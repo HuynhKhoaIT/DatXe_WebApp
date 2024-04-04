@@ -28,8 +28,6 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   const [valueRTE, setValueRTE] = useState("");
   const { addItem, updateItem } = useAddNews();
   const [loading, handlers] = useDisclosure();
-  const [file, setFile] = useState<File | null>(null);
-  const resetRef = useRef<() => void>(null);
   const form = useForm({
     initialValues: {
       thumbnail: "",
@@ -47,7 +45,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       try {
         form.setInitialValues(dataDetail);
         form.setValues(dataDetail);
-        setValueRTE(form.values.description);
+        setValueRTE(dataDetail?.description);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -164,7 +162,6 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
                     theme="snow"
                     placeholder="Mô tả chi tiết"
                     className={"quill"}
-                    defaultValue={dataDetail?.description || ""}
                     setValue={setValueRTE}
                     value={valueRTE}
                     style={{ height: 600 }}

@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from "react";
 
 export function BasicDropzone({ setImages, maxFiles, images, props }: any) {
+  console.log(images);
   const [files, setFiles] = useState<FileWithPath[]>([]);
   const handleDelete = (index: number) => {
     const updatedFiles = files.filter((_, i) => i !== index);
@@ -111,6 +112,13 @@ export function BasicDropzone({ setImages, maxFiles, images, props }: any) {
       <SimpleGrid cols={{ base: 1, sm: 4 }} mt={previews.length > 0 ? "xl" : 0}>
         {previews}
       </SimpleGrid>
+      {files?.length == 0 && (
+        <>
+          {images?.map((file: any, index: number) => {
+            return <Image src={file} key={index} />;
+          })}
+        </>
+      )}
     </Card>
   );
 }
