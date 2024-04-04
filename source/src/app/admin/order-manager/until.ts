@@ -11,7 +11,7 @@ export async function getOrders(searchParams: any, page: number) {
 
 export async function getOptionsCar({ s }: any) {
     try {
-        const res = await axios.get(`/api/car/get-by-plates?s=${s}`);
+        const res = await axios.get(`/api/admin/car/get-by-plates?s=${s}`);
         if (!res.data) {
             throw new Error('Failed to fetch data');
         }

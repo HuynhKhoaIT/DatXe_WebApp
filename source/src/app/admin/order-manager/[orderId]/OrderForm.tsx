@@ -43,7 +43,11 @@ import { getOptionsCar } from "../until";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
 
-export default function OrderForm({ isEditing = false, dataDetail }: any) {
+export default function OrderForm({
+  isEditing = false,
+  dataDetail,
+  isLoading,
+}: any) {
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
@@ -123,8 +127,9 @@ export default function OrderForm({ isEditing = false, dataDetail }: any) {
       }));
       form.setFieldValue("detail", updatedProducts);
     } else {
+      console.log("selectedProducts", selectedProducts);
       let updatedProducts = selectedProducts.map((detail: any) => ({
-        images: detail.product.images,
+        images: detail?.product?.images,
         name: detail?.product?.name || detail?.name,
         price: detail.price,
         productId: detail.productId !== 0 ? detail.productId : detail.id,
@@ -144,6 +149,12 @@ export default function OrderForm({ isEditing = false, dataDetail }: any) {
       handlers.open();
 
       if (isEditing && dataDetail) {
+        setSelectedProducts(
+          dataDetail?.orderDetails.map((item: any) => ({
+            ...item,
+            id: item.productId,
+          }))
+        );
         try {
           const [models, yearCars] = await Promise.all([
             getOptionsModels(dataDetail?.car?.carBrandId),
@@ -220,7 +231,7 @@ export default function OrderForm({ isEditing = false, dataDetail }: any) {
     handlers.open();
     try {
       const res = await fetch(
-        `/api/car/number-plates/${form.values.numberPlates}`,
+        `/api/admin/car/number-plates/${form.values.numberPlates}`,
         { method: "GET" }
       );
       const data = await res.json();
@@ -416,7 +427,7 @@ export default function OrderForm({ isEditing = false, dataDetail }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={loading}
+        visible={loading || isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />

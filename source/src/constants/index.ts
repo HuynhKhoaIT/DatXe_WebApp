@@ -76,6 +76,7 @@ export const QUERY_KEY = {
     carDetail: 'carDetail',
     customerDetail: 'customerDetail',
     newsDetail: 'newsDetail',
+    orderDetail:'orderDetail',
 };
 
 export const ORDER_CANCEL_1 = 'Sai lịch hẹn';

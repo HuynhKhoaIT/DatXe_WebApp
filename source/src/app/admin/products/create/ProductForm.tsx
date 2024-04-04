@@ -237,49 +237,17 @@ export default function ProductForm({
                   />
                 </Grid.Col>
               </Grid>
-
-              {/* <Grid gutter={10}>
-                <Grid.Col span={6}>
-                  <Select size = 'md'
-                    withAsterisk
-                    {...form.getInputProps("supplierId")}
-                    label="Nhà cung cấp"
-                    placeholder="Nhà cung cấp"
-                    data={supplierOptions}
-                  />
-                </Grid.Col>
-              </Grid> */}
               <Grid mt={24}>
                 <Grid.Col span={12}>
-                  <>
-                    {/* <Text size={"14px"} c={"#999999"} mb={"6px"}>
-                    Mô tả chi tiết
-                  </Text> */}
-                    {/* <Textarea
-                      size="lg"
-                      radius={0}
-                      label="Mô tả chi tiết"
-                      minRows={6}
-                      autosize={true}
-                      {...form.getInputProps("metaDescription")}
-                      placeholder="Mô tả chi tiết"
-                    /> */}
-                    <QuillEditor
-                      theme="snow"
-                      placeholder="Mô tả chi tiết"
-                      className={"quill"}
-                      defaultValue={dataDetail?.description || ""}
-                      setValue={setValueRTE}
-                      value={valueRTE}
-                      style={{ height: 450 }}
-                    />
-                    {/* <ReactQuill
+                  <QuillEditor
                     theme="snow"
-                    style={{ height: "400px" }}
-                    formats={formats}
-                    {...form.getInputProps("metaDescription")}
-                  /> */}
-                  </>
+                    placeholder="Mô tả chi tiết"
+                    className={"quill"}
+                    defaultValue={dataDetail?.description || ""}
+                    setValue={setValueRTE}
+                    value={valueRTE}
+                    style={{ height: 450 }}
+                  />
                 </Grid.Col>
               </Grid>
               <Grid mt={24}>
@@ -329,25 +297,8 @@ export default function ProductForm({
                     images={images}
                   />
                 </Grid.Col>
-                {/* <Grid.Col span={12}>
-                <Switch onLabel="ON" offLabel="OFF" label="Quản lý kho" />
-              </Grid.Col> */}
               </Grid>
-              <Grid gutter={10} mt={24}>
-                {/*               
-              <Grid.Col span={6}>
-               <NumberInput size = 'md'
-                  min={0}
-                  label="Số lượng cảnh báo"
-                  placeholder="Số lượng cảnh báo"
-                  thousandSeparator=","
-                  {...form.getInputProps("priceSale")}
-                />
-              </Grid.Col> */}
-                {/* <Grid.Col span={12}>
-                <Switch onLabel="ON" offLabel="OFF" label="Công khai" />
-              </Grid.Col> */}
-              </Grid>
+              <Grid gutter={10} mt={24}></Grid>
             </Card>
           </Grid.Col>
         </Grid>
