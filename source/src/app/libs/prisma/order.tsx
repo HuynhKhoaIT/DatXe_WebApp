@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "../prismadb";
 import { createCar } from "./car";
 import { createCustomer, getMyCustomers } from "./customer";
@@ -384,11 +384,14 @@ export async function createOrder(json: any) {
   try {
     let customerId = 1;
     let garageId = 2;
+    if(json.garageId){
+      garageId = Number(json.garageId)
+    }
     if (json.detail[0].garageId) {
       garageId = Number(json.detail[0].garageId);
     }
 
-    if ((!json.customerId || json.customerId == 0) && json.phoneNumber) {
+    if (Number(json.customerId) == 0 && json.phoneNumber) {
       // check and create customer
       // check customer via phone number
       let phoneNumber = json.phoneNumber;
@@ -461,7 +464,6 @@ export async function createOrder(json: any) {
         carId = Number(carNew.car?.id);
       }
     }
-
     let orderDetails: any = [];
     if (json.detail) {
       json.detail.forEach(function (data: any) {
@@ -475,7 +477,7 @@ export async function createOrder(json: any) {
           quantity: Number(data.quantity ?? 1),
           subTotal: Number(data.subTotal ?? 0),
           garageId: Number(garageId ?? 1),
-          createdBy: Number(json.createdBy ?? 1),
+          createdBy: Number(json.createdById ?? 1),
         });
       });
     }
@@ -498,6 +500,7 @@ export async function createOrder(json: any) {
       total: Number(json.total),
       garageId: Number(garageId),
       serviceAdvisorId: Number(json.serviceAdvisorId ?? 1),
+      createdById: Number(json.createdById ?? 1),
       orderDetails: {
         createMany: {
           data: orderDetails,

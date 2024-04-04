@@ -44,6 +44,7 @@ export async function POST(request: Request) {
         const session = await getServerSession(authOptions);
         if (session) {
             json.garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            json.createdById = session.user?.id
             const order = await createOrder(json);
             return new NextResponse(JSON.stringify(order), {
                 status: 201,

@@ -117,6 +117,10 @@ export default function CategoryListPage({ profile }: any) {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
+        console.log(record);
+        if (record.garageId == 2) {
+          return;
+        }
         return (
           <Flex>
             <Link
@@ -136,7 +140,6 @@ export default function CategoryListPage({ profile }: any) {
                 <IconPencil size={16} />
               </Button>
             </Link>
-
             <Button
               size="lg"
               radius={0}
