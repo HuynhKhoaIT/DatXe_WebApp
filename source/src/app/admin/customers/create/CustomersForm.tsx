@@ -215,7 +215,7 @@ export default function CustomersForm({ isEditing, dataDetail }: any) {
                   <TextInput
                     size="lg"
                     radius={0}
-                    withAsterisk
+                    // withAsterisk
                     {...form.getInputProps("address")}
                     label="Địa chỉ"
                     type="text"
