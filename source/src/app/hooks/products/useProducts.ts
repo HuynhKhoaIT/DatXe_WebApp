@@ -37,8 +37,8 @@ const useProductRelate = (limit: any) => {
     });
 };
 
-const fetchProductDetail = async (id: string) => {
-    const response = await fetch(`/api/products/${id}`);
+const fetchProductDetail = async (uuId: string) => {
+    const response = await fetch(`/api/products/${uuId}`);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch product ', response);
     }

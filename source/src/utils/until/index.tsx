@@ -159,7 +159,7 @@ export async function getOptionsYearCar(modelId: number) {
 // get danh sách options customers của chuyên gia
 export async function getOptionsCustomers() {
   try {
-    const res = await axios.get(`/api/customer`);
+    const res = await axios.get(`/api/admin/customer`);
     const dataOption = res.data?.data?.map((item: any) => ({
       value: item.id.toString(),
       label: item.fullName + "-" + item.phoneNumber,

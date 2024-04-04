@@ -7,7 +7,7 @@ import { createPost, getPosts } from '@/app/libs/prisma/post';
 export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
-        if (session) {
+        if (session && session.user?.role == 'ADMINGARAGE') {
             let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
             const { searchParams } = new URL(request.url);
             let page = 1;
