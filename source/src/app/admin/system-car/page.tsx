@@ -139,7 +139,7 @@ export default function Categories() {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={brandCarList}
+            data={brandCarList?.data}
             columns={columns}
             loading={isLoading}
             totalPage={brandCarList?.totalPage}

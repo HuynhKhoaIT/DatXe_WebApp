@@ -2,27 +2,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BrandCarForm from "../create/BrandCarForm";
+import { useBrandDetail } from "../../hooks/system-car/Brand/useBrandCar";
 export const revalidate = 60;
 export default function UpdateCategory({
   params,
 }: {
-  params: { brandId: number };
+  params: { brandId: string };
 }) {
-  const [category, setCategory] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/api/admin/product-category/${params?.brandId}`
-        );
-        setCategory(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [params?.brandId]);
-  return <BrandCarForm isEditing={true} dataDetail={category} />;
+  const { data: dataDetail, isLoading } = useBrandDetail(params?.brandId);
+  return (
+    <BrandCarForm
+      isEditing={true}
+      dataDetail={dataDetail}
+      isLoading={isLoading}
+    />
+  );
 }

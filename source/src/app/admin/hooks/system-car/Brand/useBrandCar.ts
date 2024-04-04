@@ -103,3 +103,20 @@ export const useBrandCar = (): UseNews => {
     };
 };
 
+// get detail
+const fetchBrandCarDetail = async (id: string) => {
+    const response = await fetch(`/api/admin/car-model/${id}`);
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch expert', response);
+    }
+    return await response.json();
+};
+
+const useBrandDetail = (id: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.brandCarDetail, id],
+        queryFn: () => fetchBrandCarDetail(id),
+    });
+};
+
+export { useBrandDetail, fetchBrandCarDetail };

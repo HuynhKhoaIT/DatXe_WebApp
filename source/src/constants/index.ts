@@ -81,7 +81,10 @@ export const QUERY_KEY = {
     // system-car
     brandCar:'brandCar',
     modelCar:'modalCar',
-    yearCar:'yearCar'
+    yearCar:'yearCar',
+    brandCarDetail:'brandCarDetail',
+    modelCarDetail:'modelCarDetail',
+    yearCarDetail:'yearCarDetail',
 };
 
 export const ORDER_CANCEL_1 = 'Sai lịch hẹn';
@@ -91,3 +94,8 @@ export const ORDER_CANCEL_4 = 'Hết hàng';
 export const ORDER_CANCEL_5 = 'Giá cao';
 export const ORDER_CANCEL_6 = 'Dùng sản phẩm của đối thủ';
 export const ORDER_CANCEL_7 = 'Nguyên nhân khác';
+
+
+export const CARBRAND = 'Hãng xe';
+export const CARNAME = 'Dòng xe';
+export const CARYEAR = 'Năm sản xuất'

@@ -6,6 +6,7 @@ import {
   TextInput,
   Select,
   LoadingOverlay,
+  Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
@@ -13,13 +14,16 @@ import { useDisclosure } from "@mantine/hooks";
 import convertToSlug from "@/utils/until";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useAddModel } from "@/app/admin/hooks/system-car/Model/useAddModelCar";
+import { useSearchParams } from "next/navigation";
 export default function BrandCarForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddModel();
   const [loading, handlers] = useDisclosure();
-
+  const searchParam = useSearchParams();
+  const brandId = searchParam.get("brandId");
   const form = useForm({
     initialValues: {
       title: "",
+      description: "",
     },
     validate: {
       // title: (value) => (value.length < 1 ? "Không được để trống" : null),
@@ -46,7 +50,8 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
   }, [dataDetail]);
 
   const handleSubmit = async (values: any) => {
-    values.slug = convertToSlug(values?.title);
+    values.parentId = brandId;
+    values.type = "CARNAME";
     handlers.open();
     if (isEditing) {
       updateItem(values);
@@ -91,6 +96,17 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
                       { value: "DRAFT", label: "Nháp" },
                       { value: "PENDING", label: "Đang duyệt" },
                     ]}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <Textarea
+                    size="lg"
+                    radius={0}
+                    label="Mô tả chi tiết"
+                    minRows={2}
+                    autosize={true}
+                    {...form.getInputProps("description")}
+                    placeholder="Mô tả"
                   />
                 </Grid.Col>
               </Grid>

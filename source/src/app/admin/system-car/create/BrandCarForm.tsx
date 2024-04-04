@@ -6,6 +6,7 @@ import {
   TextInput,
   Select,
   LoadingOverlay,
+  Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
@@ -13,16 +14,23 @@ import { useDisclosure } from "@mantine/hooks";
 import FooterSavePage from "../../_component/FooterSavePage";
 import convertToSlug from "@/utils/until";
 import { useAddCategory } from "../../hooks/category/useAddCategory";
-export default function BrandCarForm({ isEditing, dataDetail }: any) {
-  const { addItem, updateItem } = useAddCategory();
+import { CARBRAND } from "@/constants";
+import { useAddBrand } from "../../hooks/system-car/Brand/useAddBrandCar";
+export default function BrandCarForm({
+  isEditing,
+  dataDetail,
+  isLoading,
+}: any) {
+  const { addItem, updateItem } = useAddBrand();
   const [loading, handlers] = useDisclosure();
 
   const form = useForm({
     initialValues: {
       title: "",
+      description: "",
     },
     validate: {
-      // title: (value) => (value.length < 1 ? "Không được để trống" : null),
+      title: (value) => (value.length < 1 ? "Không được để trống" : null),
       // image: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
@@ -46,7 +54,8 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
   }, [dataDetail]);
 
   const handleSubmit = async (values: any) => {
-    values.slug = convertToSlug(values?.title);
+    values.parentId = 0;
+    values.type = "CARBRAND";
     handlers.open();
     if (isEditing) {
       updateItem(values);
@@ -59,7 +68,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
   return (
     <Box pos="relative" w={800}>
       <LoadingOverlay
-        visible={loading}
+        visible={isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -78,6 +87,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
                     placeholder="Tên hãng xe"
                   />
                 </Grid.Col>
+
                 <Grid.Col span={4}>
                   <Select
                     size="lg"
@@ -91,6 +101,17 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
                       { value: "DRAFT", label: "Nháp" },
                       { value: "PENDING", label: "Đang duyệt" },
                     ]}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <Textarea
+                    size="lg"
+                    radius={0}
+                    label="Mô tả chi tiết"
+                    minRows={2}
+                    autosize={true}
+                    {...form.getInputProps("description")}
+                    placeholder="Mô tả"
                   />
                 </Grid.Col>
               </Grid>
