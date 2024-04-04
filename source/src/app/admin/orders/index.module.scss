@@ -1,0 +1,10 @@
+.wrapper {
+    background-color: #fff;
+    padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        padding: 0;
+    }
+}

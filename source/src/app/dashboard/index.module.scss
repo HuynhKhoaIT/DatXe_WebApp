@@ -1,0 +1,115 @@
+// Dashboard
+.page {
+    background-color: white;
+    padding: 30px;
+}
+.wrapper {
+    // width: 80%;
+    margin: 0 auto;
+    gap: 20px;
+    position: relative;
+    background-color: #ededed;
+    .rowCard {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        .card1,
+        .card2,
+        .card3 {
+            margin-bottom: 30px;
+            border-radius: 10px;
+            .box {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 30px 20px;
+                border-radius: 10px;
+            }
+            .info {
+                font-weight: 500;
+                .value {
+                    font-size: 30px;
+                    font-weight: 700;
+                    margin-bottom: 5px;
+                }
+            }
+            .icon {
+                width: 65px;
+                height: 65px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 32px;
+                border-radius: 50%;
+                color: #fff;
+            }
+        }
+        .card1 {
+            background: rgba(98, 89, 202, 0.15);
+            color: #6259ca;
+            .icon {
+                background: #6259ca;
+                color: #fff;
+            }
+        }
+        .card2 {
+            background: rgba(239, 29, 38, 0.15);
+            color: #ef1d26;
+            .icon {
+                background: #ef1d26;
+            }
+        }
+        .card3 {
+            background: rgba(14, 198, 198, 0.15);
+            color: #29bf6c;
+            .icon {
+                background: #29bf6c;
+            }
+        }
+    }
+    .container {
+        display: flex;
+        gap: 30px;
+        min-height: calc(100vh - 40px);
+        padding: 30px 0px;
+    }
+    .navBar {
+        flex-shrink: 0;
+        width: 360px;
+    }
+    .content {
+        width: 100%;
+        border-radius: 12px;
+    }
+}
+.wrapperMobile {
+    margin-top: 5rem;
+    margin-bottom: 1rem;
+    min-height: 80vh;
+}
+.wrapperAdmin {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .contents {
+        padding: 0 20px;
+        height: calc(100% - 50px);
+        margin-bottom: 20px;
+        .content {
+            background-color: var(--white-background);
+            height: 100%;
+            box-shadow: var(--box-shadow);
+            border-radius: 8px;
+            overflow-y: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .navBar {
+        display: none;
+    }
+    .wrapperAdmin .contents {
+        padding: 0 10px;
+    }
+}

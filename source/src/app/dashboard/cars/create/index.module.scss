@@ -1,0 +1,11 @@
+.wrapper {
+    box-shadow: var(--box-shadow);
+    background-color: var(--white-background);
+    .title {
+        padding: 1rem 30px;
+        color: var(--primary-orange);
+    }
+    .content {
+        padding: 20px;
+    }
+}

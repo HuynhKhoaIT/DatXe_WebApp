@@ -1,0 +1,101 @@
+.header {
+    // height: var(--header-height);
+}
+.headerTop {
+    background-color: var(--primary-color);
+    height: var(--header-height-top);
+    display: flex;
+    align-items: center;
+    .topWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        .topLeft {
+            display: flex;
+            gap: 1.25rem;
+        }
+        .topRight {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            .title {
+                color: var(--text-color-light);
+                font-size: var(--primary-font-size);
+                font-weight: var(--font-bold);
+            }
+        }
+    }
+}
+
+.headerContent {
+    height: var(--header-content);
+
+    .headerSearch {
+        display: flex;
+        padding-top: 18px;
+        justify-content: space-between;
+        .search {
+            height: 3.75rem;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            .btnAdd {
+                height: 3.5rem;
+                .innerAdd {
+                    color: #3761bf;
+                    font-size: var(--primary-font-size);
+                    font-weight: var(--font-big);
+                    padding: 0 1.5rem;
+                }
+            }
+            .btnBook {
+                height: 3.5rem;
+
+                .innerBook {
+                    color: var(--title-white);
+                    font-size: var(--primary-font-size);
+                    font-weight: var(--font-big);
+                    padding: 0 1.5rem;
+                }
+            }
+        }
+    }
+    .headerNav {
+        width: 100%;
+        margin-top: 28px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .itemNav {
+            color: var(--nav-color);
+            font-weight: var(--font-semi-bold);
+            font-size: var(--primary-font-size);
+        }
+    }
+}
+.buttonLogin {
+    display: flex;
+}
+.actionLogin {
+    display: flex;
+}
+
+.navList {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+.headerLanding {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 92px;
+    width: 100%;
+}

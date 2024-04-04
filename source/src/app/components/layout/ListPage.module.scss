@@ -1,0 +1,48 @@
+.baseListPage {
+    // border: 1px solid #fff;
+
+    .action-bar {
+        margin: 10px 0 10px 0;
+    }
+    .baseTable {
+        overflow-x: auto;
+        background-color: #fff;
+        position: relative;
+        .table {
+            padding: 30px;
+        }
+    }
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.searchBox {
+    margin-bottom: 20px;
+    background-color: #fff;
+    .searchForm {
+        padding: 30px;
+    }
+}
+.actionBar {
+    margin-bottom: 1rem;
+}
+.titleList {
+    color: var(--primary-orange);
+    padding: 16px 30px;
+}
+@media only screen and (max-width: 600px) {
+    .baseListPage {
+        padding: 0;
+        .baseTable {
+            .table {
+                padding: 10px;
+            }
+        }
+    }
+    .titleList {
+        padding: 16px 0;
+    }
+}
