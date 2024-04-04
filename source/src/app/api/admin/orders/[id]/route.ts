@@ -5,7 +5,7 @@ import { authOptions } from '../../../auth/[...nextauth]/route';
 import { findOrder, updateOrder } from '@/app/libs/prisma/order';
 import { sendSMSOrder } from '@/utils/order';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
 

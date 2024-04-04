@@ -102,3 +102,22 @@ export const useOrders = (): UseOrders => {
         deleteItem,
     };
 };
+
+
+// get detail
+const fetchOrderDetail = async (id: string) => {
+    const response = await fetch(`/api/admin/orders/${id}`);
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch expert', response);
+    }
+    return await response.json();
+};
+
+const useOrderDetail = (id: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.orderDetail, id],
+        queryFn: () => fetchOrderDetail(id),
+    });
+};
+
+export { useOrderDetail, fetchOrderDetail };

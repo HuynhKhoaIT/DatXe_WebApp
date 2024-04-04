@@ -1,15 +1,21 @@
+"use client";
 import React from "react";
 import OrderForm from "./OrderForm";
-import { apiUrl } from "@/constants";
-import { getOrderBySlug } from "@/app/libs/prisma/order";
+import { useOrderDetail } from "../../hooks/order/useOrder";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export default async function ProductSavePage({
+export default function ProductSavePage({
   params,
 }: {
   params: { orderId: string };
 }) {
-  const productDetail = await getOrderBySlug(params.orderId);
-  return <OrderForm isEditing={true} dataDetail={productDetail} />;
+  const { data: orderDetail, isLoading } = useOrderDetail(params?.orderId);
+  return (
+    <OrderForm
+      isEditing={true}
+      dataDetail={orderDetail}
+      isLoading={isLoading}
+    />
+  );
 }

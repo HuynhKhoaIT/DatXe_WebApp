@@ -224,11 +224,11 @@ export async function getMyOrders(requestData: any) {
     return { error };
   }
 }
-export async function findOrder(id: Number, request: any) {
+export async function findOrder(id: string, request: any) {
   try {
     const rs = await prisma.order.findFirst({
       where: {
-        id: Number(id),
+        slug: id,
       },
       include: {
         serviceAdvisor: true,
@@ -359,8 +359,8 @@ export async function reportTrafictDashboard(
           },
           garageId,
           status: {
-            not: 'DELETE'
-          }
+            not: "DELETE",
+          },
         },
         {
           dateTime: {
@@ -371,8 +371,8 @@ export async function reportTrafictDashboard(
           },
           garageId,
           status: {
-            not: 'DELETE'
-          }
+            not: "DELETE",
+          },
         },
       ],
     },
