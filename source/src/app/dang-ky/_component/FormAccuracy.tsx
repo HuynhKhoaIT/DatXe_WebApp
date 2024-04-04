@@ -29,9 +29,9 @@ export function FormAccuracy() {
     let password = phone + "@@Datxe.com@@";
     let passwordConfirmation = password;
     try {
-      // const checkRs = await CheckOtp(phone, pin, "register");
-      // if (checkRs.CodeResult == 100) {
-      if (100 == 100) {
+      const checkRs = await CheckOtp(phone, pin, "register");
+      if (checkRs.CodeResult == 100) {
+      // if (100 == 100) {
         notifications.show({
           title: "Thành công",
           message: "Xác thực thành công",

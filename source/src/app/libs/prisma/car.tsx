@@ -1,6 +1,6 @@
-import { convertToPlatesNumber } from "@/utils/until";
+import { convertToPlatesNumber, generateUUID } from "@/utils/until";
 import prisma from "../prismadb";
-import { getCarNameById } from "./carModel";
+import {  } from "./carModel";
 import { getCustomerByPhone } from "./customer";
 import { getGarageByDlbdId } from "./garage";
 export async function createCar(json: any) {
@@ -8,6 +8,7 @@ export async function createCar(json: any) {
     let platesNumber = convertToPlatesNumber(json.numberPlates);
     const car = await prisma.car.create({
       data: {
+        uuId: generateUUID(),
         customerId: Number(json.customerId),
         numberPlates: platesNumber ?? '',
         carBrandId: Number(json.carBrandId),
@@ -20,6 +21,7 @@ export async function createCar(json: any) {
         description: json.description,
         status: json.status,
         garageId: Number(json.garageId),
+        userId: Number(json.userId),
       },
       include: {
         customer: true,
@@ -85,6 +87,10 @@ export async function getCars(requestData: any) {
   if(requestData.carStyleId){
     carStyleId = Number(requestData.carStyleId);
   }
+  let userId = {};
+  if(requestData.userId){
+    userId= Number(requestData.userId)
+  }
   const [cars, total] = await prisma.$transaction([
     prisma.car.findMany({
       take: take,
@@ -103,7 +109,8 @@ export async function getCars(requestData: any) {
             carNameId,
             carYearId,
             carStyleId,
-            garageId: garageId,
+            garageId,
+            userId,
             status: "PUBLIC",
           },
         ],
@@ -127,6 +134,7 @@ export async function getCars(requestData: any) {
             carStyleId,
             garageId: garageId,
             status: "PUBLIC",
+            userId
           },
         ],
       }
@@ -256,6 +264,10 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
   }
 }
 
+
+function getCarNameById(carBrandId: any) {
+  throw new Error("Function not implemented.");
+}
 // export async function syncCustomeFromDlbd(params:type) {
 
 // }
