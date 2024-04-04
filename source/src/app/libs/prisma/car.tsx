@@ -1,6 +1,6 @@
 import { convertToPlatesNumber } from "@/utils/until";
 import prisma from "../prismadb";
-import { getCarNameById } from "./carName";
+import { getCarNameById } from "./carModel";
 import { getCustomerByPhone } from "./customer";
 import { getGarageByDlbdId } from "./garage";
 export async function createCar(json: any) {
