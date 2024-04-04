@@ -113,8 +113,6 @@ export default function CartComponent({ myAccount, carsData }: any) {
     form.setFieldValue("detail", cartData);
   }, [cartData]);
 
-  console.log(cartData);
-
   const ModalAcceptOrder = () => {
     var dateTime = new Date();
     modals.openConfirmModal({

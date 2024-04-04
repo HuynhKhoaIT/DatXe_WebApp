@@ -154,7 +154,6 @@ export default function ModalAddCar({
                 placeholder="Năm sản xuất"
                 data={yearCarOptions}
                 onChange={(value) => {
-                  console.log(value);
                   form.setFieldValue("carYearId", value);
                 }}
               />

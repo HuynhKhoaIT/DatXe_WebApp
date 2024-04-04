@@ -10,7 +10,6 @@ const Products = ({
   setProductCount,
   isFetching,
 }: any) => {
-  console.log(products);
   return (
     <div className={styles.wrapper}>
       <div className={styles.rowItem}>

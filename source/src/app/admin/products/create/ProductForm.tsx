@@ -89,8 +89,10 @@ export default function ProductForm({
           item.categoryId.toString()
         );
         form.setFieldValue("categories", dataOption);
+        form.setFieldValue("images", dataDetail?.product?.images);
+        setImages(JSON?.parse(dataDetail?.product?.images));
       }
-      setValueRTE(dataDetail?.metaDescription);
+      setValueRTE(dataDetail?.product.metaDescription);
     }
     if (isDirection) {
       form.setFieldValue("name", dataDetail?.product?.name);
@@ -99,7 +101,7 @@ export default function ProductForm({
       form.setFieldValue("status", "PUBLIC");
       form.setFieldValue("isProduct", "1");
     }
-  }, [dataDetail?.product]);
+  }, [dataDetail]);
   const [car, setCar] = useState([{ brandId: "", nameId: "", yearId: "" }]);
 
   const handleChangeBrand = (index: number, value: any) => {
@@ -243,7 +245,6 @@ export default function ProductForm({
                     theme="snow"
                     placeholder="Mô tả chi tiết"
                     className={"quill"}
-                    defaultValue={dataDetail?.description || ""}
                     setValue={setValueRTE}
                     value={valueRTE}
                     style={{ height: 450 }}

@@ -32,7 +32,9 @@ import { ResponseError } from "@/utils/until/ResponseError";
 const queryClient = new QueryClient();
 
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
-  const response = await fetch(`/api/products?${searchParams}&page=${page}`);
+  const response = await fetch(
+    `/api/admin/products?${searchParams}&page=${page}`
+  );
   if (!response.ok) {
     throw new ResponseError("Failed to fetch products", response);
   }

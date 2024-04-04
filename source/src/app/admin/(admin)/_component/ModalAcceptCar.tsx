@@ -157,7 +157,6 @@ export default function ModalAcceptCar({ openModal, close }: any) {
     if (form?.values?.carId) handleSubmit(form.values);
   }, [form.values]);
 
-  console.log(numberPlate);
   return (
     <Modal
       title="Tiếp nhận xe"

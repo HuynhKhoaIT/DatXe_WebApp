@@ -36,7 +36,6 @@ export default function ModalUpdate({
               suffix="đ"
               thousandSeparator=","
               onChange={(value: any) => {
-                console.log("value", value);
                 form.setFieldValue(
                   `detail.${index}.subTotal`,
                   form.values.detail[index].quantity * Number(value)

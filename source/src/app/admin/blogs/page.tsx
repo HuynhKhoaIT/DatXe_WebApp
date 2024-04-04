@@ -53,7 +53,6 @@ const Blogs = () => {
       dataIndex: ["thumbnail"],
       width: "90px",
       render: (data: any) => {
-        console.log(data);
         return (
           <Image
             radius="md "

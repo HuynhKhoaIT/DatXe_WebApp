@@ -60,7 +60,7 @@ export default function QuillEditor({
   }, [defaultValue]);
 
   return (
-    <div className={`${className}`} style={{ height: 500 }}>
+    <div className={`${className}`} style={{ height: 500, fontSize: "1rem" }}>
       <ReactQuill
         theme={theme}
         modules={{ ...modules }}
