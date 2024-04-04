@@ -13,7 +13,7 @@ import Reasons3 from "@/assets/images/reasson3.png";
 import { getProvinces } from "@/utils/notion";
 import { getCategories } from "../libs/prisma/category";
 import { getProducts } from "../libs/prisma/product";
-import { getCarModes } from "../libs/prisma/carName";
+import { getCarModes } from "../libs/prisma/carModel";
 const reassons = [
   {
     image: Reasons2.src,
