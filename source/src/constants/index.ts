@@ -77,6 +77,11 @@ export const QUERY_KEY = {
     customerDetail: 'customerDetail',
     newsDetail: 'newsDetail',
     orderDetail:'orderDetail',
+
+    // system-car
+    brandCar:'brandCar',
+    modelCar:'modalCar',
+    yearCar:'yearCar'
 };
 
 export const ORDER_CANCEL_1 = 'Sai lịch hẹn';

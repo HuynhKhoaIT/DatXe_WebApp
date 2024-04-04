@@ -34,6 +34,7 @@ const mockdata = [
       { label: "Danh mục", link: "/admin/categories" },
     ],
   },
+
   { link: "/admin/blogs", label: "Danh sách bài viết", icon: IconClipboard },
 
   { link: "/admin/cars", label: "Danh sách xe", icon: IconCar },
@@ -52,6 +53,11 @@ const mockdata = [
     label: "Chuyên gia",
     icon: IconUsers,
     links: [{ label: "Danh sách chuyên gia", link: "/admin/expert" }],
+  },
+  {
+    label: "Hệ thống",
+    icon: IconCalendarStats,
+    links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
   },
 ];
 
