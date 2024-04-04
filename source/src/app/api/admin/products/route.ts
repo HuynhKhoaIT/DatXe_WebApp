@@ -10,7 +10,6 @@ import { generateUUID } from '@/utils/until';
 export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
-        // return NextResponse.json(session);
         if (session && session.user?.role == 'ADMINGARAGE') {
             const { searchParams } = new URL(request.url);
             const categoryId = searchParams.get('categoryId');

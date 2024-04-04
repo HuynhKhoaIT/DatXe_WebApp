@@ -3,7 +3,7 @@ import { generateUUID } from "@/utils/until";
 import prisma from "../prismadb";
 export async function registerUser(json: any) {
   try {
-    const user = await prisma.user.create({
+    const userRs = await prisma.user.create({
       data: {
         id: Number(json.id),
         uuId: generateUUID(),
@@ -16,7 +16,7 @@ export async function registerUser(json: any) {
         role: json.role ?? 'CUSTOMER'
       }
     });
-    return { user };
+    return { userRs };
   } catch (error) {
     return { error };
   }
