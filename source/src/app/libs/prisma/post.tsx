@@ -13,6 +13,9 @@ export async function getPosts(requestData: any){
         titleFilter = searchText;
     }
     let garageId = {};
+    if(Number(requestData.garageId)){
+        garageId = Number(requestData.garageId)
+    }
     let currentPage = 1;
     let take = 10;
     let limit = Number(requestData.limit);
@@ -30,10 +33,6 @@ export async function getPosts(requestData: any){
     let createdById = {};
     if(requestData.createdById){
         createdById = 1
-    }
-    let step = {};
-    if(requestData.step){
-        step = requestData.step;
     }
     let method = {}
     if(requestData.method){
@@ -90,6 +89,20 @@ export async function createPost(post: any) {
         post.uuId = generateUUID(),
         post.slug = convertToSlug(post.slug);
         const rs = await prisma.post.create({ data: post });
+        return rs;
+    } catch (error) {
+        return { error };
+    }
+}
+export async function updatePost(post: any) {
+    try {
+        post.slug = convertToSlug(post.slug);
+        const rs = await prisma.post.update({ 
+            where: {
+                id: post.id
+            },
+            data: post
+         });
         return rs;
     } catch (error) {
         return { error };

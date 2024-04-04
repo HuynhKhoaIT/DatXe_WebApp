@@ -24,13 +24,13 @@ const ProductDetailPageDesktop = ({
       <Container>
         <Breadcrumb breadcrumbs={Breadcrumbs} />
         <Flex direction={"column"} gap={40}>
-          <ProductDetail ProductDetail={product?.data?.product} />
+          <ProductDetail ProductDetail={product?.data} />
           <ProductTabsDes
-            ProductDetail={product?.data?.product}
+            ProductDetail={product?.data}
             productReview={productReview}
             isLoadingProductReview={isLoadingProductReview}
           />
-          <ExpertBox ProductDetail={product?.data?.product} />
+          <ExpertBox ProductDetail={product?.data} />
           <ImagesShowRoom />
           <ProductsRelate productRelate={productRelate?.data} />
           <div></div>

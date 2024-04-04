@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import validator from 'validator';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
+import { generateUUID } from '@/utils/until';
 
 export async function GET(request: NextRequest) {
     try {
@@ -85,6 +86,7 @@ export async function POST(request: Request) {
 
             const customer = await prisma.customer.create({
                 data: {
+                    uuId: generateUUID(),
                     fullName: json.fullName,
                     phoneNumber: json.phoneNumber,
                     cityId: Number(json.cityId),

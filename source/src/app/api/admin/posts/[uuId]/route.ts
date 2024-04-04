@@ -3,7 +3,8 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
-import { findPost } from '@/app/libs/prisma/post';
+import { findPost, updatePost } from '@/app/libs/prisma/post';
+import convertToSlug from '@/utils/until';
 
 export async function GET(request: NextRequest, { params }: { params: { uuId: string } }) {
     try {
@@ -23,149 +24,37 @@ export async function GET(request: NextRequest, { params }: { params: { uuId: st
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { uuId: string } }) {
     try {
         const session = await getServerSession(authOptions);
-        if (1) {
-            const id = params.id;
-            let createdBy = 0;
-            let garageId = 0;
-            let isProduct = true;
-            let catArr: any = [];
-            if (!id) {
-                return new NextResponse("Missing 'id' parameter");
-            }
+        if (session && session.user?.role == 'ADMINGARAGE') {
             const json = await request.json();
-
-            if (!json.categories) {
-                return new NextResponse("Missing 'categoryId' parameter");
-            } else {
-                json.categories.forEach(function (id: number) {
-                    catArr.push({
-                        assignedBy: session?.user?.name ?? '',
-                        assignedAt: new Date(),
-                        category: {
-                            connect: {
-                                id: parseInt(id.toString()),
-                            },
-                        },
-                    });
-                });
+            const uuId = params.uuId;
+            const postData = await findPost(uuId);
+            
+            if(json.title){
+                postData.title = json.title;
             }
+            postData.slug = convertToSlug(postData.title)
 
-            let brands = {};
-            let brandArr: any = [];
-            if (json.brands) {
-                let brandArrTemp: any = [];
-                json.brands.forEach(function (b: any) {
-                    const assignedAt = new Date();
-                    const assignedBy = session?.user?.name ?? 'Admin';
-                    if (b.yearId) {
-                        const yearArr = b.yearId.split(',');
-                        yearArr.forEach(function (y: any) {
-                            let yO = {
-                                assignedBy: assignedBy,
-                                assignedAt: assignedAt,
-                                carBrandType: 'CARYEAR',
-                                carModel: {
-                                    connect: {
-                                        id: Number(y),
-                                    },
-                                },
-                            };
-                            if (!brandArrTemp.includes(Number(y))) {
-                                brandArrTemp.push(Number(y));
-                                brandArr.push(yO);
-                            }
-                        });
-                    }
-                    if (b.nameId) {
-                        let bO = {
-                            assignedBy: assignedBy,
-                            assignedAt: assignedAt,
-                            carBrandType: 'CARNAME',
-                            carModel: {
-                                connect: {
-                                    id: Number(b.nameId),
-                                },
-                            },
-                        };
-                        if (!brandArrTemp.includes(Number(b.nameId))) {
-                            brandArrTemp.push(Number(b.nameId));
-                            brandArr.push(bO);
-                        }
-                    }
-                    if (b.brandId) {
-                        let cO = {
-                            assignedBy: assignedBy,
-                            assignedAt: assignedAt,
-                            carBrandType: 'CARYEAR',
-                            carModel: {
-                                connect: {
-                                    id: Number(b.brandId),
-                                },
-                            },
-                        };
-                        if (!brandArrTemp.includes(Number(b.brandId))) {
-                            brandArrTemp.push(Number(b.brandId));
-                            brandArr.push(cO);
-                        }
-                    }
-                });
-                brands = {
-                    deleteMany: {},
-                    create: brandArr,
-                };
+            if(json.description){
+                postData.description = json.description
             }
-            if (session?.user?.id) {
-                createdBy = Number(session.user.id);
-                garageId = Number(session.user.garageId);
+            if(json.shortDescription){
+                postData.shortDescription = json.shortDescription
             }
-            if (json.isProduct.length) {
-                isProduct = Number(json.isProduct) == 1 ? true : false;
+            if(json.thumbnail){
+                postData.thumbnail = json.thumbnail
             }
+            if(json.status){
+                postData.status = json.status
+            }
+            if(json.createdBy){
+                postData.createdBy = Number(session.user.id)
+            }
+            const rs = await updatePost(postData);
 
-            let productUpdateData = {
-                name: json.title,
-                price: json.price,
-                salePrice: json.salePrice,
-                productId: json.productId ?? 0,
-                description: json.description ?? '',
-                timeSaleStart: json.timeSaleStart ?? null,
-                timeSaleEnd: json.timeSaleEnd ?? null,
-                quantity: json.quantity ?? 0,
-                images: json.images ?? null,
-                metaDescription: json.metaDescription ?? null,
-                status: json.status,
-                createdBy: createdBy,
-                garageId: garageId,
-                brandDetail: JSON.stringify(json.brands),
-                categories: {
-                    deleteMany: {},
-                    create: json.categories.map((cat: number) => ({
-                        assignedBy: session?.user?.name ?? '',
-                        assignedAt: new Date(),
-                        category: {
-                            connect: {
-                                id: Number(cat),
-                            },
-                        },
-                    })),
-                },
-                brands,
-                isProduct: isProduct,
-            };
-            const updatedPost = await prisma.product.update({
-                where: {
-                    id: Number(id),
-                },
-                data: productUpdateData,
-                include: {
-                    categories: true,
-                },
-            });
-
-            return new NextResponse(JSON.stringify(updatedPost), {
+            return new NextResponse(JSON.stringify(rs), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },
             });
@@ -175,15 +64,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
-    const id = params.id;
-    if (!id) {
-        return new NextResponse("Missing 'id' parameter");
+export async function DELETE(request: NextRequest, { params }: { params: { uuId: string } }) {
+    const uuId = params.uuId;
+    if (!uuId) {
+        return new NextResponse("Missing 'uuId' parameter");
     }
-
-    const product = await prisma.product.update({
+    const postData = await findPost(uuId);
+    const post = await prisma.post.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (postData.id),
         },
         data: {
             status: 'DELETE',
