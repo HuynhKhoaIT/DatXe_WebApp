@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
+import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
     try {
@@ -26,10 +27,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
 export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
     try {
         const session = await getServerSession(authOptions);
-        if (1) {
+        if (session && session.user?.role == 'ADMINGARAGE') {
             const id = params.id;
+            const garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
             let createdBy = 0;
-            let garageId = 0;
             let isProduct = true;
             let catArr: any = [];
             if (!id) {
@@ -119,7 +120,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
             }
             if (session?.user?.id) {
                 createdBy = Number(session.user.id);
-                garageId = Number(session.user.garageId);
             }
             if (json.isProduct.length) {
                 isProduct = Number(json.isProduct) == 1 ? true : false;
