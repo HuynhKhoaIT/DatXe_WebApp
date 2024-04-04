@@ -21,6 +21,7 @@ import { IconCamera } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { getOptionsCar } from "../../until";
 import { useEffect, useState } from "react";
+import AutocompleteField from "@/app/components/form/AutoCompleteField";
 
 const DynamicModalCamera = dynamic(() => import("../ModalCamera"), {
   ssr: false,
@@ -30,10 +31,11 @@ export default function ModalNumberPlates({
   close,
   formOrder,
   handleGetInfo,
+  numberPlate,
+  setNumberPlate,
 }: any) {
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [carOptions, setCarOptions] = useState([]);
-  const [numberPlate, setNumberPlate] = useState("");
   const [debounced] = useDebouncedValue(numberPlate, 400);
   useEffect(() => {
     const fetchData = async () => {
@@ -70,21 +72,18 @@ export default function ModalNumberPlates({
         <Typo style={{ fontSize: 24, fontWeight: 500 }}>Nhập biển số xe</Typo>
         <Grid gutter={12}>
           <Grid.Col span={10}>
-            <Autocomplete
+            <AutocompleteField
               size="lg"
               radius={0}
-              {...formOrder.getInputProps("numberPlates")}
+              w={"100%"}
               placeholder="Biển số xe"
-              data={carOptions}
               value={numberPlate}
-              onChange={(value) => {
+              onChange={(value: any) => {
                 setNumberPlate(value);
                 formOrder.setFieldValue("numberPlates", value);
               }}
-              onOptionSubmit={(value) => {
-                console.log(value);
-              }}
-              // data={["React", "Angular", "Vue", "Svelte"]}
+              getOptionData={getOptionsCar}
+              form={formOrder}
             />
           </Grid.Col>
           <Grid.Col span={2}>
@@ -125,7 +124,7 @@ export default function ModalNumberPlates({
           </Button>
           <Button
             onClick={() => {
-              handleGetInfo();
+              handleGetInfo(numberPlate);
               close();
             }}
           >
@@ -137,6 +136,7 @@ export default function ModalNumberPlates({
         openModal={openedModalCamera}
         close={closeModalCamera}
         formOrder={formOrder}
+        handleGetInfo={handleGetInfo}
         setNumberPlate={setNumberPlate}
       />
     </Modal>

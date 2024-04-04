@@ -74,8 +74,6 @@ export default function CarListPage({ carsData, myAccount }: any) {
     setOpenModalCarDefault(false);
   };
 
-  console.log(carsData);
-
   const columns = [
     {
       label: (

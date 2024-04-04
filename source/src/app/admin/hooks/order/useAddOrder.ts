@@ -38,7 +38,6 @@ const updateOrder = async (values: any): Promise<any> => {
 };
 
 const updateStepOrder = async (values: any): Promise<any> => {
-    console.log(values);
     const response = await fetch(`/api/admin/orders/step`, {
         method: 'POST',
         headers: {

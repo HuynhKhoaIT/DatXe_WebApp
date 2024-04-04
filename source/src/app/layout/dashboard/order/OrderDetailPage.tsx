@@ -20,7 +20,6 @@ export default function OrderDetailPage({ dataSource }: any) {
     false
   );
 
-  console.log(dataSource);
   const [dataReview, setDataReview] = useState<any>();
   const columns = [
     {
@@ -59,7 +58,6 @@ export default function OrderDetailPage({ dataSource }: any) {
       name: "subTotal",
       dataIndex: [],
       render: (dataRow: any) => {
-        console.log(dataRow);
         return (
           <span>
             {(dataRow?.priceSale * dataRow?.quantity).toLocaleString()}đ

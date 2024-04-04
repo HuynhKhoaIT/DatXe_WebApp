@@ -112,13 +112,15 @@ export function BasicDropzone({ setImages, maxFiles, images, props }: any) {
       <SimpleGrid cols={{ base: 1, sm: 4 }} mt={previews.length > 0 ? "xl" : 0}>
         {previews}
       </SimpleGrid>
-      {files?.length == 0 && (
-        <>
-          {images?.map((file: any, index: number) => {
-            return <Image src={file} key={index} />;
-          })}
-        </>
-      )}
+      <SimpleGrid cols={{ base: 1, sm: 4 }} mt={previews.length > 0 ? "xl" : 0}>
+        {files?.length == 0 && (
+          <>
+            {images?.map((file: any, index: number) => {
+              return <Image src={file} key={index} />;
+            })}
+          </>
+        )}
+      </SimpleGrid>
     </Card>
   );
 }

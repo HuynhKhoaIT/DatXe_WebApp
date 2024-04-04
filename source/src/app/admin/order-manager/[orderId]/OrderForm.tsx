@@ -108,7 +108,8 @@ export default function OrderForm({
       }
     }
     if (licenseNumber) {
-      handleGetInfo();
+      if (isMobile) setActiveTab("customer");
+      handleGetInfo(licenseNumber);
     }
   }, []);
   useEffect(() => {
@@ -127,7 +128,6 @@ export default function OrderForm({
       }));
       form.setFieldValue("detail", updatedProducts);
     } else {
-      console.log("selectedProducts", selectedProducts);
       let updatedProducts = selectedProducts.map((detail: any) => ({
         images: detail?.product?.images,
         name: detail?.product?.name || detail?.name,
@@ -203,7 +203,6 @@ export default function OrderForm({
   // Tính tổng tiền
   const calculateSubTotal = () => {
     let subTotal = 0;
-    console.log(form.values?.detail);
     form.values?.detail?.forEach((item: any) => {
       subTotal += item?.priceSale * item.quantity;
     });
@@ -224,19 +223,20 @@ export default function OrderForm({
   };
 
   // lấy thông tin theo biển số xe
-  const handleGetInfo = async () => {
+  const handleGetInfo = async (numberPlate: string) => {
     if (licenseNumber) {
-      form.values.numberPlates = licenseNumber;
+      form.setFieldValue("numberPlates", licenseNumber);
     }
     handlers.open();
     try {
       const res = await fetch(
-        `/api/admin/car/number-plates/${form.values.numberPlates}`,
-        { method: "GET" }
+        `/api/admin/car/number-plates/${licenseNumber || numberPlate}`,
+        {
+          method: "GET",
+        }
       );
       const data = await res.json();
       if (data?.data) {
-        console.log(data.data);
         handlersIsUser.open();
         const [models, yearCars] = await Promise.all([
           getOptionsModels(data?.data?.carBrandId),
@@ -299,7 +299,6 @@ export default function OrderForm({
             placeholder="Số lượng"
             thousandSeparator=","
             onChange={(value: any) => {
-              console.log(form.values.detail[index].priceSale * Number(value));
               form.setFieldValue(`detail.${index}.quantity`, value);
               form.setFieldValue(
                 `detail.${index}.subTotal`,
@@ -415,7 +414,7 @@ export default function OrderForm({
 
   useEffect(() => {
     const fetchInfo = async () => {
-      await handleGetInfo();
+      await handleGetInfo(numberPlate);
       setActiveTab("customer");
     };
     if (licenseNumber) {
@@ -463,17 +462,6 @@ export default function OrderForm({
               <Tabs.Panel value="numberPlates">
                 <Grid gutter={12}>
                   <Grid.Col span={10}>
-                    {/* <Autocomplete
-                      size="lg"
-                      radius={0}
-                      placeholder="Biển số xe"
-                      data={carOptions}
-                      value={numberPlate}
-                      onChange={(value) => {
-                        setNumberPlate(value);
-                        form.setFieldValue("numberPlates", value);
-                      }}
-                    /> */}
                     <AutocompleteField
                       size="lg"
                       radius={0}
@@ -534,7 +522,7 @@ export default function OrderForm({
                       if (form.values.numberPlates.length === 0) {
                         handlersPlate.open();
                       } else {
-                        await handleGetInfo();
+                        await handleGetInfo(numberPlate);
                         setActiveTab("customer");
                       }
                     }}
@@ -1280,14 +1268,18 @@ export default function OrderForm({
           close={closeModalNumberPlates}
           formOrder={form}
           handleGetInfo={handleGetInfo}
+          setNumberPlate={setNumberPlate}
         />
       )}
-      <DynamicModalCamera
-        openModal={openedModalCamera}
-        close={closeModalCamera}
-        formOrder={form}
-        setNumberPlate={setNumberPlate}
-      />
+      {openedModalCamera && (
+        <DynamicModalCamera
+          openModal={openedModalCamera}
+          close={closeModalCamera}
+          formOrder={form}
+          setNumberPlate={setNumberPlate}
+          handleGetInfo={handleGetInfo}
+        />
+      )}
     </Box>
   );
 }
