@@ -8,7 +8,6 @@ import Link from "next/link";
 import FormLogin from "./_component/FormLogin";
 export default function Login() {
   const { data: session } = useSession();
-  console.log({ session });
   if (session && session.user) {
     redirect("/dashboard");
   }

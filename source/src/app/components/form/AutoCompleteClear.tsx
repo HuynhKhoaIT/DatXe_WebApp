@@ -155,7 +155,7 @@ export function AutocompleteClearable({
 
       <Combobox.Dropdown>
         <Combobox.Options>
-          {options.length === 0 ? (
+          {options?.length === 0 ? (
             <Combobox.Empty>Không có kết quả</Combobox.Empty>
           ) : (
             options
@@ -166,6 +166,7 @@ export function AutocompleteClearable({
         openModal={openedModalCamera}
         close={closeModalCamera}
         setNumberPlate={setValue}
+        setValueInput={setValueInput}
         openDropdown={() => combobox.openDropdown()}
       />
     </Combobox>

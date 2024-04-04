@@ -15,7 +15,6 @@ export async function getOptionsCar({ s }: any) {
         if (!res.data) {
             throw new Error('Failed to fetch data');
         }
-        console.log(res.data);
         const dataOption = res?.data?.map((item: any) => ({
             value: item.id.toString(),
             label: item.numberPlates,

@@ -15,7 +15,6 @@ export default function ItemProductChoose({
   setSelectedRows,
 }: any) {
   const [isChecked, setIschecked] = useState(true);
-  console.log(selectedRows);
   const images = JSON.parse(data?.images);
   useEffect(() => {
     setIschecked(selectedRows?.some((obj: any) => obj.id === data?.id));
@@ -59,7 +58,6 @@ export default function ItemProductChoose({
                       (selectedItem: any) => selectedItem?.id !== data.id
                     )
               );
-              console.log(data, event.currentTarget.checked);
             }}
           />
         </div>

@@ -4,15 +4,17 @@ import Webcam from "react-webcam";
 import { Modal, Box, Button } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
+import { notifications } from "@mantine/notifications";
 const ModalCamera = ({
   openModal,
   close,
   formOrder,
   setNumberPlate,
   openDropdown,
+  handleGetInfo,
+  setValueInput,
 }: any) => {
   const isMobile = useMediaQuery("(max-width: 600px)");
-  const [licensePlate, setLicensePlate] = useState("");
   const webcamRef = useRef<Webcam>(null);
 
   const handleCapture = async () => {
@@ -42,17 +44,27 @@ const ModalCamera = ({
       const image = canvas.toDataURL("image/jpeg");
       const processedBase64 = image.substring(image.indexOf(",") + 1);
       const plate: any = await TakePlatesNumber(processedBase64);
-      setLicensePlate(plate?.data);
-      formOrder?.setFieldValue("numberPlates", plate?.data);
-      setNumberPlate(plate?.data);
-      openDropdown();
+      if (!plate?.data) {
+        notifications.show({
+          title: "Lỗi",
+          message: "Vui lòng quét lại",
+        });
+        return;
+      }
+      if (formOrder) {
+        formOrder.setFieldValue("numberPlates", plate?.data);
+      }
+      if (setNumberPlate) setNumberPlate(plate?.data);
+      if (setValueInput) setValueInput(plate?.data);
       close();
+      if (handleGetInfo) handleGetInfo(plate?.data);
+      if (openDropdown) openDropdown();
     }
   };
 
   const TakePlatesNumber = async (processedBase64: any) => {
     try {
-      const res = await axios.post(`/api/car/take-plates-number`, {
+      const res = await axios.post(`/api/admin/car/take-plates-number`, {
         img: processedBase64,
       });
       return res.data;
@@ -69,7 +81,7 @@ const ModalCamera = ({
       lockScroll
       centered
       radius={0}
-      zIndex={99999}
+      // zIndex={}
       closeOnEscape={false}
       closeOnClickOutside={false}
       fullScreen={isMobile}

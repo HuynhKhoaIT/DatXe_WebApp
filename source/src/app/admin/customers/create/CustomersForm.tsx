@@ -45,9 +45,9 @@ export default function CustomersForm({ isEditing, dataDetail }: any) {
     validate: {
       fullName: (value) => (value.length < 1 ? "Không được để trống" : null),
       phoneNumber: (value) => (value.length < 1 ? "Không được để trống" : null),
-      cityId: (value) => (value.length < 1 ? "Không được để trống" : null),
-      districtId: (value) => (value.length < 1 ? "Không được để trống" : null),
-      wardId: (value) => (value.length < 1 ? "Không được để trống" : null),
+      // cityId: (value) => (value.length < 1 ? "Không được để trống" : null),
+      // districtId: (value) => (value.length < 1 ? "Không được để trống" : null),
+      // wardId: (value) => (value.length < 1 ? "Không được để trống" : null),
       // address: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });

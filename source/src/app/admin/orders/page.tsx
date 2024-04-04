@@ -31,7 +31,6 @@ export default async function Orders() {
   }));
 
   const carsData = await getCarsSsr();
-  console.log(carsData);
   const carOptions = carsData?.map((car) => ({
     value: car.id?.toString() || "",
     label: car.licensePlates || "",

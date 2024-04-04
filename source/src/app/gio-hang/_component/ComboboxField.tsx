@@ -69,7 +69,7 @@ export default function ComboboxField({
 
       <Combobox.Dropdown>
         <Combobox.Options>
-          {options.length > 0 ? (
+          {options?.length > 0 ? (
             options
           ) : (
             <Combobox.Empty>Nothing found</Combobox.Empty>

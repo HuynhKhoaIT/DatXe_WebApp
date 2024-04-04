@@ -44,7 +44,6 @@ export default function Dashboard() {
       });
     }
   }, [searchParams, isPlaceholderData, page, queryClient, myOrders]);
-  console.log(myOrders);
   return (
     <>
       <div className={styles.page}>
