@@ -24,6 +24,7 @@ import { createCustomer } from "@/app/libs/prisma/customer";
 import { registerUser } from "@/app/libs/prisma/user";
 import prisma from "@/app/libs/prismadb";
 import { generateUUID } from "./until";
+import { sha256 } from "js-sha256";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.
@@ -150,13 +151,11 @@ export const registerGarage = async (
         },
       }
     );
-    console.log(res.status);
-    console.log(res.data);
     if (res.status === 201 || res.status === 200) {
-      await fetch("/api/garage", {
+      const garageNew = await fetch("/api/admin/garage", {
         method: "POST",
         body: JSON.stringify({
-          routeId: Number(res.data.id),
+          routeId: Number(res.data.garageId),
           name: garageName,
           shortName: garageName,
           logo: "",
@@ -168,6 +167,21 @@ export const registerGarage = async (
           description: "",
         }),
       });
+      // console.log('garageNew',garageNew)
+      const garageData = await garageNew.json()
+      const userNew = await fetch("/api/user/register", {
+        method: "POST",
+        body: JSON.stringify({
+          "id": res.data.id,
+          "email": res.data.email,
+          "phoneNumber": res.data.phone,
+          "name":res.data.name,
+          "hash": sha256(`${res.data.phone}|@|${Number(res.data.id)}`),
+          "garageId": Number(garageData.id ?? 2),
+          "role": "ADMINGARAGE"
+        }),
+      });
+      // console.log('userNew',userNew)
       signIn("credentials", {
         phone: phone,
         password: password,

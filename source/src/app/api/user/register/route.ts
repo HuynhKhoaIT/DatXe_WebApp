@@ -17,13 +17,14 @@ export async function POST(request: Request) {
     try {
         const json = await request.json();
         const hash = sha256(`${json.phoneNumber}|@|${Number(json.id)}`);
+        // return NextResponse.json(hash)
         if (hash == json.hash) {
             const rs = await registerUser({
                 id: json.id,
                 fullName: json.name,
                 email: json.email,
                 phoneNumber: json.phoneNumber,
-                role: 'CUSTOMER',
+                role: json.role ?? 'CUSTOMER',
                 garageId: json.garageId,
             });
             return NextResponse.json(rs);
