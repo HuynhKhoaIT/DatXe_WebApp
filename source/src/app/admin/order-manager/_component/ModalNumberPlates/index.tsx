@@ -34,6 +34,7 @@ export default function ModalNumberPlates({
   numberPlate,
   setNumberPlate,
 }: any) {
+  console.log(numberPlate);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [carOptions, setCarOptions] = useState([]);
   const [debounced] = useDebouncedValue(numberPlate, 400);
