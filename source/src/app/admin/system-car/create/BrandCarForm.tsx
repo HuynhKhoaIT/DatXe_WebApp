@@ -58,6 +58,7 @@ export default function BrandCarForm({
     values.type = "CARBRAND";
     handlers.open();
     if (isEditing) {
+      values.id = dataDetail?.id;
       updateItem(values);
     } else {
       addItem(values);

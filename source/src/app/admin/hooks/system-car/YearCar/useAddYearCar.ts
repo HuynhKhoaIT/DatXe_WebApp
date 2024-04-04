@@ -7,7 +7,7 @@ import { notifications } from '@mantine/notifications';
 const queryClient = new QueryClient();
 
 const addYearCar = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/admin/posts`, {
+    const response = await fetch(`/api/admin/car-model`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -15,13 +15,13 @@ const addYearCar = async (values: any): Promise<any> => {
         body: JSON.stringify(values),
     });
     if (!response.ok) {
-        throw new ResponseError('Failed to insert new category', response);
+        throw new ResponseError('Failed to insert new year car', response);
     }
     return await response.json();
 };
 
 const updateYearCar = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/admin/posts/${values?.uuId}`, {
+    const response = await fetch(`/api/admin/car-model/${values?.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ const updateYearCar = async (values: any): Promise<any> => {
         body: JSON.stringify(values),
     });
     if (!response.ok) {
-        throw new ResponseError('Failed to insert new category', response);
+        throw new ResponseError('Failed to update year car', response);
     }
     return await response.json();
 };

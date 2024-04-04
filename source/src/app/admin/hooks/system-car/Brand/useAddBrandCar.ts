@@ -21,7 +21,7 @@ const addBrandCar = async (values: any): Promise<any> => {
 };
 
 const updateBrandCar = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/admin/car-model/${values?.uuId}`, {
+    const response = await fetch(`/api/admin/car-model/${values?.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

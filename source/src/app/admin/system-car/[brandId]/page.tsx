@@ -13,7 +13,7 @@ export default function UpdateCategory({
   return (
     <BrandCarForm
       isEditing={true}
-      dataDetail={dataDetail}
+      dataDetail={dataDetail?.[0]}
       isLoading={isLoading}
     />
   );

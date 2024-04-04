@@ -105,7 +105,7 @@ export const useBrandCar = (): UseNews => {
 
 // get detail
 const fetchBrandCarDetail = async (id: string) => {
-    const response = await fetch(`/api/admin/car-model/${id}`);
+    const response = await fetch(`/api/admin/car-model/detail/${id}`);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch expert', response);
     }

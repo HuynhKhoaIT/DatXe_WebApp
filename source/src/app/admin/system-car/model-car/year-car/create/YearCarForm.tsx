@@ -79,9 +79,9 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
                     size="lg"
                     radius={0}
                     {...form.getInputProps("title")}
-                    label="Tên hãng xe"
+                    label="Năm sản xuất"
                     type="text"
-                    placeholder="Tên hãng xe"
+                    placeholder="Năm sản xuất"
                   />
                 </Grid.Col>
                 <Grid.Col span={4}>
