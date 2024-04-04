@@ -2,7 +2,6 @@ import prisma from '@/app/libs/prismadb';
 import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
-import { getCarNameById } from '@/app/libs/prisma/carName';
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
     try {
@@ -52,7 +51,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
 export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
     try {
         const session = await getServerSession(authOptions);
-        if (1) {
+        if (session) {
             const id = params.id;
             let createdBy = 1;
             let garageId = 1;

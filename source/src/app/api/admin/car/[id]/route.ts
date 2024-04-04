@@ -2,7 +2,7 @@ import prisma from '@/app/libs/prismadb';
 import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
-import { getCarNameById } from '@/app/libs/prisma/carName';
+import { getCarNameById } from '@/app/libs/prisma/carModel';
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
     try {
