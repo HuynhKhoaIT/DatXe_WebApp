@@ -37,7 +37,9 @@ export default function ModalAcceptCar({ openModal, close }: any) {
   });
 
   const fetchOrders = async (searchParams: any, page: number): Promise<any> => {
-    const response = await fetch(`/api/orders?${searchParams}&page=${page}`);
+    const response = await fetch(
+      `/api/admin/orders?${searchParams}&page=${page}`
+    );
     if (!response.ok) {
       throw new ResponseError("Failed to fetch orders", response);
     }

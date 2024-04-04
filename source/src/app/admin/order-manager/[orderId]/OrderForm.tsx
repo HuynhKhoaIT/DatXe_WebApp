@@ -1268,6 +1268,7 @@ export default function OrderForm({
           close={closeModalNumberPlates}
           formOrder={form}
           handleGetInfo={handleGetInfo}
+          numberPlate={numberPlate}
           setNumberPlate={setNumberPlate}
         />
       )}
