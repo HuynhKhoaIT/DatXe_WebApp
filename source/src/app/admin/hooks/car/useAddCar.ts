@@ -92,11 +92,11 @@ export const useAddCar = (): UseCar => {
     const { data: customerOptions, isLoading: isLoadingCustomer } = useFetch({
         queryKey: [QUERY_KEY.optionsCustomer],
         queryFn: () => getOptionsCustomers(),
-        options: {
-            refetchOnWindowFocus: false,
-            staleTime: Infinity,
-            refetchInterval: false,
-        },
+        // options: {
+        //     refetchOnWindowFocus: false,
+        //     staleTime: Infinity,
+        //     refetchInterval: false,
+        // },
     });
 
     return {
