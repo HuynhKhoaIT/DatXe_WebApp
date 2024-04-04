@@ -172,13 +172,13 @@ const Blogs = () => {
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
       <ListPage
-        searchForm={
-          <SearchForm
-            searchData={searchData}
-            brandFilter={false}
-            initialValues={initialValuesSearch}
-          />
-        }
+        // searchForm={
+        //   <SearchForm
+        //     searchData={searchData}
+        //     brandFilter={false}
+        //     initialValues={initialValuesSearch}
+        //   />
+        // }
         actionBar={
           <Flex justify={"end"} align={"center"}>
             <Link
