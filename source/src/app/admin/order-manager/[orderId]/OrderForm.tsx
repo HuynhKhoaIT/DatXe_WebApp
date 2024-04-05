@@ -1247,7 +1247,7 @@ export default function OrderForm({
                 </Button>
               </Group>
             ) : (
-              <FooterSavePage saveLoading={loading} okText="Hoàn thành" />
+              <FooterSavePage saveLoading={loadingButton} okText="Hoàn thành" />
             )}
           </>
         )}
