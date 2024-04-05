@@ -8,6 +8,7 @@ import { ActionIcon, Button } from "@mantine/core";
 import Container from "@/app/components/common/Container";
 import Link from "next/link";
 const Info = ({ detailData }: any) => {
+  console.log(detailData);
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -20,7 +21,7 @@ const Info = ({ detailData }: any) => {
               <div className={styles.headerInfo}>
                 <div className={styles.name}>
                   <Typo size="small" type="semi-bold" className={styles.text}>
-                    {detailData?.name}
+                    {detailData?.shortName}
                   </Typo>
                   <img src={Check.src} />
                 </div>

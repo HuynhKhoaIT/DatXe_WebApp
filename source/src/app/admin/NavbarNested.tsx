@@ -12,6 +12,7 @@ import classes from "./NavbarNested.module.scss";
 import { LinksGroup } from "../components/NavBarLinksGroup/NavBarLinksGroup";
 import { IconUsersGroup } from "@tabler/icons-react";
 import FooterAdmin from "../layout/common/desktop/Footer/footer-admin";
+import { useSession } from "next-auth/react";
 
 const mockdata = [
   { link: "/admin", label: "Tổng quan", icon: IconGauge },
@@ -34,6 +35,7 @@ const mockdata = [
       { label: "Danh mục", link: "/admin/categories" },
     ],
   },
+
   { link: "/admin/blogs", label: "Danh sách bài viết", icon: IconClipboard },
 
   { link: "/admin/cars", label: "Danh sách xe", icon: IconCar },
@@ -53,9 +55,16 @@ const mockdata = [
     icon: IconUsers,
     links: [{ label: "Danh sách chuyên gia", link: "/admin/expert" }],
   },
+  {
+    label: "Hệ thống",
+    icon: IconCalendarStats,
+    links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
+  },
 ];
 
 export function NavbarNested({ toggle }: any) {
+  const { data: session, status } = useSession();
+
   const links = mockdata.map((item) => (
     <LinksGroup {...item} key={item.label} toggle={toggle} />
   ));

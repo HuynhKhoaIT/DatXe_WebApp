@@ -17,59 +17,34 @@ import styles from "./index.module.scss";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { stepOrderOptions } from "@/constants/masterData";
+import {
+  getOptionsBrands,
+  getOptionsModels,
+  getOptionsYearCar,
+} from "@/utils/until";
+import { QUERY_KEY } from "@/constants";
+import useFetch from "@/app/hooks/useFetch";
 require("dayjs/locale/vi");
 
 export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
+  const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({
+    queryKey: [QUERY_KEY.optionsBrandCar],
+    queryFn: () => getOptionsBrands(),
+    options: {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      refetchInterval: false,
+    },
+  });
+
   const [loading, handlers] = useDisclosure();
   const form = useForm({
     initialValues: {},
     validate: {},
   });
-  async function getDataBrands() {
-    const res = await fetch(`/api/car-model`, { method: "GET" });
-    const data = await res.json();
-    if (!data) {
-      throw new Error("Failed to fetch data");
-    }
-    const dataOption = data?.map((item: any) => ({
-      value: item.id.toString(),
-      label: item.title,
-    }));
-    setBrandOptions(dataOption);
-  }
-  async function getDataModels(brandId: number) {
-    if (brandId) {
-      const res = await fetch(`/api/car-model/${brandId}`, { method: "GET" });
-      const data = await res.json();
-      if (!data) {
-        throw new Error("Failed to fetch data");
-      }
-      const dataOption = data?.map((item: any) => ({
-        value: item.id.toString(),
-        label: item.title,
-      }));
-      setModelOptions(dataOption);
-    }
-  }
-  async function getDataYearCar(modelId: number) {
-    if (modelId) {
-      const res = await fetch(`/api/car-model/${modelId}`, {
-        method: "GET",
-      });
-      const data = await res.json();
-      if (!data) {
-        throw new Error("Failed to fetch data");
-      }
-      const dataOption = data?.map((item: any) => ({
-        value: item.id.toString(),
-        label: item.title,
-      }));
-      setYearCarOptions(dataOption);
-    }
-  }
 
   async function getDataInfoOrder() {
-    const res = await fetch(`/api/orders/create`);
+    const res = await fetch(`/api/admin/orders/create`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
@@ -102,12 +77,18 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
   useEffect(() => {
     const fetchData = async () => {
       handlers.open();
-      await Promise.all([
-        getDataInfoOrder(),
-        getDataBrands(),
-        getDataModels(detail?.car?.carBrandId),
-        getDataYearCar(detail?.car?.carNameId),
+      // await Promise.all([
+      //   getDataInfoOrder(),
+      //   getDataBrands(),
+      //   getDataModels(detail?.car?.carBrandId),
+      //   getDataYearCar(detail?.car?.carNameId),
+      // ]);
+      const [models, yearCars] = await Promise.all([
+        getOptionsModels(detail?.car?.carBrandId),
+        getOptionsYearCar(detail?.car?.carNameId),
       ]);
+      setModelOptions(models);
+      setYearCarOptions(yearCars);
       form.setInitialValues(detail);
       form.setValues(detail);
       form.setFieldValue("dateTime", dayjs(detail?.dateTime).toDate());
@@ -120,7 +101,6 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
       form.setFieldValue("orderCategoryId", detail?.orderCategoryId.toString());
       form.setFieldValue("step", detail?.step.toString());
       form.setFieldValue("priorityLevel", detail?.priorityLevel.toString());
-
       form.setFieldValue(
         "serviceAdvisorId",
         detail?.serviceAdvisor?.id?.toString()
@@ -132,7 +112,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
   }, [detail]);
   const handleSubmit = async (values: any) => {
     try {
-      await fetch(`/api/orders/${detail.id}`, {
+      await fetch(`/api/admin/orders/${detail.id}`, {
         method: "PUT",
         body: JSON.stringify(values),
       });
@@ -150,7 +130,6 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
     }
   };
 
-  const [brandOptions, setBrandOptions] = useState<any>([]);
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [categoryOptions, setCategoryOptions] = useState<any>([]);
@@ -230,9 +209,12 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               placeholder="Hãng xe"
               allowDeselect={false}
               leftSection={<IconPlus size={22} color="blue" />}
-              onChange={(value) => {
+              onChange={async (value) => {
+                const optionsData = await getOptionsModels(Number(value));
+                setModelOptions(optionsData);
                 form.setFieldValue("carBrandId", value);
                 form.setFieldValue("carNameId", null);
+                form.setFieldValue("carYearId", null);
               }}
               withAsterisk
             />
