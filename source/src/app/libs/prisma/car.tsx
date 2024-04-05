@@ -5,7 +5,6 @@ import { getCustomerByPhone } from "./customer";
 import { getGarageByDlbdId } from "./garage";
 export async function createCar(json: any) {
   try {
-    // return json;
     let platesNumber = convertToPlatesNumber(json.numberPlates);
     const car = await prisma.car.create({
       data: {
@@ -217,9 +216,9 @@ export async function createMyCars(json: any) {
 
   const car = await createCar(data);
   let carRs = JSON.parse(JSON.stringify(car.car));
-  let br = await getCarNameById(carRs.carBrandId);
-  let md = await getCarNameById(carRs.carNameId);
-  let y = await getCarNameById(carRs.carYearId);
+  let br = await getCarModelById(carRs.carBrandId);
+  let md = await getCarModelById(carRs.carNameId);
+  let y = await getCarModelById(carRs.carYearId);
   carRs.brandName = br;
   carRs.modelName = md;
   carRs.yearName = y;
