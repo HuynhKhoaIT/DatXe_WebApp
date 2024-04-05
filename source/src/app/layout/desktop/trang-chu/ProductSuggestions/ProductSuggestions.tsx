@@ -1,7 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import styles from "./index.module.scss";
-import { Box, Button, Flex, Grid } from "@mantine/core";
 import { IProduct } from "@/interfaces/product";
 import OverviewPanel from "@/app/components/layout/OverviewPanel";
 import ProductItem2 from "@/app/components/elements/product/ProductItem2";

@@ -10,7 +10,7 @@ const Reviews = ({ productReview, isLoadingProductReview }: any) => {
 
       <div className={styles.header}>
         <Typo size="sub" style={{ color: "var(--title-color)" }}>
-          1-5 trên 300 đánh giá
+          {productReview?.data?.length} đánh giá
         </Typo>
         <Select
           // size="lg"

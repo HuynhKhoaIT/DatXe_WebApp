@@ -1,7 +1,7 @@
 "use client";
 export const revalidate = 0;
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ListPage from "@/app/components/layout/ListPage";
 import { Badge, Button, Flex } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
@@ -11,6 +11,9 @@ import { statusOptions } from "@/constants/masterData";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useBrandCar } from "../hooks/system-car/Brand/useBrandCar";
+import { useMyGarage } from "@/app/hooks/useMyGarage";
+import { useSession } from "next-auth/react";
+import PageUnauthorized from "@/app/components/page/unauthorized";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -22,7 +25,11 @@ const DynamicModalDeleteItem = dynamic(
     ssr: false,
   }
 );
+
 export default function Categories() {
+  const { data: session, status } = useSession();
+
+  console.log(session);
   const {
     brandCarList,
     isLoading,
@@ -34,6 +41,7 @@ export default function Categories() {
   } = useBrandCar();
 
   const [deleteRow, setDeleteRow] = useState();
+  const { myGarage } = useMyGarage();
 
   const [
     openedDeleteItem,
@@ -51,7 +59,9 @@ export default function Categories() {
       dataIndex: [],
       render: (dataRow: any) => {
         return (
-          <Link href={`/admin/system-car/model-car?brandId=${dataRow?.id}`}>
+          <Link
+            href={`/admin/system-car/model-car?brandId=${dataRow?.id}&brandName=${dataRow?.title}`}
+          >
             {dataRow?.title}
           </Link>
         );
@@ -106,6 +116,9 @@ export default function Categories() {
       },
     },
   ];
+  if (session?.user?.role !== "ADMIN") {
+    return <PageUnauthorized />;
+  }
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={breadcrumbs} />

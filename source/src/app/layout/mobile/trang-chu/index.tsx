@@ -23,8 +23,6 @@ const LandingPageMobile = ({
   productsRelate,
   productsHot,
   blogs,
-  carsOption,
-  provinceData,
 }: any) => {
   const slideshowData = [
     {

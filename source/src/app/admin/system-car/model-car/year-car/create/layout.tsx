@@ -11,17 +11,19 @@ export default function CreateLayout({ children }: IProps) {
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
   const modelId = searchParam.get("modelId");
+  const brandName = searchParam.get("brandName");
+  const modelName = searchParam.get("modelName");
 
   const Breadcrumbs = [
     { title: "Tổng quan", href: "/admin" },
     { title: "Danh sách hãng xe", href: "/admin/system-car" },
     {
-      title: "Danh sách dòng xe",
-      href: `/admin/system-car?brandId=${brandId}`,
+      title: brandName,
+      href: `/admin/system-car/model-car?brandId=${brandId}&brandName=${brandName}`,
     },
     {
-      title: "Danh sách NSX",
-      href: `/admin/system-car/model-car/year-car?brandId=${brandId}&modelId=${modelId}`,
+      title: modelName,
+      href: `/admin/system-car/model-car/year-car?brandId=${brandId}&brandName=${brandName}&modelId=${modelId}&modelName=${modelName}`,
     },
 
     { title: "Thêm NSX" },

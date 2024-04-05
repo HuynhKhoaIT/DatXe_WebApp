@@ -9,12 +9,14 @@ interface IProps {
 export default function CreateLayout({ children }: IProps) {
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
+  const brandName = searchParam.get("brandName");
+
   const Breadcrumbs = [
     { title: "Tổng quan", href: "/admin" },
     { title: "Danh sách hãng xe", href: "/admin/system-car" },
     {
-      title: "Danh sách dòng xe",
-      href: `/admin/system-car?brandId=${brandId}`,
+      title: brandName,
+      href: `/admin/system-car/model-car?brandId=${brandId}&brandName=${brandName}`,
     },
     { title: "Cập nhật dòng xe" },
   ];

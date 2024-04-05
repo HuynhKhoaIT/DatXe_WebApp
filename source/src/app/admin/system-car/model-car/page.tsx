@@ -22,11 +22,13 @@ const DynamicModalDeleteItem = dynamic(
 export default function ModelCarListPage() {
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
+  const brandName = searchParam.get("brandName");
+
   const breadcrumbs = [
     { title: "Tổng quan", href: "/admin" },
     { title: "Danh sách hãng xe", href: "/admin/system-car" },
     {
-      title: "Danh sách dòng xe",
+      title: brandName,
     },
   ];
   var {
@@ -58,7 +60,7 @@ export default function ModelCarListPage() {
       render: (dataRow: any) => {
         return (
           <Link
-            href={`/admin/system-car/model-car/year-car?brandId=${brandId}&modelId=${dataRow.id}`}
+            href={`/admin/system-car/model-car/year-car?brandId=${brandId}&brandName=${brandName}&modelId=${dataRow.id}&modelName=${dataRow?.title}`}
           >
             {dataRow?.title}
           </Link>
@@ -79,7 +81,8 @@ export default function ModelCarListPage() {
           <Flex>
             <Link
               href={{
-                pathname: `/admin/system-car/model-car/${record.id}?brandId=${brandId}`,
+                pathname: `/admin/system-car/model-car/${record.id}`,
+                query: { brandId, brandName },
               }}
             >
               <Button
@@ -128,7 +131,7 @@ export default function ModelCarListPage() {
             <Link
               href={{
                 pathname: `/admin/system-car/model-car/create`,
-                query: { brandId },
+                query: { brandId, brandName },
               }}
             >
               <Button

@@ -2,7 +2,7 @@
 import { IProduct } from "@/interfaces/product";
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { Grid, Modal, Button, Group } from "@mantine/core";
+import { Grid, Modal, Button, Group, Skeleton } from "@mantine/core";
 import styles from "./Product.module.scss";
 import { notifications } from "@mantine/notifications";
 import Typo from "@/app/components/elements/Typo";
@@ -10,7 +10,13 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import ProductSlider from "@/app/layout/desktop/san-pham/ProductDetail/ProductSlider";
-function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
+function ProductDetail({
+  ProductDetail,
+  isLoading,
+}: {
+  ProductDetail: IProduct;
+  isLoading: boolean;
+}) {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -84,6 +90,7 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
       signIn();
     }
   };
+
   return (
     <Grid>
       <Grid.Col span={12}>
@@ -96,7 +103,13 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
           }}
         >
           <Grid.Col span={12}>
-            <ProductSlider images={JSON.parse(ProductDetail?.images)} />
+            {isLoading ? (
+              <>
+                <Skeleton height={200} mb="xl" />
+              </>
+            ) : (
+              <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
+            )}
           </Grid.Col>
           <Grid.Col span={12}>
             <div className={styles.info}>

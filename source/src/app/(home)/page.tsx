@@ -1,7 +1,6 @@
 import RenderContext from "../components/elements/RenderContext";
 import LandingPageDesktop from "../layout/desktop/trang-chu";
 import LandingPageMobile from "../layout/mobile/trang-chu";
-export const revalidate = 0;
 import blog1 from "@/assets/images/blog1.png";
 import blog2 from "@/assets/images/blog2.png";
 import blog3 from "@/assets/images/blog3.png";
@@ -10,10 +9,8 @@ import blog4 from "@/assets/images/blog4.png";
 import Reasons1 from "@/assets/images/reasson1.png";
 import Reasons2 from "@/assets/images/reasson2.png";
 import Reasons3 from "@/assets/images/reasson3.png";
-import { getProvinces } from "@/utils/notion";
 import { getCategories } from "../libs/prisma/category";
 import { getProducts } from "../libs/prisma/product";
-import { getCarModes } from "../libs/prisma/carModel";
 const reassons = [
   {
     image: Reasons2.src,
@@ -41,22 +38,22 @@ const reassons = [
 ];
 const blogs = [
   {
-    image: blog3.src,
+    thumbnail: blog3.src,
     title: "Dịch vụ sửa xe uy tin tại HCM ",
     view: 123564300,
   },
   {
-    image: blog2.src,
+    thumbnail: blog2.src,
     title: "Khi nào nên bảo dưỡng xe",
     view: 123564300,
   },
   {
-    image: blog1.src,
+    thumbnail: blog1.src,
     title: "Hành trình mua siêu xe",
     view: 123564300,
   },
   {
-    image: blog4.src,
+    thumbnail: blog4.src,
     title: "Lái xe an toàn, các kiến thức cần nắm",
     view: 123564300,
   },

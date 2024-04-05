@@ -33,6 +33,7 @@ export default function DetailProduct({
         },
       }}
       product={product}
+      isLoading={isLoading || isFetching}
       productReview={productReview}
       productRelate={productsRelate}
       isLoadingProductReview={isLoadingProductReview}

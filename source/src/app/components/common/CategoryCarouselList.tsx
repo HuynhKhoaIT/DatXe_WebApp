@@ -8,7 +8,7 @@ const CategoryCarouselList = ({ categories, shadow = false, loading }: any) => {
     <Box className="slick-mobile" mb={10}>
       <div className={styles.container}>
         <Scroll>
-          {categories?.map((item: any) => {
+          {categories?.data?.map((item: any) => {
             return <CardCategory key={item?.id} category={item} garageId={0} />;
           })}
         </Scroll>
