@@ -14,57 +14,52 @@ import { IconUsersGroup } from "@tabler/icons-react";
 import FooterAdmin from "../layout/common/desktop/Footer/footer-admin";
 import { useSession } from "next-auth/react";
 
-const mockdata = [
-  { link: "/admin", label: "Tổng quan", icon: IconGauge },
-  {
-    label: "Đơn hàng",
-    icon: IconNotes,
-    initiallyOpened: true,
-    links: [
-      { label: "Danh sách đơn hàng", link: "/admin/order-manager" },
-      { label: "Công việc & Lịch hẹn", link: "/admin/orders" },
-    ],
-  },
-
-  {
-    label: "Sản phẩm",
-    icon: IconCalendarStats,
-    links: [
-      { label: "Danh sách sản phẩm", link: "/admin/products" },
-      // { label: "Sản phẩm trong kho", link: "/admin/all-products" },
-      { label: "Danh mục", link: "/admin/categories" },
-    ],
-  },
-
-  { link: "/admin/blogs", label: "Danh sách bài viết", icon: IconClipboard },
-
-  { link: "/admin/cars", label: "Danh sách xe", icon: IconCar },
-  // {
-  //   link: "/admin/productBrand",
-  //   label: "Thương hiệu",
-  //   icon: IconAdjustments,
-  // },
-  {
-    link: "/admin/customers",
-    label: "Khách hàng",
-    icon: IconUsersGroup,
-  },
-  { link: "/admin/marketing-campaign", label: "Marketing", icon: IconGauge },
-  {
-    label: "Chuyên gia",
-    icon: IconUsers,
-    links: [{ label: "Danh sách chuyên gia", link: "/admin/expert" }],
-  },
-  {
-    label: "Hệ thống",
-    icon: IconCalendarStats,
-    links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
-  },
-];
-
 export function NavbarNested({ toggle }: any) {
-  const { data: session, status } = useSession();
+  var { data: session, status } = useSession();
+  const mockdata = [
+    { link: "/admin", label: "Tổng quan", icon: IconGauge },
+    {
+      label: "Đơn hàng",
+      icon: IconNotes,
+      initiallyOpened: true,
+      links: [
+        { label: "Danh sách đơn hàng", link: "/admin/order-manager" },
+        { label: "Công việc & Lịch hẹn", link: "/admin/orders" },
+      ],
+    },
 
+    {
+      label: "Sản phẩm",
+      icon: IconCalendarStats,
+      links: [
+        { label: "Danh sách sản phẩm", link: "/admin/products" },
+        { label: "Danh mục", link: "/admin/categories" },
+      ],
+    },
+
+    { link: "/admin/blogs", label: "Danh sách bài viết", icon: IconClipboard },
+
+    { link: "/admin/cars", label: "Danh sách xe", icon: IconCar },
+    {
+      link: "/admin/customers",
+      label: "Khách hàng",
+      icon: IconUsersGroup,
+    },
+    { link: "/admin/marketing-campaign", label: "Marketing", icon: IconGauge },
+    {
+      label: "Chuyên gia",
+      icon: IconUsers,
+      links: [{ label: "Danh sách chuyên gia", link: "/admin/expert" }],
+    },
+  ];
+
+  if (session?.user?.role === "ADMIN") {
+    mockdata.push({
+      label: "Hệ thống",
+      icon: IconCalendarStats,
+      links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
+    });
+  }
   const links = mockdata.map((item) => (
     <LinksGroup {...item} key={item.label} toggle={toggle} />
   ));

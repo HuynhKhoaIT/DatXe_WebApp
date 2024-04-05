@@ -147,7 +147,7 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
                     {...form.getInputProps("code")}
                     label="Mã số"
                     type="text"
-                    readOnly
+                    disabled
                     placeholder="Mã số"
                   />
                 </Grid.Col>
