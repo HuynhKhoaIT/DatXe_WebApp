@@ -17,12 +17,6 @@ import { getOrders } from "@/app/libs/prisma/order";
 export default async function Orders() {
   const orders = await getOrders(2, {});
   const mappedOrdersData = mapArrayEventCalendar(orders?.data);
-  // lấy danh sách brand
-  const brands = await getBrands();
-  const newBrands = brands?.map((brand) => ({
-    value: brand.id?.toString() || "",
-    label: brand.name || "",
-  }));
   // lấy danh sách category
   const categories = await getCategories();
   const categoryOptions = categories?.map((category) => ({
@@ -70,7 +64,6 @@ export default async function Orders() {
       <SearchForm searchData={searchData} initialValues={initialValuesSearch} />
       <Space h={20} />
       <CalendarSchedulerGarage
-        brandOptions={newBrands}
         categoryOptions={categoryOptions}
         carsData={carsData}
         carOptions={carOptions}
