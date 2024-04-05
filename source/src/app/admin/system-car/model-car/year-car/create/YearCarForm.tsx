@@ -21,6 +21,9 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
 
   const searchParam = useSearchParams();
   const modelId = searchParam.get("modelId");
+  const brandName = searchParam.get("brandName");
+  const modelName = searchParam.get("modelName");
+
   const form = useForm({
     initialValues: {
       title: "",
@@ -73,6 +76,30 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
         <Grid gutter={12}>
           <Grid.Col span={12}>
             <Card withBorder shadow="sm">
+              <Grid gutter={10} mt={24}>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    label="Hãng xe"
+                    type="text"
+                    value={brandName || ""}
+                    placeholder="Hãng xe"
+                    disabled
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                  <TextInput
+                    disabled
+                    size="lg"
+                    radius={0}
+                    label="Dòng xe"
+                    type="text"
+                    value={modelName || ""}
+                    placeholder="Dòng xe"
+                  />
+                </Grid.Col>
+              </Grid>
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={8}>
                   <TextInput

@@ -17,13 +17,14 @@ const ProductDetailPageMobile = ({
   product,
   productReview,
   productRelate,
+  isLoading,
 }: any) => {
   return (
     <div className={styles.wrapper}>
       <Container>
         <Breadcrumb breadcrumbs={Breadcrumbs} />
         <Flex direction={"column"} gap={40}>
-          <ProductDetail ProductDetail={product?.data} />
+          <ProductDetail isLoading={isLoading} ProductDetail={product?.data} />
           <ProductTabsDes
             ProductDetail={product?.data}
             productReview={productReview}

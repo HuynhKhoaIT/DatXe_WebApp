@@ -24,15 +24,17 @@ export default function YearCarListPage() {
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
   const modelId = searchParam.get("modelId");
+  const brandName = searchParam.get("brandName");
+  const modelName = searchParam.get("modelName");
 
   const breadcrumbs = [
     { title: "Tổng quan", href: "/admin" },
     { title: "Danh sách hãng xe", href: "/admin/system-car" },
     {
-      title: "Danh sách dòng xe",
-      href: `/admin/system-car/model-car?brandId=${brandId}`,
+      title: brandName,
+      href: `/admin/system-car/model-car?brandId=${brandId}&brandName=${brandName}`,
     },
-    { title: "Danh sách năm sản xuất" },
+    { title: modelName },
   ];
   var {
     yearCarList,
@@ -78,7 +80,8 @@ export default function YearCarListPage() {
           <Flex>
             <Link
               href={{
-                pathname: `/admin/system-car/model-car/year-car/${record.id}?brandId=${brandId}&modelId=${modelId}`,
+                pathname: `/admin/system-car/model-car/year-car/${record.id}`,
+                query: { brandId, brandName, modelId, modelName },
               }}
             >
               <Button
@@ -127,7 +130,7 @@ export default function YearCarListPage() {
             <Link
               href={{
                 pathname: `/admin/system-car/model-car/year-car/create`,
-                query: { brandId, modelId },
+                query: { brandId, brandName, modelId, modelName },
               }}
             >
               <Button

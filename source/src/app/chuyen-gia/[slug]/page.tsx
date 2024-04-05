@@ -1,7 +1,7 @@
 import RenderContext from "@/app/components/elements/RenderContext";
 import ExpertDetailPageDesktop from "@/app/layout/desktop/chuyen-gia/ExpertDetailPage";
 import ExpertDetailPageMobile from "@/app/layout/mobile/chuyen-gia/ExpertDetailPage";
-import {  getProducts } from "@/app/libs/prisma/product";
+import { getProducts } from "@/app/libs/prisma/product";
 import { apiUrl } from "@/constants";
 import BlogImage1 from "@/assets/images/blog/blog1.png";
 import BlogImage2 from "@/assets/images/blog/blog2.png";
@@ -12,8 +12,6 @@ import IconZalo from "@/assets/icons/zalo.svg";
 import IconIg from "@/assets/icons/instagram.svg";
 import { getCategories } from "@/app/libs/prisma/category";
 import { getGarageByCode, showGarage } from "@/app/libs/prisma/garage";
-
-
 
 const blogs = [
   {
@@ -97,10 +95,15 @@ export default async function DetailGarage({
   params: { slug: string };
 }) {
   const expertDetail: any = await getGarageByCode(params.slug);
-  console.log('expertDetail',expertDetail)
-  const categories = await getCategories({garageId: expertDetail.id});
-  const services = await getProducts( { isProduct: "0", garageId: expertDetail.id });
-  const products = await getProducts({ isProduct: "1",garageId: expertDetail.id });
+  const categories = await getCategories({ garageId: expertDetail?.id });
+  const services = await getProducts({
+    isProduct: "0",
+    garageId: expertDetail.id,
+  });
+  const products = await getProducts({
+    isProduct: "1",
+    garageId: expertDetail.id,
+  });
   return (
     <RenderContext
       components={{

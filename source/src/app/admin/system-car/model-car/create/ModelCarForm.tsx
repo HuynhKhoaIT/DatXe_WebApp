@@ -20,6 +20,9 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
   const [loading, handlers] = useDisclosure();
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
+  const brandName = searchParam.get("brandName");
+
+  console.log(dataDetail);
   const form = useForm({
     initialValues: {
       title: "",
@@ -73,17 +76,28 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
           <Grid.Col span={12}>
             <Card withBorder shadow="sm">
               <Grid gutter={10} mt={24}>
-                <Grid.Col span={8}>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    label="Tên hãng xe"
+                    type="text"
+                    value={brandName || ""}
+                    placeholder="Tên hãng xe"
+                    disabled
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 8, lg: 8 }}>
                   <TextInput
                     size="lg"
                     radius={0}
                     {...form.getInputProps("title")}
-                    label="Tên hãng xe"
+                    label="Tên dòng xe"
                     type="text"
-                    placeholder="Tên hãng xe"
+                    placeholder="Tên dòng xe"
                   />
                 </Grid.Col>
-                <Grid.Col span={4}>
+                <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
                     radius={0}

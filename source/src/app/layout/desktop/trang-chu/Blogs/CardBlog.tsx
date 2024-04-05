@@ -1,5 +1,6 @@
 import styles from "./CardBlog.module.scss";
 export default function CardBlog({ data }: any) {
+  console.log(data);
   return (
     <div
       className={styles.wrapper}

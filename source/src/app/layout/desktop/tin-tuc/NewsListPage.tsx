@@ -11,23 +11,26 @@ import ProductItem2 from "@/app/components/elements/product/ProductItem2";
 import CardBlog from "../trang-chu/Blogs/CardBlog";
 import ItemNews from "./_component/ItemNews";
 import Container from "@/app/components/common/Container";
+import Banner from "../chuyen-gia/Banner";
 
 export default function NewsListPage({ newsData }: any) {
-  console.log(newsData);
   return (
-    <Container>
-      <Box w={"100%"}>
-        <Grid>
-          {newsData?.data?.map((item: any, index: number) => (
-            <Grid.Col
-              key={index}
-              span={{ base: 12, xs: 12, sm: 12, md: 12, lg: 12 }}
-            >
-              <ItemNews item={item} />
-            </Grid.Col>
-          ))}
-        </Grid>
-      </Box>
-    </Container>
+    <>
+      <Banner />
+      <Container>
+        <Box w={"100%"}>
+          <Grid>
+            {newsData?.data?.map((item: any, index: number) => (
+              <Grid.Col
+                key={index}
+                span={{ base: 12, xs: 12, sm: 12, md: 12, lg: 12 }}
+              >
+                <ItemNews item={item} />
+              </Grid.Col>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    </>
   );
 }

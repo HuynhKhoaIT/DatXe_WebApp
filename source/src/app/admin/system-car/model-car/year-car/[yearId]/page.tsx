@@ -14,7 +14,7 @@ export default function UpdateCategory({
   return (
     <YearCarForm
       isEditing={true}
-      dataDetail={dataDetail}
+      dataDetail={dataDetail?.[0]}
       isLoading={isLoading}
     />
   );

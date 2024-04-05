@@ -2,7 +2,7 @@
 import { IProduct } from "@/interfaces/product";
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { Grid, Modal, Button, Group } from "@mantine/core";
+import { Grid, Modal, Button, Group, Skeleton } from "@mantine/core";
 import styles from "./Product.module.scss";
 import { notifications } from "@mantine/notifications";
 import ProductSlider from "./ProductSlider";
@@ -11,7 +11,13 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
-function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
+function ProductDetail({
+  ProductDetail,
+  isLoading,
+}: {
+  ProductDetail: IProduct;
+  isLoading: boolean;
+}) {
   console.log(ProductDetail);
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,54 +104,80 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
           }}
         >
           <Grid.Col span={5}>
-            {ProductDetail?.images && (
-              <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
+            {isLoading ? (
+              <Skeleton height={400} mb="xl" />
+            ) : (
+              <>
+                {ProductDetail?.images && (
+                  <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
+                )}
+              </>
             )}
           </Grid.Col>
           <Grid.Col span={5}>
             <div className={styles.info}>
-              <Typo type="bold" style={{ marginBottom: 15 }}>
-                {ProductDetail?.name}
-              </Typo>
-              <Typo style={{ fontSize: "14px", color: "var(--text-color)" }}>
-                {ProductDetail?.code}
-              </Typo>
-              <div className={styles.category}>
-                <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
-                  Mâm lốp
-                </Typo>
-                <div className={styles.starBox}>
-                  <img src={Star.src} />
-                  <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
-                    4.9 (2130 reviews)
+              {isLoading ? (
+                <>
+                  <Skeleton height={40} mb="xl" />
+                  <Skeleton height={20} mb="xl" />
+                  <Skeleton height={20} mb="xl" />
+                  <Skeleton height={20} mb="xl" />
+                  <Skeleton height={20} mb="xl" />
+                </>
+              ) : (
+                <>
+                  <Typo type="bold" style={{ marginBottom: 15 }}>
+                    {ProductDetail?.name}
                   </Typo>
-                </div>
-              </div>
-              <div className={styles.salePrice}>
-                <Typo
-                  style={{
-                    fontSize: "22px",
-                    color: "var(--text-color-sale-price)",
-                  }}
-                  type="bold"
-                >
-                  <del>{ProductDetail?.price?.toLocaleString()} đ</del>
-                </Typo>
-                <Typo
-                  style={{
-                    fontSize: "14px",
-                    color: "var(--text-color-sale-price)",
-                  }}
-                >
-                  30% OFF
-                </Typo>
-              </div>
-              <Typo
-                type="bold"
-                style={{ fontSize: "22px", color: "var(--primary-color)" }}
-              >
-                {ProductDetail?.salePrice?.toLocaleString()} đ
-              </Typo>
+                  <Typo
+                    style={{ fontSize: "14px", color: "var(--text-color)" }}
+                  >
+                    {ProductDetail?.code}
+                  </Typo>
+                  <div className={styles.category}>
+                    <Typo
+                      style={{ fontSize: "14px", color: "var(--nav-color)" }}
+                    >
+                      Mâm lốp
+                    </Typo>
+                    <div className={styles.starBox}>
+                      <img src={Star.src} />
+                      <Typo
+                        style={{ fontSize: "14px", color: "var(--nav-color)" }}
+                      >
+                        4.9 (2130 reviews)
+                      </Typo>
+                    </div>
+                  </div>
+                  <div className={styles.salePrice}>
+                    <Typo
+                      style={{
+                        fontSize: "22px",
+                        color: "var(--text-color-sale-price)",
+                      }}
+                      type="bold"
+                    >
+                      <del>{ProductDetail?.price?.toLocaleString()} đ</del>
+                    </Typo>
+                    <Typo
+                      style={{
+                        fontSize: "14px",
+                        color: "var(--text-color-sale-price)",
+                      }}
+                    >
+                      30% OFF
+                    </Typo>
+                  </div>
+
+                  <Typo
+                    type="bold"
+                    style={{ fontSize: "22px", color: "var(--primary-color)" }}
+                  >
+                    {ProductDetail?.salePrice?.toLocaleString()} đ
+                  </Typo>
+                </>
+              )}
+
               <Button
                 size="lg"
                 radius={0}
