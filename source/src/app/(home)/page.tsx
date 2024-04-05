@@ -11,6 +11,8 @@ import Reasons2 from "@/assets/images/reasson2.png";
 import Reasons3 from "@/assets/images/reasson3.png";
 import { getCategories } from "../libs/prisma/category";
 import { getProducts } from "../libs/prisma/product";
+import { getCarModels } from "../libs/prisma/carModel";
+
 const reassons = [
   {
     image: Reasons2.src,

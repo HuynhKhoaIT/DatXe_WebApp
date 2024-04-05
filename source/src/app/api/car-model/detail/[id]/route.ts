@@ -1,16 +1,13 @@
 import { removeCarModel, updateCarModel } from '@/app/libs/prisma/carModel';
 import prisma from '@/app/libs/prismadb';
-import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
     try {
-        const { searchParams } = new URL(request.url);
         const id = params.id;
         const brands = await prisma.carModels.findMany({
             where: {
-                id: Number(searchParams.get('detail')) ? Number(id) : {},
-                parentId: !Number(searchParams.get('detail')) ? Number(id) : {},
+                id: Number(id),
             },
             orderBy: {
                 title: 'asc',

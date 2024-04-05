@@ -1,6 +1,5 @@
 import { removeCarModel, updateCarModel } from '@/app/libs/prisma/carModel';
 import prisma from '@/app/libs/prismadb';
-import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {

@@ -31,41 +31,42 @@ export default function RegisterAccuracy() {
     };
   }, [countdown]);
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.content}>
-        <Link href={"/dang-ky"}>
-          <IconChevronLeft size={32} color="var(--theme-color)" />
-        </Link>
-        <div className="d-flex justify-content-center flex-column align-items-center ">
-          <Avatar
-            src="https://datxe.com/wp-content/uploads/2021/08/cropped-logo-DatXE-App-vuong-1.jpg"
-            alt="it's me"
-            radius={"50%"}
-            size={"100px"}
-          />
-          <p className="login-title-1">DatXe - Ứng dụng đặt lịch ô tô</p>
-        </div>
-        <div className="login-title-2">
-          <h3>Nhập mã xác minh</h3>
-          <p>
-            Bạn vui lòng nhập mã gồm 6 chữ số vừa được gửi đến{" "}
-            <span style={{ color: "var(--theme-color" }}> {phone}</span>
-          </p>
-        </div>
+    <p></p>
+    // <div className={styles.wrapper}>
+    //   <div className={styles.content}>
+    //     <Link href={"/dang-ky"}>
+    //       <IconChevronLeft size={32} color="var(--theme-color)" />
+    //     </Link>
+    //     <div className="d-flex justify-content-center flex-column align-items-center ">
+    //       <Avatar
+    //         src="https://datxe.com/wp-content/uploads/2021/08/cropped-logo-DatXE-App-vuong-1.jpg"
+    //         alt="it's me"
+    //         radius={"50%"}
+    //         size={"100px"}
+    //       />
+    //       <p className="login-title-1">DatXe - Ứng dụng đặt lịch ô tô</p>
+    //     </div>
+    //     <div className="login-title-2">
+    //       <h3>Nhập mã xác minh</h3>
+    //       <p>
+    //         Bạn vui lòng nhập mã gồm 6 chữ số vừa được gửi đến{" "}
+    //         <span style={{ color: "var(--theme-color" }}> {phone}</span>
+    //       </p>
+    //     </div>
 
-        <FormAccuracy />
-        <div className="other-accuracy">
-          <p className="other-accuracy__time">
-            Gửi lại mã sau {countdown}s{" "}
-            {countdown == 0 && (
-              <div onClick={() => setCountdown(59)}>Gửi lại</div>
-            )}
-          </p>
-          <p className="other-accuracy__title">
-            Mã xác minh có hiệu lực trong vòng 15 phút
-          </p>
-        </div>
-      </div>
-    </div>
+    //     <FormAccuracy />
+    //     <div className="other-accuracy">
+    //       <p className="other-accuracy__time">
+    //         Gửi lại mã sau {countdown}s{" "}
+    //         {countdown == 0 && (
+    //           <div onClick={() => setCountdown(59)}>Gửi lại</div>
+    //         )}
+    //       </p>
+    //       <p className="other-accuracy__title">
+    //         Mã xác minh có hiệu lực trong vòng 15 phút
+    //       </p>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }

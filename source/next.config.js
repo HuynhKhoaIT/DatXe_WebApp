@@ -3,6 +3,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   })
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    typescript: {
+      // !! WARN !!
+      // Dangerously allow production builds to successfully complete even if
+      // your project has type errors.
+      // !! WARN !!
+      // ignoreBuildErrors: true,
+    },
     env: {
         apiUser: 'https://v2.dlbd.vn/api/v2/app',
         apiGuest: 'https://v2.dlbd.vn/api/v3/guest',

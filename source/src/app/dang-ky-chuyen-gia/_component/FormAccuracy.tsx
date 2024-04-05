@@ -77,7 +77,6 @@ export function FormAccuracy() {
       form.setErrors({ pin: "Mã Otp không hợp lệ!" });
     }
 
-    // router.push(`./dang-ky/xac-thuc?phone=${phone}`);
   };
   return (
     <form className="login-accuracy-input" onSubmit={form.onSubmit(onSubmit)}>

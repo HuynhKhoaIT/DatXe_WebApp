@@ -7,7 +7,6 @@ import { getCarModelById } from '@/app/libs/prisma/carModel';
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
     try {
         const id = params.id;
-
         if (!id) {
             return new NextResponse("Missing 'id' parameter");
         }
@@ -41,7 +40,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
 export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
     try {
         const session = await getServerSession(authOptions);
-        if (1) {
+        if (session) {
             const id = params.id;
             if (!id) {
                 return new NextResponse("Missing 'id' parameter");
@@ -99,3 +98,5 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     return NextResponse.json({ success: 1, message: 'Delete success' });
 }
+
+

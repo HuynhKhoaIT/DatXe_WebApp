@@ -112,6 +112,31 @@ export const register = async (
     );
 
     if (res.status === 200) {
+      const userNew = await fetch("/api/user/register", {
+        method: "POST",
+        body: JSON.stringify({
+          "id": res.data.user.id,
+          "email": res.data.user.email,
+          "phoneNumber": res.data.user.phone,
+          "name":res.data.user.name,
+          "hash": sha256(`${res.data.user.phone}|@|${Number(res.data.user.id)}`),
+          "garageId": 2,
+          "role": "CUSTOMER"
+        }),
+      });
+      const userNeweData = await userNew.json()
+      console.log("res.data.user",res.data.user)
+      const customerNew = await fetch("/api/client/customer", {
+        method: "POST",
+        body: JSON.stringify({
+          userId: userNeweData.id,
+          fullName: res.data.user.name,
+          phoneNumber: res.data.user.phone,
+          hash: sha256(`${res.data.user.phone}|@|${Number(res.data.user.name)}`),
+          garageId: 2
+        }),
+      });
+      console.log('customerNew',customerNew)
       signIn("credentials", {
         phone: phone,
         password: password,
