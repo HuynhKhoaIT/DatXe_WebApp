@@ -3,8 +3,7 @@ import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
-import axios from 'axios';
-import { getPlatesNumberFromImg } from '@/utils/car';
+
 
 export async function GET(request: NextRequest) {
     try {
@@ -33,9 +32,10 @@ export async function POST(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            const json = await request.json();
-            let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
-            json.garageId = garageId;
+            const json      = await request.json();
+            let garageId    = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            json.garageId   = garageId;
+            json.userId     = 1;
             const car = await createCar(json);
             return new NextResponse(JSON.stringify(car), {
                 status: 201,
