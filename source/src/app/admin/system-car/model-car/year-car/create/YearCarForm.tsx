@@ -6,6 +6,7 @@ import {
   TextInput,
   Select,
   LoadingOverlay,
+  Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
@@ -13,13 +14,17 @@ import { useDisclosure } from "@mantine/hooks";
 import convertToSlug from "@/utils/until";
 import { useAddYear } from "@/app/admin/hooks/system-car/YearCar/useAddYearCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import { useSearchParams } from "next/navigation";
 export default function YearCarForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddYear();
   const [loading, handlers] = useDisclosure();
 
+  const searchParam = useSearchParams();
+  const modelId = searchParam.get("modelId");
   const form = useForm({
     initialValues: {
       title: "",
+      description: "",
     },
     validate: {
       // title: (value) => (value.length < 1 ? "Không được để trống" : null),
@@ -46,7 +51,8 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
   }, [dataDetail]);
 
   const handleSubmit = async (values: any) => {
-    values.slug = convertToSlug(values?.title);
+    values.parentId = modelId;
+    values.type = "CARYEAR";
     handlers.open();
     if (isEditing) {
       updateItem(values);
@@ -73,9 +79,9 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
                     size="lg"
                     radius={0}
                     {...form.getInputProps("title")}
-                    label="Tên hãng xe"
+                    label="Năm sản xuất"
                     type="text"
-                    placeholder="Tên hãng xe"
+                    placeholder="Năm sản xuất"
                   />
                 </Grid.Col>
                 <Grid.Col span={4}>
@@ -91,6 +97,17 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
                       { value: "DRAFT", label: "Nháp" },
                       { value: "PENDING", label: "Đang duyệt" },
                     ]}
+                  />
+                </Grid.Col>
+                <Grid.Col span={12}>
+                  <Textarea
+                    size="lg"
+                    radius={0}
+                    label="Mô tả chi tiết"
+                    minRows={2}
+                    autosize={true}
+                    {...form.getInputProps("description")}
+                    placeholder="Mô tả"
                   />
                 </Grid.Col>
               </Grid>
