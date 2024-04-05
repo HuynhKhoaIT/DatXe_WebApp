@@ -2,12 +2,11 @@ import prisma from '@/app/libs/prismadb';
 import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
-import { getCarNameById } from '@/app/libs/prisma/carModel';
+import { getCarModelById } from '@/app/libs/prisma/carModel';
 
 export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
     try {
         const id = params.id;
-
         if (!id) {
             return new NextResponse("Missing 'id' parameter");
         }
@@ -24,9 +23,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
                 },
             });
             let carRs = JSON.parse(JSON.stringify(cars));
-            let br = await getCarNameById(carRs.carBrandId);
-            let md = await getCarNameById(carRs.carNameId);
-            let y = await getCarNameById(carRs.carYearId);
+            let br = await getCarModelById(carRs.carBrandId);
+            let md = await getCarModelById(carRs.carNameId);
+            let y = await getCarModelById(carRs.carYearId);
             carRs.brandName = br;
             carRs.modelName = md;
             carRs.yearName = y;
@@ -41,7 +40,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
 export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
     try {
         const session = await getServerSession(authOptions);
-        if (1) {
+        if (session) {
             const id = params.id;
             if (!id) {
                 return new NextResponse("Missing 'id' parameter");
@@ -99,3 +98,5 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     return NextResponse.json({ success: 1, message: 'Delete success' });
 }
+
+

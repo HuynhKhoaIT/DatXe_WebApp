@@ -1,10 +1,11 @@
 import { convertToPlatesNumber, generateUUID } from "@/utils/until";
 import prisma from "../prismadb";
-import {  } from "./carModel";
+import { getCarModelById } from "./carModel";
 import { getCustomerByPhone } from "./customer";
 import { getGarageByDlbdId } from "./garage";
 export async function createCar(json: any) {
   try {
+    // return json;
     let platesNumber = convertToPlatesNumber(json.numberPlates);
     const car = await prisma.car.create({
       data: {
@@ -35,7 +36,6 @@ export async function createCar(json: any) {
 }
 
 export async function getCars(requestData: any) {
-  // return requestData;
   let currentPage = 1;
   let take = 10;
   let limit = 10;
@@ -142,9 +142,9 @@ export async function getCars(requestData: any) {
   ]);
   let carRs = JSON.parse(JSON.stringify(cars));
   for (const car of carRs) {
-    let br = await getCarNameById(car.carBrandId);
-    let md = await getCarNameById(car.carNameId);
-    let y = await getCarNameById(car.carYearId);
+    let br = await getCarModelById(car.carBrandId);
+    let md = await getCarModelById(car.carNameId);
+    let y = await getCarModelById(car.carYearId);
     car.brandName = br;
     car.modelName = md;
     car.yearName = y;
@@ -265,9 +265,3 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
 }
 
 
-function getCarNameById(carBrandId: any) {
-  throw new Error("Function not implemented.");
-}
-// export async function syncCustomeFromDlbd(params:type) {
-
-// }

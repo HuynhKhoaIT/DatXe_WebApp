@@ -1,3 +1,4 @@
+import { generateUUID } from "@/utils/until";
 import prisma from "../prismadb";
 import { syncCarFromDLBD } from "./car";
 import { getGarageByDlbdId } from "./garage";
@@ -5,21 +6,20 @@ export async function createCustomer(json: any) {
   try {
     const customer = await prisma.customer.create({
       data: {
-        fullName: json.fullName,
+        uuId: generateUUID(),
+        fullName: json.fullName.toString(),
+        userId: json.userId,
         phoneNumber: json.phoneNumber,
         cityId: Number(json.cityId),
         districtId: Number(json.districtId),
         wardId: Number(json.wardId),
-        address: json.address,
+        address: json.address ?? '',
         dob: json.dob,
-        description: json.description,
-        sex: json.sex,
+        description: json.description ?? '',
+        sex: json.sex ?? "FEMALE",
         garageId: Number(json.garageId),
-        status: json.status,
-      },
-      include: {
-        cars: true,
-      },
+        status: json.status ?? 'PUBLIC',
+      }
     });
     return { customer };
   } catch (error) {
@@ -155,6 +155,20 @@ export async function getCustomersAutoComplete(requestData: any) {
         ],
       },
     });
+}
+
+export async function getCustomerByUserId(
+  userId: number
+) {
+  const customer = await prisma.customer.findFirst({
+    where: {
+      userId: Number(userId),
+      status: {
+        not: "DELETE",
+      },
+    },
+  });
+  return customer;
 }
 
 export async function getMyCustomers(phoneNumber: string) {

@@ -56,12 +56,12 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
     handlers.open();
     try {
       if (!isEditing) {
-        await fetch(`/api/car`, {
+        await fetch(`/api/client/cars`, {
           method: "POST",
           body: JSON.stringify(values),
         });
       } else {
-        await fetch(`/api/car/${dataDetail?.id}`, {
+        await fetch(`/api/client/cars/${dataDetail?.id}`, {
           method: "PUT",
           body: JSON.stringify(values),
         });
