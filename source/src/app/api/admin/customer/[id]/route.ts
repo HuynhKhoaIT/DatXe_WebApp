@@ -60,9 +60,9 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
             }
             const json = await request.json();
 
-            if (session?.user?.id) {
-                createdBy = Number(session.user.id);
-                garageId = Number(session.user.garageId);
+            if (Number(session?.user?.id)) {
+                createdBy = Number(session?.user?.id ?? 0);
+                garageId = Number(session?.user?.garageId);
             }
             let updateData = {
                 fullName: json.fullName,

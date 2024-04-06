@@ -44,8 +44,6 @@
         .title {
             padding: 16px 32px;
         }
-        .btnAdd {
-        }
     }
     .marketingInfo {
         padding: 30px;
@@ -75,7 +73,7 @@
     border-top: 1px solid #ddd;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
 .subTotal {

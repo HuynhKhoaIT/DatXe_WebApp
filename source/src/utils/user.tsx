@@ -124,12 +124,11 @@ export const register = async (
           "role": "CUSTOMER"
         }),
       });
-      const userNeweData = await userNew.json()
       console.log("res.data.user",res.data.user)
       const customerNew = await fetch("/api/client/customer", {
         method: "POST",
         body: JSON.stringify({
-          userId: userNeweData.id,
+          userId: res.data.user.id,
           fullName: res.data.user.name,
           phoneNumber: res.data.user.phone,
           hash: sha256(`${res.data.user.phone}|@|${Number(res.data.user.name)}`),
