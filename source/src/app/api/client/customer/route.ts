@@ -1,7 +1,5 @@
 import { createCustomer } from "@/app/libs/prisma/customer";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import { sha256 } from "js-sha256";
 
 export async function POST(request: Request) {

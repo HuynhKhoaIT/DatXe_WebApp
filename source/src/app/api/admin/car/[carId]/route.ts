@@ -4,18 +4,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getCarModelById } from '@/app/libs/prisma/carModel';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { carId: number } }) {
     try {
-        const id = params.id;
-        if (!id) {
-            return new NextResponse("Missing 'id' parameter");
+        const carId = params.carId;
+        if (!carId) {
+            return new NextResponse("Missing 'carId' parameter");
         }
         const session = await getServerSession(authOptions);
 
         if (session) {
             const cars = await prisma.car.findUnique({
                 where: {
-                    id: parseInt(id.toString()),
+                    id: parseInt(carId.toString()),
                 },
                 include: {
                     customer: true,
@@ -37,13 +37,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { carId: number } }) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            const id = params.id;
-            if (!id) {
-                return new NextResponse("Missing 'id' parameter");
+            const carId = params.carId;
+            if (!carId) {
+                return new NextResponse("Missing 'carId' parameter");
             }
             const json = await request.json();
             let updateData = {
@@ -62,7 +62,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
             };
             const updatedCar = await prisma.car.update({
                 where: {
-                    id: Number(id),
+                    id: Number(carId),
                 },
                 data: updateData,
                 include: {
