@@ -24,48 +24,48 @@ export function FormAccuracy() {
     },
   });
   const onSubmit = async () => {
-    // handlers.open();
-    // const { name, phone, pin } = form.values;
-    // let password = phone + "@@Datxe.com@@";
-    // let passwordConfirmation = password;
-    // try {
-    //   const checkRs = await CheckOtp(phone, pin, "register");
-    //   if (checkRs.CodeResult == 100) {
-    //   // if (100 == 100) {
-    //     notifications.show({
-    //       title: "Thành công",
-    //       message: "Xác thực thành công",
-    //     });
-    //     try {
-    //       await register(name, phone, password, passwordConfirmation);
+    handlers.open();
+    const { name, phone, pin } = form.values;
+    let password = phone + "@@Datxe.com@@";
+    let passwordConfirmation = password;
+    try {
+      const checkRs = await CheckOtp(phone, pin, "register");
+      if (checkRs.CodeResult == 100) {
+      // if (100 == 100) {
+        notifications.show({
+          title: "Thành công",
+          message: "Xác thực thành công",
+        });
+        try {
+          await register(name, phone, password, passwordConfirmation);
           
-    //       notifications.show({
-    //         title: "Thành công",
-    //         message: "Đăng ký thành công",
-    //       });
-    //       handlers.close();
-    //     } catch (error) {
-    //       notifications.show({
-    //         title: "Thất bại",
-    //         message: "Đăng ký thất bại",
-    //       });
-    //       handlers.close();
-    //     }
-    //   } else {
-    //     notifications.show({
-    //       title: "Error",
-    //       message: "Xác thực thất bại",
-    //     });
-    //     handlers.close();
-    //   }
-    // } catch (error) {
-    //   notifications.show({
-    //     title: "Error",
-    //     message: "Xác thực thất bại",
-    //   });
-    //   handlers.close();
-    //   form.setErrors({ pin: "Mã Otp không hợp lệ!" });
-    // }
+          notifications.show({
+            title: "Thành công",
+            message: "Đăng ký thành công",
+          });
+          handlers.close();
+        } catch (error) {
+          notifications.show({
+            title: "Thất bại",
+            message: "Đăng ký thất bại",
+          });
+          handlers.close();
+        }
+      } else {
+        notifications.show({
+          title: "Error",
+          message: "Xác thực thất bại",
+        });
+        handlers.close();
+      }
+    } catch (error) {
+      notifications.show({
+        title: "Error",
+        message: "Xác thực thất bại",
+      });
+      handlers.close();
+      form.setErrors({ pin: "Mã Otp không hợp lệ!" });
+    }
   };
   return (
     <form className="login-accuracy-input" onSubmit={form.onSubmit(onSubmit)}>

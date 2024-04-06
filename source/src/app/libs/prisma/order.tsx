@@ -439,6 +439,7 @@ export async function createOrder(json: any) {
         carNewData.customerId = customerId;
         delete carNewData.id;
         let carNew = await createCar(carNewData);
+        console.log('carNew',carNew)
         carId = Number(carNew?.car?.id);
       }
     } else {
@@ -487,6 +488,161 @@ export async function createOrder(json: any) {
       slug: orderCode.toLowerCase(),
       customerId: Number(customerId),
       carId: Number(carId),
+      dateTime: json.dateTime ?? new Date(),
+      customerRequest: json.customerRequest ?? "",
+      customerNote: json.customerNote ?? "",
+      note: json.note ?? "",
+      priorityLevel: Number(json.priorityLevel ?? 1),
+      orderCategoryId: Number(json.orderCategoryId ?? 1),
+      brandId: Number(json.carBrandId),
+      modelId: Number(json.carNameId),
+      yearId: Number(json.carYearId),
+      subTotal: Number(json.subTotal),
+      total: Number(json.total),
+      garageId: Number(garageId),
+      serviceAdvisorId: Number(json.serviceAdvisorId ?? 1),
+      createdById: Number(json.createdById ?? 1),
+      orderDetails: {
+        createMany: {
+          data: orderDetails,
+        },
+      },
+    };
+    return data;
+    const order = await prisma.order.create({
+      data: data,
+      include: {
+        serviceAdvisor: true,
+        car: true,
+        customer: true,
+        orderDetails: {
+          select: {
+            quantity: true,
+            product: {
+              select: {
+                name: true,
+                sku: true,
+                images: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return { order };
+  } catch (error) {
+    return { error };
+  }
+}
+export async function createOrderClient(json: any) {
+  try {
+    let customerId = 1;
+    let garageId = 2;
+    if(Number(json.garageId)){
+      garageId = Number(json.garageId)
+    }
+    if (Number(json.detail[0].garageId)) {
+      garageId = Number(json.detail[0].garageId);
+    }
+    if (Number(json.customerId ?? 0) == 0 && json.phoneNumber) {
+      // check and create customer
+      // check customer via phone number
+      let phoneNumber = json.phoneNumber;
+        
+      if (phoneNumber) {        
+        
+        const customerFind = await prisma.customer.findFirst({
+          where: {
+            phoneNumber: phoneNumber,
+            status: "PUBLIC",
+            garageId: garageId,
+          },
+        });
+        if (customerFind) {
+          customerId = customerFind.id;
+        } else {
+          let customerJson = {
+            fullName: json.fullName,
+            phoneNumber: json.phoneNumber,
+            address: json.address,
+            garageId: Number(garageId),
+            status: "PUBLIC",
+          };
+          let cusNew = await createCustomer(customerJson);
+          if (cusNew) {
+            customerId = cusNew.customer?.id ?? 0;
+          }
+        }
+      }
+      // end check customer
+    } else {
+      customerId = json.customerId;
+    }
+    // //get carID
+    // let carId = Number(json.carId);
+    // if (carId) {
+    //   let carOrder = await prisma.car.findFirst({
+    //     where: {
+    //       id: Number(carId),
+    //       status: "PUBLIC",
+    //     },
+    //   });
+
+    //   if (carOrder?.garageId != Number(garageId)) {
+    //     const carNewData = JSON.parse(JSON.stringify(carOrder));
+    //     carNewData.garageId = garageId;
+    //     carNewData.customerId = customerId;
+    //     delete carNewData.id;
+    //     let carNew = await createCar(carNewData);
+    //     console.log('carNew',carNew)
+    //     carId = Number(carNew?.car?.id);
+    //   }
+    // } else {
+    //   const carAdmin = await createCar({
+    //     customerId: Number(customerId),
+    //     numberPlates: json.numberPlates,
+    //     carBrandId: Number(json.carBrandId),
+    //     carNameId: Number(json.carNameId),
+    //     carYearId: Number(json.carYearId),
+    //     status: "PUBLIC",
+    //     garageId: Number(process.env.GARAGE_DEFAULT),
+    //   });
+    //   const carNew = await createCar({
+    //     customerId: Number(customerId),
+    //     numberPlates: json.numberPlates,
+    //     carBrandId: Number(json.carBrandId),
+    //     carNameId: Number(json.carNameId),
+    //     carYearId: Number(json.carYearId),
+    //     status: "PUBLIC",
+    //     garageId: Number(garageId),
+    //   });
+    //   if (carNew) {
+    //     carId = Number(carNew.car?.id);
+    //   }
+    // }
+    let orderDetails: any = [];
+    if (json.detail) {
+      json.detail.forEach(function (data: any) {
+        orderDetails.push({
+          productId: Number(data.productId),
+          note: data.note,
+          price: Number(data.price ?? 0),
+          priceSale: Number(data.priceSale ?? 0),
+          saleType: data.saleType,
+          saleValue: data.saleValue.toString(),
+          quantity: Number(data.quantity ?? 1),
+          subTotal: Number(data.subTotal ?? 0),
+          garageId: Number(garageId ?? 1),
+          createdBy: Number(json.createdById ?? 1),
+        });
+      });
+    }
+    let orderCode = (await getCodeForOrder()) ?? "";
+    let data = {
+      code: orderCode,
+      slug: orderCode.toLowerCase(),
+      customerId: Number(customerId),
+      carId: Number(json.carId),
       dateTime: json.dateTime ?? new Date(),
       customerRequest: json.customerRequest ?? "",
       customerNote: json.customerNote ?? "",

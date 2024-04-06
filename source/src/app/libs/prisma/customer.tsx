@@ -139,19 +139,27 @@ export async function getCustomersAutoComplete(requestData: any) {
       where: {
         OR: [
           {
-            fullName: {
-              contains: titleFilter
-            },
-            garageId,
-            status: 'PUBLIC'
+            AND:[
+              {
+                fullName: {
+                  contains: titleFilter
+                },
+                garageId,
+                status: 'PUBLIC'
+              }
+            ],
           },
           {
-            phoneNumber: {
-              contains: titleFilter
-            },
-            garageId,
-            status: 'PUBLIC'
-          },
+            AND: [
+              {
+                phoneNumber: {
+                  contains: titleFilter
+                },
+                garageId,
+                status: 'PUBLIC'
+              }
+            ]
+          }
         ],
       },
     });

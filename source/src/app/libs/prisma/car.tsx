@@ -263,4 +263,32 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
   }
 }
 
+export async function setCarDefault(uuId:string) {
+  const carDefault = await prisma.car.findFirst({
+    where: {
+      garageId: 2,
+      uuId: uuId
+    }
+  })
+  
+  await prisma.car.updateMany({
+    where:{
+      garageId: 2,
+      userId: carDefault?.userId,
+    },
+    data:{
+      isDefault: false
+    }
+  })
+  const car = await prisma.car.updateMany({
+    where:{
+      garageId: 2,
+      uuId: uuId,
+    },
+    data:{
+      isDefault: true
+    }
+  })
+  return car;
+}
 
