@@ -15,7 +15,7 @@ import { IconCamera } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 
-export function AutocompleteClearable({
+export function AutocompletePhone({
   debounceTime = 400,
   getOptionData,
   form,
@@ -43,8 +43,6 @@ export function AutocompleteClearable({
   const [debounced] = useDebouncedValue(value, debounceTime);
 
   useEffect(() => {
-    console.log("debounced", debounced);
-
     const fetchData = async () => {
       const data: any = await getOptionData({ s: debounced });
       setGroceries(data);
@@ -77,7 +75,12 @@ export function AutocompleteClearable({
           padding: "10px 0",
         }}
         onClick={() => {
-          form.setFieldValue(name, item.value);
+          console.log(item.otherData);
+          form.setFieldValue(name, item.label);
+          form.setFieldValue("customerId", item.value);
+          form.setFieldValue("fullName", item.otherData.fullName);
+          form.setFieldValue("address", item.otherData.address);
+
           if (setValueInput) setValueInput(item.label);
           open();
         }}
@@ -106,9 +109,11 @@ export function AutocompleteClearable({
               label={label}
               placeholder={placeholder}
               value={value}
-              // {...form.getInputProps(name)}
               onChange={(event) => {
                 setValue(event.currentTarget.value);
+                form.setFieldValue("customerId", null);
+                form.setFieldValue("fullName", "");
+                form.setFieldValue("address", "");
                 if (setValueInput) setValueInput(event.currentTarget.value);
                 combobox.openDropdown();
                 combobox.updateSelectedOptionIndex();
@@ -129,7 +134,12 @@ export function AutocompleteClearable({
                     <CloseButton
                       size="sm"
                       onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => setValue("")}
+                      onClick={() => {
+                        form.setFieldValue("customerId", null);
+                        form.setFieldValue("fullName", "");
+                        form.setFieldValue("address", "");
+                        setValue("");
+                      }}
                       aria-label="Clear value"
                     />
                   )

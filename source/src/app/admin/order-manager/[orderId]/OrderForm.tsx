@@ -42,6 +42,8 @@ import FooterSavePage from "../../_component/FooterSavePage";
 import { getOptionsCar } from "../until";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
+import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
+import InfoCard from "../_component/InfoCard";
 
 export default function OrderForm({
   isEditing = false,
@@ -1046,48 +1048,7 @@ export default function OrderForm({
                 </div>
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                <div className={styles.card}>
-                  <Typo
-                    size="primary"
-                    type="bold"
-                    style={{ color: "var(--primary-orange)" }}
-                    className={styles.title}
-                  >
-                    Thông tin khách hàng
-                  </Typo>
-                  <Grid gutter={12} className={styles.marketingInfo}>
-                    <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                      <TextInput
-                        size="lg"
-                        radius={0}
-                        {...form.getInputProps("fullName")}
-                        label="Tên khách hàng"
-                        type="text"
-                        placeholder="Tên khách hàng"
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                      <TextInput
-                        size="lg"
-                        radius={0}
-                        {...form.getInputProps("phoneNumber")}
-                        label="Số điện thoại"
-                        type="text"
-                        placeholder="Số điện thoại"
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={12}>
-                      <TextInput
-                        size="lg"
-                        radius={0}
-                        {...form.getInputProps("address")}
-                        label="Địa chỉ"
-                        type="text"
-                        placeholder="Địa chỉ"
-                      />
-                    </Grid.Col>
-                  </Grid>
-                </div>
+                <InfoCard form={form} handleGetInfo={handleGetInfo} />
               </Grid.Col>
             </Grid>
             <div style={{ marginTop: 20 }} className={styles.cardListProduct}>

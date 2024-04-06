@@ -33,3 +33,21 @@ export async function deleteOrder(id: string) {
         console.error('error:', error);
     }
 }
+
+
+export async function getOptionsPhone( {s} : any) {
+    try {
+        const res = await axios.get(`/api/admin/customer/autocomplete?phoneNumber=${s}`);
+        if (!res.data) {
+            throw new Error('Failed to fetch data');
+        }
+        const dataOption = res?.data?.map((item: any) => ({
+            value: item.id.toString(),
+            label: item.phoneNumber,
+            otherData: item,
+        }));
+        return dataOption;
+    } catch (error) {
+        console.error('error: ', error);
+    }
+}

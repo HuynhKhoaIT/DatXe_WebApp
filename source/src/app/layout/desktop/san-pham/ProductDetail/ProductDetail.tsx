@@ -18,7 +18,6 @@ function ProductDetail({
   ProductDetail: IProduct;
   isLoading: boolean;
 }) {
-  console.log(ProductDetail);
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
