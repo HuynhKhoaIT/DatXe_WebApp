@@ -412,6 +412,7 @@ export async function createOrder(json: any) {
             address: json.address,
             garageId: Number(garageId),
             status: "PUBLIC",
+            userId: json.userId
           };
           let cusNew = await createCustomer(customerJson);
           if (cusNew) {
@@ -443,6 +444,7 @@ export async function createOrder(json: any) {
         carId = Number(carNew?.car?.id);
       }
     } else {
+      console.log('carAdmin');
       const carAdmin = await createCar({
         customerId: Number(customerId),
         numberPlates: json.numberPlates,
@@ -451,7 +453,9 @@ export async function createOrder(json: any) {
         carYearId: Number(json.carYearId),
         status: "PUBLIC",
         garageId: Number(process.env.GARAGE_DEFAULT),
+        userId: json.userId
       });
+      console.log('carNew2')
       const carNew = await createCar({
         customerId: Number(customerId),
         numberPlates: json.numberPlates,
@@ -460,6 +464,7 @@ export async function createOrder(json: any) {
         carYearId: Number(json.carYearId),
         status: "PUBLIC",
         garageId: Number(garageId),
+        userId: json.userId
       });
       if (carNew) {
         carId = Number(carNew.car?.id);
@@ -578,48 +583,52 @@ export async function createOrderClient(json: any) {
     } else {
       customerId = json.customerId;
     }
-    // //get carID
-    // let carId = Number(json.carId);
-    // if (carId) {
-    //   let carOrder = await prisma.car.findFirst({
-    //     where: {
-    //       id: Number(carId),
-    //       status: "PUBLIC",
-    //     },
-    //   });
-
-    //   if (carOrder?.garageId != Number(garageId)) {
-    //     const carNewData = JSON.parse(JSON.stringify(carOrder));
-    //     carNewData.garageId = garageId;
-    //     carNewData.customerId = customerId;
-    //     delete carNewData.id;
-    //     let carNew = await createCar(carNewData);
-    //     console.log('carNew',carNew)
-    //     carId = Number(carNew?.car?.id);
-    //   }
-    // } else {
-    //   const carAdmin = await createCar({
-    //     customerId: Number(customerId),
-    //     numberPlates: json.numberPlates,
-    //     carBrandId: Number(json.carBrandId),
-    //     carNameId: Number(json.carNameId),
-    //     carYearId: Number(json.carYearId),
-    //     status: "PUBLIC",
-    //     garageId: Number(process.env.GARAGE_DEFAULT),
-    //   });
-    //   const carNew = await createCar({
-    //     customerId: Number(customerId),
-    //     numberPlates: json.numberPlates,
-    //     carBrandId: Number(json.carBrandId),
-    //     carNameId: Number(json.carNameId),
-    //     carYearId: Number(json.carYearId),
-    //     status: "PUBLIC",
-    //     garageId: Number(garageId),
-    //   });
-    //   if (carNew) {
-    //     carId = Number(carNew.car?.id);
-    //   }
-    // }
+    //get carID
+    let carId = Number(json.carId);
+    if (carId) {
+      let carOrder = await prisma.car.findFirst({
+        where: {
+          id: Number(carId),
+          status: "PUBLIC",
+        },
+      });
+      console.log('ordergarageId',carOrder?.garageId)
+      console.log('garageId',garageId)
+      if (carOrder?.garageId != Number(garageId)) {
+        const carNewData = JSON.parse(JSON.stringify(carOrder));
+        carNewData.garageId = garageId;
+        carNewData.customerId = customerId;
+        carNewData.userId = carOrder?.userId
+        delete carNewData.id;
+        console.log('carNewDataUserId',carNewData)
+        let carNew = await createCar(carNewData);
+        console.log('carNew',carNew)
+        carId = Number(carNew?.car?.id);
+      }
+    } else {
+      
+      const carAdmin = await createCar({
+        customerId: Number(customerId),
+        numberPlates: json.numberPlates,
+        carBrandId: Number(json.carBrandId),
+        carNameId: Number(json.carNameId),
+        carYearId: Number(json.carYearId),
+        status: "PUBLIC",
+        garageId: Number(process.env.GARAGE_DEFAULT),
+      });
+      const carNew = await createCar({
+        customerId: Number(customerId),
+        numberPlates: json.numberPlates,
+        carBrandId: Number(json.carBrandId),
+        carNameId: Number(json.carNameId),
+        carYearId: Number(json.carYearId),
+        status: "PUBLIC",
+        garageId: Number(garageId),
+      });
+      if (carNew) {
+        carId = Number(carNew.car?.id);
+      }
+    }
     let orderDetails: any = [];
     if (json.detail) {
       json.detail.forEach(function (data: any) {

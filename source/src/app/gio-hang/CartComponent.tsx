@@ -161,7 +161,7 @@ export default function CartComponent({ myAccount, carsData }: any) {
     values.subTotal = calculateSubTotal();
 
     values.total = calculateSubTotal();
-
+    values.userId = myAccount.id;
     try {
       const res = await fetch(`/api/orders`, {
         method: "POST",

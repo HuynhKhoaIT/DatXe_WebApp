@@ -4,6 +4,6 @@ import CarListPage from "./CarListPage";
 import { getMyCars } from "@/app/libs/prisma/car";
 export default async function CarsPage() {
   const myAccount: any = await getMyAccount();
-  const carsData = await getMyCars({ phoneNumber: myAccount?.phone });
+  const carsData = await getMyCars({ userId: myAccount?.id });
   return <CarListPage carsData={carsData.data} myAccount={myAccount} />;
 }

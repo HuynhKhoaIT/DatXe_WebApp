@@ -180,14 +180,11 @@ export async function getCarsByPlates(titleFilter:string,garageId: number) {
 }
 
 export async function getMyCars(requestData: any) {
-  const customer = await getCustomerByPhone(
-    requestData.phoneNumber,
-    Number(process.env.GARAGE_DEFAULT)
-  );
+  
   const rs = {
     garageId: Number(process.env.GARAGE_DEFAULT),
-    customerId: customer?.id,
     status: "PUBLIC",
+    userId: requestData.userId
   };
 
   return await getCars(rs);
