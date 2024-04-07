@@ -1,4 +1,3 @@
-
 import { STATUS } from "@prisma/client";
 import prisma from "../prismadb";
 import { getGarageIdByDLBDID } from "./garage";
@@ -8,62 +7,64 @@ export async function getCategories(requestData: any) {
     let currentPage = 1;
     let take = 10;
     let limit = 10;
-    if(requestData.limit){
-      take = parseInt(requestData.limit)
+    if (requestData.limit) {
+      take = parseInt(requestData.limit);
     }
-    
+
     const skip = take * (currentPage - 1);
-    let titleFilter = '';
-    if(requestData.s){
-        titleFilter = requestData.s;
+    let titleFilter = "";
+    if (requestData.s) {
+      titleFilter = requestData.s;
     }
-    
-    let garageId:any = 0;
-    if(requestData.garageId){
-      garageId = requestData.garageId
+
+    let garageId: any = 0;
+    if (requestData.garageId) {
+      garageId = requestData.garageId;
     }
-    if(requestData.session){
-      garageId  = await getGarageIdByDLBDID(Number(requestData.session.user?.garageId));
+    if (requestData.session) {
+      garageId = await getGarageIdByDLBDID(
+        Number(requestData.session.user?.garageId)
+      );
     }
-    let arrayStatus:STATUS[] = ['PUBLIC'];
-    if(requestData.status == 'ALL'){
-        arrayStatus = ["PUBLIC",'PENDING','DRAFT'];
-    }else if(requestData.status){
+    let arrayStatus: STATUS[] = ["PUBLIC"];
+    if (requestData.status == "ALL") {
+      arrayStatus = ["PUBLIC", "PENDING", "DRAFT"];
+    } else if (requestData.status) {
       arrayStatus = [requestData.status];
     }
     const [productCategories, total] = await prisma.$transaction([
       prisma.productCategory.findMany({
         orderBy: {
-          id: 'desc',
+          id: "desc",
         },
         take: 10,
         where: {
-            AND: [
-                {
-                    status: {
-                        in: arrayStatus,
-                    },
-                    garageId:{
-                      in: [Number(process.env.GARAGE_DEFAULT),garageId]
-                    }
-                },
-            ],
+          AND: [
+            {
+              status: {
+                in: arrayStatus,
+              },
+              garageId: {
+                in: [Number(process.env.GARAGE_DEFAULT), garageId],
+              },
+            },
+          ],
         },
       }),
       prisma.productCategory.count({
         where: {
           AND: [
-              {
-                  status: {
-                      in: arrayStatus,
-                  },
-                  garageId:{
-                    in: [Number(process.env.GARAGE_DEFAULT),garageId]
-                  }
+            {
+              status: {
+                in: arrayStatus,
               },
+              garageId: {
+                in: [Number(process.env.GARAGE_DEFAULT), garageId],
+              },
+            },
           ],
-      },
-      })
+        },
+      }),
     ]);
     const totalPage = Math.ceil(total / limit);
     return {
@@ -124,26 +125,26 @@ export async function getCategoryById(id: number) {
   }
 }
 
-export async function syncCategoryFromDlbd(catData: any,garageId: number){
+export async function syncCategoryFromDlbd(catData: any, garageId: number) {
   const cat = await prisma.productCategory.findFirst({
-    where:{
+    where: {
       title: catData.name,
       garageId: garageId,
       status: {
-        not: "DELETE"
-      }
-    }
-  })
-  if(cat){
-    return cat;    
+        not: "DELETE",
+      },
+    },
+  });
+  if (cat) {
+    return cat;
   }
   const c = await prisma.productCategory.create({
-    data:{
+    data: {
       title: catData.name,
       garageId: garageId,
       slug: catData.name,
-      image: catData.thumbnail
-    }
-  })
+      image: catData.thumbnail,
+    },
+  });
   return c;
 }
