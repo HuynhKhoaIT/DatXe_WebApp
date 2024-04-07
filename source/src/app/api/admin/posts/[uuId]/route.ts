@@ -50,7 +50,7 @@ export async function PUT(request: NextRequest, { params }: { params: { uuId: st
                 postData.status = json.status
             }
             if(json.createdBy){
-                postData.createdBy = Number(session.user.id)
+                postData.createdBy = session.user.id
             }
             const rs = await updatePost(postData);
 
