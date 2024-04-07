@@ -58,57 +58,49 @@ export async function POST(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
             const json: formData = await request.json();
-            // const errors: string[] = [];
-            // const validationSchame = [
-            //     {
-            //         valid: validator.isLength(json.fullName, {
-            //             min: 3,
-            //         }),
-            //         errorMessage: 'Họ tên ít nhất 3 ký tự',
-            //     },
-            //     {
-            //         valid: validator.isLength(json.phoneNumber, {
-            //             min: 1,
-            //         }),
-            //         errorMessage: 'phoneNumber is invalid',
-            //     },
-            // ];
-            // validationSchame.forEach((check) => {
-            //     if (!check.valid) {
-            //         errors.push(check.errorMessage);
-            //     }
-            // });
-            // if (errors.length) {
-            //     return NextResponse.json({ errorMessage: errors });
-            // }
-
-            const customer = await prisma.customer.create({
-                data: {
-                    uuId: generateUUID(),
-                    fullName: json.fullName,
+            const checkCustomer = await prisma.customer.findFirst({
+                where: {
                     phoneNumber: json.phoneNumber,
-                    cityId: Number(json.cityId),
-                    districtId: Number(json.districtId),
-                    wardId: Number(json.wardId),
-                    address: json.address,
-                    dob: json.dob,
-                    description: json.description,
-                    sex: json.sex,
-                    garageId: (garageId).toString(),
-                    status: json.status,
-                    userId: (session.user?.id.toString() ?? "1")
-                },
-                include: {
-                    cars: true,
-                },
+                    garageId,
+                    status: {
+                        not: 'DELETE'
+                    }
+                }
             });
-
-            return new NextResponse(JSON.stringify(customer), {
+            if(checkCustomer){
+                const customer = await prisma.customer.create({
+                    data: {
+                        uuId: generateUUID(),
+                        fullName: json.fullName,
+                        phoneNumber: json.phoneNumber,
+                        cityId: Number(json.cityId),
+                        districtId: Number(json.districtId),
+                        wardId: Number(json.wardId),
+                        address: json.address,
+                        dob: json.dob,
+                        description: json.description,
+                        sex: json.sex,
+                        garageId: (garageId).toString(),
+                        status: json.status,
+                        userId: (session.user?.id.toString() ?? "1")
+                    },
+                    include: {
+                        cars: true,
+                    },
+                });
+                return new NextResponse(JSON.stringify(customer), {
+                    status: 201,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+            }
+            return new NextResponse("Lỗi trùng số điện thoại", {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },
             });
+
+            
         }
         throw new Error('Chua dang nhap');
     } catch (error: any) {
