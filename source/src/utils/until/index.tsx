@@ -124,7 +124,7 @@ export async function getOptionsBrands() {
 export async function getOptionsModels(brandId: number) {
   if (brandId) {
     try {
-      const res = await axios.get(`/api/car-model/${brandId}`);
+      const res = await axios.get(`/api/admin/car-model/${brandId}`);
 
       const dataOption = res?.data?.map((item: any) => ({
         value: item.id.toString(),

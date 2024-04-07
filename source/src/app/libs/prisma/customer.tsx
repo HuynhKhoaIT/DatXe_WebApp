@@ -17,7 +17,7 @@ export async function createCustomer(json: any) {
         dob: json.dob,
         description: json.description ?? '',
         sex: json.sex ?? "FEMALE",
-        garageId: Number(json.garageId),
+        garageId: (json.garageId),
         status: json.status ?? 'PUBLIC',
       }
     });
@@ -166,11 +166,11 @@ export async function getCustomersAutoComplete(requestData: any) {
 }
 
 export async function getCustomerByUserId(
-  userId: number
+  userId: string
 ) {
   const customer = await prisma.customer.findFirst({
     where: {
-      userId: Number(userId),
+      userId: (userId),
       status: {
         not: "DELETE",
       },
@@ -191,7 +191,7 @@ export async function getMyCustomers(phoneNumber: string) {
   return rs;
 }
 
-export async function showCustomer(id:number) {
+export async function showCustomer(id:string) {
   return await prisma.customer.findFirst({
     where: {
       id
@@ -240,12 +240,12 @@ export async function syncCustomerFromDLBD(requestData: any) {
 
 export async function getCustomerByPhone(
   phoneNumber: string,
-  garageId: Number
+  garageId: string
 ) {
   const customer = await prisma.customer.findFirst({
     where: {
       phoneNumber,
-      garageId: Number(garageId),
+      garageId: (garageId),
       status: {
         not: "DELETE",
       },
