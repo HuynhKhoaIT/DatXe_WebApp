@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
             const { searchParams } = new URL(request.url);
             let page = 1;
             let limit = 10;
