@@ -45,6 +45,7 @@ import AutocompleteField from "@/app/components/form/AutoCompleteField";
 import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
 import InfoCustomer from "../_component/InfoCustomer";
 import InfoCart from "../_component/InfoCart";
+import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
 
 export default function OrderForm({
   isEditing = false,
@@ -208,7 +209,10 @@ export default function OrderForm({
       }
     };
 
-    if (isEditing) fetchData();
+    if (isEditing) {
+      fetchData();
+      handlersIsUser.open();
+    }
   }, [dataDetail]);
 
   // Tính tổng tiền
@@ -845,9 +849,10 @@ export default function OrderForm({
                       />
                     </Grid.Col>
                   </Grid>
-                  {isEditing ? (
+                  {isEditing &&
+                  dataDetail?.step !== ORDER_DONE &&
+                  dataDetail?.step !== ORDER_CANCEL ? (
                     <div className={styles.footer}>
-                      {" "}
                       <Button
                         size="md"
                         w={"33%"}
@@ -882,7 +887,7 @@ export default function OrderForm({
                       >
                         {dataDetail?.step == "0"
                           ? "Tiếp nhận"
-                          : dataDetail?.step == 1 && "Hoàn thành"}
+                          : dataDetail?.step == "1" && "Hoàn thành"}
                       </Button>
                       <Button
                         size="md"
@@ -899,7 +904,8 @@ export default function OrderForm({
                         Cập nhật
                       </Button>
                     </div>
-                  ) : (
+                  ) : dataDetail?.step !== ORDER_DONE &&
+                    dataDetail?.step !== ORDER_CANCEL ? (
                     <div className={styles.footer}>
                       <Button
                         size="lg"
@@ -928,6 +934,20 @@ export default function OrderForm({
                         {isEditing ? "Cập nhật" : "Hoàn thành"}
                       </Button>
                     </div>
+                  ) : (
+                    <Button
+                      size="lg"
+                      w={"48%"}
+                      radius={0}
+                      h={{ base: 42, md: 50, lg: 50 }}
+                      variant="outline"
+                      key="cancel"
+                      color="red"
+                      leftSection={<IconBan size={16} />}
+                      onClick={() => setActiveTab("customer")}
+                    >
+                      Quay lại
+                    </Button>
                   )}
 
                   {/* <FooterSavePage
@@ -1066,54 +1086,71 @@ export default function OrderForm({
               </Grid>
             </div>
             {isEditing ? (
-              <Group justify="end">
-                <Button
-                  size="lg"
-                  radius={0}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  // variant="outline"
-                  key="cancel"
-                  color="red"
-                  // leftSection={<IconBan size={16} />}
-                  onClick={() => HandleCancelOrder("-1")}
-                >
-                  Huỷ đơn
-                </Button>
-                <Button
-                  size="lg"
-                  radius={0}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  // loading={saveLoading}
-                  color="green"
-                  style={{ marginLeft: "12px" }}
-                  variant="filled"
-                  onClick={() => {
-                    if (dataDetail?.step == "0") {
-                      UpdateConfirm("1");
-                    } else {
-                      UpdateConfirm("4");
-                    }
-                  }}
-                  // leftSection={<IconPlus size={16} />}
-                >
-                  {dataDetail?.step == "0"
-                    ? "Tiếp nhận"
-                    : dataDetail?.step == 1 && "Hoàn thành"}
-                </Button>
-                <Button
-                  size="lg"
-                  radius={0}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  // loading={saveLoading}
-                  style={{ marginLeft: "12px" }}
-                  key="submit"
-                  type="submit"
-                  variant="filled"
-                  // leftSection={<IconPlus size={16} />}
-                >
-                  Cập nhật
-                </Button>
-              </Group>
+              <>
+                {dataDetail?.step === ORDER_CANCEL ||
+                dataDetail?.step === ORDER_DONE ? (
+                  <Button
+                    size="lg"
+                    w={"48%"}
+                    radius={0}
+                    h={{ base: 42, md: 50, lg: 50 }}
+                    variant="outline"
+                    key="cancel"
+                    color="red"
+                    leftSection={<IconBan size={16} />}
+                    onClick={() => setActiveTab("numberPlates")}
+                  >
+                    Quay lại
+                  </Button>
+                ) : (
+                  <Group justify="end">
+                    <Button
+                      size="lg"
+                      radius={0}
+                      h={{ base: 42, md: 50, lg: 50 }}
+                      // variant="outline"
+                      key="cancel"
+                      color="red"
+                      // leftSection={<IconBan size={16} />}
+                      onClick={() => HandleCancelOrder("-1")}
+                    >
+                      Huỷ đơn
+                    </Button>
+                    <Button
+                      size="lg"
+                      radius={0}
+                      h={{ base: 42, md: 50, lg: 50 }}
+                      // loading={saveLoading}
+                      color="green"
+                      style={{ marginLeft: "12px" }}
+                      variant="filled"
+                      onClick={() => {
+                        if (dataDetail?.step == "0") {
+                          UpdateConfirm("1");
+                        } else {
+                          UpdateConfirm("4");
+                        }
+                      }}
+                      // leftSection={<IconPlus size={16} />}
+                    >
+                      Hoàn thành
+                    </Button>
+                    <Button
+                      size="lg"
+                      radius={0}
+                      h={{ base: 42, md: 50, lg: 50 }}
+                      // loading={saveLoading}
+                      style={{ marginLeft: "12px" }}
+                      key="submit"
+                      type="submit"
+                      variant="filled"
+                      // leftSection={<IconPlus size={16} />}
+                    >
+                      Cập nhật
+                    </Button>
+                  </Group>
+                )}
+              </>
             ) : (
               <FooterSavePage saveLoading={loadingButton} okText="Hoàn thành" />
             )}
