@@ -27,6 +27,8 @@ export async function GET(request: NextRequest, { params }: { params: { uuId: st
 export async function PUT(request: NextRequest, { params }: { params: { uuId: string } }) {
     try {
         const session = await getServerSession(authOptions);
+
+        
         if (session && session.user?.role == 'ADMINGARAGE') {
             const json = await request.json();
             const uuId = params.uuId;
@@ -50,7 +52,7 @@ export async function PUT(request: NextRequest, { params }: { params: { uuId: st
                 postData.status = json.status
             }
             if(json.createdBy){
-                postData.createdBy = Number(session.user.id)
+                postData.createdBy = session.user.id
             }
             const rs = await updatePost(postData);
 

@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
                 limit: 10,
                 take: 10,
                 page: page,
-                garageId: garageId,
+                garageId: garageId.toString(),
                 status: 'PUBLIC',
             };
             const cars = await getPosts(requestData);

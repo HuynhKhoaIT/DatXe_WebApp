@@ -9,7 +9,7 @@ const SharePage = ({ socials }: any) => {
         // stylesProps={{ padding: "30px 0" }}
         title="Chia sẽ kinh nghiệm"
         // linkToList={"/dich-vu"}
-        hiddenShowMore={true}
+        hiddenShowMore={socials?.length < 4}
         id="blogs-expert"
       >
         <div className={styles.rowItem}>

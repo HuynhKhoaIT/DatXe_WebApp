@@ -12,6 +12,7 @@ export default function ServicesHot({ data }: any) {
       subTitle="Các dịch vụ dành cho xe bạn"
       linkToList={"/dich-vu"}
       id="services"
+      hiddenShowMore={data?.length < 8}
     >
       <div className={styles.rowItem}>
         {data?.map((product: IProduct, index: number) => (

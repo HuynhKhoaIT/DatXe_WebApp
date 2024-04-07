@@ -1,9 +1,9 @@
 "use client";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import styles from "./Header.module.scss";
-import { Menu, Button, rem, Image } from "@mantine/core";
+import { Menu, rem } from "@mantine/core";
 import {
   IconExternalLink,
   IconLogout,
@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 const SigninButton = () => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const handleCar = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     router.push("/gio-hang");
@@ -27,6 +27,10 @@ const SigninButton = () => {
     event.preventDefault();
     router.push("/admin");
   };
+  if (status == "loading") {
+    return <></>;
+  }
+
   return (
     <>
       <div className={styles.buttonLogin}>
@@ -60,15 +64,17 @@ const SigninButton = () => {
                 >
                   Xem hồ sơ
                 </Menu.Item>
-                <Menu.Item
-                  component="a"
-                  onClick={handleAdmin}
-                  leftSection={
-                    <IconEye style={{ width: rem(14), height: rem(14) }} />
-                  }
-                >
-                  Quản trị
-                </Menu.Item>
+                {session?.user?.role !== "CUSTOMER" && (
+                  <Menu.Item
+                    component="a"
+                    onClick={handleAdmin}
+                    leftSection={
+                      <IconEye style={{ width: rem(14), height: rem(14) }} />
+                    }
+                  >
+                    Quản trị
+                  </Menu.Item>
+                )}
                 <Menu.Item
                   leftSection={
                     <IconExternalLink

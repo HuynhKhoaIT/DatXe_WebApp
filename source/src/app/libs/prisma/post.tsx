@@ -2,19 +2,16 @@ import { NextRequest } from "next/server";
 import prisma from "../prismadb";
 import convertToSlug, { generateUUID } from "@/utils/until";
 
-
-export async function getPosts(requestData: any){
-    
-    try {
-        
-    let titleFilter = '';
+export async function getPosts(requestData: any) {
+  try {
+    let titleFilter = "";
     const searchText = requestData.s;
     if (searchText) {
-        titleFilter = searchText;
+      titleFilter = searchText;
     }
     let garageId = {};
-    if(Number(requestData.garageId)){
-        garageId = Number(requestData.garageId)
+    if (requestData?.garageId) {
+      garageId = requestData.garageId;
     }
     let currentPage = 1;
     let take = 10;
@@ -22,100 +19,98 @@ export async function getPosts(requestData: any){
     let page = requestData.page;
 
     if (page) {
-        currentPage = Number(page);
+      currentPage = Number(page);
     }
     if (limit) {
-        take = Number(limit);
+      take = Number(limit);
     } else {
-        limit = 10;
+      limit = 10;
     }
-    const skip = take * (currentPage - 1); 
+    const skip = take * (currentPage - 1);
     let createdById = {};
-    if(requestData.createdById){
-        createdById = 1
+    if (requestData.createdById) {
+      createdById = 1;
     }
-    let method = {}
-    if(requestData.method){
-        method = requestData.method;
+    let method = {};
+    if (requestData.method) {
+      method = requestData.method;
     }
-    const [data,total] = await prisma.$transaction([   
-        prisma.post.findMany({
-            take: take,
-            skip: skip,
-            orderBy: {
-                id: 'desc',
-            },
-            where: {
-                title: {
-                    contains: titleFilter
-                },
-                status: {
-                    not: 'DELETE',
-                },
-                garageId: garageId
-            },
-            include: {
-                categories: true
-            },
-        }),
-        prisma.post.count({
-            where: {
-                status: {
-                    not: 'DELETE',
-                },
-                title: {
-                    contains: titleFilter
-                },
-                garageId: garageId
-            },
-        })
+    const [data, total] = await prisma.$transaction([
+      prisma.post.findMany({
+        take: take,
+        skip: skip,
+        orderBy: {
+          id: "desc",
+        },
+        where: {
+          title: {
+            contains: titleFilter,
+          },
+          status: {
+            not: "DELETE",
+          },
+          garageId: garageId,
+        },
+        include: {
+          categories: true,
+        },
+      }),
+      prisma.post.count({
+        where: {
+          status: {
+            not: "DELETE",
+          },
+          title: {
+            contains: titleFilter,
+          },
+          garageId: garageId,
+        },
+      }),
     ]);
     return {
-        data: data,
-        total: total,
-        currentPage: currentPage,
-        limit: limit,
-        totalPage: Math.ceil(total / limit),
-        status: 200
+      data: data,
+      total: total,
+      currentPage: currentPage,
+      limit: limit,
+      totalPage: Math.ceil(total / limit),
+      status: 200,
     };
-    } catch (error) {
-        return { error };
-    }
-    
+  } catch (error) {
+    return { error };
+  }
 }
 
 export async function createPost(post: any) {
-    try {
-        post.uuId = generateUUID(),
-        post.slug = convertToSlug(post.slug);
-        const rs = await prisma.post.create({ data: post });
-        return rs;
-    } catch (error) {
-        return { error };
-    }
+  try {
+    (post.uuId = generateUUID()), (post.slug = convertToSlug(post.slug));
+    const rs = await prisma.post.create({ data: post });
+    return rs;
+  } catch (error) {
+    return { error };
+  }
 }
 export async function updatePost(post: any) {
-    try {
-        post.slug = convertToSlug(post.slug);
-        const rs = await prisma.post.update({ 
-            where: {
-                id: post.id
-            },
-            data: post
-         });
-        return rs;
-    } catch (error) {
-        return { error };
-    }
+  try {
+    post.slug = convertToSlug(post.slug);
+    const rs = await prisma.post.update({
+      where: {
+        id: post.id,
+      },
+      data: post,
+    });
+    return rs;
+  } catch (error) {
+    return { error };
+  }
 }
 
-export async function findPost(uuId: string){
-    return await prisma.post.findFirstOrThrow({
-        where:{
-            status:{
-                not: 'DELETE'
-            },
-            uuId
-        }
-    })
+export async function findPost(uuId: string) {
+  return await prisma.post.findFirstOrThrow({
+    where: {
+      status: {
+        not: "DELETE",
+      },
+      uuId,
+    },
+  });
 }

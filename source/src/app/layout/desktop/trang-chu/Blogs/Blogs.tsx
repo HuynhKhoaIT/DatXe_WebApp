@@ -10,6 +10,7 @@ export default function Blogs({ blogs }: any) {
       title="Chia sẽ kinh nghiệm"
       linkToList={"/news"}
       id="products"
+      hiddenShowMore={blogs?.length < 4}
     >
       <Grid>
         <Grid.Col h={533} span={6}>

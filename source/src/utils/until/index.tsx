@@ -141,7 +141,7 @@ export async function getOptionsModels(brandId: number) {
 export async function getOptionsYearCar(modelId: number) {
   if (modelId) {
     try {
-      const res = await axios.get(`/api/car-model/${modelId}`);
+      const res = await axios.get(`/api/admin/car-model/${modelId}`);
       if (!res.data) {
         throw new Error("Failed to fetch data");
       }

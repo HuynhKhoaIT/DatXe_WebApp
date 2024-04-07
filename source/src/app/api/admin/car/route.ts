@@ -35,7 +35,7 @@ export async function POST(request: Request) {
             const json      = await request.json();
             let garageId    = await getGarageIdByDLBDID(Number(session.user?.garageId));
             json.garageId   = garageId;
-            json.userId     = 1;
+            json.userId     = session?.user?.id.toString();
             const car = await createCar(json);
             return new NextResponse(JSON.stringify(car), {
                 status: 201,

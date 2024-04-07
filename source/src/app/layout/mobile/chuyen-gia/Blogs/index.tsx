@@ -11,6 +11,7 @@ const Blogs = ({ blogs }: any) => {
         title="Chia sẽ kinh nghiệm"
         linkToList={"/blogs"}
         id="blogs-expert-mb"
+        hiddenShowMore={blogs?.length < 4}
       >
         <div style={{ marginRight: "-12px" }}>
           <Scroll>
