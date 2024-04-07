@@ -1,5 +1,13 @@
 "use client";
-import { AppShell, Burger, Group, Skeleton, Text } from "@mantine/core";
+import {
+  AppShell,
+  Box,
+  Burger,
+  Group,
+  LoadingOverlay,
+  Skeleton,
+  Text,
+} from "@mantine/core";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -10,6 +18,7 @@ import SigninButton from "../layout/common/desktop/login-button";
 import SearchFormName from "../components/elements/search/SearchFormName";
 import { useSession } from "next-auth/react";
 import { useMyGarage } from "../hooks/useMyGarage";
+import PageUnauthorized from "../components/page/unauthorized";
 interface IProps {
   children: ReactNode;
 }
@@ -17,10 +26,19 @@ export default function Layout({ children }: IProps) {
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [opened, { toggle }] = useDisclosure();
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-
+  const session = useSession();
   const { myGarage, isLoading } = useMyGarage();
-
-  console.log(myGarage);
+  const role: any = session?.data?.user?.role;
+  if (isLoading) {
+    return (
+      <Box pos={"relative"} w="100vw" h="100vh">
+        <LoadingOverlay visible={true} />
+      </Box>
+    );
+  }
+  if (role === "CUSTOMER") {
+    return <PageUnauthorized />;
+  }
   return (
     <AppShell
       layout="alt"
@@ -62,19 +80,15 @@ export default function Layout({ children }: IProps) {
               }}
             >
               <p className={styles.shortName}>{myGarage?.shortName}</p>
-              {/* <p>{myGarage?.address}</p> */}
               <p className={styles.addressExpert}>{myGarage?.address}</p>
             </div>
           </div>
-          {/* {!isMobile && <SearchFormName />} */}
           <SigninButton />
         </Group>
       </AppShell.Header>
       <AppShell.Navbar zIndex={100}>
         <Group h={60} pl={"md"}>
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-          {/* <Text>Navbar</Text> */}
-
           <Link href={"/"}>
             <img style={{ height: "60px" }} src={logo.src} alt="logo" />
           </Link>
@@ -82,9 +96,6 @@ export default function Layout({ children }: IProps) {
         <NavbarNested toggle={toggle} />
       </AppShell.Navbar>
       <AppShell.Main className={styles.main}>{children}</AppShell.Main>
-      {/* <AppShell.Footer h={70}>
-        
-      </AppShell.Footer> */}
     </AppShell>
   );
 }

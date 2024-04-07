@@ -51,6 +51,11 @@ export function NavbarNested({ toggle }: any) {
       icon: IconUsers,
       links: [{ label: "Danh sách chuyên gia", link: "/admin/expert" }],
     },
+    {
+      label: "Hệ thống",
+      icon: IconCalendarStats,
+      links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
+    },
   ];
 
   if (session?.user?.role === "ADMIN") {

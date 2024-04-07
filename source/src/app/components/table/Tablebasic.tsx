@@ -18,7 +18,6 @@ export default function TableBasic({
   setSelectedRows,
   className,
 }: any) {
-  console.log(columns);
   return (
     <div className={classNames(styles.tableBasic, className)}>
       <LoadingOverlay

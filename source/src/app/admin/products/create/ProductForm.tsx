@@ -188,8 +188,8 @@ export default function ProductForm({
                     checkIconPosition="right"
                     placeholder="Loại"
                     data={[
-                      { value: "1", label: "Sản phẩm" },
-                      { value: "0", label: "Dịch vụ" },
+                      { value: "true", label: "Sản phẩm" },
+                      { value: "false", label: "Dịch vụ" },
                     ]}
                   />
                 </Grid.Col>

@@ -16,7 +16,7 @@ import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import FooterSavePage from "../../_component/FooterSavePage";
 import { useAddCar } from "../../hooks/car/useAddCar";
-export default function CategoryForm({ isEditing, dataDetail }: any) {
+export default function CarForm({ isEditing, dataDetail }: any) {
   const {
     addItem,
     updateItem,

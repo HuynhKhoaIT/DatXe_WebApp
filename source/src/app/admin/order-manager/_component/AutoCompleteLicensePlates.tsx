@@ -15,8 +15,8 @@ import { IconCamera } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 
-export function AutocompleteClearable({
-  debounceTime = 400,
+export function AutocompleteLicensePlates({
+  debounceTime = 600,
   getOptionData,
   form,
   name,
@@ -26,6 +26,8 @@ export function AutocompleteClearable({
   setValueInput,
   isClear = true,
   label,
+  handleGetInfo,
+  disabled,
 }: any) {
   const searchParams = useSearchParams();
   const initialValues: any = searchParams.get(name);
@@ -38,19 +40,21 @@ export function AutocompleteClearable({
   useEffect(() => {
     if (values?.[name] == null) {
       setValue("");
+    } else {
+      setValue(values?.[name]);
     }
   }, [values?.[name]]);
   const [debounced] = useDebouncedValue(value, debounceTime);
-
+  const fetchData = async () => {
+    const data: any = await getOptionData({ s: debounced });
+    setGroceries(data);
+    setLoading(false);
+    return data;
+  };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   useEffect(() => {
-    console.log("debounced", debounced);
-
-    const fetchData = async () => {
-      const data: any = await getOptionData({ s: debounced });
-      setGroceries(data);
-      setLoading(false);
-      return data;
-    };
     if (debounced?.length >= 3) {
       setLoading(true);
       fetchData();
@@ -77,7 +81,14 @@ export function AutocompleteClearable({
           padding: "10px 0",
         }}
         onClick={() => {
-          form.setFieldValue(name, item.value);
+          console.log(item.otherData);
+          form.setFieldValue(name, item.label);
+          form.setFieldValue("carId", item.value);
+          handleGetInfo(item.label);
+          form.setFieldValue("customerId", item.otherData.customerId);
+          // form.setFieldValue("fullName", item.otherData.fullName);
+          // form.setFieldValue("address", item.otherData.address);
+
           if (setValueInput) setValueInput(item.label);
           open();
         }}
@@ -106,9 +117,15 @@ export function AutocompleteClearable({
               label={label}
               placeholder={placeholder}
               value={value}
-              // {...form.getInputProps(name)}
               onChange={(event) => {
                 setValue(event.currentTarget.value);
+                form.setFieldValue("carId", null);
+                form.setFieldValue("carBrandId", "");
+                form.setFieldValue("carNameId", "");
+                form.setFieldValue("carYearId", "");
+                form.setFieldValue("carBrand", "");
+                form.setFieldValue("carName", "");
+                form.setFieldValue("carYear", "");
                 if (setValueInput) setValueInput(event.currentTarget.value);
                 combobox.openDropdown();
                 combobox.updateSelectedOptionIndex();
@@ -121,15 +138,26 @@ export function AutocompleteClearable({
                   setValue("");
                 }
               }}
+              disabled={disabled}
               rightSection={
                 loading ? (
                   <Loader size={18} />
                 ) : (
-                  value !== "" && (
+                  value !== "" &&
+                  !disabled && (
                     <CloseButton
                       size="sm"
                       onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => setValue("")}
+                      onClick={() => {
+                        form.setFieldValue("carId", null);
+                        form.setFieldValue("carBrandId", "");
+                        form.setFieldValue("carNameId", "");
+                        form.setFieldValue("carYearId", "");
+                        form.setFieldValue("carBrand", "");
+                        form.setFieldValue("carName", "");
+                        form.setFieldValue("carYear", "");
+                        setValue("");
+                      }}
                       aria-label="Clear value"
                     />
                   )
@@ -146,6 +174,7 @@ export function AutocompleteClearable({
                 onClick={openModalCamera}
                 w={50}
                 h={50}
+                mt={24.8}
                 variant="filled"
                 aria-label="Settings"
               >

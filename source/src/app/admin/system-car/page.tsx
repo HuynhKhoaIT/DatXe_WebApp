@@ -116,9 +116,9 @@ export default function Categories() {
       },
     },
   ];
-  if (session?.user?.role !== "ADMIN") {
-    return <PageUnauthorized />;
-  }
+  // if (session?.user?.role !== "ADMIN") {
+  //   return <PageUnauthorized />;
+  // }
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={breadcrumbs} />
