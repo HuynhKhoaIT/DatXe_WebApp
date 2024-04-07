@@ -170,7 +170,7 @@ export async function getCustomerByUserId(
 ) {
   const customer = await prisma.customer.findFirst({
     where: {
-      userId: (userId),
+      userId: (userId).toString(),
       status: {
         not: "DELETE",
       },
