@@ -61,8 +61,7 @@ const blogs = [
   },
 ];
 export default async function Home() {
-  const categories = await getCategories({"garageId":"2"});
-  console.log('categories',categories)
+  const categories = await getCategories({ garageId: "2" });
   const productsRelate = await getProducts({
     garageId: 0,
   });
@@ -90,7 +89,6 @@ export default async function Home() {
       productsRelate={productsRelate}
       servicesHot={servicesHot}
       productsHot={productsHot}
-      blogs={blogs}
     />
   );
 }

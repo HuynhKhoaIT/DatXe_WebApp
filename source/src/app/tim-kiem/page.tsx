@@ -28,6 +28,7 @@ export default function Search() {
       setProductCount={setProductCount}
       isPending={isPending}
       fillter={categories}
+      isFetching={isFetching}
     />
   );
 }

@@ -1,3 +1,4 @@
+"use client";
 import styles from "./index.module.scss";
 import bgLanding from "@/assets/images/bgLanding.svg";
 import bgLanding2 from "@/assets/images/bgLanding2.png";
@@ -13,6 +14,7 @@ import ProductsHot from "./ProductsHot";
 import Blogs from "./Blogs/Blogs";
 import ProductSuggestions from "./ProductSuggestions/ProductSuggestions";
 import Reassons from "./Reasons/Reasons";
+import { useNewsList } from "@/app/hooks/news/useNews";
 
 const LandingPageDesktop = ({
   categories,
@@ -20,7 +22,6 @@ const LandingPageDesktop = ({
   productsRelate,
   servicesHot,
   productsHot,
-  blogs,
 }: any) => {
   const slideshowData = [
     {
@@ -30,6 +31,8 @@ const LandingPageDesktop = ({
       image: image2.src,
     },
   ];
+
+  const { data: blogs, isLoading, isFetching } = useNewsList(10);
   return (
     <div className="bg-white">
       <CarouselDesktop slideshowData={slideshowData} />
@@ -53,7 +56,7 @@ const LandingPageDesktop = ({
         <ProductsHot data={productsHot?.data} />
       </div>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
-        <Blogs blogs={blogs} />
+        <Blogs blogs={blogs?.data} isLoading={isLoading || isFetching} />
       </div>
       <ProductSuggestions data={productsRelate?.data} />
       <div

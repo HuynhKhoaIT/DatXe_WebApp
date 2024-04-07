@@ -12,8 +12,8 @@ export default function NewDetailPage({
   return (
     <div>
       <Banner data={newsData?.data} loading={newsDataLoading} />
-      <Container>
-        <Grid gutter={8}>
+      <Container className={styles.containerNews}>
+        <Grid gutter={20}>
           <Grid.Col span={9}>
             <Box w={"100%"}>
               {newsData ? (

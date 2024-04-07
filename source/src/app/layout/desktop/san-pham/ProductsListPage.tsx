@@ -9,43 +9,29 @@ import { Sort } from "@/app/components/elements/shop-sort";
 import ProductItem from "@/app/components/elements/product/ProductItem1";
 import ProductItem2 from "@/app/components/elements/product/ProductItem2";
 
-export default function ProductsListPage({ categroies }: any) {
-  const searchParams = useSearchParams();
-  const [products, setProducts] = useState<any>([]);
-  const [activePage, setActivePage] = useState(1);
-  async function getProductsHot(params: string, page: number) {
-    const res = await fetch(
-      `/api/products?isProduct=1&page=${page}&${params}`,
-      {
-        method: "GET",
-      }
-    );
-    if (!res.ok) {
-      throw new Error(`HTTP error! Status: ${res.status}`);
-    }
-    const data = await res.json();
-    return data;
-  }
-
+export default function ProductsListPage({
+  categories,
+  products,
+  isLoading,
+  productCount,
+  setProductCount,
+  isFetching,
+}: any) {
+  const [categoryFilter, setCategoryFilter] = useState();
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const productsData = await getProductsHot(
-          searchParams.toString(),
-          activePage
-        );
-        setProducts(productsData);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-    fetchData();
-  }, [searchParams, activePage]);
+    // if (!categroies) return;
+    const dataOption = categories?.data?.map((item: any) => ({
+      value: item.id.toString(),
+      name: item.title,
+    }));
+    setCategoryFilter(dataOption);
+  }, [categories]);
+
   return (
     <Body>
       <Body.Sider>
         <FilterRadio
-          data={categroies}
+          data={categoryFilter}
           filterName="Danh mục"
           keyName="categoryId"
         />
@@ -65,6 +51,17 @@ export default function ProductsListPage({ categroies }: any) {
             <Button size = 'md' color={"var(--theme-color)"}>Xem Thêm</Button>
           </Flex> */}
         </Box>
+        {productCount < products?.total && (
+          <Flex justify="center" mt={36}>
+            <Button
+              color={"var(--theme-color)"}
+              onClick={() => setProductCount(productCount + 5)}
+              disabled={isFetching}
+            >
+              Xem Thêm
+            </Button>
+          </Flex>
+        )}
       </Body.Content>
     </Body>
   );
