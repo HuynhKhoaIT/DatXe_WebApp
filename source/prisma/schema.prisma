@@ -111,7 +111,7 @@ model Product {
   name            String
   slug            String?
   sku             String?
-  description     String?
+  description     String?                 @db.Text
   price           Int                    @default(0)
   salePrice       Int                    @default(0)
   timeSaleStart   DateTime?              @default(now())
@@ -424,8 +424,8 @@ model Post{
   uuId              String?
   slug              String?
   title             String
-  description       String
-  shortDescription  String?
+  description       String @db.Text
+  shortDescription  String?   @db.Text
   thumbnail         String
   categories        CategoriesOnPosts[]
   status            STATUS @default(DRAFT)

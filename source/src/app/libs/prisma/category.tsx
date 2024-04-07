@@ -18,7 +18,7 @@ export async function getCategories(requestData: any) {
         titleFilter = requestData.s;
     }
     
-    let garageId:any = 0;
+    let garageId:any = "0";
     if(requestData.garageId){
       garageId = requestData.garageId
     }
@@ -44,7 +44,7 @@ export async function getCategories(requestData: any) {
                         in: arrayStatus,
                     },
                     garageId:{
-                      in: [Number(process.env.GARAGE_DEFAULT),garageId]
+                      in: [(process.env.GARAGE_DEFAULT),garageId]
                     }
                 },
             ],
@@ -58,7 +58,7 @@ export async function getCategories(requestData: any) {
                       in: arrayStatus,
                   },
                   garageId:{
-                    in: [Number(process.env.GARAGE_DEFAULT),garageId]
+                    in: [(process.env.GARAGE_DEFAULT),garageId]
                   }
               },
           ],
@@ -90,10 +90,10 @@ export async function createCategory(category: any) {
   }
 }
 
-export async function updateCategory(id: number, category: any) {
+export async function updateCategory(id: string, category: any) {
   try {
     const categoryFromDB = await prisma.productCategory.update({
-      where: { id: Number(id) },
+      where: { id: (id) },
       data: category,
     });
     return { product: categoryFromDB };
@@ -102,10 +102,10 @@ export async function updateCategory(id: number, category: any) {
   }
 }
 
-export async function deleteCategory(id: number) {
+export async function deleteCategory(id: string) {
   try {
     const category = await prisma.productCategory.delete({
-      where: { id: Number(id) },
+      where: { id: (id) },
     });
     return { category };
   } catch (error) {
@@ -113,10 +113,10 @@ export async function deleteCategory(id: number) {
   }
 }
 
-export async function getCategoryById(id: number) {
+export async function getCategoryById(id: string) {
   try {
     const category = await prisma.productCategory.findUnique({
-      where: { id: Number(id) },
+      where: { id: (id) },
     });
     return { category };
   } catch (error) {
@@ -124,7 +124,7 @@ export async function getCategoryById(id: number) {
   }
 }
 
-export async function syncCategoryFromDlbd(catData: any,garageId: number){
+export async function syncCategoryFromDlbd(catData: any,garageId: string){
   const cat = await prisma.productCategory.findFirst({
     where:{
       title: catData.name,
