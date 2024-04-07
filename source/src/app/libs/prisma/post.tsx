@@ -104,13 +104,13 @@ export async function updatePost(post: any) {
   }
 }
 
-export async function findPost(uuId: string) {
+export async function findPost(id: string) {
   return await prisma.post.findFirstOrThrow({
     where: {
       status: {
         not: "DELETE",
       },
-      uuId,
+      id,
     },
   });
 }
