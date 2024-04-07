@@ -15,8 +15,6 @@ import { notifications } from "@mantine/notifications";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import InfoCar from "./_component/InfoCar";
 import InfoCart from "./_component/InfoCart";
-import InfoDate from "./_component/InfoDate";
-import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { useRouter } from "next/navigation";
 import Container from "../components/common/Container";
@@ -24,7 +22,7 @@ import styles from "./index.module.scss";
 import { modals } from "@mantine/modals";
 import Typo from "../components/elements/Typo";
 import { DatePickerInput, DateTimePicker } from "@mantine/dates";
-export default function CartComponent({ myAccount, carsData }: any) {
+export default function CartComponent({ myAccount }: any) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [time, setTime] = useState(dayjs().format("HH:mm:ss"));
@@ -246,7 +244,6 @@ export default function CartComponent({ myAccount, carsData }: any) {
               <InfoCar
                 myAccount={myAccount}
                 form={form}
-                carsData={carsData}
                 // carDetail={carDetail}
                 // setCarDetail={setCarDetail}
               />

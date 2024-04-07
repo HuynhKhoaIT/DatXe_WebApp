@@ -10,6 +10,7 @@ export default function ComboboxField({
   value,
   setValue,
 }: any) {
+  console.log(carsData);
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   });
@@ -25,7 +26,7 @@ export default function ComboboxField({
     form.setFieldValue("carModelName", data?.modelName?.title);
     form.setFieldValue("carYear", data?.yearName?.title);
   };
-  const options = carsData.map((item: any, index: number) => (
+  const options = carsData?.map((item: any, index: number) => (
     <Combobox.Option value={item.numberPlates} key={index}>
       <div
         style={{
