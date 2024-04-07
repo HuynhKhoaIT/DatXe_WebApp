@@ -10,47 +10,50 @@ import {
   TextInput,
   useCombobox,
 } from "@mantine/core";
-import {
-  useDebouncedValue,
-  useDisclosure,
-  useValidatedState,
-} from "@mantine/hooks";
+import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import { IconCamera } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 
-export function AutocompletePhone({
+export function AutocompleteLicensePlates({
   debounceTime = 600,
   getOptionData,
   form,
   name,
   placeholder,
+  isCamera = false,
   w,
+  setValueInput,
   isClear = true,
   label,
-  handlersLoadingCustomer,
-  isUser,
+  handleGetInfo,
+  disabled,
 }: any) {
-  const [errorText, setErrorText] = useState<any>();
   const searchParams = useSearchParams();
   const initialValues: any = searchParams.get(name);
   const values = form?.values;
   const [loading, setLoading] = useState(false);
-  const [groceries, setGroceries] = useState<any>([]);
+  const [groceries, setGroceries] = useState([]);
+  const [value, setValue] = useState("");
   const [opened, { open: open, close: close }] = useDisclosure(false);
 
   useEffect(() => {
     if (values?.[name] == null) {
-      form.setFieldValue(name, "");
+      setValue("");
+    } else {
+      setValue(values?.[name]);
     }
   }, [values?.[name]]);
-  const [debounced] = useDebouncedValue(values?.[name], debounceTime);
+  const [debounced] = useDebouncedValue(value, debounceTime);
   const fetchData = async () => {
     const data: any = await getOptionData({ s: debounced });
     setGroceries(data);
     setLoading(false);
     return data;
   };
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
   useEffect(() => {
     if (debounced?.length >= 3) {
       setLoading(true);
@@ -59,6 +62,12 @@ export function AutocompletePhone({
   }, [debounced]);
 
   const combobox = useCombobox();
+
+  const [
+    openedModalCamera,
+    { open: openModalCamera, close: closeModalCamera },
+  ] = useDisclosure(false);
+
   const options = groceries?.map((item: any, index: number) => (
     <Combobox.Option
       defaultValue={initialValues}
@@ -72,11 +81,15 @@ export function AutocompletePhone({
           padding: "10px 0",
         }}
         onClick={() => {
-          setErrorText(null);
+          console.log(item.otherData);
           form.setFieldValue(name, item.label);
-          form.setFieldValue("customerId", item.value);
-          form.setFieldValue("fullName", item.otherData.fullName);
-          form.setFieldValue("address", item.otherData.address);
+          form.setFieldValue("carId", item.value);
+          handleGetInfo(item.label);
+          form.setFieldValue("customerId", item.otherData.customerId);
+          // form.setFieldValue("fullName", item.otherData.fullName);
+          // form.setFieldValue("address", item.otherData.address);
+
+          if (setValueInput) setValueInput(item.label);
           open();
         }}
       >
@@ -88,7 +101,7 @@ export function AutocompletePhone({
   return (
     <Combobox
       onOptionSubmit={(optionValue) => {
-        form.setFieldValue(name, optionValue);
+        setValue(optionValue);
         combobox.closeDropdown();
       }}
       store={combobox}
@@ -96,71 +109,54 @@ export function AutocompletePhone({
     >
       <Combobox.Target>
         <Grid w={w} justify="space-between" gutter={0}>
-          <Grid.Col span={12}>
+          <Grid.Col span={isCamera ? 10 : 12}>
             <TextInput
               size="lg"
               radius={0}
-              error={errorText}
               data-autofocus
               label={label}
               placeholder={placeholder}
-              value={form.values.phoneNumber}
+              value={value}
               onChange={(event) => {
-                setErrorText(null);
-                form.setFieldValue(name, event.target.value);
-                if (!isUser) {
-                  form.setFieldValue("customerId", null);
-                }
-                form.setFieldValue("fullName", "");
-                form.setFieldValue("address", "");
+                setValue(event.currentTarget.value);
+                form.setFieldValue("carId", null);
+                form.setFieldValue("carBrandId", "");
+                form.setFieldValue("carNameId", "");
+                form.setFieldValue("carYearId", "");
+                form.setFieldValue("carBrand", "");
+                form.setFieldValue("carName", "");
+                form.setFieldValue("carYear", "");
+                if (setValueInput) setValueInput(event.currentTarget.value);
                 combobox.openDropdown();
                 combobox.updateSelectedOptionIndex();
               }}
               onClick={() => combobox.openDropdown()}
               onFocus={() => combobox.openDropdown()}
-              onBlur={async (event) => {
-                const is = event.target.value
-                  ? /^0[1-9][0-9]{8}$/.test(event.target.value)
-                    ? null
-                    : "Số điện thoại sai định dạng"
-                  : "Vui lòng nhập số điện thoại";
-                setErrorText(is);
-
-                if (is == null && form.values.customerId == null) {
-                  handlersLoadingCustomer.open();
-                  const infoCustomer = await fetchData();
-
-                  form.setFieldValue("customerId", infoCustomer[0]?.value);
-                  form.setFieldValue(
-                    "fullName",
-                    infoCustomer[0]?.otherData?.fullName
-                  );
-                  form.setFieldValue(
-                    "address",
-                    infoCustomer[0]?.otherData?.address
-                  );
-                }
-
+              onBlur={() => {
+                combobox.closeDropdown();
                 if (!opened && isClear) {
-                  form.setFieldValue(name, "");
+                  setValue("");
                 }
-                handlersLoadingCustomer.close();
               }}
+              disabled={disabled}
               rightSection={
                 loading ? (
                   <Loader size={18} />
                 ) : (
-                  values[name] !== "" && (
+                  value !== "" &&
+                  !disabled && (
                     <CloseButton
                       size="sm"
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => {
-                        if (!isUser) {
-                          form.setFieldValue("customerId", null);
-                        }
-                        form.setFieldValue("fullName", "");
-                        form.setFieldValue("address", "");
-                        form.setFieldValue(name, "");
+                        form.setFieldValue("carId", null);
+                        form.setFieldValue("carBrandId", "");
+                        form.setFieldValue("carNameId", "");
+                        form.setFieldValue("carYearId", "");
+                        form.setFieldValue("carBrand", "");
+                        form.setFieldValue("carName", "");
+                        form.setFieldValue("carYear", "");
+                        setValue("");
                       }}
                       aria-label="Clear value"
                     />
@@ -169,6 +165,26 @@ export function AutocompletePhone({
               }
             />
           </Grid.Col>
+          {isCamera && (
+            <Grid.Col
+              style={{ display: "flex", justifyContent: "flex-end" }}
+              span={2}
+            >
+              <ActionIcon
+                onClick={openModalCamera}
+                w={50}
+                h={50}
+                mt={24.8}
+                variant="filled"
+                aria-label="Settings"
+              >
+                <IconCamera
+                  style={{ width: "70%", height: "70%" }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </Grid.Col>
+          )}
         </Grid>
       </Combobox.Target>
 
@@ -181,6 +197,13 @@ export function AutocompletePhone({
           )}
         </Combobox.Options>
       </Combobox.Dropdown>
+      <DynamicModalCamera
+        openModal={openedModalCamera}
+        close={closeModalCamera}
+        setNumberPlate={setValue}
+        setValueInput={setValueInput}
+        openDropdown={() => combobox.openDropdown()}
+      />
     </Combobox>
   );
 }

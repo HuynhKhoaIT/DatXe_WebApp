@@ -18,6 +18,7 @@ export async function getOptionsCar({ s }: any) {
         const dataOption = res?.data?.map((item: any) => ({
             value: item.id.toString(),
             label: item.numberPlates,
+            otherData: item,
         }));
         return dataOption;
     } catch (error) {
@@ -37,7 +38,7 @@ export async function deleteOrder(id: string) {
 
 export async function getOptionsPhone( {s} : any) {
     try {
-        const res = await axios.get(`/api/admin/customer/autocomplete?phoneNumber=${s}`);
+        const res = await axios.get(`/api/admin/customer/autocomplete?s=${s}`);
         if (!res.data) {
             throw new Error('Failed to fetch data');
         }

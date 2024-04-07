@@ -22,6 +22,9 @@ function CropImageLink({
   showRequired,
   showEditButton,
   srcIcon,
+  idUpload = "image-uploader",
+  idResult = "image-result",
+  idImageContainer = "image-container",
 }: any) {
   return (
     <div className={className}>
@@ -46,13 +49,16 @@ function CropImageLink({
           showRequired={showRequired}
           showEditButton={showEditButton}
           srcIcon={srcIcon}
+          idUpload={idUpload}
+          idResult={idResult}
+          idImageContainer={idImageContainer}
         />
       </AntdImgCrop>
     </div>
   );
 }
-const getFile = () => {
-  document?.getElementById("image-uploader")?.click();
+const getFile = (idUpload = "image-uploader") => {
+  document?.getElementById(idUpload)?.click();
 };
 function Component({
   bgColor,
@@ -68,13 +74,16 @@ function Component({
   showRequired,
   showEditButton,
   srcIcon,
+  idUpload,
+  idResult,
+  idImageContainer,
 }: any) {
   const [isEdit, setEdit] = useState(defaultImage && defaultImage !== "");
   useEffect(() => {
     if (defaultImage && defaultImage !== "") {
-      const imageContainer: any = document.getElementById("image-container");
+      const imageContainer: any = document.getElementById(idImageContainer);
       imageContainer.style.display = "none";
-      const imagePreview: any = document.getElementById("image-result");
+      const imagePreview: any = document.getElementById(idResult);
       imagePreview.style.display = "block";
     }
   }, []);
@@ -84,8 +93,8 @@ function Component({
       <div className={styles.wrapper}>
         <div
           className={styles.round}
-          id="image-container"
-          onClick={getFile}
+          id={idImageContainer}
+          onClick={() => getFile(idUpload)}
           style={{ backgroundColor: bgColor, color: color }}
         >
           {preFix && <img src={preFix} alt="" className={styles.preFix} />}
@@ -97,16 +106,17 @@ function Component({
 
       <input
         type="file"
+        name={name}
         accept="image/png, image/jpeg"
-        id="image-uploader"
+        id={idUpload}
         className={styles.imageUploader}
         onChange={async (e: any) => {
           const files = Array.from(e.target.files)[0];
           const filePreview = await beforeUpload(files, []);
           try {
-            const imagePreview: any = document.getElementById("image-result");
+            const imagePreview: any = document.getElementById(idResult);
             const imageContainer: any = document.getElementById(
-              "image-container"
+              idImageContainer
             );
             imagePreview.style.display = "block";
             imagePreview.src = URL.createObjectURL(filePreview);
@@ -122,15 +132,19 @@ function Component({
       />
       <div className={styles.imagePreviewContaier}>
         <img
-          id="image-result"
+          id={idResult}
           className={styles.imagePreview}
           src={defaultImage}
           height="150"
           alt="Image preview"
-          onClick={getFile}
+          onClick={() => getFile(idUpload)}
         />
         {srcIcon && (
-          <img src={srcIcon} onClick={getFile} className={styles.editIcon} />
+          <img
+            src={srcIcon}
+            onClick={() => getFile(idUpload)}
+            className={styles.editIcon}
+          />
         )}
       </div>
     </>

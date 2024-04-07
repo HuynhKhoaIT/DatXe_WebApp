@@ -146,3 +146,23 @@ export const useCustomers = (): useCustomers => {
         setPageDlbd,
     };
 };
+
+
+
+// get detail
+const fetchCustomerDetail = async (id: string) => {
+    const response = await fetch(`/api/admin/customer/${id}`);
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch customer', response);
+    }
+    return await response.json();
+};
+
+const useCustomerDetail = (id: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.customerDetail, id],
+        queryFn: () => fetchCustomerDetail(id),
+    });
+};
+
+export { useCustomerDetail, fetchCustomerDetail };

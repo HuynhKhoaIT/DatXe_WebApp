@@ -43,7 +43,8 @@ import { getOptionsCar } from "../until";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
 import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
-import InfoCard from "../_component/InfoCard";
+import InfoCustomer from "../_component/InfoCustomer";
+import InfoCart from "../_component/InfoCart";
 
 export default function OrderForm({
   isEditing = false,
@@ -92,13 +93,21 @@ export default function OrderForm({
   ] = useDisclosure(false);
 
   const form = useForm({
+    validateInputOnBlur: true,
     initialValues: {
       detail: selectedProducts,
       numberPlates: "",
       customerId: 0,
       carId: 0,
+      phoneNumber: "",
     },
     validate: {
+      phoneNumber: (value) =>
+        value
+          ? /^0[1-9][0-9]{8}$/.test(value)
+            ? null
+            : "Số điện thoại sai định dạng"
+          : "Vui lòng nhập số điện thoại",
       numberPlates: (value) => (value?.length > 0 ? null : "Vui lòng nhập..."),
     },
   });
@@ -933,122 +942,20 @@ export default function OrderForm({
           <>
             <Grid gutter={12}>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                <div className={styles.card}>
-                  <Typo
-                    size="primary"
-                    type="bold"
-                    style={{ color: "var(--primary-orange)" }}
-                    className={styles.title}
-                  >
-                    Thông tin xe
-                  </Typo>
-                  <Grid gutter={12} className={styles.marketingInfo}>
-                    <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                      <TextInput
-                        withAsterisk
-                        size="lg"
-                        radius={0}
-                        error="vui lòng nhập"
-                        {...form.getInputProps("numberPlates")}
-                        label="Biển số xe"
-                        type="text"
-                        placeholder="Biển số xe"
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
-                      {isUser ? (
-                        <TextInput
-                          size="lg"
-                          radius={0}
-                          {...form.getInputProps("carBrand")}
-                          label="Hãng xe"
-                          type="text"
-                          placeholder="Hãng xe"
-                          readOnly
-                        />
-                      ) : (
-                        <Select
-                          size="lg"
-                          radius={0}
-                          {...form.getInputProps("carBrandId")}
-                          label="Hãng xe"
-                          type="text"
-                          data={brandOptions}
-                          placeholder="Hãng xe"
-                          onChange={async (value) => {
-                            const optionsData = await getOptionsModels(
-                              Number(value)
-                            );
-                            setModelOptions(optionsData);
-                            form.setFieldValue("carBrandId", value);
-                            form.setFieldValue("carNameId", null);
-                            form.setFieldValue("carYearId", null);
-                          }}
-                        />
-                      )}
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
-                      {isUser ? (
-                        <TextInput
-                          size="lg"
-                          radius={0}
-                          {...form.getInputProps("carName")}
-                          label="Dòng xe"
-                          type="text"
-                          placeholder="Dòng xe"
-                          readOnly
-                        />
-                      ) : (
-                        <Select
-                          size="lg"
-                          radius={0}
-                          {...form.getInputProps("carNameId")}
-                          label="Dòng xe"
-                          type="text"
-                          data={modelOptions}
-                          placeholder="Dòng xe"
-                          onChange={async (value) => {
-                            const optionsData = await getOptionsYearCar(
-                              Number(value)
-                            );
-                            setYearCarOptions(optionsData);
-                            form.setFieldValue("carNameId", value);
-                            form.setFieldValue("carYearId", null);
-                          }}
-                        />
-                      )}
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
-                      {isUser ? (
-                        <TextInput
-                          size="lg"
-                          radius={0}
-                          {...form.getInputProps("carYear")}
-                          label="Năm sản xuất"
-                          type="text"
-                          placeholder="Năm sản xuất"
-                          readOnly
-                        />
-                      ) : (
-                        <Select
-                          size="lg"
-                          radius={0}
-                          {...form.getInputProps("carYearId")}
-                          label="Năm SX"
-                          data={yearCarOptions}
-                          type="text"
-                          placeholder="Năm sản xuất"
-                          onChange={(value) => {
-                            form.setFieldValue("carYearId", value);
-                          }}
-                        />
-                      )}
-                    </Grid.Col>
-                  </Grid>
-                </div>
+                <InfoCart
+                  brandOptions={brandOptions}
+                  isUser={isUser}
+                  setModelOptions={setModelOptions}
+                  modelOptions={modelOptions}
+                  yearCarOptions={yearCarOptions}
+                  setYearCarOptions={setYearCarOptions}
+                  form={form}
+                  handleGetInfo={handleGetInfo}
+                  handlersIsUser
+                />
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                <InfoCard form={form} handleGetInfo={handleGetInfo} />
+                <InfoCustomer form={form} isUser={isUser} />
               </Grid.Col>
             </Grid>
             <div style={{ marginTop: 20 }} className={styles.cardListProduct}>

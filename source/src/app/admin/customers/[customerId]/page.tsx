@@ -2,31 +2,24 @@
 import React, { useEffect, useState } from "react";
 import CustomersForm from "../create/CustomersForm";
 import axios from "axios";
+import { useCustomerDetail } from "../../hooks/customer/useCustomer";
 export const revalidate = 60;
 export default function UpdateCustomer({
   params,
 }: {
-  params: { customerId: number };
+  params: { customerId: string };
 }) {
-  const [customer, setCustomer] = useState(null);
+  const { data: customer, isLoading, isFetching } = useCustomerDetail(
+    params?.customerId
+  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/api/admin/customer/${params?.customerId}`
-        );
-        setCustomer(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [params?.customerId]);
   return (
     <div style={{ width: "100%", margin: "auto" }}>
-      <CustomersForm isEditing={true} dataDetail={customer} />
+      <CustomersForm
+        isEditing={true}
+        dataDetail={customer}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
