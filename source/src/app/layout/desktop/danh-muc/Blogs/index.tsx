@@ -14,6 +14,7 @@ const Blogs = ({ blogs }: any) => {
         linkToList={"/blogs"}
         id="blogs-expert"
         fullWidth={true}
+        hiddenShowMore={blogs?.length < 8}
       >
         <SlickCarousel
           column={7}

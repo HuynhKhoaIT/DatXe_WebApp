@@ -12,6 +12,7 @@ const ViewedProducts = ({ viewedProducts }: any) => {
       title="Danh sách đã xem"
       linkToList={"/san-pham"}
       id="viewedProducts"
+      hiddenShowMore={viewedProducts?.length < 8}
     >
       <SlickCarousel column={4} gap={8} dots={true}>
         {viewedProducts?.map((product: IProduct, index: number) => (

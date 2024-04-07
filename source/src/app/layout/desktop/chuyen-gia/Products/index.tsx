@@ -11,6 +11,7 @@ const Products = ({ data }: any) => {
         title="Sản phẩm của chuyên gia"
         linkToList={"/san-pham"}
         id="products-expert"
+        hiddenShowMore={data?.length < 8}
       >
         <div className={styles.rowItem}>
           {data?.map((product: IProduct, index: number) => (

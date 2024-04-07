@@ -12,6 +12,7 @@ const Service = ({ data }: any) => {
         subTitle="Các dịch vụ dành cho xe bạn"
         linkToList={"/dich-vu"}
         id="services-expert"
+        hiddenShowMore={data?.length < 8}
       >
         <div className={styles.rowItem}>
           {data?.map((product: IProduct, index: number) => (
