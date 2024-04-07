@@ -6,16 +6,16 @@ import { getProductById } from '@/app/libs/prisma/product';
 import { findPost, updatePost } from '@/app/libs/prisma/post';
 import convertToSlug from '@/utils/until';
 
-export async function GET(request: NextRequest, { params }: { params: { uuId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const uuId = params.uuId;
+        const id = params.id;
 
-        if (!uuId) {
-            return new NextResponse("Missing 'uuId' parameter");
+        if (!id) {
+            return new NextResponse("Missing 'id' parameter");
         }
         const session = await getServerSession(authOptions);
         if (session) {
-            const post = await findPost(uuId);
+            const post = await findPost(id);
             return NextResponse.json({ data: post });
         }
         throw new Error('Chua dang nhap');
@@ -24,15 +24,15 @@ export async function GET(request: NextRequest, { params }: { params: { uuId: st
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { uuId: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
 
         
         if (session && session.user?.role == 'ADMINGARAGE') {
             const json = await request.json();
-            const uuId = params.uuId;
-            const postData = await findPost(uuId);
+            const id = params.id;
+            const postData = await findPost(id);
             
             if(json.title){
                 postData.title = json.title;
