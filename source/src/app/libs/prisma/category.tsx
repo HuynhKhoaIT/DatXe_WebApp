@@ -17,10 +17,9 @@ export async function getCategories(requestData: any) {
       titleFilter = requestData.s;
     }
 
-    
-    let garageId:any = "0";
-    if(requestData.garageId){
-      garageId = requestData.garageId
+    let garageId: any = "0";
+    if (requestData.garageId) {
+      garageId = requestData.garageId;
     }
     if (requestData.session) {
       garageId = await getGarageIdByDLBDID(
@@ -40,33 +39,27 @@ export async function getCategories(requestData: any) {
         },
         take: 10,
         where: {
-
-            AND: [
-                {
-                    status: {
-                        in: arrayStatus,
-                    },
-                    garageId:{
-                      in: [(process.env.GARAGE_DEFAULT),garageId]
-                    }
-                },
-            ],
+          AND: [
+            {
+              status: {
+                in: arrayStatus,
+              },
+              garageId: {
+                in: [process.env.GARAGE_DEFAULT, garageId],
+              },
+            },
+          ],
         },
       }),
       prisma.productCategory.count({
         where: {
           AND: [
-
-              {
-                  status: {
-                      in: arrayStatus,
-                  },
-                  garageId:{
-                    in: [(process.env.GARAGE_DEFAULT),garageId]
-                  }
+            {
+              status: {
+                in: arrayStatus,
               },
               garageId: {
-                in: [Number(process.env.GARAGE_DEFAULT), garageId],
+                in: [process.env.GARAGE_DEFAULT, garageId],
               },
             },
           ],
@@ -101,7 +94,7 @@ export async function createCategory(category: any) {
 export async function updateCategory(id: string, category: any) {
   try {
     const categoryFromDB = await prisma.productCategory.update({
-      where: { id: (id) },
+      where: { id: id },
       data: category,
     });
     return { product: categoryFromDB };
@@ -113,7 +106,7 @@ export async function updateCategory(id: string, category: any) {
 export async function deleteCategory(id: string) {
   try {
     const category = await prisma.productCategory.delete({
-      where: { id: (id) },
+      where: { id: id },
     });
     return { category };
   } catch (error) {
@@ -124,7 +117,7 @@ export async function deleteCategory(id: string) {
 export async function getCategoryById(id: string) {
   try {
     const category = await prisma.productCategory.findUnique({
-      where: { id: (id) },
+      where: { id: id },
     });
     return { category };
   } catch (error) {
@@ -132,8 +125,7 @@ export async function getCategoryById(id: string) {
   }
 }
 
-
-export async function syncCategoryFromDlbd(catData: any,garageId: string){
+export async function syncCategoryFromDlbd(catData: any, garageId: string) {
   const cat = await prisma.productCategory.findFirst({
     where: {
       title: catData.name,
