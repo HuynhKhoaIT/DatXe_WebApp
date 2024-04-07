@@ -24,13 +24,13 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
         if (session && session.user?.role == 'ADMINGARAGE') {
             const id = params.id;
-            const garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
-            let createdBy = 0;
+            const garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
+            let createdBy = "0";
             let isProduct = true;
             let catArr: any = [];
             if (!id) {
@@ -119,10 +119,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
                 };
             }
             if (session?.user?.id) {
-                createdBy = Number(session.user.id);
+                createdBy = (session.user.id);
             }
             if (json.isProduct.length) {
-                isProduct = Number(json.isProduct) == 1 ? true : false;
+                isProduct = (json.isProduct) == 1 ? true : false;
             }
 
             let productUpdateData = {
@@ -138,7 +138,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
                 metaDescription: json.metaDescription ?? null,
                 status: json.status,
                 createdBy: createdBy,
-                garageId: garageId,
+                garageId: garageId ?? "2",
                 brandDetail: JSON.stringify(json.brands),
                 categories: {
                     deleteMany: {},
@@ -157,7 +157,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
             };
             const updatedPost = await prisma.product.update({
                 where: {
-                    id: Number(id),
+                    id:(id),
                 },
                 data: productUpdateData,
                 include: {
@@ -183,7 +183,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const product = await prisma.product.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',

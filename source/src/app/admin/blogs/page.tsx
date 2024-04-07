@@ -119,7 +119,7 @@ const Blogs = () => {
           <>
             <Link
               href={{
-                pathname: `/admin/blogs/${record.uuId}`,
+                pathname: `/admin/blogs/${record.id}`,
               }}
             >
               <Tooltip label="Cập nhật" withArrow position="bottom">
@@ -146,7 +146,7 @@ const Blogs = () => {
                 color="red"
                 onClick={(e) => {
                   openDeleteProduct();
-                  setDeleteRow(record.uuId);
+                  setDeleteRow(record.id);
                 }}
               >
                 <IconTrash size={16} color="red" />

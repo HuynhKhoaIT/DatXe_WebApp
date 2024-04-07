@@ -92,7 +92,7 @@ export default function ProductForm({
         form.setFieldValue("images", dataDetail?.product?.images);
         setImages(JSON?.parse(dataDetail?.product?.images));
       }
-      setValueRTE(dataDetail?.product.metaDescription);
+      setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
       form.setFieldValue("name", dataDetail?.product?.name);

@@ -275,10 +275,10 @@ export async function createProduct(product: any) {
   }
 }
 
-export async function updateProduct(id: number, product: any) {
+export async function updateProduct(id: string, product: any) {
   try {
     const productFromDB = await prisma.product.update({
-      where: { id: Number(id) },
+      where: { id: (id) },
       data: product,
     });
     return { product: productFromDB };
@@ -287,9 +287,9 @@ export async function updateProduct(id: number, product: any) {
   }
 }
 
-export async function deleteProduct(id: number) {
+export async function deleteProduct(id: string) {
   try {
-    const product = await prisma.product.delete({ where: { id: Number(id) } });
+    const product = await prisma.product.delete({ where: { id: (id) } });
     return { product };
   } catch (error) {
     return { error };
@@ -301,7 +301,7 @@ export async function getProductById(id: any) {
     const [product,avgReview] = await prisma.$transaction([
       prisma.product.findFirst({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         include: {
             categories: true,
@@ -335,7 +335,7 @@ export async function getProductById(id: any) {
         },
         _count: true,
         where:{
-          productId: Number(id),
+          productId: (id),
         },
       })
     ])

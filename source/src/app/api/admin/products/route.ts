@@ -66,9 +66,9 @@ export async function POST(request: Request) {
         if (session && session.user?.role == 'ADMINGARAGE') {
             let catArr: any = [];
             let brandArr: any = [];
-            let createdBy = 0;
+            let createdBy = "0";
 
-            let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
             let isProduct = true;
 
             if (!json.categories) {
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
                         assignedAt: new Date(),
                         category: {
                             connect: {
-                                id: parseInt(id.toString()),
+                                id: (id.toString()),
                             },
                         },
                     });
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
                     carBrandType: 'CARBRAND',
                     carModel: {
                         connect: {
-                            id: 1,
+                            id: "1",
                         },
                     },
                 };
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
                                 carBrandType: 'CARYEAR',
                                 carModel: {
                                     connect: {
-                                        id: Number(y),
+                                        id: (y),
                                     },
                                 },
                             };
@@ -129,7 +129,7 @@ export async function POST(request: Request) {
                             carBrandType: 'CARNAME',
                             carModel: {
                                 connect: {
-                                    id: Number(b.nameId),
+                                    id: (b.nameId),
                                 },
                             },
                         };
@@ -145,7 +145,7 @@ export async function POST(request: Request) {
                             carBrandType: 'CARYEAR',
                             carModel: {
                                 connect: {
-                                    id: Number(b.brandId),
+                                    id: (b.brandId),
                                 },
                             },
                         };
@@ -157,7 +157,7 @@ export async function POST(request: Request) {
                 });
             }
             if (session?.user?.id) {
-                createdBy = Number(session.user.id);
+                createdBy = (session.user.id);
             }
             if (typeof json.isProduct !== 'undefined') {
                 isProduct = Number(json.isProduct) == 1 ? true : false;
@@ -177,10 +177,10 @@ export async function POST(request: Request) {
                     images: json.images ?? null,
                     metaDescription: json.metaDescription ?? null,
                     status: json.status,
-                    createdBy: createdBy,
+                    createdBy: createdBy.toString(),
                     garageId: garageId,
-                    supplierId: Number(json.supplierId ?? 1),
-                    productBrandId: Number(json.productBrandId ?? 1),
+                    supplierId: (json.supplierId ?? "1"),
+                    productBrandId: (json.productBrandId ?? "1"),
                     isProduct: isProduct,
                     categories: {
                         create: catArr,
@@ -194,7 +194,7 @@ export async function POST(request: Request) {
 
             const updatedPost = await prisma.product.update({
                 where: {
-                    id: Number(product.id),
+                    id: (product.id),
                 },
                 data: {
                     slug: slugify(product.name.toString()) + '-' + product.id,
