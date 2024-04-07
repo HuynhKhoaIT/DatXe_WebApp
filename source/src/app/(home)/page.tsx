@@ -61,7 +61,8 @@ const blogs = [
   },
 ];
 export default async function Home() {
-  const categories = await getCategories({});
+  const categories = await getCategories({"garageId":"2"});
+  console.log('categories',categories)
   const productsRelate = await getProducts({
     garageId: 0,
   });
