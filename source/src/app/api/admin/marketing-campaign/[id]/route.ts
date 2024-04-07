@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { editMarketingCampaign, findMarketingCampaign } from '@/app/libs/prisma/marketingCampaign';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         if (!id) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         if (!id) {
@@ -36,7 +36,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     if (!id) {
         return new NextResponse("Missing 'id' parameter");
@@ -44,7 +44,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const deletePost = await prisma.marketingCampaign.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',

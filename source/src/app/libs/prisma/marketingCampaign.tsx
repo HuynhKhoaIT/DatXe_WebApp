@@ -62,10 +62,10 @@ export async function getMarketingCampaign(garage: Number,requestData: any) {
     };
 }
 
-export async function findMarketingCampaign(id: Number) {
+export async function findMarketingCampaign(id: string) {
     const marketingCampaign = await prisma.marketingCampaign.findUnique({
         where: {
-            id: Number(id),
+            id: (id),
         },
         include: {
             detail: {
@@ -151,29 +151,29 @@ export async function createMarketingCampaign(json: any) {
     }
 }
 
-export async function editMarketingCampaign(id: Number,json: any) {
+export async function editMarketingCampaign(id: string,json: any) {
     try {
 
         let detail: any = [];
         if(json.detail){
             json.detail.forEach(function (data: any) {
                 detail.push({
-                    productId: Number(data.productId),
+                    productId: (data.productId),
                     note: data.note,
                     price: Number(data.price),
                     priceSale: Number(data.priceSale ?? 0),
                     saleType: data.saleType,
                     saleValue: Number(data.saleValue).toString(),
                     quantity: Number(data.quantity),
-                    garageId: Number(json.garageId),
-                    createdBy: Number(json.createdBy),
+                    garageId: (json.garageId),
+                    createdBy: (json.createdBy),
                 });
             });
         }
 
         const updatedPost = await prisma.marketingCampaign.update({
             where: {
-                id: Number(id),
+                id: (id),
             },
             data: {
                 title: json.title,
@@ -217,10 +217,10 @@ export async function editMarketingCampaign(id: Number,json: any) {
     }
 }
 
-export async function updateMarketingCampaignStatus(id:Number,status:STATUS){
+export async function updateMarketingCampaignStatus(id:string,status:STATUS){
     const m = await prisma.marketingCampaign.findFirst({
         where: {
-            id: Number(id)
+            id: (id)
         },
         include:{
             detail: true
@@ -245,7 +245,7 @@ export async function updateMarketingCampaignStatus(id:Number,status:STATUS){
     }
     const rs = await prisma.marketingCampaign.update({
             where:{
-                id: Number(id)
+                id: (id)
             },
             data: {
                 status: status,

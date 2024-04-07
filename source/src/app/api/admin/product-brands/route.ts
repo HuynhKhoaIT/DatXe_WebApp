@@ -32,9 +32,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const json = await request.json();
-        let garageId = Number(process.env.GARAGE_DEFAULT);
+        let garageId = (process.env.GARAGE_DEFAULT);
         if (json.garageId) {
-            garageId = Number(json.garageId);
+            garageId = (json.garageId);
         }
         const productBrand = await prisma.productBrand.create({
             data: {

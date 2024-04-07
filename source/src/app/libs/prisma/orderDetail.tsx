@@ -1,10 +1,10 @@
 import prisma from "../prismadb";
 
-export async function createOrderDetail(orderId: Number,data: any) {
+export async function createOrderDetail(orderId: string,data: any) {
     try {
         const orderDetail = await prisma.orderDetail.create({
             data: {                
-                orderId: Number(orderId),
+                orderId: (orderId),
                 productId: data.productId,
                 note: data.note,
                 price: Number(data.price),
@@ -12,7 +12,7 @@ export async function createOrderDetail(orderId: Number,data: any) {
                 saleType: data.saleType,
                 quantity: Number(data.quantity),
                 subTotal: Number(data.subTotal ?? 0),
-                garageId: Number(data.garageId),
+                garageId: (data.garageId),
                 createdBy: data.createdBy,
                 status: data.status
             }

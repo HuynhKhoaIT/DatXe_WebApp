@@ -5,7 +5,7 @@ import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const now = new Date();
         const id = params.id;
@@ -175,7 +175,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     if (!id) {
         return new NextResponse("Missing 'id' parameter");

@@ -1,9 +1,9 @@
 import prisma from "../prismadb";
-export async function createMarketingCampaignDetail(marketingCampaignId: Number,json: any) {
+export async function createMarketingCampaignDetail(marketingCampaignId: string,json: any) {
     try {
         const marketingCampaignDetail = await prisma.marketingCampaignDetail.create({
             data: {                
-                marketingCampaignId: Number(marketingCampaignId),
+                marketingCampaignId: (marketingCampaignId),
                 productId: json.productId,
                 note: json.note,
                 price: json.price,

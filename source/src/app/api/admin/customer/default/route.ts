@@ -8,12 +8,12 @@ export async function POST(request: Request) {
         const json = await request.json();
         const session = await getServerSession(authOptions);
         if (session) {
-            let garageId = Number(process.env.GARAGE_DEFAULT);
+            let garageId = (process.env.GARAGE_DEFAULT);
             const customer = await prisma.customer.create({
                 data: {
                     fullName: json.fullName,
                     phoneNumber: json.phoneNumber,
-                    garageId: Number(garageId),
+                    garageId: (garageId)?.toString(),
                     status: 'PUBLIC',
                 },
             });

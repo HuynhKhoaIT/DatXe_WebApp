@@ -160,7 +160,7 @@ export async function createGarage(data: any) {
   }
 }
 
-export async function updateGarage(id: number, data: any) {
+export async function updateGarage(id: string, data: any) {
   try {
     let updateData = {
       routeId: Number(data.routeId),
