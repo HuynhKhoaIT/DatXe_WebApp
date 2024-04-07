@@ -34,9 +34,9 @@ export async function POST(request: Request) {
         if (session) {
             const json = await request.json();
             const customer = await getCustomerByUserId((session.user?.id ?? ""))
-            json.garageId = Number(process.env.GARAGE_DEFAULT);
-            json.userId = Number(session.user?.id);
-            json.customerId = Number(customer?.id)
+            json.garageId = (process.env.GARAGE_DEFAULT);
+            json.userId = (session.user?.id)?.toString();
+            json.customerId = (customer?.id)
             const car = await createCar(json);
             return new NextResponse(JSON.stringify(car), {
                 status: 201,

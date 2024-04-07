@@ -30,7 +30,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
       machineNumber: "",
       description: "",
       status: isEditing ? dataDetail?.status : "PUBLIC",
-      carStyleId: 1,
+      carStyleId: "1",
     },
     validate: {
       numberPlates: (value) => (value?.length > 0 ? null : "Vui lòng nhập..."),
