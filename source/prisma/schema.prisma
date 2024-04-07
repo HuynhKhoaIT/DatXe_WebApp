@@ -28,7 +28,7 @@ model Wards{
   garage             Garage[]
 }
 model Garage {
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   routeId             Int?
   code                String
   uuId                String?
@@ -75,28 +75,28 @@ model Garage {
 
 
 model Amenities {
-  id                  Int @id @default(autoincrement())
+  id                  String @id @default(uuid())
   title               String
   garagesOnAmenities  GaragesOnAmenities[]
 }
 model GaragesOnAmenities {
   garage            Garage         @relation(fields: [garageId], references: [id])
-  garageId          Int // relation scalar field (used in the `@relation` attribute above)
+  garageId          String // relation scalar field (used in the `@relation` attribute above)
   amenities         Amenities @relation(fields: [amenityId], references: [id])
-  amenityId         Int // relation scalar field (used in the `@relation` attribute above)
+  amenityId         String // relation scalar field (used in the `@relation` attribute above)
   assignedAt        DateTime        @default(now())
   assignedBy        String
 
   @@id([garageId, amenityId])
 }
 model ProductCategory {
-  id          Int   @id @default(autoincrement())
+  id          String @id @default(uuid())
   title       String
   slug        String
   description String?
   image       String
-  createdBy   Int                    @default(1)
-  garageId    Int                    @default(1)
+  createdBy   String                    @default("1")
+  garageId    String                    @default("1")
   status      STATUS                 @default(DRAFT)
   createdAt   DateTime               @default(now())
   updatedAt   DateTime               @updatedAt
@@ -104,7 +104,7 @@ model ProductCategory {
 }
 
 model Product {
-  id              Int                    @id @default(autoincrement())
+  id              String @id @default(uuid())
   uuID            String?
   productId       Int                    @default(0)
   isProduct       Boolean                @default(true)
@@ -123,13 +123,13 @@ model Product {
   metaDescription String?
   brandDetail     String?
   supplier        Suppiler @relation(fields: [supplierId], references: [id])
-  supplierId      Int                    @default(1)
+  supplierId      String                    @default("1")
   productBrand    ProductBrand @relation(fields: [productBrandId], references: [id])
-  productBrandId  Int                    @default(1)
+  productBrandId  String                    @default("1")
   status          STATUS                 @default(DRAFT)
-  createdBy       Int                    @default(1)
+  createdBy       String                    @default("1")
   garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        Int                    @default(1)
+  garageId        String                    @default("1")
   createdAt       DateTime               @default(now())
   updatedAt       DateTime               @updatedAt
   marketingCampaignDetail MarketingCampaignDetail[]
@@ -139,9 +139,9 @@ model Product {
 
 model CategoriesOnProducts {
   product    Product         @relation(fields: [productId], references: [id])
-  productId  Int // relation scalar field (used in the `@relation` attribute above)
+  productId  String // relation scalar field (used in the `@relation` attribute above)
   category   ProductCategory @relation(fields: [categoryId], references: [id])
-  categoryId Int // relation scalar field (used in the `@relation` attribute above)
+  categoryId String // relation scalar field (used in the `@relation` attribute above)
   assignedAt DateTime        @default(now())
   assignedBy String
 
@@ -149,19 +149,19 @@ model CategoriesOnProducts {
 }
 
 model CarModels {
-  id          Int                   @id @default(autoincrement())
+  id          String @id @default(uuid())
   title       String
   description String?
-  parentId    Int                   @default(0)
+  parentId    String                   @default("0")
   type        CARBRAND              @default(CARBRAND)
   products    CarModelsOnProducts[]
 }
 
 model CarModelsOnProducts {
   product      Product   @relation(fields: [productId], references: [id])
-  productId    Int // relation scalar field (used in the `@relation` attribute above)
+  productId    String // relation scalar field (used in the `@relation` attribute above)
   carModel     CarModels @relation(fields: [carModelId], references: [id])
-  carModelId   Int // relation scalar field (used in the `@relation` attribute above)
+  carModelId   String // relation scalar field (used in the `@relation` attribute above)
   carBrandType CARBRAND  @default(CARBRAND)
   assignedAt   DateTime  @default(now())
   assignedBy   String
@@ -169,7 +169,7 @@ model CarModelsOnProducts {
   @@id([productId, carModelId])
 }
 model Order{
-  id                Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   slug              String?
   code              String
   customerRequest   String?
@@ -177,14 +177,14 @@ model Order{
   note              String?
   priorityLevel     Int? @default(1)
   orderCategory     OrderCategory @relation(fields: [orderCategoryId], references: [id])
-  orderCategoryId   Int @default(1)
+  orderCategoryId   String @default("1")
   customer          Customer @relation(fields: [customerId], references: [id])
-  customerId        Int
+  customerId        String
   car               Car @relation(fields: [carId], references: [id])
-  carId             Int @default(1)
-  brandId           Int
-  modelId           Int
-  yearId            Int
+  carId             String @default("1")
+  brandId           String
+  modelId           String
+  yearId            String
   subTotal          Int @default(0)
   discount          Int @default(0)
   total             Int @default(0)
@@ -195,10 +195,10 @@ model Order{
   status            String @default("pending")
   cancelReason      String?
   garage            Garage @relation(fields: [garageId], references: [id])
-  garageId          Int @default(0)
+  garageId          String @default("0")
   serviceAdvisor    ServiceAdvisor @relation(fields: [serviceAdvisorId], references: [id])
-  serviceAdvisorId  Int @default(0)
-  createdById       Int @default(0)
+  serviceAdvisorId  String @default("0")
+  createdById       String @default("0")
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt  
   orderDetails      OrderDetail[]
@@ -207,19 +207,19 @@ model Order{
   method            ORDERMETHOD @default(OFFLINE)
 }
 model OrderCategory{
-  id              Int @id @default(autoincrement())
+  id              String @id @default(uuid())
   title           String
   order           Order[]
   garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        Int @default(1)
-  status              STATUS @default(PUBLIC)
+  garageId        String @default("1")
+  status          STATUS @default(PUBLIC)
 }
 
 model OrderDetail {
   order               Order @relation(fields: [orderId], references: [id])
-  orderId             Int  // relation scalar field (used in the `@relation` attribute above)
+  orderId             String  // relation scalar field (used in the `@relation` attribute above)
   product             Product @relation(fields: [productId],references: [id])
-  productId           Int
+  productId           String
   note                String?
   price               Int
   priceSale           Int
@@ -229,26 +229,26 @@ model OrderDetail {
   subTotal            Int
   total               Int @default(0)
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
-  createdBy           Int @default(1)
+  garageId            String @default("1")
+  createdBy           String @default("1")
   status              STATUS @default(PUBLIC)
   @@id([orderId,productId])
 }
 
 model ServiceAdvisor{
-  id                      Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   fullName                String
   phoneNumber             String?
   email                   String?
   garage                  Garage @relation(fields: [garageId], references: [id])
-  garageId                Int
+  garageId                String
   status                  String @default("draft")
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt 
   order                   Order[]
 }
 model Customer{
-  id                  Int @id @default(autoincrement())
+  id                  String @id @default(uuid())
   uuId                String?
   fullName            String
   phoneNumber         String?
@@ -261,8 +261,8 @@ model Customer{
   sex                 SEX @default(MALE)
   status              STATUS @default(PUBLIC)
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
-  userId              Int @default(0)
+  garageId            String @default("1")
+  userId              String @default("1")
   cars                Car[]
   customerGroup       CustomerGroupsOnCustomers[]
   orders              Order[]
@@ -271,20 +271,20 @@ model Customer{
 }
 
 model CustomerGroup {
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   title               String
   description         String?
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
+  garageId            String @default("1")
   customers           CustomerGroupsOnCustomers[]
   status              STATUS @default(PUBLIC)
 }
 
 model CustomerGroupsOnCustomers {
   customer            Customer   @relation(fields: [customerId], references: [id])
-  customerId          Int // relation scalar field (used in the `@relation` attribute above)
+  customerId          String // relation scalar field (used in the `@relation` attribute above)
   customerGroup       CustomerGroup @relation(fields: [customerGroupId], references: [id])
-  customerGroupId     Int // relation scalar field (used in the `@relation` attribute above)
+  customerGroupId     String // relation scalar field (used in the `@relation` attribute above)
   carBrandType        CARBRAND  @default(CARBRAND)
   assignedAt          DateTime  @default(now())
   assignedBy          String
@@ -293,77 +293,77 @@ model CustomerGroupsOnCustomers {
 }
 
 model Car {
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   uuId                String?
   customer            Customer @relation(fields: [customerId], references: [id])
-  customerId          Int @default(1)
+  customerId          String @default("1")
   numberPlates        String
-  carBrandId          Int?
-  carNameId           Int?
-  carYearId           Int?
+  carBrandId          String?
+  carNameId           String?
+  carYearId           String?
   carStyle            CarStyle @relation(fields: [carStyleId], references: [id])
-  carStyleId          Int @default(1)
+  carStyleId          String @default("1")
   color               String?
   vinNumber           String?
   machineNumber       String?
   description         String?
   status              STATUS @default(PUBLIC)
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
+  garageId            String @default("1")
   orders              Order[]
   user                User @relation(fields: [userId],references: [id])
-  userId              Int  @default(1)
+  userId              String  @default("1")
   isDefault           Boolean @default(true)
 }
 
 model ProductBrand{
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   name                String
   description         String?
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
+  garageId            String @default("1")
   products            Product[]
   status              STATUS @default(PUBLIC)
 }
 
 model Suppiler {
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   uuId                String?
   title               String
   description         String?
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
+  garageId            String @default("1")
   products            Product[]
   status              STATUS @default(PUBLIC)
 }
 model CarStyle {
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   name                String
   description         String?
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
+  garageId            String @default("1")
   cars                Car[]
   status              STATUS @default(PUBLIC)
 }
 
 model MarketingCampaign {
-  id              Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   uuId            String?
   title           String
   dateTimeStart   DateTime @default(now())
   dateTimeEnd     DateTime @default(now())
   garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        Int @default(1)
-  createdBy       Int @default(1)
+  garageId        String @default("1")
+  createdBy       String @default("1")
   status          STATUS @default(PUBLIC)
   detail          MarketingCampaignDetail[]
 }
 
 model MarketingCampaignDetail {
   marketingCampaign   MarketingCampaign @relation(fields: [marketingCampaignId], references: [id])
-  marketingCampaignId Int // relation scalar field (used in the `@relation` attribute above)
+  marketingCampaignId String // relation scalar field (used in the `@relation` attribute above)
   product             Product @relation(fields: [productId],references: [id])
-  productId           Int
+  productId           String
   note                String?
   price               Int
   priceSale           Int
@@ -371,35 +371,35 @@ model MarketingCampaignDetail {
   saleValue           String @default("0")
   quantity            Float
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
-  createdBy           Int @default(1)
+  garageId            String @default("1")
+  createdBy           String @default("1")
   status              STATUS @default(PUBLIC)
   @@id([marketingCampaignId,productId])
 }
 
 model FinanceCard {
-  id              Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   title           String
   bankName        String
   bankBrand       String?
   bankNumber      String
   bankFullName    String
   garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        Int @default(1)
-  createdBy       Int @default(1)
+  garageId        String @default("1")
+  createdBy       String @default("1")
   status          STATUS @default(PUBLIC)
 }
 
 model ReviewsProduct {
-  id                  Int @id @default(autoincrement())
+  id                  String @id @default(uuid())
   product             Product @relation(fields: [productId],references: [id])
-  productId           Int
+  productId           String
   order               Order @relation(fields: [orderId],references: [id])
-  orderId             Int
+  orderId             String
   star                Int @default(4)
   message             String?  
   user                User @relation(fields: [createdId],references: [id])
-  createdId           Int
+  createdId           String
   status              STATUS @default(PUBLIC)
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
@@ -408,9 +408,9 @@ model ReviewsProduct {
 model ReviewsGarage {
   id                  Int @id @default(autoincrement())
   garage              Garage @relation(fields: [garageId],references: [id])
-  garageId            Int
+  garageId            String
   order               Order @relation(fields: [orderId],references: [id])
-  orderId             Int
+  orderId             String
   star                Int @default(4)
   message             String?
   createdId           Int
@@ -420,8 +420,8 @@ model ReviewsGarage {
 }
 
 model Post{
-  id                Int  @id @default(autoincrement())
-  uuId                String?
+  id                String @id @default(uuid())
+  uuId              String?
   slug              String?
   title             String
   description       String
@@ -429,29 +429,29 @@ model Post{
   thumbnail         String
   categories        CategoriesOnPosts[]
   status            STATUS @default(DRAFT)
-  createdBy         Int @default(1)
+  createdBy         String @default("1")
   garage            Garage @relation(fields: [garageId], references: [id])
-  garageId          Int @default(1)
+  garageId          String @default("1")
 }
 
 model PostCategory{
-  id              Int  @id @default(autoincrement())
+  id              String @id @default(uuid())
   slug            String?
   title           String
   description     String
   thumbnail       String?
   status          STATUS @default(DRAFT)
-  createdBy       Int @default(1)
+  createdBy       String @default("1")
   garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        Int @default(1)
+  garageId        String @default("1")
   posts           CategoriesOnPosts[]
 }
 
 model CategoriesOnPosts {
   post            Post         @relation(fields: [postId], references: [id])
-  postId          Int // relation scalar field (used in the `@relation` attribute above)
+  postId          String // relation scalar field (used in the `@relation` attribute above)
   category        PostCategory @relation(fields: [categoryId], references: [id])
-  categoryId      Int // relation scalar field (used in the `@relation` attribute above)
+  categoryId      String // relation scalar field (used in the `@relation` attribute above)
   assignedAt      DateTime        @default(now())
   assignedBy      String
 
@@ -459,7 +459,7 @@ model CategoriesOnPosts {
 }
 
 model User{
-  id                  Int @id @default(autoincrement())
+  id   String @id @default(uuid())
   uuId                String
   fullName            String
   phoneNumber         String?
@@ -475,7 +475,7 @@ model User{
   status              STATUS @default(PUBLIC)
   role                USERROLE @default(CUSTOMER)
   garage              Garage @relation(fields: [garageId], references: [id])
-  garageId            Int @default(1)
+  garageId            String @default("1")
   reviewsProduct      ReviewsProduct[]
   cars                Car[]
   @@fulltext([fullName])

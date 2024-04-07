@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
         if (session) {
             const { searchParams } = new URL(request.url);
             const requestData = {
-                garageId: 2,
+                garageId: "2",
                 s: searchParams.get('s'),
                 carBrandId: searchParams.get('carBrandId'),
                 carNameId: searchParams.get('carNameId'),
@@ -33,7 +33,7 @@ export async function POST(request: Request) {
         const session = await getServerSession(authOptions);
         if (session) {
             const json = await request.json();
-            const customer = await getCustomerByUserId(Number(session.user?.id))
+            const customer = await getCustomerByUserId((session.user?.id ?? ""))
             json.garageId = Number(process.env.GARAGE_DEFAULT);
             json.userId = Number(session.user?.id);
             json.customerId = Number(customer?.id)

@@ -154,7 +154,7 @@ export default function CarListPage({ carsData, myAccount }: any) {
             >
               <IconEye size={16} />
             </Button>
-            <Link href={`/dashboard/cars/${record.uuId}`}>
+            <Link href={`/dashboard/cars/${record.id}`}>
               <Button
                 size="lg"
                 radius={0}

@@ -4,18 +4,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getCarModelById } from '@/app/libs/prisma/carModel';
 
-export async function GET(request: NextRequest, { params }: { params: { carId: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const carId = params.carId;
-        if (!carId) {
-            return new NextResponse("Missing 'carId' parameter");
+        const id = params.id;
+        if (!id) {
+            return new NextResponse("Missing 'id' parameter");
         }
         const session = await getServerSession(authOptions);
 
         if (session) {
             const cars = await prisma.car.findUnique({
                 where: {
-                    id: parseInt(carId.toString()),
+                    id: id,
                 },
                 include: {
                     customer: true,
@@ -37,32 +37,32 @@ export async function GET(request: NextRequest, { params }: { params: { carId: n
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { carId: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            const carId = params.carId;
-            if (!carId) {
-                return new NextResponse("Missing 'carId' parameter");
+            const id = params.id;
+            if (!id) {
+                return new NextResponse("Missing 'id' parameter");
             }
             const json = await request.json();
             let updateData = {
-                customerId: parseInt(json.customerId),
+                customerId: (json.customerId),
                 numberPlates: json.numberPlates,
-                carBrandId: parseInt(json.carBrandId),
-                carNameId: parseInt(json.carNameId),
-                carYearId: parseInt(json.carYearId),
-                carStyleId: parseInt(json.carStyleId),
+                carBrandId: (json.carBrandId),
+                carNameId: (json.carNameId),
+                carYearId: (json.carYearId),
+                carStyleId: (json.carStyleId),
                 color: json.color,
                 vinNumber: json.vinNumber,
                 machineNumber: json.machineNumber,
                 description: json.description,
                 status: json.status,
-                garageId: parseInt(json.garageId),
+                garageId: (json.garageId),
             };
             const updatedCar = await prisma.car.update({
                 where: {
-                    id: Number(carId),
+                    id: (id),
                 },
                 data: updateData,
                 include: {
@@ -81,7 +81,7 @@ export async function PUT(request: NextRequest, { params }: { params: { carId: n
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     if (!id) {
         return new NextResponse("Missing 'id' parameter");
@@ -89,7 +89,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const rs = await prisma.car.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',
