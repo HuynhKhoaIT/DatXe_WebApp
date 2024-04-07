@@ -3,9 +3,5 @@ import CartComponent from "./CartComponent";
 import { getMyCars } from "../libs/prisma/car";
 export default async function Cart() {
   const myAccount: any = await getMyAccount();
-  const carsData = await getMyCars({
-    phoneNumber: myAccount?.phone,
-    userId: myAccount.id,
-  });
-  return <CartComponent myAccount={myAccount} carsData={carsData.data} />;
+  return <CartComponent myAccount={myAccount} />;
 }

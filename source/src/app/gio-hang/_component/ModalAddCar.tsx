@@ -57,7 +57,7 @@ export default function ModalAddCar({
   const handleSubmit = async () => {
     try {
       handlers.open();
-      const res = await fetch(`/api/car/my-car`, {
+      const res = await fetch(`/api/client/cars`, {
         method: "POST",
         body: JSON.stringify(form.values),
       });
