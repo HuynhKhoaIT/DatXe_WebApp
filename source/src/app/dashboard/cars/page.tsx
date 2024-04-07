@@ -1,9 +1,15 @@
-import { getCarsSsr } from "@/utils/car";
-import { getMyAccount } from "@/utils/user";
+"use client";
+import { useCars } from "../hooks/car/useCar";
 import CarListPage from "./CarListPage";
-import { getMyCars } from "@/app/libs/prisma/car";
-export default async function CarsPage() {
-  const myAccount: any = await getMyAccount();
-  const carsData = await getMyCars({ phoneNumber: myAccount?.phone });
-  return <CarListPage carsData={carsData.data} myAccount={myAccount} />;
+export default function CarsPage() {
+  const { cars, page, setPage, deleteItem, isLoading, isFetching } = useCars();
+  return (
+    <CarListPage
+      carsData={cars}
+      page={page}
+      setPage={setPage}
+      deleteItem={deleteItem}
+      loading={isLoading || isFetching}
+    />
+  );
 }

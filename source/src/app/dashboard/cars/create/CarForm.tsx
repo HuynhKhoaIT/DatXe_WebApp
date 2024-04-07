@@ -1,39 +1,25 @@
 "use client";
 import {
-  Button,
   Card,
-  FileButton,
   Grid,
-  Group,
-  Text,
   TextInput,
   Textarea,
-  Image,
   Select,
   Box,
   LoadingOverlay,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconPlus, IconBan } from "@tabler/icons-react";
 import "react-quill/dist/quill.snow.css";
-import { useEffect, useRef, useState } from "react";
-import { notifications } from "@mantine/notifications";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import axios from "axios";
 import { statusOptions } from "@/constants/masterData";
-import {
-  getOptionsBrands,
-  getOptionsCustomers,
-  getOptionsModels,
-  getOptionsYearCar,
-} from "@/utils/until";
+import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
+import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-export default function CategoryForm({ isEditing, dataDetail }: any) {
-  const [brandOptions, setBrandOptions] = useState<any>([]);
+export default function CarForm({ isEditing, dataDetail }: any) {
+  const { addItem, updateItem, brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
-
   const [loading, handlers] = useDisclosure();
 
   const form = useForm({
@@ -51,68 +37,24 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
     },
   });
 
-  const router = useRouter();
   const handleSubmit = async (values: any) => {
     handlers.open();
-    try {
-      if (!isEditing) {
-        await fetch(`/api/client/cars`, {
-          method: "POST",
-          body: JSON.stringify(values),
-        });
-      } else {
-        await fetch(`/api/client/cars/${dataDetail?.id}`, {
-          method: "PUT",
-          body: JSON.stringify(values),
-        });
-      }
-      handlers.close();
-      router.back();
-      router.refresh();
-      notifications.show({
-        title: "Thành công",
-        message: "Thành công",
-      });
-    } catch (error) {
-      handlers.close();
-      notifications.show({
-        title: "Thất bại",
-        message: "Thất bại",
-      });
+    if (isEditing) {
+      updateItem(values);
+    } else {
+      addItem(values);
     }
+    handlers.close();
   };
 
-  const [customerOptions, setCustomerOptions] = useState();
   useEffect(() => {
     const fetchData = async () => {
-      handlers.open();
-      const [customer, brands] = await Promise.all([
-        getOptionsCustomers(),
-        getOptionsBrands(),
-      ]);
-      setCustomerOptions(customer);
-      setBrandOptions(brands);
-      handlers.close();
-    };
-
-    if (!isEditing) {
-      fetchData();
-    }
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      handlers.open();
-
       if (isEditing && dataDetail) {
         try {
-          const [customers, brands, models, yearCars] = await Promise.all([
-            getOptionsCustomers(),
-            getOptionsBrands(),
+          const [models, yearCars] = await Promise.all([
             getOptionsModels(dataDetail?.carBrandId),
             getOptionsYearCar(dataDetail?.carNameId),
           ]);
-          setCustomerOptions(customers);
-          setBrandOptions(brands);
           setModelOptions(models);
           setYearCarOptions(yearCars);
 
@@ -123,8 +65,6 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
           form.setFieldValue("carYearId", dataDetail?.carYearId.toString());
         } catch (error) {
           console.error("Error fetching data:", error);
-        } finally {
-          handlers.close();
         }
       }
     };
@@ -134,7 +74,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={loading}
+        visible={isLoadingBrand}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -260,33 +200,10 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
             </Card>
           </Grid.Col>
         </Grid>
-        <Group justify="end" mt={20}>
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            variant="outline"
-            key="cancel"
-            color="red"
-            leftSection={<IconBan size={16} />}
-            onClick={() => router.back()}
-          >
-            Huỷ
-          </Button>
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            loading={loading}
-            style={{ marginLeft: "12px" }}
-            key="submit"
-            type="submit"
-            variant="filled"
-            leftSection={<IconPlus size={16} />}
-          >
-            {isEditing ? "Cập nhật" : "Thêm"}
-          </Button>
-        </Group>
+        <FooterSavePage
+          saveLoading={loading}
+          okText={isEditing ? "Cập nhật" : "Thêm"}
+        />
       </form>
     </Box>
   );

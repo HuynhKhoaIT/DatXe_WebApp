@@ -1,0 +1,22 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    .text_403{
+        margin-top: -60px;
+        font-size: 200px;
+        font-weight: 700;
+        color: var(--primary-orange);
+    }
+    .subText{
+        font-size: 30px;
+        font-weight: 500;
+        color: black;
+        margin-bottom: 30px;
+
+    }
+
+}

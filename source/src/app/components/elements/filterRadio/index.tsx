@@ -14,6 +14,7 @@ export function FilterRadio({
   if (params.has(keyName)) {
     valueRadio = params.get(keyName);
   }
+  console.log(valueRadio);
   return (
     <div className={styles.shopSidebar}>
       <div className={styles.shopWidgets}>
@@ -22,7 +23,7 @@ export function FilterRadio({
           defaultValue={String(valueRadio)}
           classNames={{ root: styles.root }}
         >
-          {data?.data?.map((item: any, index: number) => (
+          {data?.map((item: any, index: number) => (
             <ItemRadio dataDetail={item} key={index} keyName={keyName} />
           ))}
         </Radio.Group>

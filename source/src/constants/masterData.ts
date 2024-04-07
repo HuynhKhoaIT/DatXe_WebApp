@@ -84,17 +84,15 @@ export const OptionsCancelOrder = [
     { value: ORDER_CANCEL_7, label: 'Nguyên nhân khác', color: 'red' },
 ];
 
-export const kindProduct = {
-    data: [
-        {
-            id: '1',
-            value: true,
-            name: 'Sản phẩm',
-        },
-        {
-            id: '2',
-            value: false,
-            name: 'Dịch  vụ',
-        },
-    ],
-};
+export const kindProduct = [
+    {
+        id: '1',
+        value: 'true',
+        name: 'Sản phẩm',
+    },
+    {
+        id: '2',
+        value: 'false',
+        name: 'Dịch  vụ',
+    },
+];

@@ -54,6 +54,8 @@ export default function ProductsManaga() {
     productsDlbd,
     isLoadingDlbd,
   } = useProduct();
+
+  if (error) return <>error</>;
   const router = useRouter();
 
   const [deleteRow, setDeleteRow] = useState();

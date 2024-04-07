@@ -14,39 +14,22 @@ import { kindProduct } from "@/constants/masterData";
 export default function ListSearch({ fillter }: any) {
   const [postCount, setPostCount] = useState(5);
   const { data: products, isPending, isFetching } = useSearch(postCount);
-  if (isPending)
-    return (
-      <Body>
-        <Body.Sider>
-          <FilterRadio
-            data={fillter}
-            filterName="Danh mục"
-            keyName="categoryId"
-          />
-          <FilterRadio
-            data={kindProduct}
-            filterName="Loại"
-            keyName="isProduct"
-          />
-        </Body.Sider>
-        <Body.Content>
-          <Sort lengthData={0} />
-          <Space h="md" />
-          <Box w={"100%"} h={"80vh"} pos={"relative"}>
-            <LoadingOverlay
-              visible={true}
-              overlayProps={{ radius: "sm", blur: 2 }}
-            />
-          </Box>
-        </Body.Content>
-      </Body>
-    );
 
+  const [categoryFilter, setCategoryFilter] = useState();
+
+  useEffect(() => {
+    if (!fillter) return;
+    const dataOption = fillter?.data?.map((item: any) => ({
+      value: item.id.toString(),
+      name: item.title,
+    }));
+    setCategoryFilter(dataOption);
+  }, [fillter]);
   return (
     <Body>
       <Body.Sider>
         <FilterRadio
-          data={fillter}
+          data={categoryFilter}
           filterName="Danh mục"
           keyName="categoryId"
         />
@@ -61,30 +44,36 @@ export default function ListSearch({ fillter }: any) {
         /> */}
       </Body.Sider>
       <Body.Content>
-        <Sort lengthData={products?.data?.length} />
-        <Space h="md" />
-        <Box w={"100%"}>
-          <Grid pb={20}>
-            {products?.data?.map((product: IProduct, index: number) => (
-              <Grid.Col
-                key={index}
-                span={{ base: 12, xs: 6, sm: 4, md: 4, lg: 3 }}
-              >
-                <ProductItem product={product} />
-              </Grid.Col>
-            ))}
-          </Grid>
-          {postCount < products?.total && (
-            <Flex justify="center" mt={36}>
-              <Button
-                color={"var(--theme-color)"}
-                onClick={() => setPostCount(postCount + 5)}
-                disabled={isFetching}
-              >
-                Xem Thêm
-              </Button>
-            </Flex>
-          )}
+        <Box pos={"relative"}>
+          <LoadingOverlay
+            visible={isPending}
+            overlayProps={{ radius: "sm", blur: 2 }}
+          />
+          <Sort lengthData={products?.data?.length} />
+          <Space h="md" />
+          <Box w={"100%"}>
+            <Grid pb={20}>
+              {products?.data?.map((product: IProduct, index: number) => (
+                <Grid.Col
+                  key={index}
+                  span={{ base: 12, xs: 6, sm: 4, md: 4, lg: 3 }}
+                >
+                  <ProductItem product={product} />
+                </Grid.Col>
+              ))}
+            </Grid>
+            {postCount < products?.total && (
+              <Flex justify="center" mt={36}>
+                <Button
+                  color={"var(--theme-color)"}
+                  onClick={() => setPostCount(postCount + 5)}
+                  disabled={isFetching}
+                >
+                  Xem Thêm
+                </Button>
+              </Flex>
+            )}
+          </Box>
         </Box>
       </Body.Content>
     </Body>
