@@ -539,7 +539,6 @@ export async function createOrder(json: any) {
 }
 export async function createOrderClient(json: any) {
   try {
-    let customerId = "1";
     let garageId = "2";
     if (json.garageId) {
       garageId = json.garageId;
@@ -547,84 +546,57 @@ export async function createOrderClient(json: any) {
     if (json.detail[0].garageId) {
       garageId = json.detail[0].garageId;
     }
-    if (json.customerId == "0" && json.phoneNumber) {
-      // check and create customer
-      // check customer via phone number
-      let phoneNumber = json.phoneNumber;
-
-      if (phoneNumber) {
-        const customerFind = await prisma.customer.findFirst({
-          where: {
-            phoneNumber: phoneNumber,
-            status: "PUBLIC",
-            garageId: garageId,
-          },
-        });
-        if (customerFind) {
-          customerId = customerFind.id;
-        } else {
-          let customerJson = {
-            fullName: json.fullName,
-            phoneNumber: json.phoneNumber,
-            address: json.address,
-            garageId: garageId,
-            status: "PUBLIC",
-          };
-          let cusNew = await createCustomer(customerJson);
-          if (cusNew) {
-            customerId = cusNew.customer?.id ?? "0";
-          }
-        }
+    let customerId = json.customerId;
+    // check customer
+    const customerInGarage = await prisma.customer.findFirst({
+      where: {
+        phoneNumber: json.phoneNumber,
+        garageId,
+        status: 'PUBLIC'
       }
-      // end check customer
-    } else {
-      customerId = json.customerId;
+    })
+    if(!customerInGarage){
+      const userNewGarage = await prisma.customer.create({
+        data:{
+          phoneNumber: json.phoneNumber,
+          fullName: json.fullName,
+          garageId: garageId
+        }
+      })
+      if(userNewGarage){
+        customerId = userNewGarage.id;
+      }
+    }else{
+      customerId = customerInGarage.id
     }
     //get carID
     let carId = json.carId;
-    if (carId) {
-      let carOrder = await prisma.car.findFirst({
-        where: {
-          id: carId,
-          status: "PUBLIC",
+    const carInAdmin = await prisma.car.findFirst({
+      where: {
+        id: carId
+      }
+    })
+    const carInGarage = await prisma.car.findFirst({
+      where:{
+        numberPlates: carInAdmin?.numberPlates,
+        status: {
+          not: 'DELETE'
         },
-      });
-      console.log("ordergarageId", carOrder?.garageId);
-      console.log("garageId", garageId);
-      if (carOrder?.garageId != garageId) {
-        const carNewData = JSON.parse(JSON.stringify(carOrder));
-        carNewData.garageId = garageId;
-        carNewData.customerId = customerId;
-        carNewData.userId = carOrder?.userId;
-        delete carNewData.id;
-        console.log("carNewDataUserId", carNewData);
-        let carNew = await createCar(carNewData);
-        console.log("carNew", carNew);
-        carId = carNew?.car?.id;
+        garageId
       }
-    } else {
-      const carAdmin = await createCar({
-        customerId: customerId,
-        numberPlates: json.numberPlates,
-        carBrandId: json.carBrandId,
-        carNameId: json.carNameId,
-        carYearId: json.carYearId,
-        status: "PUBLIC",
-        garageId: process.env.GARAGE_DEFAULT,
+    });
+    if(!carInGarage){
+      const carNewGarage = await prisma.car.create({
+        data:{
+          numberPlates: carInAdmin?.numberPlates ?? '',
+          carBrandId: carInAdmin?.carBrandId,
+          carNameId: carInAdmin?.carNameId,
+          carYearId: carInAdmin?.carYearId
+        }
       });
-      const carNew = await createCar({
-        customerId: customerId,
-        numberPlates: json.numberPlates,
-        carBrandId: json.carBrandId,
-        carNameId: json.carNameId,
-        carYearId: json.carYearId,
-        status: "PUBLIC",
-        garageId: garageId,
-      });
-      if (carNew) {
-        carId = carNew.car?.id;
-      }
+      carId = carNewGarage.id;
     }
+
     let orderDetails: any = [];
     if (json.detail) {
       json.detail.forEach(function (data: any) {
@@ -638,7 +610,7 @@ export async function createOrderClient(json: any) {
           quantity: Number(data.quantity ?? 1),
           subTotal: Number(data.subTotal ?? 0),
           garageId: garageId ?? "1",
-          createdBy: json.createdById ?? "1",
+          createdBy: json.createdById.toString() ?? "1",
         });
       });
     }
@@ -647,7 +619,7 @@ export async function createOrderClient(json: any) {
       code: orderCode,
       slug: orderCode.toLowerCase(),
       customerId: customerId,
-      carId: json.carId,
+      carId: carId,
       dateTime: json.dateTime ?? new Date(),
       customerRequest: json.customerRequest ?? "",
       customerNote: json.customerNote ?? "",
@@ -661,13 +633,14 @@ export async function createOrderClient(json: any) {
       total: Number(json.total),
       garageId: garageId,
       serviceAdvisorId: json.serviceAdvisorId ?? "1",
-      createdById: json.createdById ?? "1",
+      createdById: json.createdById.toString() ?? "1",
       orderDetails: {
         createMany: {
           data: orderDetails,
         },
       },
     };
+    // return data;
     const order = await prisma.order.create({
       data: data,
       include: {
