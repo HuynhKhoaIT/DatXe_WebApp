@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
 const fetchNewsList = async (searchParams: any, limit = 10) => {
-    const response = await fetch(`/api/admin/posts?${searchParams}&limit=${limit}`);
+    const response = await fetch(`/api/posts?${searchParams}&limit=${limit}`);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch news', response);
     }
@@ -21,7 +21,7 @@ const useNewsList = (limit: any) => {
 };
 
 const fetchNewsDetail = async (id: string) => {
-    const response = await fetch(`/api/admin/posts/${id}`);
+    const response = await fetch(`/api/posts/${id}`);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch news', response);
     }

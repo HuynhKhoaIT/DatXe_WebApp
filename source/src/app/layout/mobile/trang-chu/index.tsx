@@ -15,6 +15,7 @@ import Advertisement from "../../desktop/trang-chu/Advertisement";
 import ProductsHot from "./ProductsHot";
 import Blogs from "./Blogs";
 import Book from "./Book";
+import { useNewsList } from "@/app/hooks/news/useNews";
 
 const LandingPageMobile = ({
   categories,
@@ -22,7 +23,6 @@ const LandingPageMobile = ({
   servicesHot,
   productsRelate,
   productsHot,
-  blogs,
 }: any) => {
   const slideshowData = [
     {
@@ -34,6 +34,8 @@ const LandingPageMobile = ({
       image: image1.src,
     },
   ];
+  const { data: blogs, isLoading } = useNewsList(10);
+
   return (
     <div>
       <Hero slideshowData={slideshowData} />
@@ -49,7 +51,7 @@ const LandingPageMobile = ({
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Advertisement />
       </div>
-      <Blogs blogs={blogs} />
+      <Blogs blogs={blogs?.data} />
       <ProductsHot data={productsHot?.data} />
       <ServicesHot data={servicesHot?.data} />
       <ProductSuggestions data={productsRelate?.data} />

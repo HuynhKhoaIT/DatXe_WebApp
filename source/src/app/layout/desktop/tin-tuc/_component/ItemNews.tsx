@@ -8,7 +8,6 @@ import { DATE_FORMAT_DISPLAY, DEFAULT_FORMAT } from "@/constants";
 import { useRouter } from "next/navigation";
 const ItemNews = ({ item }: any) => {
   const router = useRouter();
-  console.log(item);
   return (
     <Flex
       py={20}
@@ -16,7 +15,7 @@ const ItemNews = ({ item }: any) => {
       mb={15}
       w={"100%"}
       className={styles.item}
-      onClick={() => router.push(`/news/${item.uuId}`)}
+      onClick={() => router.push(`/news/${item.id}`)}
     >
       <img src={item.thumbnail} alt="Relevant Image" className={styles.image} />
       <div style={{ marginLeft: 25 }} className={styles.content}>

@@ -41,6 +41,7 @@ const ServicesItem = ({ data }: any) => {
                 className={styles.image}
                 // style={{ objectFit: 'fill' }}
                 style={{
+                  height: "120px",
                   objectFit: "fill",
                   transform: isHovered ? "scale(1.01)" : "scale(1)", // ZoomOut 1 lần khi hover
                   transition: "transform 0.3s ease", // Thêm hiệu ứng chuyển động mềm mại
