@@ -130,16 +130,18 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
             />
           )}
         </Table.Td> */}
-        <Table.Td miw={200}>
+        <Table.Td miw={200} style={{ fontSize: "18px" }}>
           {selectedRow.name || selectedRow?.product?.name || ""}
         </Table.Td>
-        <Table.Td>{selectedRow.price.toLocaleString()}đ</Table.Td>
+        <Table.Td style={{ fontSize: "18px" }}>
+          {selectedRow.price.toLocaleString()}đ
+        </Table.Td>
         <Table.Td>
           <NumberInput
             size="lg"
             radius={0}
             withAsterisk
-            readOnly
+            // readOnly
             // label="Tên chương trình"
             miw={100}
             thousandSeparator=","
@@ -258,8 +260,6 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
   });
 
   const handleSubmit = async (values: any) => {
-    values.garageId = 1;
-    values.createdBy = 1;
     handlers.open();
     if (isEditing) {
       updateItem(values);

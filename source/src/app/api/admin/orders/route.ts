@@ -28,7 +28,7 @@ export async function GET(request: Request) {
                 carId: searchParams.get('carId'),
                 limit: limit,
                 page: page,
-                garageId: garageId,
+                garageId: garageId.toString(),
             };
             const orders = await getOrders(garageId, requestData);
             return NextResponse.json(orders);

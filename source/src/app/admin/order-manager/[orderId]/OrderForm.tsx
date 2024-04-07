@@ -278,7 +278,7 @@ export default function OrderForm({
     // const images = JSON.parse(selectedRow.images);
     return (
       <Table.Tr key={index}>
-        <Table.Td miw={200}>
+        <Table.Td miw={200} style={{ fontSize: "18px" }}>
           {selectedRow.name || selectedRow?.product?.name || ""}
         </Table.Td>
         <Table.Td w={200}>

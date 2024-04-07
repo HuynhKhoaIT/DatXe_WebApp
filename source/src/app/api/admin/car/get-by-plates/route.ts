@@ -8,10 +8,10 @@ export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            let garageId = await getGarageIdByDLBDID((session.user?.garageId ?? ""));
+            let garageId = await getGarageIdByDLBDID((Number(session.user?.garageId) ?? 0));
             const { searchParams } = new URL(request.url);
             const s: any = searchParams.get('s');
-            const cars = await getCarsByPlates(s, garageId);
+            const cars = await getCarsByPlates(s, garageId.toString());
 
             return NextResponse.json(cars);
         } else {

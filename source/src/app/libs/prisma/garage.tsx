@@ -18,7 +18,7 @@ export async function getGarages(requestData: any) {
       limit = 10;
     }
     let garageId = 0;
-    if(requestData.garageId){
+    if (requestData.garageId) {
       garageId = Number(requestData.garageId);
     }
     const skip = take * (currentPage - 1);
@@ -35,7 +35,7 @@ export async function getGarages(requestData: any) {
               status: {
                 not: "DELETE",
               },
-              routeId: garageId
+              routeId: Number(garageId),
             },
           ],
         },
@@ -62,45 +62,44 @@ export async function getGarages(requestData: any) {
   }
 }
 
-export async function getGarageIdByDLBDID(dlbdId:number) {
+export async function getGarageIdByDLBDID(dlbdId: number) {
   const rs = await prisma.garage.findFirst({
-    where:{
-        routeId: dlbdId,
-        status: {
-          not: 'DELETE'
-        }
-    }
+    where: {
+      routeId: Number(dlbdId),
+      status: {
+        not: "DELETE",
+      },
+    },
   });
-  if(rs){
+  if (rs) {
     return rs.id;
   }
   return 0;
 }
 
-
-export async function showGarage(id:number) {
-    const garage = await prisma.garage.findFirst({
-        where:{
-            id: Number(id),
-        },
+export async function showGarage(id: string) {
+  const garage = await prisma.garage.findFirst({
+    where: {
+      id: id,
+    },
+    include: {
+      amenities: {
         include: {
-          amenities: {
-              include: {
-                  amenities: true,
-              },
-          },
+          amenities: true,
+        },
       },
-    });
-    return garage;
+    },
+  });
+  return garage;
 }
 
-export async function getGarageByDlbdId(garageId: number){
-    return await prisma.garage.findFirst({
-        where:{
-            routeId: garageId,
-            status: 'PUBLIC'
-        }
-    });
+export async function getGarageByDlbdId(garageId: number) {
+  return await prisma.garage.findFirst({
+    where: {
+      routeId: Number(garageId),
+      status: "PUBLIC",
+    },
+  });
 }
 
 export async function createGarage(data: any) {
@@ -123,7 +122,7 @@ export async function createGarage(data: any) {
     const garage = await prisma.garage.create({
       data: {
         routeId: Number(data.routeId),
-        code: code ?? '',
+        code: code ?? "",
         name: data.name,
         shortName: data.shortName,
         logo: data.logo,
@@ -142,17 +141,17 @@ export async function createGarage(data: any) {
         amenities: true,
       },
     });
-    if(garage){
+    if (garage) {
       const createBitly = await createBitlyGarage(garage);
-      if(createBitly){
-        await  prisma.garage.update({
+      if (createBitly) {
+        await prisma.garage.update({
           where: {
-            id: Number(garage.id),
+            id: garage.id.toString(),
           },
           data: {
-            bitlyUrl: createBitly.id
+            bitlyUrl: createBitly.id,
           },
-        })
+        });
       }
     }
     return garage;
@@ -177,7 +176,7 @@ export async function updateGarage(id: number, data: any) {
       description: data.description,
       amenities: {
         deleteMany: {},
-        create: data.amenities.map((id: number) => ({
+        create: data.amenities.map((id: string) => ({
           assignedBy: "Admin",
           assignedAt: new Date(),
           amenities: {
@@ -190,7 +189,7 @@ export async function updateGarage(id: number, data: any) {
     };
     const updatedPost = await prisma.garage.update({
       where: {
-        id: Number(id),
+        id: id.toString(),
       },
       data: updateData,
     });
@@ -200,10 +199,10 @@ export async function updateGarage(id: number, data: any) {
   }
 }
 
-export async function deleteGarage(id: number) {
+export async function deleteGarage(id: string) {
   try {
     const garage = await prisma.garage.delete({
-      where: { id: Number(id) },
+      where: { id: id },
     });
     return { garage };
   } catch (error) {
@@ -214,22 +213,21 @@ export async function deleteGarage(id: number) {
 export async function getRandomCodeForGarage() {
   let str = randomString(5).toLocaleUpperCase();
   const c = await getGarageByCode(str);
-  if(!c){
-      return str;
+  if (!c) {
+    return str;
   }
   await getRandomCodeForGarage();
 }
 
-export async function getGarageByCode(code: string){
+export async function getGarageByCode(code: string) {
   try {
-      const rs = await prisma.garage.findFirst({
-          where: {
-              code: code,
-          }
-      });
-      return rs;
+    const rs = await prisma.garage.findFirst({
+      where: {
+        code: code,
+      },
+    });
+    return rs;
   } catch (error) {
-      return { error };
+    return { error };
   }
-  
 }
