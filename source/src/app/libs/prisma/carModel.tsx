@@ -1,9 +1,9 @@
 import prisma from "../prismadb";
 
 export async function getCarModels(requestData:any) {
-    let parentId = 0;
+    let parentId = "0";
     if(requestData.parentId){
-        parentId = parseInt(requestData.parentId)
+        parentId = (requestData.parentId)
     }
     let currentPage = 1;
     let take = 10;
@@ -52,11 +52,11 @@ export async function getCarModels(requestData:any) {
         status: 200,
     };
 }
-export async function getCarModelById(id: Number) {
+export async function getCarModelById(id: string) {
     try {
         const rs = await prisma.carModels.findUnique({
             where:{
-                id: Number(id)
+                id: (id)
             }
         });
         return rs;
@@ -71,7 +71,7 @@ export async function createCarModel(params:any) {
             data: {
                 title: params.title,
                 description: params.description,
-                parentId: Number(params.parentId),
+                parentId: (params.parentId),
                 type: (params.type),
             }
         });
@@ -81,11 +81,11 @@ export async function createCarModel(params:any) {
     }
 }
 
-export async function updateCarModel(id:number,data: any) {
+export async function updateCarModel(id:string,data: any) {
     try {
         const rs = await prisma.carModels.update({
             where:{
-                id: Number(id)
+                id: (id)
             },
             data
         });
@@ -94,11 +94,11 @@ export async function updateCarModel(id:number,data: any) {
         
     }
 }
-export async function removeCarModel(id:number) {
+export async function removeCarModel(id:string) {
     try {
         const rs = await prisma.carModels.delete({
             where:{
-               id:  Number(id)
+               id:  (id)
             }
         });
         return rs;

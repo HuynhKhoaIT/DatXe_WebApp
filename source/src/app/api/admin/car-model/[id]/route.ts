@@ -3,14 +3,14 @@ import prisma from '@/app/libs/prismadb';
 import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const { searchParams } = new URL(request.url);
-        const id = params.id;
+        const id = params?.id.toString();
         const brands = await prisma.carModels.findMany({
             where: {
-                id: Number(searchParams.get('detail')) ? Number(id) : {},
-                parentId: !Number(searchParams.get('detail')) ? Number(id) : {},
+                id: (searchParams.get('detail')) ? (id.toString()) : {},
+                parentId: !(searchParams.get('detail')?.toString()) ? id : {},
             },
             orderBy: {
                 title: 'asc',
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
 }
 
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     const json = await request.json();
     const id = params.id;
     if (!id) {
@@ -36,7 +36,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
         headers: { 'Content-Type': 'application/json' },
     });
 }
-export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     if (!id) {
         return new NextResponse("Missing 'id' parameter");
