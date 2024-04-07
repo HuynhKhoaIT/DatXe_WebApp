@@ -75,7 +75,7 @@ export default function Header() {
                 <Skeleton height={56} radius="xl" />
               ) : (
                 <>
-                  {cars?.data ? (
+                  {cars?.data?.length > 0 ? (
                     <Select
                       classNames={{ input: styles.inputSelect }}
                       data={dataOption}
