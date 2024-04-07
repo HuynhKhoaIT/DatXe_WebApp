@@ -22,6 +22,8 @@ import dynamic from "next/dynamic";
 import { getOptionsCar } from "../../until";
 import { useEffect, useState } from "react";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const DynamicModalCamera = dynamic(() => import("../ModalCamera"), {
   ssr: false,
@@ -34,7 +36,7 @@ export default function ModalNumberPlates({
   numberPlate,
   setNumberPlate,
 }: any) {
-  console.log(numberPlate);
+  const router = useRouter();
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [carOptions, setCarOptions] = useState([]);
   const [debounced] = useDebouncedValue(numberPlate, 400);
@@ -118,10 +120,10 @@ export default function ModalNumberPlates({
         >
           <Button
             onClick={() => {
-              close();
+              router.back();
             }}
           >
-            Cancel
+            Huỷ bỏ
           </Button>
           <Button
             onClick={() => {
@@ -129,7 +131,7 @@ export default function ModalNumberPlates({
               close();
             }}
           >
-            Ok
+            Tiếp tục
           </Button>
         </div>
       </Box>

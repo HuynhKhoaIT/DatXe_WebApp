@@ -293,3 +293,15 @@ export const convertUtcToLocalTime = (
     return "";
   }
 };
+
+export function isValidPhoneNumber(phoneNumber: string) {
+  // Biểu thức chính quy để kiểm tra số điện thoại
+  var phoneRegex = /^0[1-9][0-9]{8}$/;
+
+  // Kiểm tra nếu phoneNumber phù hợp với mẫu
+  if (phoneRegex.test(phoneNumber)) {
+    return true; // Hợp lệ
+  } else {
+    return false; // Không hợp lệ
+  }
+}

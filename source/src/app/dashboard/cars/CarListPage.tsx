@@ -19,10 +19,15 @@ import Link from "next/link";
 import { notifications } from "@mantine/notifications";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
-export default function CarListPage({ carsData, myAccount }: any) {
-  const router = useRouter();
-  const { data: session } = useSession();
-  const token = session?.user?.token;
+import { useAddCar } from "../hooks/car/useAddCar";
+export default function CarListPage({
+  carsData,
+  page,
+  setPage,
+  deleteItem,
+  loading,
+}: any) {
+  const { setDefault } = useAddCar();
   const [
     openedPreviewCar,
     { open: openPreviewCar, close: closePreviewCar },
@@ -31,46 +36,28 @@ export default function CarListPage({ carsData, myAccount }: any) {
     openedDeleteCar,
     { open: openDeleteCar, close: closeDeleteCar },
   ] = useDisclosure(false);
+
+  const [
+    openedSetDefault,
+    { open: openSetDefault, close: closeSetDefault },
+  ] = useDisclosure(false);
+
   const [detail, setDetail] = useState<any>({});
   const [deleteRow, setDeleteRow] = useState("");
-  const [openModalCarDefault, setOpenModalCarDefault] = useState(false);
 
-  const handleDeleteCar = async (carId: string) => {
-    try {
-      await deleteCar(carId, token ?? "");
-      notifications.show({
-        title: "Thành công",
-        message: "Xoá thành công",
-      });
-    } catch (error) {
-      console.error("Error deleting car:", error);
-      notifications.show({
-        title: "Thất bại",
-        message: "Xoá thất bại",
-      });
-    }
-    router.refresh();
-  };
-  const handleSetCarDefault = async (CarId: string) => {
-    try {
-      await setCarDefault(CarId, token ?? "");
-    } catch (error) {
-      console.error("Error set car:", error);
-    }
+  const handleDeleteCar = (carId: string) => {
+    deleteItem(carId);
   };
 
-  // select xe mặc định
-  const [selectedRow, setSelectedRow] = useState<any>(myAccount?.carIdDefault);
-  const [dataCarDefault, setdataCartDefault] = useState<any>();
+  const [dataCarDefault, setdataCarDefault] = useState<any>();
 
   const handleRadioChange = (selectedRecord: any) => {
-    setOpenModalCarDefault(true);
-    setdataCartDefault(selectedRecord);
+    openSetDefault();
+    setdataCarDefault(selectedRecord);
   };
   const handleCarDefault = () => {
-    setSelectedRow(dataCarDefault?.id);
-    handleSetCarDefault(dataCarDefault?.id);
-    setOpenModalCarDefault(false);
+    setDefault({ uuId: dataCarDefault?.uuId });
+    closeSetDefault();
   };
 
   const columns = [
@@ -87,7 +74,7 @@ export default function CarListPage({ carsData, myAccount }: any) {
           <>
             <Radio
               style={{ display: "flex", justifyContent: "center" }}
-              checked={selectedRow === dataRow.id}
+              checked={dataRow?.isDefault}
               onChange={() => handleRadioChange(dataRow)}
             />
           </>
@@ -214,9 +201,12 @@ export default function CarListPage({ carsData, myAccount }: any) {
         </div>
         <TableBasic
           className={styles.table}
-          data={carsData}
+          data={carsData?.data}
           columns={columns}
-          loading={false}
+          totalPage={carsData?.totalPage}
+          loading={loading}
+          setPage={setPage}
+          activePage={page}
         />
       </div>
       <Modal title="Delete" opened={openedDeleteCar} onClose={closeDeleteCar}>
@@ -253,12 +243,12 @@ export default function CarListPage({ carsData, myAccount }: any) {
 
       <Modal
         size={400}
-        opened={openModalCarDefault}
-        onClose={() => setOpenModalCarDefault(false)}
+        opened={openedSetDefault}
+        onClose={closeSetDefault}
         title="Xe mặc định"
         lockScroll={false}
       >
-        <div>Biển số: {dataCarDefault?.licensePlates}</div>
+        <div>Biển số: {dataCarDefault?.numberPlates}</div>
         <Group justify="end" style={{ marginTop: 10 }}>
           <Button
             size="lg"
@@ -266,7 +256,7 @@ export default function CarListPage({ carsData, myAccount }: any) {
             h={{ base: 42, md: 50, lg: 50 }}
             variant="outline"
             color="red"
-            onClick={() => setOpenModalCarDefault(false)}
+            onClick={closeSetDefault}
             leftSection={<IconBan />}
           >
             Huỷ bỏ

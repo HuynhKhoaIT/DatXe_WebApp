@@ -104,6 +104,21 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
       console.error("Error:", error);
     }
   };
+  const uploadFileBanner = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      form.setFieldValue("banner", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const handleSubmit = async (values: any) => {
     handlers.open();
@@ -126,8 +141,8 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
         <Grid gutter={12}>
           <Grid.Col span={12}>
             <Card withBorder shadow="sm">
-              <Grid>
-                <Grid.Col span={{ base: 12 }}>
+              <Grid gutter={12}>
+                <Grid.Col span={{ base: 6 }}>
                   <Text size={"16px"} c={"#999999"} mb={"6px"}>
                     Logo
                   </Text>
@@ -136,6 +151,24 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
                     placeholder={"Cập nhật logo"}
                     defaultImage={dataDetail?.logo || ImageUpload.src}
                     uploadFileThumbnail={uploadFileThumbnail}
+                    aspect={1 / 1}
+                    name="logo"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 6 }}>
+                  <Text size={"16px"} c={"#999999"} mb={"6px"}>
+                    Ảnh bìa
+                  </Text>
+                  <CropImageLink
+                    shape="rect"
+                    placeholder={"Cập nhật ảnh bìa"}
+                    defaultImage={dataDetail?.banner || ImageUpload.src}
+                    uploadFileThumbnail={uploadFileBanner}
+                    aspect={16 / 9}
+                    idUpload="image-uploader-banner"
+                    idResult="image-result-banner"
+                    idImageContainer="image-container-banner"
+                    name="banner"
                   />
                 </Grid.Col>
               </Grid>
@@ -147,7 +180,7 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
                     {...form.getInputProps("code")}
                     label="Mã số"
                     type="text"
-                    readOnly
+                    disabled
                     placeholder="Mã số"
                   />
                 </Grid.Col>

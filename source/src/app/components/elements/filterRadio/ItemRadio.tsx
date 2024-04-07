@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import styles from "./index.module.scss";
 export function ItemRadio({ dataDetail, keyName }: any) {
   const router = useRouter();
-  const itemId = dataDetail?.id.toString();
+  const itemId = dataDetail?.value;
   const name = dataDetail ? dataDetail?.name || dataDetail?.title : "";
   const pathname = usePathname();
   const searchParams = useSearchParams();

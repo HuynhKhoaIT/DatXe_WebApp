@@ -8,6 +8,7 @@ const ProductTabsDes = ({
   productReview,
   isLoadingProductReview,
 }: any) => {
+  console.log(ProductDetail);
   return (
     <Tabs
       defaultValue="description"
@@ -20,19 +21,11 @@ const ProductTabsDes = ({
       </Tabs.List>
 
       <Tabs.Panel value="description">
-        🚕 Sản phẩm chúng tôi bảo hành theo tiêu chuẩn của nhà sản xuất. Một số
-        sản phẩm khác chúng tôi bảo hành từ 03 - 12 tháng tùy vào từng loại sau:
-        <br />
-        👉 Sản phẩm hao mòn theo thời gian bảo hành không quá 03 tháng (má
-        phanh, các loại lọc, dầu nhờn,...) <br />
-        👉 Sản phẩm, phụ tùng thiết bị điện, thiết bị liên kết từ nhiều loại chi
-        tiết (cụm) bảo hành tối đa 06 tháng (hộp điều khiển, cụm phanh ABS, vĩ
-        điều khiển,...)
-        <br /> 👉 Các loại sản phẩm, phụ tùng thay thế theo chỉ định và được
-        thực hiện theo đúng thời gian khuyến nghị của Chuyên gia đã đề ra có
-        thời gian bảo hành 12 tháng.
-        <br /> 👤 Về dịch vụ chúng tôi bảo hành từ 06 đến 12 tháng tùy vào dịch
-        vụ. Vui lòng liên hệ để chúng tôi tư vấn và có chính sách phù hợp!
+        <div
+          dangerouslySetInnerHTML={{
+            __html: ProductDetail?.metaDescription,
+          }}
+        ></div>
       </Tabs.Panel>
 
       <Tabs.Panel value="guarantee">

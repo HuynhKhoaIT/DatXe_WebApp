@@ -18,7 +18,11 @@ import dayjs from "dayjs";
 import FooterSavePage from "../../_component/FooterSavePage";
 import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
 import { useAddCustomer } from "../../hooks/customer/useAddCustomer";
-export default function CustomersForm({ isEditing, dataDetail }: any) {
+export default function CustomersForm({
+  isEditing,
+  dataDetail,
+  isLoading,
+}: any) {
   const {
     addItem,
     updateItem,
@@ -45,10 +49,6 @@ export default function CustomersForm({ isEditing, dataDetail }: any) {
     validate: {
       fullName: (value) => (value.length < 1 ? "Không được để trống" : null),
       phoneNumber: (value) => (value.length < 1 ? "Không được để trống" : null),
-      // cityId: (value) => (value.length < 1 ? "Không được để trống" : null),
-      // districtId: (value) => (value.length < 1 ? "Không được để trống" : null),
-      // wardId: (value) => (value.length < 1 ? "Không được để trống" : null),
-      // address: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
 
@@ -99,7 +99,7 @@ export default function CustomersForm({ isEditing, dataDetail }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={isLoadingProvince}
+        visible={isLoadingProvince || isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
