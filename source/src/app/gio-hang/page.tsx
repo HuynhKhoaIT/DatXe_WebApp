@@ -5,6 +5,7 @@ export default async function Cart() {
   const myAccount: any = await getMyAccount();
   const carsData = await getMyCars({
     phoneNumber: myAccount?.phone,
+    userId: myAccount.id,
   });
   return <CartComponent myAccount={myAccount} carsData={carsData.data} />;
 }

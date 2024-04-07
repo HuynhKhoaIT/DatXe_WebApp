@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
                 carBrandId: searchParams.get('carBrandId'),
                 carNameId: searchParams.get('carNameId'),
                 carYearId: searchParams.get('carYearId'),
-                userId: session.user?.id
+                userId: session.user?.id.toString(),
             };
             const cars = await getCars(requestData);
 

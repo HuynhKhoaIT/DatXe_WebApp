@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
         // const session = await getServerSession(authOptions);
         const productCategory = await prisma.productCategory.findUnique({
             where: {
-                id: parseInt(id.toString()),
+                id: id.toString(),
             },
         });
         return NextResponse.json(productCategory);
@@ -32,13 +32,13 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
         const json = await request.json();
         const productCategory = await prisma.productCategory.findUnique({
             where: {
-                id: parseInt(id.toString()),
+                id: id.toString(),
             },
         });
 
         const updatedPost = await prisma.productCategory.update({
             where: {
-                id: parseInt(id.toString()),
+                id: id.toString(),
             },
             data: json,
         });
@@ -60,7 +60,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const deletePost = await prisma.productCategory.update({
         where: {
-            id: parseInt(id.toString()),
+            id: id.toString(),
         },
         data: {
             status: 'DELETE',

@@ -63,7 +63,7 @@ export default function ComboboxField({
           rightSectionPointerEvents="none"
           //   classNames={{ input: classes.input }}
         >
-          {value || <Input.Placeholder>Pick value</Input.Placeholder>}
+          {value || <Input.Placeholder>Chọn xe</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
 
