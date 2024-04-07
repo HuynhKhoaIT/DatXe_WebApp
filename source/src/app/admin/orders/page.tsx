@@ -15,7 +15,7 @@ import styles from "./index.module.scss";
 import CalendarSchedulerGarage from "@/app/admin/orders/CalendarGarage";
 import { getOrders } from "@/app/libs/prisma/order";
 export default async function Orders() {
-  const orders = await getOrders(2, {});
+  const orders = await getOrders("2", {});
   const mappedOrdersData = mapArrayEventCalendar(orders?.data);
   // lấy danh sách category
   const categories = await getCategories();

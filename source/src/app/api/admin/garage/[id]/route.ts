@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { showGarage, updateGarage } from '@/app/libs/prisma/garage';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
 
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
         if (1) {
@@ -56,7 +56,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const rs = await prisma.garage.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',

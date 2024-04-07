@@ -56,7 +56,7 @@ export async function getOrders(garage: string, requestData: any) {
         take: take,
         skip: skip,
         orderBy: {
-          id: "desc",
+          createdAt: "desc",
         },
         where: {
           status: {

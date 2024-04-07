@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         if (!id) {
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
         // const session = await getServerSession(authOptions);
         const serviceAdvisor = await prisma.serviceAdvisor.findUnique({
             where: {
-                id: parseInt(id.toString()),
+                id: (id.toString()),
             },
         });
         return NextResponse.json(serviceAdvisor);
@@ -32,7 +32,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
 
         const updatedPost = await prisma.serviceAdvisor.update({
             where: {
-                id: parseInt(id.toString()),
+                id: (id.toString()),
             },
             data: {
                 fullName: json.fullName,
@@ -52,7 +52,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: number } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
     const id = params.id;
     if (!id) {
         return new NextResponse("Missing 'id' parameter");
@@ -60,7 +60,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const deletePost = await prisma.serviceAdvisor.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',

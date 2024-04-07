@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 
-export async function DELETE(request: NextRequest, { params }: { params: { garageId: number } }) {
+export async function DELETE(request: NextRequest, { params }: { params: { garageId: string } }) {
     // const title = params.id;
     const title = '';
     if (!title) {
@@ -14,7 +14,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { garag
         where: {
             AND: [
                 {
-                    garageId: 1,
+                    garageId: "1",
                     title: {
                         contains: title,
                     },

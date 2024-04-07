@@ -162,7 +162,7 @@ export async function getProductsClient(requestData:any) {
       categories = {
           some: {
               category: {
-                  id: Number(categoryId!),
+                  id: (categoryId!),
               },
           },
       };
@@ -174,7 +174,7 @@ export async function getProductsClient(requestData:any) {
       brands = {
           some: {
               carModel: {
-                  id: Number(brandIdFilter),
+                  id: (brandIdFilter),
               },
           },
       };

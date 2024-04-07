@@ -4,8 +4,8 @@ export async function createReviewGarage(data: any) {
     try {
         const rs = await prisma.reviewsGarage.create({
             data: {                
-                garageId: Number(data.garageId),
-                orderId: Number(data.orderId),
+                garageId: (data.garageId),
+                orderId: (data.orderId),
                 star: Number(data.star ?? 1),
                 message: data.message?.toString(),
                 createdId: Number(data.createdId),
@@ -18,7 +18,7 @@ export async function createReviewGarage(data: any) {
     }
 }
 
-export async function getReviewsGarage(garageId:number,requestData: any) {
+export async function getReviewsGarage(garageId:string,requestData: any) {
     let currentPage = 1;
     let take = 10;
     let limit = 10;

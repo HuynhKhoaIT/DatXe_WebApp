@@ -1,7 +1,7 @@
 import { getReviewsGarage } from '@/app/libs/prisma/reviewGarage';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         const { searchParams } = new URL(request.url);

@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         if (!id) {
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
         // const session = await getServerSession(authOptions);
         const suppiler = await prisma.suppiler.findUnique({
             where: {
-                id: parseInt(id.toString()),
+                id: (id.toString()),
             },
         });
         return NextResponse.json(suppiler);
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         if (!id) {
@@ -32,7 +32,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
 
         const updatedPost = await prisma.suppiler.update({
             where: {
-                id: parseInt(id.toString()),
+                id: (id.toString()),
             },
             data: {
                 title: json.title,
@@ -59,7 +59,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const deletePost = await prisma.suppiler.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',

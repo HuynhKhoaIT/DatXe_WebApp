@@ -9,7 +9,7 @@ export async function GET(request: Request) {
         const session = await getServerSession(authOptions);
         if (session) {
             const { searchParams } = new URL(request.url);
-            const garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            const garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
             // return NextResponse.json({ garageId: garageId });
             const rs = await reportTrafictDashboard(
                 searchParams.get('dateStart')!,

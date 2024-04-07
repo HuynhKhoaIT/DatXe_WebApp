@@ -12,7 +12,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
         // const session = await getServerSession(authOptions);
         const carStyle = await prisma.carStyle.findUnique({
             where: {
-                id: parseInt(id.toString()),
+                id: (id.toString()),
             },
         });
         return NextResponse.json(carStyle);
@@ -32,7 +32,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
 
         const updatedPost = await prisma.carStyle.update({
             where: {
-                id: parseInt(id.toString()),
+                id: (id.toString()),
             },
             data: {
                 name: json.name,
@@ -59,7 +59,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const deletePost = await prisma.carStyle.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',

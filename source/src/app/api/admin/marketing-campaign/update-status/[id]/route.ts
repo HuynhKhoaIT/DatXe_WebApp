@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../../auth/[...nextauth]/route';
 import { updateMarketingCampaignStatus } from '@/app/libs/prisma/marketingCampaign';
 
-export async function POST(request: NextRequest, { params }: { params: { id: number } }) {
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
         if (!id) {

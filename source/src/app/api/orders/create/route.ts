@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         data.categories = categories;
         const brands = await prisma.carModels.findMany({
             where: {
-                parentId: 0,
+                parentId: "0",
             },
             orderBy: {
                 title: 'asc',

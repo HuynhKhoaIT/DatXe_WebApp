@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 
-export async function GET(request: NextRequest, { params }: { params: { id: number } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const id = params.id;
 
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
         if (1) {
             const orderCategorys = await prisma.orderCategory.findUnique({
                 where: {
-                    id: parseInt(id.toString()),
+                    id: (id.toString()),
                 },
             });
             return NextResponse.json(orderCategorys);
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: numb
     }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: number } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
         if (1) {
@@ -48,7 +48,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: numb
             };
             const updatedCat = await prisma.orderCategory.update({
                 where: {
-                    id: Number(id),
+                    id: (id),
                 },
                 data: orderCatUpdateData,
             });
@@ -71,7 +71,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: n
 
     const rs = await prisma.orderCategory.update({
         where: {
-            id: parseInt(id.toString()),
+            id: (id.toString()),
         },
         data: {
             status: 'DELETE',
