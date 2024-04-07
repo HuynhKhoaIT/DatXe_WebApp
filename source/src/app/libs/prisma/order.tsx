@@ -591,7 +591,8 @@ export async function createOrderClient(json: any) {
           numberPlates: carInAdmin?.numberPlates ?? '',
           carBrandId: carInAdmin?.carBrandId,
           carNameId: carInAdmin?.carNameId,
-          carYearId: carInAdmin?.carYearId
+          carYearId: carInAdmin?.carYearId,
+          garageId: garageId
         }
       });
       carId = carNewGarage.id;
