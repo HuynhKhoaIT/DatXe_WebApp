@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
-            let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
             const { searchParams } = new URL(request.url);
             let page = 1;
             let limit = 10;
@@ -43,8 +43,8 @@ export async function POST(request: Request) {
         const json = await request.json();
         const session = await getServerSession(authOptions);
         if (session) {
-            json.garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
-            json.createdById = session.user?.id
+            json.garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
+            json.createdById = session.user?.id.toString()
             const order = await createOrder(json);
             return new NextResponse(JSON.stringify(order), {
                 status: 201,

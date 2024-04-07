@@ -390,8 +390,7 @@ export async function createOrder(json: any) {
     if (json.detail[0].garageId) {
       garageId = json.detail[0].garageId.toString();
     }
-
-    if (Number(json.customerId) == 0 && json.phoneNumber) {
+    if (!(json.customerId)) {
       // check and create customer
       // check customer via phone number
       let phoneNumber = json.phoneNumber;
@@ -412,7 +411,7 @@ export async function createOrder(json: any) {
             address: json.address,
             garageId: garageId,
             status: "PUBLIC",
-            userId: json.userId,
+            userId: json.createdById,
           };
           let cusNew = await createCustomer(customerJson);
           if (cusNew) {
