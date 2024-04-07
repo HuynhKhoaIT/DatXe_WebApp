@@ -9,19 +9,19 @@ export async function createCar(json: any) {
     const car = await prisma.car.create({
       data: {
         uuId: generateUUID(),
-        customerId: Number(json.customerId),
+        customerId: (json.customerId),
         numberPlates: platesNumber ?? '',
-        carBrandId: Number(json.carBrandId),
-        carNameId: Number(json.carNameId),
-        carYearId: Number(json.carYearId),
+        carBrandId: (json.carBrandId),
+        carNameId: (json.carNameId),
+        carYearId: (json.carYearId),
         carStyleId: json.carStyleId,
         color: json.color,
         vinNumber: json.vinNumber,
         machineNumber: json.machineNumber,
         description: json.description,
         status: json.status,
-        garageId: Number(json.garageId),
-        userId: Number(json.userId),
+        garageId: (json.garageId),
+        userId: (json.userId),
       },
       include: {
         customer: true,
@@ -56,7 +56,7 @@ export async function getCars(requestData: any) {
   }
   let customerId = {};
   if (requestData.customerId) {
-    customerId = Number(requestData.customerId);
+    customerId = (requestData.customerId);
   }
   let status = {
     contains: "PUBLIC",
@@ -72,23 +72,23 @@ export async function getCars(requestData: any) {
   }
   let carBrandId = {};
   if(requestData.carBrandId){
-    carBrandId = Number(requestData.carBrandId);
+    carBrandId = (requestData.carBrandId);
   }
   let carNameId = {};
   if(requestData.carNameId){
-    carNameId = Number(requestData.carNameId);
+    carNameId = (requestData.carNameId);
   }
   let carYearId = {};
   if(requestData.carYearId){
-    carYearId = Number(requestData.carYearId);
+    carYearId = (requestData.carYearId);
   }
   let carStyleId = {};
   if(requestData.carStyleId){
-    carStyleId = Number(requestData.carStyleId);
+    carStyleId = (requestData.carStyleId);
   }
   let userId = {};
   if(requestData.userId){
-    userId= Number(requestData.userId)
+    userId= (requestData.userId)
   }
   const [cars, total] = await prisma.$transaction([
     prisma.car.findMany({
@@ -159,7 +159,7 @@ export async function getCars(requestData: any) {
   };
 }
 
-export async function getCarsByPlates(titleFilter:string,garageId: number) {
+export async function getCarsByPlates(titleFilter:string,garageId: string) {
   return await prisma.car.findMany({
     take: 10,
     orderBy: {
@@ -180,14 +180,11 @@ export async function getCarsByPlates(titleFilter:string,garageId: number) {
 }
 
 export async function getMyCars(requestData: any) {
-  const customer = await getCustomerByPhone(
-    requestData.phoneNumber,
-    Number(process.env.GARAGE_DEFAULT)
-  );
+  
   const rs = {
-    garageId: Number(process.env.GARAGE_DEFAULT),
-    customerId: customer?.id,
+    garageId: (process.env.GARAGE_DEFAULT),
     status: "PUBLIC",
+    userId: requestData.userId.toString()
   };
 
   return await getCars(rs);
@@ -196,7 +193,7 @@ export async function getMyCars(requestData: any) {
 export async function createMyCars(json: any) {
   const customer = await getCustomerByPhone(
     json.phoneNumber,
-    Number(process.env.GARAGE_DEFAULT)
+    (process.env.GARAGE_DEFAULT)?.toString() ?? ""
   );
 
   const data = {
@@ -231,7 +228,7 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
     if (garage) {
       const customer = await getCustomerByPhone(
         customerData.phone_number,
-        Number(garage.id)
+        (garage.id)
       );
       if (customer) {
         const car = await prisma.car.findFirst({
@@ -240,7 +237,7 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
             numberPlates: {
               contains: carData.licensePlates,
             },
-            garageId: Number(garage.id),
+            garageId: (garage.id),
           },
         });
         if (car) {
@@ -248,10 +245,10 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
         } else {
           const carNew = await prisma.car.create({
             data: {
-              customerId: Number(customer.id),
+              customerId: (customer.id),
               numberPlates: carData.licensePlates,
               description: carData.description,
-              garageId: Number(garage.id),
+              garageId: (garage.id),
             },
           });
           return carNew;
@@ -266,14 +263,14 @@ export async function syncCarFromDLBD(carData: any, customerData: any) {
 export async function setCarDefault(uuId:string) {
   const carDefault = await prisma.car.findFirst({
     where: {
-      garageId: 2,
+      garageId: "2",
       uuId: uuId
     }
   })
   
   await prisma.car.updateMany({
     where:{
-      garageId: 2,
+      garageId: "2",
       userId: carDefault?.userId,
     },
     data:{
@@ -282,7 +279,7 @@ export async function setCarDefault(uuId:string) {
   })
   const car = await prisma.car.updateMany({
     where:{
-      garageId: 2,
+      garageId: "2",
       uuId: uuId,
     },
     data:{

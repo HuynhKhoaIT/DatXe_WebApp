@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { getCars, deleteCar, setCarDefault } from "@/utils/car";
+import { deleteCar, setCarDefault } from "@/utils/car";
 import { useSession } from "next-auth/react";
 import {
   IconChevronRight,
@@ -12,7 +12,6 @@ import {
 } from "@tabler/icons-react";
 import PreviewModal from "./PreviewModal";
 import { Radio, Button, Modal, Group, Pagination, Flex } from "@mantine/core";
-import { getModels, getYears } from "@/utils/branch";
 import { useDisclosure } from "@mantine/hooks";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useRouter } from "next/navigation";

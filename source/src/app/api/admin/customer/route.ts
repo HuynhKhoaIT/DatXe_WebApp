@@ -96,9 +96,9 @@ export async function POST(request: Request) {
                     dob: json.dob,
                     description: json.description,
                     sex: json.sex,
-                    garageId: Number(garageId),
+                    garageId: (garageId).toString(),
                     status: json.status,
-                    userId: Number(session.user?.id ?? 1)
+                    userId: (session.user?.id.toString() ?? "1")
                 },
                 include: {
                     cars: true,
