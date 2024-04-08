@@ -30,7 +30,7 @@ import FilterCategories from "@/app/components/common/FilterCategory/FilterCateg
 import { QUERY_KEY } from "@/constants";
 import { ResponseError } from "@/utils/until/ResponseError";
 const queryClient = new QueryClient();
-
+import styles from "./index.module.scss";
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
   const response = await fetch(
     `/api/admin/products?${searchParams}&page=${page}`
@@ -263,61 +263,91 @@ export default function ModalChooseProducts({
               );
             })}
           </ScrollArea>
+          <div className={styles.footerSavePage}>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              variant="outline"
+              key="cancel"
+              color="red"
+              leftSection={<IconBan size={16} />}
+              onClick={close}
+            >
+              Huỷ bỏ
+            </Button>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              style={{ marginLeft: "12px" }}
+              onClick={() => {
+                setSelectedProducts(selectedRows);
+                close();
+              }}
+              variant="filled"
+              leftSection={<IconChevronRight size={16} />}
+            >
+              Thêm
+            </Button>
+          </div>
         </>
       ) : (
-        <ListPage
-          searchForm={
-            <SearchForm
-              searchData={searchData}
-              brandFilter={true}
-              initialValues={initialValuesSearch}
-            />
-          }
-          filterCategory={<FilterCategories categories={categoryOptions} />}
-          style={{ height: "100%" }}
-          baseTable={
-            <TableBasic
-              loading={isLoading || isFetching}
-              data={products?.data}
-              columns={columns}
-              totalPage={products?.totalPage}
-              setPage={setPage}
-              activePage={page}
-              selectRow={true}
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-            />
-          }
-        />
+        <>
+          <ListPage
+            searchForm={
+              <SearchForm
+                searchData={searchData}
+                brandFilter={true}
+                initialValues={initialValuesSearch}
+              />
+            }
+            filterCategory={<FilterCategories categories={categoryOptions} />}
+            style={{ height: "100%" }}
+            baseTable={
+              <TableBasic
+                loading={isLoading || isFetching}
+                data={products?.data}
+                columns={columns}
+                totalPage={products?.totalPage}
+                setPage={setPage}
+                activePage={page}
+                selectRow={true}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+            }
+          />
+          <Group justify="end" style={{ marginTop: 10 }}>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              variant="outline"
+              key="cancel"
+              onClick={close}
+              color="red"
+              leftSection={<IconBan size={16} />}
+            >
+              Huỷ bỏ
+            </Button>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              style={{ marginLeft: "12px" }}
+              onClick={() => {
+                setSelectedProducts(selectedRows);
+                close();
+              }}
+              variant="filled"
+              leftSection={<IconChevronRight size={16} />}
+            >
+              Xác nhận
+            </Button>
+          </Group>
+        </>
       )}
-      <Group justify="end" style={{ marginTop: 10 }}>
-        <Button
-          size="lg"
-          radius={0}
-          h={{ base: 42, md: 50, lg: 50 }}
-          variant="outline"
-          key="cancel"
-          onClick={close}
-          color="red"
-          leftSection={<IconBan size={16} />}
-        >
-          Huỷ bỏ
-        </Button>
-        <Button
-          size="lg"
-          radius={0}
-          h={{ base: 42, md: 50, lg: 50 }}
-          style={{ marginLeft: "12px" }}
-          onClick={() => {
-            setSelectedProducts(selectedRows);
-            close();
-          }}
-          variant="filled"
-          leftSection={<IconChevronRight size={16} />}
-        >
-          Xác nhận
-        </Button>
-      </Group>
     </Modal>
   );
 }

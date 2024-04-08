@@ -21,7 +21,7 @@ const CategoryDetailPageMobile = ({
   return (
     <div className={styles.wrapper}>
       <Hero slideshowData={slideshowData} height={135} />
-      <Filter kindProduct={kindProduct.data} />
+      <Filter kindProduct={kindProduct} />
       <Container>
         <Products products={products?.data} />
       </Container>

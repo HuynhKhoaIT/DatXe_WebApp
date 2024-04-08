@@ -14,7 +14,6 @@ export function FilterRadio({
   if (params.has(keyName)) {
     valueRadio = params.get(keyName);
   }
-  console.log(valueRadio);
   return (
     <div className={styles.shopSidebar}>
       <div className={styles.shopWidgets}>

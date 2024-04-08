@@ -1,6 +1,4 @@
-import styles from "./index.module.scss";
-import bgLanding from "@/assets/images/bgLanding.svg";
-import bgLanding2 from "@/assets/images/bgLanding2.png";
+"use client";
 import image1 from "@/assets/images/bannerExpert.png";
 import image2 from "@/assets/images/banner.png";
 import Container from "@/app/components/common/Container";
