@@ -2,12 +2,10 @@
 import { Button, Flex, Grid, Box, Space, LoadingOverlay } from "@mantine/core";
 import { FilterRadio } from "../components/elements/filterRadio";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Body from "../components/layout/Body";
 import { IProduct } from "@/interfaces/product";
 import ProductItem from "../components/elements/product/ProductItem1";
 import { Sort } from "../components/elements/shop-sort";
-import { FilterCheckBox } from "../components/elements/filterCheckBox";
 import { useSearch } from "../hooks/search/useSearch";
 import { kindProduct } from "@/constants/masterData";
 
@@ -34,14 +32,7 @@ export default function ListSearch({ fillter }: any) {
           keyName="categoryId"
         />
         <FilterRadio data={kindProduct} filterName="Loại" keyName="isProduct" />
-        {/* <FilterCheckBox
-          data={[
-            { id: "1", title: "Sản phẩm" },
-            { id: "0", title: "Dịch vụ" },
-          ]}
-          filterName="Loại"
-          keyName="isProduct"
-        /> */}
+        
       </Body.Sider>
       <Body.Content>
         <Box pos={"relative"}>

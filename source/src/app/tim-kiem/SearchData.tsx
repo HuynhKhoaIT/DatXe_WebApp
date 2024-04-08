@@ -1,5 +1,5 @@
 // "use client";
-import { getProductsSearch } from "@/utils/product";
+
 import { IconBulb } from "@tabler/icons-react";
 import { TableDataProduct } from "../components/pagination-area/pagination-area";
 import { Suspense } from "react";
