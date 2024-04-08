@@ -60,7 +60,8 @@ const blogs = [
     view: 123564300,
   },
 ];
-export default async function Home() {
+export default async function Home({ searchParams }: any) {
+  console.log("request", searchParams);
   const categories = await getCategories({ garageId: "2" });
   const productsRelate = await getProducts({
     garageId: 0,
