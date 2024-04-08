@@ -1,10 +1,10 @@
-"use client";
+import { callApi } from "@/lib";
 import RenderContextClient from "../components/elements/RenderContextClient";
-import { useNewsList } from "../hooks/news/useNews";
 import NewsListPage from "../layout/desktop/tin-tuc/NewsListPage";
+import apiConfig from "@/constants/apiConfig";
 
-export default function News() {
-  const { data: newsData, isLoading, isFetching } = useNewsList(10);
+export default async function News() {
+  const newsData = await callApi(apiConfig.posts.getList, {});
   return (
     <RenderContextClient
       components={{

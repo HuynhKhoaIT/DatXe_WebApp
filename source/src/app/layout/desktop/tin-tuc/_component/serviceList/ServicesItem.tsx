@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import styles from "./servicesItem.module.scss";
 import { Card, Image, Flex, HoverCard } from "@mantine/core";

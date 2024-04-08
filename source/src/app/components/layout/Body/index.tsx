@@ -2,7 +2,6 @@ import { Children } from "react";
 import Container from "../../common/Container";
 import classNames from "classnames";
 import styles from "./index.module.scss";
-import { Grid } from "@mantine/core";
 function Body({ children, className }: any) {
   let Content = null,
     Top = null,
@@ -15,12 +14,12 @@ function Body({ children, className }: any) {
 
   return (
     <Container className={classNames(styles.body, className)}>
-      <main className={styles.main}>
+      <main>
         {Top}
-        <Grid>
-          <Grid.Col span={3}>{Sider}</Grid.Col>
-          <Grid.Col span={9}>{Content}</Grid.Col>
-        </Grid>
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-3">{Sider}</div>
+          <div className="col-span-9">{Content}</div>
+        </div>
       </main>
     </Container>
   );

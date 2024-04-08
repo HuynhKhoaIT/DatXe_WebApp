@@ -1,4 +1,3 @@
-"use client";
 import Container from "@/app/components/common/Container";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import ProductDetail from "./ProductDetail/ProductDetail";
@@ -13,28 +12,26 @@ const Breadcrumbs = [
   { title: "Danh sách sản phẩm", href: "/san-pham" },
   { title: "Sản phẩm" },
 ];
-const ProductDetailPageMobile = ({
+const ProductDetailPageMobile = async ({
   product,
   productReview,
   productRelate,
-  isLoading,
 }: any) => {
   return (
     <div className={styles.wrapper}>
       <Container>
         <Breadcrumb breadcrumbs={Breadcrumbs} />
         <Flex direction={"column"} gap={40}>
-          <ProductDetail isLoading={isLoading} ProductDetail={product?.data} />
+          <ProductDetail ProductDetail={product?.product} />
           <ProductTabsDes
-            ProductDetail={product?.data}
+            ProductDetail={product?.product}
             productReview={productReview}
           />
-          <ExpertBox ProductDetail={product?.data} />
+          <ExpertBox ProductDetail={product?.product} />
           <ImagesShowRoom />
-          <div></div>
         </Flex>
       </Container>
-      <ProductsRelate productRelate={productRelate?.data} />
+      <ProductsRelate productRelate={productRelate} />
     </div>
   );
 };

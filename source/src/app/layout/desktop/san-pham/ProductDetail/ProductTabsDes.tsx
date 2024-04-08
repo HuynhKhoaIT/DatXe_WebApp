@@ -1,14 +1,8 @@
 "use client";
-import { IProduct } from "@/interfaces/product";
 import { LoadingOverlay, Tabs } from "@mantine/core";
 import styles from "./ProductTabsDes.module.scss";
 import Reviews from "./Review";
-const ProductTabsDes = ({
-  ProductDetail,
-  productReview,
-  isLoadingProductReview,
-}: any) => {
-  console.log(ProductDetail);
+const ProductTabsDes = ({ ProductDetail, productReview }: any) => {
   return (
     <Tabs
       defaultValue="description"
@@ -48,10 +42,7 @@ const ProductTabsDes = ({
       </Tabs.Panel>
 
       <Tabs.Panel value="evaluate">
-        <Reviews
-          productReview={productReview}
-          isLoadingProductReview={isLoadingProductReview}
-        />
+        <Reviews productReview={productReview} />
       </Tabs.Panel>
     </Tabs>
   );
