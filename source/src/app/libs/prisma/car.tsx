@@ -41,7 +41,7 @@ export async function getCars(requestData: any) {
   if (requestData.limit) {
     take = parseInt(requestData.limit);
   }
-  let page = requestData.page;
+  let page = Number(requestData.page) > 0 ? Number(requestData.page) : 1;
   if (page) {
     currentPage = Number(page);
   }
@@ -95,7 +95,7 @@ export async function getCars(requestData: any) {
       take: take,
       skip: skip,
       orderBy: {
-        id: "desc",
+        createdAt: "desc",
       },
       where: {
         AND: [
