@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReviewsProduct } from '@/app/libs/prisma/reviewProduct';
 
-export async function GET(request: NextRequest, { params }: { params: { uuId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const uuId = params.uuId;
+        const id = params.id;
         const { searchParams } = new URL(request.url);
         let page = 1;
         let limit = 10;
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest, { params }: { params: { uuId: st
         if (searchParams.get('limit')) {
             limit = Number(searchParams.get('limit'));
         }
-        const review = await getReviewsProduct(uuId, {
+        const review = await getReviewsProduct(id, {
             page,
             limit,
         });

@@ -1,12 +1,12 @@
 import prisma from "../prismadb";
-import { getProductSimpleByUuID } from "./product";
+import { getProductSimpleByID } from "./product";
 
 export async function createReviewProduct(data: any) {
     try {
         const rs = await prisma.reviewsProduct.create({
             data: {                
                 productId: (data.productId),
-                orderId: (data.orderId),
+                orderId: (data.orderId).toString(),
                 star: Number(data.star ?? 1),
                 message: data.message?.toString(),
                 createdId: (data.createdId),
@@ -18,7 +18,7 @@ export async function createReviewProduct(data: any) {
         return { error };
     }
 }
-export async function getReviewsProduct(uuId:string,requestData: any) {
+export async function getReviewsProduct(id:string,requestData: any) {
     let currentPage = 1;
     let take = 10;
     let limit = 10;
@@ -30,7 +30,7 @@ export async function getReviewsProduct(uuId:string,requestData: any) {
         currentPage = Number(page);
     }
     const skip = take * (currentPage - 1);
-    let product = await getProductSimpleByUuID(uuId);
+    let product = await getProductSimpleByID(id);
     const [reviews, total] = await prisma.$transaction([
         prisma.reviewsProduct.findMany({
             take: take,
