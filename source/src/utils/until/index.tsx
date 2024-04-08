@@ -102,7 +102,7 @@ export function convertToPlatesNumber(str: string) {
     .toUpperCase()
     .replace(/([^0-9A-Z\s])/g, "")
     .replace(/(\s+)/g, "");
-  let platesNumberFormat = /^\(?([0-9]{2}[A-Z]{1,2}[0-9]{4,6})/;
+  let platesNumberFormat = /\(?([0-9]{2}[A-Z]{1,2}[0-9]{4,6})/g;
   return str.match(platesNumberFormat)?.[0];
 }
 

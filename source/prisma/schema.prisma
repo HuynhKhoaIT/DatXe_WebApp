@@ -120,7 +120,7 @@ model Product {
   categories      CategoriesOnProducts[]
   brands          CarModelsOnProducts[]
   images          Json?
-  metaDescription String?
+  metaDescription String?     @db.Text
   brandDetail     String?
   supplier        Suppiler @relation(fields: [supplierId], references: [id])
   supplierId      String                    @default("1")
@@ -175,6 +175,7 @@ model Order{
   customerRequest   String?
   customerNote      String?
   note              String?
+  notePrivate       String?
   priorityLevel     Int? @default(1)
   orderCategory     OrderCategory @relation(fields: [orderCategoryId], references: [id])
   orderCategoryId   String @default("1")

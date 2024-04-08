@@ -504,6 +504,7 @@ export async function createOrder(json: any) {
       customerRequest: json.customerRequest ?? "",
       customerNote: json.customerNote ?? "",
       note: json.note ?? "",
+      notePrivate: json.notePrivate ?? '',
       priorityLevel: Number(json.priorityLevel ?? 1),
       orderCategoryId: json.orderCategoryId ?? "1",
       brandId: json.carBrandId,
@@ -514,6 +515,7 @@ export async function createOrder(json: any) {
       garageId: garageId,
       serviceAdvisorId: json.serviceAdvisorId ?? "1",
       createdById: json.createdById ?? "1",
+      
       orderDetails: {
         createMany: {
           data: orderDetails,
