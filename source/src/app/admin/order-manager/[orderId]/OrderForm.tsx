@@ -798,7 +798,7 @@ export default function OrderForm({
                         size="lg"
                         rows={2}
                         radius={0}
-                        {...form.getInputProps("note")}
+                        {...form.getInputProps("notePrivate")}
                         label="Ghi chú nội bộ"
                         autosize={true}
                         placeholder="Ghi chú nội bộ"
@@ -1048,6 +1048,17 @@ export default function OrderForm({
                     minRows={3}
                     autosize={true}
                     placeholder="Ghi chú của khách hàng"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                  <Textarea
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("notePrivate")}
+                    label="Ghi chú nội bộ"
+                    minRows={3}
+                    autosize={true}
+                    placeholder="Ghi chú nội bộ"
                   />
                 </Grid.Col>
               </Grid>
