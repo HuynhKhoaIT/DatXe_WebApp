@@ -378,10 +378,10 @@ export async function getProductByUuID(uuID:string) {
   });
   
 }
-export async function getProductSimpleByUuID(uuID:string){
+export async function getProductSimpleByID(id:string){
   return await prisma.product.findFirst({
     where: {
-      uuID: (uuID.toString()),
+      id: (id.toString()),
     }});
 }
 
