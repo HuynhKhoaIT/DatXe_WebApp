@@ -105,11 +105,7 @@ export default function OrderForm({
     },
     validate: {
       phoneNumber: (value) =>
-        value
-          ? /^0[1-9][0-9]{8}$/.test(value)
-            ? null
-            : "Số điện thoại sai định dạng"
-          : "Vui lòng nhập số điện thoại",
+        /^0[1-9][0-9]{8}$/.test(value) ? null : "Số điện thoại sai định dạng",
       numberPlates: (value) => (value?.length > 0 ? null : "Vui lòng nhập..."),
     },
   });

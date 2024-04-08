@@ -69,7 +69,7 @@ export default function ModalReview({
                 defaultValue={5}
                 size="lg"
                 onChange={(value) => {
-                  form.setFieldValue("start", value);
+                  form.setFieldValue("star", value);
                 }}
               />
             </div>
