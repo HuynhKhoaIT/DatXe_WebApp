@@ -108,7 +108,11 @@ function ProductDetail({
                 <Skeleton height={200} mb="xl" />
               </>
             ) : (
-              <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
+              <>
+                {ProductDetail?.images && (
+                  <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
+                )}
+              </>
             )}
           </Grid.Col>
           <Grid.Col span={12}>

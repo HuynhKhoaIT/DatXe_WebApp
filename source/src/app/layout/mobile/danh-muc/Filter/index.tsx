@@ -9,6 +9,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import FilterBox from "./FilterBox";
 import SliderRange from "./SliderRange";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 const DynamicNavFilter = dynamic(
   () => import("@/app/layout/common/mobile/NavDrawer"),
   {
@@ -16,6 +18,11 @@ const DynamicNavFilter = dynamic(
   }
 );
 const Filter = ({ kindProduct }: any) => {
+  const router = useRouter();
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let params = new URLSearchParams(searchParams);
   const [openedNav, { open: openNav, close: closeNav }] = useDisclosure(false);
   const form = useForm({
     initialValues: {
@@ -30,7 +37,10 @@ const Filter = ({ kindProduct }: any) => {
     const filteredValues = Object.fromEntries(
       Object.entries(values).filter(([key, value]) => value !== null)
     ); // lọc các giá trị null từ đối tượng values
-    console.log(filteredValues);
+    console.log(filteredValues?.toString());
+    const path = pathname + "?" + values?.toString();
+    // router.push(path);
+    console.log(path);
     // setQueryParams({ ...currentParams, ...filteredValues });
     // setOpenNavDraw(false);
   };

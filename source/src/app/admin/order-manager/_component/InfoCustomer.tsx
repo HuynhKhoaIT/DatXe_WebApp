@@ -3,9 +3,12 @@ import { Box, Grid, LoadingOverlay, TextInput } from "@mantine/core";
 import { getOptionsPhone } from "../until";
 import { AutocompletePhone } from "./AutoCompletePhone";
 import styles from "./index.module.scss";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 export default function InfoCustomer({ form, isUser }: any) {
+  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
+
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
+
   return (
     <div className={styles.cardInfo}>
       <Box pos={"relative"}>
@@ -13,14 +16,16 @@ export default function InfoCustomer({ form, isUser }: any) {
           visible={loadingCustomer}
           loaderProps={{ type: "bars" }}
         />
-        <Typo
-          size="primary"
-          type="bold"
-          style={{ color: "var(--primary-orange)" }}
-          className={styles.title}
-        >
-          Thông tin khách hàng
-        </Typo>
+        {!isMobile && (
+          <Typo
+            size="primary"
+            type="bold"
+            style={{ color: "var(--primary-orange)" }}
+            className={styles.title}
+          >
+            Thông tin khách hàng
+          </Typo>
+        )}
         <Grid gutter={12} className={styles.marketingInfo}>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <AutocompletePhone

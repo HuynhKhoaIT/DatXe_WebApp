@@ -39,13 +39,14 @@ import {
   handleKeyPress,
 } from "@/utils/until";
 import FooterSavePage from "../../_component/FooterSavePage";
-import { getOptionsCar } from "../until";
+import { getOptionsCar, getOptionsPhone } from "../until";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
 import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
 import InfoCustomer from "../_component/InfoCustomer";
 import InfoCart from "../_component/InfoCart";
 import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import { AutocompletePhone } from "../_component/AutoCompletePhone";
 
 export default function OrderForm({
   isEditing = false,
@@ -235,6 +236,7 @@ export default function OrderForm({
     } else {
       addItem(values);
     }
+    // handlersButton.close();
   };
 
   // lấy thông tin theo biển số xe
@@ -661,38 +663,7 @@ export default function OrderForm({
                 </Grid.Col>
               </Grid>
               <Space h={30} />
-              <Grid gutter={12} className={styles.marketingInfo}>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("fullName")}
-                    label="Tên khách hàng"
-                    type="text"
-                    placeholder="Tên khách hàng"
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("phoneNumber")}
-                    label="Số điện thoại"
-                    type="text"
-                    placeholder="Số điện thoại"
-                  />
-                </Grid.Col>
-                <Grid.Col span={12}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("address")}
-                    label="Địa chỉ"
-                    type="text"
-                    placeholder="Địa chỉ"
-                  />
-                </Grid.Col>
-              </Grid>
+              <InfoCustomer form={form} isUser={isUser} />
               <div className={styles.footer}>
                 <Button
                   size="lg"

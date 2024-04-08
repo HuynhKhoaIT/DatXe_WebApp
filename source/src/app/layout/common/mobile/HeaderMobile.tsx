@@ -82,9 +82,15 @@ const HeaderMobile = () => {
       >
         <ul className={styles.nav}>
           <li className={styles.navItem}>
-            <Link href="/admin/profile">
+            <Link href="/dashboard">
               <IconUser size={18} />
               Hồ sơ
+            </Link>
+          </li>
+          <li className={styles.navItem}>
+            <Link href="/admin">
+              <IconUser size={18} />
+              Quản trị
             </Link>
           </li>
           <li className={styles.navItem}>

@@ -32,6 +32,7 @@ export default function ProductForm({
     categoryOptions,
   } = useAddProduct();
 
+  console.log(dataDetail);
   const [loading, handlers] = useDisclosure();
   const [valueRTE, setValueRTE] = useState("");
   const [images, setImages] = useState<any>();
@@ -95,9 +96,9 @@ export default function ProductForm({
       setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
-      form.setFieldValue("name", dataDetail?.product?.name);
-      form.setFieldValue("price", dataDetail?.product?.price);
-      form.setFieldValue("description", dataDetail?.product?.description);
+      form.setFieldValue("name", dataDetail?.name);
+      form.setFieldValue("price", dataDetail?.price);
+      form.setFieldValue("description", dataDetail?.description);
       form.setFieldValue("status", "PUBLIC");
       form.setFieldValue("isProduct", "1");
     }
