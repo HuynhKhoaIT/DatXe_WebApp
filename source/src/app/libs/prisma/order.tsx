@@ -418,6 +418,15 @@ export async function createOrder(json: any) {
             customerId = cusNew.customer?.id.toString() ?? "0";
           }
         }
+      }else{
+        const cusNoName = await createCustomer({
+          'fullName': 'KH '+json.numberPlates,
+          'phoneNumber': "0",
+          garageId
+        })
+        if(cusNoName.customer){
+          customerId = cusNoName.customer?.id
+        }
       }
       // end check customer
     } else {
