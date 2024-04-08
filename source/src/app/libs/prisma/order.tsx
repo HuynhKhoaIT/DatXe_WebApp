@@ -667,6 +667,166 @@ export async function createOrderClient(json: any) {
   }
 }
 
+
+export async function bookingOrderClient(json: any) {
+  try {
+    let garageId = "2";
+    if (json.garageId) {
+      garageId = json.garageId;
+    }
+    if (json.detail[0].garageId) {
+      garageId = json.detail[0].garageId;
+    }
+    let customerId = json.customerId;
+    // check customer
+    const customerInGarage = await prisma.customer.findFirst({
+      where: {
+        phoneNumber: json.phoneNumber,
+        garageId,
+        status: 'PUBLIC'
+      }
+    })
+    if(!customerInGarage){
+      const userNewGarage = await prisma.customer.create({
+        data:{
+          phoneNumber: json.phoneNumber,
+          fullName: json.fullName,
+          garageId: garageId
+        }
+      })
+      if(userNewGarage){
+        customerId = userNewGarage.id;
+      }
+    }else{
+      customerId = customerInGarage.id
+    }
+    //get carID
+    let carId = json.carId;
+    if(carId){
+      const carInAdmin = await prisma.car.findFirst({
+        where: {
+          id: carId
+        }
+      })
+
+      const carInGarage = await prisma.car.findFirst({
+        where:{
+          numberPlates: carInAdmin?.numberPlates,
+          status: {
+            not: 'DELETE'
+          },
+          garageId
+        }
+      });
+
+      if(!carInGarage){
+        const carNewGarage = await prisma.car.create({
+          data:{
+            numberPlates: carInAdmin?.numberPlates ?? '',
+            carBrandId: carInAdmin?.carBrandId,
+            carNameId: carInAdmin?.carNameId,
+            carYearId: carInAdmin?.carYearId,
+            garageId: garageId
+          }
+        });
+        carId = carNewGarage.id;
+      }
+    }else{
+      // chua có xe
+      const carInGarage = await prisma.car.findFirst({
+        where:{
+          numberPlates: json?.numberPlates,
+          status: {
+            not: 'DELETE'
+          },
+          garageId
+        }
+      });
+
+      if(!carInGarage){
+        const carNewGarage = await prisma.car.create({
+          data:{
+            numberPlates: json?.numberPlates ?? '',
+            carBrandId: json?.carBrandId,
+            carNameId: json?.carNameId,
+            carYearId: json?.carYearId,
+            garageId: garageId
+          }
+        });
+        carId = carNewGarage.id;
+      }
+    }
+    let orderDetails: any = [];
+    if (json.detail) {
+      json.detail.forEach(function (data: any) {
+        orderDetails.push({
+          productId: data.productId,
+          note: data.note,
+          price: Number(data.price ?? 0),
+          priceSale: Number(data.priceSale ?? 0),
+          saleType: data.saleType,
+          saleValue: data.saleValue.toString(),
+          quantity: Number(data.quantity ?? 1),
+          subTotal: Number(data.subTotal ?? 0),
+          garageId: garageId ?? "1",
+          createdBy: json.createdById.toString() ?? "1",
+        });
+      });
+    }
+    let orderCode = (await getCodeForOrder()) ?? "";
+    let data = {
+      code: orderCode,
+      slug: orderCode.toLowerCase(),
+      customerId: customerId,
+      carId: carId,
+      dateTime: json.dateTime ?? new Date(),
+      customerRequest: json.customerRequest ?? "",
+      customerNote: json.customerNote ?? "",
+      note: json.note ?? "",
+      priorityLevel: Number(json.priorityLevel ?? 1),
+      orderCategoryId: json.orderCategoryId ?? "1",
+      brandId: json.carBrandId,
+      modelId: json.carNameId,
+      yearId: json.carYearId,
+      subTotal: Number(json.subTotal),
+      total: Number(json.total),
+      garageId: garageId,
+      serviceAdvisorId:  "1",
+      createdById: "1",
+      
+      orderDetails: {
+        createMany: {
+          data: orderDetails,
+        },
+      },
+    };
+    // return data;
+    const order = await prisma.order.create({
+      data: data,
+      include: {
+        serviceAdvisor: true,
+        car: true,
+        customer: true,
+        orderDetails: {
+          select: {
+            quantity: true,
+            product: {
+              select: {
+                name: true,
+                sku: true,
+                images: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return { order };
+  } catch (error) {
+    return { error };
+  }
+}
+
 export async function updateOrder(id: string, json: any) {
   try {
     let customerId = "1";
