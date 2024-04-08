@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./index.module.scss";
 import { IProduct } from "@/interfaces/product";
 import OverviewPanel from "@/app/components/layout/OverviewPanel";

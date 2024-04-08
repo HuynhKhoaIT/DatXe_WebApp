@@ -28,7 +28,7 @@ export async function getProducts(requestData:any) {
       categories = {
           some: {
               category: {
-                  id: Number(categoryId!),
+                  id: (categoryId!),
               },
           },
       };
@@ -40,7 +40,7 @@ export async function getProducts(requestData:any) {
       brands = {
           some: {
               carModel: {
-                  id: Number(brandIdFilter),
+                  id: (brandIdFilter),
               },
           },
       };
