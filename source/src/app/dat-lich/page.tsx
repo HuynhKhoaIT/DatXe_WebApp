@@ -20,18 +20,7 @@ export default async function DatLich() {
   const orders = await getSchedule();
   const mappedOrdersData = mapArrayEventCalendar(orders);
   const carsData = await getCarsSsr();
-  // const carOptions = carsData?.map((car) => ({
-  //   value: car.id?.toString() || "",
-  //   label: car.licensePlates || "",
-  //   otherData: {
-  //     carId: car.id?.toString() || "",
-  //     brandId: car.brandCarName.id,
-  //     brandName: car.brandCarName.name,
-  //     modelId: car.modelCarName.id,
-  //     modelName: car.modelCarName.name,
-  //     yearCarName: car.yearCarName,
-  //   },
-  // }));
+  
 
   const account: any = await getMyAccount();
 
