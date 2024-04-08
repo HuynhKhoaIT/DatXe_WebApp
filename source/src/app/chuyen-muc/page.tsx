@@ -3,7 +3,7 @@ export default async function Category() {
 
   return (
     <div>
-      <div className="shop-item-wrapper pt-60 pb-60">
+      <div className="shop-item-wrapper">
         <div className="row">
           {/* {categories?.map((category: ICategory, index: number) => (
             <div className="col-md-2">

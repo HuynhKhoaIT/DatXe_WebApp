@@ -199,7 +199,7 @@ export default function CartComponent({ myAccount }: any) {
   return (
     <>
       <form>
-        <div className="shop-cart pt-60 pb-60">
+        <div className="shop-cart ">
           <Container>
             <Grid gutter={16}>
               <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>

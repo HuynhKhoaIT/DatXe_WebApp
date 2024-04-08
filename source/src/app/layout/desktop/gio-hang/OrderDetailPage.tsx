@@ -182,7 +182,7 @@ export default function OrderDetailPage({ dataSource }: any) {
         giá sửa chữa như sau:
       </Typo>
 
-      <div className="order-item-single bg pt-60">
+      <div className="order-item-single">
         <div>
           {/* <div className="card text-left mb-40">
             <div className="card-body">

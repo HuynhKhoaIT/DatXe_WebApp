@@ -3,18 +3,14 @@ import styles from "./index.module.scss";
 import { LoadingOverlay, Select } from "@mantine/core";
 import ReviewItem from "./ReviewItem";
 
-const Reviews = ({ productReview, isLoadingProductReview }: any) => {
+const Reviews = ({ productReview }: any) => {
   return (
     <div className={styles.wrapper}>
-      {/* <LoadingOverlay visible={isLoadingProductReview} /> */}
-
       <div className={styles.header}>
         <Typo size="sub" style={{ color: "var(--title-color)" }}>
           {productReview?.data?.length} đánh giá
         </Typo>
         <Select
-          // size="lg"
-          // radius={0}
           w={130}
           placeholder="Lọc theo"
           data={["5 sao", "4 sao", "3 sao", "2 sao", "1 sao"]}
