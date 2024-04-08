@@ -119,11 +119,9 @@ export function AutocompletePhone({
               onClick={() => combobox.openDropdown()}
               onFocus={() => combobox.openDropdown()}
               onBlur={async (event) => {
-                const is = event.target.value
-                  ? /^0[1-9][0-9]{8}$/.test(event.target.value)
-                    ? null
-                    : "Số điện thoại sai định dạng"
-                  : "Vui lòng nhập số điện thoại";
+                const is = /^0[1-9][0-9]{8}$/.test(event.target.value)
+                  ? null
+                  : "Số điện thoại sai định dạng";
                 setErrorText(is);
 
                 if (is == null && form.values.customerId == null) {

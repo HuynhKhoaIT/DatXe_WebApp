@@ -49,6 +49,18 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+    },
+    car:{
+        getList: {
+            baseURL: `${apiUrl}api/client/cars`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getById: {
+            baseURL: `${apiUrl}api/client/cars/:id`,
+            method: 'GET',
+            headers: baseHeader,
+        },
     }
 };
 
