@@ -62,16 +62,14 @@ const blogs = [
 ];
 export default async function Home() {
   const categories = await getCategories({ garageId: "2" });
-  const productsRelate = await getProducts({
-    garageId: 0,
-  });
+  const productsRelate = await getProducts({});
   const servicesHot = await getProducts({
     garageId: 0,
-    isProduct: "0",
+    isProduct: 0,
   });
   const productsHot = await getProducts({
     garageId: 0,
-    isProduct: "1",
+    isProduct: 1,
   });
 
   return (
