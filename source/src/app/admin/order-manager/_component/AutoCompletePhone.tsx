@@ -119,12 +119,12 @@ export function AutocompletePhone({
               onClick={() => combobox.openDropdown()}
               onFocus={() => combobox.openDropdown()}
               onBlur={async (event) => {
-                const is = /^0[1-9][0-9]{8}$/.test(event.target.value)
-                  ? null
-                  : "Số điện thoại sai định dạng";
-                setErrorText(is);
+                // const is = /^0[1-9][0-9]{8}$/.test(event.target.value)
+                //   ? null
+                //   : "Số điện thoại sai định dạng";
+                // setErrorText(is);
 
-                if (is == null && form.values.customerId == null) {
+                if (form.values.customerId == null) {
                   handlersLoadingCustomer.open();
                   const infoCustomer = await fetchData();
 
