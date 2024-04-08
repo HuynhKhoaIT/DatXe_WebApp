@@ -28,18 +28,21 @@ model Wards{
   garage             Garage[]
 }
 model Garage {
-  id   String @id @default(uuid())
+  id                  String @id @default(uuid())
   routeId             Int?
   code                String
   uuId                String?
   name                String
   shortName           String?
   logo                String?
+  banner              String?
+  photos              String? @db.Text
   phoneNumber         String?
   email               String?
   website             String?
   address             String?
-  description         String?
+  description         String? @db.Text
+  social              String? @db.Text
   status              STATUS @default(PUBLIC)
   product             Product[]
   order               Order[]
