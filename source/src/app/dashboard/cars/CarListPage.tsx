@@ -129,7 +129,7 @@ export default function CarListPage({
       render: (record: any) => {
         return (
           <>
-            <Button
+            {/* <Button
               size="lg"
               radius={0}
               p={5}
@@ -140,7 +140,7 @@ export default function CarListPage({
               }}
             >
               <IconEye size={16} />
-            </Button>
+            </Button> */}
             <Link href={`/dashboard/cars/${record.id}`}>
               <Button
                 size="lg"

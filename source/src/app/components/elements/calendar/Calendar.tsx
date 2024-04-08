@@ -37,6 +37,7 @@ export default function CalendarScheduler({
   orderInfo,
   advisorOptions,
 }: any) {
+  console.log(dataDetail);
   const { data: session, status } = useSession();
   const token = session?.user?.token;
   const [ordersData, setOrdersData] = useState(dataDetail);
