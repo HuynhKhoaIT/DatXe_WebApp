@@ -26,7 +26,7 @@ export default function ModalReview({
   });
   const handleSubmit = async (values: any) => {
     try {
-      await axios.post("/api/reviews", values);
+      await axios.post("/api/client/reviews", values);
       notifications.show({
         title: "Thành công",
         message: "Gửi đánh giá thành công.",
@@ -69,7 +69,7 @@ export default function ModalReview({
                 defaultValue={5}
                 size="lg"
                 onChange={(value) => {
-                  form.setFieldValue("start", value);
+                  form.setFieldValue("star", value);
                 }}
               />
             </div>

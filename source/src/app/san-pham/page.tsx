@@ -1,25 +1,22 @@
-"use client";
 import ProductsListPageDesktop from "../layout/desktop/san-pham/ProductsListPage";
 import ProductsListPageMobile from "../layout/mobile/san-pham/ProductsListPage";
-import { getCategories } from "../libs/prisma/category";
-import { getProducts } from "../libs/prisma/product";
 import { kindProduct } from "@/constants/masterData";
-import RenderContextClient from "../components/elements/RenderContextClient";
-import { useProduct, useProductRelate } from "../hooks/products/useProducts";
-import { useCategories } from "../hooks/categories/useCategory";
-import { useState } from "react";
+import RenderContext from "../components/elements/RenderContext";
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
+import { getCategories } from "../libs/prisma/category";
 // import { useProduct } from "../hooks/products/useProducts";
 
-export default function Products() {
-  const [productCount, setProductCount] = useState(5);
-  const { data: products, isLoading } = useProductRelate(productCount);
-  const {
-    data: categories,
-    isLoading: isLoadingCategory,
-    isFetching: isFetchingCategory,
-  } = useCategories(10);
+export default async function Products({ searchParams }: any) {
+  const products = await callApi(apiConfig.products.getList, {
+    params: {
+      categoriId: searchParams?.categoryId,
+    },
+  });
+  const categories = await getCategories({ garageId: "2" });
+
   return (
-    <RenderContextClient
+    <RenderContext
       components={{
         desktop: {
           defaultTheme: ProductsListPageDesktop,
@@ -31,9 +28,6 @@ export default function Products() {
       products={products}
       categories={categories}
       kindProduct={kindProduct}
-      setProductCount={setProductCount}
-      productCount={productCount}
-      isLoadingCategory={isLoadingCategory || isFetchingCategory}
     />
   );
 }

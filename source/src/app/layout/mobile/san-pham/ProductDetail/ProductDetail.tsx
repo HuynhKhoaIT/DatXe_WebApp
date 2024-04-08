@@ -10,13 +10,8 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import ProductSlider from "@/app/layout/desktop/san-pham/ProductDetail/ProductSlider";
-function ProductDetail({
-  ProductDetail,
-  isLoading,
-}: {
-  ProductDetail: IProduct;
-  isLoading: boolean;
-}) {
+function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
+  console.log(ProductDetail);
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -103,16 +98,8 @@ function ProductDetail({
           }}
         >
           <Grid.Col span={12}>
-            {isLoading ? (
-              <>
-                <Skeleton height={200} mb="xl" />
-              </>
-            ) : (
-              <>
-                {ProductDetail?.images && (
-                  <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
-                )}
-              </>
+            {ProductDetail?.images && (
+              <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
             )}
           </Grid.Col>
           <Grid.Col span={12}>

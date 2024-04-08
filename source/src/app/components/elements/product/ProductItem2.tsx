@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { IProduct } from "@/interfaces/product";
 import { Card, Image, Badge, Group, Flex, Box } from "@mantine/core";

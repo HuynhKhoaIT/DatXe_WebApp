@@ -1,16 +1,10 @@
 import React from "react";
 import styles from "./index.module.scss";
 import classNames from "classnames";
-import { Flex, Image, LoadingOverlay, Title } from "@mantine/core";
+import { Flex, Image, Title } from "@mantine/core";
 import Typo from "@/app/components/elements/Typo";
 
-const Banner = ({ data, loading }: any) => {
-  const breadScrumbs = [
-    { name: "Trang chủ", path: "/", active: true },
-    { name: "Tại sao bạn nên học tại Life Uni?", path: "/news", active: true },
-    {},
-    // { name: data?.title, path: '/', active: true },
-  ];
+const Banner = ({ data }: any) => {
   return (
     <div className={styles.container}>
       <div className={classNames("container", styles.content)}>
@@ -32,12 +26,6 @@ const Banner = ({ data, loading }: any) => {
           </Flex>
         </div>
       </div>
-      <LoadingOverlay
-        visible={loading}
-        zIndex={10}
-        overlayProps={{ radius: "sm" }}
-        loaderProps={{ type: "bars" }}
-      />
       <Image
         src={data?.thumbnail}
         alt=""

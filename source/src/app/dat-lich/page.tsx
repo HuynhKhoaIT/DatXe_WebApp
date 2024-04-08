@@ -7,6 +7,8 @@ import { getCategories } from "@/utils/category";
 import { getCarsSsr } from "@/utils/car";
 import { getMyAccount } from "@/utils/user";
 import { apiUrl } from "@/constants";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 async function getDataInfoOrder() {
   const res = await fetch(`${apiUrl}api/orders/create`);
@@ -20,28 +22,9 @@ export default async function DatLich() {
   const orders = await getSchedule();
   const mappedOrdersData = mapArrayEventCalendar(orders);
   const carsData = await getCarsSsr();
-  
-
-  const account: any = await getMyAccount();
-
+  const session = await getServerSession(authOptions);
   let orderInfo = await getDataInfoOrder();
-  const categoryOptions = orderInfo?.categories?.map((category: any) => ({
-    value: category.id?.toString() || "",
-    label: category.title || "",
-  }));
-  const carOptions = orderInfo?.cars?.map((car: any) => ({
-    value: car.id?.toString() || "",
-    label: car.numberPlates || "",
-    otherData: {
-      carId: car.id?.toString() || "",
-      brandId: car.carBrandId,
-      modelId: car.carNameId,
-      carYearId: car.carYearId,
-    },
-  }));
-  const carDefault = carOptions?.filter(
-    (car: any) => car.value == account?.carIdDefault
-  );
+
   const newBrands = orderInfo?.carBrands?.map((brand: any) => ({
     value: brand.id?.toString() || "",
     label: brand.title || "",
@@ -54,10 +37,10 @@ export default async function DatLich() {
     <main className="main">
       <CalendarScheduler
         brandOptions={newBrands}
-        categoryOptions={categoryOptions}
+        // categoryOptions={categoryOptions}
         carsData={carsData}
-        carOptions={carOptions}
-        carDefault={carDefault}
+        // carOptions={carOptions}
+        // carDefault={carDefault}
         ordersData={mappedOrdersData}
         orderInfo={orderInfo}
         advisorOptions={advisorOptions}

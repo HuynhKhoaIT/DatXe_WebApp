@@ -1,17 +1,14 @@
+"use client";
 import { Box, Grid, Group, Skeleton } from "@mantine/core";
 import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import Container from "@/app/components/common/Container";
 import Banner from "./_component/Banner";
 import ServiceList from "./_component/serviceList/ServiceList";
-export default function NewDetailPage({
-  newsData,
-  newsDataLoading,
-  newsDataList,
-}: any) {
+export default function NewDetailPage({ newsData, newsDataList }: any) {
   return (
     <div>
-      <Banner data={newsData?.data} loading={newsDataLoading} />
+      <Banner data={newsData?.data} />
       <Container className={styles.containerNews}>
         <Grid gutter={20}>
           <Grid.Col span={9}>

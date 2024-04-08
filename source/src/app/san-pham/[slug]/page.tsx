@@ -1,29 +1,29 @@
-"use client";
-import RenderContextClient from "@/app/components/elements/RenderContextClient";
-import {
-  useProduct,
-  useProductRelate,
-  useProductReview,
-} from "@/app/hooks/products/useProducts";
+import RenderContext from "@/app/components/elements/RenderContext";
 import ProductDetailPageDesktop from "@/app/layout/desktop/san-pham/ProductDetailPage";
 import ProductDetailPageMobile from "@/app/layout/mobile/san-pham/ProductDetailPage";
+import apiConfig from "@/constants/apiConfig";
+import { callApi } from "@/lib";
 export const dynamic = "force-dynamic";
 
-export default function DetailProduct({
+export default async function DetailProduct({
   params,
 }: {
   params: { slug: string };
 }) {
-  const { data: product, isLoading, isFetching } = useProduct(params?.slug);
-  const { data: productsRelate, isLoading: isLoadingRelate } = useProductRelate(
-    10
-  );
-  const {
-    data: productReview,
-    isLoading: isLoadingProductReview,
-  } = useProductReview(params?.slug);
+  const product = await callApi(apiConfig.products.getById, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
+  const productsRelate = await callApi(apiConfig.products.getList, {});
+
+  const productReview = await callApi(apiConfig.products.getReviewById, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
   return (
-    <RenderContextClient
+    <RenderContext
       components={{
         desktop: {
           defaultTheme: ProductDetailPageDesktop,
@@ -32,11 +32,9 @@ export default function DetailProduct({
           defaultTheme: ProductDetailPageMobile,
         },
       }}
-      product={product}
-      isLoading={isLoading || isFetching}
-      productReview={productReview}
-      productRelate={productsRelate}
-      isLoadingProductReview={isLoadingProductReview}
+      product={product?.data}
+      productReview={productReview?.data}
+      productRelate={productsRelate?.data}
     />
   );
 }

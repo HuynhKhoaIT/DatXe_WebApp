@@ -1,4 +1,3 @@
-"use client";
 import Link from "next/link";
 import React from "react";
 import styles from "./Header.module.scss";
@@ -9,8 +8,11 @@ import HeaderTop from "./HeaderTop";
 import Container from "@/app/components/common/Container";
 import SearchFormName from "@/app/components/elements/search/SearchFormName";
 import { IconShoppingCart } from "@tabler/icons-react";
-import { useCarsList } from "@/app/hooks/cars/useCars";
-export default function Header() {
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+export default async function Header() {
   const brandData = [
     {
       id: "1",
@@ -49,12 +51,12 @@ export default function Header() {
       name: "KIA",
     },
   ];
-
-  const { data: cars, isLoading: isLoadingCar } = useCarsList(10);
+  const cars = await callApi(apiConfig.car.getList, {});
   const dataOption = cars?.data?.map((item: any) => ({
     value: item.id.toString(),
     label: item.numberPlates,
   }));
+
   return (
     <header className={styles.header}>
       <HeaderTop />
@@ -71,29 +73,23 @@ export default function Header() {
                   <IconShoppingCart size={28} color="#3450E7" />
                 </ActionIcon>
               </Link>
-              {isLoadingCar ? (
-                <Skeleton height={56} radius="xl" />
+              {cars?.data?.length > 0 ? (
+                <Select
+                  classNames={{ input: styles.inputSelect }}
+                  data={dataOption}
+                  h={56}
+                />
               ) : (
-                <>
-                  {cars?.data?.length > 0 ? (
-                    <Select
-                      classNames={{ input: styles.inputSelect }}
-                      data={dataOption}
-                      h={56}
-                    />
-                  ) : (
-                    <Button
-                      color="#EEF1F9"
-                      leftSection={<img src={car.src} alt="Car Icon" />}
-                      classNames={{
-                        root: styles.btnAdd,
-                        inner: styles.innerAdd,
-                      }}
-                    >
-                      Thêm xe
-                    </Button>
-                  )}
-                </>
+                <Button
+                  color="#EEF1F9"
+                  leftSection={<img src={car.src} alt="Car Icon" />}
+                  classNames={{
+                    root: styles.btnAdd,
+                    inner: styles.innerAdd,
+                  }}
+                >
+                  Thêm xe
+                </Button>
               )}
 
               <Link href={"/dat-lich"}>

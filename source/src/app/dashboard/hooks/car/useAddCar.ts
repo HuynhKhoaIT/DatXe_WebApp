@@ -64,12 +64,13 @@ export const useAddCar = (): UseCar => {
     const searchParams = useSearchParams();
     const { mutate: addItem } = useMutation({
         mutationFn: addCar,
-        onSuccess: () => {
+        onSuccess: (res) => {
             router.back();
             notifications.show({
                 title: 'Thành công',
                 message: 'Thêm xe thành công',
             });
+
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
@@ -97,7 +98,7 @@ export const useAddCar = (): UseCar => {
 
             notifications.show({
                 title: 'Thành công',
-                message: 'Cập nhật đơn hàng thành công',
+                message: 'Cập nhật xe thành công',
             });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],

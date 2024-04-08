@@ -1,6 +1,7 @@
 import { Skeleton } from "@mantine/core";
 import styles from "./CardBlog.module.scss";
 import blog4 from "@/assets/images/blog4.png";
+import Link from "next/link";
 
 export default function CardBlog({ data, isLoading }: any) {
   if (!data) {
@@ -12,7 +13,8 @@ export default function CardBlog({ data, isLoading }: any) {
     };
   }
   return (
-    <div
+    <Link
+      href={`news/${data?.id}`}
       className={styles.wrapper}
       style={{
         backgroundImage: isLoading ? blog4.src : `url(${data?.thumbnail})`,
@@ -20,8 +22,8 @@ export default function CardBlog({ data, isLoading }: any) {
     >
       <div className={styles.info}>
         <div className={styles.title}>{data?.title}</div>
-        <div className={styles.view}>{data?.view} lượt xem</div>
+        {/* <div className={styles.view}>{data?.view} lượt xem</div> */}
       </div>
-    </div>
+    </Link>
   );
 }

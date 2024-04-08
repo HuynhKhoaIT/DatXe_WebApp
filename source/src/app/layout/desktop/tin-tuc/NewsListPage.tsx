@@ -14,6 +14,7 @@ import Container from "@/app/components/common/Container";
 import Banner from "../chuyen-gia/Banner";
 
 export default function NewsListPage({ newsData }: any) {
+  console.log(newsData);
   return (
     <>
       <Banner />
