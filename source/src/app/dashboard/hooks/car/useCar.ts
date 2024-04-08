@@ -16,7 +16,7 @@ const fetchCars = async (searchParams: any, page: number): Promise<any> => {
 };
 
 const deleteCar = async (id: string): Promise<any> => {
-    const response = await fetch(`/api/client/cars${id}`, {
+    const response = await fetch(`/api/client/cars/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
