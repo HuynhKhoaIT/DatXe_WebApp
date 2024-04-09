@@ -21,9 +21,10 @@ export async function GET(request: NextRequest) {
             const cars = await getCars(requestData);
 
             return NextResponse.json(cars);
-        } else {
-            throw new Error('Chua dang nhap');
         }
+        return NextResponse.json({
+            data: []
+        })
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
