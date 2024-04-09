@@ -5,12 +5,15 @@ import RenderContext from "../components/elements/RenderContext";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 import { getCategories } from "../libs/prisma/category";
+import { DEFAULT_SIZE_LIMIT } from "@/constants";
 // import { useProduct } from "../hooks/products/useProducts";
 
 export default async function Products({ searchParams }: any) {
   const products = await callApi(apiConfig.products.getList, {
     params: {
       categoriId: searchParams?.categoryId,
+      isProduct: searchParams?.isProduct || true,
+      limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
     },
   });
   const categories = await getCategories({ garageId: "2" });
@@ -28,6 +31,7 @@ export default async function Products({ searchParams }: any) {
       products={products}
       categories={categories}
       kindProduct={kindProduct}
+      searchParams={searchParams}
     />
   );
 }

@@ -798,7 +798,7 @@ export default function OrderForm({
                         size="lg"
                         rows={2}
                         radius={0}
-                        {...form.getInputProps("note")}
+                        {...form.getInputProps("notePrivate")}
                         label="Ghi chú nội bộ"
                         autosize={true}
                         placeholder="Ghi chú nội bộ"
@@ -1027,7 +1027,7 @@ export default function OrderForm({
                     value={calculateSubTotal()}
                   />
                 </Grid.Col>
-                {isEditing && (
+                {isEditing ? (
                   <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                     <Select
                       size="lg"
@@ -1038,6 +1038,8 @@ export default function OrderForm({
                       data={stepOrderOptions}
                     />
                   </Grid.Col>
+                ) : (
+                  <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}></Grid.Col>
                 )}
                 <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                   <Textarea
@@ -1045,9 +1047,20 @@ export default function OrderForm({
                     radius={0}
                     {...form.getInputProps("note")}
                     label="Ghi chú của khách hàng"
-                    minRows={3}
+                    minRows={2}
                     autosize={true}
                     placeholder="Ghi chú của khách hàng"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                  <Textarea
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("notePrivate")}
+                    label="Ghi chú nội bộ"
+                    minRows={2}
+                    autosize={true}
+                    placeholder="Ghi chú nội bộ"
                   />
                 </Grid.Col>
               </Grid>

@@ -10,7 +10,7 @@ export default function ServicesHot({ data }: any) {
       stylesProps={{ padding: "30px 0" }}
       title="Dịch vụ khuyến mãi"
       subTitle="Các dịch vụ dành cho xe bạn"
-      linkToList={"/dich-vu"}
+      linkToList={"/san-pham?isProduct=false"}
       id="services"
       hiddenShowMore={data?.length < 8}
     >

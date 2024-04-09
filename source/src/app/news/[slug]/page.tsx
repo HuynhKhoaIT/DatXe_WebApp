@@ -1,5 +1,6 @@
 import RenderContextClient from "@/app/components/elements/RenderContextClient";
 import NewDetailPage from "@/app/layout/desktop/tin-tuc/NewsDetailPage";
+import BlogDetailPageMobile from "@/app/layout/mobile/blog/BlogDetailPage";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
 export const dynamic = "force-dynamic";
@@ -21,9 +22,9 @@ export default async function DetailNews({
         desktop: {
           defaultTheme: NewDetailPage,
         },
-        // mobile: {
-        //   defaultTheme: ProductDetailPageMobile,
-        // },
+        mobile: {
+          defaultTheme: BlogDetailPageMobile,
+        },
       }}
       newsData={newsData}
       newsDataList={newsDataList}

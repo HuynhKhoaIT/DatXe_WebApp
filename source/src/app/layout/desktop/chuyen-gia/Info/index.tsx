@@ -8,7 +8,6 @@ import { ActionIcon, Button } from "@mantine/core";
 import Container from "@/app/components/common/Container";
 import Link from "next/link";
 const Info = ({ detailData }: any) => {
-  console.log(detailData);
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -66,7 +65,7 @@ const Info = ({ detailData }: any) => {
                 Đặt lịch
               </Button>
             </Link>
-            <a href="tel:555-555-5555">
+            <a href={`tel:${detailData.phoneNumber}`}>
               <Button
                 size="lg"
                 radius={0}

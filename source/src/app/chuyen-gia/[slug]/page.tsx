@@ -12,6 +12,8 @@ import IconZalo from "@/assets/icons/zalo.svg";
 import IconIg from "@/assets/icons/instagram.svg";
 import { getCategories } from "@/app/libs/prisma/category";
 import { getGarageByCode, showGarage } from "@/app/libs/prisma/garage";
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
 
 const blogs = [
   {
@@ -104,6 +106,11 @@ export default async function DetailGarage({
     isProduct: "1",
     garageId: expertDetail.id,
   });
+  const newsList = await callApi(apiConfig.posts.getList, {
+    params: {
+      garageId: expertDetail.id,
+    },
+  });
   return (
     <RenderContext
       components={{
@@ -118,9 +125,10 @@ export default async function DetailGarage({
       categories={categories}
       services={services}
       products={products}
-      blogs={blogs}
+      blogs={newsList}
       socials={socials}
       convenients={convenients}
+      blogsDefalt={blogs}
     />
   );
 }
