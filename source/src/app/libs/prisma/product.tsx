@@ -230,7 +230,27 @@ export async function getProductsClient(requestData:any) {
           include: {
               reviews: true,
               categories: true,
-              garage: true,
+              marketingCampaignDetail: {
+                take: 1,
+                where: {
+                    marketingCampaign: {
+                        AND: [
+                            {
+                                status: 'PUBLIC',
+                                dateTimeStart: {
+                                    lte: new Date(),
+                                },
+                                dateTimeEnd: {
+                                    gte: new Date(),
+                                },
+                            },
+                        ],
+                    },
+                },
+                include: {
+                    marketingCampaign: true,
+                },
+            },
           },
       }),
       prisma.product.count({
@@ -250,6 +270,13 @@ export async function getProductsClient(requestData:any) {
           },
       }),
   ]);
+
+
+  products.map((p)=>{
+    if(p.marketingCampaignDetail.length){
+      p.salePrice = p.marketingCampaignDetail[0]?.priceSale;
+    }
+  });
 
   const totalPage = Math.ceil(total / limit);
 
@@ -339,6 +366,9 @@ export async function getProductById(id: any) {
         },
       })
     ])
+    if(product?.marketingCampaignDetail.length){
+      product.salePrice = product.marketingCampaignDetail[0]?.priceSale;
+    }
     return {product,avgReview};
   } catch (error) {
     return { error };
