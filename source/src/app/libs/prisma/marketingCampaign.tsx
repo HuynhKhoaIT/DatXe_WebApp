@@ -115,6 +115,8 @@ export async function createMarketingCampaign(json: any) {
             dateTimeEnd: json.dateTimeEnd,
             garageId: json.garageId.toString(),
             createdBy: json.createdBy.toString(),
+            description: json.description,
+            banner: json.banner,
             status: json.status,
             detail: {
                 createMany : {
