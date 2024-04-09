@@ -57,6 +57,8 @@ export default async function Header() {
     label: item.numberPlates,
   }));
 
+  console.log(cars);
+
   return (
     <header className={styles.header}>
       <HeaderTop />

@@ -30,14 +30,11 @@ export default function CalendarScheduler({
   ordersData: dataDetail,
   brandOptions,
   categoryOptions,
-  carsData,
   carOptions,
   carDefault,
   selectable = true,
-  orderInfo,
   advisorOptions,
 }: any) {
-  console.log(dataDetail);
   const { data: session, status } = useSession();
   const token = session?.user?.token;
   const [ordersData, setOrdersData] = useState(dataDetail);
@@ -144,7 +141,6 @@ export default function CalendarScheduler({
         eventInfos={eventInfos}
         brandOptions={brandOptions}
         categoryOptions={categoryOptions}
-        carsData={carsData}
         carOptions={carOptions}
         carDefault={carDefault}
         fetchDataOrders={fetchDataOrders}

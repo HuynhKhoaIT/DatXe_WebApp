@@ -37,6 +37,11 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+        orderCategory:{
+            baseURL: `${apiUrl}api/order-category`,
+            method: 'GET',
+            headers: baseHeader,
+        }
     },
     posts:{
         getList: {
@@ -61,6 +66,11 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+        // getBrandCar:{
+        //     baseURL: `${apiUrl}api/cars/:id`,
+        //     method: 'GET',
+        //     headers: baseHeader,
+        // }
     }
 };
 

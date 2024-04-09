@@ -73,7 +73,7 @@ export default function ComboboxField({
           {options?.length > 0 ? (
             options
           ) : (
-            <Combobox.Empty>Nothing found</Combobox.Empty>
+            <Combobox.Empty>Dữ liệu trống</Combobox.Empty>
           )}
           <Button
             variant="transparent"

@@ -8,7 +8,9 @@ import {
   NumberInput,
   Select,
   Table,
+  Text,
   TextInput,
+  Textarea,
   Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -23,6 +25,10 @@ import dayjs from "dayjs";
 import Typo from "@/app/components/elements/Typo";
 import FooterSavePage from "../../_component/FooterSavePage";
 import { useAddMarketing } from "../../hooks/marketingCampaign/useAddMarketing";
+import CropImageLink from "@/app/components/common/CropImage";
+import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
+import axios from "axios";
+
 const DynamicModalChooseProducts = dynamic(
   () => import("./ModalChooseProducts"),
   {
@@ -38,6 +44,23 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
       ? dataDetail?.detail.map((item: any) => ({ ...item, id: item.productId }))
       : []
   );
+
+  const uploadFileBanner = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      form.setFieldValue("banner", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const [loading, handlers] = useDisclosure();
   const [
     openModalChoose,
@@ -287,6 +310,24 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
             Thông tin chương trình
           </Typo>
           <div className={styles.marketingInfo}>
+            <Grid>
+              <Grid.Col span={{ base: 6 }}>
+                <Text size={"16px"} c={"#999999"} mb={"6px"}>
+                  Banner
+                </Text>
+                <CropImageLink
+                  shape="rect"
+                  placeholder={"Cập nhật ảnh bìa"}
+                  defaultImage={dataDetail?.banner || ImageUpload.src}
+                  uploadFileThumbnail={uploadFileBanner}
+                  aspect={3 / 2}
+                  idUpload="image-uploader-banner"
+                  idResult="image-result-banner"
+                  idImageContainer="image-container-banner"
+                  name="banner"
+                />
+              </Grid.Col>
+            </Grid>
             <Grid gutter={16}>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <TextInput
@@ -317,6 +358,17 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
                   label="Ngày kết thúc"
                   required
                   {...form.getInputProps("dateTimeEnd")}
+                />
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <Textarea
+                  size="lg"
+                  radius={0}
+                  label="Mô tả"
+                  minRows={4}
+                  autosize={true}
+                  {...form.getInputProps("description")}
+                  placeholder="Mô tả"
                 />
               </Grid.Col>
             </Grid>

@@ -24,6 +24,17 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { GenOTP } from "@/utils/user";
 import styles from "./index.module.scss";
+import ComboboxField from "@/app/gio-hang/_component/ComboboxField";
+import dynamic from "next/dynamic";
+import { useCars } from "@/app/dashboard/hooks/car/useCar";
+
+const DynamicModalAddCar = dynamic(
+  () => import("@/app/gio-hang/_component/ModalAddCar"),
+  {
+    ssr: false,
+  }
+);
+
 export const ModalEventCalendar = ({
   user,
   brandOptions,
@@ -37,12 +48,17 @@ export const ModalEventCalendar = ({
   garage,
   advisorOptions,
   carOptions,
-  cars,
   garageOptions,
   dataCarDefault,
   onClose,
   fetchDataOrders,
 }: any) => {
+  const { cars, isLoading, isFetching } = useCars();
+  const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
+    false
+  );
+  const [value, setValue] = useState<string | null>(null);
+
   const typeView = eventInfos?.view?.type;
   const newDate = new Date(eventInfos?.start);
   newDate.setHours(newDate.getHours() + 9);
@@ -173,21 +189,14 @@ export const ModalEventCalendar = ({
         <Grid mt="md" justify="center">
           <Grid.Col span={6} className="input-plate">
             {token ? (
-              <Select
-                withAsterisk
-                {...form.getInputProps("carId")}
-                checkIconPosition="right"
+              <ComboboxField
+                form={form}
                 placeholder="Biển số xe"
-                classNames={{
-                  root: styles.rootPlates,
-                  input: styles.inputPlates,
-                }}
-                allowDeselect={false}
-                size="lg"
-                radius={0}
-                data={carOptions}
-                onChange={handlePlace}
-              ></Select>
+                carsData={cars?.data}
+                openModal={openModal}
+                value={value}
+                setValue={setValue}
+              />
             ) : (
               <TextInput
                 withAsterisk
@@ -387,7 +396,13 @@ export const ModalEventCalendar = ({
           </Button>
         </Group>
       </form>
-
+      <DynamicModalAddCar
+        openModal={openedModal}
+        close={closeModal}
+        myAccount={user}
+        formData={form}
+        setValue={setValue}
+      />
       {/* <ModalOrderGuest
         close={closeLogin}
         opened={openedLogin}
