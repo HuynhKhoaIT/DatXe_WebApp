@@ -61,7 +61,7 @@ interface IProps {
 }
 export default function RootLayout({ children }: IProps) {
   return (
-    <html lang="vi">
+    <html lang="vi" suppressHydrationWarning>
       <body className={inter.className}>
         <QueryProvider>
           <MantineProvider theme={theme}>
