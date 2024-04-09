@@ -37,6 +37,7 @@ const DynamicModalChooseProducts = dynamic(
 );
 
 export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
+  console.log(dataDetail);
   const { addItem, updateItem } = useAddMarketing();
 
   const [selectedProducts, setSelectedProducts] = useState<any>(
@@ -131,7 +132,7 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
       title: isNotEmpty("Vui lòng nhập..."),
       detail: {
         saleValue: isNotEmpty("Vui lòng nhập..."),
-        salePrice: (value) => (value < 0 ? "Không được để giá trị âm" : null),
+        priceSale: (value) => (value < 0 ? "Không được để giá trị âm" : null),
       },
     },
   });
@@ -164,14 +165,14 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
             size="lg"
             radius={0}
             withAsterisk
-            // readOnly
+            readOnly
             // label="Tên chương trình"
             miw={100}
             thousandSeparator=","
             type="text"
             placeholder="Giá sau giảm"
             suffix="đ"
-            {...form.getInputProps(`detail.${index}.salePrice`)}
+            {...form.getInputProps(`detail.${index}.priceSale`)}
           />
           {/* {form.values.detail[index].salePrice
             ? Number(form.values.detail[index].salePrice).toLocaleString()
@@ -195,7 +196,7 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
                 onChange={(value) => {
                   form.setFieldValue(`detail.${index}.saleType`, value);
                   form.setFieldValue(
-                    `detail.${index}.salePrice`,
+                    `detail.${index}.priceSale`,
                     form.values.detail[index].price
                   );
                   form.setFieldValue(`detail.${index}.saleValue`, 0);
@@ -214,7 +215,7 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
                   suffix="đ"
                   onChange={(value) => {
                     form.setFieldValue(
-                      `detail.${index}.salePrice`,
+                      `detail.${index}.priceSale`,
                       form.values.detail[index].price - Number(value)
                     );
 
@@ -232,7 +233,7 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
                   max={100}
                   onChange={(value) => {
                     form.setFieldValue(
-                      `detail.${index}.salePrice`,
+                      `detail.${index}.priceSale`,
                       form.values.detail[index].price -
                         (form.values.detail[index].price * Number(value)) / 100
                     );

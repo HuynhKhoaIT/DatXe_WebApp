@@ -1,11 +1,16 @@
-import { Skeleton } from "@mantine/core";
+import { Skeleton, Space } from "@mantine/core";
 import CardProductSkeleton from "./CardProductSkeleton";
 import styles from "./index.module.scss";
+import Typo from "../../elements/Typo";
 export default function ListProductSkeleton() {
   return (
     <div>
       <div style={{ padding: "30px 0" }}>
-        <Skeleton height={40} radius={"lg"} />
+        <Typo size="small" type="bold" style={{ color: "var(--title-color)" }}>
+          Loading...
+        </Typo>
+        <div style={{ fontSize: "14px" }}>Loading...</div>
+        <Space h={10} />
       </div>
       <div className={styles.listItem}>
         <CardProductSkeleton />
