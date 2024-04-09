@@ -68,7 +68,7 @@ export default function DashboardAdmin() {
     {
       id: 3,
       icon: Calendar.src,
-      label: "Lịch hẹn",
+      label: "Lịch đặt",
       link: "/admin/orders",
     },
     {
