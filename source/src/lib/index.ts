@@ -12,11 +12,11 @@ async function getData() {
   }
 
 async function callApi(options:any, payload:any) {
-    let session:any = await getData();
+    let {session}:any = await getData();
 
     let token;
     if (session) {
-        token =session?.user?.token;
+        token = session?.user?.token;
     }
 
     try {

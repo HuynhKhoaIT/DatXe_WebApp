@@ -2,13 +2,12 @@ import axios from 'axios';
 
 const axiosInstance = axios.create();
 
-const sendRequest = async (options:any, payload:any, accessToken:any) => {
+const sendRequest = async (options:any, payload:any, token:any) => {
     const { params = {}, pathParams = {}, data = {} } = payload;
     let { method, baseURL, headers, ignoreAuth } = options;
-    if (!ignoreAuth && accessToken) {
-        headers.Authorization = `Bearer ${accessToken}`;
+    if (!ignoreAuth && token) {
+        headers.Authorization = `Bearer ${token}`;
     }
-
     // update path params
     for (let key of Object.keys(pathParams)) {
         const keyCompare = `:${key}`;

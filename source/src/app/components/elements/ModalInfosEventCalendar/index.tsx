@@ -14,7 +14,6 @@ export default function ModalCalendar({
   eventInfos,
   brandOptions,
   categoryOptions,
-  carsData,
   carOptions,
   carDefault: dataCarDefault,
   fetchDataOrders,
@@ -140,7 +139,6 @@ export default function ModalCalendar({
         advisorOptions={advisorOptions}
         carOptions={carOptions}
         yearCarOptions={yearCarOptions}
-        cars={carsData}
         garageOptions={garageOptions}
         dataCarDefault={dataCarDefault?.[0]?.otherData}
         onClose={onClose}
