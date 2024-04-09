@@ -14,7 +14,10 @@ const Info = ({ detailData }: any) => {
         <div className={styles.body}>
           <div className={styles.info}>
             <div className={styles.avatar}>
-              <img src={Avatar.src} alt="avatar" />
+              <img
+                src={detailData?.logo ? detailData?.logo : Avatar.src}
+                alt="avatar"
+              />
             </div>
             <div className={styles.infoBox}>
               <div className={styles.headerInfo}>
