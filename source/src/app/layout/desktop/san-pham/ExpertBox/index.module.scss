@@ -39,3 +39,12 @@
         gap: 0.5rem;
     }
 }
+
+.description{
+    // color: var(--primary-color);
+    line-height: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+}

@@ -28,7 +28,11 @@ export default function ProductItem2({
 
         <div className={styles.infoCard2}>
           <Link href={`/san-pham/${product.id}`}>
-            <Typo size="sub" type="semi-bold" className={styles.productName}>
+            <Typo
+              size="primary"
+              type="semi-bold"
+              className={styles.productName}
+            >
               {product.name}
             </Typo>
           </Link>
@@ -51,6 +55,17 @@ export default function ProductItem2({
         </div>
 
         <Flex gap={10} mt={6} align={"center"}>
+          {product?.salePrice !== product?.price && (
+            <del>
+              <Typo
+                size="sub"
+                type="big"
+                style={{ color: "var(--title-color-2)" }}
+              >
+                {product?.price?.toLocaleString()}đ{" "}
+              </Typo>
+            </del>
+          )}
           <Typo size="sub" type="big" style={{ color: "var(--blue-color)" }}>
             {product?.salePrice?.toLocaleString()}đ{" "}
           </Typo>

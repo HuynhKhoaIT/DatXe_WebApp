@@ -49,6 +49,17 @@ export default function ProductItem({ product }: { product: IProduct }) {
         </div>
 
         <Flex gap={10}>
+          {product?.salePrice !== product?.price && (
+            <del>
+              <Typo
+                size="sub"
+                type="big"
+                style={{ color: "var(--title-color-2)" }}
+              >
+                {product?.price?.toLocaleString()}đ{" "}
+              </Typo>
+            </del>
+          )}
           <Typo size="sub" type="big" style={{ color: "var(--blue-color)" }}>
             {product?.salePrice?.toLocaleString()}đ{" "}
           </Typo>

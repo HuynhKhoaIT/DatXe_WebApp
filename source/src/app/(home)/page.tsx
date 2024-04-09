@@ -12,6 +12,8 @@ import Reasons3 from "@/assets/images/reasson3.png";
 import { getCategories } from "../libs/prisma/category";
 import { getProducts } from "../libs/prisma/product";
 import { getCarModels } from "../libs/prisma/carModel";
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
 
 const reassons = [
   {
@@ -62,14 +64,24 @@ const blogs = [
 ];
 export default async function Home({ searchParams }: any) {
   const categories = await getCategories({ garageId: "2" });
-  const productsRelate = await getProducts({});
-  const servicesHot = await getProducts({
-    garageId: 0,
-    isProduct: 0,
+
+  const productsRelate = await callApi(apiConfig.products.getRelate, {
+    params: {
+      garageId: 0,
+      isProduct: 1,
+    },
   });
-  const productsHot = await getProducts({
-    garageId: 0,
-    isProduct: 1,
+  const productsHot = await callApi(apiConfig.products.getProductHot, {
+    params: {
+      garageId: 0,
+      isProduct: 1,
+    },
+  });
+  const servicesHot = await callApi(apiConfig.products.getServiceHot, {
+    params: {
+      garageId: 0,
+      isProduct: 0,
+    },
   });
 
   return (

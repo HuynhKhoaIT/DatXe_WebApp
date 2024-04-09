@@ -38,10 +38,12 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
             </Link>
           </div>
         </div>
-        <Typo size="sub" style={{ color: "#6F6C90" }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis sem
-          eget erat posuere fringilla. Libero massa et diam faucibus nulla nisl
-          dolor, ornare vel.
+        <Typo
+          size="sub"
+          style={{ color: "#6F6C90" }}
+          className={styles.description}
+        >
+          {ProductDetail?.garage?.description}
         </Typo>
       </div>
     </div>
