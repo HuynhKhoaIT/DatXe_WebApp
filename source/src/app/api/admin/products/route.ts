@@ -162,6 +162,7 @@ export async function POST(request: Request) {
             if (typeof json.isProduct !== 'undefined') {
                 isProduct = Number(json.isProduct) == 1 ? true : false;
             }
+
             const product = await prisma.product.create({
                 data: {
                     name: json.title,
