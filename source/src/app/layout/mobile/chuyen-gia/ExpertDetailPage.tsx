@@ -19,10 +19,11 @@ const ExpertDetailPageMobile = ({
   blogs,
   socials,
   convenients,
+  blogsDefalt,
 }: any) => {
   return (
     <div className={styles.wrapper}>
-      <Banner heigth={174} />
+      <Banner heigth={174} detailData={expertDetail} />
       <Info detailData={expertDetail} />
       <Container className={styles.containerImages}>
         <ImagesShowRoom className={styles.imagesShowRoom} />
@@ -33,7 +34,7 @@ const ExpertDetailPageMobile = ({
           backgroundColor: "var(--background-color-light)",
         }}
       >
-        <CategoryCarouselList categories={categories} />
+        <CategoryCarouselList categories={categories?.data} />
       </div>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Service data={services.data} />
@@ -44,7 +45,7 @@ const ExpertDetailPageMobile = ({
         <Container>
           <TabsComponent />
         </Container>
-        <Blogs blogs={blogs} />
+        <Blogs blogs={blogs?.data || blogsDefalt} />
         <SharePage socials={socials} />
       </div>
     </div>

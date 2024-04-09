@@ -12,3 +12,11 @@
 .wrapper {
     min-width: 15rem;
 }
+.shortDescription{
+      // color: var(--primary-color);
+      line-height: normal;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
+}

@@ -3,28 +3,19 @@ import Filter from "../danh-muc/Filter";
 import Products from "../danh-muc/Products";
 import styles from "./index.module.scss";
 import { Button, Flex } from "@mantine/core";
-const ProductsListPageMobile = ({
-  products,
-  kindProduct,
-  productCount,
-  setProductCount,
-  isFetching,
-}: any) => {
+import ButtonShowMore from "@/app/components/form/ButtonShowMore";
+import { DEFAULT_SIZE_LIMIT } from "@/constants";
+const ProductsListPageMobile = ({ products, searchParams }: any) => {
   return (
     <div className={styles.wrapper}>
       {/* <Filter kindProduct={kindProduct?.data} /> */}
       <Container>
         <Products products={products?.data} />
-        {productCount < products?.total && (
-          <Flex justify="center" pt={36} pb={20}>
-            <Button
-              color={"var(--theme-color)"}
-              onClick={() => setProductCount(productCount + 5)}
-              disabled={isFetching}
-            >
-              Xem Thêm
-            </Button>
-          </Flex>
+        {products?.currentPage < products.totalPage && (
+          <ButtonShowMore
+            limitCurrent={searchParams?.limit}
+            defaultValue={DEFAULT_SIZE_LIMIT}
+          />
         )}
       </Container>
     </div>

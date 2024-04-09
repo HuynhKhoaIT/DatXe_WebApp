@@ -1,13 +1,18 @@
-import { Button, Flex, Grid, Box, Space } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { Box, Space } from "@mantine/core";
 import { IProduct } from "@/interfaces/product";
 import Body from "@/app/components/layout/Body";
 import { FilterRadio } from "@/app/components/elements/filterRadio";
 import { Sort } from "@/app/components/elements/shop-sort";
-import ProductItem from "@/app/components/elements/product/ProductItem1";
 import ProductItem2 from "@/app/components/elements/product/ProductItem2";
 import styles from "./index.module.scss";
-export default function ProductsListPage({ categories, products }: any) {
+import ButtonShowMore from "@/app/components/form/ButtonShowMore";
+import { DEFAULT_SIZE_LIMIT } from "@/constants";
+export default function ProductsListPage({
+  categories,
+  products,
+  searchParams,
+}: any) {
+  console.log(products);
   return (
     <Body>
       <Body.Sider>
@@ -27,15 +32,12 @@ export default function ProductsListPage({ categories, products }: any) {
             ))}
           </div>
         </Box>
-        <Flex justify="center" mt={36}>
-          <Button
-            color={"var(--theme-color)"}
-            // onClick={() => setProductCount(productCount + 5)}
-            // disabled={isFetching}
-          >
-            Xem Thêm
-          </Button>
-        </Flex>
+        {products?.currentPage < products.totalPage && (
+          <ButtonShowMore
+            limitCurrent={searchParams?.limit}
+            defaultValue={DEFAULT_SIZE_LIMIT}
+          />
+        )}
       </Body.Content>
     </Body>
   );

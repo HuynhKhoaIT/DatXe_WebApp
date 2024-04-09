@@ -1,0 +1,58 @@
+.content {
+    // width: 100%;
+    padding: 0 10px;
+    background-color: #d5cdcd;
+    border-radius: 10;
+}
+.item {
+    display: flex;
+    justify-content: start;
+    gap: 12px;
+    margin-top: 15px;
+    // border-bottom: 1px solid #afe0f8;
+    // border-radius: 10px;
+    box-shadow: 'var(--box-shadow)';
+    cursor: pointer;
+
+    .title {
+        font-size: 15px;
+        font-weight: 900;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 2;
+        line-height: normal;
+        margin-bottom: 5px;
+    }
+
+    .numberstart {
+        color: var(--star-color);
+    }
+
+    .timegroup {
+        padding-right: 100px;
+        display: flex;
+    }
+    .money {
+        color: var(--primary-color);
+    }
+}
+
+.item:last-child{
+    border-bottom: 1px solid #ffffff;
+
+}
+.oldprice {
+    text-decoration-line: line-through;
+}
+
+.shortDescription {
+    // color: var(--primary-color);
+    line-height: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+}
+
+
