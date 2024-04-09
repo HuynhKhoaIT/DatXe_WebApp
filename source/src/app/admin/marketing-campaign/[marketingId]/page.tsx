@@ -4,9 +4,9 @@ import MarketingCampaignForm from "../choose-products/MarketingCampaignForm";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-async function getDataMarketing(marketingId: number) {
+async function getDataMarketing(marketingId: string) {
   const res = await fetch(
-    `${apiUrl}api/marketing-campaign/${Number(marketingId)}`
+    `${apiUrl}api/admin/marketing-campaign/${(marketingId)}`
   );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
@@ -17,7 +17,7 @@ async function getDataMarketing(marketingId: number) {
 export default async function MarketingSavePage({
   params,
 }: {
-  params: { marketingId: number };
+  params: { marketingId: string };
 }) {
   const marketingDetail = await getDataMarketing(params.marketingId);
   return (

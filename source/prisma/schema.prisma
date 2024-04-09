@@ -355,16 +355,19 @@ model CarStyle {
 }
 
 model MarketingCampaign {
-  id   String @id @default(uuid())
-  uuId            String?
-  title           String
-  dateTimeStart   DateTime @default(now())
-  dateTimeEnd     DateTime @default(now())
-  garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        String @default("1")
-  createdBy       String @default("1")
-  status          STATUS @default(PUBLIC)
-  detail          MarketingCampaignDetail[]
+  id                  String @id @default(uuid())
+  title               String
+  dateTimeStart       DateTime @default(now())
+  dateTimeEnd         DateTime @default(now())
+  garage              Garage @relation(fields: [garageId], references: [id])
+  garageId            String @default("1")
+  createdBy           String @default("1")
+  status              STATUS @default(PUBLIC)
+  detail              MarketingCampaignDetail[]
+  banner              String?
+  description         String? @db.Text
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }
 
 model MarketingCampaignDetail {
@@ -382,6 +385,8 @@ model MarketingCampaignDetail {
   garageId            String @default("1")
   createdBy           String @default("1")
   status              STATUS @default(PUBLIC)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   @@id([marketingCampaignId,productId])
 }
 
