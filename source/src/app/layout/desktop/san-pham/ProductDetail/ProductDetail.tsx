@@ -2,7 +2,7 @@
 import { IProduct } from "@/interfaces/product";
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { Grid, Modal, Button, Group, Skeleton } from "@mantine/core";
+import { Grid, Modal, Button, Group, Skeleton, Flex } from "@mantine/core";
 import styles from "./Product.module.scss";
 import { notifications } from "@mantine/notifications";
 import ProductSlider from "./ProductSlider";
@@ -11,7 +11,8 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
-function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
+function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
+  console.log(ProductDetail);
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -110,9 +111,29 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
                 {ProductDetail?.code}
               </Typo>
               <div className={styles.category}>
-                <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
-                  Mâm lốp
-                </Typo>
+                <Flex>
+                  {ProductDetail?.categories?.map(
+                    (item: any, index: number) => {
+                      return (
+                        <>
+                          <Typo
+                            key={index}
+                            style={{
+                              fontSize: "14px",
+                              color: "var(--nav-color)",
+                            }}
+                          >
+                            {item?.category?.title}
+                          </Typo>
+                          {index >= 0 &&
+                            index < ProductDetail?.categories?.length - 1 && (
+                              <>, </>
+                            )}
+                        </>
+                      );
+                    }
+                  )}
+                </Flex>
                 <div className={styles.starBox}>
                   <img src={Star.src} />
                   <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
