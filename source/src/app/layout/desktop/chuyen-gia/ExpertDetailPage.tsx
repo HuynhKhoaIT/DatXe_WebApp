@@ -18,10 +18,11 @@ const ExpertDetailPageDesktop = ({
   blogs,
   socials,
   convenients,
+  blogsDefalt,
 }: any) => {
   return (
     <div className={styles.wrapper}>
-      <Banner />
+      <Banner detailData={expertDetail} />
       <Container>
         <Info detailData={expertDetail} />
         <ImagesShowRoom className={styles.imagesShowRoom} />
@@ -36,7 +37,7 @@ const ExpertDetailPageDesktop = ({
         <Container>
           <TabsComponent />
         </Container>
-        <Blogs blogs={blogs} />
+        <Blogs blogs={blogs?.data || blogsDefalt} />
         <SharePage socials={socials} />
       </div>
     </div>

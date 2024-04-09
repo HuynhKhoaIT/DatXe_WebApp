@@ -10,7 +10,7 @@ const Service = ({ data }: any) => {
         // stylesProps={{ padding: "30px 0" }}
         title="Dịch vụ của chuyên gia"
         subTitle="Các dịch vụ dành cho xe bạn"
-        linkToList={"/dich-vu"}
+        linkToList={"/san-pham?isProduct=false"}
         id="services-expert"
         hiddenShowMore={data?.length < 8}
       >

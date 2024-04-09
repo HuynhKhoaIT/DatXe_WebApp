@@ -12,7 +12,7 @@ const BlogItem = ({ blog }: any) => {
           <div>
             <Link href="" style={{ width: "100%" }}>
               <ImageField
-                src={blog?.image ? blog?.image : null}
+                src={blog?.thumbnail ? blog?.thumbnail : null}
                 height={"160"}
                 radius={8}
               />
@@ -31,19 +31,11 @@ const BlogItem = ({ blog }: any) => {
               </Typo>
             </Link>
             <Typo
-              size="tiny"
-              style={{ color: "var(--title-color-sub)" }}
-              className={styles.description}
-            >
-              Đăng bởi{" "}
-              <span style={{ fontWeight: "600" }}>{blog?.expert?.name}</span>
-            </Typo>
-            <Typo
               size="primary"
               style={{ color: "var(--title-color)" }}
-              className={styles.description}
+              className={styles.shortDescription}
             >
-              {blog.description}
+              {blog.shortDescription}
             </Typo>
           </div>
         </div>
