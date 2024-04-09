@@ -43,12 +43,7 @@ export default function ProductItem({ product }: { product: IProduct }) {
           <Typo size="tiny" className={styles.address}>
             Hồ Chí Minh
           </Typo>
-          <Badge
-            radius={0}
-            size="lg"
-            variant="light"
-            classNames={{ root: styles.productOnSale }}
-          >
+          <Badge variant="light" classNames={{ root: styles.productOnSale }}>
             On Sale
           </Badge>
         </div>

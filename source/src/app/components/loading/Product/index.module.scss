@@ -1,0 +1,15 @@
+.listItem{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 13px;
+}
+.cardSkeleton{
+    border-radius: 10px;
+    background-color: #ffffff;
+    .infoCard{
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

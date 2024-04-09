@@ -34,7 +34,7 @@ export default function ProductsListPage({
         </Box>
         {products?.currentPage < products.totalPage && (
           <ButtonShowMore
-            limitCurrent={searchParams?.limit}
+            limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
             defaultValue={DEFAULT_SIZE_LIMIT}
           />
         )}

@@ -45,12 +45,7 @@ export default function ProductItem2({
               4.6
             </Typo>
           </div>
-          <Badge
-            radius={0}
-            variant="light"
-            size="lg"
-            classNames={{ root: styles.productOnSale }}
-          >
+          <Badge variant="light" classNames={{ root: styles.productOnSale }}>
             On Sale
           </Badge>
         </div>
