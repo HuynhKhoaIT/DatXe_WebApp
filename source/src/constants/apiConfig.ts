@@ -24,7 +24,23 @@ const apiConfig = {
             baseURL: `${apiUrl}api/reviews/product/:id`,
             method: 'GET',
             headers: baseHeader,
-        }
+        },
+        getRelate: {
+            baseURL: `${apiUrl}api/products`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getProductHot: {
+            baseURL: `${apiUrl}api/products`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getServiceHot: {
+            baseURL: `${apiUrl}api/products`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        
     },
     category:{
         getList: {
