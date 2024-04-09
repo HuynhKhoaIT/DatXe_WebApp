@@ -49,9 +49,11 @@ export default function ProductItem2({
               4.6
             </Typo>
           </div>
-          <Badge variant="light" classNames={{ root: styles.productOnSale }}>
-            On Sale
-          </Badge>
+          {product?.salePrice !== product?.price && (
+            <Badge variant="light" classNames={{ root: styles.productOnSale }}>
+              On Sale
+            </Badge>
+          )}
         </div>
 
         <Flex gap={10} mt={6} align={"center"}>
@@ -69,14 +71,14 @@ export default function ProductItem2({
           <Typo size="sub" type="big" style={{ color: "var(--blue-color)" }}>
             {product?.salePrice?.toLocaleString()}đ{" "}
           </Typo>
-          <div className={styles.iconBox}>
+          {/* <div className={styles.iconBox}>
             <div className={styles.heart}>
               <img src={Heart.src} className={styles.icon} />
             </div>
             <div className={styles.cart}>
               <img src={Cart.src} className={styles.icon} />
             </div>
-          </div>
+          </div> */}
         </Flex>
         {/* <div className={styles.point}>
           <img src={Point.src} className={styles.bgPoint} />

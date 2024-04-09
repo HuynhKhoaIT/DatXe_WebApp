@@ -43,9 +43,11 @@ export default function ProductItem({ product }: { product: IProduct }) {
           <Typo size="tiny" className={styles.address}>
             Hồ Chí Minh
           </Typo>
-          <Badge variant="light" classNames={{ root: styles.productOnSale }}>
-            On Sale
-          </Badge>
+          {product?.salePrice !== product?.price && (
+            <Badge variant="light" classNames={{ root: styles.productOnSale }}>
+              On Sale
+            </Badge>
+          )}
         </div>
 
         <Flex gap={10}>
