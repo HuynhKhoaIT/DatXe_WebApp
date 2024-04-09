@@ -331,7 +331,16 @@ export async function getProductById(id: any) {
             id: (id.toString()),
         },
         include: {
-            categories: true,
+            categories: {
+              include: {
+                category: {
+                  select: {
+                    title: true
+                  },
+                }
+              }
+            },
+            
             garage: true,
             marketingCampaignDetail: {
                 take: 1,
