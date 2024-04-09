@@ -97,33 +97,36 @@ export async function createMarketingCampaign(json: any) {
         if(json.detail){
             json.detail.forEach(function (data: any) {
                 detail.push({
-                    productId: Number(data.productId),
+                    productId: (data.productId),
                     note: data.note,
                     price: Number(data.price),
                     priceSale: Number(data.priceSale ?? 0),
                     saleType: data.saleType,
                     saleValue: Number(data.saleValue).toString(),
                     quantity: Number(data.quantity),
-                    garageId: Number(json.garageId),
-                    createdBy: Number(json.createdBy),
+                    garageId: (json.garageId).toString(),
+                    createdBy: (json.createdBy).toString(),
                 });
             });
         }
-        // return detail;
-        const marketingCampaign = await prisma.marketingCampaign.create({
-            data: {                
-                title: json.title,
-                dateTimeStart: json.dateTimeStart,
-                dateTimeEnd: json.dateTimeEnd,
-                garageId: json.garageId,
-                createdBy: json.createdBy,
-                status: json.status,
-                detail: {
-                    createMany : {
-                        data: detail
-                    }
+        const data = {                
+            title: json.title,
+            dateTimeStart: json.dateTimeStart,
+            dateTimeEnd: json.dateTimeEnd,
+            garageId: json.garageId.toString(),
+            createdBy: json.createdBy.toString(),
+            description: json.description,
+            banner: json.banner,
+            status: json.status,
+            detail: {
+                createMany : {
+                    data: detail
                 }
-            },
+            }
+        }
+        // return data;
+        const marketingCampaign = await prisma.marketingCampaign.create({
+            data,
             include: {
                 detail: {
                     select: {

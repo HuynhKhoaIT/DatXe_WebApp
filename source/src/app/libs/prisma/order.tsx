@@ -3,6 +3,7 @@ import prisma from "../prismadb";
 import { createCar } from "./car";
 import { createCustomer, getMyCustomers } from "./customer";
 import { randomString } from "@/utils";
+import { ORDERMETHOD } from "@prisma/client";
 
 export async function getOrders(garage: string, requestData: any) {
   try {
@@ -804,7 +805,7 @@ export async function bookingOrderClient(json: any) {
       garageId: garageId,
       serviceAdvisorId:  "1",
       createdById: "1",
-      
+      method: ORDERMETHOD.ONLINE,
       orderDetails: {
         createMany: {
           data: orderDetails,

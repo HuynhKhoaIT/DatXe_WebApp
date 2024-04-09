@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { createMarketingCampaign, getMarketingCampaign } from '@/app/libs/prisma/marketingCampaign';
 import { createMarketingCampaignDetail } from '@/app/libs/prisma/marketingCampaignDetail';
+import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 
 export async function GET(request: Request) {
     try {
@@ -30,12 +31,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const json = await request.json();
-
-        const marketingCampaign = await createMarketingCampaign(json);
-        return new NextResponse(JSON.stringify(marketingCampaign), {
-            status: 201,
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const session = await getServerSession(authOptions);
+        if(session){
+            json.createdBy = session.user?.id
+            json.garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            const marketingCampaign = await createMarketingCampaign(json);
+            return new NextResponse(JSON.stringify(marketingCampaign), {
+                status: 201,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
+        
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
