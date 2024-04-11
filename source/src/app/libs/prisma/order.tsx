@@ -474,6 +474,7 @@ export async function createOrder(json: any) {
         garageId: garageId,
         userId: json.userId,
       });
+      console.log("carNews2",carNew)
       if (carNew) {
         carId = carNew.car?.id;
       }

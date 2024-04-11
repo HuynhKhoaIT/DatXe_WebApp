@@ -21,7 +21,7 @@ const addNews = async (values: any): Promise<any> => {
 };
 
 const updateNews = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/admin/posts/${values?.uuId}`, {
+    const response = await fetch(`/api/admin/posts/${values?.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

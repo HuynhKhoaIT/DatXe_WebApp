@@ -92,6 +92,7 @@ export async function createPost(post: any) {
 export async function updatePost(id: string,data: any) {
   try {
     const postData = await findPost(id);
+    
     if(data.title){
         postData.title = data.title;
     }
@@ -110,12 +111,12 @@ export async function updatePost(id: string,data: any) {
         postData.status = data.status
     }
     if(data.createdBy){
-        postData.createdBy = data.userId
+        postData.createdBy = data.createdBy.toString()
     }
     data.slug = convertToSlug(data.slug);
     const rs = await prisma.post.update({
       where: {
-        id: data.id,
+        id: id,
       },
       data: data,
     });

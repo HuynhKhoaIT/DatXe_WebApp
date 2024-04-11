@@ -30,7 +30,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         if (session && session.user?.role == 'ADMINGARAGE') {
             const data = await request.json();
             const id = params.id; 
-            data.userId = session.user.id
+            data.createdBy = session.user.id.toString()
+            // return NextResponse.json(data);
             const rs = await updatePost(id,data);
             return new NextResponse(JSON.stringify(rs), {
                 status: 201,
