@@ -219,7 +219,7 @@ export async function getProductsClient(requestData: any) {
         take: take,
         skip: skip,
         orderBy: {
-          id: "desc",
+          createdAt: "desc",
         },
         where: {
           AND: [

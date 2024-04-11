@@ -89,14 +89,35 @@ export async function createPost(post: any) {
     return { error };
   }
 }
-export async function updatePost(post: any) {
+export async function updatePost(id: string,data: any) {
   try {
-    post.slug = convertToSlug(post.slug);
+    const postData = await findPost(id);
+    if(data.title){
+        postData.title = data.title;
+    }
+    postData.slug = convertToSlug(postData.title)
+
+    if(data.description){
+        postData.description = data.description
+    }
+    if(data.shortDescription){
+        postData.shortDescription = data.shortDescription
+    }
+    if(data.thumbnail){
+        postData.thumbnail = data.thumbnail
+    }
+    if(data.status){
+        postData.status = data.status
+    }
+    if(data.createdBy){
+        postData.createdBy = data.userId
+    }
+    data.slug = convertToSlug(data.slug);
     const rs = await prisma.post.update({
       where: {
-        id: post.id,
+        id: data.id,
       },
-      data: post,
+      data: data,
     });
     return rs;
   } catch (error) {
