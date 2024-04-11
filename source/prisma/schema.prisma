@@ -186,9 +186,9 @@ model Order{
   customerId        String
   car               Car @relation(fields: [carId], references: [id])
   carId             String @default("1")
-  brandId           String
-  modelId           String
-  yearId            String
+  brandId           String?
+  modelId           String?
+  yearId            String?
   subTotal          Int @default(0)
   discount          Int @default(0)
   total             Int @default(0)

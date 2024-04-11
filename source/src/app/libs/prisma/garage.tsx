@@ -180,6 +180,9 @@ export async function updateGarage(id: string, data: any) {
       address: data.address,
       status: data.status,
       description: data.description,
+      provinceId: Number(data.provinceId) ?? 1,
+      wardId: Number(data.wardId) ?? 1,
+      districtId: Number(data.districtId) ?? 1,
       amenities: {
         deleteMany: {},
         create: data.amenities.map((id: string) => ({

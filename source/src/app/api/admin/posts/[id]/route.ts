@@ -27,35 +27,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
-
-        
         if (session && session.user?.role == 'ADMINGARAGE') {
-            const json = await request.json();
-            const id = params.id;
-            const postData = await findPost(id);
-            
-            if(json.title){
-                postData.title = json.title;
-            }
-            postData.slug = convertToSlug(postData.title)
-
-            if(json.description){
-                postData.description = json.description
-            }
-            if(json.shortDescription){
-                postData.shortDescription = json.shortDescription
-            }
-            if(json.thumbnail){
-                postData.thumbnail = json.thumbnail
-            }
-            if(json.status){
-                postData.status = json.status
-            }
-            if(json.createdBy){
-                postData.createdBy = session.user.id
-            }
-            const rs = await updatePost(postData);
-
+            const data = await request.json();
+            const id = params.id; 
+            data.createdBy = session.user.id.toString()
+            // return NextResponse.json(data);
+            const rs = await updatePost(id,data);
             return new NextResponse(JSON.stringify(rs), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },
