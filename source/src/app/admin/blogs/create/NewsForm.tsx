@@ -35,7 +35,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       description: "",
     },
     validate: {
-      // title: (value) => (value.length < 1 ? "Không được để trống" : null),
+      title: (value) => (value.length < 1 ? "Không được để trống" : null),
       // image: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
@@ -160,7 +160,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
                 <Grid.Col span={12}>
                   <QuillEditor
                     theme="snow"
-                    placeholder="Mô tả chi tiết"
+                    placeholder="Nội dung"
                     className={"quill"}
                     setValue={setValueRTE}
                     value={valueRTE}

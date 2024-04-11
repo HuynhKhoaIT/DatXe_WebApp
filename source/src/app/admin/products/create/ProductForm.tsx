@@ -151,10 +151,11 @@ export default function ProductForm({
 
     handlers.open();
     if (isEditing) {
-      updateItem(values);
+      await updateItem(values);
     } else {
-      addItem(values);
+      await addItem(values);
     }
+    handlers.close();
   };
 
   return (
@@ -189,8 +190,8 @@ export default function ProductForm({
                     checkIconPosition="right"
                     placeholder="Loại"
                     data={[
-                      { value: "true", label: "Sản phẩm" },
-                      { value: "false", label: "Dịch vụ" },
+                      { value: "1", label: "Sản phẩm" },
+                      { value: "0", label: "Dịch vụ" },
                     ]}
                   />
                 </Grid.Col>

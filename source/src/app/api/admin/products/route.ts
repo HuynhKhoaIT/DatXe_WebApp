@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
             let page = searchParams.get('page');
 
             if (page) {
-                currentPage = parseInt(page);
+                currentPage = Number(page);
             }
             if (limit) {
                 take = Number(limit);
