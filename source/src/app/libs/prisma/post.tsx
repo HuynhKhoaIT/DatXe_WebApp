@@ -110,7 +110,7 @@ export async function findPost(id: string) {
       status: {
         not: "DELETE",
       },
-      id,
+      id: id,
     },
   });
 }

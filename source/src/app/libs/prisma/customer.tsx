@@ -13,13 +13,13 @@ export async function createCustomer(json: any) {
         cityId: Number(json.cityId),
         districtId: Number(json.districtId),
         wardId: Number(json.wardId),
-        address: json.address ?? '',
+        address: json.address ?? "",
         dob: json.dob,
-        description: json.description ?? '',
+        description: json.description ?? "",
         sex: json.sex ?? "FEMALE",
-        garageId: (json.garageId),
-        status: json.status ?? 'PUBLIC',
-      }
+        garageId: json.garageId,
+        status: json.status ?? "PUBLIC",
+      },
     });
     return { customer };
   } catch (error) {
@@ -69,9 +69,9 @@ export async function getCustomers(requestData: any) {
       },
     };
   }
-  let phoneNumber = {}
-  if(requestData.phoneNumber){
-    phoneNumber = requestData.phoneNumber
+  let phoneNumber = {};
+  if (requestData.phoneNumber) {
+    phoneNumber = requestData.phoneNumber;
   }
   const [customers, total] = await prisma.$transaction([
     prisma.customer.findMany({
@@ -84,7 +84,10 @@ export async function getCustomers(requestData: any) {
         AND: [
           {
             fullName: {
-              contains: titleFilter
+              contains: titleFilter,
+            },
+            status: {
+              not: "DELETE",
             },
             phoneNumber,
             garageId: garageId,
@@ -132,45 +135,43 @@ export async function getCustomersAutoComplete(requestData: any) {
     garageId = requestData.garageId;
   }
   return await prisma.customer.findMany({
-      take: 10,
-      orderBy: {
-        id: "desc",
-      },
-      where: {
-        OR: [
-          {
-            AND:[
-              {
-                fullName: {
-                  contains: titleFilter
-                },
-                garageId,
-                status: 'PUBLIC'
-              }
-            ],
-          },
-          {
-            AND: [
-              {
-                phoneNumber: {
-                  contains: titleFilter
-                },
-                garageId,
-                status: 'PUBLIC'
-              }
-            ]
-          }
-        ],
-      },
-    });
+    take: 10,
+    orderBy: {
+      id: "desc",
+    },
+    where: {
+      OR: [
+        {
+          AND: [
+            {
+              fullName: {
+                contains: titleFilter,
+              },
+              garageId,
+              status: "PUBLIC",
+            },
+          ],
+        },
+        {
+          AND: [
+            {
+              phoneNumber: {
+                contains: titleFilter,
+              },
+              garageId,
+              status: "PUBLIC",
+            },
+          ],
+        },
+      ],
+    },
+  });
 }
 
-export async function getCustomerByUserId(
-  userId: string
-) {
+export async function getCustomerByUserId(userId: string) {
   const customer = await prisma.customer.findFirst({
     where: {
-      userId: (userId).toString(),
+      userId: userId.toString(),
       status: {
         not: "DELETE",
       },
@@ -184,23 +185,23 @@ export async function getMyCustomers(phoneNumber: string) {
     where: {
       phoneNumber,
       status: {
-        not: 'DELETE'
-      }
-    }
+        not: "DELETE",
+      },
+    },
   });
   return rs;
 }
 
-export async function showCustomer(id:string) {
+export async function showCustomer(id: string) {
   return await prisma.customer.findFirst({
     where: {
-      id
+      id,
     },
-    include:{
+    include: {
       customerGroup: true,
-      cars: true
-    }
-  })
+      cars: true,
+    },
+  });
 }
 
 export async function syncCustomerFromDLBD(requestData: any) {
@@ -245,7 +246,7 @@ export async function getCustomerByPhone(
   const customer = await prisma.customer.findFirst({
     where: {
       phoneNumber,
-      garageId: (garageId),
+      garageId: garageId,
       status: {
         not: "DELETE",
       },

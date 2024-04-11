@@ -80,10 +80,9 @@ export default function ProductForm({
       }
 
       if (dataDetail?.product?.isProduct) {
-        form.setFieldValue(
-          "isProduct",
-          Number(dataDetail?.product?.isProduct).toString()
-        );
+        form.setFieldValue("isProduct", "1");
+      } else {
+        form.setFieldValue("isProduct", "0");
       }
       if (dataDetail?.product?.categories?.length > 0) {
         const dataOption = dataDetail?.product?.categories?.map((item: any) =>

@@ -52,7 +52,7 @@
 }
 @media (max-width: 1536px) {
     .card {
-        width: 300px; /* Điều chỉnh kích thước của card khi độ rộng màn hình dưới 1536px */
+        max-width: 300px; /* Điều chỉnh kích thước của card khi độ rộng màn hình dưới 1536px */
     }
 }
 

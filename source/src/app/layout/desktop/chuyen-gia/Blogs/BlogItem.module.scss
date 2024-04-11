@@ -9,6 +9,22 @@
     gap: 12px;
     width: 100%;
 }
+
+.card {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card img {
+    transition: transform 0.4s ease;
+    object-fit: fill;
+
+  }
+  
+  .card:hover img {
+    transform: scale(1.02);
+  }
+
 .wrapper {
     min-width: 15rem;
 }
@@ -19,4 +35,7 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       -webkit-line-clamp: 2;
+}
+.image{
+    width: 100%;
 }

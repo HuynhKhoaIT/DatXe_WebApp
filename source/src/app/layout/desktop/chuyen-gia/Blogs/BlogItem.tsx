@@ -8,28 +8,24 @@ const BlogItem = ({ blog }: any) => {
   return (
     <div className={styles.wrapper}>
       <Box w={"100%"}>
-        <div className={styles.card}>
+        <Link href={`/news/${blog?.id}`} className={styles.card}>
           <div>
-            <Link href="" style={{ width: "100%" }}>
-              <ImageField
-                src={blog?.thumbnail ? blog?.thumbnail : null}
-                height={"160"}
-                radius={8}
-              />
-            </Link>
+            <ImageField
+              src={blog?.thumbnail ? blog?.thumbnail : null}
+              height={"160"}
+              radius={8}
+            />
           </div>
 
           <div className={styles.infoCard}>
-            <Link href="">
-              <Typo
-                size="sub"
-                type="bold"
-                style={{ color: "var(--title-color)" }}
-                className={styles.productName}
-              >
-                {blog.title}
-              </Typo>
-            </Link>
+            <Typo
+              size="sub"
+              type="bold"
+              style={{ color: "var(--title-color)" }}
+              className={styles.productName}
+            >
+              {blog.title}
+            </Typo>
             <Typo
               size="primary"
               style={{ color: "var(--title-color)" }}
@@ -38,7 +34,7 @@ const BlogItem = ({ blog }: any) => {
               {blog.shortDescription}
             </Typo>
           </div>
-        </div>
+        </Link>
       </Box>
     </div>
   );
