@@ -80,6 +80,8 @@ model Garage {
 model Amenities {
   id                  String @id @default(uuid())
   title               String
+  thumbnail           String?
+  description         String? @db.Text
   garagesOnAmenities  GaragesOnAmenities[]
 }
 model GaragesOnAmenities {

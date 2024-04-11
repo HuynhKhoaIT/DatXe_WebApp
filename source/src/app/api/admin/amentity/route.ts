@@ -1,5 +1,7 @@
 import { createAmentity, getAmentity } from '@/app/libs/prisma/amentity';
+import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '../../auth/[...nextauth]/route';
 
 export async function GET() {
     try {
@@ -12,10 +14,14 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        const json = await request.json();
-        const errors: string[] = [];
-        const amentity = await createAmentity(json);
-        return NextResponse.json({ amentity });
+        const session = await getServerSession(authOptions);
+        if(session){
+            const json = await request.json();
+            const errors: string[] = [];
+            const amentity = await createAmentity(json);
+            return NextResponse.json(amentity );
+        }
+        
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
