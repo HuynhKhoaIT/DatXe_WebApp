@@ -75,8 +75,8 @@ export function AutocompletePhone({
           setErrorText(null);
           form.setFieldValue(name, item.label);
           form.setFieldValue("customerId", item.value);
-          form.setFieldValue("fullName", item.otherData.fullName);
-          form.setFieldValue("address", item.otherData.address);
+          form.setFieldValue("billingCustomerName", item.otherData.fullName);
+          form.setFieldValue("billingAdress", item.otherData.address);
           open();
         }}
       >
@@ -104,33 +104,35 @@ export function AutocompletePhone({
               data-autofocus
               label={label}
               placeholder={placeholder}
-              value={form.values.phoneNumber}
+              value={form.values[name]}
               onChange={(event) => {
                 setErrorText(null);
                 form.setFieldValue(name, event.target.value);
                 if (!isUser) {
                   form.setFieldValue("customerId", null);
                 }
-                form.setFieldValue("fullName", "");
-                form.setFieldValue("address", "");
+                // form.setFieldValue("billingCustomerName", "");
+                // form.setFieldValue("address", "");
                 combobox.openDropdown();
                 combobox.updateSelectedOptionIndex();
               }}
               onClick={() => combobox.openDropdown()}
               onFocus={() => combobox.openDropdown()}
               onBlur={async (event) => {
-                // const is = /^0[1-9][0-9]{8}$/.test(event.target.value)
-                //   ? null
-                //   : "Số điện thoại sai định dạng";
-                // setErrorText(is);
+                const is = event.target.value
+                  ? /^0[1-9][0-9]{8}$/.test(event.target.value)
+                    ? null
+                    : "Số điện thoại sai định dạng"
+                  : null;
+                setErrorText(is);
 
-                if (form.values.customerId == null) {
+                if (!is && form.values.customerId == null) {
                   handlersLoadingCustomer.open();
                   const infoCustomer = await fetchData();
 
                   form.setFieldValue("customerId", infoCustomer[0]?.value);
                   form.setFieldValue(
-                    "fullName",
+                    "billingCustomerName",
                     infoCustomer[0]?.otherData?.fullName
                   );
                   form.setFieldValue(
@@ -156,8 +158,8 @@ export function AutocompletePhone({
                         if (!isUser) {
                           form.setFieldValue("customerId", null);
                         }
-                        form.setFieldValue("fullName", "");
-                        form.setFieldValue("address", "");
+                        // form.setFieldValue("fullName", "");
+                        // form.setFieldValue("address", "");
                         form.setFieldValue(name, "");
                       }}
                       aria-label="Clear value"
