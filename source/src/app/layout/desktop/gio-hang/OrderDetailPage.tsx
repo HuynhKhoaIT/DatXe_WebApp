@@ -10,7 +10,6 @@ import Typo from "@/app/components/elements/Typo";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { modals } from "@mantine/modals";
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
@@ -63,26 +62,7 @@ export default function OrderDetailPage({ dataSource }: any) {
         );
       },
     },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Hành động
-        </span>
-      ),
-      dataIndex: [],
-      width: "100px",
-      render: (record: any) => {
-        return (
-          <Tooltip label="Đánh giá" withArrow position="bottom">
-            <Button size="lg" radius={0} variant="outline" onClick={openModal}>
-              Đánh giá
-            </Button>
-          </Tooltip>
-        );
-      },
-    },
   ];
-  console.log(dayjs(dataSource?.dateTime).format("HH:mm DD:MM:YY"));
 
   return (
     <Container className="printable">
