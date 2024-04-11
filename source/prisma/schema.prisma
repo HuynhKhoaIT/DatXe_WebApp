@@ -183,7 +183,10 @@ model Order{
   orderCategory     OrderCategory @relation(fields: [orderCategoryId], references: [id])
   orderCategoryId   String @default("1")
   customer          Customer @relation(fields: [customerId], references: [id])
-  customerId        String
+  customerId               String
+  billingAdress            String?
+  billingPhone             String?
+  billingCustomerName      String?
   car               Car @relation(fields: [carId], references: [id])
   carId             String @default("1")
   brandId           String?

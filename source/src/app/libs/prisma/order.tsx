@@ -790,6 +790,9 @@ export async function bookingOrderClient(json: any) {
       code: orderCode,
       slug: orderCode.toLowerCase(),
       customerId: customerId,
+      billingAdress: json.address,
+      billingPhone: json.phoneNumber,
+      billingCustomerName: json.fullName,
       carId: carId,
       dateTime: json.dateTime ?? new Date(),
       customerRequest: json.customerRequest ?? "",
@@ -903,7 +906,11 @@ export async function updateOrder(id: string, json: any) {
         });
       });
     }
-
+    const orderOld = await prisma.order.findFirst({
+      where:{
+        id:id
+      }
+    });
     const order = await prisma.order.update({
       where: {
         id: id,
@@ -920,6 +927,9 @@ export async function updateOrder(id: string, json: any) {
             id: carId,
           },
         },
+        billingAdress: json.address ?? orderOld?.billingAdress,
+        billingPhone: json.phoneNumber ?? orderOld?.billingPhone,
+        billingCustomerName: json.fullName ?? orderOld?.billingCustomerName,
         dateTime: json.dateTime,
         customerRequest: json.customerRequest,
         customerNote: json.customerNote,
