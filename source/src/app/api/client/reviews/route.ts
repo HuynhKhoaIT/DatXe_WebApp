@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         const json = await request.json();
         const session = await getServerSession(authOptions);
         if (session) {
-            json.createdId = session.user?.id;
+            json.createdId = session.user?.id.toString();
             const review = await createReviewProduct(json);
             return NextResponse.json({
                 data: review,

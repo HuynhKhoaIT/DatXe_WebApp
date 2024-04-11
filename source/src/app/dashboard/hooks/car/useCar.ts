@@ -37,6 +37,7 @@ interface useCars {
     page?: number;
     setPage: Dispatch<SetStateAction<number>>;
     deleteItem: any;
+    refetch:any,
 }
 
 function mapError(error: unknown | undefined): undefined | string {
@@ -58,6 +59,7 @@ export const useCars = (): useCars => {
         isFetching,
         error,
         isPlaceholderData,
+        refetch,
     } = useQuery({
         queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), page],
         queryFn: () => fetchCars(searchParams.toString(), page),
@@ -100,6 +102,7 @@ export const useCars = (): useCars => {
         page,
         setPage,
         deleteItem,
+        refetch
     };
 };
 

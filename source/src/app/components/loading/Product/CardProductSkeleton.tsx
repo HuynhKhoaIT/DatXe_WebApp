@@ -8,7 +8,7 @@ export default function CardProductSkeleton() {
       <div className={styles.infoCard}>
         <Skeleton h={15} w={80} radius={"lg"} />
         <Skeleton h={12} radius={"lg"} />
-        <Skeleton h={12} radius={"lg"} />.
+        <Skeleton h={12} radius={"lg"} />
         <Skeleton h={12} radius={"lg"} />
       </div>
     </div>

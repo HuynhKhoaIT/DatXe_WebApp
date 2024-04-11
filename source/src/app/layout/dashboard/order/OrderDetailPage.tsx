@@ -20,6 +20,8 @@ export default function OrderDetailPage({ dataSource }: any) {
     false
   );
 
+  console.log(dataSource);
+
   const [dataReview, setDataReview] = useState<any>();
   const columns = [
     {
@@ -93,7 +95,7 @@ export default function OrderDetailPage({ dataSource }: any) {
     },
   ];
   return (
-    <Container className={classNames("printable", styles.container)}>
+    <div className={classNames("printable", styles.container)}>
       <div className={styles.infoGara}>
         <div className={styles.info}>
           <div className={styles.imageGara}>
@@ -230,6 +232,6 @@ export default function OrderDetailPage({ dataSource }: any) {
           orderId={dataSource?.id}
         />
       )}
-    </Container>
+    </div>
   );
 }

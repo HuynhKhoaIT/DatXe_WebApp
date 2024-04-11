@@ -25,6 +25,7 @@ export default function ModalAddCar({
   myAccount,
   formData,
   setValue,
+  refetch,
 }: any) {
   const [brandOptions, setBrandOptions] = useState<any>([]);
   const [modelOptions, setModelOptions] = useState<any>([]);
@@ -63,6 +64,7 @@ export default function ModalAddCar({
       });
       const data = await res.json();
       setValue(data.numberPlates);
+      refetch();
       formData.setFieldValue("carId", data?.id);
       formData.setFieldValue("carBrandId", data?.carBrandId);
       formData.setFieldValue("carNameId", data?.carNameId);

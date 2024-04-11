@@ -10,7 +10,6 @@ import Link from "next/link";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
 export default function OrdersListPage({ dataSource }: any) {
-  console.log(dataSource);
   // pagination
   const itemsPerPage: number = 10;
   const [currentPage, setCurrentPage] = useState(1);

@@ -25,8 +25,6 @@ import { DatePickerInput, DateTimePicker } from "@mantine/dates";
 export default function CartComponent({ myAccount }: any) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [time, setTime] = useState(dayjs().format("HH:mm:ss"));
-  const [date, setDate] = useState(dayjs().format("YYYY-MM-DD"));
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [deleteRow, setDeleteRow] = useState<any>();
   const [cartData, setCartData] = useState<any>([]);
@@ -96,7 +94,7 @@ export default function CartComponent({ myAccount }: any) {
       fullName: myAccount?.name || "",
       phoneNumber: myAccount?.phone || "",
       address: myAccount?.address || "",
-      carId: 3,
+      carId: null,
       carYearId: "",
       carNameId: "",
       carBrandId: "",
@@ -158,42 +156,43 @@ export default function CartComponent({ myAccount }: any) {
     values.dateTime = dateTime;
     values.subTotal = calculateSubTotal();
 
+    console.log(values);
     values.total = calculateSubTotal();
     values.userId = myAccount.id;
-    try {
-      const res = await fetch(`/api/orders`, {
-        method: "POST",
-        body: JSON.stringify(values),
-      });
+    // try {
+    //   const res = await fetch(`/api/orders`, {
+    //     method: "POST",
+    //     body: JSON.stringify(values),
+    //   });
 
-      const data = await res.json();
+    //   const data = await res.json();
 
-      if (!data?.order) {
-        notifications.show({
-          title: "Thất bại",
-          message: "Đặt hàng thất bại: " + (data?.error || "Unknown error"),
-        });
-      } else {
-        notifications.show({
-          title: "Thành công",
-          message: "Đặt hàng thành công",
-        });
-        // const sms = await fetch(`/api/orders/sendSMS`, {
-        //   method: "POST",
-        //   body: JSON.stringify(data?.order),
-        // });
-        localStorage.setItem("cartData", JSON.stringify([]));
-        router.push(`/order/${data?.order?.slug}`);
-      }
-    } catch (error) {
-      console.error("Error during API call:", error);
-      notifications.show({
-        title: "Lỗi",
-        message: "Đã xảy ra lỗi trong quá trình xử lý yêu cầu.",
-      });
-    } finally {
-      setLoading(false);
-    }
+    //   if (!data?.order) {
+    //     notifications.show({
+    //       title: "Thất bại",
+    //       message: "Đặt hàng thất bại: " + (data?.error || "Unknown error"),
+    //     });
+    //   } else {
+    //     notifications.show({
+    //       title: "Thành công",
+    //       message: "Đặt hàng thành công",
+    //     });
+    //     // const sms = await fetch(`/api/orders/sendSMS`, {
+    //     //   method: "POST",
+    //     //   body: JSON.stringify(data?.order),
+    //     // });
+    //     localStorage.setItem("cartData", JSON.stringify([]));
+    //     router.push(`/order/${data?.order?.slug}`);
+    //   }
+    // } catch (error) {
+    //   console.error("Error during API call:", error);
+    //   notifications.show({
+    //     title: "Lỗi",
+    //     message: "Đã xảy ra lỗi trong quá trình xử lý yêu cầu.",
+    //   });
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

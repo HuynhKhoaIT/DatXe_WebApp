@@ -262,15 +262,15 @@ export async function findOrder(id: string, request: any) {
       },
     });
     let orderRs = JSON.parse(JSON.stringify(rs));
-    if(rs?.car){      
-      let br = await getCarModelById(rs?.car?.carBrandId ?? '');
-      let md = await getCarModelById(rs.car.carNameId ?? '');
-      let y = await getCarModelById(rs.car.carYearId ?? '');
+    if (rs?.car) {
+      let br = await getCarModelById(rs?.car?.carBrandId ?? "");
+      let md = await getCarModelById(rs.car.carNameId ?? "");
+      let y = await getCarModelById(rs.car.carYearId ?? "");
       orderRs.car.brandName = br;
       orderRs.car.modelName = md;
       orderRs.car.yearName = y;
     }
-    
+
     return orderRs;
   } catch (error) {
     return { error };
@@ -485,7 +485,7 @@ export async function createOrder(json: any) {
         garageId: garageId,
         userId: json.userId,
       });
-      console.log("carNews2",carNew)
+      console.log("carNews2", carNew);
       if (carNew) {
         carId = carNew.car?.id;
       }
@@ -513,6 +513,9 @@ export async function createOrder(json: any) {
       slug: orderCode.toLowerCase(),
       customerId: customerId,
       carId: carId,
+      billingAdress: json?.billingAdress ?? json?.address,
+      billingPhone: json?.billingPhone ?? json?.phoneNumber,
+      billingCustomerName: json.billingCustomerName ?? json?.fullName,
       dateTime: json.dateTime ?? new Date(),
       customerRequest: json.customerRequest ?? "",
       customerNote: json.customerNote ?? "",
@@ -918,9 +921,9 @@ export async function updateOrder(id: string, json: any) {
       });
     }
     const orderOld = await prisma.order.findFirst({
-      where:{
-        id:id
-      }
+      where: {
+        id: id,
+      },
     });
     const order = await prisma.order.update({
       where: {
@@ -938,13 +941,15 @@ export async function updateOrder(id: string, json: any) {
             id: carId,
           },
         },
-        billingAdress: json.address ?? orderOld?.billingAdress,
-        billingPhone: json.phoneNumber ?? orderOld?.billingPhone,
-        billingCustomerName: json.fullName ?? orderOld?.billingCustomerName,
+        billingAdress: json.billingAdress ?? orderOld?.billingAdress,
+        billingPhone: json.billingPhone ?? orderOld?.billingPhone,
+        billingCustomerName:
+          json.billingCustomerName ?? orderOld?.billingCustomerName,
         dateTime: json.dateTime,
         customerRequest: json.customerRequest,
         customerNote: json.customerNote,
         note: json.note,
+        notePrivate: json.notePrivate,
         priorityLevel: Number(json.priorityLevel),
         orderCategory: {
           connect: {
