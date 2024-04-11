@@ -186,11 +186,11 @@ export default function OrdersManaga() {
       getOptionsData: getOptionsCar,
       isCamera: true,
     },
-    {
-      name: "s",
-      placeholder: "Mã đơn hàng",
-      type: FieldTypes?.STRING,
-    },
+    // {
+    //   name: "s",
+    //   placeholder: "Mã đơn hàng",
+    //   type: FieldTypes?.STRING,
+    // },
     {
       name: "customerId",
       placeholder: "Khách hàng",
@@ -202,7 +202,7 @@ export default function OrdersManaga() {
   ];
 
   const initialValuesSearch = {
-    s: "",
+    // s: "",
     customerId: null,
     carId: null,
   };

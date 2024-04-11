@@ -17,7 +17,7 @@ export default function InfoCar({ myAccount, form }: any) {
   );
   const [value, setValue] = useState<string | null>(null);
 
-  const { cars, isLoading, isFetching } = useCars();
+  const { cars, isLoading, isFetching, refetch } = useCars();
   return (
     <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
       <div className="checkout-widget">
@@ -49,15 +49,16 @@ export default function InfoCar({ myAccount, form }: any) {
                 label="Hãng Xe"
                 placeholder="Hãng Xe"
                 readOnly
-                {...form.getInputProps("carBrandName")}
+                value={form.values.carBrandName}
+                // {...form.getInputProps("carBrandName")}
               />
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
               <TextInput
                 size="lg"
                 radius={0}
-                {...form.getInputProps("carModelName")}
                 label="Dòng xe"
+                value={form.values.carModelName}
                 placeholder="Dòng xe"
                 readOnly
               />
@@ -66,7 +67,7 @@ export default function InfoCar({ myAccount, form }: any) {
               <TextInput
                 size="lg"
                 radius={0}
-                {...form.getInputProps("carYear")}
+                value={form.values.carYear}
                 label="Năm sản xuất"
                 placeholder="Năm sản xuất"
                 readOnly
@@ -80,6 +81,7 @@ export default function InfoCar({ myAccount, form }: any) {
         close={closeModal}
         myAccount={myAccount}
         formData={form}
+        refetch={refetch}
         setValue={setValue}
       />
     </Grid.Col>

@@ -44,9 +44,10 @@ import { useAddOrder } from "../../hooks/order/useAddOrder";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
 import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
 import InfoCustomer from "../_component/InfoCustomer";
-import InfoCart from "../_component/InfoCart";
+import InfoCart from "../_component/InfoCar";
 import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import { AutocompletePhone } from "../_component/AutoCompletePhone";
+import { notifications } from "@mantine/notifications";
 
 export default function OrderForm({
   isEditing = false,
@@ -193,10 +194,21 @@ export default function OrderForm({
             "carYearId",
             dataDetail?.car?.carYearId.toString()
           );
-          form.setFieldValue("fullName", dataDetail?.customer?.fullName);
-          form.setFieldValue("phoneNumber", dataDetail?.customer?.phoneNumber);
-          form.setFieldValue("address", dataDetail?.customer?.address);
-
+          form.setFieldValue(
+            "billingCustomerName",
+            dataDetail?.billingCustomerName || dataDetail?.customer?.fullName
+          );
+          form.setFieldValue(
+            "billingPhone",
+            dataDetail?.billingPhone || dataDetail?.customer?.phoneNumber
+          );
+          form.setFieldValue(
+            "billingAdress",
+            dataDetail?.billingAdress || dataDetail?.customer?.address
+          );
+          form.setFieldValue("carBrand", dataDetail?.car?.brandName.title);
+          form.setFieldValue("carName", dataDetail?.car?.modelName.title);
+          form.setFieldValue("carYear", dataDetail?.car?.yearName.title);
           form.setFieldValue("step", dataDetail?.step.toString());
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -208,6 +220,7 @@ export default function OrderForm({
 
     if (isEditing) {
       fetchData();
+
       handlersIsUser.open();
     }
   }, [dataDetail]);
@@ -227,12 +240,22 @@ export default function OrderForm({
     values.total = calculateSubTotal();
     values.dateTime = new Date();
     handlersButton.open();
-    if (isEditing) {
-      updateItem(values);
+
+    if (values.detail?.length == 0) {
+      notifications.show({
+        title: "Cảnh báo",
+        message: "Vui lòng thêm sản phẩm hoặc dịch vụ",
+      });
+      handlersButton.close();
     } else {
-      addItem(values);
+      if (isEditing) {
+        updateItem(values);
+      } else {
+        addItem(values);
+      }
     }
-    // handlersButton.close();
+
+    //
   };
 
   // lấy thông tin theo biển số xe
@@ -265,9 +288,12 @@ export default function OrderForm({
         form.setFieldValue("carBrand", data?.data?.brandName.title);
         form.setFieldValue("carName", data?.data?.modelName.title);
         form.setFieldValue("carYear", data?.data?.yearName.title);
-        form.setFieldValue("fullName", data?.data?.customer.fullName);
-        form.setFieldValue("phoneNumber", data?.data?.customer.phoneNumber);
-        form.setFieldValue("address", data?.data?.customer.address);
+        form.setFieldValue(
+          "billingCustomerName",
+          data?.data?.customer.fullName
+        );
+        form.setFieldValue("billingPhone", data?.data?.customer.phoneNumber);
+        form.setFieldValue("billingAdress", data?.data?.customer.address);
       }
     } catch (error) {
     } finally {

@@ -35,7 +35,7 @@ export default function InfoCustomer({ form, isUser }: any) {
               isClear={false}
               getOptionData={getOptionsPhone}
               form={form}
-              name="phoneNumber"
+              name="billingPhone"
               handlersLoadingCustomer={handlersLoadingCustomer}
             />
           </Grid.Col>
@@ -43,7 +43,7 @@ export default function InfoCustomer({ form, isUser }: any) {
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("fullName")}
+              {...form.getInputProps("billingCustomerName")}
               label="Tên khách hàng"
               type="text"
               placeholder="Tên khách hàng"
@@ -54,7 +54,7 @@ export default function InfoCustomer({ form, isUser }: any) {
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("address")}
+              {...form.getInputProps("billingAdress")}
               label="Địa chỉ"
               type="text"
               placeholder="Địa chỉ"

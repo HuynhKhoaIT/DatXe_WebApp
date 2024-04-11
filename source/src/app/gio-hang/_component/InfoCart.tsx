@@ -13,6 +13,7 @@ import TableBasic from "../../components/table/Tablebasic";
 import ImageDefult from "../../../../public/assets/images/logoDatxe.png";
 import { IconPlus, IconMinus, IconTrash } from "@tabler/icons-react";
 import styles from "./InfoCart.module.scss";
+import { notifications } from "@mantine/notifications";
 export default function InfoCart({
   loading,
   calculateSubTotal,
@@ -192,7 +193,16 @@ export default function InfoCart({
                 className="theme-btn"
                 variant="filled"
                 // type="submit"
-                onClick={ModalAcceptOrder}
+                onClick={() => {
+                  if (form.values.carId == null) {
+                    notifications.show({
+                      title: "Thất bại",
+                      message: "Vui lòng chọn xe",
+                    });
+                    return;
+                  }
+                  ModalAcceptOrder();
+                }}
                 loading={loading}
                 style={{ background: "var(--theme-color)" }}
               >
