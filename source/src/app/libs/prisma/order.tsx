@@ -4,6 +4,7 @@ import { createCar } from "./car";
 import { createCustomer, getMyCustomers } from "./customer";
 import { randomString } from "@/utils";
 import { ORDERMETHOD } from "@prisma/client";
+import { getCarModelById } from "./carModel";
 
 export async function getOrders(garage: string, requestData: any) {
   try {
@@ -260,7 +261,17 @@ export async function findOrder(id: string, request: any) {
         id: "desc",
       },
     });
-    return rs;
+    let orderRs = JSON.parse(JSON.stringify(rs));
+    if(rs?.car){      
+      let br = await getCarModelById(rs?.car?.carBrandId ?? '');
+      let md = await getCarModelById(rs.car.carNameId ?? '');
+      let y = await getCarModelById(rs.car.carYearId ?? '');
+      orderRs.car.brandName = br;
+      orderRs.car.modelName = md;
+      orderRs.car.yearName = y;
+    }
+    
+    return orderRs;
   } catch (error) {
     return { error };
   }

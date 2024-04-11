@@ -106,9 +106,12 @@ export async function getCustomers(requestData: any) {
             fullName: {
               contains: titleFilter,
             },
+            status: {
+              not: "DELETE",
+            },
+            phoneNumber,
             garageId: garageId,
             customerGroup,
-            // status: ,
           },
         ],
       },
