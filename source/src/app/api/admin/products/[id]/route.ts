@@ -119,7 +119,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 };
             }
             if (session?.user?.id) {
-                createdBy = (session.user.id);
+                createdBy = session.user.id.toString();
             }
             if (json.isProduct.length) {
                 isProduct = (json.isProduct) == 1 ? true : false;
@@ -142,12 +142,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 brandDetail: JSON.stringify(json.brands),
                 categories: {
                     deleteMany: {},
-                    create: json.categories.map((cat: number) => ({
+                    create: json.categories.map((cat: string) => ({
                         assignedBy: session?.user?.name ?? '',
                         assignedAt: new Date(),
                         category: {
                             connect: {
-                                id: Number(cat),
+                                id: cat,
                             },
                         },
                     })),

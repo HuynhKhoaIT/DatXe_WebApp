@@ -55,7 +55,7 @@ export default function CustomersForm({
           ? /^0[1-9][0-9]{8}$/.test(value)
             ? null
             : "Số điện thoại sai định dạng"
-          : "Vui lòng nhập số điện thoại",
+          : null,
     },
   });
 
@@ -130,7 +130,7 @@ export default function CustomersForm({
                   <TextInput
                     size="lg"
                     radius={0}
-                    withAsterisk
+                    // withAsterisk
                     {...form.getInputProps("phoneNumber")}
                     label="Số điện thoại"
                     type="text"
