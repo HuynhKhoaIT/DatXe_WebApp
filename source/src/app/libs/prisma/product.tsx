@@ -82,9 +82,8 @@ export async function getProducts(requestData: any) {
       prisma.product.findMany({
         take: take,
         skip: skip,
-        orderBy: {
-          id: "desc",
-        },
+        orderBy: 
+        {"createdAt" : "desc"} ,
         where: {
           AND: [
             {
@@ -507,4 +506,33 @@ export async function getProductsBestSeller(token: String, json: any) {
   } catch (error) {
     return { error };
   }
+}
+
+export async function relatedProducts(productId:string) {
+  let relatedProducts = null;
+  const product = await getProductById(productId);
+  
+  if(product.product?.categories.length){
+    let cats:any = [];
+    product.product?.categories.forEach((c)=>{
+      cats.push(c.categoryId);
+    })
+    relatedProducts = await prisma.product.findMany({
+      take: 8,
+      orderBy: {
+        createdAt: "desc",
+      },
+      where:{
+        categories: {
+          some:{
+            categoryId: {
+              in: cats
+            }
+          }
+        },
+        status:"PUBLIC"
+      }
+    });
+  }
+  return relatedProducts;
 }
