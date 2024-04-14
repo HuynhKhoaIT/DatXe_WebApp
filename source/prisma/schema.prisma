@@ -74,6 +74,7 @@ model Garage {
   bitlyUrl            String?
   reviews             ReviewsGarage[]
   user                User[]
+  slideBanners        slideBanner[]
 }
 
 
@@ -499,6 +500,20 @@ model User{
   @@fulltext([fullName])
   @@fulltext([fullName, phoneNumber])
 
+}
+
+
+model slideBanner {
+  id                String @id @default(uuid())
+  title             String
+  description       String      @db.Text
+  shortDescription  String?     @db.Text
+  banners           String
+  url               String?
+  status            STATUS @default(DRAFT)
+  createdBy         String @default("1")
+  garage            Garage @relation(fields: [garageId], references: [id])
+  garageId          String @default("1")
 }
 
 enum SALETYPE {
