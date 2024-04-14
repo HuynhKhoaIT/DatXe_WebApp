@@ -49,10 +49,9 @@ export async function getOrders(garage: string, requestData: any) {
       customerId = Number(requestData.customerId);
     }
     let carId = {};
-    if (Number(requestData.carId)) {
-      carId = Number(requestData.carId);
+    if ((requestData.carId)) {
+      carId = (requestData.carId);
     }
-
     const [data, total] = await prisma.$transaction([
       prisma.order.findMany({
         take: take,
