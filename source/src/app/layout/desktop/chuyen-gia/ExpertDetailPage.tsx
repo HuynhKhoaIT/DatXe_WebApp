@@ -25,14 +25,17 @@ const ExpertDetailPageDesktop = ({
       <Banner detailData={expertDetail} />
       <Container>
         <Info detailData={expertDetail} />
-        <ImagesShowRoom className={styles.imagesShowRoom} />
+        <ImagesShowRoom
+          photos={expertDetail.photos}
+          className={styles.imagesShowRoom}
+        />
       </Container>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Category categories={categories} />
         <Service data={services?.data} />
       </div>
       <Products data={products?.data} />
-      <Convenients convenients={convenients} />
+      <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>
           <TabsComponent />

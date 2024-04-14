@@ -234,8 +234,8 @@ export async function getOptionsWard(districtId: number) {
 
 export const getUltilities = async () => {
   try {
-    const res = await axios.get(`/api/amentity`);
-    const dataOption = res.data?.map((item: any) => ({
+    const res = await axios.get(`/api/admin/amentity`);
+    const dataOption = res.data?.data?.map((item: any) => ({
       value: item.id.toString(),
       label: item.title,
     }));

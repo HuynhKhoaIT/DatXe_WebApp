@@ -3,7 +3,8 @@ import OverviewPanel from "@/app/components/layout/OverviewPanel";
 import styles from "./index.module.scss";
 import SlickCarousel from "@/app/components/common/SlickCarousell";
 import CardConvenient from "./CardConvenient";
-const Convenients = ({ convenients }: any) => {
+const Convenients = ({ amenities }: any) => {
+  console.log(amenities);
   return (
     <div className={styles.wrapper}>
       <OverviewPanel
@@ -14,8 +15,8 @@ const Convenients = ({ convenients }: any) => {
         id="convenients-expert"
       >
         <SlickCarousel column={4} gap={8} dots={true}>
-          {convenients?.map((convenient: any, index: number) => (
-            <CardConvenient convenient={convenient} key={index} />
+          {amenities?.map((convenient: any, index: number) => (
+            <CardConvenient convenient={convenient?.amenities} key={index} />
           ))}
         </SlickCarousel>
       </OverviewPanel>
