@@ -28,11 +28,17 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const json = await request.json();
-        const serviceAdvisor = await createSlideBanner({json});
-        return new NextResponse(JSON.stringify(serviceAdvisor), {
-            status: 201,
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const session = await getServerSession(authOptions);
+        if(session){
+                json.createdBy = session.user?.id.toString()
+                const serviceAdvisor = await createSlideBanner(json);
+                return new NextResponse(JSON.stringify(serviceAdvisor), {
+                    status: 201,
+                    headers: { 'Content-Type': 'application/json' },
+                });
+        }
+        throw new Error('Chua dang nhap');
+       
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
