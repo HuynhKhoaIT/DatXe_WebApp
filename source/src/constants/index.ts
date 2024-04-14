@@ -37,6 +37,7 @@ export const QUERY_KEY = {
     productDetail: 'productDetail',
     productListReview: 'productListReview',
     categories: 'categories',
+    amenities:'amenities',
     newsList: 'newsList',
     marketings: 'marketings',
     ordersAdmin: 'ordersAdmin',

@@ -10,10 +10,10 @@ import dynamic from "next/dynamic";
 import { FieldTypes, statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
-import { useCategories } from "../hooks/category/useCategory";
+import { useCategories } from "../../hooks/category/useCategory";
 
 const DynamicModalDeleteItem = dynamic(
-  () => import("../_component/ModalDeleteItem"),
+  () => import("../../_component/ModalDeleteItem"),
   {
     ssr: false,
   }

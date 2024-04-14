@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BrandCarForm from "../create/BrandCarForm";
-import { useBrandDetail } from "../../hooks/system-car/Brand/useBrandCar";
+import { useBrandDetail } from "../../../hooks/system-car/Brand/useBrandCar";
 export const revalidate = 60;
 export default function UpdateCategory({
   params,

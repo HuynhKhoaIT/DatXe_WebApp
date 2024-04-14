@@ -1,51 +1,37 @@
 "use client";
-export const revalidate = 0;
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import { Fragment, useState } from "react";
 import ListPage from "@/app/components/layout/ListPage";
-import { Badge, Button, Flex } from "@mantine/core";
+import TableBasic from "@/app/components/table/Tablebasic";
+import { Button, Flex, Image } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
-import TableBasic from "@/app/components/table/Tablebasic";
-import { statusOptions } from "@/constants/masterData";
-import { useDisclosure } from "@mantine/hooks";
+import { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
-import { useModelCar } from "../../../hooks/system-car/Model/useModelCar";
-import { useSearchParams } from "next/navigation";
-import { useYearCar } from "@/app/admin/hooks/system-car/YearCar/useYearCar";
+import { useAmenitites } from "../../hooks/amentity/useAmentity";
+import { useDisclosure } from "@mantine/hooks";
+import ImageDefult from "@/assets/images/carService.jpeg";
 
+const breadcrumbs = [
+  { title: "Tổng quan", href: "/admin" },
+  { title: "Danh sách hãng xe" },
+];
 const DynamicModalDeleteItem = dynamic(
-  () => import("../../../_component/ModalDeleteItem"),
+  () => import("../../_component/ModalDeleteItem"),
   {
     ssr: false,
   }
 );
-export default function YearCarListPage() {
-  const searchParam = useSearchParams();
-  const brandId = searchParam.get("brandId");
-  const modelId = searchParam.get("modelId");
-  const brandName = searchParam.get("brandName");
-  const modelName = searchParam.get("modelName");
 
-  const breadcrumbs = [
-    { title: "Tổng quan", href: "/admin" },
-    { title: "Danh sách hãng xe", href: "/admin/system-car" },
-    {
-      title: brandName,
-      href: `/admin/system-car/model-car?brandId=${brandId}&brandName=${brandName}`,
-    },
-    { title: modelName },
-  ];
-  var {
-    yearCarList,
+export default function amentityListPage() {
+  const {
+    amenities,
     isLoading,
     isFetching,
     error,
     page,
     setPage,
     deleteItem,
-  } = useYearCar(modelId);
-
+  } = useAmenitites();
   const [deleteRow, setDeleteRow] = useState();
 
   const [
@@ -55,18 +41,34 @@ export default function YearCarListPage() {
   const handleDeleteItem = (id: any) => {
     deleteItem(id);
   };
+
   const columns = [
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Hình ảnh</span>
+      ),
+      name: "thumbnail",
+      dataIndex: ["thumbnail"],
+      width: "90px",
+      render: (data: any) => {
+        return (
+          <Image
+            radius="md "
+            h={40}
+            w={80}
+            fit="contain"
+            src={data || ImageDefult.src}
+          />
+        );
+      },
+    },
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Tên</span>
       ),
       name: "title",
       dataIndex: ["title"],
-      render: (dataRow: any) => {
-        return <>{dataRow}</>;
-      },
     },
-
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
@@ -76,12 +78,14 @@ export default function YearCarListPage() {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
+        if (record.garageId == 2) {
+          return;
+        }
         return (
           <Flex>
             <Link
               href={{
-                pathname: `/admin/system-car/model-car/year-car/${record.id}`,
-                query: { brandId, brandName, modelId, modelName },
+                pathname: `/admin/amentity/${record.id}`,
               }}
             >
               <Button
@@ -114,6 +118,7 @@ export default function YearCarListPage() {
       },
     },
   ];
+
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={breadcrumbs} />
@@ -129,8 +134,7 @@ export default function YearCarListPage() {
           <Flex justify={"end"} align={"center"} gap={20}>
             <Link
               href={{
-                pathname: `/admin/system-car/model-car/year-car/create`,
-                query: { brandId, brandName, modelId, modelName },
+                pathname: `/admin/amentity/create`,
               }}
             >
               <Button
@@ -148,10 +152,10 @@ export default function YearCarListPage() {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={yearCarList}
+            data={amenities}
             columns={columns}
             loading={isLoading}
-            totalPage={yearCarList?.totalPage}
+            totalPage={amenities?.totalPage}
             setPage={setPage}
             activePage={page}
           />

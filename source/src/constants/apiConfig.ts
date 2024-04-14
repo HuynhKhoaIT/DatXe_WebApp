@@ -87,7 +87,35 @@ const apiConfig = {
         //     method: 'GET',
         //     headers: baseHeader,
         // }
+    },
+    amentity:{
+        getList: {
+            baseURL: `${apiUrl}api/admin/amentity`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getById: {
+            baseURL: `${apiUrl}api/admin/amentity/:id`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        create: {
+            baseURL: `${apiUrl}api/admin/amentity`,
+            method: 'POST',
+            headers: baseHeader,
+        },
+        update: {
+            baseURL: `${apiUrl}api/admin/amentity/:id`,
+            method: 'PUT',
+            headers: baseHeader,
+        },
+        // getBrandCar:{
+        //     baseURL: `${apiUrl}api/cars/:id`,
+        //     method: 'GET',
+        //     headers: baseHeader,
+        // }
     }
+
 };
 
 export default apiConfig;
