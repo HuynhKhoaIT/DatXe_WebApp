@@ -3,7 +3,7 @@ import OverviewPanel from "@/app/components/layout/OverviewPanel";
 import styles from "./index.module.scss";
 import Scroll from "@/app/components/common/Scroll";
 import CardConvenient from "@/app/layout/desktop/chuyen-gia/Convenient/CardConvenient";
-const Convenients = ({ convenients }: any) => {
+const Convenients = ({ amenities }: any) => {
   return (
     <div className={styles.wrapper}>
       <OverviewPanel
@@ -11,12 +11,12 @@ const Convenients = ({ convenients }: any) => {
         title="Tiện ích lân cận"
         subTitle="Danh mục dịch vụ phổ biến"
         hiddenShowMore={true}
-        id="convenients-expert"
+        id="amenities-expert"
       >
         <div style={{ marginRight: "-12px" }}>
           <Scroll>
-            {convenients?.map((convenient: any, index: number) => (
-              <CardConvenient convenient={convenient} key={index} />
+            {amenities?.map((convenient: any, index: number) => (
+              <CardConvenient convenient={convenient?.amenities} key={index} />
             ))}
           </Scroll>
         </div>

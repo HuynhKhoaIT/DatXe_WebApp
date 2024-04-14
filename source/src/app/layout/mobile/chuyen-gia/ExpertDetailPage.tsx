@@ -26,7 +26,10 @@ const ExpertDetailPageMobile = ({
       <Banner heigth={174} detailData={expertDetail} />
       <Info detailData={expertDetail} />
       <Container className={styles.containerImages}>
-        <ImagesShowRoom className={styles.imagesShowRoom} />
+        <ImagesShowRoom
+          photos={expertDetail?.photos}
+          className={styles.imagesShowRoom}
+        />
       </Container>
       <div
         style={{
@@ -40,7 +43,7 @@ const ExpertDetailPageMobile = ({
         <Service data={services.data} />
       </div>
       <Products data={products.data} />
-      <Convenients convenients={convenients} />
+      <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>
           <TabsComponent />

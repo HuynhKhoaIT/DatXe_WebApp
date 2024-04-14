@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AmentityForm from "../create/AmentityForm";
+import BannerForm from "../create/BannerForm";
 export const revalidate = 60;
 export default function UpdateAmentity({ params }: { params: { id: number } }) {
   const [amentity, setAmentity] = useState(null);
@@ -9,7 +9,9 @@ export default function UpdateAmentity({ params }: { params: { id: number } }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`/api/admin/amentity/${params?.id}`);
+        const response = await axios.get(
+          `/api/admin/slide-banner/${params?.id}`
+        );
         setAmentity(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -18,5 +20,5 @@ export default function UpdateAmentity({ params }: { params: { id: number } }) {
 
     fetchData();
   }, [params?.id]);
-  return <AmentityForm isEditing={true} dataDetail={amentity} />;
+  return <BannerForm isEditing={true} dataDetail={amentity} />;
 }

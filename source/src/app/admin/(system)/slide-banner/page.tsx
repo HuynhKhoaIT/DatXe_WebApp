@@ -7,13 +7,13 @@ import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
-import { useAmenitites } from "../../hooks/amentity/useAmentity";
 import { useDisclosure } from "@mantine/hooks";
 import ImageDefult from "@/assets/images/carService.jpeg";
+import { useBanner } from "../../hooks/banner/useBanner";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Danh sách hãng xe" },
+  { title: "Danh sách banner" },
 ];
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -22,16 +22,16 @@ const DynamicModalDeleteItem = dynamic(
   }
 );
 
-export default function amentityListPage() {
+export default function bannerListPage() {
   const {
-    amenities,
+    banner,
     isLoading,
     isFetching,
     error,
     page,
     setPage,
     deleteItem,
-  } = useAmenitites();
+  } = useBanner();
   const [deleteRow, setDeleteRow] = useState();
 
   const [
@@ -85,7 +85,7 @@ export default function amentityListPage() {
           <Flex>
             <Link
               href={{
-                pathname: `/admin/amentity/${record.id}`,
+                pathname: `/admin/slide-banner/${record.id}`,
               }}
             >
               <Button
@@ -134,7 +134,7 @@ export default function amentityListPage() {
           <Flex justify={"end"} align={"center"} gap={20}>
             <Link
               href={{
-                pathname: `/admin/amentity/create`,
+                pathname: `/admin/slide-banner/create`,
               }}
             >
               <Button
@@ -152,10 +152,10 @@ export default function amentityListPage() {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={amenities?.data || []}
+            data={banner?.data || []}
             columns={columns}
             loading={isLoading}
-            totalPage={amenities?.totalPage}
+            totalPage={banner?.totalPage}
             setPage={setPage}
             activePage={page}
           />
