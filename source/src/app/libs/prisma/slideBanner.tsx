@@ -30,7 +30,7 @@ export async function getSlideBanners(requestData: any) {
       createdById = 1;
     }
     const [data, total] = await prisma.$transaction([
-      prisma.slideBaner.findMany({
+      prisma.slideBanner.findMany({
         take: take,
         skip: skip,
         orderBy: {
@@ -46,7 +46,7 @@ export async function getSlideBanners(requestData: any) {
           garageId: garageId,
         },
       }),
-      prisma.slideBaner.count({
+      prisma.slideBanner.count({
         where: {
           status: {
             not: "DELETE",
@@ -72,7 +72,7 @@ export async function getSlideBanners(requestData: any) {
 }
 
 export async function findSlideBanner(id: string) {
-    return await prisma.slideBaner.findFirst({
+    return await prisma.slideBanner.findFirst({
         where: {
             id
         }
@@ -80,7 +80,7 @@ export async function findSlideBanner(id: string) {
 }
 export async function updateSlideBanner(id: string, json: any) {
     const slide = await findSlideBanner(id);
-    return await prisma.slideBaner.updateMany({
+    return await prisma.slideBanner.updateMany({
         where: {
             id
         },
@@ -90,27 +90,28 @@ export async function updateSlideBanner(id: string, json: any) {
             shortDescription: json.shortDescription ?? slide?.shortDescription,
             createdBy: json.createdBy ?? slide?.createdBy,
             url: json.url ?? slide?.url,
-            banner: json.banner ?? slide?.banner,
+            banners: json.banner ?? slide?.banners,
             status: json.status ?? slide?.status,
         }
     })
 }
 export async function createSlideBanner(json: any) {
-    return await prisma.slideBaner.create({
+    return await prisma.slideBanner.create({
         data:{
             title: json.title,
             description: json.description,
             shortDescription: json.shortDescription,
             createdBy: json.createdBy,
             url: json.url,
-            banner: json.banner,
             status: json.status,
+            banners:json.banners,
+            garageId: json.garageId ?? "2"
         }
     })
 }
 
 export async function deleteSlideBanner(id:string) {
-    return await prisma.slideBaner.update({
+    return await prisma.slideBanner.update({
         where: {
             id
         },

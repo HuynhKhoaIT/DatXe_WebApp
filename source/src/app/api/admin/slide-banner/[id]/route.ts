@@ -35,6 +35,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 headers: { 'Content-Type': 'application/json' },
             });
         }
+        throw new Error('Chua dang nhap');
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }

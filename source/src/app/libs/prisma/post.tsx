@@ -136,3 +136,15 @@ export async function findPost(id: string) {
     },
   });
 }
+
+
+export async function deletePost(id: string) {
+  return await prisma.post.update({
+    where: {
+      id
+    },
+    data:{
+      status:'DELETE'
+    }
+  });
+}
