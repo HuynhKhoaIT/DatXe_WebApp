@@ -11,9 +11,53 @@ export async function createAmentity(data: any) {
     return rs;
 }
 
-export async function getAmentity(){
-    const rs = await prisma.amenities.findMany();
-    return rs;
+export async function getAmentity(requestData: any){
+    let currentPage = 1;
+    let take = 10;
+    let limit = Number(requestData.limit);
+    let page = requestData.page;
+
+    if (page) {
+      currentPage = Number(page);
+    }
+    if (limit) {
+      take = Number(limit);
+    } else {
+      limit = 10;
+    }
+    let s = '';
+    if(requestData.s){
+        s = requestData.s;
+    }
+    const skip = take * (currentPage - 1);
+    const [data, total] = await prisma.$transaction([
+        prisma.amenities.findMany({
+            take: take,
+            skip: skip,
+            where:{
+                title: {
+                    contains: s
+                }
+            }
+        }),
+        prisma.amenities.count(
+            {
+                where:{
+                    title: {
+                        contains: s
+                    }
+                }
+            }
+        )
+    ])
+    return {
+        data: data,
+        total: total,
+        currentPage: currentPage,
+        limit: limit,
+        totalPage: Math.ceil(total / limit),
+        status: 201,
+    };
 }
 export async function findAmentity(id: string){
     const rs = await prisma.amenities.findFirst(
