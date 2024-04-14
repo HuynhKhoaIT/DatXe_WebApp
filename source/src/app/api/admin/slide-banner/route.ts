@@ -28,7 +28,9 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const json = await request.json();
-        const serviceAdvisor = await createSlideBanner({json});
+        json.createdBy = "1"
+        // return NextResponse.json(json)
+        const serviceAdvisor = await createSlideBanner(json);
         return new NextResponse(JSON.stringify(serviceAdvisor), {
             status: 201,
             headers: { 'Content-Type': 'application/json' },

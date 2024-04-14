@@ -506,7 +506,7 @@ model User{
 model slideBanner {
   id                String @id @default(uuid())
   title             String
-  description       String      @db.Text
+  description       String?      @db.Text
   shortDescription  String?     @db.Text
   banners           String
   url               String?
