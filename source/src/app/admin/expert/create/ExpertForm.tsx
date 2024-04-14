@@ -11,6 +11,7 @@ import {
   Select,
   LoadingOverlay,
   MultiSelect,
+  Space,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
@@ -18,25 +19,36 @@ import { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import FooterSavePage from "../../_component/FooterSavePage";
-import { useAddExpert } from "../../hooks/expert/useAddExpert";
 import {
   getOptionsDistrict,
   getOptionsWard,
   getUltilities,
 } from "@/utils/until";
 import CropImageLink from "@/app/components/common/CropImage";
-import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
-
-export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
-  const {
-    addItem,
-    updateItem,
-    provinceOptions,
-    UltilitiesOptions,
-  } = useAddExpert();
-
+import ImageUpload from "@/assets/icons/image.svg";
+import Typo from "@/app/components/elements/Typo";
+import DropZone from "../_component/DropZone";
+export default function ExpertForm({
+  isLoading,
+  isEditing,
+  dataDetail,
+  UltilitiesOptions,
+  updateItem,
+  addItem,
+  provinceOptions,
+  isLoadingUltilities,
+}: any) {
   const [loading, handlers] = useDisclosure();
-  const resetRef = useRef<() => void>(null);
+
+  const [logoUrl, setLogoUrl] = useState(null);
+  const [bannerUrl, setBannerUrl] = useState(null);
+  const [imagesUrl, setImagesUrl] = useState<any>([]);
+
+  const handleChangeImage = (index: number, value: any) => {
+    const newImage = [...imagesUrl];
+    newImage[index] = value;
+    setImagesUrl(newImage);
+  };
 
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
@@ -44,12 +56,13 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
   const [ward, setWard] = useState<any>();
-  const [amenities, setAmenities] = useState<any>();
 
   const form = useForm({
     initialValues: {
       logo: "",
       description: "",
+      amenities: [],
+      photos: [],
     },
     validate: {},
   });
@@ -59,6 +72,14 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
         try {
           form.setInitialValues(dataDetail);
           form.setValues(dataDetail);
+          if (dataDetail?.amenities?.length > 0) {
+            const dataOption = dataDetail?.amenities?.map(
+              (item: any) => item?.amenities?.id
+            );
+            form.setFieldValue("amenities", dataOption);
+          }
+          setImagesUrl(JSON?.parse(dataDetail?.photos));
+
           const [districts, wards] = await Promise.all([
             getOptionsDistrict(Number(dataDetail?.provinceId)),
             getOptionsWard(Number(dataDetail?.districtId)),
@@ -72,14 +93,6 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
           form.setFieldValue("provinceId", dataDetail?.provinceId?.toString());
           form.setFieldValue("districtId", dataDetail?.districtId?.toString());
           form.setFieldValue("wardId", dataDetail?.wardId?.toString());
-
-          if (dataDetail?.amenities?.length > 0) {
-            const dataOption = dataDetail?.amenities?.map((item: any) =>
-              item.amenityId.toString()
-            );
-            setAmenities(dataOption);
-            form.setFieldValue("amenities", dataOption);
-          }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -87,6 +100,8 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
     };
 
     if (isEditing) fetchData();
+    setLogoUrl(dataDetail?.logo);
+    setBannerUrl(dataDetail?.banner);
   }, [dataDetail]);
 
   const uploadFileThumbnail = async (file: File) => {
@@ -100,6 +115,7 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
       }
       const response = await axios.post(baseURL, formData, options);
       form.setFieldValue("logo", response.data);
+      return response.data;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -120,7 +136,25 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
     }
   };
 
+  const uploadFileImages = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleSubmit = async (values: any) => {
+    values.photos = JSON.stringify(imagesUrl);
+    console.log(values);
     handlers.open();
     if (isEditing) {
       updateItem(values);
@@ -133,7 +167,7 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={isLoading}
+        visible={isLoading || isLoadingUltilities || loading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -149,9 +183,10 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật logo"}
-                    defaultImage={dataDetail?.logo || ImageUpload.src}
+                    defaultImage={logoUrl || ImageUpload.src}
                     uploadFileThumbnail={uploadFileThumbnail}
                     aspect={1 / 1}
+                    form={form}
                     name="logo"
                   />
                 </Grid.Col>
@@ -239,10 +274,10 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
                     size="lg"
                     radius={0}
                     withAsterisk
-                    value={amenities}
                     label="Tiện ích lân cận"
                     checkIconPosition="right"
                     placeholder="Tiện ích lân cận"
+                    {...form.getInputProps("amenities")}
                     data={UltilitiesOptions}
                   />
                 </Grid.Col>
@@ -329,6 +364,17 @@ export default function ExpertForm({ isLoading, isEditing, dataDetail }: any) {
                   ></Select>
                 </Grid.Col>
               </Grid>
+              <Card mt={20} pb={20}>
+                <Typo size="primary" type="bold" style={{ color: "#3d4465" }}>
+                  Ảnh garage
+                </Typo>
+                <DropZone
+                  setImagesUrl={setImagesUrl}
+                  imagesUrl={imagesUrl}
+                  uploadFile={uploadFileImages}
+                  handleChangeImage={handleChangeImage}
+                />
+              </Card>
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea

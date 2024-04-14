@@ -22,7 +22,7 @@ const Info = ({ detailData }: any) => {
     false
   );
 
-  const [src, setSrc] = useState<string>("");
+  console.log(detailData);
 
   return (
     <div className={styles.wrapper}>
@@ -112,8 +112,9 @@ const Info = ({ detailData }: any) => {
       </Container>
       <DynamicModalQRCode
         openModal={openedModal}
-        src={src}
         close={closeModal}
+        src={`https://${detailData?.bitlyUrl}`}
+        logoUrl={detailData?.logo}
       />
     </div>
   );

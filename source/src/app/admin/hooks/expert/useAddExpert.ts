@@ -42,6 +42,7 @@ interface UseExpert {
     provinceOptions: any;
     isLoadingProvince: boolean;
     UltilitiesOptions: any;
+    isLoadingUltilities:boolean;
 }
 
 export const useAddExpert = (): UseExpert => {
@@ -84,6 +85,11 @@ export const useAddExpert = (): UseExpert => {
     const { data: UltilitiesOptions, isLoading: isLoadingUltilities } = useFetch({
         queryKey: [QUERY_KEY.optionsultilities],
         queryFn: () => getUltilities(),
+        options: {
+            refetchOnWindowFocus: false,
+            staleTime: Infinity,
+            refetchInterval: false,
+        },
     });
 
     return {
@@ -92,5 +98,6 @@ export const useAddExpert = (): UseExpert => {
         provinceOptions,
         isLoadingProvince,
         UltilitiesOptions,
+        isLoadingUltilities,
     };
 };

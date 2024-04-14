@@ -1,19 +1,19 @@
-import { Box, Button, Group, Input, Modal } from "@mantine/core";
+import { Box, Button, CopyButton, Group, Input, Modal } from "@mantine/core";
 
 import html2canvas from "html2canvas";
 import { QRCodeCanvas } from "qrcode.react";
 import { useState } from "react";
 import Logo from "@/assets/images/avatar.png";
-export default function ModalQRCode({ openModal, close, src }: any) {
-  const [qr, setqr] = useState("");
-  const [url, seturl] = useState("oga.datxe.com");
+import { IconDownload } from "@tabler/icons-react";
+export default function ModalQRCode({ openModal, close, src, logoUrl }: any) {
+  // const [qr, setqr] = useState("");
+  // const [url, seturl] = useState("oga.datxe.com");
   const QrCodeDownload = async () => {
     const canvas: any = (
       await html2canvas(document.getElementById("canvas"))
     ).toDataURL();
 
     if (canvas) {
-      setqr(canvas);
       const a = document.createElement("a");
       a.download = "QrCode.png";
       a.href = canvas;
@@ -24,7 +24,7 @@ export default function ModalQRCode({ openModal, close, src }: any) {
   };
 
   const QrCodeCopy = () => {
-    navigator.clipboard.writeText(url);
+    navigator.clipboard.writeText(src);
   };
   return (
     <Modal
@@ -45,14 +45,14 @@ export default function ModalQRCode({ openModal, close, src }: any) {
         }}
       >
         <QRCodeCanvas
-          value={url}
+          value={src}
           size={300}
           bgColor={"#ffffff"}
           fgColor={"#0a75ad"}
           level={"H"}
           includeMargin={false}
           imageSettings={{
-            src: `${Logo.src}`,
+            src: logoUrl,
             x: undefined,
             y: undefined,
             height: 40,
@@ -70,18 +70,29 @@ export default function ModalQRCode({ openModal, close, src }: any) {
           paddingTop: 10,
         }}
       >
-        <Input value={url} w={"calc(100% - 100px)"} />
-        <Button
-          style={{ cursor: "pointer" }}
-          w={80}
-          onClick={() => QrCodeCopy()}
-        >
-          Copy
-        </Button>
+        <Input readOnly value={src} w={"calc(100% - 100px)"} />
+        <CopyButton value={src}>
+          {({ copied, copy }) => (
+            <Button
+              color={copied ? "teal" : "var(--primary-color)"}
+              onClick={copy}
+              variant="outline"
+              radius="xl"
+            >
+              {copied ? "Copied url" : "Copy url"}
+            </Button>
+          )}
+        </CopyButton>
       </div>
 
       <Group mt={10} justify="end">
-        <Button onClick={() => QrCodeDownload()}>Download</Button>
+        <Button
+          leftSection={<IconDownload size={16} />}
+          color="var(--primary-color)"
+          onClick={() => QrCodeDownload()}
+        >
+          Tải về
+        </Button>
       </Group>
     </Modal>
   );

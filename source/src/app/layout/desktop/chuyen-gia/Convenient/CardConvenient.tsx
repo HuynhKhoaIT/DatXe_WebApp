@@ -12,7 +12,7 @@ const CardConvenient = ({ convenient }: any) => {
           <div>
             <Link href="" style={{ width: "100%" }}>
               <ImageField
-                src={convenient?.image ? convenient?.image : null}
+                src={convenient?.thumbnail ? convenient?.thumbnail : null}
                 height={222}
                 width={266}
               />
@@ -27,16 +27,9 @@ const CardConvenient = ({ convenient }: any) => {
                 style={{ color: "var(--title-white)" }}
                 className={styles.productName}
               >
-                {convenient?.name}
+                {convenient?.title}
               </Typo>
             </Link>
-            <Typo
-              size="sub"
-              style={{ color: "var(--title-white)" }}
-              className={styles.description}
-            >
-              {convenient?.properties} properties
-            </Typo>
           </div>
         </div>
       </Box>

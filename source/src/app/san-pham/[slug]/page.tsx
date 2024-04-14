@@ -15,13 +15,18 @@ export default async function DetailProduct({
       id: params?.slug,
     },
   });
-  const productsRelate = await callApi(apiConfig.products.getList, {});
+  const productsRelate = await callApi(apiConfig.products.getRelate, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
 
   const productReview = await callApi(apiConfig.products.getReviewById, {
     pathParams: {
       id: params?.slug,
     },
   });
+
   return (
     <RenderContext
       components={{
@@ -32,9 +37,9 @@ export default async function DetailProduct({
           defaultTheme: ProductDetailPageMobile,
         },
       }}
-      product={product?.data}
-      productReview={productReview?.data}
-      productRelate={productsRelate?.data}
+      product={product?.data || []}
+      productReview={productReview?.data || []}
+      productRelate={productsRelate}
     />
   );
 }
