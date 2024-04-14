@@ -6,8 +6,6 @@ import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 import { getCategories } from "../libs/prisma/category";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
-// import { useProduct } from "../hooks/products/useProducts";
-
 export default async function Products({ searchParams }: any) {
   const products = await callApi(apiConfig.products.getList, {
     params: {

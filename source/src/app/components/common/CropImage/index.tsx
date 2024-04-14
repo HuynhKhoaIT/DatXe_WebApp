@@ -25,6 +25,7 @@ function CropImageLink({
   idUpload = "image-uploader",
   idResult = "image-result",
   idImageContainer = "image-container",
+  onChange,
 }: any) {
   return (
     <div className={className}>
@@ -52,6 +53,7 @@ function CropImageLink({
           idUpload={idUpload}
           idResult={idResult}
           idImageContainer={idImageContainer}
+          onChange={onChange}
         />
       </AntdImgCrop>
     </div>
@@ -77,6 +79,7 @@ function Component({
   idUpload,
   idResult,
   idImageContainer,
+  onChange,
 }: any) {
   const [isEdit, setEdit] = useState(defaultImage && defaultImage !== "");
   useEffect(() => {
@@ -113,6 +116,7 @@ function Component({
         onChange={async (e: any) => {
           const files = Array.from(e.target.files)[0];
           const filePreview = await beforeUpload(files, []);
+          console.log(filePreview);
           try {
             const imagePreview: any = document.getElementById(idResult);
             const imageContainer: any = document.getElementById(
@@ -120,8 +124,10 @@ function Component({
             );
             imagePreview.style.display = "block";
             imagePreview.src = URL.createObjectURL(filePreview);
-            console.log(filePreview);
-            await uploadFileThumbnail(filePreview);
+            const res = await uploadFileThumbnail(filePreview);
+            if (onChange) {
+              onChange.handleChangeImage(onChange.index, res);
+            }
             imageContainer.style.display = "none";
             setEdit(true);
             onFinish?.(filePreview);

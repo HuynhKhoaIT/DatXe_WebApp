@@ -9,6 +9,13 @@ const multipartFormHeader = {
 };
 
 const apiConfig = {
+    file: {
+        upload: {
+            baseURL: `https://up-image.dlbd.vn/api/image`,
+            method: 'POST',
+            headers: multipartFormHeader,
+        },
+    },
     products: {
         getList: {
             baseURL: `${apiUrl}api/products`,
@@ -26,7 +33,7 @@ const apiConfig = {
             headers: baseHeader,
         },
         getRelate: {
-            baseURL: `${apiUrl}api/products`,
+            baseURL: `${apiUrl}api/products/related-products/:id`,
             method: 'GET',
             headers: baseHeader,
         },
@@ -114,6 +121,18 @@ const apiConfig = {
         //     method: 'GET',
         //     headers: baseHeader,
         // }
+    },
+    garage:{
+        getList: {
+            baseURL: `${apiUrl}api/client/cars`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getById: {
+            baseURL: `${apiUrl}api/client/cars/:id`,
+            method: 'GET',
+            headers: baseHeader,
+        },
     }
 
 };

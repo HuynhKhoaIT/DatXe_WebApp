@@ -190,7 +190,7 @@ export async function updateGarage(id: string, data: any) {
           assignedAt: new Date(),
           amenities: {
             connect: {
-              id: Number(id),
+              id: id,
             },
           },
         })),
@@ -233,6 +233,13 @@ export async function getGarageByCode(code: string) {
     const rs = await prisma.garage.findFirst({
       where: {
         code: code,
+      },
+      include: {
+        amenities: {
+          include: {
+            amenities: true,
+          },
+        },
       },
     });
     return rs;
