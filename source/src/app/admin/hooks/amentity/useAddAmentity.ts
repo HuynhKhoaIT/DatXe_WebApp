@@ -6,8 +6,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 const queryClient = new QueryClient();
 
-const addCategory = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/admin/product-category`, {
+const addAmentity = async (values: any): Promise<any> => {
+    const response = await fetch(`/api/admin/amentity`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -15,13 +15,13 @@ const addCategory = async (values: any): Promise<any> => {
         body: JSON.stringify(values),
     });
     if (!response.ok) {
-        throw new ResponseError('Failed to insert new category', response);
+        throw new ResponseError('Failed to insert new amentity', response);
     }
     return await response.json();
 };
 
-const updateCategory = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/admin/product-category/${values?.id}`, {
+const updateAmentity = async (values: any): Promise<any> => {
+    const response = await fetch(`/api/admin/amentity/${values?.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -29,46 +29,46 @@ const updateCategory = async (values: any): Promise<any> => {
         body: JSON.stringify(values),
     });
     if (!response.ok) {
-        throw new ResponseError('Failed to insert new category', response);
+        throw new ResponseError('Failed to insert new amentity', response);
     }
     return await response.json();
 };
 
-interface UseCategory {
+interface UseAmentity {
     addItem: any;
     updateItem: any;
 }
 
-export const useAddCategory = (): UseCategory => {
+export const useAddAmentity = (): UseAmentity => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
     const { mutate: addItem } = useMutation({
-        mutationFn: addCategory,
+        mutationFn: addAmentity,
         onSuccess: () => {
             router.back();
             notifications.show({
                 title: 'Thành công',
-                message: 'Thêm danh mục thành công',
+                message: 'Thêm tiện ích thành công',
             });
 
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.categories, searchParams.toString(), 1],
+                queryKey: [QUERY_KEY.amenities, searchParams.toString(), 1],
             });
         },
     });
 
     const { mutate: updateItem } = useMutation({
-        mutationFn: updateCategory,
+        mutationFn: updateAmentity,
         onSuccess: () => {
             router.back();
 
             notifications.show({
                 title: 'Thành công',
-                message: 'Cập nhật danh mục thành công',
+                message: 'Cập nhật tiện ích thành công',
             });
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.categories, searchParams.toString(), 1],
+                queryKey: [QUERY_KEY.amenities, searchParams.toString(), 1],
             });
         },
     });

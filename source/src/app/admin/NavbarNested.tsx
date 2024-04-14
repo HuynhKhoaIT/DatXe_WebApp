@@ -54,17 +54,20 @@ export function NavbarNested({ toggle }: any) {
     {
       label: "Hệ thống",
       icon: IconCalendarStats,
-      links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
+      links: [
+        { label: "Danh mục xe", link: "/admin/system-car" },
+        { label: "Danh sách tiện ích", link: "/admin/amentity" },
+      ],
     },
   ];
 
-  if (session?.user?.role === "ADMIN") {
-    mockdata.push({
-      label: "Hệ thống",
-      icon: IconCalendarStats,
-      links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
-    });
-  }
+  // if (session?.user?.role === "ADMIN") {
+  //   mockdata.push({
+  //     label: "Hệ thống",
+  //     icon: IconCalendarStats,
+  //     links: [{ label: "Danh mục xe", link: "/admin/system-car" }],
+  //   });
+  // }
   const links = mockdata.map((item) => (
     <LinksGroup {...item} key={item.label} toggle={toggle} />
   ));

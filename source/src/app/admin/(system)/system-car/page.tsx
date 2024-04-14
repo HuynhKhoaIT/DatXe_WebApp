@@ -10,7 +10,7 @@ import TableBasic from "@/app/components/table/Tablebasic";
 import { statusOptions } from "@/constants/masterData";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useBrandCar } from "../hooks/system-car/Brand/useBrandCar";
+import { useBrandCar } from "../../hooks/system-car/Brand/useBrandCar";
 import { useMyGarage } from "@/app/hooks/useMyGarage";
 import { useSession } from "next-auth/react";
 import PageUnauthorized from "@/app/components/page/unauthorized";
@@ -20,7 +20,7 @@ const breadcrumbs = [
   { title: "Danh sách hãng xe" },
 ];
 const DynamicModalDeleteItem = dynamic(
-  () => import("../_component/ModalDeleteItem"),
+  () => import("../../_component/ModalDeleteItem"),
   {
     ssr: false,
   }

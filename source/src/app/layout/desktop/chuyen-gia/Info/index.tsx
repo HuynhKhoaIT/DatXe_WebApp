@@ -1,4 +1,6 @@
+"use client";
 import Typo from "@/app/components/elements/Typo";
+
 import styles from "./index.module.scss";
 import Star from "@/assets/icons/star.svg";
 import Avatar from "@/assets/images/avatar.png";
@@ -7,7 +9,21 @@ import Check from "@/assets/icons/checkExpert.svg";
 import { ActionIcon, Button } from "@mantine/core";
 import Container from "@/app/components/common/Container";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useDisclosure } from "@mantine/hooks";
+
+import React, { useState } from "react";
+const DynamicModalQRCode = dynamic(() => import("./ModalQRCode"), {
+  ssr: false,
+});
+
 const Info = ({ detailData }: any) => {
+  const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
+    false
+  );
+
+  const [src, setSrc] = useState<string>("");
+
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -79,12 +95,26 @@ const Info = ({ detailData }: any) => {
                 Liên hệ
               </Button>
             </a>
-            <ActionIcon w={56} h={56} variant="outline" color="#000">
+            <ActionIcon
+              w={56}
+              h={56}
+              variant="outline"
+              color="#000"
+              onClick={() => {
+                // generate();
+                openModal();
+              }}
+            >
               <img src={Qr.src} />
             </ActionIcon>
           </div>
         </div>
       </Container>
+      <DynamicModalQRCode
+        openModal={openedModal}
+        src={src}
+        close={closeModal}
+      />
     </div>
   );
 };

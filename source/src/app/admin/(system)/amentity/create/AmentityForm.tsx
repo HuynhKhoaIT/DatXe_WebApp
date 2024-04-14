@@ -2,35 +2,39 @@
 import {
   Box,
   Card,
+  FileButton,
   Grid,
+  Text,
   TextInput,
+  Textarea,
+  Image,
   Select,
   LoadingOverlay,
-  Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useEffect } from "react";
+import "react-quill/dist/quill.snow.css";
+import { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import FooterSavePage from "../../_component/FooterSavePage";
+import axios from "axios";
 import convertToSlug from "@/utils/until";
-import { useAddCategory } from "../../hooks/category/useAddCategory";
-import { CARBRAND } from "@/constants";
-import { useAddBrand } from "../../hooks/system-car/Brand/useAddBrandCar";
-export default function BrandCarForm({
-  isEditing,
-  dataDetail,
-  isLoading,
-}: any) {
-  const { addItem, updateItem } = useAddBrand();
+import CropImageLink from "@/app/components/common/CropImage";
+import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
+import { useAddAmentity } from "@/app/admin/hooks/amentity/useAddAmentity";
+import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+export default function AmentityForm({ isEditing, dataDetail }: any) {
+  const { addItem, updateItem } = useAddAmentity();
   const [loading, handlers] = useDisclosure();
+  const resetRef = useRef<() => void>(null);
+  const [imageField, setImageField] = useState<File | null>();
 
   const form = useForm({
     initialValues: {
+      thumbnail: "",
       title: "",
       description: "",
     },
     validate: {
-      title: (value) => (value.length < 1 ? "Không được để trống" : null),
+      // title: (value) => (value.length < 1 ? "Không được để trống" : null),
       // image: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
@@ -53,12 +57,25 @@ export default function BrandCarForm({
     }
   }, [dataDetail]);
 
+  const uploadFileThumbnail = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      form.setFieldValue("thumbnail", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleSubmit = async (values: any) => {
-    values.parentId = 0;
-    values.type = "CARBRAND";
     handlers.open();
     if (isEditing) {
-      values.id = dataDetail?.id;
       updateItem(values);
     } else {
       addItem(values);
@@ -67,9 +84,9 @@ export default function BrandCarForm({
   };
 
   return (
-    <Box pos="relative" w={800}>
+    <Box pos="relative">
       <LoadingOverlay
-        visible={isLoading}
+        visible={loading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -77,18 +94,30 @@ export default function BrandCarForm({
         <Grid gutter={12}>
           <Grid.Col span={12}>
             <Card withBorder shadow="sm">
+              <Grid>
+                <Grid.Col span={12}>
+                  <Text size={"16px"} c={"#999999"} mb={"6px"}>
+                    Hình ảnh
+                  </Text>
+                  <CropImageLink
+                    shape="rect"
+                    placeholder={"Cập nhật hình ảnh"}
+                    defaultImage={dataDetail?.thumbnail || ImageUpload.src}
+                    uploadFileThumbnail={uploadFileThumbnail}
+                  />
+                </Grid.Col>
+              </Grid>
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={8}>
                   <TextInput
                     size="lg"
                     radius={0}
                     {...form.getInputProps("title")}
-                    label="Tên hãng xe"
+                    label="Tên tiện ích"
                     type="text"
-                    placeholder="Tên hãng xe"
+                    placeholder="Tên tiện ích"
                   />
                 </Grid.Col>
-
                 <Grid.Col span={4}>
                   <Select
                     size="lg"
@@ -104,12 +133,14 @@ export default function BrandCarForm({
                     ]}
                   />
                 </Grid.Col>
+              </Grid>
+              <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
                     size="lg"
                     radius={0}
                     label="Mô tả chi tiết"
-                    minRows={2}
+                    minRows={4}
                     autosize={true}
                     {...form.getInputProps("description")}
                     placeholder="Mô tả"

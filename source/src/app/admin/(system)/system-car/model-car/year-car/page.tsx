@@ -10,36 +10,41 @@ import TableBasic from "@/app/components/table/Tablebasic";
 import { statusOptions } from "@/constants/masterData";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useModelCar } from "../../hooks/system-car/Model/useModelCar";
+import { useModelCar } from "../../../../hooks/system-car/Model/useModelCar";
 import { useSearchParams } from "next/navigation";
+import { useYearCar } from "@/app/admin/hooks/system-car/YearCar/useYearCar";
 
 const DynamicModalDeleteItem = dynamic(
-  () => import("../../_component/ModalDeleteItem"),
+  () => import("../../../../_component/ModalDeleteItem"),
   {
     ssr: false,
   }
 );
-export default function ModelCarListPage() {
+export default function YearCarListPage() {
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
+  const modelId = searchParam.get("modelId");
   const brandName = searchParam.get("brandName");
+  const modelName = searchParam.get("modelName");
 
   const breadcrumbs = [
     { title: "Tổng quan", href: "/admin" },
     { title: "Danh sách hãng xe", href: "/admin/system-car" },
     {
       title: brandName,
+      href: `/admin/system-car/model-car?brandId=${brandId}&brandName=${brandName}`,
     },
+    { title: modelName },
   ];
   var {
-    modelCarList,
+    yearCarList,
     isLoading,
     isFetching,
     error,
     page,
     setPage,
     deleteItem,
-  } = useModelCar(brandId);
+  } = useYearCar(modelId);
 
   const [deleteRow, setDeleteRow] = useState();
 
@@ -56,15 +61,9 @@ export default function ModelCarListPage() {
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Tên</span>
       ),
       name: "title",
-      dataIndex: [],
+      dataIndex: ["title"],
       render: (dataRow: any) => {
-        return (
-          <Link
-            href={`/admin/system-car/model-car/year-car?brandId=${brandId}&brandName=${brandName}&modelId=${dataRow.id}&modelName=${dataRow?.title}`}
-          >
-            {dataRow?.title}
-          </Link>
-        );
+        return <>{dataRow}</>;
       },
     },
 
@@ -81,8 +80,8 @@ export default function ModelCarListPage() {
           <Flex>
             <Link
               href={{
-                pathname: `/admin/system-car/model-car/${record.id}`,
-                query: { brandId, brandName },
+                pathname: `/admin/system-car/model-car/year-car/${record.id}`,
+                query: { brandId, brandName, modelId, modelName },
               }}
             >
               <Button
@@ -130,8 +129,8 @@ export default function ModelCarListPage() {
           <Flex justify={"end"} align={"center"} gap={20}>
             <Link
               href={{
-                pathname: `/admin/system-car/model-car/create`,
-                query: { brandId, brandName },
+                pathname: `/admin/system-car/model-car/year-car/create`,
+                query: { brandId, brandName, modelId, modelName },
               }}
             >
               <Button
@@ -149,10 +148,10 @@ export default function ModelCarListPage() {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={modelCarList}
+            data={yearCarList}
             columns={columns}
             loading={isLoading}
-            totalPage={modelCarList?.totalPage}
+            totalPage={yearCarList?.totalPage}
             setPage={setPage}
             activePage={page}
           />

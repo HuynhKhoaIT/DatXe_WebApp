@@ -80,7 +80,7 @@ export default function TableBasic({
                     />
                   </Table.Td>
                 )}
-                {columns.map((col: any, _index: number) => {
+                {columns?.map((col: any, _index: number) => {
                   const { render, dataIndex, name } = col;
                   const data = col.dataIndex?.reduce(
                     (acc: any, current: number) => acc && acc[current],
