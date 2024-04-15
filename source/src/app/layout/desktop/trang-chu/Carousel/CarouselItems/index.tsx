@@ -7,13 +7,11 @@ const CarouselItem = ({ item, height = 520 }: any) => {
     <div className={styles.card}>
       <Center>
         <BackgroundImage
-          src={item?.image ? item?.image : image}
+          src={item?.banners ? item?.banners : image}
           h={height}
-
+          style={{ cursor: "pointer" }}
           //   w={"100%"}
-          //   onClick={() =>
-          //     item?.action == 1 && item?.url && window.open(`${item?.url}`)
-          //   }
+          onClick={() => item?.url && window.open(`${item?.url}`)}
         ></BackgroundImage>
       </Center>
     </div>

@@ -23,11 +23,13 @@ const Hero = ({ slideshowData, height = 220 }: any) => {
       }}
     >
       <Slider {...settings}>
-        {slideshowData?.map((item: any) => {
+        {slideshowData?.data?.map((item: any) => {
           return (
             <BackgroundImage
-              src={item?.image ? item?.image : image}
+              style={{ cursor: "pointer" }}
+              src={item?.banners ? item?.banners : image}
               h={height}
+              onClick={() => item?.url && window.open(`${item?.url}`)}
             ></BackgroundImage>
           );
         })}
