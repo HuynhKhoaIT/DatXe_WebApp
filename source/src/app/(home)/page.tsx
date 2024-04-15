@@ -1,17 +1,10 @@
 import RenderContext from "../components/elements/RenderContext";
 import LandingPageDesktop from "../layout/desktop/trang-chu";
 import LandingPageMobile from "../layout/mobile/trang-chu";
-import blog1 from "@/assets/images/blog1.png";
-import blog2 from "@/assets/images/blog2.png";
-import blog3 from "@/assets/images/blog3.png";
-import blog4 from "@/assets/images/blog4.png";
-
 import Reasons1 from "@/assets/images/reasson1.png";
 import Reasons2 from "@/assets/images/reasson2.png";
 import Reasons3 from "@/assets/images/reasson3.png";
 import { getCategories } from "../libs/prisma/category";
-import { getProducts } from "../libs/prisma/product";
-import { getCarModels } from "../libs/prisma/carModel";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 
@@ -40,28 +33,6 @@ const reassons = [
       "Từ dịch vụ rửa xe, mâm & lốp, chăm sóc toàn diện, ắc quy, phụ tùng và cả việc bảo dưỡng định kỳ nữa. Ban có thể so sánh và tìm kiếm hệ thống Chuyên gia trên cả nước.",
   },
 ];
-const blogs = [
-  {
-    thumbnail: blog3.src,
-    title: "Dịch vụ sửa xe uy tin tại HCM ",
-    view: 123564300,
-  },
-  {
-    thumbnail: blog2.src,
-    title: "Khi nào nên bảo dưỡng xe",
-    view: 123564300,
-  },
-  {
-    thumbnail: blog1.src,
-    title: "Hành trình mua siêu xe",
-    view: 123564300,
-  },
-  {
-    thumbnail: blog4.src,
-    title: "Lái xe an toàn, các kiến thức cần nắm",
-    view: 123564300,
-  },
-];
 export default async function Home({ searchParams }: any) {
   const categories = await getCategories({ garageId: "2" });
 
@@ -84,6 +55,8 @@ export default async function Home({ searchParams }: any) {
     },
   });
 
+  const slideData = await callApi(apiConfig.banner.getList, {});
+
   return (
     <RenderContext
       components={{
@@ -94,6 +67,7 @@ export default async function Home({ searchParams }: any) {
           defaultTheme: LandingPageMobile,
         },
       }}
+      slideData={slideData}
       categories={categories.data}
       reassons={reassons}
       productsRelate={productsRelate}

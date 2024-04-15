@@ -17,11 +17,8 @@ export default function InfoCart({
   setYearCarOptions,
   handleGetInfo,
   customer,
+  openModalUpdate,
 }: any) {
-  const [
-    openModalUpdate,
-    { open: openModal, close: closeModal },
-  ] = useDisclosure(false);
   console.log(form.values.numberPlates);
   return (
     <div className={styles.cardInfo}>
@@ -34,7 +31,10 @@ export default function InfoCart({
           Thông tin xe
         </Typo>
         {isUser && (
-          <Button leftSection={<IconUpload size={16} />} onClick={openModal}>
+          <Button
+            leftSection={<IconUpload size={16} />}
+            onClick={openModalUpdate}
+          >
             Cập nhật
           </Button>
         )}
@@ -148,21 +148,6 @@ export default function InfoCart({
           )}
         </Grid.Col>
       </Grid>
-      {openModalUpdate && (
-        <DynamicModalUpdateCar
-          dataDetail={customer}
-          openModal={openModalUpdate}
-          close={closeModal}
-          brandOptions={brandOptions}
-          yearCarOptions={yearCarOptions}
-          modelOptions={modelOptions}
-          setModelOptions={setModelOptions}
-          setYearCarOptions={setYearCarOptions}
-        />
-      )}
     </div>
   );
 }
-const DynamicModalUpdateCar = dynamic(() => import("./ModalUpdateCar"), {
-  ssr: false,
-});

@@ -4,7 +4,7 @@ import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function PUT(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (session) {
