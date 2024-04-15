@@ -1,9 +1,12 @@
 import Typo from "@/app/components/elements/Typo";
-import { Grid, Select, TextInput } from "@mantine/core";
+import { Button, Grid, Group, Select, TextInput } from "@mantine/core";
 import styles from "./index.module.scss";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { AutocompleteLicensePlates } from "./AutoCompleteLicensePlates";
 import { getOptionsCar } from "../until";
+import { IconUpload } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
+import dynamic from "next/dynamic";
 export default function InfoCart({
   form,
   brandOptions,
@@ -13,18 +16,29 @@ export default function InfoCart({
   yearCarOptions,
   setYearCarOptions,
   handleGetInfo,
+  customer,
 }: any) {
-  console.log(isUser);
+  const [
+    openModalUpdate,
+    { open: openModal, close: closeModal },
+  ] = useDisclosure(false);
+  console.log(form.values.numberPlates);
   return (
     <div className={styles.cardInfo}>
-      <Typo
-        size="primary"
-        type="bold"
-        style={{ color: "var(--primary-orange)" }}
-        className={styles.title}
-      >
-        Thông tin xe
-      </Typo>
+      <Group justify="space-between" className={styles.title}>
+        <Typo
+          size="primary"
+          type="bold"
+          style={{ color: "var(--primary-orange)" }}
+        >
+          Thông tin xe
+        </Typo>
+        {isUser && (
+          <Button leftSection={<IconUpload size={16} />} onClick={openModal}>
+            Cập nhật
+          </Button>
+        )}
+      </Group>
       <Grid gutter={12} className={styles.marketingInfo}>
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           {/* <TextInput
@@ -83,10 +97,10 @@ export default function InfoCart({
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("carName")}
-              label="Dòng xe"
+              {...form.getInputProps("phoneNumber")}
+              label="Số điện thoại"
               type="text"
-              placeholder="Dòng xe"
+              placeholder="Số điện thoại"
               disabled
             />
           ) : (
@@ -112,10 +126,10 @@ export default function InfoCart({
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("carYear")}
-              label="Năm sản xuất"
+              {...form.getInputProps("fullName")}
+              label="Họ và tên"
               type="text"
-              placeholder="Năm sản xuất"
+              placeholder="Họ và tên"
               disabled
             />
           ) : (
@@ -134,6 +148,21 @@ export default function InfoCart({
           )}
         </Grid.Col>
       </Grid>
+      {openModalUpdate && (
+        <DynamicModalUpdateCar
+          dataDetail={customer}
+          openModal={openModalUpdate}
+          close={closeModal}
+          brandOptions={brandOptions}
+          yearCarOptions={yearCarOptions}
+          modelOptions={modelOptions}
+          setModelOptions={setModelOptions}
+          setYearCarOptions={setYearCarOptions}
+        />
+      )}
     </div>
   );
 }
+const DynamicModalUpdateCar = dynamic(() => import("./ModalUpdateCar"), {
+  ssr: false,
+});

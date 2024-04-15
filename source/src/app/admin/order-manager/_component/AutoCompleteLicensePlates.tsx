@@ -24,7 +24,7 @@ export function AutocompleteLicensePlates({
   isCamera = false,
   w,
   setValueInput,
-  isClear = true,
+  isClear = false,
   label,
   handleGetInfo,
   disabled,
@@ -81,7 +81,6 @@ export function AutocompleteLicensePlates({
           padding: "10px 0",
         }}
         onClick={() => {
-          console.log(item.otherData);
           form.setFieldValue(name, item.label);
           form.setFieldValue("carId", item.value);
           handleGetInfo(item.label);
@@ -117,8 +116,10 @@ export function AutocompleteLicensePlates({
               label={label}
               placeholder={placeholder}
               value={value}
+              error={value?.length == 0 ? "Vui lòng nhập..." : null}
               onChange={(event) => {
                 setValue(event.currentTarget.value);
+                form.setFieldValue(name, event.currentTarget.value);
                 form.setFieldValue("carId", null);
                 form.setFieldValue("carBrandId", "");
                 form.setFieldValue("carNameId", "");

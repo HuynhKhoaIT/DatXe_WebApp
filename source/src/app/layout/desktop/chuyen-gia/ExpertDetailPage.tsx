@@ -38,10 +38,10 @@ const ExpertDetailPageDesktop = ({
       <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>
-          <TabsComponent />
+          <TabsComponent data={expertDetail} />
         </Container>
         <Blogs blogs={blogs?.data || blogsDefalt} />
-        <SharePage socials={socials} />
+        <SharePage bitlyUrl={expertDetail?.bitlyUrl} />
       </div>
     </div>
   );

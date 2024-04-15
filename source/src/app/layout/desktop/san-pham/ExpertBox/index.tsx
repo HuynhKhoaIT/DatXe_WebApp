@@ -7,6 +7,7 @@ import IconFaceBook from "@/assets/icons/fbIcon.svg";
 import IconInstagram from "@/assets/icons/igIcon.svg";
 
 const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
+  console.log(ProductDetail);
   return (
     <div className={styles.wrapper}>
       <div className={styles.avatar}>
@@ -20,7 +21,7 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
         <div className={styles.headerInfo}>
           <div className={styles.leftInfo}>
             <Typo type="bold" style={{ color: "#170F49" }}>
-              {ProductDetail?.garage?.name}
+              {ProductDetail?.garage?.shortName}
             </Typo>
             <Link
               href={`/chuyen-gia/${ProductDetail?.garage?.code}`}

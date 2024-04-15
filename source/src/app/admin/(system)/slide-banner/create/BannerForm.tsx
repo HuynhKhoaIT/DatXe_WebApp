@@ -28,7 +28,7 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
 
   const form = useForm({
     initialValues: {
-      banner: "",
+      banners: "",
       title: "",
       url: "",
       shortDescription: "",
@@ -68,7 +68,7 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
         formData.append("image", file);
       }
       const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("banner", response.data);
+      form.setFieldValue("banners", response.data);
     } catch (error) {
       console.error("Error:", error);
     }

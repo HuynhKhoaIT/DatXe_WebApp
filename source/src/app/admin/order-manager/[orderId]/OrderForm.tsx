@@ -258,8 +258,11 @@ export default function OrderForm({
     //
   };
 
+  const [customer, setCustomer] = useState({});
   // lấy thông tin theo biển số xe
   const handleGetInfo = async (numberPlate: string) => {
+    form.setFieldValue("numberPlates", numberPlate);
+
     if (licenseNumber) {
       form.setFieldValue("numberPlates", licenseNumber);
     }
@@ -272,6 +275,8 @@ export default function OrderForm({
         }
       );
       const data = await res.json();
+
+      console.log(data?.data);
       if (data?.data) {
         handlersIsUser.open();
         const [models, yearCars] = await Promise.all([
@@ -280,6 +285,7 @@ export default function OrderForm({
         ]);
         setModelOptions(models);
         setYearCarOptions(yearCars);
+        setCustomer(data?.data);
         form.setFieldValue("customerId", data?.data?.customer.id);
         form.setFieldValue("carId", data?.data?.id);
         form.setFieldValue("carBrandId", data?.data?.carBrandId);
@@ -288,6 +294,8 @@ export default function OrderForm({
         form.setFieldValue("carBrand", data?.data?.brandName.title);
         form.setFieldValue("carName", data?.data?.modelName.title);
         form.setFieldValue("carYear", data?.data?.yearName.title);
+        form.setFieldValue("fullName", data?.data?.customer.fullName);
+        form.setFieldValue("phoneNumber", data?.data?.customer.phoneNumber);
         form.setFieldValue(
           "billingCustomerName",
           data?.data?.customer.fullName
@@ -807,18 +815,6 @@ export default function OrderForm({
                         </span>
                       </div>
                     </Grid.Col>
-                    {/* {isEditing && (
-                      <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                        <Select
-                          size="lg"
-                          radius={0}
-                          label="Tình trạng đơn hàng"
-                          placeholder="Tình trạng đơn hàng"
-                          {...form.getInputProps("step")}
-                          data={stepOrderOptions}
-                        />
-                      </Grid.Col>
-                    )} */}
                     <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                       <Textarea
                         size="lg"
@@ -843,8 +839,8 @@ export default function OrderForm({
                     </Grid.Col>
                   </Grid>
                   {isEditing &&
-                  dataDetail?.step !== ORDER_DONE &&
-                  dataDetail?.step !== ORDER_CANCEL ? (
+                  dataDetail?.step !== Number(ORDER_DONE) &&
+                  dataDetail?.step !== Number(ORDER_CANCEL) ? (
                     <div className={styles.footer}>
                       <Button
                         size="md"
@@ -897,8 +893,8 @@ export default function OrderForm({
                         Cập nhật
                       </Button>
                     </div>
-                  ) : dataDetail?.step !== ORDER_DONE &&
-                    dataDetail?.step !== ORDER_CANCEL ? (
+                  ) : dataDetail?.step !== Number(ORDER_DONE) &&
+                    dataDetail?.step !== Number(ORDER_CANCEL) ? (
                     <div className={styles.footer}>
                       <Button
                         size="lg"
@@ -928,25 +924,12 @@ export default function OrderForm({
                       </Button>
                     </div>
                   ) : (
-                    <Button
-                      size="lg"
-                      w={"48%"}
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      variant="outline"
-                      key="cancel"
-                      color="red"
-                      leftSection={<IconBan size={16} />}
-                      onClick={() => setActiveTab("customer")}
-                    >
-                      Quay lại
-                    </Button>
+                    <FooterSavePage
+                      saveLoading={loadingButton}
+                      cancelText="Quay lại"
+                      isOk={false}
+                    />
                   )}
-
-                  {/* <FooterSavePage
-                    saveLoading={loading}
-                    okText={isEditing ? "Cập nhật" : "Hoàn thành"}
-                  /> */}
                 </div>
               </>
             </Tabs.Panel>
@@ -957,6 +940,7 @@ export default function OrderForm({
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <InfoCart
                   brandOptions={brandOptions}
+                  customer={customer}
                   isUser={isUser}
                   setModelOptions={setModelOptions}
                   modelOptions={modelOptions}
@@ -1091,78 +1075,95 @@ export default function OrderForm({
                 </Grid.Col>
               </Grid>
             </div>
-            {isEditing ? (
+
+            {dataDetail?.step !== Number(ORDER_CANCEL) &&
+            dataDetail?.step !== Number(ORDER_DONE) ? (
               <>
-                {dataDetail?.step === ORDER_CANCEL ||
-                dataDetail?.step === ORDER_DONE ? (
-                  <Button
-                    size="lg"
-                    w={"48%"}
-                    radius={0}
-                    h={{ base: 42, md: 50, lg: 50 }}
-                    variant="outline"
-                    key="cancel"
-                    color="red"
-                    leftSection={<IconBan size={16} />}
-                    onClick={() => setActiveTab("numberPlates")}
-                  >
-                    Quay lại
-                  </Button>
+                {isEditing ? (
+                  <>
+                    {dataDetail?.step === ORDER_CANCEL ||
+                    dataDetail?.step === ORDER_DONE ? (
+                      <Button
+                        size="lg"
+                        w={"48%"}
+                        radius={0}
+                        h={{ base: 42, md: 50, lg: 50 }}
+                        variant="outline"
+                        key="cancel"
+                        color="red"
+                        leftSection={<IconBan size={16} />}
+                        onClick={() => setActiveTab("numberPlates")}
+                      >
+                        Quay lại
+                      </Button>
+                    ) : (
+                      <Group justify="end">
+                        <Button
+                          size="lg"
+                          radius={0}
+                          h={{ base: 42, md: 50, lg: 50 }}
+                          // variant="outline"
+                          key="cancel"
+                          color="red"
+                          // leftSection={<IconBan size={16} />}
+                          onClick={() => HandleCancelOrder("-1")}
+                        >
+                          Huỷ đơn
+                        </Button>
+                        <Button
+                          size="lg"
+                          radius={0}
+                          h={{ base: 42, md: 50, lg: 50 }}
+                          // loading={saveLoading}
+                          color="green"
+                          style={{ marginLeft: "12px" }}
+                          variant="filled"
+                          onClick={() => {
+                            if (dataDetail?.step == "0") {
+                              UpdateConfirm("1");
+                            } else {
+                              UpdateConfirm("4");
+                            }
+                          }}
+                          // leftSection={<IconPlus size={16} />}
+                        >
+                          Hoàn thành
+                        </Button>
+                        <Button
+                          size="lg"
+                          radius={0}
+                          h={{ base: 42, md: 50, lg: 50 }}
+                          // loading={saveLoading}
+                          style={{ marginLeft: "12px" }}
+                          key="submit"
+                          type="submit"
+                          variant="filled"
+                          // leftSection={<IconPlus size={16} />}
+                        >
+                          Cập nhật
+                        </Button>
+                      </Group>
+                    )}
+                  </>
                 ) : (
-                  <Group justify="end">
-                    <Button
-                      size="lg"
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      // variant="outline"
-                      key="cancel"
-                      color="red"
-                      // leftSection={<IconBan size={16} />}
-                      onClick={() => HandleCancelOrder("-1")}
-                    >
-                      Huỷ đơn
-                    </Button>
-                    <Button
-                      size="lg"
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      // loading={saveLoading}
-                      color="green"
-                      style={{ marginLeft: "12px" }}
-                      variant="filled"
-                      onClick={() => {
-                        if (dataDetail?.step == "0") {
-                          UpdateConfirm("1");
-                        } else {
-                          UpdateConfirm("4");
-                        }
-                      }}
-                      // leftSection={<IconPlus size={16} />}
-                    >
-                      Hoàn thành
-                    </Button>
-                    <Button
-                      size="lg"
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      // loading={saveLoading}
-                      style={{ marginLeft: "12px" }}
-                      key="submit"
-                      type="submit"
-                      variant="filled"
-                      // leftSection={<IconPlus size={16} />}
-                    >
-                      Cập nhật
-                    </Button>
-                  </Group>
+                  <FooterSavePage
+                    saveLoading={loadingButton}
+                    okText="Hoàn thành"
+                  />
                 )}
               </>
             ) : (
-              <FooterSavePage saveLoading={loadingButton} okText="Hoàn thành" />
+              <FooterSavePage
+                saveLoading={loadingButton}
+                cancelText="Quay lại"
+                isOk={false}
+              />
             )}
           </>
         )}
       </form>
+
+      {}
 
       {openModalChoose && (
         <DynamicModalChooseProducts

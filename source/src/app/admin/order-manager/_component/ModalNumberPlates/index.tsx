@@ -54,10 +54,6 @@ export default function ModalNumberPlates({
     openedModalCamera,
     { open: openModalCamera, close: closeModalCamera },
   ] = useDisclosure(false);
-  // const { data: carOptions, isLoading } = useFetch({
-  //   queryKey: ["carOptions"],
-  //   queryFn: () => getOptionsCar(),
-  // });
   return (
     <Modal
       opened={openModal}
@@ -81,9 +77,9 @@ export default function ModalNumberPlates({
               w={"100%"}
               placeholder="Biển số xe"
               value={numberPlate}
+              error={numberPlate?.length < 8 ? "Tối thiểu 7 kí tự" : null}
               onChange={(value: any) => {
                 setNumberPlate(value);
-                formOrder.setFieldValue("numberPlates", value);
               }}
               getOptionData={getOptionsCar}
               form={formOrder}
@@ -130,6 +126,7 @@ export default function ModalNumberPlates({
               handleGetInfo(numberPlate);
               close();
             }}
+            disabled={numberPlate?.length < 8}
           >
             Tiếp tục
           </Button>
