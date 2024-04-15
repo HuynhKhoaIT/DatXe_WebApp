@@ -21,6 +21,7 @@ const LandingPageMobile = ({
   servicesHot,
   productsRelate,
   productsHot,
+  slideData,
 }: any) => {
   const slideshowData = [
     {
@@ -36,7 +37,7 @@ const LandingPageMobile = ({
 
   return (
     <div>
-      <Hero slideshowData={slideshowData} />
+      <Hero slideshowData={slideData} />
       <Book />
       <div
         style={{

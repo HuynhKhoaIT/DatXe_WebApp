@@ -36,7 +36,7 @@ const LandingPageDesktop = ({
   const { data: blogs, isLoading, isFetching } = useNewsList(10);
   return (
     <div className="bg-white">
-      <CarouselDesktop slideshowData={slideshowData} />
+      <CarouselDesktop slideshowData={slideData} />
       <BookForm />
       <div className={styles.categoryBox}>
         <Category categories={categories} />

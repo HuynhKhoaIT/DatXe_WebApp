@@ -2,7 +2,7 @@
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import ListPage from "@/app/components/layout/ListPage";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { Button, Flex, Image } from "@mantine/core";
+import { Badge, Button, Flex, Image } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import { Fragment, useState } from "react";
@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 import ImageDefult from "@/assets/images/carService.jpeg";
 import { useBanner } from "../../hooks/banner/useBanner";
+import { statusOptions } from "@/constants/masterData";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -47,8 +48,8 @@ export default function bannerListPage() {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Hình ảnh</span>
       ),
-      name: "thumbnail",
-      dataIndex: ["thumbnail"],
+      name: "banners",
+      dataIndex: ["banners"],
       width: "90px",
       render: (data: any) => {
         return (
@@ -62,12 +63,41 @@ export default function bannerListPage() {
         );
       },
     },
+
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Tên</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Tiêu đề</span>
       ),
       name: "title",
       dataIndex: ["title"],
+    },
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+          Trạng thái
+        </span>
+      ),
+      name: "status",
+      dataIndex: ["status"],
+      width: "100px",
+      render: (record: any) => {
+        const matchedStatus = statusOptions.find(
+          (item) => item.value === record
+        );
+        if (matchedStatus) {
+          return (
+            <Badge
+              variant="light"
+              radius={0}
+              size="lg"
+              color={matchedStatus.color}
+              key={record}
+            >
+              {matchedStatus.label}
+            </Badge>
+          );
+        }
+      },
     },
     {
       label: (

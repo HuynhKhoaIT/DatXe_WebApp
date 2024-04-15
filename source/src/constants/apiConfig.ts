@@ -136,7 +136,7 @@ const apiConfig = {
     },
     banner:{
         getList: {
-            baseURL: `${apiUrl}api/admin/slide-banner`,
+            baseURL: `${apiUrl}api/slide-banner`,
             method: 'GET',
             headers: baseHeader,
         },
