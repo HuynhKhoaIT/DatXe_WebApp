@@ -10,7 +10,6 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url);
         let garageId = "2";
         if(session){
-            garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
             const requestData = {
                 s: searchParams.get('s'),
                 garageId: garageId
