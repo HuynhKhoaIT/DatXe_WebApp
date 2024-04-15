@@ -21,6 +21,7 @@
             .title {
                 font-size: 24px;
                 font-weight: 500;
+                
             }
             .quantity {
                 width: 100%;
@@ -47,8 +48,11 @@
     box-shadow: var(--box-shadow);
     margin: 10px;
     .title {
-        padding: 16px 32px;
+        padding: 10px 32px;
         border-bottom: 1px solid #eeeeee;
+        height: 57px;
+        display: flex;
+        align-items: center;
     }
     .marketingInfo {
         padding: 30px;

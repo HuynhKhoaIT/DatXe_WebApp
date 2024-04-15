@@ -13,15 +13,15 @@ const ImagesShowRoom = ({ className, photos }: any) => {
     <div className={classNames(styles.wrapper, className)}>
       <div className={styles.body}>
         <div className={styles.left}>
-          <img src={images[0] || Image1.src} />
+          <img src={images?.[0] || Image1.src} />
         </div>
         <div className={styles.right}>
           <div className={styles.rightTop}>
-            <img src={images[1] || Image2.src} />
+            <img src={images?.[1] || Image2.src} />
           </div>
           <div className={styles.rightBottom}>
-            <img src={images[2] || Image3.src} />
-            <img src={images[3] || Image4.src} />
+            <img src={images?.[2] || Image3.src} />
+            <img src={images?.[3] || Image4.src} />
           </div>
         </div>
       </div>
