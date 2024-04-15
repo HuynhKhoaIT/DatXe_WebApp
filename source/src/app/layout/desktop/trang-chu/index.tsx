@@ -22,6 +22,7 @@ const LandingPageDesktop = ({
   productsRelate,
   servicesHot,
   productsHot,
+  slideData,
 }: any) => {
   const slideshowData = [
     {
