@@ -57,6 +57,7 @@ export function NavbarNested({ toggle }: any) {
       links: [
         { label: "Danh mục xe", link: "/admin/system-car" },
         { label: "Danh sách tiện ích", link: "/admin/amentity" },
+        { label: "Danh sách banner", link: "/admin/slide-banner" },
       ],
     },
   ];

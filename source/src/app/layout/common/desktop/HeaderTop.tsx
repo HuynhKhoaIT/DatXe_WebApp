@@ -23,7 +23,7 @@ export default function HeaderTop() {
             </Link>
           </div>
           <div className={styles.topRight}>
-            <Link href="" className={styles.title}>
+            <Link href="/dashboard/order" className={styles.title}>
               Kiểm tra lịch hẹn
             </Link>
             <SigninButton />

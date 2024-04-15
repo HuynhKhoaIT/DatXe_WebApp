@@ -8,6 +8,7 @@ export default function FooterSavePage({
   saveLoading,
   okText = "Thêm",
   cancelText = "Huỷ",
+  isOk = true,
 }: any) {
   const router = useRouter();
   return (
@@ -24,19 +25,21 @@ export default function FooterSavePage({
       >
         {cancelText}
       </Button>
-      <Button
-        size="lg"
-        radius={0}
-        h={{ base: 42, md: 50, lg: 50 }}
-        loading={saveLoading}
-        style={{ marginLeft: "12px" }}
-        key="submit"
-        type="submit"
-        variant="filled"
-        leftSection={<IconPlus size={16} />}
-      >
-        {okText}
-      </Button>
+      {isOk && (
+        <Button
+          size="lg"
+          radius={0}
+          h={{ base: 42, md: 50, lg: 50 }}
+          loading={saveLoading}
+          style={{ marginLeft: "12px" }}
+          key="submit"
+          type="submit"
+          variant="filled"
+          leftSection={<IconPlus size={16} />}
+        >
+          {okText}
+        </Button>
+      )}
     </div>
   );
 }

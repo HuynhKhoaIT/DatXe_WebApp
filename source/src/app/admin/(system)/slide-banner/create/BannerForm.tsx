@@ -16,26 +16,27 @@ import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
-import convertToSlug from "@/utils/until";
 import CropImageLink from "@/app/components/common/CropImage";
-import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
-import { useAddAmentity } from "@/app/admin/hooks/amentity/useAddAmentity";
+import ImageUpload from "@/assets/icons/image.svg";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-export default function AmentityForm({ isEditing, dataDetail }: any) {
-  const { addItem, updateItem } = useAddAmentity();
+import { useAddBanner } from "@/app/admin/hooks/banner/useAddBanner";
+export default function BannerForm({ isEditing, dataDetail }: any) {
+  const { addItem, updateItem } = useAddBanner();
   const [loading, handlers] = useDisclosure();
   const resetRef = useRef<() => void>(null);
   const [imageField, setImageField] = useState<File | null>();
 
   const form = useForm({
     initialValues: {
-      thumbnail: "",
+      banners: "",
       title: "",
+      url: "",
+      shortDescription: "",
       description: "",
     },
     validate: {
-      // title: (value) => (value.length < 1 ? "Không được để trống" : null),
-      // image: (value) => (value.length < 1 ? "Không được để trống" : null),
+      title: (value) => (value.length < 1 ? "Không được để trống" : null),
+      url: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
 
@@ -67,7 +68,7 @@ export default function AmentityForm({ isEditing, dataDetail }: any) {
         formData.append("image", file);
       }
       const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("thumbnail", response.data);
+      form.setFieldValue("banners", response.data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -97,12 +98,13 @@ export default function AmentityForm({ isEditing, dataDetail }: any) {
               <Grid>
                 <Grid.Col span={12}>
                   <Text size={"16px"} c={"#999999"} mb={"6px"}>
-                    Hình ảnh
+                    Banner
                   </Text>
                   <CropImageLink
                     shape="rect"
+                    aspect={3 / 2}
                     placeholder={"Cập nhật hình ảnh"}
-                    defaultImage={dataDetail?.thumbnail || ImageUpload.src}
+                    defaultImage={dataDetail?.banner || ImageUpload.src}
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>
@@ -113,9 +115,9 @@ export default function AmentityForm({ isEditing, dataDetail }: any) {
                     size="lg"
                     radius={0}
                     {...form.getInputProps("title")}
-                    label="Tên tiện ích"
+                    label="Tên banner"
                     type="text"
-                    placeholder="Tên tiện ích"
+                    placeholder="Tên banner"
                   />
                 </Grid.Col>
                 <Grid.Col span={4}>
@@ -134,15 +136,27 @@ export default function AmentityForm({ isEditing, dataDetail }: any) {
                   />
                 </Grid.Col>
               </Grid>
+              <Grid gutter={12}>
+                <Grid.Col span={12}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("url")}
+                    label="Đường dẫn url"
+                    type="text"
+                    placeholder="Đường dẫn url"
+                  />
+                </Grid.Col>
+              </Grid>
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
                     size="lg"
                     radius={0}
-                    label="Mô tả chi tiết"
+                    label="Mô tả ngắn"
                     minRows={4}
                     autosize={true}
-                    {...form.getInputProps("description")}
+                    {...form.getInputProps("shortDescription")}
                     placeholder="Mô tả"
                   />
                 </Grid.Col>
