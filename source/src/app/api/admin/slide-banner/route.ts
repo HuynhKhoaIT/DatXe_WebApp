@@ -15,7 +15,7 @@ export async function GET(request: Request) {
                 s: searchParams.get('s'),
                 garageId: garageId
             }
-            const slideBanners = getSlideBanners(requestData);
+            const slideBanners = await getSlideBanners(requestData);
             return NextResponse.json(slideBanners);
         } else {
             throw new Error('Chua dang nhap');
