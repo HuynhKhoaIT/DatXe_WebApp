@@ -95,6 +95,10 @@ export default function OrderForm({
     { open: openModalCamera, close: closeModalCamera },
   ] = useDisclosure(false);
 
+  const [
+    openedModalUpdate,
+    { open: openModalUpdate, close: closeModalUpdate },
+  ] = useDisclosure(false);
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
@@ -947,6 +951,7 @@ export default function OrderForm({
                   yearCarOptions={yearCarOptions}
                   setYearCarOptions={setYearCarOptions}
                   form={form}
+                  openModalUpdate={openModalUpdate}
                   handleGetInfo={handleGetInfo}
                   handlersIsUser
                 />
@@ -1164,6 +1169,19 @@ export default function OrderForm({
       </form>
 
       {}
+      {openedModalUpdate && (
+        <DynamicModalUpdateCar
+          dataDetail={customer}
+          openModal={openedModalUpdate}
+          close={closeModalUpdate}
+          brandOptions={brandOptions}
+          yearCarOptions={yearCarOptions}
+          modelOptions={modelOptions}
+          setModelOptions={setModelOptions}
+          setYearCarOptions={setYearCarOptions}
+          formOrder={form}
+        />
+      )}
 
       {openModalChoose && (
         <DynamicModalChooseProducts
@@ -1208,6 +1226,12 @@ const DynamicModalChooseProducts = dynamic(
 );
 const DynamicModalNumberPlates = dynamic(
   () => import("../_component/ModalNumberPlates"),
+  {
+    ssr: false,
+  }
+);
+const DynamicModalUpdateCar = dynamic(
+  () => import("../_component/ModalUpdateCar"),
   {
     ssr: false,
   }

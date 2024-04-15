@@ -11,9 +11,10 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconChevronRight } from "@tabler/icons-react";
 import { IconBan } from "@tabler/icons-react";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function ModalUpdateCar({
@@ -25,11 +26,14 @@ export default function ModalUpdateCar({
   setModelOptions,
   setYearCarOptions,
   dataDetail,
+  formOrder,
 }: any) {
-  console.log(dataDetail);
+  const [loading, handlers] = useDisclosure();
+
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
+      carId: dataDetail?.id,
       numberPlates: dataDetail?.numberPlates,
       phoneNumber: dataDetail?.customer?.phoneNumber,
       fullName: dataDetail?.customer?.fullName,
@@ -47,8 +51,29 @@ export default function ModalUpdateCar({
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
   const handleSubmit = async (values: any) => {
-    console.log(values);
-    //
+    handlers.open();
+    try {
+      const res: any = await axios.put(
+        `/api/admin/car/update-customer`,
+        values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      formOrder.setFieldValue("billingCustomerName", values.fullName);
+      formOrder.setFieldValue("billingPhone", values.phoneNumber);
+      formOrder.setFieldValue("numberPlates", values.numberPlates);
+      formOrder.setFieldValue("numberPlates", values.numberPlates);
+      formOrder.setFieldValue("carBrand", res?.brandName.title);
+      formOrder.setFieldValue("carName", res?.modelName.title);
+      formOrder.setFieldValue("carYear", res?.yearName.title);
+      handlers.close();
+      close();
+    } catch (error) {
+      handlers.close();
+    }
   };
   return (
     <Modal
@@ -164,7 +189,7 @@ export default function ModalUpdateCar({
                 size="lg"
                 radius={0}
                 h={{ base: 42, md: 50, lg: 50 }}
-                // loading={loadingButton}
+                loading={loading}
                 style={{ marginLeft: "12px" }}
                 variant="filled"
                 type="submit"

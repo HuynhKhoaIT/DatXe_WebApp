@@ -133,6 +133,13 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+    },
+    banner:{
+        getList: {
+            baseURL: `${apiUrl}api/admin/slide-banner`,
+            method: 'GET',
+            headers: baseHeader,
+        },
     }
 
 };
