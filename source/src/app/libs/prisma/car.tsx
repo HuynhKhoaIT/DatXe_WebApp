@@ -1,7 +1,7 @@
 import { convertToPlatesNumber, generateUUID } from "@/utils/until";
 import prisma from "../prismadb";
 import { getCarModelById } from "./carModel";
-import { getCustomerByPhone } from "./customer";
+import {createCustomer, getCustomerByPhone } from "./customer";
 import { getGarageByDlbdId } from "./garage";
 export async function createCar(json: any) {
   try {
@@ -159,6 +159,30 @@ export async function getCars(requestData: any) {
   };
 }
 
+export async function updateCar(carId: string,dataInput:any) {
+  const car = await showCar(carId);
+  return await prisma.car.update({
+    where:{
+      id: carId
+    },
+    data:{
+      customerId: dataInput.customerId,
+      numberPlates: dataInput.numberPlates ?? car.numberPlates,
+      carBrandId: dataInput.carBrandId ?? car.carBrandId,
+      carNameId: dataInput.carNameId ?? car.carNameId,
+      carYearId: dataInput.carYearId ?? car.carYearId,
+      carStyleId: dataInput.carStyleId ?? car.carStyleId,
+      color: dataInput.color ?? car.color,
+      vinNumber: dataInput.vinNumber ?? car.vinNumber,
+      machineNumber: dataInput.machineNumber ?? car.machineNumber,
+      description: dataInput.description ?? car.description,
+      status: dataInput.status ?? car.status,
+      garageId: dataInput.garageId ?? car.garageId,
+      userId: dataInput.userId ?? car.userId,
+    }
+  })
+}
+
 export async function getCarsByPlates(titleFilter: string, garageId: string) {
   return await prisma.car.findMany({
     take: 10,
@@ -286,4 +310,23 @@ export async function setCarDefault(uuId: string) {
     },
   });
   return car;
+}
+
+export async function showCar(id:string) {
+  return await prisma.car.findFirstOrThrow({
+    where: {
+      id
+    }
+  })
+}
+
+export async function updateCustomerAndCar(dataInput:any) {
+  const customer = await getCustomerByPhone(dataInput.phoneNumber,dataInput.garageId);
+  if(customer){
+    dataInput.customerId = customer.id
+  }else{
+    const newCustomer = await createCustomer(dataInput);
+    dataInput.customerId = newCustomer.customer?.id;
+  }
+  return await updateCar(dataInput.carId,dataInput);
 }
