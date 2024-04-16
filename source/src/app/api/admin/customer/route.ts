@@ -69,7 +69,8 @@ export async function POST(request: Request) {
                     }
                 }
             });
-            if(checkCustomer){
+            // return NextResponse.json(checkCustomer)
+            if(!checkCustomer){
                 const customer = await prisma.customer.create({
                     data: {
                         uuId: generateUUID(),

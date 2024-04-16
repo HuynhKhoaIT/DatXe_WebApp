@@ -133,6 +133,9 @@ export async function findPost(id: string) {
         not: "DELETE",
       },
       id: id,
+      garage:{
+        status: 'PUBLIC'
+      }
     },
   });
 }

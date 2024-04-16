@@ -7,14 +7,15 @@ export async function getCarModels(requestData: any) {
   }
   let currentPage = 1;
   let take = 10;
-  if (requestData.limit) {
-    take = parseInt(requestData.limit);
+  if (requestData.take) {
+    take = parseInt(requestData.take);
   }
-  const skip = take * (currentPage - 1);
+  
   let page = requestData.page;
   if (page) {
     currentPage = Number(page);
   }
+  const skip = take * (currentPage - 1);
   let titleFilter = "";
   if (requestData.s) {
     titleFilter = requestData.s;
