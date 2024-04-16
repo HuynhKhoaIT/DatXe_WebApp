@@ -16,8 +16,8 @@ export async function GET(request: Request) {
         }
         const requestData = {
             s: searchParams.get('s'),
-            take: limit,
             page: page,
+            take: limit,
         };
         const brands = await getCarModels(requestData);
         return NextResponse.json(brands);

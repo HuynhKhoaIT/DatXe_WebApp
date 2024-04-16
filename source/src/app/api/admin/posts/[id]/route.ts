@@ -43,12 +43,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { uuId: string } }) {
-    const uuId = params.uuId;
-    if (!uuId) {
-        return new NextResponse("Missing 'uuId' parameter");
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+    const id = params.id;
+    if (!id) {
+        return new NextResponse("Missing 'id' parameter");
     }
-    const postData = await findPost(uuId);
+    const postData = await findPost(id);
     const post = await prisma.post.update({
         where: {
             id: (postData.id),

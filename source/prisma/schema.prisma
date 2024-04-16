@@ -478,7 +478,7 @@ model CategoriesOnPosts {
 }
 
 model User{
-  id   String @id @default(uuid())
+  id                  String @id @default(uuid())
   uuId                String
   fullName            String
   phoneNumber         String?
