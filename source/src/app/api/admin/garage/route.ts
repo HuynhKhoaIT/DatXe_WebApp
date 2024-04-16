@@ -8,6 +8,7 @@ export async function GET(request: NextRequest) {
         const session = await getServerSession(authOptions);
         if (session) {
             let garageId = session.user?.garageId;
+            // if(session.user?.role == )
             const { searchParams } = new URL(request.url);
             let requestData = {
                 limit: 10,
