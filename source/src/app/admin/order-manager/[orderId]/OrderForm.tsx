@@ -265,6 +265,7 @@ export default function OrderForm({
   const [customer, setCustomer] = useState({});
   // lấy thông tin theo biển số xe
   const handleGetInfo = async (numberPlate: string) => {
+    console.log("handle get info");
     form.setFieldValue("numberPlates", numberPlate);
 
     if (licenseNumber) {
@@ -279,8 +280,6 @@ export default function OrderForm({
         }
       );
       const data = await res.json();
-
-      console.log(data?.data);
       if (data?.data) {
         handlersIsUser.open();
         const [models, yearCars] = await Promise.all([
@@ -300,12 +299,14 @@ export default function OrderForm({
         form.setFieldValue("carYear", data?.data?.yearName.title);
         form.setFieldValue("fullName", data?.data?.customer.fullName);
         form.setFieldValue("phoneNumber", data?.data?.customer.phoneNumber);
-        form.setFieldValue(
-          "billingCustomerName",
-          data?.data?.customer.fullName
-        );
-        form.setFieldValue("billingPhone", data?.data?.customer.phoneNumber);
-        form.setFieldValue("billingAdress", data?.data?.customer.address);
+        form.setFieldValue("address", data?.data?.customer.address);
+
+        // form.setFieldValue(
+        //   "billingCustomerName",
+        //   data?.data?.customer.fullName
+        // );
+        // form.setFieldValue("billingPhone", data?.data?.customer.phoneNumber);
+        // form.setFieldValue("billingAdress", data?.data?.customer.address);
       }
     } catch (error) {
     } finally {

@@ -4,7 +4,7 @@ import axios from "axios";
 import BannerForm from "../create/BannerForm";
 export const revalidate = 60;
 export default function UpdateAmentity({ params }: { params: { id: number } }) {
-  const [amentity, setAmentity] = useState(null);
+  const [banner, setBanner] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,7 +12,7 @@ export default function UpdateAmentity({ params }: { params: { id: number } }) {
         const response = await axios.get(
           `/api/admin/slide-banner/${params?.id}`
         );
-        setAmentity(response.data);
+        setBanner(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -20,5 +20,5 @@ export default function UpdateAmentity({ params }: { params: { id: number } }) {
 
     fetchData();
   }, [params?.id]);
-  return <BannerForm isEditing={true} dataDetail={amentity} />;
+  return <BannerForm isEditing={true} dataDetail={banner} />;
 }

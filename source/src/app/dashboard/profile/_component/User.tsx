@@ -8,6 +8,7 @@ import {
   Group,
   Box,
   Card,
+  Text,
 } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
@@ -16,6 +17,8 @@ import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import styles from "./index.module.scss";
+import ImageUpload from "@/assets/icons/image.svg";
+
 import {
   getOptionsDistrict,
   getOptionsProvince,
@@ -24,11 +27,16 @@ import {
 import useFetch from "@/app/hooks/useFetch";
 import Typo from "@/app/components/elements/Typo";
 import DateField from "@/app/components/form/DateField";
+import CropImageLink from "@/app/components/common/CropImage";
+import axios from "axios";
 export default function UserProfile({ myAccount }: any) {
+  console.log(myAccount);
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
+  const [avatarUrl, setAvatarUrl] = useState(null);
+
   const [ward, setWard] = useState<any>();
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
     queryKey: ["provinceOptions"],
@@ -49,7 +57,23 @@ export default function UserProfile({ myAccount }: any) {
       name: (value) => (value.length > 1 ? null : "Vui lòng nhập tên"),
     },
   });
+  const uploadFileThumbnail = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
 
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      form.setFieldValue("avatar", response.data);
+      setAvatarUrl(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   const handleUpdateProfile = async (values: any) => {
     try {
       await updateAccount(values, token ?? "");
@@ -69,6 +93,7 @@ export default function UserProfile({ myAccount }: any) {
   useEffect(() => {
     const fetchData = async () => {
       if (myAccount) {
+        setAvatarUrl(myAccount?.avatar);
         try {
           const [districts, wards] = await Promise.all([
             getOptionsDistrict(Number(myAccount?.provinceId)),
@@ -104,6 +129,22 @@ export default function UserProfile({ myAccount }: any) {
             name="userProfileForm"
             onSubmit={form.onSubmit((values) => handleUpdateProfile(values))}
           >
+            <Grid gutter={12}>
+              <Grid.Col span={{ base: 6 }}>
+                <Text size={"16px"} c={"#999999"} mb={"6px"}>
+                  Ảnh đại diện
+                </Text>
+                <CropImageLink
+                  shape="rect"
+                  placeholder={"Cập nhật logo"}
+                  defaultImage={avatarUrl || ImageUpload.src}
+                  uploadFileThumbnail={uploadFileThumbnail}
+                  aspect={1 / 1}
+                  form={form}
+                  name="avatar"
+                />
+              </Grid.Col>
+            </Grid>
             <Grid gutter={16} w={"100%"}>
               <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                 <TextInput

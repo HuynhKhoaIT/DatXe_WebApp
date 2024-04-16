@@ -20,6 +20,13 @@ export const FEMALE = 'FEMALE';
 export const COMPANY = 'COMPANY';
 export const OTHER = 'OTHER';
 
+// role
+
+export const ROLE_ADMIN ='ADMIN';
+export const ROLE_EXPERT ='ADMINGARAGE';
+export const ROLE_CUSTOMER ='CUSTOMER';
+
+
 export const ORDER_PENDING = '0';
 export const ORDER_CANCEL = '-1';
 export const ORDER_ACCEPT = '1';

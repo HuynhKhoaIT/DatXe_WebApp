@@ -1,10 +1,10 @@
 import Typo from "@/app/components/elements/Typo";
-import { Button, Grid, Group, Select, TextInput } from "@mantine/core";
+import { Button, Grid, Group, Select, TextInput, Tooltip } from "@mantine/core";
 import styles from "./index.module.scss";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { AutocompleteLicensePlates } from "./AutoCompleteLicensePlates";
 import { getOptionsCar } from "../until";
-import { IconUpload } from "@tabler/icons-react";
+import { IconEdit, IconUpload } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 export default function InfoCart({
@@ -31,26 +31,13 @@ export default function InfoCart({
           Thông tin xe
         </Typo>
         {isUser && (
-          <Button
-            leftSection={<IconUpload size={16} />}
-            onClick={openModalUpdate}
-          >
-            Cập nhật
-          </Button>
+          <Tooltip label="Cập nhật xe" position="bottom" withArrow>
+            <IconEdit onClick={openModalUpdate} style={{ cursor: "pointer" }} />
+          </Tooltip>
         )}
       </Group>
       <Grid gutter={12} className={styles.marketingInfo}>
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-          {/* <TextInput
-            withAsterisk
-            size="lg"
-            radius={0}
-            error="vui lòng nhập"
-            {...form.getInputProps("numberPlates")}
-            label="Biển số xe"
-            type="text"
-            placeholder="Biển số xe"
-          /> */}
           <AutocompleteLicensePlates
             label="Biển số xe"
             placeholder="Biển số xe"
@@ -59,7 +46,6 @@ export default function InfoCart({
             getOptionData={getOptionsCar}
             handleGetInfo={handleGetInfo}
             disabled={isUser}
-            // isCamera={true}
           />
         </Grid.Col>
         <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
@@ -97,10 +83,10 @@ export default function InfoCart({
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("phoneNumber")}
-              label="Số điện thoại"
+              {...form.getInputProps("carName")}
+              label="Dòng xe"
               type="text"
-              placeholder="Số điện thoại"
+              placeholder="Dòng xe"
               disabled
             />
           ) : (
@@ -126,10 +112,10 @@ export default function InfoCart({
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("fullName")}
-              label="Họ và tên"
+              {...form.getInputProps("carYear")}
+              label="Năm sản xuất"
               type="text"
-              placeholder="Họ và tên"
+              placeholder="Năm sản xuất"
               disabled
             />
           ) : (
