@@ -8,9 +8,11 @@ import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 export async function GET(request: Request) {
     try {
         const session = await getServerSession(authOptions);
-
         if (session) {
             let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            if(session.user?.role == 'ADMIN'){
+                garageId = "2";
+            }
             const { searchParams } = new URL(request.url);
             let page = 1;
             if (searchParams.get('page')) {
