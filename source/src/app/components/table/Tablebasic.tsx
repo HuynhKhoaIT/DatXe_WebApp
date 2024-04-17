@@ -62,7 +62,6 @@ export default function TableBasic({
                 key={index}
                 style={{ cursor: onRow ? "pointer" : "none" }}
                 onClick={(e) => {
-                  e.stopPropagation();
                   if (onRow) {
                     router.push(onRow + `/${item?.id}`);
                   }
