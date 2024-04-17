@@ -1,8 +1,8 @@
 "use client";
 import { Box } from "@mantine/core";
 import ExpertForm from "../create/ExpertForm";
-import { useExpertDetail } from "../../hooks/expert/useExpert";
-import { useAddExpert } from "../../hooks/expert/useAddExpert";
+import { useExpertDetail } from "../../../hooks/expert/useExpert";
+import { useAddExpert } from "../../../hooks/expert/useAddExpert";
 export const revalidate = 60;
 export default function UpdateCategory({
   params,
