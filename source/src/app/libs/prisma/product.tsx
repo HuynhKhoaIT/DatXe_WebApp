@@ -252,6 +252,9 @@ export async function getProductsClient(requestData: any) {
                     dateTimeEnd: {
                       gte: new Date(),
                     },
+                    garage:{
+                      status: 'PUBLIC'
+                    }
                   },
                 ],
               },

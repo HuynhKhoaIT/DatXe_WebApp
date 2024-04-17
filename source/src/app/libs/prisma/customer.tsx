@@ -4,22 +4,24 @@ import { syncCarFromDLBD } from "./car";
 import { getGarageByDlbdId } from "./garage";
 export async function createCustomer(json: any) {
   try {
-    const customer = await prisma.customer.create({
-      data: {
+    const data ={
         uuId: generateUUID(),
         fullName: json.fullName.toString(),
-        userId: json.userId,
-        phoneNumber: json.phoneNumber,
-        cityId: Number(json.cityId),
-        districtId: Number(json.districtId),
-        wardId: Number(json.wardId),
+        userId: json.userId.toString(),
+        phoneNumber: json.phoneNumber.toString(),
+        cityId: Number(json.cityId ?? 1),
+        districtId: Number(json.districtId ?? 1),
+        wardId: Number(json.wardId ?? 1),
         address: json.address ?? "",
-        dob: json.dob,
+        dob: json.dob ?? "",
         description: json.description ?? "",
         sex: json.sex ?? "FEMALE",
-        garageId: json.garageId,
+        garageId: json.garageId.toString(),
         status: json.status ?? "PUBLIC",
-      },
+      };
+    // return data;
+    const customer = await prisma.customer.create({
+      data: data
     });
     return { customer };
   } catch (error) {

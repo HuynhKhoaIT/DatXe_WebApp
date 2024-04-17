@@ -14,6 +14,7 @@ import { getCategories } from "@/app/libs/prisma/category";
 import { getGarageByCode, showGarage } from "@/app/libs/prisma/garage";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
+import ErrorPage from "@/app/error";
 
 const blogs = [
   {

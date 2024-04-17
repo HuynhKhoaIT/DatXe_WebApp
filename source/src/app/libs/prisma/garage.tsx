@@ -19,7 +19,7 @@ export async function getGarages(requestData: any) {
     }
     let garageId = 0;
     if (requestData.garageId) {
-      garageId = Number(requestData.garageId);
+      garageId = (requestData.garageId);
     }
     const skip = take * (currentPage - 1);
     const [data, total] = await prisma.$transaction([
@@ -35,7 +35,7 @@ export async function getGarages(requestData: any) {
               status: {
                 not: "DELETE",
               },
-              routeId: Number(garageId),
+              routeId: (garageId) ? Number(garageId) : {},
             },
           ],
         },
@@ -241,7 +241,7 @@ export async function getRandomCodeForGarage() {
 
 export async function getGarageByCode(code: string) {
   try {
-    const rs = await prisma.garage.findFirst({
+    const rs = await prisma.garage.findFirstOrThrow({
       where: {
         code: code,
       },
