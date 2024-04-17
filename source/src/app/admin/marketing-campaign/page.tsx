@@ -235,6 +235,7 @@ export default function Discounts() {
             totalPage={marketings?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/marketing-campaign`}
           />
         }
       />

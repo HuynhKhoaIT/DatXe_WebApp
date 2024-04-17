@@ -6,7 +6,11 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const categoryId = searchParams.get('categoryId');
         const brandIdFilter = searchParams.get('brand');
-        const garageId = searchParams.get('garageId');
+        let garageId:any = "";
+        // const garage   = searchParams.get('garageId');
+        if(searchParams.get('garageId')){
+            garageId = searchParams.get('garageId');
+        }
 
         let titleFilter = '';
         const searchText = searchParams.get('s');

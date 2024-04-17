@@ -259,6 +259,7 @@ const Expert = () => {
             totalPage={experts?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/expert`}
           />
         }
       />

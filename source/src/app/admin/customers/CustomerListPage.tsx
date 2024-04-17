@@ -243,6 +243,7 @@ export default function CustomerListPage({
                     totalPage={customers?.totalPage}
                     setPage={setPage}
                     activePage={page}
+                    onRow={`/admin/customers`}
                   />
                 }
               />
@@ -255,6 +256,7 @@ export default function CustomerListPage({
                     data={customersDlbd?.data}
                     columns={columns}
                     loading={isLoadingDlbd}
+
                     // totalPage={marketing?.totalPage}
                     // setPage={setPage}
                     // activePage={page}

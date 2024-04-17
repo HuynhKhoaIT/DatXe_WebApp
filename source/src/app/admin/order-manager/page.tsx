@@ -247,6 +247,7 @@ export default function OrdersManaga() {
             totalPage={list?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/order-manager`}
           />
         }
       />

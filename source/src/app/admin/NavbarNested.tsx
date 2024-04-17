@@ -22,7 +22,7 @@ export function NavbarNested({ toggle }: any) {
     <nav className={classes.navbar}>
       <ScrollArea className={classes.links}>
         <div className={classes.linksInner}>
-          {role !== ROLE_ADMIN ? menuAdmin : menuExpert}
+          {role === ROLE_ADMIN ? menuAdmin : menuExpert}
         </div>
       </ScrollArea>
       <div className={classes.footer}>

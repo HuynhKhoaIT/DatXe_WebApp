@@ -108,7 +108,7 @@ export async function getGarageByDlbdId(garageId: number) {
   return await prisma.garage.findFirst({
     where: {
       routeId: Number(garageId),
-      status: "PUBLIC",
+      // status: "PUBLIC" || "PENDING",
     },
   });
 }

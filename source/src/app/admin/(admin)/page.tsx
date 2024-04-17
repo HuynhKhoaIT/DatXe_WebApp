@@ -16,7 +16,11 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useAdmin } from "../hooks/admin/useAdmin";
 import { ORDER_ACCEPT, ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import { Alert, Button } from "@mantine/core";
+import { IconInfoCircle } from "@tabler/icons-react";
+import { useMyGarage } from "@/app/hooks/useMyGarage";
 export default function DashboardAdmin() {
+  const { myGarage } = useMyGarage();
   const {
     ordersAdmin,
     isLoading,
@@ -116,6 +120,17 @@ export default function DashboardAdmin() {
   ];
   return (
     <div className={styles.main}>
+      {myGarage?.status === "PENDING" && (
+        <Alert
+          variant="light"
+          title="Xác minh"
+          icon={<IconInfoCircle />}
+          mb={30}
+        >
+          Chuyên gia chưa được xác minh, hãy xác minh để được nhiều tính năng
+          hơn
+        </Alert>
+      )}
       <div className={styles.wrapper_1}>
         <div className={styles.card1}>
           <div className={styles.info}>
