@@ -5,7 +5,7 @@ const menuConfigAdmin = [
   {
     label: "Danh sách chuyên gia",
     icon: IconUsers,
-    link: "/admin/expert",
+    link: "/admin/system-expert",
   },
   { link: "/admin/system-car", label: "Danh mục xe", icon: IconCar },
   {

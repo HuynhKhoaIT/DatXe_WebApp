@@ -82,8 +82,7 @@ export async function getProducts(requestData: any) {
       prisma.product.findMany({
         take: take,
         skip: skip,
-        orderBy: 
-        {"createdAt" : "desc"} ,
+        orderBy: { createdAt: "desc" },
         where: {
           AND: [
             {
@@ -231,9 +230,9 @@ export async function getProductsClient(requestData: any) {
               status: "PUBLIC",
               garageId,
               isProduct,
-              garage:{
-                status: 'PUBLIC'
-              }
+              garage: {
+                status: "PUBLIC",
+              },
             },
           ],
         },
@@ -511,30 +510,30 @@ export async function getProductsBestSeller(token: String, json: any) {
   }
 }
 
-export async function relatedProducts(productId:string) {
+export async function relatedProducts(productId: string) {
   let relatedProducts = null;
   const product = await getProductById(productId);
-  
-  if(product.product?.categories.length){
-    let cats:any = [];
-    product.product?.categories.forEach((c)=>{
+
+  if (product.product?.categories.length) {
+    let cats: any = [];
+    product.product?.categories.forEach((c) => {
       cats.push(c.categoryId);
-    })
+    });
     relatedProducts = await prisma.product.findMany({
       take: 8,
       orderBy: {
         createdAt: "desc",
       },
-      where:{
+      where: {
         categories: {
-          some:{
+          some: {
             categoryId: {
-              in: cats
-            }
-          }
+              in: cats,
+            },
+          },
         },
-        status:"PUBLIC"
-      }
+        status: "PUBLIC",
+      },
     });
   }
   return relatedProducts;

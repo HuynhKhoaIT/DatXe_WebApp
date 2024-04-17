@@ -19,7 +19,6 @@ const ExpertDetailPageMobile = ({
   blogs,
   socials,
   convenients,
-  blogsDefalt,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -48,7 +47,7 @@ const ExpertDetailPageMobile = ({
         <Container>
           <TabsComponent data={expertDetail} />
         </Container>
-        <Blogs blogs={blogs?.data || blogsDefalt} />
+        <Blogs blogs={blogs} />
         <SharePage bitlyUrl={expertDetail?.bitlyUrl} />
       </div>
     </div>

@@ -19,7 +19,6 @@ export default function InfoCart({
   car,
   openModalUpdate,
 }: any) {
-  console.log(form.values.numberPlates);
   return (
     <div className={styles.cardInfo}>
       <Group justify="space-between" className={styles.title}>

@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
         let page = 1;
+        const garageId = searchParams.get('garageId');
         if (searchParams.get('page')) {
             page = Number(searchParams.get('page'));
         }
@@ -15,6 +16,7 @@ export async function GET(request: NextRequest) {
             limit: 10,
             take: 10,
             page: page,
+            garageId,
             status: 'PUBLIC',
         };
         const cars = await getPosts(requestData);
