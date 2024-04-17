@@ -48,6 +48,7 @@ import InfoCart from "../_component/InfoCar";
 import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import { AutocompletePhone } from "../_component/AutoCompletePhone";
 import { notifications } from "@mantine/notifications";
+import InfoCustomer2 from "../_component/InfoCustomer2";
 
 export default function OrderForm({
   isEditing = false,
@@ -175,6 +176,13 @@ export default function OrderForm({
             id: item.productId,
           }))
         );
+        // Khách hàng
+        form.setFieldValue("customerId", dataDetail?.customerId.toString());
+        form.setFieldValue("fullName", dataDetail?.customer?.fullName);
+        form.setFieldValue("phoneNumber", dataDetail?.customer?.phoneNumber);
+        form.setFieldValue("address", dataDetail?.customer?.address);
+        form.setFieldValue("step", dataDetail?.step.toString());
+
         try {
           const [models, yearCars] = await Promise.all([
             getOptionsModels(dataDetail?.car?.carBrandId),
@@ -206,27 +214,15 @@ export default function OrderForm({
             dataDetail?.car?.carYearId.toString()
           );
 
-          // Khách hàng
-          form.setFieldValue("customerId", dataDetail?.customerId.toString());
-          form.setFieldValue("fullName", dataDetail?.customer?.fullName);
-          form.setFieldValue("phoneNumber", dataDetail?.customer?.phoneNumber);
-          form.setFieldValue("address", dataDetail?.customer?.address);
           form.setFieldValue(
             "billingCustomerName",
-            dataDetail?.billingCustomerName || dataDetail?.customer?.fullName
+            dataDetail?.billingCustomerName
           );
-          form.setFieldValue(
-            "billingPhone",
-            dataDetail?.billingPhone || dataDetail?.customer?.phoneNumber
-          );
-          form.setFieldValue(
-            "billingAdress",
-            dataDetail?.billingAdress || dataDetail?.customer?.address
-          );
+          form.setFieldValue("billingPhone", dataDetail?.billingPhone);
+          form.setFieldValue("billingAdress", dataDetail?.billingAdress);
           form.setFieldValue("carBrand", dataDetail?.car?.brandName.title);
           form.setFieldValue("carName", dataDetail?.car?.modelName.title);
           form.setFieldValue("carYear", dataDetail?.car?.yearName.title);
-          form.setFieldValue("step", dataDetail?.step.toString());
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
@@ -715,6 +711,7 @@ export default function OrderForm({
               </Grid>
               <Space h={30} />
               <InfoCustomer form={form} isUser={isUser} />
+
               <div className={styles.footer}>
                 <Button
                   size="lg"
@@ -979,6 +976,9 @@ export default function OrderForm({
                   form={form}
                   isUser={isUser}
                 />
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <InfoCustomer2 form={form} isUser={isUser} />
               </Grid.Col>
             </Grid>
             <div style={{ marginTop: 20 }} className={styles.cardListProduct}>

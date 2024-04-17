@@ -30,6 +30,7 @@ export function AutocompletePhone({
   label,
   handlersLoadingCustomer,
   isUser,
+  disabled,
 }: any) {
   const [errorText, setErrorText] = useState<any>();
   const searchParams = useSearchParams();
@@ -105,6 +106,7 @@ export function AutocompletePhone({
               label={label}
               placeholder={placeholder}
               value={form.values[name]}
+              disabled={disabled}
               onChange={(event) => {
                 setErrorText(null);
                 form.setFieldValue(name, event.target.value);
@@ -153,6 +155,7 @@ export function AutocompletePhone({
                   values[name] !== "" && (
                     <CloseButton
                       size="sm"
+                      disabled={disabled}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => {
                         if (!isUser) {

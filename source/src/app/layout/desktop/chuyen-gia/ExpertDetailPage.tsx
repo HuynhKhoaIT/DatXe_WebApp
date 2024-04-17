@@ -18,8 +18,8 @@ const ExpertDetailPageDesktop = ({
   blogs,
   socials,
   convenients,
-  blogsDefalt,
 }: any) => {
+  console.log(blogs);
   return (
     <div className={styles.wrapper}>
       <Banner detailData={expertDetail} />
@@ -40,7 +40,7 @@ const ExpertDetailPageDesktop = ({
         <Container>
           <TabsComponent data={expertDetail} />
         </Container>
-        <Blogs blogs={blogs?.data || blogsDefalt} />
+        <Blogs blogs={blogs} />
         <SharePage bitlyUrl={expertDetail?.bitlyUrl} />
       </div>
     </div>
