@@ -2,8 +2,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import { getMyAccount, updateUser } from "@/app/libs/prisma/user";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { createOrderClient } from "@/app/libs/prisma/order";
 
 export async function GET() {
   try {
@@ -13,8 +11,8 @@ export async function GET() {
       return NextResponse.json({ data });
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
-    return new NextResponse(error.message, { status: 500 });
+  } catch (error:any) {
+    return new NextResponse(error?.message, { status: 500 });
   }
 }
 export async function PUT(request: Request) {
@@ -29,7 +27,7 @@ export async function PUT(request: Request) {
         headers: { "Content-Type": "application/json" },
       });
     }
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
