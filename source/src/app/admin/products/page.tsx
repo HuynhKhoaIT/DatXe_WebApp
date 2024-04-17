@@ -365,6 +365,7 @@ export default function ProductsManaga() {
                     totalPage={products?.totalPage}
                     setPage={setPage}
                     activePage={page}
+                    onRow={`/admin/products`}
                   />
                 }
               />

@@ -242,6 +242,7 @@ export default function CarsListPage({
                     totalPage={cars?.totalPage}
                     setPage={setPage}
                     activePage={page}
+                    onRow={`/admin/cars`}
                   />
                 }
               />

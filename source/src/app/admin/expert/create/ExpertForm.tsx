@@ -388,7 +388,7 @@ export default function ExpertForm({
                   />
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
+                {/* <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
                     radius={0}
@@ -402,7 +402,7 @@ export default function ExpertForm({
                       { value: "PENDING", label: "Đang duyệt" },
                     ]}
                   />
-                </Grid.Col>
+                </Grid.Col> */}
               </Grid>
             </Card>
           </Grid.Col>

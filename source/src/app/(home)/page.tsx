@@ -38,19 +38,16 @@ export default async function Home({ searchParams }: any) {
 
   const productsRelate = await callApi(apiConfig.products.getRelate, {
     params: {
-      garageId: 0,
       isProduct: 1,
     },
   });
   const productsHot = await callApi(apiConfig.products.getProductHot, {
     params: {
-      garageId: 0,
       isProduct: 1,
     },
   });
   const servicesHot = await callApi(apiConfig.products.getServiceHot, {
     params: {
-      garageId: 0,
       isProduct: 0,
     },
   });

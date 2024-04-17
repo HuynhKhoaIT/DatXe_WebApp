@@ -207,6 +207,7 @@ const Blogs = () => {
             totalPage={newsList?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/blogs`}
           />
         }
       />
