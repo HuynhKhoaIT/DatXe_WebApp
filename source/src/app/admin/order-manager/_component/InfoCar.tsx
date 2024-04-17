@@ -16,7 +16,7 @@ export default function InfoCart({
   yearCarOptions,
   setYearCarOptions,
   handleGetInfo,
-  customer,
+  car,
   openModalUpdate,
 }: any) {
   console.log(form.values.numberPlates);

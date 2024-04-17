@@ -47,10 +47,10 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
   const token = session?.user?.token;
   const form = useForm({
     initialValues: {
-      fullName: myAccount.fullName,
-      phoneNumber: myAccount.phoneNumber,
+      fullName: myAccount?.fullName || "",
+      phoneNumber: myAccount?.phoneNumber || "",
       dob: myAccount?.dob && dayjs(myAccount?.dob).toDate(),
-      address: myAccount.address,
+      address: myAccount?.address || "",
     },
 
     validate: {

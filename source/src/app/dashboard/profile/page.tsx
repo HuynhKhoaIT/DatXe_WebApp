@@ -1,5 +1,4 @@
 import React from "react";
-import { getMyAccount } from "@/utils/user";
 import { Space } from "@mantine/core";
 import InfoProfile from "./_component/Info";
 import UserProfile from "./_component/User";

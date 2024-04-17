@@ -13,7 +13,12 @@ import { AutocompletePhone } from "./AutoCompletePhone";
 import styles from "./index.module.scss";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconEdit, IconUpload } from "@tabler/icons-react";
-export default function InfoCustomer({ form, isUser }: any) {
+export default function InfoCustomer({
+  form,
+  isUser,
+  openModalUpdateCustomer,
+}: any) {
+  console.log(form.values);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
   return (
@@ -34,7 +39,7 @@ export default function InfoCustomer({ form, isUser }: any) {
           {isUser && (
             <Tooltip label="Cập nhật khách hàng" position="bottom" withArrow>
               <IconEdit
-                // onClick={openModalUpdate}
+                onClick={openModalUpdateCustomer}
                 style={{ cursor: "pointer" }}
               />
             </Tooltip> // <Button

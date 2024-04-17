@@ -78,7 +78,7 @@ export default function ExpertForm({
             );
             form.setFieldValue("amenities", dataOption);
           }
-          setImagesUrl(JSON?.parse(dataDetail?.photos));
+          setImagesUrl(JSON?.parse(dataDetail?.photos) || []);
 
           const [districts, wards] = await Promise.all([
             getOptionsDistrict(Number(dataDetail?.provinceId)),
