@@ -229,7 +229,7 @@ export async function findOrder(id: string, request: any) {
   try {
     const rs = await prisma.order.findFirst({
       where: {
-        slug: id,
+        id: id,
       },
       include: {
         serviceAdvisor: true,
