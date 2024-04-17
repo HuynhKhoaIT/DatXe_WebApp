@@ -108,9 +108,6 @@ export default function bannerListPage() {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
-        if (record.garageId == 2) {
-          return;
-        }
         return (
           <Flex>
             <Link

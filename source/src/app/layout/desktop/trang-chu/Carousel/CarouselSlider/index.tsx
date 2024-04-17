@@ -10,9 +10,10 @@ const Carousel = ({ slideshowData, height }: any) => {
         dots={true}
         nextArrow={<></>}
         prevArrow={<></>}
-        speed={500}
+        speed={2000}
         infinite={true}
         autoplay={true}
+        autoplaySpeed={3000}
       >
         {slideshowData?.map((item: any, index: number) => {
           return <CarouselItem height={height} item={item} key={index} />;

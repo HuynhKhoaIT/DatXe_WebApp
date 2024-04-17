@@ -29,7 +29,6 @@ const DynamicModalDeleteItem = dynamic(
 export default function Categories() {
   const { data: session, status } = useSession();
 
-  console.log(session);
   const {
     brandCarList,
     isLoading,

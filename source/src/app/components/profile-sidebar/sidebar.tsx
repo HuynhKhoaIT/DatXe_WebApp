@@ -18,14 +18,17 @@ const ProfileSidebar = ({ myAccount }: any) => {
     >
       <div className="user-profile-sidebar-top">
         <div className="user-profile-img">
-          <img src="/assets/img/account/user.jpg" alt="" />
+          <img
+            src={myAccount?.avarate || "/assets/img/account/user.jpg"}
+            alt=""
+          />
           <button type="button" className="profile-img-btn">
             <i className="far fa-camera"></i>
           </button>
           <input type="file" className="profile-img-file" />
         </div>
-        <h5>{myAccount?.name}</h5>
-        <p>{myAccount?.phone}</p>
+        <h5>{myAccount?.fullName}</h5>
+        <p>{myAccount?.phoneNumber}</p>
       </div>
       {parts[1] === "admin" ? <SidebarAdmin /> : <SidebarClient />}
     </div>

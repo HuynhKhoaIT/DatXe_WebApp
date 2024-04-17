@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
+import CardImg from "@/assets/images/card.png";
+import { BackgroundImage, Center, Text } from "@mantine/core";
 export default function InfoProfile() {
   return (
     <div className={styles.wrapper}>
@@ -12,23 +14,22 @@ export default function InfoProfile() {
             Thông tin hồ sơ
           </Typo>
         </div>
-
-        <div className="card-body">
-          <div className="card-info">
-            <div className="card-info__code">
+        <BackgroundImage src={CardImg.src} radius="sm" h={300} w={550}>
+          <ul className={styles.infoCard}>
+            <li>
               <span>Mã khách hàng:</span> <span>1232322</span>
-            </div>
-            <div className="card-info__point">
+            </li>
+            <li>
               <span>Điểm hiện có:</span> <span>140000</span>
-            </div>
-            <div className="card-info__customer">
+            </li>
+            <li>
               <span>Thành viên:</span> <span>bạc</span>
-            </div>
-            <div className="card-code">
+            </li>
+            <li>
               <span>Mã thẻ:</span> <span>Xe747484848848</span>
-            </div>
-          </div>
-        </div>
+            </li>
+          </ul>
+        </BackgroundImage>
       </div>
     </div>
   );

@@ -30,13 +30,12 @@ export default function ModalUpdateCar({
 }: any) {
   const [loading, handlers] = useDisclosure();
 
+  console.log(dataDetail);
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
       carId: dataDetail?.id,
       numberPlates: dataDetail?.numberPlates,
-      phoneNumber: dataDetail?.customer?.phoneNumber,
-      fullName: dataDetail?.customer?.fullName,
       carBrandId: dataDetail?.brandName?.id,
       carNameId: dataDetail?.modelName?.id,
       carYearId: dataDetail?.yearName?.id,
@@ -53,18 +52,11 @@ export default function ModalUpdateCar({
   const handleSubmit = async (values: any) => {
     handlers.open();
     try {
-      const res: any = await axios.put(
-        `/api/admin/car/update-customer`,
-        values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      formOrder.setFieldValue("billingCustomerName", values.fullName);
-      formOrder.setFieldValue("billingPhone", values.phoneNumber);
-      formOrder.setFieldValue("numberPlates", values.numberPlates);
+      const res: any = await axios.put(`/api/admin/car/${values?.id}`, values, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       formOrder.setFieldValue("numberPlates", values.numberPlates);
       formOrder.setFieldValue("carBrand", res?.brandName.title);
       formOrder.setFieldValue("carName", res?.modelName.title);
@@ -148,26 +140,6 @@ export default function ModalUpdateCar({
                 onChange={(value) => {
                   form.setFieldValue("carYearId", value);
                 }}
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                size="lg"
-                radius={0}
-                {...form.getInputProps("phoneNumber")}
-                label="Số điện thoại"
-                type="text"
-                placeholder="Số điện thoại"
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                size="lg"
-                radius={0}
-                {...form.getInputProps("fullName")}
-                label="Họ và tên"
-                type="text"
-                placeholder="Họ và tên"
               />
             </Grid.Col>
           </Grid>

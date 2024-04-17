@@ -21,6 +21,8 @@ async function callApi(options:any, payload:any) {
 
     try {
         const item:any = await sendRequest(options, payload, token);
+
+        console.log('item',item);
         return item.data;
     } catch (error) {
         console.log(error);
