@@ -232,7 +232,7 @@ export async function getProductsClient(requestData: any) {
               garageId,
               isProduct,
               garage:{
-                // status: 'PUBLIC'
+                status: 'PUBLIC'
               }
             },
           ],
@@ -253,6 +253,9 @@ export async function getProductsClient(requestData: any) {
                     dateTimeEnd: {
                       gte: new Date(),
                     },
+                    garage:{
+                      status: 'PUBLIC'
+                    }
                   },
                 ],
               },

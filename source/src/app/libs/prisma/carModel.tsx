@@ -22,8 +22,7 @@ export async function getCarModels(requestData: any) {
   }
   const [carModels, total] = await prisma.$transaction([
     prisma.carModels.findMany({
-      take: take,
-      skip: skip,
+      
       where: {
         parentId: parentId,
         title: {
