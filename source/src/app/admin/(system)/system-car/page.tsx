@@ -105,6 +105,7 @@ export default function Categories() {
               color="red"
               onClick={(e) => {
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >

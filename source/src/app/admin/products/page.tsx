@@ -234,6 +234,7 @@ export default function ProductsManaga() {
                   color="red"
                   onClick={(e) => {
                     openDeleteProduct();
+                    e.stopPropagation();
                     setDeleteRow(record.id);
                   }}
                 >
