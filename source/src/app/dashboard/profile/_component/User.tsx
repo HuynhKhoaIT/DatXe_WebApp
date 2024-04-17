@@ -29,8 +29,7 @@ import Typo from "@/app/components/elements/Typo";
 import DateField from "@/app/components/form/DateField";
 import CropImageLink from "@/app/components/common/CropImage";
 import axios from "axios";
-export default function UserProfile({ myAccount, handleUpdate }: any) {
-  console.log(myAccount);
+export default function UserProfile({ myAccount }: any) {
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
   const [province, setProvince] = useState<any>();
@@ -76,7 +75,13 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
   };
   const handleUpdateProfile = async (values: any) => {
     try {
-      await handleUpdate(values);
+      await fetch(`/api/client/account`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       notifications.show({
         title: "Thành công",
         message: "Cập nhật thành công",
@@ -101,7 +106,11 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
           ]);
           setDistrictOptions(districts);
           setWardOptions(wards);
-
+          form.setFieldValue("fullName", myAccount.fullName);
+          form.setFieldValue("phoneNumber", myAccount.phoneNumber);
+          form.setFieldValue("address", myAccount.address);
+          form.setFieldValue("avatar", myAccount.avatar);
+          form.setFieldValue("dob", dayjs(myAccount?.dob).toDate());
           form.setFieldValue("cityId", myAccount?.provinceId?.toString());
           form.setFieldValue("districtId", myAccount?.districtId?.toString());
           form.setFieldValue("wardId", myAccount?.wardId?.toString());
@@ -114,7 +123,7 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
       }
     };
     fetchData();
-  }, []);
+  }, [myAccount]);
   return (
     <div className={styles.wrapper}>
       <div>
@@ -135,7 +144,7 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
                   Ảnh đại diện
                 </Text>
                 <CropImageLink
-                  shape="rect"
+                  shape="circle"
                   placeholder={"Cập nhật logo"}
                   defaultImage={avatarUrl || ImageUpload.src}
                   uploadFileThumbnail={uploadFileThumbnail}

@@ -6,6 +6,12 @@ export async function GET(request: NextRequest) {
         const { searchParams } = new URL(request.url);
         const categoryId = searchParams.get('categoryId');
         const brandIdFilter = searchParams.get('brand');
+        let garageId:any = "";
+        // const garage   = searchParams.get('garageId');
+        if(searchParams.get('garageId')){
+            garageId = searchParams.get('garageId');
+        }
+
         let titleFilter = '';
         const searchText = searchParams.get('s');
         if (searchText) {
@@ -32,6 +38,7 @@ export async function GET(request: NextRequest) {
             s: titleFilter,
             limit: limit,
             page: page,
+            garageId:garageId,
             isProduct: searchParams.get('isProduct'),
         };
         const products = await getProductsClient(requestData);

@@ -168,6 +168,7 @@ export default function Discounts() {
                 color="red"
                 onClick={(e) => {
                   openDeleteProduct();
+                  e.stopPropagation();
                   setDeleteRow(record.id);
                 }}
               >
@@ -235,6 +236,7 @@ export default function Discounts() {
             totalPage={marketings?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/marketing-campaign`}
           />
         }
       />

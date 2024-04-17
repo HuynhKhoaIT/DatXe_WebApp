@@ -18,7 +18,6 @@ export default function InfoCustomer({
   isUser,
   openModalUpdateCustomer,
 }: any) {
-  console.log(form.values);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
   return (
@@ -54,6 +53,7 @@ export default function InfoCustomer({
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <AutocompletePhone
               isUser={isUser}
+              disabled={isUser}
               placeholder="Số điện thoại"
               label="Số điện thoại"
               isClear={false}
@@ -65,6 +65,7 @@ export default function InfoCustomer({
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <TextInput
+              disabled={isUser}
               size="lg"
               radius={0}
               {...form.getInputProps("fullName")}
@@ -77,6 +78,7 @@ export default function InfoCustomer({
           <Grid.Col span={12}>
             <TextInput
               size="lg"
+              disabled={isUser}
               radius={0}
               {...form.getInputProps("address")}
               label="Địa chỉ"

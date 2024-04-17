@@ -146,6 +146,7 @@ const Blogs = () => {
                 color="red"
                 onClick={(e) => {
                   openDeleteProduct();
+                  e.stopPropagation();
                   setDeleteRow(record.id);
                 }}
               >
@@ -207,6 +208,7 @@ const Blogs = () => {
             totalPage={newsList?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/blogs`}
           />
         }
       />

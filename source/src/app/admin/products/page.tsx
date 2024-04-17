@@ -234,6 +234,7 @@ export default function ProductsManaga() {
                   color="red"
                   onClick={(e) => {
                     openDeleteProduct();
+                    e.stopPropagation();
                     setDeleteRow(record.id);
                   }}
                 >
@@ -365,6 +366,7 @@ export default function ProductsManaga() {
                     totalPage={products?.totalPage}
                     setPage={setPage}
                     activePage={page}
+                    onRow={`/admin/products`}
                   />
                 }
               />

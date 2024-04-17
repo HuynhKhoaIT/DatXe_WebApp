@@ -135,6 +135,7 @@ export default function bannerListPage() {
               color="red"
               onClick={(e) => {
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >

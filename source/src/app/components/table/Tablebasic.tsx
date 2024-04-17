@@ -5,6 +5,7 @@ import PaginationBase from "../form/PaginationBase";
 import styles from "./index.module.scss";
 import classNames from "classnames";
 import EmptyData from "@/assets/images/nodata.png";
+import { useRouter } from "next/navigation";
 export default function TableBasic({
   data = [],
   columns,
@@ -17,7 +18,9 @@ export default function TableBasic({
   selectedRows,
   setSelectedRows,
   className,
+  onRow,
 }: any) {
+  const router = useRouter();
   return (
     <div className={classNames(styles.tableBasic, className)}>
       <LoadingOverlay
@@ -55,7 +58,15 @@ export default function TableBasic({
         <Table.Tbody style={{ position: "relative", overflowX: "auto" }}>
           {data?.map((item: any, index: number) => {
             return (
-              <Table.Tr key={index}>
+              <Table.Tr
+                key={index}
+                style={{ cursor: onRow ? "pointer" : "none" }}
+                onClick={(e) => {
+                  if (onRow) {
+                    router.push(onRow + `/${item?.id}`);
+                  }
+                }}
+              >
                 {selectRow && (
                   <Table.Td>
                     <Checkbox

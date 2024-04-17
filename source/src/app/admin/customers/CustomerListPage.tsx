@@ -163,7 +163,9 @@ export default function CustomerListPage({
               variant="transparent"
               color="red"
               onClick={(e) => {
+                e.stopPropagation();
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >
@@ -243,6 +245,7 @@ export default function CustomerListPage({
                     totalPage={customers?.totalPage}
                     setPage={setPage}
                     activePage={page}
+                    onRow={`/admin/customers`}
                   />
                 }
               />
@@ -255,6 +258,7 @@ export default function CustomerListPage({
                     data={customersDlbd?.data}
                     columns={columns}
                     loading={isLoadingDlbd}
+
                     // totalPage={marketing?.totalPage}
                     // setPage={setPage}
                     // activePage={page}

@@ -195,6 +195,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
               totalPage={list?.totalPage}
               setPage={setPage}
               activePage={page}
+              onRow={`/admin/order-manager`}
             />
           ) : (
             <div className={styles.pleaseInput}>

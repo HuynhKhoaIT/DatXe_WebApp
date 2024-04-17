@@ -152,6 +152,28 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+    },
+    expert:{
+        getList: {
+            baseURL: `${apiUrl}api/garage`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getById: {
+            baseURL: `${apiUrl}api/garage/:id`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        create: {
+            baseURL: `${apiUrl}api/garage`,
+            method: 'POST',
+            headers: baseHeader,
+        },
+        update: {
+            baseURL: `${apiUrl}api/garage/:id`,
+            method: 'PUT',
+            headers: baseHeader,
+        },
     }
 
 };

@@ -147,6 +147,7 @@ export default function CategoryListPage({ profile }: any) {
               color="red"
               onClick={(e) => {
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >

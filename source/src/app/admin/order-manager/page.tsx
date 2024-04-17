@@ -165,6 +165,7 @@ export default function OrdersManaga() {
                 color="red"
                 onClick={(e) => {
                   openDeleteProduct();
+                  e.stopPropagation();
                   setDeleteRow(record.id);
                 }}
               >
@@ -247,6 +248,7 @@ export default function OrdersManaga() {
             totalPage={list?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/order-manager`}
           />
         }
       />

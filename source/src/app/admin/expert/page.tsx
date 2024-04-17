@@ -197,6 +197,7 @@ const Expert = () => {
                 color="red"
                 onClick={(e) => {
                   openDeleteProduct();
+                  e.stopPropagation();
                   setDeleteRow(record.id);
                 }}
               >
@@ -259,6 +260,7 @@ const Expert = () => {
             totalPage={experts?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/expert`}
           />
         }
       />

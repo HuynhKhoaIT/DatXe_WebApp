@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import IconCart from "@/assets/icons/cart.svg";
 import dynamic from "next/dynamic";
 import { signOut, useSession } from "next-auth/react";
+import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
+import { ROLE_CUSTOMER } from "@/constants";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
@@ -23,6 +25,8 @@ const DynamicMenu = dynamic(() => import("./NavDrawer"), {
 const HeaderMobile = () => {
   const { data: session } = useSession();
 
+  const role = session?.user?.role;
+  const { data: profile } = useAccountDetail();
   const router = useRouter();
   const [openNav, setOpenNav] = useState(false);
   const form = useForm({
@@ -65,9 +69,13 @@ const HeaderMobile = () => {
           <Link href={"/gio-hang"} className={styles.cart}>
             <img src={IconCart.src} alt="bell" />
           </Link>
-          {session?.user && (
+          {profile?.data?.avatar && (
             <Link href={"/dashboard"}>
-              <img src={logo.src} alt="avatar" />
+              <img
+                src={profile?.data?.avatar}
+                alt="avatar"
+                style={{ width: 40, height: 40, borderRadius: 40 }}
+              />
             </Link>
           )}
           <div className={styles.menu} onClick={() => setOpenNav(true)}>
@@ -87,12 +95,14 @@ const HeaderMobile = () => {
               Hồ sơ
             </Link>
           </li>
-          <li className={styles.navItem}>
-            <Link href="/admin">
-              <IconUser size={18} />
-              Quản trị
-            </Link>
-          </li>
+          {role !== ROLE_CUSTOMER && (
+            <li className={styles.navItem}>
+              <Link href="/admin">
+                <IconUser size={18} />
+                Quản trị
+              </Link>
+            </li>
+          )}
           <li className={styles.navItem}>
             <Link href="/admin/cart">
               <img src={IconCart.src} alt="bell" />

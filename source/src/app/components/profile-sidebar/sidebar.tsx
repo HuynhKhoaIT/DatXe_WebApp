@@ -1,16 +1,14 @@
 "use client";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { IconLogout } from "@tabler/icons-react";
 import { SidebarClient } from "./SidebarClient";
 import { SidebarAdmin } from "./SidebarAdmin";
+import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
 const ProfileSidebar = ({ myAccount }: any) => {
   const pathname = usePathname();
   const parts = pathname.split("/");
-  let page = parts[parts.length - 1];
-  const { data: session } = useSession();
-  const token = session?.user?.token;
+
+  const { data: profile } = useAccountDetail();
   return (
     <div
       className="user-profile-sidebar"
@@ -19,16 +17,16 @@ const ProfileSidebar = ({ myAccount }: any) => {
       <div className="user-profile-sidebar-top">
         <div className="user-profile-img">
           <img
-            src={myAccount?.avarate || "/assets/img/account/user.jpg"}
+            src={profile?.data?.avatar || "/assets/img/account/user.jpg"}
             alt=""
           />
-          <button type="button" className="profile-img-btn">
+          {/* <button type="button" className="profile-img-btn">
             <i className="far fa-camera"></i>
-          </button>
+          </button> */}
           <input type="file" className="profile-img-file" />
         </div>
-        <h5>{myAccount?.fullName}</h5>
-        <p>{myAccount?.phoneNumber}</p>
+        <h5>{profile?.data?.fullName}</h5>
+        <p>{profile?.data?.phoneNumber}</p>
       </div>
       {parts[1] === "admin" ? <SidebarAdmin /> : <SidebarClient />}
     </div>

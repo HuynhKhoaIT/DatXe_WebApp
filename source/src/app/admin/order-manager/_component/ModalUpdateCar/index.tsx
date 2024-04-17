@@ -30,7 +30,7 @@ export default function ModalUpdateCar({
 }: any) {
   const [loading, handlers] = useDisclosure();
 
-  
+
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
@@ -52,15 +52,19 @@ export default function ModalUpdateCar({
   const handleSubmit = async (values: any) => {
     handlers.open();
     try {
-      const res: any = await axios.put(`/api/admin/car/${values?.id}`, values, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res: any = await axios.put(
+        `/api/admin/car/${values?.carId}`,
+        values,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       formOrder.setFieldValue("numberPlates", values.numberPlates);
-      formOrder.setFieldValue("carBrand", res?.brandName.title);
-      formOrder.setFieldValue("carName", res?.modelName.title);
-      formOrder.setFieldValue("carYear", res?.yearName.title);
+      // formOrder.setFieldValue("carBrand", res?.brandName.title);
+      // formOrder.setFieldValue("carName", res?.modelName.title);
+      // formOrder.setFieldValue("carYear", res?.yearName.title);
       handlers.close();
       close();
     } catch (error) {

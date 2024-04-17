@@ -49,8 +49,8 @@ export async function getOrders(garage: string, requestData: any) {
       customerId = Number(requestData.customerId);
     }
     let carId = {};
-    if ((requestData.carId)) {
-      carId = (requestData.carId);
+    if (requestData.carId) {
+      carId = requestData.carId;
     }
     const [data, total] = await prisma.$transaction([
       prisma.order.findMany({
@@ -512,9 +512,9 @@ export async function createOrder(json: any) {
       slug: orderCode.toLowerCase(),
       customerId: customerId,
       carId: carId,
-      billingAdress: json?.billingAdress ?? json?.address,
-      billingPhone: json?.billingPhone ?? json?.phoneNumber,
-      billingCustomerName: json.billingCustomerName ?? json?.fullName,
+      billingAdress: json?.billingAdress,
+      billingPhone: json?.billingPhone,
+      billingCustomerName: json.billingCustomerName,
       dateTime: json.dateTime ?? new Date(),
       customerRequest: json.customerRequest ?? "",
       customerNote: json.customerNote ?? "",
@@ -940,10 +940,9 @@ export async function updateOrder(id: string, json: any) {
             id: carId,
           },
         },
-        billingAdress: json.billingAdress ?? orderOld?.billingAdress,
-        billingPhone: json.billingPhone ?? orderOld?.billingPhone,
-        billingCustomerName:
-          json.billingCustomerName ?? orderOld?.billingCustomerName,
+        billingAdress: json.billingAdress,
+        billingPhone: json.billingPhone,
+        billingCustomerName: json.billingCustomerName,
         dateTime: json.dateTime,
         customerRequest: json.customerRequest,
         customerNote: json.customerNote,

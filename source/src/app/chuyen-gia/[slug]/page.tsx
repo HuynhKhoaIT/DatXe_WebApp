@@ -20,7 +20,7 @@ const blogs = [
   {
     id: "1",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    image: BlogImage1.src,
+    thumbnail: BlogImage1.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -32,7 +32,7 @@ const blogs = [
   {
     id: "2",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    image: BlogImage2.src,
+    thumbnail: BlogImage2.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -44,7 +44,7 @@ const blogs = [
   {
     id: "3",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    image: BlogImage3.src,
+    thumbnail: BlogImage3.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -56,7 +56,7 @@ const blogs = [
   {
     id: "4",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    image: BlogImage4.src,
+    thumbnail: BlogImage4.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -68,7 +68,7 @@ const blogs = [
   {
     id: "5",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    image: BlogImage1.src,
+    thumbnail: BlogImage1.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -78,7 +78,6 @@ const blogs = [
       "Mitsubishi Grandis chính hãng khi gặp hiện tượng động cơ bị ngừng hoạt động, xe chết máy giữa đường",
   },
 ];
-
 const socials = [
   { id: "1", name: "SHARE ON FACEBOOK", image: IconFaceBook.src },
   { id: "2", name: "SHARE ON ZALO", image: IconZalo.src },
@@ -97,19 +96,30 @@ export default async function DetailGarage({
 }: {
   params: { slug: string };
 }) {
-  const expertDetail: any = await getGarageByCode(params.slug);
-  const categories = await getCategories({ garageId: expertDetail?.id });
+  const expertData: any = await callApi(apiConfig.expert.getById, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
+  const categories = await getCategories({ garageId: params?.slug });
   const services = await getProducts({
     isProduct: "0",
-    garageId: expertDetail.id,
+    garageId: params?.slug,
   });
-  const products = await getProducts({
-    isProduct: "1",
-    garageId: expertDetail.id,
+  // const products = await getProducts({
+  //   isProduct: "1",
+  //   garageId: expertDetail.id,
+  // });
+  const products = await callApi(apiConfig.products.getList, {
+    params: {
+      isProduct: "1",
+      garageId: params?.slug,
+    },
   });
+
   const newsList = await callApi(apiConfig.posts.getList, {
     params: {
-      garageId: expertDetail.id,
+      garageId: params?.slug,
     },
   });
   return (
@@ -122,14 +132,13 @@ export default async function DetailGarage({
           defaultTheme: ExpertDetailPageMobile,
         },
       }}
-      expertDetail={expertDetail}
+      expertDetail={expertData || {}}
       categories={categories}
       services={services}
       products={products}
-      blogs={newsList}
+      blogs={newsList?.data?.length > 0 ? newsList?.data : blogs}
       socials={socials}
       convenients={convenients}
-      blogsDefalt={blogs}
     />
   );
 }

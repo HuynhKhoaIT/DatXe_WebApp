@@ -139,6 +139,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
               color="red"
               onClick={(e) => {
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >

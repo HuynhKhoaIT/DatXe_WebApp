@@ -7,7 +7,6 @@ import IconFaceBook from "@/assets/icons/fbIcon.svg";
 import IconInstagram from "@/assets/icons/igIcon.svg";
 
 const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
-  console.log(ProductDetail);
   return (
     <div className={styles.wrapper}>
       <div className={styles.avatar}>
@@ -24,7 +23,7 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
               {ProductDetail?.garage?.shortName}
             </Typo>
             <Link
-              href={`/chuyen-gia/${ProductDetail?.garage?.code}`}
+              href={`/chuyen-gia/${ProductDetail?.garage?.id}`}
               className={styles.toExpert}
             >
               Đi đến chuyên gia
