@@ -1,14 +1,26 @@
 import Typo from "@/app/components/elements/Typo";
-import { Box, Grid, LoadingOverlay, TextInput } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Grid,
+  Group,
+  LoadingOverlay,
+  TextInput,
+  Tooltip,
+} from "@mantine/core";
 import { getOptionsPhone } from "../until";
 import { AutocompletePhone } from "./AutoCompletePhone";
 import styles from "./index.module.scss";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-export default function InfoCustomer({ form, isUser }: any) {
+import { IconEdit, IconUpload } from "@tabler/icons-react";
+export default function InfoCustomer({
+  form,
+  isUser,
+  openModalUpdateCustomer,
+}: any) {
+  console.log(form.values);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
-
   return (
     <div className={styles.cardInfo}>
       <Box pos={"relative"}>
@@ -16,16 +28,28 @@ export default function InfoCustomer({ form, isUser }: any) {
           visible={loadingCustomer}
           loaderProps={{ type: "bars" }}
         />
-        {!isMobile && (
+        <Group justify="space-between" className={styles.title}>
           <Typo
             size="primary"
             type="bold"
             style={{ color: "var(--primary-orange)" }}
-            className={styles.title}
           >
             Thông tin khách hàng
           </Typo>
-        )}
+          {isUser && (
+            <Tooltip label="Cập nhật khách hàng" position="bottom" withArrow>
+              <IconEdit
+                onClick={openModalUpdateCustomer}
+                style={{ cursor: "pointer" }}
+              />
+            </Tooltip> // <Button
+            //   leftSection={<IconUpload size={16} />}
+            //   // onClick={openModalUpdate}
+            // >
+            //   Cập nhật
+            // </Button>
+          )}
+        </Group>
         <Grid gutter={12} className={styles.marketingInfo}>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <AutocompletePhone
@@ -35,7 +59,7 @@ export default function InfoCustomer({ form, isUser }: any) {
               isClear={false}
               getOptionData={getOptionsPhone}
               form={form}
-              name="billingPhone"
+              name="phoneNumber"
               handlersLoadingCustomer={handlersLoadingCustomer}
             />
           </Grid.Col>
@@ -43,7 +67,7 @@ export default function InfoCustomer({ form, isUser }: any) {
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("billingCustomerName")}
+              {...form.getInputProps("fullName")}
               label="Tên khách hàng"
               type="text"
               placeholder="Tên khách hàng"
@@ -54,7 +78,7 @@ export default function InfoCustomer({ form, isUser }: any) {
             <TextInput
               size="lg"
               radius={0}
-              {...form.getInputProps("billingAdress")}
+              {...form.getInputProps("address")}
               label="Địa chỉ"
               type="text"
               placeholder="Địa chỉ"

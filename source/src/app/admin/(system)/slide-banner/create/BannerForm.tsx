@@ -102,9 +102,9 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
                   </Text>
                   <CropImageLink
                     shape="rect"
-                    aspect={3 / 2}
+                    aspect={16 / 6}
                     placeholder={"Cập nhật hình ảnh"}
-                    defaultImage={dataDetail?.banner || ImageUpload.src}
+                    defaultImage={dataDetail?.banners || ImageUpload.src}
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>

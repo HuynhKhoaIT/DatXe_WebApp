@@ -40,3 +40,14 @@
 .cursorPointer {
     cursor: pointer;
 }
+
+.img {
+    @media (max-width: 563px) {
+        border-radius: 0px;
+        min-height: 200px;
+    }
+    @media (max-width: 384px) {
+        border-radius: 0px;
+        min-height: 150px;
+    }
+}

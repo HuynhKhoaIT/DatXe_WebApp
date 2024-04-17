@@ -54,6 +54,7 @@ export default function OrderForm({
   dataDetail,
   isLoading,
 }: any) {
+  console.log(dataDetail);
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
@@ -67,7 +68,6 @@ export default function OrderForm({
   const [errorPlate, handlersPlate] = useDisclosure();
   const [loading, handlers] = useDisclosure();
   const [loadingButton, handlersButton] = useDisclosure();
-
   const [selectedProducts, setSelectedProducts] = useState<any>(
     dataDetail
       ? dataDetail?.orderDetails.map((item: any) => ({
@@ -98,6 +98,10 @@ export default function OrderForm({
   const [
     openedModalUpdate,
     { open: openModalUpdate, close: closeModalUpdate },
+  ] = useDisclosure(false);
+  const [
+    openedModalUpdateCustomer,
+    { open: openModalUpdateCustomer, close: closeModalUpdateCustomer },
   ] = useDisclosure(false);
   const form = useForm({
     validateInputOnBlur: true,
@@ -163,6 +167,8 @@ export default function OrderForm({
       handlers.open();
 
       if (isEditing && dataDetail) {
+        setCustomer(dataDetail?.customer);
+        setCar(dataDetail?.car);
         setSelectedProducts(
           dataDetail?.orderDetails.map((item: any) => ({
             ...item,
@@ -180,7 +186,8 @@ export default function OrderForm({
 
           form.setInitialValues(dataDetail);
           form.setValues(dataDetail);
-          form.setFieldValue("customerId", dataDetail?.customerId.toString());
+
+          // thông tin xe
           form.setFieldValue(
             "numberPlates",
             dataDetail?.car?.numberPlates.toString()
@@ -198,6 +205,12 @@ export default function OrderForm({
             "carYearId",
             dataDetail?.car?.carYearId.toString()
           );
+
+          // Khách hàng
+          form.setFieldValue("customerId", dataDetail?.customerId.toString());
+          form.setFieldValue("fullName", dataDetail?.customer?.fullName);
+          form.setFieldValue("phoneNumber", dataDetail?.customer?.phoneNumber);
+          form.setFieldValue("address", dataDetail?.customer?.address);
           form.setFieldValue(
             "billingCustomerName",
             dataDetail?.billingCustomerName || dataDetail?.customer?.fullName
@@ -263,8 +276,11 @@ export default function OrderForm({
   };
 
   const [customer, setCustomer] = useState({});
+  const [car, setCar] = useState({});
+
   // lấy thông tin theo biển số xe
   const handleGetInfo = async (numberPlate: string) => {
+    console.log("handle get info");
     form.setFieldValue("numberPlates", numberPlate);
 
     if (licenseNumber) {
@@ -279,8 +295,6 @@ export default function OrderForm({
         }
       );
       const data = await res.json();
-
-      console.log(data?.data);
       if (data?.data) {
         handlersIsUser.open();
         const [models, yearCars] = await Promise.all([
@@ -289,7 +303,8 @@ export default function OrderForm({
         ]);
         setModelOptions(models);
         setYearCarOptions(yearCars);
-        setCustomer(data?.data);
+        setCustomer(data?.data?.customer);
+        setCar(data?.data?.car);
         form.setFieldValue("customerId", data?.data?.customer.id);
         form.setFieldValue("carId", data?.data?.id);
         form.setFieldValue("carBrandId", data?.data?.carBrandId);
@@ -300,12 +315,14 @@ export default function OrderForm({
         form.setFieldValue("carYear", data?.data?.yearName.title);
         form.setFieldValue("fullName", data?.data?.customer.fullName);
         form.setFieldValue("phoneNumber", data?.data?.customer.phoneNumber);
-        form.setFieldValue(
-          "billingCustomerName",
-          data?.data?.customer.fullName
-        );
-        form.setFieldValue("billingPhone", data?.data?.customer.phoneNumber);
-        form.setFieldValue("billingAdress", data?.data?.customer.address);
+        form.setFieldValue("address", data?.data?.customer.address);
+
+        // form.setFieldValue(
+        //   "billingCustomerName",
+        //   data?.data?.customer.fullName
+        // );
+        // form.setFieldValue("billingPhone", data?.data?.customer.phoneNumber);
+        // form.setFieldValue("billingAdress", data?.data?.customer.address);
       }
     } catch (error) {
     } finally {
@@ -944,7 +961,7 @@ export default function OrderForm({
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <InfoCart
                   brandOptions={brandOptions}
-                  customer={customer}
+                  car={car}
                   isUser={isUser}
                   setModelOptions={setModelOptions}
                   modelOptions={modelOptions}
@@ -957,7 +974,11 @@ export default function OrderForm({
                 />
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                <InfoCustomer form={form} isUser={isUser} />
+                <InfoCustomer
+                  openModalUpdateCustomer={openModalUpdateCustomer}
+                  form={form}
+                  isUser={isUser}
+                />
               </Grid.Col>
             </Grid>
             <div style={{ marginTop: 20 }} className={styles.cardListProduct}>
@@ -1168,10 +1189,17 @@ export default function OrderForm({
         )}
       </form>
 
-      {}
+      {openedModalUpdateCustomer && (
+        <DynamicModalUpdateCustomer
+          dataDetail={customer}
+          openModal={openedModalUpdateCustomer}
+          close={closeModalUpdateCustomer}
+          formOrder={form}
+        />
+      )}
       {openedModalUpdate && (
         <DynamicModalUpdateCar
-          dataDetail={customer}
+          dataDetail={car}
           openModal={openedModalUpdate}
           close={closeModalUpdate}
           brandOptions={brandOptions}
@@ -1232,6 +1260,13 @@ const DynamicModalNumberPlates = dynamic(
 );
 const DynamicModalUpdateCar = dynamic(
   () => import("../_component/ModalUpdateCar"),
+  {
+    ssr: false,
+  }
+);
+
+const DynamicModalUpdateCustomer = dynamic(
+  () => import("../_component/ModalUpdateCustomer"),
   {
     ssr: false,
   }

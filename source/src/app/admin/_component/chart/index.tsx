@@ -140,9 +140,9 @@ export default function Chart({ isLoading, data, arrayDate }: any) {
             <Box h={500}>
               <SimpleLineChart dataSource={dataChart} />
             </Box>
-            <Box h={500} mt={30}>
+            {/* <Box h={500} mt={30}>
               <SimpleBarChart dataSource={dataChart} />
-            </Box>
+            </Box> */}
           </div>
         </Box>
       </Grid.Col>
