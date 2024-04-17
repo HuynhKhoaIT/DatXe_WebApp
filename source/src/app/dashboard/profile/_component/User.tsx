@@ -29,7 +29,7 @@ import Typo from "@/app/components/elements/Typo";
 import DateField from "@/app/components/form/DateField";
 import CropImageLink from "@/app/components/common/CropImage";
 import axios from "axios";
-export default function UserProfile({ myAccount }: any) {
+export default function UserProfile({ myAccount, handleUpdate }: any) {
   console.log(myAccount);
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
@@ -47,14 +47,14 @@ export default function UserProfile({ myAccount }: any) {
   const token = session?.user?.token;
   const form = useForm({
     initialValues: {
-      name: myAccount.name,
-      phone: myAccount.phone,
+      fullName: myAccount.fullName,
+      phoneNumber: myAccount.phoneNumber,
       dob: myAccount?.dob && dayjs(myAccount?.dob).toDate(),
       address: myAccount.address,
     },
 
     validate: {
-      name: (value) => (value.length > 1 ? null : "Vui lòng nhập tên"),
+      fullName: (value) => (value.length > 1 ? null : "Vui lòng nhập tên"),
     },
   });
   const uploadFileThumbnail = async (file: File) => {
@@ -76,7 +76,7 @@ export default function UserProfile({ myAccount }: any) {
   };
   const handleUpdateProfile = async (values: any) => {
     try {
-      await updateAccount(values, token ?? "");
+      await handleUpdate(values);
       notifications.show({
         title: "Thành công",
         message: "Cập nhật thành công",
@@ -102,9 +102,9 @@ export default function UserProfile({ myAccount }: any) {
           setDistrictOptions(districts);
           setWardOptions(wards);
 
-          form.setFieldValue("province_id", myAccount?.provinceId?.toString());
-          form.setFieldValue("district_id", myAccount?.districtId?.toString());
-          form.setFieldValue("ward_id", myAccount?.wardId?.toString());
+          form.setFieldValue("cityId", myAccount?.provinceId?.toString());
+          form.setFieldValue("districtId", myAccount?.districtId?.toString());
+          form.setFieldValue("wardId", myAccount?.wardId?.toString());
           setProvince(myAccount?.provinceId?.toString());
           setDistrict(myAccount?.districtId?.toString());
           setWard(myAccount?.wardId?.toString());
@@ -152,7 +152,7 @@ export default function UserProfile({ myAccount }: any) {
                   radius={0}
                   w={"100%"}
                   withAsterisk
-                  {...form.getInputProps("name")}
+                  {...form.getInputProps("fullName")}
                   label="Họ tên"
                   placeholder="Nguyễn Văn A"
                 />
@@ -172,7 +172,7 @@ export default function UserProfile({ myAccount }: any) {
                   radius={0}
                   type="tel"
                   disabled={true}
-                  {...form.getInputProps("phone")}
+                  {...form.getInputProps("phoneNumber")}
                   label="Điện thoại"
                 />
               </Grid.Col>
@@ -189,7 +189,7 @@ export default function UserProfile({ myAccount }: any) {
                 <Select
                   size="lg"
                   radius={0}
-                  {...form.getInputProps("province_id")}
+                  {...form.getInputProps("cityId")}
                   label="Tỉnh/Thành phố"
                   placeholder="Chọn tỉnh"
                   data={provinceOptions}
@@ -197,9 +197,9 @@ export default function UserProfile({ myAccount }: any) {
                   onChange={async (value) => {
                     const optionsData = await getOptionsDistrict(Number(value));
                     setDistrictOptions(optionsData);
-                    form.setFieldValue("province_id", value);
-                    form.setFieldValue("district_id", "");
-                    form.setFieldValue("ward_id", "");
+                    form.setFieldValue("cityId", value);
+                    form.setFieldValue("districtId", "");
+                    form.setFieldValue("wardId", "");
                     setProvince(value);
                     setDistrict(null);
                     setWard(null);
@@ -210,7 +210,7 @@ export default function UserProfile({ myAccount }: any) {
                 <Select
                   size="lg"
                   radius={0}
-                  {...form.getInputProps("district_id")}
+                  {...form.getInputProps("districtId")}
                   label="Huyện/Phường"
                   placeholder="Huyện/Phường"
                   data={districtOptions}
@@ -218,8 +218,8 @@ export default function UserProfile({ myAccount }: any) {
                   onChange={async (value) => {
                     const optionsData = await getOptionsWard(Number(value));
                     setWardOptions(optionsData);
-                    form.setFieldValue("district_id", value);
-                    form.setFieldValue("ward_id", "");
+                    form.setFieldValue("districtId", value);
+                    form.setFieldValue("wardId", "");
                     setDistrict(value);
 
                     setWard(null);
@@ -230,13 +230,13 @@ export default function UserProfile({ myAccount }: any) {
                 <Select
                   size="lg"
                   radius={0}
-                  {...form.getInputProps("ward_id")}
+                  {...form.getInputProps("wardId")}
                   label="Xã/Phường"
                   placeholder="Chọn xã/phường"
                   data={wardOptions}
                   value={ward}
                   onChange={(value) => {
-                    form.setFieldValue("ward_id", value);
+                    form.setFieldValue("wardId", value);
                     setWard(value);
                   }}
                 ></Select>

@@ -95,6 +95,18 @@ const apiConfig = {
         //     headers: baseHeader,
         // }
     },
+    account:{
+        getAccount: {
+            baseURL: `${apiUrl}api/client/account`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        update: {
+            baseURL: `${apiUrl}api/client/account`,
+            method: 'PUT',
+            headers: baseHeader,
+        },
+    },
     amentity:{
         getList: {
             baseURL: `${apiUrl}api/admin/amentity`,
