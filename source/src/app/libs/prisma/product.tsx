@@ -232,7 +232,7 @@ export async function getProductsClient(requestData: any) {
               garageId,
               isProduct,
               garage:{
-                status: 'PUBLIC'
+                // status: 'PUBLIC'
               }
             },
           ],

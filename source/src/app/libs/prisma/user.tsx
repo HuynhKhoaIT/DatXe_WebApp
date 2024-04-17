@@ -46,7 +46,7 @@ export async function registerUser(json: any) {
         email: json.email ?? '',
         phoneNumber: json.phoneNumber,
         sex: 'FEMALE',
-        garageId: (json.garageId) ?? 2,
+        garageId: (json.garageId).toString() ?? "2",
         status: 'PUBLIC',
         role: json.role ?? 'CUSTOMER'
       }

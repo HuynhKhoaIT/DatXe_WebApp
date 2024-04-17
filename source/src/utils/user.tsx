@@ -111,39 +111,34 @@ export const register = async (
       }
     );
 
-    if (res.status === 200) {
-      const userNew = await fetch("/api/user/register", {
-        method: "POST",
-        body: JSON.stringify({
-          "id": res.data.user.id,
-          "email": res.data.user.email,
-          "phoneNumber": res.data.user.phone,
-          "name":res.data.user.name,
-          "hash": sha256(`${res.data.user.phone}|@|${Number(res.data.user.id)}`),
-          "garageId": 2,
-          "role": "CUSTOMER"
-        }),
-      });
-      console.log("res.data.user",res.data.user)
-      const customerNew = await fetch("/api/client/customer", {
-        method: "POST",
-        body: JSON.stringify({
-          userId: res.data.user.id,
-          fullName: res.data.user.name,
-          phoneNumber: res.data.user.phone,
-          hash: sha256(`${res.data.user.phone}|@|${Number(res.data.user.name)}`),
-          garageId: 2
-        }),
-      });
-      console.log('customerNew',customerNew)
-      signIn("credentials", {
-        phone: phone,
-        password: password,
-        callbackUrl: `/dashboard`,
-      });
-    } else {
-      console.log("Regiter failed");
-    }
+    const userNew = await fetch("/api/user/register", {
+      method: "POST",
+      body: JSON.stringify({
+        "id": res.data.user.id.toString(),
+        "email": res.data.user.email,
+        "phoneNumber": res.data.user.phone,
+        "name":res.data.user.name,
+        "hash": sha256(`${res.data.user.phone}|@|${Number(res.data.user.id)}`),
+        "garageId": "2",
+        "role": "CUSTOMER"
+      }),
+    });
+    const customerNew = await fetch("/api/client/customer", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: res.data.user.id.toString(),
+        fullName: res.data.user.name,
+        phoneNumber: res.data.user.phone,
+        hash: sha256(`${res.data.user.phone}|@|${res.data.user.name}`),
+        garageId: "2"
+      }),
+    });
+    console.log('customerNew',customerNew)
+    signIn("credentials", {
+      phone: phone,
+      password: password,
+      callbackUrl: `/dashboard`,
+    });
   } catch (error) {
     console.error(error);
     throw new Error("Đăng Ký thất bại");
