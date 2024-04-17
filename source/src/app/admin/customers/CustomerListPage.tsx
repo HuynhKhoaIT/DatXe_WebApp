@@ -163,7 +163,9 @@ export default function CustomerListPage({
               variant="transparent"
               color="red"
               onClick={(e) => {
+                e.stopPropagation();
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >

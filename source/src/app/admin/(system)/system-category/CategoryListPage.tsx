@@ -1,37 +1,50 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./index.module.scss";
-import ImageDefult from "../../../../public/assets/images/logoDatxe.png";
+import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
 import { Badge, Button, Flex, Image } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import { notifications } from "@mantine/notifications";
 import TableBasic from "@/app/components/table/Tablebasic";
 import dynamic from "next/dynamic";
-import { statusOptions } from "@/constants/masterData";
+import { FieldTypes, statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
-import axios from "axios";
+import ListPage from "@/app/components/layout/ListPage";
+import { useCategories } from "../../hooks/category/useCategory";
+
 const DynamicModalDeleteItem = dynamic(
-  () => import("../_component/ModalDeleteItem"),
+  () => import("../../_component/ModalDeleteItem"),
   {
     ssr: false,
   }
 );
-export default function UtilitiesListPage({ dataSource }: any) {
+const DynamicModalCategories = dynamic(() => import("./ModalCategoriesDLBD"));
+
+export default function CategoryListPage({ profile }: any) {
+  const {
+    categories,
+    isLoading,
+    isFetching,
+    error,
+    page,
+    setPage,
+    deleteItem,
+  } = useCategories();
+
   const [deleteRow, setDeleteRow] = useState();
-  const handleDeleteItem = async (id: any) => {
-    try {
-      await axios.delete(`/api/admin/product-category/${id}`);
-      notifications.show({
-        title: "Thành công",
-        message: "Xoá danh mục thành công",
-      });
-    } catch (error) {}
+
+  const handleDeleteItem = (id: any) => {
+    deleteItem(id);
   };
+
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
+  ] = useDisclosure(false);
+
+  const [
+    openedModalCategories,
+    { open: openModalCategories, close: closeModalCategories },
   ] = useDisclosure(false);
 
   const columns = [
@@ -66,13 +79,6 @@ export default function UtilitiesListPage({ dataSource }: any) {
       render: (dataRow: any) => {
         return <span>{dataRow}</span>;
       },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Mô tả</span>
-      ),
-      name: "description",
-      dataIndex: ["description"],
     },
     {
       label: (
@@ -111,8 +117,11 @@ export default function UtilitiesListPage({ dataSource }: any) {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
+        if (record.garageId == 2) {
+          return;
+        }
         return (
-          <>
+          <Flex>
             <Link
               href={{
                 pathname: `/admin/categories/${record.id}`,
@@ -130,7 +139,6 @@ export default function UtilitiesListPage({ dataSource }: any) {
                 <IconPencil size={16} />
               </Button>
             </Link>
-
             <Button
               size="lg"
               radius={0}
@@ -145,7 +153,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
             >
               <IconTrash size={16} color="red" />
             </Button>
-          </>
+          </Flex>
         );
       },
     },
@@ -155,7 +163,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
     {
       name: "s",
       placeholder: "Tên danh mục",
-      type: "input",
+      type: FieldTypes.STRING,
     },
     {
       name: "status",
@@ -168,36 +176,71 @@ export default function UtilitiesListPage({ dataSource }: any) {
     s: "",
     status: null,
   };
+
   return (
-    <div className={styles.content}>
-      <SearchForm searchData={searchData} initialValues={initialValuesSearch} />
-      <Flex justify={"end"} align={"center"}>
-        <Link
-          href={{
-            pathname: `/admin/categories/create`,
-          }}
-        >
-          <Button
-            size="lg"
-            h={{ base: 42, md: 50, lg: 50 }}
-            radius={0}
-            leftSection={<IconPlus size={18} />}
-          >
-            Thêm mới
-          </Button>
-        </Link>
-      </Flex>
-      <div className="row">
-        <div className="col-12">
-          <TableBasic data={dataSource} columns={columns} />
-        </div>
-      </div>
+    <div>
+      <ListPage
+        searchForm={
+          <SearchForm
+            searchData={searchData}
+            brandFilter={false}
+            initialValues={initialValuesSearch}
+          />
+        }
+        actionBar={
+          <Flex justify={"end"} align={"center"} gap={20}>
+            <Button
+              size="lg"
+              h={{ base: 42, md: 50, lg: 50 }}
+              radius={0}
+              onClick={openModalCategories}
+              leftSection={<IconPlus size={18} />}
+            >
+              Đồng bộ
+            </Button>
+            <Link
+              href={{
+                pathname: `/admin/categories/create`,
+              }}
+            >
+              <Button
+                h={{ base: 42, md: 50, lg: 50 }}
+                size="lg"
+                radius={0}
+                leftSection={<IconPlus size={18} />}
+              >
+                Thêm mới
+              </Button>
+            </Link>
+          </Flex>
+        }
+        style={{ height: "100%" }}
+        titleTable={true}
+        baseTable={
+          <TableBasic
+            data={categories?.data}
+            columns={columns}
+            loading={isLoading}
+            totalPage={categories?.totalPage}
+            setPage={setPage}
+            activePage={page}
+          />
+        }
+      />
+
       <DynamicModalDeleteItem
         openedDeleteItem={openedDeleteItem}
         closeDeleteItem={closeDeleteItem}
         handleDeleteItem={handleDeleteItem}
         deleteRow={deleteRow}
       />
+      {openedModalCategories && (
+        <DynamicModalCategories
+          openedModalCategories={openedModalCategories}
+          closeModalCategories={closeModalCategories}
+          profile={profile}
+        />
+      )}
     </div>
   );
 }

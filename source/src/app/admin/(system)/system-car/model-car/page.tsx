@@ -105,6 +105,7 @@ export default function ModelCarListPage() {
               color="red"
               onClick={(e) => {
                 openDeleteProduct();
+                e.stopPropagation();
                 setDeleteRow(record.id);
               }}
             >
