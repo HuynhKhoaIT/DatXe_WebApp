@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import ExpertForm from "./ExpertForm";
-import { useAddExpert } from "../../hooks/expert/useAddExpert";
+import { useAddExpert } from "../../../hooks/expert/useAddExpert";
 export default function CreateCategory() {
   const {
     addItem,

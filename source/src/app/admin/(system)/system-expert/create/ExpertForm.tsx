@@ -18,7 +18,7 @@ import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
-import FooterSavePage from "../../_component/FooterSavePage";
+import FooterSavePage from "../../../_component/FooterSavePage";
 import {
   getOptionsDistrict,
   getOptionsWard,

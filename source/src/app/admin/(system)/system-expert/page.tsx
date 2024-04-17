@@ -170,7 +170,7 @@ const Expert = () => {
           <>
             <Link
               href={{
-                pathname: `/admin/expert/${record.id}`,
+                pathname: `/admin/system-expert/${record.id}`,
               }}
             >
               <Tooltip label="Cập nhật" withArrow position="bottom">
