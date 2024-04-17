@@ -47,7 +47,18 @@ export async function getGarages(requestData: any) {
           },
         },
       }),
-      prisma.garage.count(),
+      prisma.garage.count({
+        where: {
+          AND: [
+            {
+              status: {
+                not: "DELETE",
+              },
+              routeId: Number(garageId),
+            },
+          ],
+        }
+      }),
     ]);
     return {
       data: data,

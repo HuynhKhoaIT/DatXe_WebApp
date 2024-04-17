@@ -175,9 +175,6 @@ export const registerGarage = async (
         },
       }
     );
-    console.log('-----res')
-    console.log('res',res);
-    console.log('res.data',res.data)
     const garageNew = await fetch("/api/admin/garage", {
       method: "POST",
       body: JSON.stringify({
@@ -207,7 +204,6 @@ export const registerGarage = async (
         "role": "ADMINGARAGE"
       }),
     });
-    console.log('userNew',userNew)
     signIn("credentials", {
       phone: phone,
       password: password,
