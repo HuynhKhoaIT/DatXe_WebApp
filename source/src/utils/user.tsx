@@ -175,45 +175,44 @@ export const registerGarage = async (
         },
       }
     );
-    if (res.status === 201 || res.status === 200) {
-      const garageNew = await fetch("/api/admin/garage", {
-        method: "POST",
-        body: JSON.stringify({
-          routeId: Number(res.data.garageId),
-          name: garageName,
-          shortName: garageName,
-          logo: "",
-          email: `${phone}@datxe.com`,
-          phoneNumber: phone,
-          website: "",
-          address: address,
-          status: "PUBLIC",
-          description: "",
-        }),
-      });
-      // console.log('garageNew',garageNew)
-      const garageData = await garageNew.json()
-      const userNew = await fetch("/api/user/register", {
-        method: "POST",
-        body: JSON.stringify({
-          "id": res.data.id,
-          "email": res.data.email,
-          "phoneNumber": res.data.phone,
-          "name":res.data.name,
-          "hash": sha256(`${res.data.phone}|@|${Number(res.data.id)}`),
-          "garageId": Number(garageData.id ?? 2),
-          "role": "ADMINGARAGE"
-        }),
-      });
-      // console.log('userNew',userNew)
-      signIn("credentials", {
-        phone: phone,
-        password: password,
-        callbackUrl: "/admin",
-      });
-    } else {
-      console.log("Regiter failed");
-    }
+    console.log('-----res')
+    console.log('res',res);
+    console.log('res.data',res.data)
+    const garageNew = await fetch("/api/admin/garage", {
+      method: "POST",
+      body: JSON.stringify({
+        routeId: Number(res.data.garageId),
+        name: garageName,
+        shortName: garageName,
+        logo: "",
+        email: `${phone}@datxe.com`,
+        phoneNumber: phone,
+        website: "",
+        address: address,
+        status: "PUBLIC",
+        description: "",
+      }),
+    });
+    // console.log('garageNew',garageNew)
+    const garageData = await garageNew.json()
+    const userNew = await fetch("/api/user/register", {
+      method: "POST",
+      body: JSON.stringify({
+        "id": res.data.id.toString(),
+        "email": res.data.email,
+        "phoneNumber": res.data.phone,
+        "name":res.data.name,
+        "hash": sha256(`${res.data.phone}|@|${Number(res.data.id)}`),
+        "garageId": (garageData.id ?? "2"),
+        "role": "ADMINGARAGE"
+      }),
+    });
+    console.log('userNew',userNew)
+    signIn("credentials", {
+      phone: phone,
+      password: password,
+      callbackUrl: "/admin",
+    });
   } catch (error) {
     console.error(error);
     throw new Error("Đăng Ký thất bại");
