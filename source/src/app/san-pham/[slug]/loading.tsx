@@ -63,7 +63,7 @@ export default function Loading() {
             </div>
           </Flex>
         </Card>
-        <ListProductSkeleton />
+        <ListProductSkeleton title="Sản phẩm liên quan" />
       </Container>
     </div>
   );

@@ -26,7 +26,7 @@ const ExpertDetailPageDesktop = ({
       <Container>
         <Info detailData={expertDetail} />
         <ImagesShowRoom
-          photos={expertDetail.photos}
+          photos={expertDetail?.photos}
           className={styles.imagesShowRoom}
         />
       </Container>

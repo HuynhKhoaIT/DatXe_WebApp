@@ -1,20 +1,10 @@
 "use client";
-import { Button, Flex, Grid, Box, Space } from "@mantine/core";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { IProduct } from "@/interfaces/product";
-import Body from "@/app/components/layout/Body";
-import { FilterRadio } from "@/app/components/elements/filterRadio";
-import { Sort } from "@/app/components/elements/shop-sort";
-import ProductItem from "@/app/components/elements/product/ProductItem1";
-import ProductItem2 from "@/app/components/elements/product/ProductItem2";
-import CardBlog from "../trang-chu/Blogs/CardBlog";
+import { Grid, Box } from "@mantine/core";
 import ItemNews from "./_component/ItemNews";
 import Container from "@/app/components/common/Container";
 import Banner from "../chuyen-gia/Banner";
 
 export default function NewsListPage({ newsData }: any) {
-  console.log(newsData);
   return (
     <>
       <Banner />

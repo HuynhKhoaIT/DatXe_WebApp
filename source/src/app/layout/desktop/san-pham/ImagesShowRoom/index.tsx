@@ -5,7 +5,10 @@ import Image2 from "@/assets/images/showRoom/Image2.png";
 import Image3 from "@/assets/images/showRoom/Image3.png";
 import Image4 from "@/assets/images/showRoom/Image4.png";
 
-const ImagesShowRoom = () => {
+const ImagesShowRoom = ({ ProductDetail }: any) => {
+  let images;
+  if (ProductDetail?.garage?.photos)
+    images = JSON?.parse(ProductDetail?.garage?.photos);
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>
@@ -19,15 +22,15 @@ const ImagesShowRoom = () => {
       </div>
       <div className={styles.body}>
         <div className={styles.left}>
-          <img src={Image1.src} />
+          <img src={images?.[0] || Image1.src} />
         </div>
         <div className={styles.right}>
           <div className={styles.rightTop}>
-            <img src={Image2.src} />
+            <img src={images?.[1] || Image2.src} />
           </div>
           <div className={styles.rightBottom}>
-            <img src={Image3.src} />
-            <img src={Image4.src} />
+            <img src={images?.[2] || Image3.src} />
+            <img src={images?.[3] || Image4.src} />
           </div>
         </div>
       </div>

@@ -2,21 +2,22 @@ import classNames from "classnames";
 import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import { Rating } from "@mantine/core";
-import Avatar from "@/assets/images/avatar.png";
+import Avatar from "@/assets/images/avatar.jpeg";
+import { formatTimeDifference } from "@/utils/until";
 const ReviewItem = ({ dataDetail }: any) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.avatar}>
-        <img src={Avatar.src} />
+        <img src={dataDetail?.user?.avatar || Avatar.src} />
       </div>
       <div className={styles.content}>
         <div className={styles.info}>
           <div className={styles.infoUser}>
-            <Typo size="tiny" type="bold">
+            <Typo size="primary" type="bold">
               {dataDetail?.user?.fullName}
             </Typo>
-            <Typo style={{ fontSize: "12px", color: "var(--sub-color)" }}>
-              {dataDetail?.createdAt}
+            <Typo style={{ fontSize: "14px", color: "var(--sub-color)" }}>
+              {formatTimeDifference(dataDetail?.createdAt)}
             </Typo>
           </div>
           <div className={styles.star}>

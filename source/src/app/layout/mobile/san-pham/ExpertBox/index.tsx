@@ -2,7 +2,7 @@ import { IProduct } from "@/interfaces/product";
 import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import Link from "next/link";
-import avatar from "@/assets/images/avatar.png";
+import avatar from "@/assets/images/avatar.jpeg";
 import IconFaceBook from "@/assets/icons/fbIcon.svg";
 import IconInstagram from "@/assets/icons/igIcon.svg";
 

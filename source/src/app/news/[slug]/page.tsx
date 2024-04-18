@@ -15,7 +15,11 @@ export default async function DetailNews({
       id: params.slug,
     },
   });
-  const newsDataList = await callApi(apiConfig.posts.getList, {});
+  const newsDataList = await callApi(apiConfig.posts.getList, {
+    params: {
+      limit: 5,
+    },
+  });
   return (
     <RenderContextClient
       components={{

@@ -9,14 +9,12 @@ const sendRequest = async (options:any, payload:any, token:any) => {
         headers.Authorization = `Bearer ${token}`;
     }
     // update path params
-
     for (let key of Object.keys(pathParams)) {
         const keyCompare = `:${key}`;
         if (baseURL.indexOf(keyCompare) !== -1) {
             baseURL = baseURL.replace(keyCompare, pathParams[key]);
         }
     }
-
 
     // handle multipart
     if (options.headers['Content-Type'] === 'multipart/form-data') {
@@ -40,8 +38,6 @@ const sendRequest = async (options:any, payload:any, token:any) => {
             });
     }
     // ...
-
-    console.log('headers',headers);
     return axiosInstance.request({
         method,
         baseURL,

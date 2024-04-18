@@ -12,7 +12,6 @@ export default function ProductsListPage({
   products,
   searchParams,
 }: any) {
-  console.log(products);
   return (
     <Body>
       <Body.Sider>

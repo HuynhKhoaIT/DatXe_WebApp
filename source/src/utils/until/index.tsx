@@ -1,5 +1,6 @@
-import { DATE_FORMAT_DISPLAY } from "@/constants";
+import { DATE_FORMAT_DISPLAY, DEFAULT_FORMAT } from "@/constants";
 import axios from "axios";
+import dayjs from "dayjs";
 import moment from "moment/moment";
 require("moment/locale/vi");
 
@@ -285,8 +286,8 @@ export const convertUtcToLocalTime = (
 ) => {
   try {
     if (utcTime) {
-      // console.log(moment(moment.utc(utcTime, inputFormat).toDate()).format(format));
-      return moment(moment.utc(utcTime, inputFormat).toDate()).format(format);
+      return dayjs(utcTime).format(inputFormat);
+      // return moment(moment.utc(utcTime, inputFormat).toDate()).format(format);
     }
     return "";
   } catch (err) {
@@ -305,3 +306,10 @@ export function isValidPhoneNumber(phoneNumber: string) {
     return false; // Không hợp lệ
   }
 }
+
+export const formatTimeDifference = (utcTime: any, format = DEFAULT_FORMAT) => {
+  const date = convertUtcToLocalTime(utcTime, format, format);
+  const givenDate = moment(date, DEFAULT_FORMAT);
+  const formattedDifference = givenDate.fromNow();
+  return formattedDifference;
+};

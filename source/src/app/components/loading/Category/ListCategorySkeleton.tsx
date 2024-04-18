@@ -1,12 +1,12 @@
 import { Card, Flex, Skeleton, Space } from "@mantine/core";
 import Typo from "../../elements/Typo";
-export default function ListCategorySkeleton() {
+export default function ListCategorySkeleton({ title, subTitle }: any) {
   return (
     <div>
       <Typo size="small" type="bold" style={{ color: "var(--title-color)" }}>
-        Loading...
+        {title}
       </Typo>
-      <div style={{ fontSize: "14px" }}>Loading...</div>
+      <div style={{ fontSize: "14px" }}>{subTitle}</div>
       <Space h={10} />
       <div
         style={{
