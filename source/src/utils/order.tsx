@@ -175,8 +175,8 @@ export const sendSMSOrder = async (order: any) => {
         break;
     }
     contentSMS = contentSMS?.replaceAll('{order_code}',order?.code);
-    return order;
-    contentSMS = contentSMS?.replaceAll('{garage_short}',order?.garage.shortName);
+    contentSMS = contentSMS?.replaceAll('{garage_short}',order?.garage?.shortName ?? 'DatXE');
+    console.log(contentSMS)
     let dataSMS = {
       Phone: order.customer.phoneNumber,
       Content: contentSMS,
