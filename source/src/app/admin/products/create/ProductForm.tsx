@@ -32,7 +32,6 @@ export default function ProductForm({
     categoryOptions,
   } = useAddProduct();
 
-  console.log(dataDetail);
   const [loading, handlers] = useDisclosure();
   const [valueRTE, setValueRTE] = useState("");
   const [images, setImages] = useState<any>();

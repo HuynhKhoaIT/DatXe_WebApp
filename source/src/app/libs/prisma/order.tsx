@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+
 import prisma from "../prismadb";
-import { createCar } from "./car";
-import { createCustomer, getMyCustomers } from "./customer";
+import { createCar, showCar } from "./car";
+import { createCustomer, getCustomerByPhone, getMyCustomers } from "./customer";
 import { randomString } from "@/utils";
 import { ORDERMETHOD } from "@prisma/client";
 import { getCarModelById } from "./carModel";
@@ -406,13 +406,8 @@ export async function createOrder(json: any) {
       // check customer via phone number
       let phoneNumber = json.phoneNumber;
       if (phoneNumber) {
-        const customerFind = await prisma.customer.findFirst({
-          where: {
-            phoneNumber: phoneNumber,
-            status: "PUBLIC",
-            garageId: garageId,
-          },
-        });
+        console.log('phoneNumber',phoneNumber)
+        const customerFind = await getCustomerByPhone(phoneNumber,garageId);
         if (customerFind) {
           customerId = customerFind.id;
         } else {
@@ -430,11 +425,13 @@ export async function createOrder(json: any) {
           }
         }
       } else {
-        const cusNoName = await createCustomer({
-          fullName: "KH " + json.numberPlates,
-          phoneNumber: null,
+        const dataCus = {
+          fullName: json.fullName ?? "KH " + json.numberPlates,
+          phoneNumber: '',
           garageId,
-        });
+          userId: json.createdById
+        };
+        const cusNoName = await createCustomer(dataCus);
         if (cusNoName.customer) {
           customerId = cusNoName.customer?.id;
         }
@@ -446,12 +443,7 @@ export async function createOrder(json: any) {
     //get carID
     let carId = json.carId;
     if (carId) {
-      let carOrder = await prisma.car.findFirst({
-        where: {
-          id: carId,
-          status: "PUBLIC",
-        },
-      });
+      let carOrder = await showCar(carId);
 
       if (carOrder?.garageId != garageId) {
         const carNewData = JSON.parse(JSON.stringify(carOrder));
@@ -462,7 +454,6 @@ export async function createOrder(json: any) {
         carId = carNew?.car?.id;
       }
     } else {
-      console.log("carAdmin");
       const carAdmin = await createCar({
         customerId: customerId,
         numberPlates: json.numberPlates,
@@ -473,7 +464,6 @@ export async function createOrder(json: any) {
         garageId: process.env.GARAGE_DEFAULT,
         userId: json.userId,
       });
-      console.log("carNew2");
       const carNew = await createCar({
         customerId: customerId,
         numberPlates: json.numberPlates,
@@ -484,7 +474,6 @@ export async function createOrder(json: any) {
         garageId: garageId,
         userId: json.userId,
       });
-      console.log("carNews2", carNew);
       if (carNew) {
         carId = carNew.car?.id;
       }
