@@ -37,7 +37,7 @@ const DynamicModalChooseProducts = dynamic(
 );
 
 export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
-  console.log(dataDetail);
+
   const { addItem, updateItem } = useAddMarketing();
 
   const [selectedProducts, setSelectedProducts] = useState<any>(
