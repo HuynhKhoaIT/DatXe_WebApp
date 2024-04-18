@@ -28,7 +28,7 @@ const ProductDetailPageMobile = async ({
             productReview={productReview}
           />
           <ExpertBox ProductDetail={product?.product} />
-          <ImagesShowRoom />
+          <ImagesShowRoom ProductDetail={product?.product} />
         </Flex>
       </Container>
       <ProductsRelate productRelate={productRelate} />

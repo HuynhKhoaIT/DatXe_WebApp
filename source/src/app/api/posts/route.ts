@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
         }
         const requestData = {
             s: searchParams.get('s'),
-            limit: 10,
+            limit: searchParams.get('limit')||10,
             take: 10,
             page: page,
             garageId,

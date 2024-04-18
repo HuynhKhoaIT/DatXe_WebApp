@@ -1,10 +1,8 @@
 "use client";
-import { Avatar, Group, Rating, Text, Box, Image, Flex } from "@mantine/core";
+import { Group, Flex } from "@mantine/core";
 import React from "react";
 import styles from "./ItemNews.module.scss";
 import Typo from "@/app/components/elements/Typo";
-import { convertUtcToLocalTime } from "@/utils/until";
-import { DATE_FORMAT_DISPLAY, DEFAULT_FORMAT } from "@/constants";
 import { useRouter } from "next/navigation";
 const ItemNews = ({ item }: any) => {
   const router = useRouter();
@@ -27,8 +25,7 @@ const ItemNews = ({ item }: any) => {
           {item.title}
         </Typo>
 
-        <Group className={styles.timegroup} gap="sm">
-          {/* <Typo size="priamry" type='bold' style={{ color:'var(--title-color-2)' }}> */}
+        {/* <Group className={styles.timegroup} gap="sm">
           <Typo
             type="bold"
             style={{ color: "var(--title-color-2)" }}
@@ -40,15 +37,7 @@ const ItemNews = ({ item }: any) => {
               DATE_FORMAT_DISPLAY
             )}
           </Typo>
-        </Group>
-        {/* <Group className={styles.timegroup} gap="sm">
-                    <Typo size="sub" type='bold'>
-                        Được viết bởi:
-                    </Typo>
-                    <Typo size="sub" style={{ marginLeft:'-8px' }}>
-                        {'Hoàng Thùy'}
-                    </Typo>
-                </Group> */}
+        </Group> */}
         <Group justify="space-between">
           <Group>
             <Typo size="sub" className={styles.description} type="semi-bold">

@@ -10,11 +10,11 @@ const Reviews = ({ productReview }: any) => {
         <Typo size="sub" style={{ color: "var(--title-color)" }}>
           {productReview?.data?.length || 0} đánh giá
         </Typo>
-        <Select
+        {/* <Select
           w={130}
           placeholder="Lọc theo"
           data={["5 sao", "4 sao", "3 sao", "2 sao", "1 sao"]}
-        />
+        /> */}
       </div>
       <div className={styles.body}>
         {productReview?.data?.map((item: any, index: number) => {

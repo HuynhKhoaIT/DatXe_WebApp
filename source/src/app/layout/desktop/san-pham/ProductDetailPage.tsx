@@ -32,7 +32,7 @@ const ProductDetailPageDesktop = async ({
             productReview={productReview}
           />
           <ExpertBox ProductDetail={product?.product} />
-          <ImagesShowRoom />
+          <ImagesShowRoom ProductDetail={product?.product} />
           <ProductsRelate productRelate={productRelate} />
           <div></div>
         </Flex>

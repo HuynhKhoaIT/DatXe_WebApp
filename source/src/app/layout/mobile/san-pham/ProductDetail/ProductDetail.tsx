@@ -11,7 +11,6 @@ import Book from "@/assets/icons/book.svg";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import ProductSlider from "@/app/layout/desktop/san-pham/ProductDetail/ProductSlider";
 function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
-  console.log(ProductDetail);
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {

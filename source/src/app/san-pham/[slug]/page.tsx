@@ -38,7 +38,7 @@ export default async function DetailProduct({
         },
       }}
       product={product?.data || []}
-      productReview={productReview?.data || []}
+      productReview={productReview || []}
       productRelate={productsRelate}
     />
   );

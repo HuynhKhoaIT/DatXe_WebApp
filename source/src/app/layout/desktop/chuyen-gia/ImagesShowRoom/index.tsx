@@ -1,5 +1,3 @@
-"use client";
-import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
 import Image1 from "@/assets/images/showRoom/Image1.png";
 import Image2 from "@/assets/images/showRoom/Image2.png";
@@ -8,7 +6,8 @@ import Image4 from "@/assets/images/showRoom/Image4.png";
 import classNames from "classnames";
 
 const ImagesShowRoom = ({ className, photos }: any) => {
-  const images = JSON?.parse(photos);
+  let images;
+  if (photos) images = JSON?.parse(photos);
   return (
     <div className={classNames(styles.wrapper, className)}>
       <div className={styles.body}>
