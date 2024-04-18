@@ -187,19 +187,19 @@ export default function OrdersManaga() {
       getOptionsData: getOptionsCar,
       isCamera: true,
     },
-    {
-      name: "customerId",
-      placeholder: "Khách hàng",
-      type: FieldTypes?.AUTOCOMPLETE,
-      value: customer,
-      setValue: setCustomer,
-      getOptionsData: getOptionsCustomers,
-    },
+    // {
+    //   name: "customerId",
+    //   placeholder: "Khách hàng",
+    //   type: FieldTypes?.AUTOCOMPLETE,
+    //   value: customer,
+    //   setValue: setCustomer,
+    //   getOptionsData: getOptionsCustomers,
+    // },
   ];
 
   const initialValuesSearch = {
     // s: "",
-    customerId: null,
+    // customerId: null,
     carId: null,
   };
 
