@@ -5,6 +5,7 @@ import { createCustomer, getCustomerByPhone, getMyCustomers } from "./customer";
 import { randomString } from "@/utils";
 import { ORDERMETHOD } from "@prisma/client";
 import { getCarModelById } from "./carModel";
+import { sendSMSOrder } from "@/utils/order";
 
 export async function getOrders(garage: string, requestData: any) {
   try {
@@ -649,6 +650,7 @@ export async function createOrderClient(json: any) {
       garageId: garageId,
       serviceAdvisorId: json.serviceAdvisorId ?? "1",
       createdById: json.createdById.toString() ?? "1",
+      step: 0,
       orderDetails: {
         createMany: {
           data: orderDetails,
@@ -1006,6 +1008,7 @@ export async function updateOrderStep(
   step: any,
   cancelReason: string
 ) {
+  const or = await findOrder(id,{});
   const order = await prisma.order.update({
     where: {
       id: id,
@@ -1014,7 +1017,19 @@ export async function updateOrderStep(
       step: Number(step),
       cancelReason,
     },
+    include:{
+      car: true,
+      customer: true,
+      garage: true
+    }
   });
+  const orderRs = await findOrder(id,{})
+  if(or.step != orderRs.step){
+    const smsRs = await sendSMSOrder(order)
+    console.log('sms',smsRs)
+  }
+  
+  
   return order;
 }
 export async function codeGeneration(garageId: string) {
