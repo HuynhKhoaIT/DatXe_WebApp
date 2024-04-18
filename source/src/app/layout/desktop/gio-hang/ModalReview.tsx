@@ -12,7 +12,6 @@ export default function ModalReview({
   onCancelModal,
   dataDetail,
 }: any) {
-  console.log(dataDetail);
   return (
     <BasicModal
       isOpen={openedModal}

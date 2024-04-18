@@ -22,7 +22,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
   const brandId = searchParam.get("brandId");
   const brandName = searchParam.get("brandName");
 
-  console.log(dataDetail);
+
   const form = useForm({
     initialValues: {
       title: "",
