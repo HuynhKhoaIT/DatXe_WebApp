@@ -413,7 +413,7 @@ export async function createOrder(json: any) {
           customerId = customerFind.id;
         } else {
           let customerJson = {
-            fullName: json.fullName,
+            fullName: json.fullName ?? "KH " + json.numberPlates,
             phoneNumber: json.phoneNumber,
             address: json.address,
             garageId: garageId,
@@ -987,6 +987,10 @@ export async function updateOrder(id: string, json: any) {
         },
       },
     });
+    if(orderOld?.step != order.step){
+      const smsRs = await sendSMSOrder(order)
+      console.log('sms',smsRs)
+    }
     return { order };
   } catch (error) {
     return { error };
