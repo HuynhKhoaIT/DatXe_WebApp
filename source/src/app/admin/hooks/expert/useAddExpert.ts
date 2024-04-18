@@ -43,13 +43,15 @@ interface UseExpert {
     isLoadingProvince: boolean;
     UltilitiesOptions: any;
     isLoadingUltilities:boolean;
+    isPendingAdd:boolean;
+    isPendingUpdate:boolean;
 }
 
 export const useAddExpert = (): UseExpert => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem ,isPending:isPendingAdd } = useMutation({
         mutationFn: addExpert,
         onSuccess: () => {
             router.back();
@@ -64,7 +66,7 @@ export const useAddExpert = (): UseExpert => {
         },
     });
 
-    const { mutate: updateItem } = useMutation({
+    const { mutate: updateItem,isPending:isPendingUpdate } = useMutation({
         mutationFn: updateExpert,
         onSuccess: () => {
             router.back();
@@ -99,5 +101,7 @@ export const useAddExpert = (): UseExpert => {
         isLoadingProvince,
         UltilitiesOptions,
         isLoadingUltilities,
+        isPendingUpdate,
+        isPendingAdd
     };
 };

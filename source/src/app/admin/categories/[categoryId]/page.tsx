@@ -2,27 +2,20 @@
 import React, { useEffect, useState } from "react";
 import CategoryForm from "../create/CategoryForm";
 import axios from "axios";
+import { useCategoryDetail } from "../../hooks/category/useCategory";
 export const revalidate = 60;
 export default function UpdateCategory({
   params,
 }: {
-  params: { categoryId: number };
+  params: { categoryId: string };
 }) {
-  const [category, setCategory] = useState(null);
+  const { data: category, isLoading } = useCategoryDetail(params?.categoryId);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/api/admin/product-category/${params?.categoryId}`
-        );
-        setCategory(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [params?.categoryId]);
-  return <CategoryForm isEditing={true} dataDetail={category} />;
+  return (
+    <CategoryForm
+      isEditing={true}
+      dataDetail={category}
+      isLoading={isLoading}
+    />
+  );
 }

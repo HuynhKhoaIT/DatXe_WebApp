@@ -2,7 +2,6 @@
 import {
   Box,
   Card,
-  FileButton,
   Grid,
   Text,
   TextInput,
@@ -14,17 +13,22 @@ import {
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef, useState } from "react";
-import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import FooterSavePage from "../../_component/FooterSavePage";
 import convertToSlug from "@/utils/until";
 import { useAddCategory } from "../../hooks/category/useAddCategory";
 import CropImageLink from "@/app/components/common/CropImage";
-import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
-export default function CategoryForm({ isEditing, dataDetail }: any) {
-  const { addItem, updateItem } = useAddCategory();
-  const [loading, handlers] = useDisclosure();
-  const resetRef = useRef<() => void>(null);
+export default function CategoryForm({
+  isEditing,
+  dataDetail,
+  isLoading,
+}: any) {
+  const {
+    addItem,
+    updateItem,
+    isPendingCreate,
+    isPendingUpdate,
+  } = useAddCategory();
   const [imageField, setImageField] = useState<File | null>();
 
   const form = useForm({
@@ -34,7 +38,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
       description: "",
     },
     validate: {
-      // title: (value) => (value.length < 1 ? "Không được để trống" : null),
+      title: (value) => (value.length < 1 ? "Không được để trống" : null),
       // image: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
@@ -44,15 +48,13 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
       try {
         form.setInitialValues(dataDetail);
         form.setValues(dataDetail);
+        setImageField(dataDetail.image);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        handlers.close();
       }
     };
 
     if (isEditing) {
-      handlers.open();
       fetchData();
     }
   }, [dataDetail]);
@@ -68,6 +70,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
       }
       const response = await axios.post(baseURL, formData, options);
       form.setFieldValue("image", response.data);
+      setImageField(response.data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -75,19 +78,17 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
 
   const handleSubmit = async (values: any) => {
     values.slug = convertToSlug(values?.title);
-    handlers.open();
     if (isEditing) {
       updateItem(values);
     } else {
       addItem(values);
     }
-    handlers.close();
   };
 
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={loading}
+        visible={isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -102,8 +103,9 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
                   </Text>
                   <CropImageLink
                     shape="rect"
+                    aspect={1 / 1}
                     placeholder={"Cập nhật avatar"}
-                    defaultImage={dataDetail?.image || ImageUpload.src}
+                    defaultImage={imageField}
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>
@@ -153,7 +155,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
         </Grid>
 
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={isPendingCreate || isPendingUpdate}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />
       </form>

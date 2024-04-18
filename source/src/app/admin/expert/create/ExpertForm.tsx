@@ -19,11 +19,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import FooterSavePage from "../../_component/FooterSavePage";
-import {
-  getOptionsDistrict,
-  getOptionsWard,
-  getUltilities,
-} from "@/utils/until";
+import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/image.svg";
 import Typo from "@/app/components/elements/Typo";
@@ -37,9 +33,9 @@ export default function ExpertForm({
   addItem,
   provinceOptions,
   isLoadingUltilities,
+  isPendingUpdate,
+  isPendingAdd,
 }: any) {
-  const [loading, handlers] = useDisclosure();
-
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
@@ -154,20 +150,17 @@ export default function ExpertForm({
 
   const handleSubmit = async (values: any) => {
     values.photos = JSON.stringify(imagesUrl);
-    console.log(values);
-    handlers.open();
     if (isEditing) {
       updateItem(values);
     } else {
       addItem(values);
     }
-    handlers.close();
   };
 
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={isLoading || isLoadingUltilities || loading}
+        visible={isLoading || isLoadingUltilities}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -409,7 +402,7 @@ export default function ExpertForm({
         </Grid>
 
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={isPendingUpdate || isPendingAdd}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />
       </form>

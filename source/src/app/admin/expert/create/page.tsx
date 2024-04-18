@@ -9,6 +9,8 @@ export default function CreateCategory() {
     provinceOptions,
     UltilitiesOptions,
     isLoadingUltilities,
+    isPendingUpdate,
+    isPendingAdd,
   } = useAddExpert();
   return (
     <ExpertForm
@@ -18,6 +20,8 @@ export default function CreateCategory() {
       provinceOptions={provinceOptions}
       UltilitiesOptions={UltilitiesOptions}
       isLoadingUltilities={isLoadingUltilities}
+      isPendingUpdate={isPendingUpdate}
+      isPendingAdd={isPendingAdd}
     />
   );
 }

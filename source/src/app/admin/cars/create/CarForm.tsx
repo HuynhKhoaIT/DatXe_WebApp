@@ -16,7 +16,8 @@ import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import FooterSavePage from "../../_component/FooterSavePage";
 import { useAddCar } from "../../hooks/car/useAddCar";
-export default function CarForm({ isEditing, dataDetail }: any) {
+import { useRouter } from "next/navigation";
+export default function CarForm({ isEditing, dataDetail, isLoading }: any) {
   const {
     addItem,
     updateItem,
@@ -24,10 +25,11 @@ export default function CarForm({ isEditing, dataDetail }: any) {
     isLoadingBrand,
     customerOptions,
     isLoadingCustomer,
+    isPendingAdd,
+    isPendingUpdate,
   } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
-  const [loading, handlers] = useDisclosure();
 
   const form = useForm({
     initialValues: {
@@ -47,13 +49,11 @@ export default function CarForm({ isEditing, dataDetail }: any) {
   });
 
   const handleSubmit = async (values: any) => {
-    handlers.open();
     if (isEditing) {
       updateItem(values);
     } else {
       addItem(values);
     }
-    handlers.close();
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={isLoadingBrand || isLoadingCustomer}
+        visible={isLoadingBrand || isLoadingCustomer || isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -223,7 +223,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
           </Grid.Col>
         </Grid>
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={isPendingAdd || isPendingUpdate}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />
       </form>

@@ -11,7 +11,6 @@ import {
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
-import { useDisclosure } from "@mantine/hooks";
 import { sexOptions, statusOptions } from "@/constants/masterData";
 import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
@@ -28,9 +27,10 @@ export default function CustomersForm({
     updateItem,
     provinceOptions,
     isLoadingProvince,
+    isPendingUpdate,
+    isPendingAdd,
   } = useAddCustomer();
 
-  const [loading, handlers] = useDisclosure();
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
   const [ward, setWard] = useState<any>();
@@ -60,13 +60,11 @@ export default function CustomersForm({
   });
 
   const handleSubmit = async (values: any) => {
-    handlers.open();
     if (isEditing) {
       updateItem(values);
     } else {
       addItem(values);
     }
-    handlers.close();
   };
 
   const [districtOptions, setDistrictOptions] = useState<any>([]);
@@ -74,7 +72,6 @@ export default function CustomersForm({
 
   useEffect(() => {
     const fetchData = async () => {
-      handlers.open();
       if (isEditing && dataDetail) {
         try {
           const [districts, wards] = await Promise.all([
@@ -96,8 +93,6 @@ export default function CustomersForm({
             form.setFieldValue("dob", dayjs(dataDetail?.dob).toDate());
         } catch (error) {
           console.error("Error fetching data:", error);
-        } finally {
-          handlers.close();
         }
       }
     };
@@ -258,7 +253,7 @@ export default function CustomersForm({
           </Grid.Col>
         </Grid>
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={isPendingUpdate || isPendingAdd}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />
       </form>

@@ -18,6 +18,8 @@ export default function UpdateCategory({
     provinceOptions,
     UltilitiesOptions,
     isLoadingUltilities,
+    isPendingUpdate,
+    isPendingAdd,
   } = useAddExpert();
   return (
     <Box maw={"100%"} mx="auto">
@@ -30,6 +32,8 @@ export default function UpdateCategory({
         provinceOptions={provinceOptions}
         UltilitiesOptions={UltilitiesOptions}
         isLoadingUltilities={isLoadingUltilities}
+        isPendingUpdate={isPendingUpdate}
+        isPendingAdd={isPendingAdd}
       />
     </Box>
   );

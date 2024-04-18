@@ -141,3 +141,23 @@ export const useCars = (): useCars => {
         setActiveTab,
     };
 };
+
+
+
+// get detail
+const fetchCarDetail = async (id: string) => {
+    const response = await fetch(`/api/admin/car/${id}`);
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch car', response);
+    }
+    return await response.json();
+};
+
+const useCarDetail = (id: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.cars, id],
+        queryFn: () => fetchCarDetail(id),
+    });
+};
+
+export { useCarDetail, fetchCarDetail };
