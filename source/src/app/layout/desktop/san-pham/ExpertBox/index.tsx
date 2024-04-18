@@ -16,7 +16,7 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
           alt="avatar"
         />
       </div>
-      <div>
+      <div style={{ flex: 1 }}>
         <div className={styles.headerInfo}>
           <div className={styles.leftInfo}>
             <Typo type="bold" style={{ color: "#170F49" }}>

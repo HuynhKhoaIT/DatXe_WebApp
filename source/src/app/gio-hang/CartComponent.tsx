@@ -42,6 +42,7 @@ export default function CartComponent({ myAccount }: any) {
     const updateCartData = cartData.map((item: any) => {
       if (item.productId === idProduct) {
         item.quantity += 1;
+        item.subTotal += item.subTotal;
       }
       return item;
     });
@@ -55,6 +56,7 @@ export default function CartComponent({ myAccount }: any) {
         deleteItem(idProduct);
       } else if (item.productId === idProduct && item.quantity > 1) {
         item.quantity -= 1;
+        item.subTotal -= item.subTotal;
       }
 
       return item;
@@ -154,8 +156,6 @@ export default function CartComponent({ myAccount }: any) {
     setLoading(true);
     values.dateTime = dateTime;
     values.subTotal = calculateSubTotal();
-
-    console.log(values);
     values.total = calculateSubTotal();
     values.userId = myAccount.id;
     try {

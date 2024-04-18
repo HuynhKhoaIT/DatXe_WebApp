@@ -1,21 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import {
-  ActionIcon,
   CloseButton,
   Combobox,
-  Flex,
   Grid,
   Loader,
   TextInput,
   useCombobox,
 } from "@mantine/core";
-import {
-  useDebouncedValue,
-  useDisclosure,
-  useValidatedState,
-} from "@mantine/hooks";
-import { IconCamera } from "@tabler/icons-react";
+import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 
@@ -76,8 +69,8 @@ export function AutocompletePhone({
           setErrorText(null);
           form.setFieldValue(name, item.label);
           form.setFieldValue("customerId", item.value);
-          form.setFieldValue("billingCustomerName", item.otherData.fullName);
-          form.setFieldValue("billingAdress", item.otherData.address);
+          form.setFieldValue("fullName", item.otherData.fullName);
+          form.setFieldValue("address", item.otherData.address);
           open();
         }}
       >
@@ -110,11 +103,12 @@ export function AutocompletePhone({
               onChange={(event) => {
                 setErrorText(null);
                 form.setFieldValue(name, event.target.value);
-                if (!isUser) {
-                  form.setFieldValue("customerId", null);
-                }
-                // form.setFieldValue("billingCustomerName", "");
-                // form.setFieldValue("address", "");
+                // if (!isUser) {
+                //   form.setFieldValue("customerId", null);
+                // }
+                form.setFieldValue("customerId", null);
+                form.setFieldValue("fullName", "");
+                form.setFieldValue("address", "");
                 combobox.openDropdown();
                 combobox.updateSelectedOptionIndex();
               }}
@@ -134,7 +128,7 @@ export function AutocompletePhone({
 
                   form.setFieldValue("customerId", infoCustomer[0]?.value);
                   form.setFieldValue(
-                    "billingCustomerName",
+                    "fullName",
                     infoCustomer[0]?.otherData?.fullName
                   );
                   form.setFieldValue(
@@ -158,11 +152,9 @@ export function AutocompletePhone({
                       disabled={disabled}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => {
-                        if (!isUser) {
-                          form.setFieldValue("customerId", null);
-                        }
-                        // form.setFieldValue("fullName", "");
-                        // form.setFieldValue("address", "");
+                        form.setFieldValue("customerId", null);
+                        form.setFieldValue("fullName", "");
+                        form.setFieldValue("address", "");
                         form.setFieldValue(name, "");
                       }}
                       aria-label="Clear value"

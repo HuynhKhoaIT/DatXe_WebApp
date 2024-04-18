@@ -1,6 +1,7 @@
 "use client";
 import {
   ActionIcon,
+  Alert,
   Box,
   Button,
   Grid,
@@ -23,6 +24,7 @@ import {
   IconTrash,
   IconChevronRight,
   IconCamera,
+  IconInfoCircle,
 } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import { useEffect, useState } from "react";
@@ -118,6 +120,8 @@ export default function OrderForm({
     },
   });
 
+  console.log("total", dataDetail);
+
   useEffect(() => {
     if (!isEditing && !licenseNumber) {
       if (form.values.numberPlates.length == 0) {
@@ -145,6 +149,7 @@ export default function OrderForm({
       }));
       form.setFieldValue("detail", updatedProducts);
     } else {
+      console.log("selectedProducts", selectedProducts);
       let updatedProducts = selectedProducts.map((detail: any) => ({
         images: detail?.product?.images,
         name: detail?.product?.name || detail?.name,
@@ -369,7 +374,7 @@ export default function OrderForm({
             {...form.getInputProps(`detail.${index}.subTotal`)}
             min={0}
             readOnly
-            placeholder="Số lượng"
+            // placeholder="Số lượng"
             thousandSeparator=","
             suffix="đ"
           />
@@ -413,7 +418,7 @@ export default function OrderForm({
     }
     modals.openConfirmModal({
       title: (
-        <Typo size="small" type="semi-bold" style={{ color: "red" }}>
+        <Typo type="semi-bold" style={{ color: "red", fontSize: 20 }}>
           Xác nhận
         </Typo>
       ),
@@ -431,7 +436,11 @@ export default function OrderForm({
     var cancelReason = "";
     modals.openConfirmModal({
       title: (
-        <Typo size="small" type="semi-bold" style={{ color: "red" }}>
+        <Typo
+          // size="small"
+          type="semi-bold"
+          style={{ color: "red", fontSize: 20 }}
+        >
           Huỷ đơn hàng
         </Typo>
       ),
@@ -451,7 +460,7 @@ export default function OrderForm({
           />
         </Box>
       ),
-      h: 400,
+      // h: 400,
       size: "350px",
       centered: true,
       // zIndex: 99,
@@ -760,6 +769,18 @@ export default function OrderForm({
                   style={{ marginTop: 20 }}
                   className={styles.cardListProduct}
                 >
+                  {dataDetail?.step === Number(ORDER_CANCEL) && (
+                    <Alert
+                      variant="light"
+                      color="red"
+                      title="Đơn hàng đã huỷ"
+                      icon={<IconInfoCircle />}
+                    >
+                      <span style={{ fontSize: "1rem" }}>
+                        Lí do: {dataDetail?.cancelReason || "Không rõ"}
+                      </span>
+                    </Alert>
+                  )}
                   <div className={styles.top}>
                     <Typo
                       className={styles.title}
@@ -962,6 +983,19 @@ export default function OrderForm({
           </Tabs>
         ) : (
           <>
+            {dataDetail?.step === Number(ORDER_CANCEL) && (
+              <Alert
+                m={10}
+                variant="light"
+                color="red"
+                title="Đơn hàng đã huỷ"
+                icon={<IconInfoCircle />}
+              >
+                <span style={{ fontSize: "1rem" }}>
+                  Lí do: {dataDetail?.cancelReason || "Không rõ"}
+                </span>
+              </Alert>
+            )}
             <Grid gutter={12}>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <InfoCart

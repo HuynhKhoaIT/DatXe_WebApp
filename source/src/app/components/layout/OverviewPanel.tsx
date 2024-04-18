@@ -36,7 +36,7 @@ function OverviewPanel({
               {!hiddenShowMore && (
                 <Link className={styles.showMore} href={linkToList}>
                   <Button
-                    variant="outline"
+                    variant="transparent"
                     color={"var(--blue-color)"}
                     rightSection={<img src={ArrowRight.src} />}
                   >
