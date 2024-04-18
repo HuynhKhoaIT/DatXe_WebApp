@@ -135,7 +135,7 @@ export default function DashboardAdmin() {
         <div className={styles.card1}>
           <div className={styles.info}>
             <span className={styles.title}>Hiện đang có</span>
-            <span className={styles.updating}>Đang cập nhật</span>
+            {/* <span className={styles.updating}>Đang cập nhật</span> */}
           </div>
           <div className={styles.boxMenu}>
             {menu?.map((item: any, index: number) => {

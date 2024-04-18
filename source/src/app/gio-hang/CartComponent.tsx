@@ -1,7 +1,5 @@
 "use client";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import dayjs from "dayjs";
-import { useSession } from "next-auth/react";
 import {
   Grid,
   Modal,
@@ -21,7 +19,7 @@ import Container from "../components/common/Container";
 import styles from "./index.module.scss";
 import { modals } from "@mantine/modals";
 import Typo from "../components/elements/Typo";
-import { DatePickerInput, DateTimePicker } from "@mantine/dates";
+import { DateTimePicker } from "@mantine/dates";
 export default function CartComponent({ myAccount }: any) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -114,16 +112,17 @@ export default function CartComponent({ myAccount }: any) {
     modals.openConfirmModal({
       title: (
         <Typo
-          size="small"
-          type="semi-bold"
-          style={{ color: "var(--primary-color)" }}
+          size="primary"
+          type="bold"
+          // style={{ color: "var(--primary-color)" }}
         >
           Xác nhận thời gian
         </Typo>
       ),
       children: (
         <DateTimePicker
-          label="Thời gian"
+          size="md"
+          // label="Thời gian"
           defaultValue={dateTime}
           placeholder="Chọn thời gian "
           locale="vi"
@@ -248,18 +247,16 @@ export default function CartComponent({ myAccount }: any) {
               />
             </Grid>
             {/* <InfoDate setDate={setDate} setTime={setTime} /> */}
-            <Suspense fallback={<p>loading...</p>}>
-              <InfoCart
-                loading={loading}
-                calculateSubTotal={calculateSubTotal}
-                cartData={cartData}
-                decrementQuantity={decrementQuantity}
-                handleOpenModalDelete={handleOpenModalDelete}
-                incrementQuantity={incrementQuantity}
-                form={form}
-                ModalAcceptOrder={ModalAcceptOrder}
-              />
-            </Suspense>
+            <InfoCart
+              loading={loading}
+              calculateSubTotal={calculateSubTotal}
+              cartData={cartData}
+              decrementQuantity={decrementQuantity}
+              handleOpenModalDelete={handleOpenModalDelete}
+              incrementQuantity={incrementQuantity}
+              form={form}
+              ModalAcceptOrder={ModalAcceptOrder}
+            />
           </Container>
         </div>
       </form>

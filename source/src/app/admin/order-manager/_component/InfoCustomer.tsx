@@ -18,6 +18,7 @@ export default function InfoCustomer({
   isUser,
   openModalUpdateCustomer,
 }: any) {
+  console.log(form.values);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
   return (
