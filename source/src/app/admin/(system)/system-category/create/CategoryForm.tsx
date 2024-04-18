@@ -16,11 +16,11 @@ import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
-import FooterSavePage from "../../_component/FooterSavePage";
 import convertToSlug from "@/utils/until";
-import { useAddCategory } from "../../hooks/category/useAddCategory";
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
+import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import { useAddCategory } from "@/app/admin/hooks/category/useAddCategory";
 export default function CategoryForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddCategory();
   const [loading, handlers] = useDisclosure();
