@@ -8,37 +8,10 @@ import { getOptionsBrands } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
 const queryClient = new QueryClient();
 
-const addCar = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/client/cars`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-    });
-    if (!response.ok) {
-        throw new ResponseError('Failed to insert new car', response);
-    }
-    return await response.json();
-};
-
-const addCarDefault = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/client/cars/set-default`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-    });
-    if (!response.ok) {
-        throw new ResponseError('Failed to insert car default', response);
-    }
-    return await response.json();
-};
 
 
-const updateCar = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/client/cars/${values?.id}`, {
+const updateAccount = async (values: any): Promise<any> => {
+    const response = await fetch(`/api/client/account`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -50,78 +23,31 @@ const updateCar = async (values: any): Promise<any> => {
     }
     return await response.json();
 };
-interface UseCar {
-    addItem: any;
+interface UseAccount {
     updateItem: any;
-    brandOptions: any;
-    setDefault:any;
-    isLoadingBrand: boolean;
+    isPending: boolean;
 }
 
-export const useAddCar = (): UseCar => {
+export const useAddAccount = (): UseAccount => {
     const router = useRouter();
     const queryClient = useQueryClient();
-    const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
-        mutationFn: addCar,
-        onSuccess: (res) => {
-            router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm xe thành công',
-            });
+   
 
-
-            queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
-            });
-        },
-    });
-
-    const { mutate: setDefault } = useMutation({
-        mutationFn: addCarDefault,
+    const { mutate: updateItem,isPending } = useMutation({
+        mutationFn: updateAccount,
         onSuccess: () => {
+            router.refresh();
             notifications.show({
                 title: 'Thành công',
-                message: 'Thêm xe mặc định thành công',
+                message: 'Cập nhật thông tin thành công',
             });
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
+                queryKey: [QUERY_KEY.account,'client'],
             });
         },
     });
-
-    const { mutate: updateItem } = useMutation({
-        mutationFn: updateCar,
-        onSuccess: () => {
-            router.back();
-
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật xe thành công',
-            });
-            queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
-            });
-        },
-    });
-
-    const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({
-        queryKey: [QUERY_KEY.optionsBrandCar],
-        queryFn: () => getOptionsBrands(),
-        options: {
-            refetchOnWindowFocus: false,
-            staleTime: Infinity,
-            refetchInterval: false,
-        },
-    });
-
- 
     return {
-        addItem,
         updateItem,
-        setDefault,
-        brandOptions,
-        isLoadingBrand,
+        isPending
     };
 };

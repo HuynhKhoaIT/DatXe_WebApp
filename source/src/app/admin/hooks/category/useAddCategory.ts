@@ -37,13 +37,15 @@ const updateCategory = async (values: any): Promise<any> => {
 interface UseCategory {
     addItem: any;
     updateItem: any;
+    isPendingCreate:boolean,
+    isPendingUpdate:boolean,
 }
 
 export const useAddCategory = (): UseCategory => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem ,isPending:isPendingCreate } = useMutation({
         mutationFn: addCategory,
         onSuccess: () => {
             router.back();
@@ -58,7 +60,7 @@ export const useAddCategory = (): UseCategory => {
         },
     });
 
-    const { mutate: updateItem } = useMutation({
+    const { mutate: updateItem, isPending:isPendingUpdate } = useMutation({
         mutationFn: updateCategory,
         onSuccess: () => {
             router.back();
@@ -76,5 +78,7 @@ export const useAddCategory = (): UseCategory => {
     return {
         addItem,
         updateItem,
+        isPendingCreate,
+        isPendingUpdate,
     };
 };

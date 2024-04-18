@@ -2,6 +2,7 @@ import AntdImgCrop from "antd-img-crop";
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import edit from "@assets/icons/edit_icon.png";
+import { IconPlus } from "@tabler/icons-react";
 function CropImageLink({
   shape,
   url,
@@ -26,7 +27,9 @@ function CropImageLink({
   idResult = "image-result",
   idImageContainer = "image-container",
   onChange,
+  requiredText = "Vui lòng thêm...",
 }: any) {
+  console.log(defaultImage);
   return (
     <div className={className}>
       <AntdImgCrop
@@ -47,13 +50,14 @@ function CropImageLink({
           preFix={preFix}
           bgColor={bgColor}
           color={color}
-          showRequired={showRequired}
           showEditButton={showEditButton}
           srcIcon={srcIcon}
           idUpload={idUpload}
           idResult={idResult}
           idImageContainer={idImageContainer}
           onChange={onChange}
+          requiredText={requiredText}
+          showRequired={showRequired}
         />
       </AntdImgCrop>
     </div>
@@ -73,13 +77,14 @@ function Component({
   placeholder,
   required,
   color,
-  showRequired,
   showEditButton,
   srcIcon,
   idUpload,
   idResult,
   idImageContainer,
   onChange,
+  requiredText,
+  showRequired,
 }: any) {
   const [isEdit, setEdit] = useState(defaultImage && defaultImage !== "");
   useEffect(() => {
@@ -89,22 +94,22 @@ function Component({
       const imagePreview: any = document.getElementById(idResult);
       imagePreview.style.display = "block";
     }
-  }, []);
+  }, [defaultImage]);
 
   return (
     <>
       <div className={styles.wrapper}>
         <div
-          className={styles.round}
+          className={styles.addImage}
           id={idImageContainer}
           onClick={() => getFile(idUpload)}
           style={{ backgroundColor: bgColor, color: color }}
         >
-          {preFix && <img src={preFix} alt="" className={styles.preFix} />}
-          <span style={{ fontSize: "14px" }}> {placeholder}</span>
+          <IconPlus />
+          <span style={{ fontSize: "14px" }}> Tải lên</span>
         </div>
 
-        {required && showRequired && <Required />}
+        {required && <Required />}
       </div>
 
       <input
@@ -116,19 +121,19 @@ function Component({
         onChange={async (e: any) => {
           const files = Array.from(e.target.files)[0];
           const filePreview = await beforeUpload(files, []);
-          console.log(filePreview);
           try {
             const imagePreview: any = document.getElementById(idResult);
             const imageContainer: any = document.getElementById(
               idImageContainer
             );
+
+            imageContainer.style.display = "none";
             imagePreview.style.display = "block";
             imagePreview.src = URL.createObjectURL(filePreview);
             const res = await uploadFileThumbnail(filePreview);
             if (onChange) {
               onChange.handleChangeImage(onChange.index, res);
             }
-            imageContainer.style.display = "none";
             setEdit(true);
             onFinish?.(filePreview);
           } catch (error) {
@@ -136,7 +141,8 @@ function Component({
           }
         }}
       />
-      <div className={styles.imagePreviewContaier}>
+      {}
+      <div id="boxImage" className={styles.imagePreviewContaier}>
         <img
           id={idResult}
           className={styles.imagePreview}
@@ -153,6 +159,11 @@ function Component({
           />
         )}
       </div>
+      {required && showRequired && (
+        <p style={{ color: "red", fontSize: "14px" }} id="requiredText">
+          {requiredText}
+        </p>
+      )}
     </>
   );
 }

@@ -102,3 +102,22 @@ export const useCategories = (): UseCategories => {
         deleteItem,
     };
 };
+
+
+// get detail
+const fetchCategoryDetail = async (id: string) => {
+    const response = await fetch(`/api/admin/product-category/${id}`);
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch expert', response);
+    }
+    return await response.json();
+};
+
+const useCategoryDetail = (id: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.categories, id],
+        queryFn: () => fetchCategoryDetail(id),
+    });
+};
+
+export { useCategoryDetail, fetchCategoryDetail };

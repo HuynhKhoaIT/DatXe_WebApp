@@ -6,12 +6,12 @@ import UserProfile from "./_component/User";
 import { useAccountDetail } from "../hooks/profile/useProfile";
 
 export default function ProfilePage() {
-  const { data: profile } = useAccountDetail();
+  const { data: profile, isLoading } = useAccountDetail();
   return (
     <div className="user-profile-wrapper">
       <InfoProfile />
       <Space h="md" />
-      <UserProfile myAccount={profile?.data} />
+      <UserProfile myAccount={profile?.data} isLoading={isLoading} />
     </div>
   );
 }
