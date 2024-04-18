@@ -161,7 +161,7 @@ export async function getCars(requestData: any) {
 
 export async function updateCar(carId: string,dataInput:any) {
   const car = await showCar(carId);
-  return await prisma.car.update({
+  const rs = await prisma.car.update({
     where:{
       id: carId
     },
@@ -181,6 +181,14 @@ export async function updateCar(carId: string,dataInput:any) {
       userId: dataInput.userId ?? car.userId,
     }
   })
+  let carRs = JSON.parse(JSON.stringify(rs));
+  let br = await getCarModelById(carRs.carBrandId);
+  let md = await getCarModelById(carRs.carNameId);
+  let y = await getCarModelById(carRs.carYearId);
+  carRs.brandName = br;
+  carRs.modelName = md;
+  carRs.yearName = y;
+  return carRs;
 }
 
 export async function getCarsByPlates(titleFilter: string, garageId: string) {

@@ -71,7 +71,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 },
             });
 
-            return new NextResponse(JSON.stringify(updatedCar), {
+            let carRs = JSON.parse(JSON.stringify(updatedCar));
+            let br = await getCarModelById(carRs.carBrandId);
+            let md = await getCarModelById(carRs.carNameId);
+            let y = await getCarModelById(carRs.carYearId);
+            carRs.brandName = br;
+            carRs.modelName = md;
+            carRs.yearName = y;
+
+            return new NextResponse(JSON.stringify(carRs), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },
             });
