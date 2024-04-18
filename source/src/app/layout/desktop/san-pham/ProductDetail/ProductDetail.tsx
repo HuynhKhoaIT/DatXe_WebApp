@@ -12,7 +12,6 @@ import Book from "@/assets/icons/book.svg";
 
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
-  console.log(ProductDetail);
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -27,10 +26,11 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
       quantity: 1,
       price: ProductDetail?.price,
       priceSale: ProductDetail?.salePrice,
-      saleValue: 0,
       images: ProductDetail?.images,
       name: ProductDetail?.name,
       garageId: ProductDetail.garageId,
+      saleValue: ProductDetail?.salePrice,
+      subTotal: ProductDetail?.salePrice,
     });
     localStorage.setItem("cartData", JSON.stringify(existingCartItems));
     notifications.show({
@@ -62,16 +62,19 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
       } else {
         if (index !== -1) {
           existingCartItems[index].quantity += 1;
+          existingCartItems[index].subTotal +=
+            existingCartItems[index].subTotal;
         } else {
           existingCartItems.push({
             productId: ProductDetail?.id,
             price: ProductDetail?.price,
             priceSale: ProductDetail?.salePrice,
-            saleValue: 0,
+            saleValue: ProductDetail?.salePrice,
             images: ProductDetail?.images,
             name: ProductDetail?.name,
             garageId: ProductDetail.garageId,
             quantity: 1,
+            subTotal: ProductDetail?.salePrice,
           });
         }
         console.log("existingCartItems", existingCartItems);

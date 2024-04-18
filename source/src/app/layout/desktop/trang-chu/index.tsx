@@ -24,15 +24,6 @@ const LandingPageDesktop = ({
   productsHot,
   slideData,
 }: any) => {
-  const slideshowData = [
-    {
-      image: image1.src,
-    },
-    {
-      image: image2.src,
-    },
-  ];
-
   const { data: blogs, isLoading, isFetching } = useNewsList(10);
   return (
     <div className="bg-white">
@@ -59,7 +50,7 @@ const LandingPageDesktop = ({
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Blogs blogs={blogs?.data} isLoading={isLoading || isFetching} />
       </div>
-      <ProductSuggestions data={productsRelate?.data} />
+      {/* <ProductSuggestions data={productsRelate?.data} /> */}
       <div
         className={styles.productsBox}
         style={{

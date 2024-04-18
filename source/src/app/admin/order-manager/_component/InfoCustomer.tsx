@@ -42,12 +42,7 @@ export default function InfoCustomer({
                 onClick={openModalUpdateCustomer}
                 style={{ cursor: "pointer" }}
               />
-            </Tooltip> // <Button
-            //   leftSection={<IconUpload size={16} />}
-            //   // onClick={openModalUpdate}
-            // >
-            //   Cập nhật
-            // </Button>
+            </Tooltip>
           )}
         </Group>
         <Grid gutter={12} className={styles.marketingInfo}>
