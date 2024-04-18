@@ -188,23 +188,18 @@ export default function OrdersManaga() {
       isCamera: true,
     },
     // {
-    //   name: "s",
-    //   placeholder: "Mã đơn hàng",
-    //   type: FieldTypes?.STRING,
+    //   name: "customerId",
+    //   placeholder: "Khách hàng",
+    //   type: FieldTypes?.AUTOCOMPLETE,
+    //   value: customer,
+    //   setValue: setCustomer,
+    //   getOptionsData: getOptionsCustomers,
     // },
-    {
-      name: "customerId",
-      placeholder: "Khách hàng",
-      type: FieldTypes?.AUTOCOMPLETE,
-      value: customer,
-      setValue: setCustomer,
-      getOptionsData: getOptionsCustomers,
-    },
   ];
 
   const initialValuesSearch = {
     // s: "",
-    customerId: null,
+    // customerId: null,
     carId: null,
   };
 

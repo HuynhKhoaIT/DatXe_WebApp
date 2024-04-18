@@ -8,7 +8,7 @@ const Reviews = ({ productReview }: any) => {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <Typo size="sub" style={{ color: "var(--title-color)" }}>
-          {productReview?.data?.length} đánh giá
+          {productReview?.data?.length || 0} đánh giá
         </Typo>
         <Select
           w={130}

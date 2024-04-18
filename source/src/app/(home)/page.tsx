@@ -39,16 +39,19 @@ export default async function Home({ searchParams }: any) {
   const productsRelate = await callApi(apiConfig.products.getRelate, {
     params: {
       isProduct: 1,
+      limit: 8,
     },
   });
   const productsHot = await callApi(apiConfig.products.getProductHot, {
     params: {
       isProduct: 1,
+      limit: 8,
     },
   });
   const servicesHot = await callApi(apiConfig.products.getServiceHot, {
     params: {
       isProduct: 0,
+      limit: 8,
     },
   });
 
