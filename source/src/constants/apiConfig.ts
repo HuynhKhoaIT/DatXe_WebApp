@@ -51,20 +51,10 @@ const apiConfig = {
     },
     category:{
         getList: {
-            baseURL: `${apiUrl}api/products`,
+            baseURL: `${apiUrl}api/admin/product-category`,
             method: 'GET',
             headers: baseHeader,
         },
-        getById: {
-            baseURL: `${apiUrl}api/products/:id`,
-            method: 'GET',
-            headers: baseHeader,
-        },
-        orderCategory:{
-            baseURL: `${apiUrl}api/order-category`,
-            method: 'GET',
-            headers: baseHeader,
-        }
     },
     posts:{
         getList: {
