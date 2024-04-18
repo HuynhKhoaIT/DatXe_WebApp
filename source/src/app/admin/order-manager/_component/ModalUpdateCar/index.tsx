@@ -1,4 +1,5 @@
 "use client";
+import { useAddCar } from "@/app/admin/hooks/car/useAddCar";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import {
   Box,
@@ -30,6 +31,7 @@ export default function ModalUpdateCar({
 }: any) {
   const [loading, handlers] = useDisclosure();
 
+  const { updateItem } = useAddCar();
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
@@ -61,9 +63,12 @@ export default function ModalUpdateCar({
         }
       );
       formOrder.setFieldValue("numberPlates", values.numberPlates);
-      // formOrder.setFieldValue("carBrand", res?.brandName.title);
-      // formOrder.setFieldValue("carName", res?.modelName.title);
-      // formOrder.setFieldValue("carYear", res?.yearName.title);
+      if (res?.data?.brandName?.title)
+        formOrder.setFieldValue("carBrand", res?.data?.brandName?.title);
+      if (res?.data?.modelName?.title)
+        formOrder.setFieldValue("carName", res?.data?.modelName?.title);
+      if (res?.data?.yearName?.title)
+        formOrder.setFieldValue("carYear", res?.data?.yearName?.title);
       handlers.close();
       close();
     } catch (error) {

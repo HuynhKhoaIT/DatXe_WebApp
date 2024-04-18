@@ -43,13 +43,15 @@ interface UseCar {
     customerOptions: any;
     isLoadingBrand: boolean;
     isLoadingCustomer: boolean;
+    isPendingUpdate:boolean;
+    isPendingAdd:boolean;
 }
 
 export const useAddCar = (): UseCar => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem,isPending:isPendingAdd  } = useMutation({
         mutationFn: addCar,
         onSuccess: () => {
             router.back();
@@ -64,14 +66,13 @@ export const useAddCar = (): UseCar => {
         },
     });
 
-    const { mutate: updateItem } = useMutation({
+    const { mutate: updateItem,isPending:isPendingUpdate } = useMutation({
         mutationFn: updateCar,
         onSuccess: () => {
             router.back();
-
             notifications.show({
                 title: 'Thành công',
-                message: 'Cập nhật đơn hàng thành công',
+                message: 'Cập nhật xe thành công',
             });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars, searchParams.toString(), 1],
@@ -106,5 +107,7 @@ export const useAddCar = (): UseCar => {
         isLoadingBrand,
         customerOptions,
         isLoadingCustomer,
+        isPendingAdd,
+        isPendingUpdate
     };
 };

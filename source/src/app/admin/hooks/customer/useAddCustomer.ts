@@ -41,13 +41,15 @@ interface UseCustomer {
     updateItem: any;
     provinceOptions: any;
     isLoadingProvince: boolean;
+    isPendingUpdate:boolean;
+    isPendingAdd:boolean;
 }
 
 export const useAddCustomer = (): UseCustomer => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem ,isPending:isPendingAdd} = useMutation({
         mutationFn: addCustomer,
         onSuccess: () => {
             router.back();
@@ -62,7 +64,7 @@ export const useAddCustomer = (): UseCustomer => {
         },
     });
 
-    const { mutate: updateItem } = useMutation({
+    const { mutate: updateItem,isPending:isPendingUpdate } = useMutation({
         mutationFn: updateCustomer,
         onSuccess: () => {
             router.back();
@@ -87,5 +89,7 @@ export const useAddCustomer = (): UseCustomer => {
         updateItem,
         provinceOptions,
         isLoadingProvince,
+        isPendingUpdate,
+        isPendingAdd,
     };
 };

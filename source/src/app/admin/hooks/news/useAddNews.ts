@@ -37,13 +37,15 @@ const updateNews = async (values: any): Promise<any> => {
 interface UseCategory {
     addItem: any;
     updateItem: any;
+    isPendingAdd:boolean;
+    isPendingUpdate:boolean;
 }
 
 export const useAddNews = (): UseCategory => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem,isPending: isPendingAdd } = useMutation({
         mutationFn: addNews,
         onSuccess: () => {
             router.back();
@@ -58,7 +60,7 @@ export const useAddNews = (): UseCategory => {
         },
     });
 
-    const { mutate: updateItem } = useMutation({
+    const { mutate: updateItem,isPending: isPendingUpdate } = useMutation({
         mutationFn: updateNews,
         onSuccess: () => {
             router.back();
@@ -76,5 +78,7 @@ export const useAddNews = (): UseCategory => {
     return {
         addItem,
         updateItem,
+        isPendingAdd,
+        isPendingUpdate,
     };
 };

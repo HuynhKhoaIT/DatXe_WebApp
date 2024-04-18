@@ -26,8 +26,8 @@ import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
 
 export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   const [valueRTE, setValueRTE] = useState("");
-  const { addItem, updateItem } = useAddNews();
-  const [loading, handlers] = useDisclosure();
+  const { addItem, updateItem, isPendingAdd, isPendingUpdate } = useAddNews();
+  const [thumbnailUrl, setThumbnailUrl] = useState<File | null>();
   const form = useForm({
     initialValues: {
       thumbnail: "",
@@ -45,11 +45,10 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       try {
         form.setInitialValues(dataDetail);
         form.setValues(dataDetail);
+        setThumbnailUrl(dataDetail?.thumbnail);
         setValueRTE(dataDetail?.description);
       } catch (error) {
         console.error("Error fetching data:", error);
-      } finally {
-        handlers.close();
       }
     };
 
@@ -75,6 +74,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       }
       const response = await axios.post(baseURL, formData, options);
       form.setFieldValue("thumbnail", response.data);
+      setThumbnailUrl(response.data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -82,13 +82,11 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   const handleSubmit = async (values: any) => {
     values.slug = convertToSlug(values?.title);
     values.description = valueRTE;
-    handlers.open();
     if (isEditing) {
       updateItem(values);
     } else {
       addItem(values);
     }
-    handlers.close();
   };
 
   return (
@@ -111,7 +109,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
                     shape="rect"
                     aspect={2 / 1}
                     placeholder={"Cập nhật ảnh "}
-                    defaultImage={dataDetail?.thumbnail || ImageUpload.src}
+                    defaultImage={thumbnailUrl}
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>
@@ -173,7 +171,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
         </Grid>
 
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={isPendingAdd || isPendingUpdate}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />
       </form>
