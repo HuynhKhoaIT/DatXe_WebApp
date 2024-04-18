@@ -153,7 +153,7 @@ export default function ModelCarListPage() {
             data={modelCarList}
             columns={columns}
             loading={isLoading}
-            totalPage={modelCarList?.totalPage}
+            // totalPage={modelCarList?.totalPage}
             setPage={setPage}
             activePage={page}
           />

@@ -155,7 +155,7 @@ export default function Categories() {
             data={brandCarList?.data}
             columns={columns}
             loading={isLoading}
-            totalPage={brandCarList?.totalPage}
+            // totalPage={brandCarList?.totalPage}
             setPage={setPage}
             activePage={page}
           />

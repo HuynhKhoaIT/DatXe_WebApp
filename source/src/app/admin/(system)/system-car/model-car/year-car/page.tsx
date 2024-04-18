@@ -152,7 +152,7 @@ export default function YearCarListPage() {
             data={yearCarList}
             columns={columns}
             loading={isLoading}
-            totalPage={yearCarList?.totalPage}
+            // totalPage={yearCarList?.totalPage}
             setPage={setPage}
             activePage={page}
           />
