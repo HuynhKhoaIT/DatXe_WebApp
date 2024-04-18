@@ -18,9 +18,8 @@ const DynamicModalDeleteItem = dynamic(
     ssr: false,
   }
 );
-const DynamicModalCategories = dynamic(() => import("./ModalCategoriesDLBD"));
 
-export default function CategoryListPage({ profile }: any) {
+export default function CategoryListPage() {
   const {
     categories,
     isLoading,
@@ -40,11 +39,6 @@ export default function CategoryListPage({ profile }: any) {
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
-  ] = useDisclosure(false);
-
-  const [
-    openedModalCategories,
-    { open: openModalCategories, close: closeModalCategories },
   ] = useDisclosure(false);
 
   const columns = [
@@ -117,14 +111,11 @@ export default function CategoryListPage({ profile }: any) {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
-        if (record.garageId == 2) {
-          return;
-        }
         return (
           <Flex>
             <Link
               href={{
-                pathname: `/admin/categories/${record.id}`,
+                pathname: `/admin/system-categories/${record.id}`,
               }}
             >
               <Button
@@ -189,18 +180,9 @@ export default function CategoryListPage({ profile }: any) {
         }
         actionBar={
           <Flex justify={"end"} align={"center"} gap={20}>
-            <Button
-              size="lg"
-              h={{ base: 42, md: 50, lg: 50 }}
-              radius={0}
-              onClick={openModalCategories}
-              leftSection={<IconPlus size={18} />}
-            >
-              Đồng bộ
-            </Button>
             <Link
               href={{
-                pathname: `/admin/categories/create`,
+                pathname: `/admin/system-categories/create`,
               }}
             >
               <Button
@@ -234,13 +216,6 @@ export default function CategoryListPage({ profile }: any) {
         handleDeleteItem={handleDeleteItem}
         deleteRow={deleteRow}
       />
-      {openedModalCategories && (
-        <DynamicModalCategories
-          openedModalCategories={openedModalCategories}
-          closeModalCategories={closeModalCategories}
-          profile={profile}
-        />
-      )}
     </div>
   );
 }

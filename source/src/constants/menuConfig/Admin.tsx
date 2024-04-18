@@ -13,11 +13,11 @@ const menuConfigAdmin = [
   },
   { link: "/admin/slide-banner", label: "Danh sách banner", icon: IconCar },
 
-  // {
-  //   label: "Danh mục",
-  //   link: "/admin/system-category",
-  //   icon: IconCalendarStats,
-  // },
+  {
+    label: "Danh mục",
+    link: "/admin/system-categories",
+    icon: IconCalendarStats,
+  },
 
   { link: "/admin/system-car", label: "Danh mục xe", icon: IconCar },
 ];
