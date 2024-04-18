@@ -7,6 +7,7 @@ import {
   Group,
   LoadingOverlay,
   NumberInput,
+  ScrollArea,
   Select,
   Space,
   Table,
@@ -55,7 +56,6 @@ export default function OrderForm({
   dataDetail,
   isLoading,
 }: any) {
-  console.log(dataDetail);
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
@@ -297,10 +297,14 @@ export default function OrderForm({
           getOptionsModels(data?.data?.carBrandId),
           getOptionsYearCar(data?.data?.carNameId),
         ]);
+        form.setFieldValue("fullName", data?.data?.customer.fullName);
+        form.setFieldValue("phoneNumber", data?.data?.customer.phoneNumber);
+        form.setFieldValue("address", data?.data?.customer.address);
         setModelOptions(models);
         setYearCarOptions(yearCars);
         setCustomer(data?.data?.customer);
         setCar(data?.data?.car);
+        console.log(data?.data);
         form.setFieldValue("customerId", data?.data?.customer.id);
         form.setFieldValue("carId", data?.data?.id);
         form.setFieldValue("carBrandId", data?.data?.carBrandId);
@@ -309,16 +313,6 @@ export default function OrderForm({
         form.setFieldValue("carBrand", data?.data?.brandName.title);
         form.setFieldValue("carName", data?.data?.modelName.title);
         form.setFieldValue("carYear", data?.data?.yearName.title);
-        form.setFieldValue("fullName", data?.data?.customer.fullName);
-        form.setFieldValue("phoneNumber", data?.data?.customer.phoneNumber);
-        form.setFieldValue("address", data?.data?.customer.address);
-
-        // form.setFieldValue(
-        //   "billingCustomerName",
-        //   data?.data?.customer.fullName
-        // );
-        // form.setFieldValue("billingPhone", data?.data?.customer.phoneNumber);
-        // form.setFieldValue("billingAdress", data?.data?.customer.address);
       }
     } catch (error) {
     } finally {
@@ -599,7 +593,7 @@ export default function OrderForm({
             )}
 
             <Tabs.Panel value="customer">
-              <Grid gutter={12} className={styles.marketingInfo}>
+              {/* <Grid gutter={12} className={styles.marketingInfo}>
                 <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                   <TextInput
                     size="lg"
@@ -708,10 +702,26 @@ export default function OrderForm({
                     />
                   )}
                 </Grid.Col>
-              </Grid>
+              </Grid> */}
+              <InfoCart
+                brandOptions={brandOptions}
+                car={car}
+                isUser={isUser}
+                setModelOptions={setModelOptions}
+                modelOptions={modelOptions}
+                yearCarOptions={yearCarOptions}
+                setYearCarOptions={setYearCarOptions}
+                form={form}
+                openModalUpdate={openModalUpdate}
+                handleGetInfo={handleGetInfo}
+                handlersIsUser
+              />
               <Space h={30} />
-              <InfoCustomer form={form} isUser={isUser} />
-
+              <InfoCustomer
+                openModalUpdateCustomer={openModalUpdateCustomer}
+                form={form}
+                isUser={isUser}
+              />
               <div className={styles.footer}>
                 <Button
                   size="lg"
@@ -749,7 +759,7 @@ export default function OrderForm({
             </Tabs.Panel>
 
             <Tabs.Panel value="detailOrder">
-              <>
+              <ScrollArea>
                 <div
                   style={{ marginTop: 20 }}
                   className={styles.cardListProduct}
@@ -775,6 +785,7 @@ export default function OrderForm({
                       Thêm
                     </Button>
                   </div>
+
                   <Grid className={styles.marketingInfo}>
                     <Grid.Col span={12}>
                       {!isMobile ? (
@@ -813,6 +824,7 @@ export default function OrderForm({
                       )}
                     </Grid.Col>
                   </Grid>
+                  <InfoCustomer2 form={form} isUser={isUser} />
                 </div>
                 <div style={{ marginTop: 20 }} className={styles.card}>
                   <Typo
@@ -949,7 +961,7 @@ export default function OrderForm({
                     />
                   )}
                 </div>
-              </>
+              </ScrollArea>
             </Tabs.Panel>
           </Tabs>
         ) : (

@@ -12,6 +12,7 @@ const DynamicModalAddCar = dynamic(() => import("../_component/ModalAddCar"), {
 });
 
 export default function InfoCar({ myAccount, form }: any) {
+  console.log(myAccount);
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );

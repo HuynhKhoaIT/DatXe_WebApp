@@ -77,7 +77,7 @@ export default function ModalNumberPlates({
               w={"100%"}
               placeholder="Biển số xe"
               value={numberPlate}
-              error={numberPlate?.length < 4 ? "Tối thiểu 3 kí tự" : null}
+              error={numberPlate?.length < 3 ? "Tối thiểu 3 kí tự" : null}
               onChange={(value: any) => {
                 setNumberPlate(value);
               }}

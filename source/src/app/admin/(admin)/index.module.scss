@@ -54,6 +54,22 @@
             }
         }
     }
+    @media only screen and (max-width: 1230px) {
+        .boxMenu {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 10px;
+        }
+
+    }
+    @media only screen and (max-width: 980px) {
+        .boxMenu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }
+
+    }
 }
 
 .wrapper_2 {

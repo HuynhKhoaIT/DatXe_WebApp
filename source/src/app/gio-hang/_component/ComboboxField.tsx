@@ -1,6 +1,14 @@
 "use client";
 import { useState } from "react";
-import { InputBase, Combobox, useCombobox, Button, Input } from "@mantine/core";
+import {
+  InputBase,
+  Combobox,
+  useCombobox,
+  Button,
+  Input,
+  Group,
+  CheckIcon,
+} from "@mantine/core";
 
 export default function ComboboxField({
   label,
@@ -10,13 +18,20 @@ export default function ComboboxField({
   value,
   setValue,
 }: any) {
+  // const combobox = useCombobox({
+  //   onDropdownClose: () => combobox.resetSelectedOption(),
+  // });
+
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
+    onDropdownOpen: (eventSource) => {
+      if (eventSource === "keyboard") {
+        combobox.selectActiveOption();
+      } else {
+        combobox.updateSelectedOptionIndex("active");
+      }
+    },
   });
-
-  console.log(value);
-
-  const [search, setSearch] = useState("");
 
   const handleSetValueCar = (data: any) => {
     form.setFieldValue("carId", data?.id);
@@ -27,37 +42,34 @@ export default function ComboboxField({
     form.setFieldValue("carModelName", data?.modelName?.title);
     form.setFieldValue("carYear", data?.yearName?.title);
   };
-  const options = carsData?.map((item: any, index: number) => (
+
+  const options = carsData?.map((item: any) => (
     <Combobox.Option
       value={item.numberPlates}
-      key={index}
-      active={item.numberPlates === value}
+      key={item?.id}
+      active={item.isDefault === true}
+      onClick={() => {
+        handleSetValueCar(item);
+      }}
     >
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          padding: "10px 0",
-        }}
-        onClick={() => {
-          handleSetValueCar(item);
-        }}
-      >
-        {item.numberPlates}
-      </div>
+      <Group h={40} gap="xs">
+        {item.numberPlates === value && <CheckIcon size={12} />}
+        <span>{item.numberPlates}</span>
+      </Group>
     </Combobox.Option>
   ));
 
   return (
     <Combobox
       store={combobox}
+      resetSelectionOnOptionHover
       onOptionSubmit={(val) => {
         setValue(val);
-        setSearch(val);
         combobox.closeDropdown();
+        combobox.updateSelectedOptionIndex("active");
       }}
     >
-      <Combobox.Target>
+      <Combobox.Target targetType="button">
         <InputBase
           size="lg"
           label={label}
@@ -67,8 +79,6 @@ export default function ComboboxField({
           rightSection={<Combobox.Chevron />}
           onClick={() => combobox.toggleDropdown()}
           rightSectionPointerEvents="none"
-          // defaultValue={defaultValue}
-          //   classNames={{ input: classes.input }}
         >
           {value || <Input.Placeholder>Chọn xe</Input.Placeholder>}
         </InputBase>
