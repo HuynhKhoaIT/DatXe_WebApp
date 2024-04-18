@@ -14,6 +14,7 @@ const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
 export default function OrderDetailPage({ dataSource }: any) {
+  console.log(dataSource);
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );

@@ -60,7 +60,7 @@ export default function TableBasic({
             return (
               <Table.Tr
                 key={index}
-                style={{ cursor: onRow ? "pointer" : "none" }}
+                style={{ cursor: onRow ? "pointer" : "initial" }}
                 onClick={(e) => {
                   if (onRow) {
                     router.push(onRow + `/${item?.id}`);

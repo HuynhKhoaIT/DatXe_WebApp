@@ -40,6 +40,9 @@ export async function POST(request: Request) {
         const session = await getServerSession(authOptions);
         if (session) {
             let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
+            if(session.user?.role == 'ADMIN'){
+                garageId = "2";
+            }
             json.garageId = garageId;
             const productCategory = await prisma.productCategory.create({
                 data: json,

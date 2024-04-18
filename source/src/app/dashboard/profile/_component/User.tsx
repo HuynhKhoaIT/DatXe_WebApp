@@ -9,6 +9,7 @@ import {
   Box,
   Card,
   Text,
+  LoadingOverlay,
 } from "@mantine/core";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
@@ -29,26 +30,27 @@ import Typo from "@/app/components/elements/Typo";
 import DateField from "@/app/components/form/DateField";
 import CropImageLink from "@/app/components/common/CropImage";
 import axios from "axios";
-export default function UserProfile({ myAccount }: any) {
+import { QUERY_KEY } from "@/constants";
+import { useAddAccount } from "../../hooks/profile/useAddProfile";
+export default function UserProfile({ myAccount, isLoading }: any) {
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
   const [avatarUrl, setAvatarUrl] = useState(null);
 
+  const { updateItem, isPending } = useAddAccount();
   const [ward, setWard] = useState<any>();
-  const { data: provinceOptions, isLoading: isLoading } = useFetch({
-    queryKey: ["provinceOptions"],
+  const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
+    queryKey: [QUERY_KEY.optionsProvince],
     queryFn: () => getOptionsProvince(),
   });
+
   const router = useRouter();
-  const { data: session } = useSession();
-  const token = session?.user?.token;
   const form = useForm({
     initialValues: {
       fullName: myAccount?.fullName || "",
       phoneNumber: myAccount?.phoneNumber || "",
-      dob: myAccount?.dob && dayjs(myAccount?.dob).toDate(),
       address: myAccount?.address || "",
     },
 
@@ -75,17 +77,7 @@ export default function UserProfile({ myAccount }: any) {
   };
   const handleUpdateProfile = async (values: any) => {
     try {
-      await fetch(`/api/client/account`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      notifications.show({
-        title: "Thành công",
-        message: "Cập nhật thành công",
-      });
+      updateItem(values);
       router.refresh();
     } catch (error) {
       notifications.show({
@@ -97,33 +89,37 @@ export default function UserProfile({ myAccount }: any) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (myAccount) {
+      try {
+        form.setInitialValues(myAccount);
+        form.setValues(myAccount);
         setAvatarUrl(myAccount?.avatar);
-        try {
-          const [districts, wards] = await Promise.all([
-            getOptionsDistrict(Number(myAccount?.provinceId)),
-            getOptionsWard(Number(myAccount?.districtId)),
-          ]);
-          setDistrictOptions(districts);
-          setWardOptions(wards);
-          form.setFieldValue("fullName", myAccount.fullName);
-          form.setFieldValue("phoneNumber", myAccount.phoneNumber);
-          form.setFieldValue("address", myAccount.address);
-          form.setFieldValue("avatar", myAccount.avatar);
+        if (myAccount?.dob)
           form.setFieldValue("dob", dayjs(myAccount?.dob).toDate());
-          form.setFieldValue("cityId", myAccount?.provinceId?.toString());
-          form.setFieldValue("districtId", myAccount?.districtId?.toString());
-          form.setFieldValue("wardId", myAccount?.wardId?.toString());
-          setProvince(myAccount?.provinceId?.toString());
-          setDistrict(myAccount?.districtId?.toString());
-          setWard(myAccount?.wardId?.toString());
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
+        const [districts, wards] = await Promise.all([
+          getOptionsDistrict(Number(myAccount?.cityId)),
+          getOptionsWard(Number(myAccount?.districtId)),
+        ]);
+        form.setFieldValue("cityId", myAccount?.cityId.toString());
+        form.setFieldValue("districtId", myAccount?.districtId?.toString());
+        form.setFieldValue("wardId", myAccount?.wardId?.toString());
+        setProvince(myAccount?.cityId?.toString());
+        setDistrict(myAccount?.districtId?.toString());
+        setWard(myAccount?.wardId?.toString());
+
+        setDistrictOptions(districts);
+        setWardOptions(wards);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
     };
-    fetchData();
+
+    if (myAccount) {
+      fetchData();
+    } else {
+      form.setFieldValue("status", "PUBLIC");
+    }
   }, [myAccount]);
+
   return (
     <div className={styles.wrapper}>
       <div>
@@ -133,131 +129,134 @@ export default function UserProfile({ myAccount }: any) {
           </Typo>
         </div>
 
-        <Card w={"100%"} px={20}>
-          <form
-            name="userProfileForm"
-            onSubmit={form.onSubmit((values) => handleUpdateProfile(values))}
-          >
-            <Grid gutter={12}>
-              <Grid.Col span={{ base: 6 }}>
-                <Text size={"16px"} c={"#999999"} mb={"6px"}>
-                  Ảnh đại diện
-                </Text>
-                <CropImageLink
-                  shape="circle"
-                  placeholder={"Cập nhật logo"}
-                  defaultImage={avatarUrl || ImageUpload.src}
-                  uploadFileThumbnail={uploadFileThumbnail}
-                  aspect={1 / 1}
-                  form={form}
-                  name="avatar"
-                />
-              </Grid.Col>
-            </Grid>
-            <Grid gutter={16} w={"100%"}>
-              <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
-                <TextInput
-                  size="lg"
-                  radius={0}
-                  w={"100%"}
-                  withAsterisk
-                  {...form.getInputProps("fullName")}
-                  label="Họ tên"
-                  placeholder="Nguyễn Văn A"
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <DateField
-                  {...form.getInputProps("dob")}
-                  label="Ngày sinh"
-                  placeholder="Ngày sinh"
-                  clearable={true}
-                  maxDate={new Date()}
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <TextInput
-                  size="lg"
-                  radius={0}
-                  type="tel"
-                  disabled={true}
-                  {...form.getInputProps("phoneNumber")}
-                  label="Điện thoại"
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <TextInput
-                  size="lg"
-                  radius={0}
-                  {...form.getInputProps("address")}
-                  label="Địa chỉ"
-                  placeholder="1234 Main St"
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <Select
-                  size="lg"
-                  radius={0}
-                  {...form.getInputProps("cityId")}
-                  label="Tỉnh/Thành phố"
-                  placeholder="Chọn tỉnh"
-                  data={provinceOptions}
-                  value={province}
-                  onChange={async (value) => {
-                    const optionsData = await getOptionsDistrict(Number(value));
-                    setDistrictOptions(optionsData);
-                    form.setFieldValue("cityId", value);
-                    form.setFieldValue("districtId", "");
-                    form.setFieldValue("wardId", "");
-                    setProvince(value);
-                    setDistrict(null);
-                    setWard(null);
-                  }}
-                ></Select>
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <Select
-                  size="lg"
-                  radius={0}
-                  {...form.getInputProps("districtId")}
-                  label="Huyện/Phường"
-                  placeholder="Huyện/Phường"
-                  data={districtOptions}
-                  value={district}
-                  onChange={async (value) => {
-                    const optionsData = await getOptionsWard(Number(value));
-                    setWardOptions(optionsData);
-                    form.setFieldValue("districtId", value);
-                    form.setFieldValue("wardId", "");
-                    setDistrict(value);
-
-                    setWard(null);
-                  }}
-                ></Select>
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <Select
-                  size="lg"
-                  radius={0}
-                  {...form.getInputProps("wardId")}
-                  label="Xã/Phường"
-                  placeholder="Chọn xã/phường"
-                  data={wardOptions}
-                  value={ward}
-                  onChange={(value) => {
-                    form.setFieldValue("wardId", value);
-                    setWard(value);
-                  }}
-                ></Select>
-              </Grid.Col>
-            </Grid>
-            <Group pt={20} justify="end" className="col-12 text-right ">
-              <Button size="lg" radius={0} type="submit">
-                Cập nhật
-              </Button>
-            </Group>
-          </form>
-        </Card>
+        <Box pos={"relative"}>
+          <LoadingOverlay visible={isLoading} />
+          <Card w={"100%"} px={20}>
+            <form
+              name="userProfileForm"
+              onSubmit={form.onSubmit((values) => handleUpdateProfile(values))}
+            >
+              <Grid gutter={12}>
+                <Grid.Col span={{ base: 6 }}>
+                  <Text size={"16px"} c={"#3d4465"} mb={"6px"}>
+                    Ảnh đại diện
+                  </Text>
+                  <CropImageLink
+                    shape="round"
+                    defaultImage={avatarUrl}
+                    uploadFileThumbnail={uploadFileThumbnail}
+                    aspect={1 / 1}
+                    form={form}
+                    name="avatar"
+                  />
+                </Grid.Col>
+              </Grid>
+              <Grid gutter={16} w={"100%"}>
+                <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    w={"100%"}
+                    withAsterisk
+                    {...form.getInputProps("fullName")}
+                    label="Họ tên"
+                    placeholder="Nguyễn Văn A"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                  <DateField
+                    {...form.getInputProps("dob")}
+                    label="Ngày sinh"
+                    placeholder="Ngày sinh"
+                    clearable={true}
+                    maxDate={new Date()}
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    type="tel"
+                    disabled={true}
+                    {...form.getInputProps("phoneNumber")}
+                    label="Điện thoại"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("address")}
+                    label="Địa chỉ"
+                    placeholder="1234 Main St"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                  <Select
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("cityId")}
+                    label="Tỉnh/Thành phố"
+                    placeholder="Chọn tỉnh"
+                    data={provinceOptions}
+                    value={province}
+                    onChange={async (value) => {
+                      const optionsData: any = await getOptionsDistrict(
+                        Number(value)
+                      );
+                      setDistrictOptions(optionsData);
+                      form.setFieldValue("cityId", value);
+                      form.setFieldValue("districtId", "");
+                      form.setFieldValue("wardId", "");
+                      setProvince(value);
+                      setDistrict(null);
+                      setWard(null);
+                    }}
+                  ></Select>
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                  <Select
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("districtId")}
+                    label="Huyện/Phường"
+                    placeholder="Huyện/Phường"
+                    data={districtOptions}
+                    value={district}
+                    onChange={async (value) => {
+                      const optionsData = await getOptionsWard(Number(value));
+                      setWardOptions(optionsData);
+                      form.setFieldValue("districtId", value);
+                      form.setFieldValue("wardId", "");
+                      setDistrict(value);
+                      setWard(null);
+                    }}
+                  ></Select>
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                  <Select
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("wardId")}
+                    label="Xã/Phường"
+                    placeholder="Chọn xã/phường"
+                    data={wardOptions}
+                    value={ward}
+                    onChange={(value) => {
+                      form.setFieldValue("wardId", value);
+                      setWard(value);
+                    }}
+                  ></Select>
+                </Grid.Col>
+              </Grid>
+              <Group pt={20} justify="end" className="col-12 text-right ">
+                <Button size="lg" radius={0} type="submit" loading={isPending}>
+                  Cập nhật
+                </Button>
+              </Group>
+            </form>
+          </Card>
+        </Box>
       </div>
     </div>
   );
