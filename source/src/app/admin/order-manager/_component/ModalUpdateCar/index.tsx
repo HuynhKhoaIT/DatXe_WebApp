@@ -30,7 +30,6 @@ export default function ModalUpdateCar({
 }: any) {
   const [loading, handlers] = useDisclosure();
 
-
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {

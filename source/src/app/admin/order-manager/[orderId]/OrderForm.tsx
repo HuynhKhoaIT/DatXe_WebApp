@@ -109,8 +109,6 @@ export default function OrderForm({
     initialValues: {
       detail: selectedProducts,
       numberPlates: "",
-      customerId: 0,
-      carId: 0,
       phoneNumber: "",
     },
     validate: {
@@ -276,7 +274,6 @@ export default function OrderForm({
 
   // lấy thông tin theo biển số xe
   const handleGetInfo = async (numberPlate: string) => {
-    console.log("handle get info");
     form.setFieldValue("numberPlates", numberPlate);
 
     if (licenseNumber) {
@@ -303,8 +300,7 @@ export default function OrderForm({
         setModelOptions(models);
         setYearCarOptions(yearCars);
         setCustomer(data?.data?.customer);
-        setCar(data?.data?.car);
-        console.log(data?.data);
+        setCar(data?.data);
         form.setFieldValue("customerId", data?.data?.customer.id);
         form.setFieldValue("carId", data?.data?.id);
         form.setFieldValue("carBrandId", data?.data?.carBrandId);
