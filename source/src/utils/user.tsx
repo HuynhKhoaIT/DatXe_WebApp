@@ -25,6 +25,7 @@ import { registerUser } from "@/app/libs/prisma/user";
 import prisma from "@/app/libs/prismadb";
 import { generateUUID } from "./until";
 import { sha256 } from "js-sha256";
+import { createBitlyGarage } from "./garage";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.
@@ -185,8 +186,10 @@ export const registerGarage = async (
         description: "",
       }),
     });
-    // console.log('garageNew',garageNew)
+    
+    
     const garageData = await garageNew.json()
+    
     const userNew = await fetch("/api/user/register", {
       method: "POST",
       body: JSON.stringify({

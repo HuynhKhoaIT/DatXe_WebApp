@@ -157,6 +157,7 @@ export async function createGarage(data: any) {
     });
     if (garage) {
       const createBitly = await createBitlyGarage(garage);
+      console.log(createBitly);
       if (createBitly) {
         await prisma.garage.update({
           where: {

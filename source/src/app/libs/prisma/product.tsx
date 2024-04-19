@@ -277,6 +277,9 @@ export async function getProductsClient(requestData: any) {
               status: "PUBLIC",
               garageId,
               isProduct,
+              garage: {
+                status: "PUBLIC",
+              },
             },
           ],
         },

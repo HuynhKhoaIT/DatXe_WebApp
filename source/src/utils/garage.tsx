@@ -59,7 +59,7 @@ export const getEmployees = async (id: string) => {
 
 export const createBitlyGarage = async(data:any) => {
   try {
-    const bitlyURL = `https://oga.datxe.com/chuyen-gia/${data.code}`;
+    const bitlyURL = `https://oga.datxe.com/chuyen-gia/${data.id}`;
     const config = {
       headers: { Authorization: `Bearer ${process.env.BITLY_TOKEN}` },
     };
