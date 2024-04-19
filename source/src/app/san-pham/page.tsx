@@ -9,13 +9,17 @@ import { DEFAULT_SIZE_LIMIT } from "@/constants";
 export default async function Products({ searchParams }: any) {
   const products = await callApi(apiConfig.products.getList, {
     params: {
-      categoriId: searchParams?.categoryId,
+      categoryId: searchParams?.categoryId,
       isProduct: searchParams?.isProduct || true,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
     },
   });
   const categories = await getCategories({ garageId: "2" });
 
+  const categoryOption = categories?.data?.map((item: any) => ({
+    value: item.id.toString(),
+    name: item.title,
+  }));
   return (
     <RenderContext
       components={{
@@ -27,7 +31,7 @@ export default async function Products({ searchParams }: any) {
         },
       }}
       products={products}
-      categories={categories}
+      categoryOption={categoryOption}
       kindProduct={kindProduct}
       searchParams={searchParams}
     />

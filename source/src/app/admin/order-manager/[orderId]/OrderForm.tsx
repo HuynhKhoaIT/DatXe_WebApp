@@ -967,7 +967,7 @@ export default function OrderForm({
                         type="submit"
                         leftSection={<IconChevronRight size={16} />}
                       >
-                        {isEditing ? "Cập nhật" : "Hoàn thành"}
+                        {isEditing ? "Cập nhật" : "Tạo đơn"}
                       </Button>
                     </div>
                   ) : (
@@ -1216,7 +1216,7 @@ export default function OrderForm({
                 ) : (
                   <FooterSavePage
                     saveLoading={loadingButton}
-                    okText="Hoàn thành"
+                    okText="Tạo đơn"
                   />
                 )}
               </>

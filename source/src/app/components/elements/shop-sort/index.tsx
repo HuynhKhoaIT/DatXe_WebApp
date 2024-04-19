@@ -9,12 +9,10 @@ export function Sort({ lengthData }: { lengthData: number }) {
   const searchParams = useSearchParams();
   return (
     <Group justify="space-between" w={"100%"}>
-      <Typo size="sub" type="semi-bold" style={{ color: "var(--theme-color)" }}>
+      <Typo size="primary" type="bold" style={{ color: "var(--theme-color)" }}>
         Hiển thị {lengthData} sản phẩm
       </Typo>
-      <Select
-        // size="lg"
-        // radius={0}
+      {/* <Select
         placeholder="Sắp xếp theo mặc định"
         data={[
           { value: "0", label: "Sắp xếp theo mặc định" },
@@ -36,7 +34,7 @@ export function Sort({ lengthData }: { lengthData: number }) {
           }
           router.push(`?${params.toString()}`);
         }}
-      />
+      /> */}
     </Group>
   );
 }

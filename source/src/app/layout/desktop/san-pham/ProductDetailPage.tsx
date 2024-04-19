@@ -25,7 +25,10 @@ const ProductDetailPageDesktop = async ({
         <Breadcrumb breadcrumbs={Breadcrumbs} />
         <Flex direction={"column"} gap={40}>
           <Suspense fallback={<LoadingComponent />}>
-            <ProductDetail ProductDetail={product?.product} />
+            <ProductDetail
+              productReview={productReview}
+              ProductDetail={product?.product}
+            />
           </Suspense>
           <ProductTabsDes
             ProductDetail={product?.product}

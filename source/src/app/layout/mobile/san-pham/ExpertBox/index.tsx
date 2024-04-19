@@ -23,7 +23,7 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
               {ProductDetail?.garage?.shortName}
             </Typo>
             <Link
-              href={`/chuyen-gia/${ProductDetail?.garage?.code}`}
+              href={`/chuyen-gia/${ProductDetail?.garage?.id}`}
               className={styles.toExpert}
             >
               Đi đến chuyên gia

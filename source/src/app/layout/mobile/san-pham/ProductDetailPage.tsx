@@ -22,7 +22,10 @@ const ProductDetailPageMobile = async ({
       <Container>
         <Breadcrumb breadcrumbs={Breadcrumbs} />
         <Flex direction={"column"} gap={40}>
-          <ProductDetail ProductDetail={product?.product} />
+          <ProductDetail
+            productReview={productReview}
+            ProductDetail={product?.product}
+          />
           <ProductTabsDes
             ProductDetail={product?.product}
             productReview={productReview}
