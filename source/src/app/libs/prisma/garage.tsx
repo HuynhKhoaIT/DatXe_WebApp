@@ -155,20 +155,6 @@ export async function createGarage(data: any) {
         amenities: true,
       },
     });
-    if (garage) {
-      const createBitly = await createBitlyGarage(garage);
-      console.log(createBitly);
-      if (createBitly) {
-        await prisma.garage.update({
-          where: {
-            id: garage.id.toString(),
-          },
-          data: {
-            bitlyUrl: createBitly.id,
-          },
-        });
-      }
-    }
     return garage;
   } catch (error) {
     return { error };
@@ -258,4 +244,19 @@ export async function getGarageByCode(code: string) {
   } catch (error) {
     return { error };
   }
+}
+
+export async function createQrGarage(garage:any) {
+  const createBitly = await createBitlyGarage(garage);
+  if (createBitly) {
+    return await prisma.garage.update({
+      where: {
+        id: garage.id.toString(),
+      },
+      data: {
+        bitlyUrl: createBitly.link,
+      },
+    });
+  }
+  return {}
 }
