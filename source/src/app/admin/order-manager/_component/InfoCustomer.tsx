@@ -17,15 +17,15 @@ export default function InfoCustomer({
   form,
   isUser,
   openModalUpdateCustomer,
+  loading,
 }: any) {
-  console.log(form.values);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
   return (
     <div className={styles.cardInfo}>
       <Box pos={"relative"}>
         <LoadingOverlay
-          visible={loadingCustomer}
+          visible={loadingCustomer || loading}
           loaderProps={{ type: "bars" }}
         />
         <Group justify="space-between" className={styles.title}>
