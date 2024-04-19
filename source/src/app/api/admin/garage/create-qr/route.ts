@@ -8,7 +8,7 @@ export async function POST(request: Request) {
         const session = await getServerSession(authOptions);
         if(session){
             const json = await request.json();
-            const garage = await createQrGarage(json);
+            const garage = await createQrGarage(json.garageId);
             return NextResponse.json(garage);
         }
         throw new Error('Chua dang nhap');

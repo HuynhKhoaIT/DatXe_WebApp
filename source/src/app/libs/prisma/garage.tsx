@@ -246,12 +246,13 @@ export async function getGarageByCode(code: string) {
   }
 }
 
-export async function createQrGarage(garage:any) {
+export async function createQrGarage(garageId:string) {
+  const garage = await showGarage(garageId);
   const createBitly = await createBitlyGarage(garage);
   if (createBitly) {
     return await prisma.garage.update({
       where: {
-        id: garage.id.toString(),
+        id: garageId,
       },
       data: {
         bitlyUrl: createBitly.link,
