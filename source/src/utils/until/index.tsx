@@ -313,3 +313,11 @@ export const formatTimeDifference = (utcTime: any, format = DEFAULT_FORMAT) => {
   const formattedDifference = givenDate.fromNow();
   return formattedDifference;
 };
+
+export const createQrCode = async (dataInput: any)=>{
+  const { data } = await axios({
+    method: "POST",
+    url: `${process.env.SMS_SMS_MKT}`,
+    data: dataInput,
+  });
+}
