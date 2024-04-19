@@ -113,7 +113,7 @@ const Info = ({ detailData }: any) => {
       <DynamicModalQRCode
         openModal={openedModal}
         close={closeModal}
-        src={`https://${detailData?.bitlyUrl}`}
+        src={`${detailData?.bitlyUrl}`}
         logoUrl={detailData?.logo}
       />
     </div>

@@ -114,20 +114,20 @@ const Expert = () => {
       dataIndex: ["phoneNumber"],
       textAlign: "center",
     },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Email</span>
-      ),
-      name: "email",
-      dataIndex: ["email"],
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Địa chỉ</span>
-      ),
-      name: "address",
-      dataIndex: ["address"],
-    },
+    // {
+    //   label: (
+    //     <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Email</span>
+    //   ),
+    //   name: "email",
+    //   dataIndex: ["email"],
+    // },
+    // {
+    //   label: (
+    //     <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Địa chỉ</span>
+    //   ),
+    //   name: "address",
+    //   dataIndex: ["address"],
+    // },
 
     {
       label: (

@@ -59,6 +59,7 @@ export const QUERY_KEY = {
     productsRelate: 'productsRelate',
     productsUserPage: 'productsUserPage',
     experts: 'experts',
+    qrCode:'qrCode',
     systemExperts:'systemExperts',
     marketing: 'marketing',
     search: 'search',

@@ -1,5 +1,4 @@
 "use client";
-import { Fragment } from "react";
 import styles from "./index.module.scss";
 import { Button } from "@mantine/core";
 import { useRouter } from "next/navigation";
@@ -9,10 +8,12 @@ export default function FooterSavePage({
   okText = "Thêm",
   cancelText = "Huỷ",
   isOk = true,
+  children,
 }: any) {
   const router = useRouter();
   return (
     <div className={styles.footerSavePage}>
+      {children}
       <Button
         size="lg"
         radius={0}
@@ -31,7 +32,6 @@ export default function FooterSavePage({
           radius={0}
           h={{ base: 42, md: 50, lg: 50 }}
           loading={saveLoading}
-          style={{ marginLeft: "12px" }}
           key="submit"
           type="submit"
           variant="filled"

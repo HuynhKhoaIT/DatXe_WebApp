@@ -22,6 +22,20 @@ const addExpert = async (values: any): Promise<any> => {
     return await response.json();
 };
 
+const createQrCode = async (values: any): Promise<any> => {
+    const response = await fetch(`/api/admin/garage/create-qr`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+    });
+    if (!response.ok) {
+        throw new ResponseError('Failed to insert new qrcode', response);
+    }
+    return await response.json();
+};
+
 const updateExpert = async (values: any): Promise<any> => {
     const response = await fetch(`/api/admin/garage/${values?.id}`, {
         method: 'PUT',
@@ -45,6 +59,8 @@ interface UseExpert {
     isLoadingUltilities:boolean;
     isPendingAdd:boolean;
     isPendingUpdate:boolean;
+    createQr:any;
+    isPendingQr:boolean;
 }
 
 export const useAddExpert = (): UseExpert => {
@@ -80,6 +96,22 @@ export const useAddExpert = (): UseExpert => {
             });
         },
     });
+
+    const { mutate: createQr ,isPending:isPendingQr } = useMutation({
+        mutationFn: createQrCode,
+        onSuccess: () => {
+            router.back();
+            notifications.show({
+                title: 'Thành công',
+                message: 'Tạo Qr code thành công',
+            });
+
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEY.experts],
+            });
+        },
+    });
+
     const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
         queryKey: [QUERY_KEY.optionsProvince],
         queryFn: () => getOptionsProvince(),
@@ -102,6 +134,8 @@ export const useAddExpert = (): UseExpert => {
         UltilitiesOptions,
         isLoadingUltilities,
         isPendingUpdate,
-        isPendingAdd
+        isPendingAdd,
+        createQr,
+        isPendingQr,
     };
 };
