@@ -10,7 +10,7 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import ProductSlider from "@/app/layout/desktop/san-pham/ProductDetail/ProductSlider";
-function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
+function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -89,6 +89,14 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
     }
   };
 
+  let totalStars;
+  if (productReview?.data?.length > 0) {
+    totalStars = productReview?.data.reduce(
+      (accumulator: any, currentValue: any) => accumulator + currentValue.star,
+      0
+    );
+    totalStars = totalStars / productReview?.data?.length;
+  }
   return (
     <Grid>
       <Grid.Col span={12}>
@@ -107,20 +115,23 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
           </Grid.Col>
           <Grid.Col span={12}>
             <div className={styles.info}>
-              <Typo type="bold" style={{ marginBottom: 15 }}>
+              <Typo
+                type="bold"
+                style={{ marginBottom: 15, color: "var(--text-color)" }}
+              >
                 {ProductDetail?.name}
               </Typo>
-              <Typo style={{ fontSize: "14px", color: "var(--text-color)" }}>
+              <Typo style={{ fontSize: "1rem", color: "var(--text-color)" }}>
                 {ProductDetail?.code}
               </Typo>
               <div className={styles.category}>
-                <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
+                <Typo style={{ fontSize: "1rem", color: "var(--nav-color)" }}>
                   Mâm lốp
                 </Typo>
                 <div className={styles.starBox}>
                   <img src={Star.src} />
-                  <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
-                    4.9 (2130 reviews)
+                  <Typo style={{ fontSize: "1rem", color: "var(--nav-color)" }}>
+                    {totalStars} ({productReview?.data?.length || 0} reviews)
                   </Typo>
                 </div>
               </div>
@@ -134,14 +145,14 @@ function ProductDetail({ ProductDetail }: { ProductDetail: IProduct }) {
                 >
                   <del>{ProductDetail?.price?.toLocaleString()} đ</del>
                 </Typo>
-                <Typo
+                {/* <Typo
                   style={{
                     fontSize: "14px",
                     color: "var(--text-color-sale-price)",
                   }}
                 >
                   30% OFF
-                </Typo>
+                </Typo> */}
               </div>
               <Typo
                 type="bold"

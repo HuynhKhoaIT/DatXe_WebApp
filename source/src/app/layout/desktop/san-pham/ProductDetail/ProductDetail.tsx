@@ -11,7 +11,7 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
-function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
+function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -77,8 +77,6 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
             subTotal: ProductDetail?.salePrice,
           });
         }
-        console.log("existingCartItems", existingCartItems);
-
         localStorage.setItem("cartData", JSON.stringify(existingCartItems));
         notifications.show({
           title: "Thành công",
@@ -89,6 +87,15 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
       signIn();
     }
   };
+
+  let totalStars;
+  if (productReview?.data?.length > 0) {
+    totalStars = productReview?.data.reduce(
+      (accumulator: any, currentValue: any) => accumulator + currentValue.star,
+      0
+    );
+    totalStars = totalStars / productReview?.data?.length;
+  }
   return (
     <Grid>
       <Grid.Col span={12}>
@@ -107,14 +114,17 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
           </Grid.Col>
           <Grid.Col span={5}>
             <div className={styles.info}>
-              <Typo type="bold" style={{ marginBottom: 15 }}>
+              <Typo
+                type="bold"
+                style={{ marginBottom: 15, color: "var(--text-color)" }}
+              >
                 {ProductDetail?.name}
               </Typo>
-              <Typo style={{ fontSize: "14px", color: "var(--text-color)" }}>
+              <Typo style={{ fontSize: "1rem", color: "var(--text-color)" }}>
                 {ProductDetail?.code}
               </Typo>
               <div className={styles.category}>
-                <Flex>
+                <Flex align="center">
                   {ProductDetail?.categories?.map(
                     (item: any, index: number) => {
                       return (
@@ -122,7 +132,7 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
                           <Typo
                             key={index}
                             style={{
-                              fontSize: "14px",
+                              fontSize: "1rem",
                               color: "var(--nav-color)",
                             }}
                           >
@@ -138,9 +148,9 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
                   )}
                 </Flex>
                 <div className={styles.starBox}>
-                  <img src={Star.src} />
+                  <img src={Star.src} style={{ width: 20, height: 20 }} />
                   <Typo style={{ fontSize: "14px", color: "var(--nav-color)" }}>
-                    4.9 (2130 reviews)
+                    {totalStars} ({productReview?.data?.length || 0} reviews)
                   </Typo>
                 </div>
               </div>
@@ -148,20 +158,20 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
                 <Typo
                   style={{
                     fontSize: "22px",
-                    color: "var(--text-color-sale-price)",
+                    color: "var(--title-color-2)",
                   }}
                   type="bold"
                 >
                   <del>{ProductDetail?.price?.toLocaleString()} đ</del>
                 </Typo>
-                <Typo
+                {/* <Typo
                   style={{
                     fontSize: "14px",
                     color: "var(--text-color-sale-price)",
                   }}
                 >
                   30% OFF
-                </Typo>
+                </Typo> */}
               </div>
 
               <Typo
@@ -173,7 +183,7 @@ function ProductDetail({ ProductDetail }: { ProductDetail: any }) {
 
               <Button
                 size="lg"
-                radius={0}
+                // radius={0}
                 mt={22}
                 color={"var(--primary-color)"}
                 leftSection={<img src={Book.src} />}

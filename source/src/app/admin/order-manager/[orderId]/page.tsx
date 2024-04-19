@@ -10,12 +10,14 @@ export default function ProductSavePage({
 }: {
   params: { orderId: string };
 }) {
-  const { data: orderDetail, isLoading } = useOrderDetail(params?.orderId);
+  const { data: orderDetail, isLoading, isPending } = useOrderDetail(
+    params?.orderId
+  );
   return (
     <OrderForm
       isEditing={true}
       dataDetail={orderDetail}
-      isLoading={isLoading}
+      isLoading={isLoading || isPending}
     />
   );
 }

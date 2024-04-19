@@ -8,7 +8,7 @@ import styles from "./index.module.scss";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 export default function ProductsListPage({
-  categories,
+  categoryOption,
   products,
   searchParams,
 }: any) {
@@ -16,13 +16,13 @@ export default function ProductsListPage({
     <Body>
       <Body.Sider>
         <FilterRadio
-          data={categories?.data}
+          data={categoryOption}
           filterName="Danh mục"
           keyName="categoryId"
         />
       </Body.Sider>
       <Body.Content>
-        <Sort lengthData={8} />
+        <Sort lengthData={products?.data?.length || 0} />
         <Space h="md" />
         <Box w={"100%"}>
           <div className={styles.products}>

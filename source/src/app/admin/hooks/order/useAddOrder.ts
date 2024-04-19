@@ -58,13 +58,16 @@ interface UseOrders {
     updateStep: any;
     brandOptions: any;
     isLoadingBrand: boolean;
+    isPendingAdd:boolean;
+    isPendingUpdate:boolean;
+    isPendingUpdateStep:boolean;
 }
 
 export const useAddOrder = (): UseOrders => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem,isPending:isPendingAdd } = useMutation({
         mutationFn: addOrder,
         onSuccess: () => {
             router.back();
@@ -79,7 +82,7 @@ export const useAddOrder = (): UseOrders => {
         },
     });
 
-    const { mutate: updateItem } = useMutation({
+    const { mutate: updateItem,isPending:isPendingUpdate } = useMutation({
         mutationFn: updateOrder,
         onSuccess: () => {
             router.back();
@@ -94,7 +97,7 @@ export const useAddOrder = (): UseOrders => {
         },
     });
 
-    const { mutate: updateStep } = useMutation({
+    const { mutate: updateStep,isPending:isPendingUpdateStep } = useMutation({
         mutationFn: updateStepOrder,
         onSuccess: () => {
             router.back();
@@ -123,5 +126,8 @@ export const useAddOrder = (): UseOrders => {
         updateStep,
         brandOptions,
         isLoadingBrand,
+        isPendingAdd,
+        isPendingUpdate,
+        isPendingUpdateStep
     };
 };

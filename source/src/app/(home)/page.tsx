@@ -58,7 +58,6 @@ export default async function Home({ searchParams }: any) {
   const slideData = await callApi(apiConfig.banner.getList, {});
 
   const cate = await callApi(apiConfig.category.getList, {});
-  console.log(cate);
   return (
     <RenderContext
       components={{

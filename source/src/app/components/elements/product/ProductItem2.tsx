@@ -14,8 +14,16 @@ export default function ProductItem2({
   product,
 }: {
   key: number;
-  product: IProduct;
+  product: any;
 }) {
+  let totalStars;
+  if (product?.reviews?.length > 0) {
+    totalStars = product?.reviews.reduce(
+      (accumulator: any, currentValue: any) => accumulator + currentValue.star,
+      0
+    );
+    totalStars = totalStars / product?.reviews?.length;
+  }
   const images = JSON.parse(product.images);
   return (
     <Box w={"100%"}>
@@ -36,19 +44,21 @@ export default function ProductItem2({
               {product.name}
             </Typo>
           </Link>
-          <div className={styles.star}>
-            <img src={Star.src} alt="start" />
-            <Typo
-              style={{
-                fontSize: "12px",
-                fontWeight: "500",
-                lineHeight: "1rem",
-                color: "var(--title-color-sub)",
-              }}
-            >
-              4.6
-            </Typo>
-          </div>
+          {product?.reviews?.length > 0 && (
+            <div className={styles.star}>
+              <img src={Star.src} alt="start" />
+              <Typo
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "500",
+                  lineHeight: "1rem",
+                  color: "var(--title-color-sub)",
+                }}
+              >
+                {totalStars}
+              </Typo>
+            </div>
+          )}
           {product?.salePrice !== product?.price && (
             <Badge variant="light" classNames={{ root: styles.productOnSale }}>
               On Sale

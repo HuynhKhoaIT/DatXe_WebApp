@@ -122,6 +122,7 @@ export default async function DetailGarage({
       garageId: params?.slug,
     },
   });
+
   return (
     <RenderContext
       components={{

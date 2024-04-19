@@ -62,7 +62,15 @@ export default function OrderForm({
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const router = useRouter();
-  const { addItem, updateItem, updateStep, brandOptions } = useAddOrder();
+  const {
+    addItem,
+    updateItem,
+    updateStep,
+    brandOptions,
+    isPendingUpdate,
+    isPendingAdd,
+    isPendingUpdateStep,
+  } = useAddOrder();
   const [activeTab, setActiveTab] = useState<string | null>(
     !isEditing ? "numberPlates" : "customer"
   );
@@ -489,7 +497,7 @@ export default function OrderForm({
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={loading || isLoading}
+        visible={isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -598,117 +606,8 @@ export default function OrderForm({
             )}
 
             <Tabs.Panel value="customer">
-              {/* <Grid gutter={12} className={styles.marketingInfo}>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    withAsterisk
-                    {...form.getInputProps("numberPlates")}
-                    label="Biển số xe"
-                    type="text"
-                    onChange={(e) => {
-                      if (e.target.value.length > 0) {
-                        handlersPlate.close();
-                      }
-                      form.setFieldValue("numberPlates", e.target.value);
-                    }}
-                    error={errorPlate ? "Vui lòng nhập..." : false}
-                    placeholder="Biển số xe"
-                    readOnly={isUser}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
-                  {isUser ? (
-                    <TextInput
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("carBrand")}
-                      label="Hãng xe"
-                      type="text"
-                      placeholder="Hãng xe"
-                      readOnly
-                    />
-                  ) : (
-                    <Select
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("carBrandId")}
-                      label="Hãng xe"
-                      type="text"
-                      data={brandOptions}
-                      placeholder="Hãng xe"
-                      onChange={async (value) => {
-                        const optionsData = await getOptionsModels(
-                          Number(value)
-                        );
-                        setModelOptions(optionsData);
-                        form.setFieldValue("carBrandId", value);
-                        form.setFieldValue("carNameId", null);
-                        form.setFieldValue("carYearId", null);
-                      }}
-                    />
-                  )}
-                </Grid.Col>
-                <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
-                  {isUser ? (
-                    <TextInput
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("carName")}
-                      label="Dòng xe"
-                      type="text"
-                      placeholder="Dòng xe"
-                      readOnly
-                    />
-                  ) : (
-                    <Select
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("carNameId")}
-                      label="Dòng xe"
-                      type="text"
-                      data={modelOptions}
-                      placeholder="Dòng xe"
-                      onChange={async (value) => {
-                        const optionsData = await getOptionsYearCar(
-                          Number(value)
-                        );
-                        setYearCarOptions(optionsData);
-                        form.setFieldValue("carNameId", value);
-                        form.setFieldValue("carYearId", null);
-                      }}
-                    />
-                  )}
-                </Grid.Col>
-                <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
-                  {isUser ? (
-                    <TextInput
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("carYear")}
-                      label="Năm sản xuất"
-                      type="text"
-                      placeholder="Năm sản xuất"
-                      readOnly
-                    />
-                  ) : (
-                    <Select
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("carYearId")}
-                      label="Năm SX"
-                      data={yearCarOptions}
-                      type="text"
-                      placeholder="Năm sản xuất"
-                      onChange={(value) => {
-                        form.setFieldValue("carYearId", value);
-                      }}
-                    />
-                  )}
-                </Grid.Col>
-              </Grid> */}
               <InfoCart
+                loading={loading}
                 brandOptions={brandOptions}
                 car={car}
                 isUser={isUser}
@@ -726,6 +625,7 @@ export default function OrderForm({
                 openModalUpdateCustomer={openModalUpdateCustomer}
                 form={form}
                 isUser={isUser}
+                loading={loading}
               />
               <div className={styles.footer}>
                 <Button
@@ -930,7 +830,7 @@ export default function OrderForm({
                         radius={0}
                         w={"33%"}
                         h={{ base: 42, md: 50, lg: 50 }}
-                        // loading={saveLoading}
+                        loading={isPendingUpdate}
                         style={{ marginLeft: "12px" }}
                         key="submit"
                         type="submit"
@@ -961,13 +861,13 @@ export default function OrderForm({
                         radius={0}
                         w={"48%"}
                         h={{ base: 42, md: 50, lg: 50 }}
-                        loading={loadingButton}
+                        loading={isPendingAdd || isPendingUpdate}
                         style={{ marginLeft: "12px" }}
                         variant="filled"
                         type="submit"
                         leftSection={<IconChevronRight size={16} />}
                       >
-                        {isEditing ? "Cập nhật" : "Hoàn thành"}
+                        {isEditing ? "Cập nhật" : "Tạo đơn"}
                       </Button>
                     </div>
                   ) : (
@@ -999,6 +899,7 @@ export default function OrderForm({
             <Grid gutter={12}>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <InfoCart
+                  loading={loading}
                   brandOptions={brandOptions}
                   car={car}
                   isUser={isUser}
@@ -1017,6 +918,7 @@ export default function OrderForm({
                   openModalUpdateCustomer={openModalUpdateCustomer}
                   form={form}
                   isUser={isUser}
+                  loading={loading}
                 />
               </Grid.Col>
               <Grid.Col span={12}>
@@ -1201,7 +1103,7 @@ export default function OrderForm({
                           size="lg"
                           radius={0}
                           h={{ base: 42, md: 50, lg: 50 }}
-                          // loading={saveLoading}
+                          loading={isPendingUpdate}
                           style={{ marginLeft: "12px" }}
                           key="submit"
                           type="submit"
@@ -1215,8 +1117,8 @@ export default function OrderForm({
                   </>
                 ) : (
                   <FooterSavePage
-                    saveLoading={loadingButton}
-                    okText="Hoàn thành"
+                    loading={isPendingAdd || isPendingUpdate}
+                    okText="Tạo đơn"
                   />
                 )}
               </>

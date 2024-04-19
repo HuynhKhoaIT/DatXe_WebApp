@@ -5,8 +5,16 @@ import styles from "./ProductItem.module.scss";
 import Typo from "../Typo";
 import ImageField from "../../form/ImageField";
 import Star from "@/assets/icons/star.svg";
-export default function ProductItem({ product }: { product: IProduct }) {
-  const images = JSON.parse(product.images);
+export default function ProductItem({ product }: { product: any }) {
+  const images = JSON?.parse(product.images);
+  let totalStars;
+  if (product?.reviews?.length > 0) {
+    totalStars = product?.reviews.reduce(
+      (accumulator: any, currentValue: any) => accumulator + currentValue.star,
+      0
+    );
+    totalStars = totalStars / product?.reviews?.length;
+  }
   return (
     <Box w={"100%"}>
       <Card shadow="sm" radius="md">
@@ -22,19 +30,21 @@ export default function ProductItem({ product }: { product: IProduct }) {
         </Card.Section>
 
         <div className={styles.infoCard}>
-          <div className={styles.star}>
-            <img src={Star.src} alt="start" />
-            <Typo
-              style={{
-                fontSize: "12px",
-                fontWeight: "500",
-                lineHeight: "1rem",
-                color: "var(--title-color-sub)",
-              }}
-            >
-              4.6(280)
-            </Typo>
-          </div>
+          {totalStars && (
+            <div className={styles.star}>
+              <img src={Star.src} alt="start" />
+              <Typo
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "500",
+                  lineHeight: "1rem",
+                  color: "var(--title-color-sub)",
+                }}
+              >
+                {totalStars}
+              </Typo>
+            </div>
+          )}
           <Link href={`/san-pham/${product.id}`}>
             <Typo size="primary" className={styles.productName}>
               {product.name}
