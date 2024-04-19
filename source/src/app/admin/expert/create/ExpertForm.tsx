@@ -12,11 +12,11 @@ import {
   LoadingOverlay,
   MultiSelect,
   Space,
+  Button,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
-import { useEffect, useRef, useState } from "react";
-import { useDisclosure } from "@mantine/hooks";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import FooterSavePage from "../../_component/FooterSavePage";
 import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
@@ -24,6 +24,7 @@ import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/image.svg";
 import Typo from "@/app/components/elements/Typo";
 import DropZone from "../_component/DropZone";
+import { IconQrcode } from "@tabler/icons-react";
 export default function ExpertForm({
   isLoading,
   isEditing,
@@ -35,11 +36,13 @@ export default function ExpertForm({
   isLoadingUltilities,
   isPendingUpdate,
   isPendingAdd,
+  createQr,
+  isPendingQr,
+  isCreateQr,
 }: any) {
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
-
   const handleChangeImage = (index: number, value: any) => {
     const newImage = [...imagesUrl];
     newImage[index] = value;
@@ -59,6 +62,7 @@ export default function ExpertForm({
       description: "",
       amenities: [],
       photos: [],
+      bitlyUrl: null,
     },
     validate: {},
   });
@@ -85,7 +89,8 @@ export default function ExpertForm({
           setProvince(dataDetail?.provinceId?.toString());
           setDistrict(dataDetail?.districtId?.toString());
           setWard(dataDetail?.wardId?.toString());
-
+          setLogoUrl(dataDetail?.logo);
+          setBannerUrl(dataDetail?.banner);
           form.setFieldValue("provinceId", dataDetail?.provinceId?.toString());
           form.setFieldValue("districtId", dataDetail?.districtId?.toString());
           form.setFieldValue("wardId", dataDetail?.wardId?.toString());
@@ -96,8 +101,6 @@ export default function ExpertForm({
     };
 
     if (isEditing) fetchData();
-    setLogoUrl(dataDetail?.logo);
-    setBannerUrl(dataDetail?.banner);
   }, [dataDetail]);
 
   const uploadFileThumbnail = async (file: File) => {
@@ -111,6 +114,7 @@ export default function ExpertForm({
       }
       const response = await axios.post(baseURL, formData, options);
       form.setFieldValue("logo", response.data);
+      setLogoUrl(response.data);
       return response.data;
     } catch (error) {
       console.error("Error:", error);
@@ -127,6 +131,7 @@ export default function ExpertForm({
       }
       const response = await axios.post(baseURL, formData, options);
       form.setFieldValue("banner", response.data);
+      setBannerUrl(response.data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -176,7 +181,7 @@ export default function ExpertForm({
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật logo"}
-                    defaultImage={logoUrl || ImageUpload.src}
+                    defaultImage={logoUrl}
                     uploadFileThumbnail={uploadFileThumbnail}
                     aspect={1 / 1}
                     form={form}
@@ -190,7 +195,7 @@ export default function ExpertForm({
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật ảnh bìa"}
-                    defaultImage={dataDetail?.banner || ImageUpload.src}
+                    defaultImage={bannerUrl}
                     uploadFileThumbnail={uploadFileBanner}
                     aspect={16 / 9}
                     idUpload="image-uploader-banner"
@@ -256,13 +261,24 @@ export default function ExpertForm({
                   <TextInput
                     size="lg"
                     radius={0}
+                    {...form.getInputProps("bitlyUrl")}
+                    label="Qr code"
+                    readOnly
+                    type="text"
+                    placeholder="Qr code"
+                  />
+                </Grid.Col>
+                {/* <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
                     {...form.getInputProps("website")}
                     label="Website"
                     type="text"
                     placeholder="Website"
                   />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                </Grid.Col> */}
+                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                   <MultiSelect
                     size="lg"
                     radius={0}
@@ -275,17 +291,7 @@ export default function ExpertForm({
                   />
                 </Grid.Col>
 
-                <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("address")}
-                    label="Địa chỉ"
-                    type="text"
-                    placeholder="Địa chỉ"
-                  />
-                </Grid.Col>
-                <Grid.Col span={12}>
+                {/* <Grid.Col span={12}>
                   <TextInput
                     size="lg"
                     radius={0}
@@ -294,7 +300,7 @@ export default function ExpertForm({
                     type="text"
                     placeholder="Địa chỉ 2"
                   />
-                </Grid.Col>
+                </Grid.Col> */}
                 <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
@@ -356,11 +362,25 @@ export default function ExpertForm({
                     }}
                   ></Select>
                 </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("address")}
+                    label="Địa chỉ"
+                    type="text"
+                    placeholder="Địa chỉ"
+                  />
+                </Grid.Col>
               </Grid>
+              <Typo
+                size="primary"
+                type="bold"
+                style={{ color: "#3d4465", marginTop: 20 }}
+              >
+                Hình ảnh Showroom
+              </Typo>
               <Card mt={20} pb={20}>
-                <Typo size="primary" type="bold" style={{ color: "#3d4465" }}>
-                  Ảnh garage
-                </Typo>
                 <DropZone
                   setImagesUrl={setImagesUrl}
                   imagesUrl={imagesUrl}
@@ -404,7 +424,27 @@ export default function ExpertForm({
         <FooterSavePage
           saveLoading={isPendingUpdate || isPendingAdd}
           okText={isEditing ? "Cập nhật" : "Thêm"}
-        />
+        >
+          {isCreateQr ? (
+            <></>
+          ) : (
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              variant="outline"
+              key="cancel"
+              color="blue"
+              loading={isPendingQr}
+              leftSection={<IconQrcode size={16} />}
+              onClick={() => {
+                createQr({ garageId: dataDetail?.id });
+              }}
+            >
+              Tạo Qr code
+            </Button>
+          )}
+        </FooterSavePage>
       </form>
     </Box>
   );

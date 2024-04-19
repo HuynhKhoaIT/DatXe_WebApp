@@ -20,11 +20,13 @@ export default function UpdateCategory({
     isLoadingUltilities,
     isPendingUpdate,
     isPendingAdd,
+    createQr,
+    isPendingQr,
   } = useAddExpert();
   return (
     <Box maw={"100%"} mx="auto">
       <ExpertForm
-        isLoading={isLoading}
+        isLoading={isLoading || isPending}
         isEditing={true}
         dataDetail={expert}
         addItem={addItem}
@@ -34,6 +36,9 @@ export default function UpdateCategory({
         isLoadingUltilities={isLoadingUltilities}
         isPendingUpdate={isPendingUpdate}
         isPendingAdd={isPendingAdd}
+        createQr={createQr}
+        isPendingQr={isPendingQr}
+        isCreateQr={expert?.bitlyUrl}
       />
     </Box>
   );

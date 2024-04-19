@@ -19,7 +19,7 @@ export async function getGarages(requestData: any) {
     }
     let garageId = 0;
     if (requestData.garageId) {
-      garageId = (requestData.garageId);
+      garageId = requestData.garageId;
     }
     const skip = take * (currentPage - 1);
     const [data, total] = await prisma.$transaction([
@@ -35,7 +35,7 @@ export async function getGarages(requestData: any) {
               status: {
                 not: "DELETE",
               },
-              routeId: (garageId) ? Number(garageId) : {},
+              routeId: garageId ? Number(garageId) : {},
             },
           ],
         },
@@ -57,7 +57,7 @@ export async function getGarages(requestData: any) {
               routeId: Number(garageId),
             },
           ],
-        }
+        },
       }),
     ]);
     return {
@@ -246,9 +246,10 @@ export async function getGarageByCode(code: string) {
   }
 }
 
-export async function createQrGarage(garageId:string) {
+export async function createQrGarage(garageId: string) {
   const garage = await showGarage(garageId);
   const createBitly = await createBitlyGarage(garage);
+
   if (createBitly) {
     return await prisma.garage.update({
       where: {
@@ -259,5 +260,5 @@ export async function createQrGarage(garageId:string) {
       },
     });
   }
-  return {}
+  return {};
 }

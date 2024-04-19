@@ -11,6 +11,8 @@ export default function CreateCategory() {
     isLoadingUltilities,
     isPendingUpdate,
     isPendingAdd,
+    createQr,
+    isPendingQr,
   } = useAddExpert();
   return (
     <ExpertForm
@@ -22,6 +24,8 @@ export default function CreateCategory() {
       isLoadingUltilities={isLoadingUltilities}
       isPendingUpdate={isPendingUpdate}
       isPendingAdd={isPendingAdd}
+      createQr={createQr}
+      isPendingQr={isPendingQr}
     />
   );
 }
