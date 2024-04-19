@@ -228,7 +228,7 @@ export async function getRandomCodeForGarage() {
 
 export async function getGarageByCode(code: string) {
   try {
-    const rs = await prisma.garage.findFirstOrThrow({
+    const rs = await prisma.garage.findFirst({
       where: {
         code: code,
       },
