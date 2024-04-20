@@ -25,6 +25,8 @@ import ImageUpload from "@/assets/icons/image.svg";
 import Typo from "@/app/components/elements/Typo";
 import DropZone from "../_component/DropZone";
 import { IconQrcode } from "@tabler/icons-react";
+import { useSession } from "next-auth/react";
+import { ROLE_ADMIN } from "@/constants";
 export default function ExpertForm({
   isLoading,
   isEditing,
@@ -43,6 +45,9 @@ export default function ExpertForm({
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
+  const session = useSession();
+
+  console.log(session);
   const handleChangeImage = (index: number, value: any) => {
     const newImage = [...imagesUrl];
     newImage[index] = value;
@@ -401,21 +406,23 @@ export default function ExpertForm({
                   />
                 </Grid.Col>
 
-                {/* <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
-                  <Select
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("status")}
-                    label="Trạng thái"
-                    checkIconPosition="right"
-                    placeholder="Trạng thái"
-                    data={[
-                      { value: "PUBLIC", label: "Công khai" },
-                      { value: "DRAFT", label: "Nháp" },
-                      { value: "PENDING", label: "Đang duyệt" },
-                    ]}
-                  />
-                </Grid.Col> */}
+                {session?.data?.user?.role === ROLE_ADMIN && (
+                  <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
+                    <Select
+                      size="lg"
+                      radius={0}
+                      {...form.getInputProps("status")}
+                      label="Trạng thái"
+                      checkIconPosition="right"
+                      placeholder="Trạng thái"
+                      data={[
+                        { value: "PUBLIC", label: "Công khai" },
+                        { value: "DRAFT", label: "Nháp" },
+                        { value: "PENDING", label: "Đang duyệt" },
+                      ]}
+                    />
+                  </Grid.Col>
+                )}
               </Grid>
             </Card>
           </Grid.Col>

@@ -1,8 +1,8 @@
 "use client";
 import { Box } from "@mantine/core";
-import ExpertForm from "../create/ExpertForm";
 import { useExpertDetail } from "../../../hooks/expert/useExpert";
 import { useAddExpert } from "../../../hooks/expert/useAddExpert";
+import ExpertForm from "@/app/admin/expert/create/ExpertForm";
 export const revalidate = 60;
 export default function UpdateCategory({
   params,
@@ -18,6 +18,10 @@ export default function UpdateCategory({
     provinceOptions,
     UltilitiesOptions,
     isLoadingUltilities,
+    isPendingUpdate,
+    isPendingAdd,
+    createQr,
+    isPendingQr,
   } = useAddExpert();
   return (
     <Box maw={"100%"} mx="auto">
@@ -30,6 +34,11 @@ export default function UpdateCategory({
         provinceOptions={provinceOptions}
         UltilitiesOptions={UltilitiesOptions}
         isLoadingUltilities={isLoadingUltilities}
+        isPendingUpdate={isPendingUpdate}
+        isPendingAdd={isPendingAdd}
+        createQr={createQr}
+        isPendingQr={isPendingQr}
+        isCreateQr={expert?.bitlyUrl}
       />
     </Box>
   );
