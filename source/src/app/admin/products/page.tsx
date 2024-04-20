@@ -379,7 +379,7 @@ export default function ProductsManaga() {
                     data={productsDlbd?.data}
                     columns={columns}
                     loading={isLoadingDlbd}
-                    totalPage={productsDlbd?.last_page}
+                    totalPage={productsDlbd?.meta?.last_page}
                     setPage={setPageDlbd}
                     activePage={pageDlbd}
                   />
