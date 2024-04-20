@@ -27,7 +27,7 @@ export async function getGarages(requestData: any) {
         take: take,
         skip: skip,
         orderBy: {
-          id: "desc",
+          createdAt: "desc",
         },
         where: {
           AND: [
