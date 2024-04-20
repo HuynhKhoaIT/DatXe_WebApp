@@ -642,7 +642,6 @@ export default function OrderForm({
                   radius={0}
                   w={"48%"}
                   h={{ base: 42, md: 50, lg: 50 }}
-                  loading={loadingButton}
                   style={{ marginLeft: "12px" }}
                   variant="filled"
                   onClick={() => {
