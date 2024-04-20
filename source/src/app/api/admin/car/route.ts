@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
             const requestData = {
                 garageId: garageId,
                 s: searchParams.get('s'),
+                customerId: searchParams.get('customerId'),
                 carBrandId: searchParams.get('carBrandId'),
                 carNameId: searchParams.get('carNameId'),
                 carYearId: searchParams.get('carYearId'),

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { Badge, Button, Flex, Image, Tabs } from "@mantine/core";
-import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
+import { Badge, Button, Flex, Image, Tabs, Tooltip } from "@mantine/core";
+import { IconCar, IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import TableBasic from "@/app/components/table/Tablebasic";
@@ -134,43 +134,69 @@ export default function CustomerListPage({
         </span>
       ),
       dataIndex: [],
-      width: "100px",
+      width: "140px",
       render: (record: any) => {
         return (
           <>
             <Link
               href={{
+                pathname: `/admin/customers/cars`,
+                query: { customerId: record?.id },
+              }}
+            >
+              <Tooltip label="Xe" withArrow position="bottom">
+                <Button
+                  size="lg"
+                  radius={0}
+                  style={{ margin: "0 5px" }}
+                  variant="transparent"
+                  color="gray"
+                  p={5}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <IconCar size={16} />
+                </Button>
+              </Tooltip>
+            </Link>
+
+            <Link
+              href={{
                 pathname: `/admin/customers/${record.id}`,
               }}
             >
+              <Tooltip label="Chỉnh sửa" withArrow position="bottom">
+                <Button
+                  size="lg"
+                  radius={0}
+                  style={{ margin: "0 5px" }}
+                  variant="transparent"
+                  color="gray"
+                  p={5}
+                  onClick={() => {}}
+                >
+                  <IconPencil size={16} />
+                </Button>
+              </Tooltip>
+            </Link>
+            <Tooltip label="Xoá" withArrow position="bottom">
               <Button
                 size="lg"
                 radius={0}
-                style={{ margin: "0 5px" }}
-                variant="transparent"
-                color="gray"
                 p={5}
-                onClick={() => {}}
+                variant="transparent"
+                color="red"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openDeleteProduct();
+                  e.stopPropagation();
+                  setDeleteRow(record.id);
+                }}
               >
-                <IconPencil size={16} />
+                <IconTrash size={16} color="red" />
               </Button>
-            </Link>
-
-            <Button
-              size="lg"
-              radius={0}
-              p={5}
-              variant="transparent"
-              color="red"
-              onClick={(e) => {
-                e.stopPropagation();
-                openDeleteProduct();
-                e.stopPropagation();
-                setDeleteRow(record.id);
-              }}
-            >
-              <IconTrash size={16} color="red" />
-            </Button>
+            </Tooltip>
           </>
         );
       },

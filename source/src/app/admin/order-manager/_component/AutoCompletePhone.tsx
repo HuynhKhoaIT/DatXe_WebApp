@@ -122,7 +122,11 @@ export function AutocompletePhone({
                   : null;
                 setErrorText(is);
 
-                if (!is && form.values.customerId == null) {
+                if (
+                  !is &&
+                  form.values.customerId == null &&
+                  event.target.value?.length > 3
+                ) {
                   handlersLoadingCustomer.open();
                   const infoCustomer = await fetchData();
 

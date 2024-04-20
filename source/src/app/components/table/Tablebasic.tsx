@@ -81,7 +81,14 @@ export default function TableBasic({
                       onChange={(event) => {
                         setSelectedRows(
                           event.currentTarget.checked
-                            ? [...selectedRows, item]
+                            ? [
+                                ...selectedRows,
+                                {
+                                  ...item,
+                                  quantity: 1,
+                                  subTotal: item?.salePrice,
+                                },
+                              ]
                             : selectedRows.filter(
                                 (selectedItem: any) =>
                                   selectedItem?.id !== item.id
