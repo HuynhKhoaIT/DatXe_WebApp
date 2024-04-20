@@ -7,6 +7,7 @@ import Typo from "@/app/components/elements/Typo";
 import { useForm } from "@mantine/form";
 import axios from "axios";
 import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 export default function ModalReview({
   openedModal,
   onCloseModal,
@@ -14,6 +15,7 @@ export default function ModalReview({
   dataDetail,
   orderId,
 }: any) {
+  const router = useRouter();
   const images = JSON.parse(dataDetail?.product?.images);
   const form = useForm({
     initialValues: {
@@ -27,6 +29,7 @@ export default function ModalReview({
   const handleSubmit = async (values: any) => {
     try {
       await axios.post("/api/client/reviews", values);
+      router.refresh();
       notifications.show({
         title: "Thành công",
         message: "Gửi đánh giá thành công.",

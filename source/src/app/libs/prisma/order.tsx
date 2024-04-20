@@ -1,4 +1,3 @@
-
 import prisma from "../prismadb";
 import { createCar, showCar } from "./car";
 import { createCustomer, getCustomerByPhone, getMyCustomers } from "./customer";
@@ -287,6 +286,7 @@ export async function getOrderBySlug(slug: string) {
         serviceAdvisor: true,
         car: true,
         customer: true,
+        reviews: true,
         orderDetails: {
           select: {
             productId: true,
@@ -408,8 +408,8 @@ export async function createOrder(json: any) {
       // check customer via phone number
       let phoneNumber = json.phoneNumber;
       if (phoneNumber) {
-        console.log('phoneNumber',phoneNumber)
-        const customerFind = await getCustomerByPhone(phoneNumber,garageId);
+        console.log("phoneNumber", phoneNumber);
+        const customerFind = await getCustomerByPhone(phoneNumber, garageId);
         if (customerFind) {
           customerId = customerFind.id;
         } else {
@@ -429,9 +429,9 @@ export async function createOrder(json: any) {
       } else {
         const dataCus = {
           fullName: json.fullName ?? "KH " + json.numberPlates,
-          phoneNumber: '',
+          phoneNumber: "",
           garageId,
-          userId: json.createdById
+          userId: json.createdById,
         };
         const cusNoName = await createCustomer(dataCus);
         if (cusNoName.customer) {
@@ -986,11 +986,11 @@ export async function updateOrder(id: string, json: any) {
             },
           },
         },
-        garage:true
+        garage: true,
       },
     });
-    if(orderOld?.step != order.step){
-      const smsRs = await sendSMSOrder(order)
+    if (orderOld?.step != order.step) {
+      const smsRs = await sendSMSOrder(order);
     }
     return { order };
   } catch (error) {
@@ -1013,7 +1013,7 @@ export async function updateOrderStep(
   step: any,
   cancelReason: string
 ) {
-  const or = await findOrder(id,{});
+  const or = await findOrder(id, {});
   const order = await prisma.order.update({
     where: {
       id: id,
@@ -1022,19 +1022,18 @@ export async function updateOrderStep(
       step: Number(step),
       cancelReason,
     },
-    include:{
+    include: {
       car: true,
       customer: true,
-      garage: true
-    }
+      garage: true,
+    },
   });
-  const orderRs = await findOrder(id,{})
-  if(or.step != orderRs.step){
-    const smsRs = await sendSMSOrder(order)
-    console.log('sms',smsRs)
+  const orderRs = await findOrder(id, {});
+  if (or.step != orderRs.step) {
+    const smsRs = await sendSMSOrder(order);
+    console.log("sms", smsRs);
   }
-  
-  
+
   return order;
 }
 export async function codeGeneration(garageId: string) {
