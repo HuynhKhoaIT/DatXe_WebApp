@@ -237,6 +237,7 @@ export async function findOrder(id: string, request: any) {
         car: true,
         customer: true,
         garage: true,
+        reviews: true,
         orderDetails: {
           select: {
             productId: true,
@@ -985,11 +986,11 @@ export async function updateOrder(id: string, json: any) {
             },
           },
         },
+        garage:true
       },
     });
     if(orderOld?.step != order.step){
       const smsRs = await sendSMSOrder(order)
-      console.log('sms',smsRs)
     }
     return { order };
   } catch (error) {

@@ -43,7 +43,7 @@ model Garage {
   address             String?
   description         String? @db.Text
   social              String? @db.Text
-  status              STATUS @default(PUBLIC)
+  status              STATUS @default(PENDING)
   product             Product[]
   order               Order[]
   customers           Customer[]
@@ -75,6 +75,8 @@ model Garage {
   reviews             ReviewsGarage[]
   user                User[]
   slideBanners        slideBanner[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
 }
 
 

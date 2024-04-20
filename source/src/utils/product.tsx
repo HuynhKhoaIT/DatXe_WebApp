@@ -106,11 +106,13 @@ export const getProductsSearch = async (
     throw new Error("Lỗi trong quá trình lấy danh sách sản phẩm");
   }
 };
-export async function getProductsFromDLBD(token : string){
-  const res = await fetch(GET_PRODUCTS_DLBD_ENDPOINT,{
+export async function getProductsFromDLBD(session : any,dataInput: any){
+  const urlFetch = GET_PRODUCTS_DLBD_ENDPOINT+'?garage_id='+session.garageId+'&page='+dataInput.page;
+  const res = await fetch(urlFetch,{
+    
     headers: {
       "Content-Type": "application/json",
-      "Authorization":"Bearer "+token
+      "Authorization":"Bearer "+session.token
     },
   });
 

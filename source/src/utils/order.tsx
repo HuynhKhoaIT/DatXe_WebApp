@@ -168,15 +168,17 @@ export const sendSMSOrder = async (order: any) => {
         contentSMS = process.env.SMS_ORDER_RECEIVED
         break;
       case 4:
-        contentSMS = process.env.SMS_ORDER_RECEIVED
+        contentSMS = process.env.SMS_ORDER_DONE
         break;
       case -1:
         contentSMS = process.env.SMS_ORDER_CANCEL
         break;
     }
     contentSMS = contentSMS?.replaceAll('{order_code}',order?.code);
+    contentSMS = contentSMS?.replaceAll('{order_id}',order?.id);
     contentSMS = contentSMS?.replaceAll('{garage_short}',order?.garage?.shortName ?? 'DatXE');
-    console.log(contentSMS)
+    contentSMS = contentSMS?.replaceAll('{garage_phone}',order?.garage?.phoneNumber ?? '');
+    // console.log(contentSMS)
     let dataSMS = {
       Phone: order.customer.phoneNumber,
       Content: contentSMS,
