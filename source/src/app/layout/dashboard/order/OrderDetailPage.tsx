@@ -20,8 +20,14 @@ export default function OrderDetailPage({ dataSource }: any) {
     false
   );
 
-  console.log(dataSource);
-
+  const reviews = dataSource?.reviews?.map((item: any) => item?.productId);
+  function checkId(id: string) {
+    if (reviews.includes(id)) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
   const [dataReview, setDataReview] = useState<any>();
   const columns = [
     {
@@ -76,6 +82,10 @@ export default function OrderDetailPage({ dataSource }: any) {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
+        const isPreview = checkId(record?.productId);
+        if (isPreview == 1) {
+          return;
+        }
         return (
           <Tooltip label="Đánh giá" withArrow position="bottom">
             <Button
