@@ -24,3 +24,13 @@
     text-align: center;
     margin-top: 20px;
 }
+.infoGara{
+    display: flex;
+    gap: 10px;
+}
+.infoWifi{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

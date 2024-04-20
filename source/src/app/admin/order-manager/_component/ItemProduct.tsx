@@ -34,7 +34,9 @@ export default function ItemProduct({
     openModalChoose,
     { open: openModal, close: closeModal },
   ] = useDisclosure(false);
-  const images = JSON.parse(data?.images);
+  console.log(data);
+  let images;
+  if (data?.images) images = JSON.parse(data?.images);
   const routes = useRouter();
   const DeleteItemConfirm = (data: any) => {
     modals.openConfirmModal({

@@ -53,7 +53,10 @@ export default function ItemProductChoose({
             onChange={(event) => {
               setSelectedRows(
                 event.currentTarget.checked
-                  ? [...selectedRows, data]
+                  ? [
+                      ...selectedRows,
+                      { ...data, quantity: 1, subTotal: data?.salePrice },
+                    ]
                   : selectedRows.filter(
                       (selectedItem: any) => selectedItem?.id !== data.id
                     )

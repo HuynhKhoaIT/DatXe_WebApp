@@ -42,14 +42,12 @@ import {
   handleKeyPress,
 } from "@/utils/until";
 import FooterSavePage from "../../_component/FooterSavePage";
-import { getOptionsCar, getOptionsPhone } from "../until";
+import { getOptionsCar } from "../until";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
-import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
 import InfoCustomer from "../_component/InfoCustomer";
 import InfoCart from "../_component/InfoCar";
 import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
-import { AutocompletePhone } from "../_component/AutoCompletePhone";
 import { notifications } from "@mantine/notifications";
 import InfoCustomer2 from "../_component/InfoCustomer2";
 
@@ -128,8 +126,6 @@ export default function OrderForm({
     },
   });
 
-  console.log("total", dataDetail);
-
   useEffect(() => {
     if (!isEditing && !licenseNumber) {
       if (form.values.numberPlates.length == 0) {
@@ -157,9 +153,8 @@ export default function OrderForm({
       }));
       form.setFieldValue("detail", updatedProducts);
     } else {
-      console.log("selectedProducts", selectedProducts);
       let updatedProducts = selectedProducts.map((detail: any) => ({
-        images: detail?.product?.images,
+        images: detail?.product?.images || detail?.images,
         name: detail?.product?.name || detail?.name,
         price: detail.price,
         productId: detail.productId !== 0 ? detail.productId : detail.id,
@@ -178,12 +173,14 @@ export default function OrderForm({
     const fetchData = async () => {
       handlers.open();
 
+      console.log(dataDetail?.orderDetails);
       if (isEditing && dataDetail) {
         setCustomer(dataDetail?.customer);
         setCar(dataDetail?.car);
         setSelectedProducts(
           dataDetail?.orderDetails.map((item: any) => ({
             ...item,
+            images: item?.product?.images,
             id: item.productId,
           }))
         );
@@ -382,7 +379,6 @@ export default function OrderForm({
             {...form.getInputProps(`detail.${index}.subTotal`)}
             min={0}
             readOnly
-            // placeholder="Số lượng"
             thousandSeparator=","
             suffix="đ"
           />

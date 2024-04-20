@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button, Container, Tooltip } from "@mantine/core";
+import { Button, Container, Divider, Flex, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import styles from "./OrderDetailPage.module.scss";
@@ -10,11 +10,13 @@ import Typo from "@/app/components/elements/Typo";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
+import ReactToPrint from "react-to-print";
+import ReactPrint from "@/app/components/common/ReactToPrint";
+
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
 export default function OrderDetailPageMobile({ dataSource }: any) {
-  console.log(dataSource);
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
@@ -65,92 +67,119 @@ export default function OrderDetailPageMobile({ dataSource }: any) {
     },
   ];
   return (
-    <Container className="printable">
-      <div className={styles.wrapper}>
-        <Typo type="bold">{dataSource?.garage?.name}</Typo>
-        <Typo size="small">Địa chỉ: {dataSource?.garage?.address}</Typo>
-        <Typo size="small">Điện thoại :{dataSource?.garage?.phoneNumber}</Typo>
-        <div className={styles.box}>
-          <div className={styles.title}>
-            <span>Phiếu báo giá</span>
+    <ReactPrint>
+      <Container className="printable">
+        <div className={styles.wrapper}>
+          <div className={styles.infoGara}>
+            <ImageField
+              src={dataSource?.garage?.logo}
+              width={120}
+              height={120}
+              radius={8}
+            />
+            <div>
+              <Typo type="bold">{dataSource?.garage?.shortName}</Typo>
+              <Typo size="primary">Địa chỉ: {dataSource?.garage?.address}</Typo>
+              <Typo size="primary">
+                phone: {dataSource?.garage?.phoneNumber}
+              </Typo>
+            </div>
           </div>
-          <Typo size="mall" type="bold">
-            {dayjs(dataSource?.dateTime).format("HH:mm DD:MM:YY")}
-          </Typo>
-          <Typo size="mall" type="bold">
-            Mã đơn hàng:{dataSource?.code}
-          </Typo>
-        </div>
-        <div className={styles.infoCustomer}>
-          <div style={{ display: "flex", gap: "6px" }}>
-            KH:
-            <Typo size="primary" type="bold">
-              {dataSource?.customer?.fullName}
-            </Typo>
+          <Divider
+            my={"lg"}
+            mx={"lg"}
+            color="black"
+            size={1.5}
+            variant="dashed"
+          />
+
+          <div className={styles.box}>
+            <div className={styles.title}>
+              <span>Chi tiết đơn hàng</span>
+            </div>
+            <Flex px={40} w={"100%"} justify={"space-between"}>
+              <Typo size="mall">
+                {dayjs(dataSource?.dateTime).format("HH:mm DD:MM:YY")}
+              </Typo>
+              <Typo size="mall">Số:{dataSource?.code}</Typo>
+            </Flex>
           </div>
-          <div style={{ display: "flex", gap: "6px" }}>
-            ĐT:
-            <Typo size="primary" type="bold">
-              {dataSource?.customer?.phoneNumber}
-            </Typo>
+          <div className={styles.infoCustomer}>
+            <div style={{ display: "flex", gap: "6px" }}>
+              KH:
+              <Typo size="primary">{dataSource?.customer?.fullName}</Typo>
+            </div>
+            <div style={{ display: "flex", gap: "6px" }}>
+              ĐT:
+              <Typo size="primary">{dataSource?.customer?.phoneNumber}</Typo>
+            </div>
+            <div style={{ display: "flex", gap: "6px" }}>
+              XE:
+              <Typo size="primary">{dataSource?.car?.numberPlates}</Typo>
+            </div>
           </div>
-          <div style={{ display: "flex", gap: "6px" }}>
-            XE:
-            <Typo size="primary" type="bold">
-              {dataSource?.car?.numberPlates}
-            </Typo>
+          <Divider
+            my={"lg"}
+            mx={"lg"}
+            color="black"
+            size={1.5}
+            variant="dashed"
+          />
+          <div style={{ marginTop: "20px" }}></div>
+          <TableBasic
+            loading={false}
+            columns={columns}
+            data={dataSource?.orderDetails}
+          />
+          <Divider my={"lg"} color="black" size={1} variant="dashed" />
+          <div
+            style={{
+              marginTop: "40px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <p>Tiền hàng: </p>
+            <p>{dataSource?.subTotal?.toLocaleString()}</p>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <p>VAT: </p>
+            <p>0</p>
+          </div>
+          <Divider my={"lg"} color="black" size={1} variant="dashed" />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <p>Tổng cộng: </p>
+            <p>{dataSource?.total?.toLocaleString()}</p>
+          </div>
+          <div className={styles.infoWifi}>
+            <ImageField width={150} height={150} />
+            <p>Wifi:</p>
+            <p>Passwifi:</p>
+          </div>
+          <div className={styles.titleThanks}>
+            Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
           </div>
         </div>
-        <div style={{ marginTop: "20px" }}></div>
-        <TableBasic
-          loading={false}
-          columns={columns}
-          data={dataSource?.orderDetails}
-        />
-        <div
-          style={{
-            marginTop: "40px",
-            display: "flex",
-            justifyContent: "space-between",
-            borderBottom: "1px dotted #333",
-          }}
-        >
-          <p>Tiền hàng: </p>
-          <p>{dataSource?.subTotal?.toLocaleString()}</p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            borderBottom: "1px dotted #333",
-          }}
-        >
-          <p>VAT: </p>
-          <p>0</p>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            borderBottom: "1px dotted #333",
-          }}
-        >
-          <p>Tổng cộng: </p>
-          <p>{dataSource?.total?.toLocaleString()}</p>
-        </div>
-        <div className={styles.titleThanks}>
-          Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
-        </div>
-      </div>
-      {openedModal && (
-        <DynamicModalReview
-          openedModal={openedModal}
-          onCloseModal={closeModal}
-          title="Đánh giá sản phẩm"
-          onCancelModal={closeModal}
-          dataDetail={dataSource}
-        />
-      )}
-    </Container>
+        {openedModal && (
+          <DynamicModalReview
+            openedModal={openedModal}
+            onCloseModal={closeModal}
+            title="Đánh giá sản phẩm"
+            onCancelModal={closeModal}
+            dataDetail={dataSource}
+          />
+        )}
+      </Container>
+    </ReactPrint>
   );
 }
