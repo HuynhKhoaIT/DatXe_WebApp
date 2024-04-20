@@ -237,7 +237,7 @@ export default function CarsListPage({
         <Flex justify={"end"} align={"center"}>
           <Link
             href={{
-              pathname: `/admin/customers/cars/reate`,
+              pathname: `/admin/customers/cars/create`,
               query: {
                 customerId,
               },
