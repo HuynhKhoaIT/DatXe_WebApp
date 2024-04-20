@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         if (session?.user?.token) {
-            const products = await getProductsFromDLBD(session.user?.token);
+            const products = await getProductsFromDLBD(session.user);
             return NextResponse.json(products);
         }
         throw new Error('Chua dang nhap');
