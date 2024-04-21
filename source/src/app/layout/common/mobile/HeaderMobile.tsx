@@ -89,12 +89,23 @@ const HeaderMobile = () => {
         headerTitle="Menu"
       >
         <ul className={styles.nav}>
-          <li className={styles.navItem}>
-            <Link href="/dashboard">
-              <IconUser size={18} />
-              Hồ sơ
-            </Link>
-          </li>
+          {role == ROLE_CUSTOMER && (
+            <li className={styles.navItem}>
+              <Link href="/dashboard">
+                <IconUser size={18} />
+                Hồ sơ
+              </Link>
+            </li>
+          )}
+          {role == ROLE_CUSTOMER && (
+            <li className={styles.navItem}>
+              <Link href="/admin/cart">
+                <img src={IconCart.src} alt="bell" />
+                Giỏ hàng
+              </Link>
+            </li>
+          )}
+
           {role !== ROLE_CUSTOMER && (
             <li className={styles.navItem}>
               <Link href="/admin">
@@ -103,12 +114,7 @@ const HeaderMobile = () => {
               </Link>
             </li>
           )}
-          <li className={styles.navItem}>
-            <Link href="/admin/cart">
-              <img src={IconCart.src} alt="bell" />
-              Giỏ hàng
-            </Link>
-          </li>
+
           {!session?.user ? (
             <Link href="/dang-nhap" className={styles.title}>
               <li className={styles.navLogout}>
