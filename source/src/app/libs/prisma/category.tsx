@@ -148,3 +148,18 @@ export async function syncCategoryFromDlbd(catData: any, garageId: string) {
   });
   return c;
 }
+export async function getByNameViaGarageId(productName: string,garageId: string){
+  
+  const cat = await prisma.productCategory.findFirst({
+    where:{
+      title: {
+        contains: productName
+      },
+      garageId:{
+        in: ["2",garageId.toString()]
+      },
+      status: 'PUBLIC'
+    }
+  })
+  return cat;
+}
