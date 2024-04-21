@@ -55,15 +55,31 @@ const SigninButton = () => {
               </Menu.Target>
 
               <Menu.Dropdown>
-                <Menu.Item
-                  component="a"
-                  onClick={handleDashboard}
-                  leftSection={
-                    <IconEye style={{ width: rem(14), height: rem(14) }} />
-                  }
-                >
-                  Xem hồ sơ
-                </Menu.Item>
+                {session?.user?.role == "CUSTOMER" && (
+                  <>
+                    <Menu.Item
+                      component="a"
+                      onClick={handleDashboard}
+                      leftSection={
+                        <IconEye style={{ width: rem(14), height: rem(14) }} />
+                      }
+                    >
+                      Xem hồ sơ
+                    </Menu.Item>
+                    <Menu.Item
+                      leftSection={
+                        <IconExternalLink
+                          style={{ width: rem(14), height: rem(14) }}
+                        />
+                      }
+                      component="a"
+                      onClick={handleCar}
+                    >
+                      Đơn mua
+                    </Menu.Item>
+                  </>
+                )}
+
                 {session?.user?.role !== "CUSTOMER" && (
                   <Menu.Item
                     component="a"
@@ -75,17 +91,7 @@ const SigninButton = () => {
                     Quản trị
                   </Menu.Item>
                 )}
-                <Menu.Item
-                  leftSection={
-                    <IconExternalLink
-                      style={{ width: rem(14), height: rem(14) }}
-                    />
-                  }
-                  component="a"
-                  onClick={handleCar}
-                >
-                  Đơn mua
-                </Menu.Item>
+
                 <Menu.Divider />
                 <Menu.Item
                   component="a"

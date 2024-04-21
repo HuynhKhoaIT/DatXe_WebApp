@@ -9,14 +9,22 @@ import FooterMobile from "../layout/common/mobile/Footer/FooterMobile";
 import HeaderMobile from "../layout/common/mobile/HeaderMobile";
 import Container from "../components/common/Container";
 import HeaderTopMobile from "../layout/common/mobile/HeaderTopMobile";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
+import { ROLE_CUSTOMER } from "@/constants";
 
 interface IProps {
   children: ReactNode;
 }
-export default function DashboardLayout({ children }: IProps) {
+export default async function DashboardLayout({ children }: IProps) {
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
   );
+  const session = await getServerSession(authOptions);
+  if (session?.user?.role !== ROLE_CUSTOMER) {
+    return redirect(`/admin`);
+  }
   return (
     <Fragment>
       {isMobile ? (
