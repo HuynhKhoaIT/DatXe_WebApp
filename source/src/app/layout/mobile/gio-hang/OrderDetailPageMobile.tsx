@@ -57,7 +57,6 @@ export default function OrderDetailPageMobile({ dataSource }: any) {
       name: "subTotal",
       dataIndex: [],
       render: (dataRow: any) => {
-        console.log(dataRow);
         return (
           <span>
             {(dataRow?.priceSale * dataRow?.quantity).toLocaleString()}đ
@@ -162,9 +161,12 @@ export default function OrderDetailPageMobile({ dataSource }: any) {
             <p>{dataSource?.total?.toLocaleString()}</p>
           </div>
           <div className={styles.infoWifi}>
-            <ImageField width={150} height={150} />
-            <p>Wifi:</p>
-            <p>Passwifi:</p>
+            <ImageField
+              src={dataSource?.garage?.qrCodeBank}
+              width={150}
+              height={150}
+            />
+            <p>Wifi:{dataSource?.garage?.wifiInfo}</p>
           </div>
           <div className={styles.titleThanks}>
             Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
