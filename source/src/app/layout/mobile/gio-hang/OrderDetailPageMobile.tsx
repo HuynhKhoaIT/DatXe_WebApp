@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Divider, Flex, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
@@ -12,14 +12,24 @@ import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
 import ReactToPrint from "react-to-print";
 import ReactPrint from "@/app/components/common/ReactToPrint";
+import { ORDER_DONE } from "@/constants";
 
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
-export default function OrderDetailPageMobile({ dataSource }: any) {
+export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
+  function checkId(id: string) {
+    if (reviews?.includes(id)) {
+      return 1;
+    } else {
+      return -1;
+    }
+  }
+  const [dataReview, setDataReview] = useState<any>();
+
   const columns = [
     {
       label: (
@@ -61,6 +71,36 @@ export default function OrderDetailPageMobile({ dataSource }: any) {
           <span>
             {(dataRow?.priceSale * dataRow?.quantity).toLocaleString()}đ
           </span>
+        );
+      },
+    },
+    dataSource?.step.toString() == ORDER_DONE && {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+          Hành động
+        </span>
+      ),
+      dataIndex: [],
+      width: "100px",
+      render: (record: any) => {
+        const isPreview = checkId(record?.productId);
+        if (isPreview == 1) {
+          return;
+        }
+        return (
+          <Tooltip label="Đánh giá" withArrow position="bottom">
+            <Button
+              size="lg"
+              radius={0}
+              variant="outline"
+              onClick={() => {
+                setDataReview(record);
+                openModal();
+              }}
+            >
+              Đánh giá
+            </Button>
+          </Tooltip>
         );
       },
     },
@@ -178,7 +218,7 @@ export default function OrderDetailPageMobile({ dataSource }: any) {
             onCloseModal={closeModal}
             title="Đánh giá sản phẩm"
             onCancelModal={closeModal}
-            dataDetail={dataSource}
+            dataDetail={dataReview}
           />
         )}
       </Container>
