@@ -11,6 +11,7 @@ import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
 
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
+import ImageField from "@/app/components/form/ImageField";
 function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,6 +97,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
     );
     totalStars = totalStars / productReview?.data?.length;
   }
+
   return (
     <Grid>
       <Grid.Col span={12}>
@@ -108,8 +110,10 @@ function ProductDetail({ ProductDetail, productReview }: any) {
           }}
         >
           <Grid.Col span={5}>
-            {ProductDetail?.images && (
+            {ProductDetail?.images ? (
               <ProductSlider images={JSON?.parse(ProductDetail?.images)} />
+            ) : (
+              <ImageField radius={10} />
             )}
           </Grid.Col>
           <Grid.Col span={5}>

@@ -31,7 +31,7 @@ export default function ProductSlider({ images }: any) {
         {images?.map((image: any, index: number) => {
           return (
             <SwiperSlide key={index}>
-              <ImageField radius={10} src={image || null} />
+              <ImageField radius={10} src={image} />
             </SwiperSlide>
           );
         })}
@@ -54,7 +54,7 @@ export default function ProductSlider({ images }: any) {
         {images?.map((image: any, index: number) => {
           return (
             <SwiperSlide key={index}>
-              <ImageField radius={10} src={image || null} />
+              <ImageField radius={10} src={image} />
             </SwiperSlide>
           );
         })}

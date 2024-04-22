@@ -10,17 +10,17 @@ const BlogItem = ({ blog }: any) => {
       <Box w={"100%"}>
         <div className={styles.card}>
           <div>
-            <Link href="" style={{ width: "100%" }}>
+            <div style={{ width: "100%" }}>
               <ImageField
                 src={blog?.image ? blog?.image : null}
                 height={160}
                 radius={12}
               />
-            </Link>
+            </div>
           </div>
 
           <div className={styles.infoCard}>
-            <Link href="">
+            <div>
               <Typo
                 size="sub"
                 type="bold"
@@ -29,7 +29,7 @@ const BlogItem = ({ blog }: any) => {
               >
                 {blog.title}
               </Typo>
-            </Link>
+            </div>
             <Typo
               size="tiny"
               style={{ color: "var(--title-color-sub)" }}

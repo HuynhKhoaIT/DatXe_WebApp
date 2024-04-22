@@ -10,17 +10,17 @@ const CardConvenient = ({ convenient }: any) => {
       <Box w={"100%"}>
         <div className={styles.card}>
           <div>
-            <Link href="" style={{ width: "100%" }}>
+            <div style={{ width: "100%" }}>
               <ImageField
                 src={convenient?.thumbnail ? convenient?.thumbnail : null}
                 height={222}
                 width={266}
               />
-            </Link>
+            </div>
           </div>
 
           <div className={styles.infoCard}>
-            <Link href="">
+            <div>
               <Typo
                 size="small"
                 type="bold"
@@ -29,7 +29,7 @@ const CardConvenient = ({ convenient }: any) => {
               >
                 {convenient?.title}
               </Typo>
-            </Link>
+            </div>
           </div>
         </div>
       </Box>

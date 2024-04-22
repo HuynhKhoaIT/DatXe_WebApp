@@ -20,31 +20,11 @@ export default function ProductItem({ product }: { product: any }) {
       <Card shadow="sm" radius="md">
         <Card.Section>
           <Link href={`/san-pham/${product.id}`} style={{ width: "100%" }}>
-            <ImageField
-              src={images ? images[0] : null}
-              height={160}
-
-              // fill={true}
-            />
+            <ImageField src={images ? images[0] : null} height={160} />
           </Link>
         </Card.Section>
 
         <div className={styles.infoCard}>
-          {totalStars && (
-            <div className={styles.star}>
-              <img src={Star.src} alt="start" />
-              <Typo
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  lineHeight: "1rem",
-                  color: "var(--title-color-sub)",
-                }}
-              >
-                {totalStars?.toFixed(2)}
-              </Typo>
-            </div>
-          )}
           <Link href={`/san-pham/${product.id}`}>
             <Typo size="primary" className={styles.productName}>
               {product.name}
