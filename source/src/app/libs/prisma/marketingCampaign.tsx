@@ -1,6 +1,6 @@
 import { STATUS } from "@prisma/client";
 import prisma from "../prismadb";
-export async function getMarketingCampaign(garage: Number,requestData: any) {
+export async function getMarketingCampaign(garage: string,requestData: any) {
 
     let titleFilter = '';
     const searchText = requestData.s;
@@ -9,7 +9,7 @@ export async function getMarketingCampaign(garage: Number,requestData: any) {
     }
     let garageId = {};
     if (garage) {
-        garageId = Number(garage);
+        garageId = (garage);
     }
     let currentPage = 1;
     let take = 10;
