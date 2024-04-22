@@ -181,4 +181,20 @@ const useProductDetail = (id: string) => {
     });
 };
 
-export { useProductDetail, fetchProductDetail };
+// get detail
+const fetchProductDLPDDetail = async (id: string) => {
+    const response = await fetch(`/api/admin/products/dlbd/${id}`);
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch products', response);
+    }
+    return await response.json();
+};
+
+const useProductDLPDDetail = (id: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.productDetail, id],
+        queryFn: () => fetchProductDLPDDetail(id),
+    });
+};
+
+export { useProductDetail, fetchProductDetail,useProductDLPDDetail,fetchProductDLPDDetail};

@@ -45,6 +45,8 @@ export default function ExpertForm({
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
+  const [qrUrl, setQrUrl] = useState(null);
+
   const session = useSession();
 
   console.log(session);
@@ -96,6 +98,7 @@ export default function ExpertForm({
           setWard(dataDetail?.wardId?.toString());
           setLogoUrl(dataDetail?.logo);
           setBannerUrl(dataDetail?.banner);
+          setQrUrl(dataDetail?.qrCodeBank);
           form.setFieldValue("provinceId", dataDetail?.provinceId?.toString());
           form.setFieldValue("districtId", dataDetail?.districtId?.toString());
           form.setFieldValue("wardId", dataDetail?.wardId?.toString());
@@ -141,6 +144,22 @@ export default function ExpertForm({
       console.error("Error:", error);
     }
   };
+  const uploadFileQrCodeBank = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      form.setFieldValue("qrCodeBank", response.data);
+      setQrUrl(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const uploadFileImages = async (file: File) => {
     try {
@@ -179,7 +198,7 @@ export default function ExpertForm({
           <Grid.Col span={12}>
             <Card withBorder shadow="sm">
               <Grid gutter={12}>
-                <Grid.Col span={{ base: 6 }}>
+                <Grid.Col span={{ base: 4 }}>
                   <Text size={"16px"} c={"#999999"} mb={"6px"}>
                     Logo
                   </Text>
@@ -193,7 +212,7 @@ export default function ExpertForm({
                     name="logo"
                   />
                 </Grid.Col>
-                <Grid.Col span={{ base: 6 }}>
+                <Grid.Col span={{ base: 4 }}>
                   <Text size={"16px"} c={"#999999"} mb={"6px"}>
                     Ảnh bìa
                   </Text>
@@ -207,6 +226,22 @@ export default function ExpertForm({
                     idResult="image-result-banner"
                     idImageContainer="image-container-banner"
                     name="banner"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 4 }}>
+                  <Text size={"16px"} c={"#999999"} mb={"6px"}>
+                    QR thanh toán
+                  </Text>
+                  <CropImageLink
+                    shape="rect"
+                    placeholder={"Cập nhật QR thanh toán"}
+                    defaultImage={qrUrl}
+                    uploadFileThumbnail={uploadFileQrCodeBank}
+                    aspect={16 / 9}
+                    idUpload="image-uploader-qrCodeBank"
+                    idResult="image-result-qrCodeBank"
+                    idImageContainer="image-container-qrCodeBank"
+                    name="qrCodeBank"
                   />
                 </Grid.Col>
               </Grid>
@@ -296,16 +331,16 @@ export default function ExpertForm({
                   />
                 </Grid.Col>
 
-                {/* <Grid.Col span={12}>
+                <Grid.Col span={12}>
                   <TextInput
                     size="lg"
                     radius={0}
-                    {...form.getInputProps("address2")}
-                    label="Địa chỉ 2"
+                    {...form.getInputProps("wifiInfo")}
+                    label="Thông tin wifi"
                     type="text"
-                    placeholder="Địa chỉ 2"
+                    placeholder="Tên wifi - mật khẩu"
                   />
-                </Grid.Col> */}
+                </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                   <Select
                     size="lg"

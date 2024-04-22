@@ -1,3 +1,4 @@
+"use client";
 import { Box, Space } from "@mantine/core";
 import Typo from "@/app/components/elements/Typo";
 import styles from "../index.module.scss";
@@ -7,29 +8,17 @@ import { getCategories } from "@/app/libs/prisma/category";
 import ProductSave from "../create/ProductSave";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-async function getDataCategories() {
-  const categories = await getCategories({});
-  if (!categories) {
-    throw new Error("Failed to fetch data");
-  }
+import { useProductDLPDDetail } from "../../hooks/product/useProduct";
+import { useSearchParams } from "next/navigation";
 
-  return categories;
-}
-export default async function ProductDirection() {
-  const categories = await getDataCategories();
-  const session = await getServerSession(authOptions);
+export default function ProductDirection() {
+  const searchParams = useSearchParams();
+  const productId: any = searchParams.get("productId");
+  const { data: productDetail } = useProductDLPDDetail(productId);
 
-  const dataOptions = categories?.data?.map((item: any) => ({
-    value: item.id.toString(),
-    label: item.title,
-  }));
   return (
     <Box maw={"100%"} mx="auto">
-      <ProductSave
-        isDirection={true}
-        categoryOptions={dataOptions}
-        user={session?.user}
-      />
+      <ProductSave isDirection={true} productDetail={productDetail} />
     </Box>
   );
 }

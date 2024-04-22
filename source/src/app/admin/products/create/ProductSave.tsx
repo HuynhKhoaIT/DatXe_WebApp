@@ -7,33 +7,27 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getProductDetail } from "@/utils/product";
 import { LoadingComponent } from "@/app/components/loading";
-export default function ProductSave({
-  isDirection,
-  brandOptions = [],
-  user,
-}: any) {
+export default function ProductSave({ isDirection, productDetail }: any) {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const [productDetail, setProductDetail] = useState<any>();
-  const handleGetProduct = async (productId: number) => {
-    try {
-      const res: any = await getProductDetail(productId);
-      setProductDetail(res);
-    } catch (error) {}
-  };
-  useEffect(() => {
-    if (isDirection) {
-      handleGetProduct(Number(productId));
-    }
-  }, [isDirection]);
+  // const [productDetail, setProductDetail] = useState<any>();
+  // const handleGetProduct = async (productId: number) => {
+  //   try {
+  //     const res: any = await getProductDetail(productId);
+  //     setProductDetail(res);
+  //   } catch (error) {}
+  // };
+  // useEffect(() => {
+  //   if (isDirection) {
+  //     handleGetProduct(Number(productId));
+  //   }
+  // }, [isDirection]);
   return (
     <Box maw={"100%"} mx="auto">
       <ProductForm
         isEditing={false}
         dataDetail={isDirection ? productDetail : []}
         isDirection={isDirection}
-        brandOptions={brandOptions}
-        user={user}
       />
     </Box>
   );
