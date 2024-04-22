@@ -13,7 +13,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const session = await getServerSession(authOptions);
 
         if (session) {
-            const cars = await prisma.car.findUnique({
+            const car = await prisma.car.findFirst({
                 where: {
                     id: id,
                 },
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                     carStyle: true,
                 },
             });
-            let carRs = JSON.parse(JSON.stringify(cars));
+            let carRs = JSON.parse(JSON.stringify(car));
             let br = await getCarModelById(carRs.carBrandId);
             let md = await getCarModelById(carRs.carNameId);
             let y = await getCarModelById(carRs.carYearId);
