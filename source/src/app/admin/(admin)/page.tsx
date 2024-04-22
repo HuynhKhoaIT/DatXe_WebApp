@@ -131,6 +131,16 @@ export default function DashboardAdmin() {
           hơn
         </Alert>
       )}
+      {myGarage?.status == "DELETE" && (
+        <Alert
+          variant="light"
+          title="Xác minh"
+          icon={<IconInfoCircle />}
+          mb={30}
+        >
+          Chuyên gia đã bị xoá, hãy liên hệ với admin tổng.
+        </Alert>
+      )}
       <div className={styles.wrapper_1}>
         <div className={styles.card1}>
           <div className={styles.info}>

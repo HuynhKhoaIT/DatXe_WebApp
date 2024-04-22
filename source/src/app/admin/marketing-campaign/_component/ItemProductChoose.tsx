@@ -65,8 +65,8 @@ export default function ItemProductChoose({
           />
         </div>
         <div className={styles.imgItem}>
-          <Image
-            src={images[0]}
+          <ImageField
+            src={images?.[0]}
             alt="Relevant Image"
             width="80px"
             height={"80px"}
