@@ -70,7 +70,7 @@ export const useAddOrder = (): UseOrders => {
     const { mutate: addItem,isPending:isPendingAdd } = useMutation({
         mutationFn: addOrder,
         onSuccess: () => {
-            router.back();
+            router.push('/admin/order-manager');
             notifications.show({
                 title: 'Thành công',
                 message: 'Thêm đơn hàng thành công',
