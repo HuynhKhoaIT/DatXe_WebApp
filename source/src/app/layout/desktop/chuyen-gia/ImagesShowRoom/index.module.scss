@@ -39,9 +39,10 @@
         .rightBottom {
             display: flex;
             gap: 0.5rem;
-            height: 30%;
+            height: calc(30% - 8px);
+            width:100%;
             img {
-                width: 100%;
+                width: calc(50% - 4px);
                 height: 100%;
                 object-fit: fill;
             }
