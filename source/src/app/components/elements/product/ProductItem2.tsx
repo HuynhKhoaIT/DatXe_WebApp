@@ -55,7 +55,7 @@ export default function ProductItem2({
                   color: "var(--title-color-sub)",
                 }}
               >
-                {totalStars}
+                {totalStars?.toFixed(2)}
               </Typo>
             </div>
           )}

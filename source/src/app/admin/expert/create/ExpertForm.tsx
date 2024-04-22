@@ -237,7 +237,7 @@ export default function ExpertForm({
                     placeholder={"Cập nhật QR thanh toán"}
                     defaultImage={qrUrl}
                     uploadFileThumbnail={uploadFileQrCodeBank}
-                    aspect={16 / 9}
+                    aspect={1 / 1}
                     idUpload="image-uploader-qrCodeBank"
                     idResult="image-result-qrCodeBank"
                     idImageContainer="image-container-qrCodeBank"
