@@ -145,6 +145,8 @@ export async function createGarage(data: any) {
         amenities: {
           create: amenitiesArr,
         },
+        wifiInfo: data.wifiInfo,
+        qrCodeBank: data.qrCodeBank,
       },
       include: {
         cars: true,
@@ -189,6 +191,8 @@ export async function updateGarage(id: string, data: any) {
           },
         })),
       },
+      wifiInfo: data.wifiInfo,
+      qrCodeBank: data.qrCodeBank,
     };
     const updatedPost = await prisma.garage.update({
       where: {
