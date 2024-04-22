@@ -164,7 +164,14 @@ const apiConfig = {
             method: 'PUT',
             headers: baseHeader,
         },
-    }
+    },
+    order:{
+        getList: {
+            baseURL: `${apiUrl}api/admin/orders`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+    },
 
 };
 

@@ -14,9 +14,21 @@ export const revalidate = 0;
 import styles from "./index.module.scss";
 import CalendarSchedulerGarage from "@/app/admin/orders/CalendarGarage";
 import { getOrders } from "@/app/libs/prisma/order";
+import { useOrders } from "../hooks/order/useOrder";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 export default async function Orders() {
-  const orders = await getOrders("2", {});
+  const session: any = await getServerSession(authOptions);
+
+  let garageId = (
+    await getGarageIdByDLBDID(Number(session.user?.garageId))
+  ).toString();
+
+  const orders: any = await getOrders(garageId, {});
+
   const mappedOrdersData = mapArrayEventCalendar(orders?.data);
+
   // lấy danh sách category
   const categories = await getCategories();
   const categoryOptions = categories?.map((category) => ({
@@ -59,6 +71,7 @@ export default async function Orders() {
     startDate: "",
     endDate: null,
   };
+
   return (
     <div className={styles.wrapper}>
       <SearchForm searchData={searchData} initialValues={initialValuesSearch} />

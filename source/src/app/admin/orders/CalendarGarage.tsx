@@ -17,6 +17,7 @@ const DynamicModalAcceptCalendar = dynamic(
 export default function CalendarSchedulerGarage({
   ordersData,
   selectable = true,
+  categoryOptions,
 }: any) {
   const [layoutMobile, setLayoutMobile] = useState(false);
   const [previewInfos, setPreviewInfos] = useState();
@@ -71,12 +72,14 @@ export default function CalendarSchedulerGarage({
           firstDay={new Date().getDay() - 3}
           windowResize={handleWindowResize}
           isListEvent={true}
+          categoryOptions={categoryOptions}
         />
       </Box>
       <DynamicModalAcceptCalendar
         opened={openedPreviewCalendar}
         onClose={closePreviewCalendar}
         previewInfos={previewInfos}
+        categoryOptions={categoryOptions}
       />
     </div>
   );

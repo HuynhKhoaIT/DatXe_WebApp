@@ -7,6 +7,7 @@ export default function ModalPreviewDetailCalendar({
   opened,
   onClose,
   previewInfos,
+  categoryOptions,
 }: any) {
   return (
     <BasicModal
@@ -27,6 +28,7 @@ export default function ModalPreviewDetailCalendar({
       <ModalPreviewCalendar
         detail={previewInfos?.event?._def?.extendedProps?.orderDetail}
         onClose={onClose}
+        categoryOptions={categoryOptions}
       />
     </BasicModal>
   );

@@ -13,7 +13,7 @@ export default async function Products({
     <RenderContext
       components={{
         desktop: {
-          defaultTheme: OrderDetailPage,
+          defaultTheme: OrderDetailPageMobile,
         },
         mobile: {
           defaultTheme: OrderDetailPageMobile,
