@@ -10,19 +10,19 @@ export async function GET(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         const { searchParams } = new URL(request.url);
-        let garageId = 0;
-        if (searchParams.get('garage')) {
-            garageId = Number(searchParams.get('garage'));
+        if(session){
+            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString() ?? '2';
+            const requestData = {
+                s: searchParams.get('s'),
+                limit: searchParams.get('limit'),
+                page: searchParams.get('page'),
+            };
+    
+            const marketingCampaign = await getMarketingCampaign(garageId, requestData);
+            return NextResponse.json(marketingCampaign);
         }
 
-        const requestData = {
-            s: searchParams.get('s'),
-            limit: searchParams.get('limit'),
-            page: searchParams.get('page'),
-        };
-
-        const marketingCampaign = await getMarketingCampaign(garageId, requestData);
-        return NextResponse.json(marketingCampaign);
+        
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
