@@ -28,7 +28,7 @@ const BasicModal = ({
       onClose={onCloseModal}
       title={title}
       classNames={classNames}
-      lockScroll={false}
+      lockScroll={true}
       centered={centered}
       withCloseButton={withCloseButton}
     >

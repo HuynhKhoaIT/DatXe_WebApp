@@ -50,6 +50,7 @@ export default function CalendarEventBase({
   isResponsive = true,
   heightMobile = "500px",
   heightDesktop = "700px",
+  categoryOptions,
 }: any) {
   const fullCalendarRef = useRef<FullCalendar | null>(null);
   const [viewDefault, setViewDefault] = useState("Tuần");
@@ -152,7 +153,6 @@ export default function CalendarEventBase({
     handleGetVisibleEvents();
   }, []);
 
-  console.log("eventData", eventData);
   return (
     <>
       <FullCalendar

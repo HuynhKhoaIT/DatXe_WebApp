@@ -53,6 +53,7 @@ export const ModalEventCalendar = ({
   onClose,
   fetchDataOrders,
 }: any) => {
+  console.log(user);
   const { cars, isLoading, isFetching } = useCars();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
@@ -90,39 +91,39 @@ export const ModalEventCalendar = ({
   });
   const handleSubmit = async (values: any) => {
     console.log(values);
-    values.token = token;
-    values.garageId = 1;
-    // setLoading(true);
-    if (!token) {
-      // const genRs = await GenOTP(phoneNumber);
-      // setLoading(false);
-      // openLogin();
-      alert("vui long dang nhap");
-    } else {
-      try {
-        const createdCar = await fetch(`/api/orders`, {
-          method: "POST",
-          body: JSON.stringify(values),
-        });
-        setLoading(false);
-        notifications.show({
-          title: "Thành công",
-          message: "Đặt lịch thành công",
-        });
-        onClose();
-        fetchDataOrders();
-        // router.push('/dashboard');
-      } catch (error) {
-        console.error("Error creating customer care:", error);
-        notifications.show({
-          title: "Thất bại",
-          message: "Đặt lịch thất bại",
-        });
-        setLoading(false);
-        onClose();
-        fetchDataOrders();
-      }
-    }
+    // values.token = token;
+    // values.garageId = 1;
+    // // setLoading(true);
+    // if (!token) {
+    //   // const genRs = await GenOTP(phoneNumber);
+    //   // setLoading(false);
+    //   // openLogin();
+    //   alert("vui long dang nhap");
+    // } else {
+    //   try {
+    //     const createdCar = await fetch(`/api/orders`, {
+    //       method: "POST",
+    //       body: JSON.stringify(values),
+    //     });
+    //     setLoading(false);
+    //     notifications.show({
+    //       title: "Thành công",
+    //       message: "Đặt lịch thành công",
+    //     });
+    //     onClose();
+    //     fetchDataOrders();
+    //     // router.push('/dashboard');
+    //   } catch (error) {
+    //     console.error("Error creating customer care:", error);
+    //     notifications.show({
+    //       title: "Thất bại",
+    //       message: "Đặt lịch thất bại",
+    //     });
+    //     setLoading(false);
+    //     onClose();
+    //     fetchDataOrders();
+    //   }
+    // }
   };
   const ref = useRef<HTMLInputElement>(null);
   const pickerControl = (

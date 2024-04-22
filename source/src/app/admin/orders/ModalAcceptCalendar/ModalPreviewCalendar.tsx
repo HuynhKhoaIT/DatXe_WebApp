@@ -8,6 +8,7 @@ import {
   Textarea,
   Select,
   Radio,
+  LoadingOverlay,
 } from "@mantine/core";
 import { DateTimePicker } from "@mantine/dates";
 import { IconPlus } from "@tabler/icons-react";
@@ -22,67 +23,41 @@ import {
   getOptionsModels,
   getOptionsYearCar,
 } from "@/utils/until";
-import { QUERY_KEY } from "@/constants";
+import { ORDER_DONE, QUERY_KEY, ROLE_EXPERT } from "@/constants";
 import useFetch from "@/app/hooks/useFetch";
+import { useSession } from "next-auth/react";
+import { useAddOrder } from "../../hooks/order/useAddOrder";
+import { useUpdateOrder } from "../../hooks/order/useUpdateOrder";
 require("dayjs/locale/vi");
 
-export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
-  const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({
-    queryKey: [QUERY_KEY.optionsBrandCar],
-    queryFn: () => getOptionsBrands(),
-    options: {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      refetchInterval: false,
-    },
-  });
+export const ModalPreviewCalendar = ({
+  detail,
+  onClose,
+  categoryOptions,
+}: any) => {
+  const { updateItem, brandOptions, isPendingUpdate } = useUpdateOrder();
+
+  console.log(detail);
+  const { data }: any = useSession();
+  const role = data?.user?.role;
+  // const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({
+  //   queryKey: [QUERY_KEY.optionsBrandCar],
+  //   queryFn: () => getOptionsBrands(),
+  //   options: {
+  //     refetchOnWindowFocus: false,
+  //     staleTime: Infinity,
+  //     refetchInterval: false,
+  //   },
+  // });
 
   const [loading, handlers] = useDisclosure();
-  const form = useForm({
+  const form = useForm<any>({
     initialValues: {},
     validate: {},
   });
-
-  async function getDataInfoOrder() {
-    const res = await fetch(`/api/admin/orders/create`);
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    const orderInfo = await res.json();
-    const categoryOptions = orderInfo?.categories?.map((category: any) => ({
-      value: category.id?.toString() || "",
-      label: category.title || "",
-    }));
-    setCategoryOptions(categoryOptions);
-    const carOptions = orderInfo?.cars?.map((car: any) => ({
-      value: car.id?.toString() || "",
-      label: car.numberPlates || "",
-      otherData: {
-        carId: car.id?.toString() || "",
-        brandId: car.carBrandId,
-        modelId: car.carNameId,
-        carYearId: car.carYearId,
-      },
-    }));
-    const newBrands = orderInfo?.carBrands?.map((brand: any) => ({
-      value: brand.id?.toString() || "",
-      label: brand.title || "",
-    }));
-    const advisorOptions = orderInfo?.serviceadvisors?.map((advisor: any) => ({
-      value: advisor.id?.toString(),
-      label: advisor.fullName,
-    }));
-    setAdvisorOptions(advisorOptions);
-  }
   useEffect(() => {
     const fetchData = async () => {
       handlers.open();
-      // await Promise.all([
-      //   getDataInfoOrder(),
-      //   getDataBrands(),
-      //   getDataModels(detail?.car?.carBrandId),
-      //   getDataYearCar(detail?.car?.carNameId),
-      // ]);
       const [models, yearCars] = await Promise.all([
         getOptionsModels(detail?.car?.carBrandId),
         getOptionsYearCar(detail?.car?.carNameId),
@@ -95,12 +70,15 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
       form.setFieldValue("fullName", detail?.customer?.fullName);
       form.setFieldValue("phoneNumber", detail?.customer?.phoneNumber);
       form.setFieldValue("numberPlates", detail?.car?.numberPlates);
-      form.setFieldValue("carBrandId", detail?.car?.carBrandId.toString());
-      form.setFieldValue("carNameId", detail?.car?.carNameId.toString());
-      form.setFieldValue("carYearId", detail?.car?.carYearId.toString());
-      form.setFieldValue("orderCategoryId", detail?.orderCategoryId.toString());
+      form.setFieldValue("carBrandId", detail?.car?.carBrandId?.toString());
+      form.setFieldValue("carNameId", detail?.car?.carNameId?.toString());
+      form.setFieldValue("carYearId", detail?.car?.carYearId?.toString());
+      form.setFieldValue(
+        "orderCategoryId",
+        detail?.orderCategoryId?.toString()
+      );
       form.setFieldValue("step", detail?.step.toString());
-      form.setFieldValue("priorityLevel", detail?.priorityLevel.toString());
+      form.setFieldValue("priorityLevel", detail?.priorityLevel?.toString());
       form.setFieldValue(
         "serviceAdvisorId",
         detail?.serviceAdvisor?.id?.toString()
@@ -111,32 +89,17 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
     if (detail) fetchData();
   }, [detail]);
   const handleSubmit = async (values: any) => {
-    try {
-      await fetch(`/api/admin/orders/${detail.id}`, {
-        method: "PUT",
-        body: JSON.stringify(values),
-      });
-      notifications.show({
-        title: "Thành công",
-        message: "Thành công",
-      });
-    } catch (error) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Thất bại",
-      });
-    } finally {
-      onClose();
-    }
+    updateItem(values);
   };
 
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
-  const [categoryOptions, setCategoryOptions] = useState<any>([]);
   const [advisorOptions, setAdvisorOptions] = useState<any>([]);
   const [garageOptions, setGarageOptions] = useState<any>([]);
+
   return (
-    <Box w={"100%"}>
+    <Box w={"100%"} pos={"relative"}>
+      <LoadingOverlay visible={loading} loaderProps={{ type: "bars" }} />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Textarea
           size="lg"
@@ -165,6 +128,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               radius={0}
               label="Họ và tên"
               placeholder="Họ và tên"
+              disabled
               withAsterisk
               {...form.getInputProps("fullName")}
             />
@@ -175,6 +139,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               radius={0}
               label="Số điện thoại"
               placeholder="Số điện thoại"
+              disabled
               withAsterisk
               {...form.getInputProps("phoneNumber")}
             />
@@ -191,6 +156,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               }}
               placeholder="Nhập biển số xe"
               size="lg"
+              disabled
               radius={0}
               {...form.getInputProps("numberPlates")}
             ></TextInput>
@@ -205,6 +171,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               label="Hãng xe"
               {...form.getInputProps("carBrandId")}
               name="carBrandId"
+              disabled
               data={brandOptions}
               placeholder="Hãng xe"
               allowDeselect={false}
@@ -228,6 +195,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               placeholder="Dòng xe"
               leftSection={<IconPlus size={22} color="blue" />}
               withAsterisk
+              disabled
               allowDeselect={false}
               {...form.getInputProps("carNameId")}
               onChange={(value: any) => {
@@ -243,6 +211,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               label="Năm sản xuất"
               data={yearCarOptions}
               placeholder="Năm sản xuất"
+              disabled
               leftSection={<IconPlus size={22} color="blue" />}
               withAsterisk
               allowDeselect={false}
@@ -266,6 +235,8 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
           </Grid.Col>
           <Grid.Col span={6} className="input-date">
             <DateTimePicker
+              size="lg"
+              radius={0}
               label="Thời gian đặt lịch"
               valueFormat="DD/MM/YYYY hh:mm A"
               placeholder="Thời gian đặt lịch"
@@ -273,7 +244,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               {...form.getInputProps("dateTime")}
             />
           </Grid.Col>
-          <Grid.Col span={6}>
+          {/* <Grid.Col span={6}>
             <Select
               size="lg"
               radius={0}
@@ -285,22 +256,24 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               withAsterisk
               {...form.getInputProps("serviceAdvisorId")}
             />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Select
-              size="lg"
-              radius={0}
-              label="Chuyên gia"
-              allowDeselect={false}
-              data={garageOptions}
-              placeholder="Chọn chuyên gia"
-              withAsterisk
-              {...form.getInputProps("garageId")}
-            />
-          </Grid.Col>
+          </Grid.Col> */}
+          {role !== ROLE_EXPERT && (
+            <Grid.Col span={6}>
+              <Select
+                size="lg"
+                radius={0}
+                label="Chuyên gia"
+                allowDeselect={false}
+                data={garageOptions}
+                placeholder="Chọn chuyên gia"
+                withAsterisk
+                {...form.getInputProps("garageId")}
+              />
+            </Grid.Col>
+          )}
         </Grid>
 
-        <Grid mt="md">
+        {/* <Grid mt="md">
           <Grid.Col span={12}>
             <Textarea
               size="lg"
@@ -311,7 +284,7 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
               {...form.getInputProps("customerNote")}
             />
           </Grid.Col>
-        </Grid>
+        </Grid> */}
         <Grid mt="md">
           <Grid.Col span={12}>
             <Select
@@ -324,37 +297,39 @@ export const ModalPreviewCalendar = ({ detail, onClose }: any) => {
             />
           </Grid.Col>
         </Grid>
-        <Group
-          grow
-          preventGrowOverflow={false}
-          wrap="nowrap"
-          mt="md"
-          className="footer-modal-schedule"
-        >
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            w={100}
-            variant="outline"
-            color="red"
-            onClick={() => onClose()}
+        {detail?.step !== Number(ORDER_DONE) && (
+          <Group
+            grow
+            preventGrowOverflow={false}
+            wrap="nowrap"
+            mt="md"
+            className="footer-modal-schedule"
           >
-            Huỷ
-          </Button>
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            loading={loading}
-            w={100}
-            bg={"var(--theme-color)"}
-            type="submit"
-            key="submit"
-          >
-            Cập nhật
-          </Button>
-        </Group>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              w={100}
+              variant="outline"
+              color="red"
+              onClick={() => onClose()}
+            >
+              Huỷ
+            </Button>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              loading={isPendingUpdate}
+              w={100}
+              bg={"var(--theme-color)"}
+              type="submit"
+              key="submit"
+            >
+              Cập nhật
+            </Button>
+          </Group>
+        )}
       </form>
     </Box>
   );
