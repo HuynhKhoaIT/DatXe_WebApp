@@ -47,7 +47,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                         assignedAt: new Date(),
                         category: {
                             connect: {
-                                id: parseInt(id.toString()),
+                                id: (id.toString()),
                             },
                         },
                     });
@@ -70,12 +70,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                                 carBrandType: 'CARYEAR',
                                 carModel: {
                                     connect: {
-                                        id: Number(y),
+                                        id: (y),
                                     },
                                 },
                             };
-                            if (!brandArrTemp.includes(Number(y))) {
-                                brandArrTemp.push(Number(y));
+                            if (!brandArrTemp.includes((y))) {
+                                brandArrTemp.push((y));
                                 brandArr.push(yO);
                             }
                         });
@@ -87,11 +87,11 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                             carBrandType: 'CARNAME',
                             carModel: {
                                 connect: {
-                                    id: Number(b.nameId),
+                                    id: (b.nameId),
                                 },
                             },
                         };
-                        if (!brandArrTemp.includes(Number(b.nameId))) {
+                        if (!brandArrTemp.includes((b.nameId))) {
                             brandArrTemp.push(Number(b.nameId));
                             brandArr.push(bO);
                         }
