@@ -36,7 +36,7 @@ export default function Layout({ children }: IProps) {
       </Box>
     );
   }
-  if (role === "CUSTOMER") {
+  if (role === "CUSTOMER" || myGarage?.status === "DELETE") {
     return <PageUnauthorized />;
   }
   return (

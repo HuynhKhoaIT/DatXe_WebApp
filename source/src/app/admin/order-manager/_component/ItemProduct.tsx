@@ -1,16 +1,7 @@
 import React from "react";
 import styles from "./index.module.scss";
 import ImageField from "@/app/components/form/ImageField";
-import ImageDefault from "@/assets/images/logo.png";
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Flex,
-  Group,
-  Image,
-  Menu,
-} from "@mantine/core";
+import { Menu } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import Typo from "@/app/components/elements/Typo";
 import { IconDotsVertical } from "@tabler/icons-react";
@@ -34,7 +25,6 @@ export default function ItemProduct({
     openModalChoose,
     { open: openModal, close: closeModal },
   ] = useDisclosure(false);
-  console.log(data);
   let images;
   if (data?.images) images = JSON.parse(data?.images);
   const routes = useRouter();
@@ -64,7 +54,7 @@ export default function ItemProduct({
     <div className={styles.item}>
       <div className={styles.itemLeft}>
         <div className={styles.imgItem}>
-          <Image
+          <ImageField
             src={images?.[0]}
             alt="Relevant Image"
             width="80px"
