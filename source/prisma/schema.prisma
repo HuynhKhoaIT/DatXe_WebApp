@@ -144,6 +144,7 @@ model Product {
   updatedAt       DateTime                @updatedAt
   marketingCampaignDetail                 MarketingCampaignDetail[]
   orderDetail                             OrderDetail[]
+  productsHome                            productsHome[]
   reviews                                 ReviewsProduct[]
 }
 
@@ -520,6 +521,14 @@ model slideBanner {
   garage            Garage @relation(fields: [garageId], references: [id])
   garageId          String @default("1")
 }
+
+model productsHome{
+  product             Product @relation(fields: [productId],references: [id])
+  productId           String @id
+  isProduct           Int? @default(1)
+  index               Int @default(10)
+}
+
 
 enum SALETYPE {
   FIXED
