@@ -27,11 +27,16 @@ export default function ProductSlider({ images }: any) {
         }}
         modules={[FreeMode, Navigation, Thumbs]}
         className="my-swiper2"
+        style={{ height: 400 }}
       >
         {images?.map((image: any, index: number) => {
           return (
-            <SwiperSlide key={index}>
-              <ImageField radius={10} src={image} />
+            <SwiperSlide style={{ height: 380 }} key={index}>
+              <ImageField
+                radius={10}
+                src={image}
+                // style={{ objectFit: "contain" }}
+              />
             </SwiperSlide>
           );
         })}

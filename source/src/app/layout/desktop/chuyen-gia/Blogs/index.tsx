@@ -6,7 +6,6 @@ import ProductItem from "@/app/components/elements/product/ProductItem1";
 import BlogItem from "./BlogItem";
 import SlickCarousel from "@/app/components/common/SlickCarousell";
 const Blogs = ({ blogs }: any) => {
-  console.log(blogs);
   return (
     <div className={styles.wrapper}>
       <OverviewPanel

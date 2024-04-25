@@ -11,7 +11,7 @@ import { useDisclosure } from "@mantine/hooks";
 import SearchForm from "@/app/components/form/SearchForm";
 import TableBasic from "@/app/components/table/Tablebasic";
 import ListPage from "@/app/components/layout/ListPage";
-import FilterStepOrder from "@/app/components/common/FilterStepOrder/FilterCategories";
+import FilterTable from "@/app/components/common/FilterTable";
 import { getOptionsCar } from "./until";
 import { useOrders } from "../hooks/order/useOrder";
 const DynamicModalDeleteItem = dynamic(
@@ -230,7 +230,9 @@ export default function OrdersManaga() {
             </Link>
           </Flex>
         }
-        filterCategory={<FilterStepOrder stepOptions={stepOrderOptions} />}
+        filterCategory={
+          <FilterTable stepOptions={stepOrderOptions} keyQuery="step" />
+        }
         style={{ height: "100%" }}
         titleTable={true}
         baseTable={

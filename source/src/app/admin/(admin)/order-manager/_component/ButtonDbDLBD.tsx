@@ -2,7 +2,14 @@ import Typo from "@/app/components/elements/Typo";
 import { Button } from "@mantine/core";
 import { modals } from "@mantine/modals";
 
-export default function ButtonDbDLBD({ isPendingDlbd, handleDbDLBD }: any) {
+export default function ButtonDbDLBD({
+  isPendingDlbd,
+  handleDbDLBD,
+  dataDetail,
+}: any) {
+  if (dataDetail?.orderDLBDId) {
+    return;
+  }
   const HandleCancelOrder = () => {
     modals.openConfirmModal({
       title: "Xác nhận",

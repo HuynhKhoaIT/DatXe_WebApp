@@ -11,6 +11,7 @@ export default function ImageField({
   height,
   fit,
   alt,
+  style,
 }: any) {
   return (
     <Image
@@ -22,6 +23,7 @@ export default function ImageField({
       h={height}
       fit={fit}
       alt={alt}
+      style={style}
     />
   );
 }

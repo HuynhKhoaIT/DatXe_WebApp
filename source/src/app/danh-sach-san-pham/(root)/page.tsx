@@ -11,6 +11,7 @@ export default async function Products({ searchParams }: any) {
       categoryId: searchParams?.categoryId,
       isProduct: searchParams?.isProduct || true,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
+      garageId: searchParams?.garageId,
     },
   });
 
