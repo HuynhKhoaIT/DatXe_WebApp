@@ -6,12 +6,12 @@ import axios from "axios";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(request: Request) {
     try {
-        const id = params.id;
+        const json = await request.json();
         const session = await getServerSession(authOptions);
         if (session) {
-            const id = params.id;
+            const id = json.id;
             const order = await findOrder(id,{});
             const { data } = await axios({
                 method: "POST",
