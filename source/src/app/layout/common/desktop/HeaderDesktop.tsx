@@ -49,7 +49,7 @@ export default async function Header() {
       name: "KIA",
     },
   ];
-  // const myAccount: any = await getMyAccount();
+  const myAccount: any = await getMyAccount();
 
   return (
     <header className={styles.header}>
@@ -67,7 +67,7 @@ export default async function Header() {
                   <IconShoppingCart size={28} color="#3450E7" />
                 </ActionIcon>
               </Link>
-              {/* <ButtonAddCar styles={styles} user={myAccount} /> */}
+              <ButtonAddCar styles={styles} user={myAccount} />
 
               <Link href={"/dat-lich"}>
                 <Button

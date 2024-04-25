@@ -13,7 +13,6 @@ import menuConfigExpertDelete from "@/constants/menuConfig/ExpertDelete";
 export function NavbarNested({ toggle }: any) {
   const garage = useMyGarage();
 
-  console.log(garage?.myGarage?.status);
   var { data: session, status } = useSession();
   const role = session?.user?.role;
   const menuExpert = menuConfigExpert.map((item) => (

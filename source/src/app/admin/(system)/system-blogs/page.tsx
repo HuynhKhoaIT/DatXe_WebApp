@@ -11,37 +11,34 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useExperts } from "../../(admin)/hooks/expert/useExpert";
-import FilterTable from "@/app/components/common/FilterTable";
+import { QueryClient } from "@tanstack/react-query";
+import { useNewsList } from "../../(admin)/hooks/news/useNews";
+const queryClient = new QueryClient();
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Chuyên gia" },
+  { title: "Bài viết" },
 ];
-
 const DynamicModalDeleteItem = dynamic(
-  () => import("../../_component/ModalDeleteItem"),
+  () => import("@/app/admin/_component/ModalDeleteItem"),
   {
     ssr: false,
   }
 );
-const Expert = () => {
+const Blogs = () => {
   const {
-    experts,
+    newsList,
     isLoading,
     isFetching,
-    error,
     page,
     setPage,
     deleteItem,
-  } = useExperts();
-
-  console.log(experts);
+  } = useNewsList();
   const [deleteRow, setDeleteRow] = useState();
+
   const handleDeleteItem = (id: any) => {
     deleteItem(id);
   };
-
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
@@ -52,83 +49,33 @@ const Expert = () => {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Hình ảnh</span>
       ),
-      name: "image",
-      dataIndex: ["logo"],
+      name: "thumbnail",
+      dataIndex: ["thumbnail"],
       width: "90px",
       render: (data: any) => {
-        if (!data) {
-          return (
-            <Image
-              radius="md"
-              src={ImageDefult.src}
-              h={40}
-              w="auto"
-              fit="contain"
-            />
-          );
-        }
-        return <Image radius="md " h={40} w={80} fit="contain" src={data} />;
+        return (
+          <Image
+            radius="md "
+            h={40}
+            w={80}
+            fit="contain"
+            src={data || ImageDefult.src}
+          />
+        );
       },
     },
+
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Mã chuyên gia
-        </span>
-      ),
-      name: "code",
-      dataIndex: ["code"],
-      render: (dataRow: any) => {
-        return <span>{dataRow}</span>;
-      },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên chuyên gia
+          Tên bài viết
         </span>
       ),
       name: "name",
-      dataIndex: ["name"],
+      dataIndex: ["title"],
       render: (dataRow: any) => {
         return <span>{dataRow}</span>;
       },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên rút gọn
-        </span>
-      ),
-      name: "shortName",
-      dataIndex: ["shortName"],
-      render: (dataRow: any) => {
-        return <span>{dataRow}</span>;
-      },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Số điện thoại
-        </span>
-      ),
-      name: "phoneNumber",
-      dataIndex: ["phoneNumber"],
-      textAlign: "center",
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Email</span>
-      ),
-      name: "email",
-      dataIndex: ["email"],
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Địa chỉ</span>
-      ),
-      name: "address",
-      dataIndex: ["address"],
     },
 
     {
@@ -172,7 +119,7 @@ const Expert = () => {
           <>
             <Link
               href={{
-                pathname: `/admin/system-expert/${record.id}`,
+                pathname: `/admin/system-blogs/${record.id}`,
               }}
             >
               <Tooltip label="Cập nhật" withArrow position="bottom">
@@ -212,59 +159,39 @@ const Expert = () => {
     },
   ];
 
-  const searchData = [
-    {
-      name: "s",
-      placeholder: "Tên chuyên gia",
-      type: "input",
-    },
-  ];
-
-  const initialValuesSearch = {
-    s: "",
-  };
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
       <ListPage
-        searchForm={
-          <SearchForm
-            searchData={searchData}
-            brandFilter={false}
-            initialValues={initialValuesSearch}
-          />
-        }
-        // actionBar={
-        //   <Flex justify={"end"} align={"center"}>
-        //     <Link
-        //       href={{
-        //         pathname: `/admin/expert/create`,
-        //       }}
-        //     >
-        //       <Button
-        //         size="lg"
-        //         h={{ base: 42, md: 50, lg: 50 }}
-        //         radius={0}
-        //         leftSection={<IconPlus size={18} />}
-        //       >
-        //         Thêm mới
-        //       </Button>
-        //     </Link>
-        //   </Flex>
-        // }
-        filterCategory={
-          <FilterTable keyQuery="status" stepOptions={statusOptions} />
+        actionBar={
+          <Flex justify={"end"} align={"center"}>
+            <Link
+              href={{
+                pathname: `/admin/system-blogs/create`,
+              }}
+            >
+              <Button
+                size="lg"
+                h={{ base: 42, md: 50, lg: 50 }}
+                radius={0}
+                leftSection={<IconPlus size={18} />}
+              >
+                Thêm mới
+              </Button>
+            </Link>
+          </Flex>
         }
         style={{ height: "100%" }}
         titleTable={true}
         baseTable={
           <TableBasic
-            data={experts?.data}
+            data={newsList?.data}
             columns={columns}
             loading={isLoading}
-            totalPage={experts?.totalPage}
+            totalPage={newsList?.totalPage}
             setPage={setPage}
             activePage={page}
+            onRow={`/admin/system-blogs`}
           />
         }
       />
@@ -279,4 +206,4 @@ const Expert = () => {
     </Fragment>
   );
 };
-export default Expert;
+export default Blogs;

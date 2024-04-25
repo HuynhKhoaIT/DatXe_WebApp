@@ -7,11 +7,16 @@ import Scroll from "../Scroll";
 import Typo from "../../elements/Typo";
 import { IconFilter } from "@tabler/icons-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-const FilterStepOrder = ({ stepOptions, shadow = false, loading }: any) => {
+const FilterTable = ({
+  stepOptions,
+  shadow = false,
+  loading,
+  keyQuery,
+}: any) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const activeStep = searchParams.get("step");
+  const activeStep = searchParams.get(keyQuery);
   return (
     <Box className="slick-mobile" mb={10}>
       <div className={styles.container}>
@@ -42,7 +47,7 @@ const FilterStepOrder = ({ stepOptions, shadow = false, loading }: any) => {
                     activeStep === item.value ? "var(--primary-orange)" : "gray"
                   }
                   onClick={() =>
-                    router.push(`${pathname}?step=${item.value}`, {
+                    router.push(`${pathname}?${keyQuery}=${item.value}`, {
                       scroll: false,
                     })
                   }
@@ -58,4 +63,4 @@ const FilterStepOrder = ({ stepOptions, shadow = false, loading }: any) => {
   );
 };
 
-export default FilterStepOrder;
+export default FilterTable;
