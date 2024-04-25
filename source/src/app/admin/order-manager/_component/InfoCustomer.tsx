@@ -39,6 +39,7 @@ export default function InfoCustomer({
           {isUser && (
             <Tooltip label="Cập nhật khách hàng" position="bottom" withArrow>
               <IconEdit
+                className="no-print"
                 onClick={openModalUpdateCustomer}
                 style={{ cursor: "pointer" }}
               />

@@ -32,6 +32,7 @@ export default async function DatLich({ searchParams }: any) {
     value: category.id?.toString(),
     label: category.title,
   }));
+
   return (
     <main className="main">
       <CalendarScheduler

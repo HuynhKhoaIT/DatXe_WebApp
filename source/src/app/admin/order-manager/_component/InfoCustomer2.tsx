@@ -15,11 +15,12 @@ import styles from "./index.module.scss";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconEdit, IconUpload } from "@tabler/icons-react";
 import { IconChevronDown } from "@tabler/icons-react";
+import classNames from "classnames";
 export default function InfoCustomer2({ form, isUser }: any) {
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <div className={styles.cardInfo}>
+    <div className={classNames(styles.cardInfo, "no-print")}>
       <Box pos={"relative"}>
         {/* <LoadingOverlay
           visible={loadingCustomer}

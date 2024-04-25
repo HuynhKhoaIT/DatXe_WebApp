@@ -8,7 +8,7 @@ const Products = ({ data }: any) => {
     <OverviewPanel
       stylesProps={{ padding: "10px 0" }}
       title="Sản phẩm của chuyên gia"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="products-expert-mb"
     >
       <div className={styles.rowItem}>

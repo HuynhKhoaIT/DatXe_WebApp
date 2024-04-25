@@ -27,7 +27,7 @@ const ServicesItem = ({ data }: any) => {
           radius="lg"
           withBorder
           //   bg="var(--product-container-bg)"
-          onClick={() => router.push(`/news/${data?.id}`)}
+          onClick={() => router.push(`/bai-viet/${data?.id}`)}
           className={styles.card}
         >
           <Card.Section>

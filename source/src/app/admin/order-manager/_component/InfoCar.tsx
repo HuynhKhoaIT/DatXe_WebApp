@@ -15,7 +15,6 @@ import { AutocompleteLicensePlates } from "./AutoCompleteLicensePlates";
 import { getOptionsCar } from "../until";
 import { IconEdit, IconUpload } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
-import dynamic from "next/dynamic";
 export default function InfoCart({
   form,
   brandOptions,
@@ -41,7 +40,11 @@ export default function InfoCart({
         </Typo>
         {isUser && (
           <Tooltip label="Cập nhật xe" position="bottom" withArrow>
-            <IconEdit onClick={openModalUpdate} style={{ cursor: "pointer" }} />
+            <IconEdit
+              className="no-print"
+              onClick={openModalUpdate}
+              style={{ cursor: "pointer" }}
+            />
           </Tooltip>
         )}
       </Group>

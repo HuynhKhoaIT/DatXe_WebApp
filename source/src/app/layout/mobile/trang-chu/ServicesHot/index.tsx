@@ -8,7 +8,7 @@ const ServicesHot = ({ data }: any) => {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Dịch vụ của chúng tôi"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="services-hot-mb"
     >
       <div className={styles.rowItem}>

@@ -18,10 +18,6 @@ export default function ComboboxField({
   value,
   setValue,
 }: any) {
-  // const combobox = useCombobox({
-  //   onDropdownClose: () => combobox.resetSelectedOption(),
-  // });
-
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: (eventSource) => {

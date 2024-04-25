@@ -14,7 +14,7 @@ export default function CardBlog({ data, isLoading }: any) {
   }
   return (
     <Link
-      href={`news/${data?.id}`}
+      href={`/bai-viet/${data?.id}`}
       className={styles.wrapper}
       style={{
         backgroundImage: isLoading ? blog4.src : `url(${data?.thumbnail})`,

@@ -1,5 +1,5 @@
 "use client";
-import { apiUrl } from "@/constants";
+import { DEFAULT_SIZE_LIMIT, apiUrl } from "@/constants";
 import BlogImage1 from "@/assets/images/blog/blog1.png";
 import BlogImage2 from "@/assets/images/blog/blog2.png";
 import BlogImage3 from "@/assets/images/blog/blog3.png";
@@ -170,7 +170,7 @@ export default function DetailCategory({
 }: {
   params: { slug: string };
 }) {
-  const [productCount, setProductCount] = useState(5);
+  const [productCount, setProductCount] = useState(DEFAULT_SIZE_LIMIT);
   const { data: products, isPending, isFetching } = useProductByCategory(
     productCount,
     params?.slug

@@ -190,4 +190,8 @@ img {
         left: 0;
         top: 0;
     }
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
 }

@@ -20,7 +20,17 @@ import styles from "./index.module.scss";
 import { modals } from "@mantine/modals";
 import Typo from "../components/elements/Typo";
 import { DateTimePicker } from "@mantine/dates";
+import dynamic from "next/dynamic";
+import { useCars } from "../dashboard/hooks/car/useCar";
+import { useDisclosure } from "@mantine/hooks";
+
 export default function CartComponent({ myAccount }: any) {
+  const { cars, isLoading, isFetching, refetch } = useCars();
+  const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
+    false
+  );
+  const [value, setValue] = useState<string | null>(null);
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -136,7 +146,7 @@ export default function CartComponent({ myAccount }: any) {
         />
       ),
       size: "500px",
-      centered: true,
+      // centered: true,
       withCloseButton: false,
       labels: { confirm: "Tiếp tục", cancel: "Hủy" },
       onConfirm: () => {
@@ -242,6 +252,12 @@ export default function CartComponent({ myAccount }: any) {
               <InfoCar
                 myAccount={myAccount}
                 form={form}
+                cars={cars}
+                isLoading={isLoading}
+                isFetching={isFetching}
+                openModal={openModal}
+                value={value}
+                setValue={setValue}
                 // carDetail={carDetail}
                 // setCarDetail={setCarDetail}
               />
@@ -260,7 +276,14 @@ export default function CartComponent({ myAccount }: any) {
           </Container>
         </div>
       </form>
-
+      <DynamicModalAddCar
+        openModal={openedModal}
+        close={closeModal}
+        myAccount={myAccount}
+        formData={form}
+        refetch={refetch}
+        setValue={setValue}
+      />
       <Modal
         title="Delete"
         opened={isModalDeleteOpen}
@@ -297,3 +320,6 @@ export default function CartComponent({ myAccount }: any) {
     </>
   );
 }
+const DynamicModalAddCar = dynamic(() => import("./_component/ModalAddCar"), {
+  ssr: false,
+});

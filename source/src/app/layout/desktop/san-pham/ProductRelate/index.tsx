@@ -10,7 +10,7 @@ const ProductsRelate = ({ productRelate }: any) => {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Sản phẩm liên quan"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="productsRelate"
     >
       <SlickCarousel column={4} gap={8} dots={true}>

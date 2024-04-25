@@ -23,17 +23,17 @@ const FooterMobile = () => {
       <div className={styles.iconSocial}>
         <ul className={styles.listSocial}>
           <li className={styles.itemSocial}>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={Twiter.src} />
             </Link>
           </li>
           <li className={styles.itemSocial}>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={FaceBook.src} />
             </Link>
           </li>
           <li className={styles.itemSocial}>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={Instagram.src} />
             </Link>
           </li>
@@ -58,12 +58,12 @@ const FooterMobile = () => {
       <div className={styles.app}>
         <ul className={styles.footerApp}>
           <li>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={ChPlay.src} />
             </Link>
           </li>
           <li>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={AppStore.src} />
             </Link>
           </li>
@@ -72,28 +72,28 @@ const FooterMobile = () => {
       <div>
         <ul className={styles.listItem}>
           <li className={styles.item}>
-            <Link href={""}>
+            <Link href={"#"}>
               <Typo size="primary" style={{ color: "var(--text-color-light)" }}>
                 Giới thiệu
               </Typo>
             </Link>
           </li>
           <li className={styles.item}>
-            <Link href={""}>
+            <Link href={"#"}>
               <Typo size="primary" style={{ color: "var(--text-color-light)" }}>
                 Điều khoản
               </Typo>
             </Link>
           </li>
           <li className={styles.item}>
-            <Link href={""}>
+            <Link href={"#"}>
               <Typo size="primary" style={{ color: "var(--text-color-light)" }}>
                 Chính sách
               </Typo>
             </Link>
           </li>
           <li className={styles.item}>
-            <Link href={""}>
+            <Link href={"#"}>
               <Typo size="primary" style={{ color: "var(--text-color-light)" }}>
                 Liên hệ
               </Typo>

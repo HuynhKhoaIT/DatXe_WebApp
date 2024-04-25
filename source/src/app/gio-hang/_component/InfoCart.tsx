@@ -14,6 +14,7 @@ import ImageDefult from "../../../../public/assets/images/logoDatxe.png";
 import { IconPlus, IconMinus, IconTrash } from "@tabler/icons-react";
 import styles from "./InfoCart.module.scss";
 import { notifications } from "@mantine/notifications";
+import ImageField from "@/app/components/form/ImageField";
 export default function InfoCart({
   loading,
   calculateSubTotal,
@@ -41,17 +42,10 @@ export default function InfoCart({
       dataIndex: ["images"],
       width: "90px",
       render: (data: any) => {
-        const images = JSON.parse(data);
+        let images;
+        if (data) images = JSON.parse(data);
         if (!images) {
-          return (
-            <Image
-              radius="md"
-              src={ImageDefult.src}
-              h={40}
-              w="auto"
-              fit="contain"
-            />
-          );
+          return <ImageField radius="md" h={40} width="auto" fit="contain" />;
         }
         return (
           <Image radius="md " h={40} w={80} fit="contain" src={images[0]} />

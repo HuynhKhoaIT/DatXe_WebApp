@@ -25,19 +25,13 @@ const MyFooter = () => (
             <div className={styles.iconSocial}>
               <ul className={styles.listSocial}>
                 <li className={styles.itemSocial}>
-                  <Link href={""}>
-                    <img src={Twiter.src} />
-                  </Link>
+                  <img src={Twiter.src} />
                 </li>
                 <li className={styles.itemSocial}>
-                  <Link href={""}>
-                    <img src={FaceBook.src} />
-                  </Link>
+                  <img src={FaceBook.src} />
                 </li>
                 <li className={styles.itemSocial}>
-                  <Link href={""}>
-                    <img src={Instagram.src} />
-                  </Link>
+                  <img src={Instagram.src} />
                 </li>
               </ul>
             </div>
@@ -46,7 +40,7 @@ const MyFooter = () => (
             <div>
               <ul className={styles.listItem}>
                 <li className={styles.item}>
-                  <Link href={""}>
+                  <Link href={"#"}>
                     <Typo
                       size="primary"
                       style={{ color: "var(--text-color-light)" }}
@@ -56,7 +50,7 @@ const MyFooter = () => (
                   </Link>
                 </li>
                 <li className={styles.item}>
-                  <Link href={""}>
+                  <Link href={"#"}>
                     <Typo
                       size="primary"
                       style={{ color: "var(--text-color-light)" }}
@@ -66,7 +60,7 @@ const MyFooter = () => (
                   </Link>
                 </li>
                 <li className={styles.item}>
-                  <Link href={""}>
+                  <Link href={"#"}>
                     <Typo
                       size="primary"
                       style={{ color: "var(--text-color-light)" }}
@@ -76,7 +70,7 @@ const MyFooter = () => (
                   </Link>
                 </li>
                 <li className={styles.item}>
-                  <Link href={""}>
+                  <Link href={"#"}>
                     <Typo
                       size="primary"
                       style={{ color: "var(--text-color-light)" }}
@@ -129,12 +123,12 @@ const MyFooter = () => (
           <div className={styles.right}>
             <ul className={styles.footerApp}>
               <li>
-                <Link href={""}>
+                <Link href={"#"}>
                   <img src={ChPlay.src} />
                 </Link>
               </li>
               <li>
-                <Link href={""}>
+                <Link href={"#"}>
                   <img src={AppStore.src} />
                 </Link>
               </li>

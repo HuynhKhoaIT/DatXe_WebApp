@@ -23,6 +23,7 @@
                 color: var(--text-color-light);
                 font-size: var(--primary-font-size);
                 font-weight: var(--font-bold);
+                
             }
         }
     }
@@ -103,4 +104,13 @@
 
 .inputSelect{
     height: 56px;
+}
+@media (max-width: 578px) {
+    .userName{
+        text-overflow: ellipsis;
+        overflow: hidden; 
+        width: 80px; 
+        // height: 1.2em; 
+        white-space: nowrap;
+    }
 }
