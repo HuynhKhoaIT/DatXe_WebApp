@@ -9,7 +9,7 @@ export default function ProductsHot({ data }: any) {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Sản phẩm ưu đãi"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="products"
     >
       <div className={styles.rowItem}>

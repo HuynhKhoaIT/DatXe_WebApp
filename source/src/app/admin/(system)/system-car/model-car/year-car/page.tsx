@@ -7,12 +7,10 @@ import { Badge, Button, Flex } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { statusOptions } from "@/constants/masterData";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useModelCar } from "../../../../hooks/system-car/Model/useModelCar";
 import { useSearchParams } from "next/navigation";
-import { useYearCar } from "@/app/admin/hooks/system-car/YearCar/useYearCar";
+import { useYearCar } from "@/app/admin/(admin)/hooks/system-car/YearCar/useYearCar";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../../../_component/ModalDeleteItem"),

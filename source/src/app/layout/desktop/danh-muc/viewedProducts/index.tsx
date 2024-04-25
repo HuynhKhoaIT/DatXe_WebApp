@@ -10,7 +10,7 @@ const ViewedProducts = ({ viewedProducts }: any) => {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Danh sách đã xem"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="viewedProducts"
       hiddenShowMore={viewedProducts?.length < 8}
     >

@@ -11,7 +11,8 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useExperts } from "../../hooks/expert/useExpert";
+import { useExperts } from "../../(admin)/hooks/expert/useExpert";
+import FilterTable from "@/app/components/common/FilterTable";
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -251,6 +252,9 @@ const Expert = () => {
         //     </Link>
         //   </Flex>
         // }
+        filterCategory={
+          <FilterTable keyQuery="status" stepOptions={statusOptions} />
+        }
         style={{ height: "100%" }}
         titleTable={true}
         baseTable={

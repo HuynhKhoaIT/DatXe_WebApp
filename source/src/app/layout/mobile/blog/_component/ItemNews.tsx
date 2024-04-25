@@ -7,7 +7,7 @@ import Link from "next/link";
 const ItemNews = ({ item, index }: any) => {
   return (
     <Group mt={20} className={styles.item}>
-      <Link href={`/news/${item?.id}`}>
+      <Link href={`/bai-viet/${item?.id}`}>
         <Image
           src={item?.thumbnail}
           alt="Relevant Image"

@@ -8,24 +8,28 @@ export default function FooterSavePage({
   okText = "Thêm",
   cancelText = "Huỷ",
   isOk = true,
+  isCancel = true,
   children,
 }: any) {
   const router = useRouter();
   return (
     <div className={styles.footerSavePage}>
       {children}
-      <Button
-        size="lg"
-        radius={0}
-        h={{ base: 42, md: 50, lg: 50 }}
-        variant="outline"
-        key="cancel"
-        color="red"
-        leftSection={<IconBan size={16} />}
-        onClick={() => router.back()}
-      >
-        {cancelText}
-      </Button>
+      {isCancel && (
+        <Button
+          size="lg"
+          radius={0}
+          h={{ base: 42, md: 50, lg: 50 }}
+          variant="outline"
+          key="cancel"
+          color="red"
+          leftSection={<IconBan size={16} />}
+          onClick={() => router.back()}
+        >
+          {cancelText}
+        </Button>
+      )}
+
       {isOk && (
         <Button
           size="lg"

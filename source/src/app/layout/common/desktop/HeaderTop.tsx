@@ -12,15 +12,11 @@ export default function HeaderTop() {
       <Container>
         <div className={styles.topWrapper}>
           <div className={styles.topLeft}>
-            <Link href={""}>
-              <img src={facebook.src} alt="Facebook Icon" />
-            </Link>
-            <Link href={""}>
-              <img src={pintest.src} alt="{Pintest} Icon" />
-            </Link>
-            <Link href={""}>
-              <img src={instagram.src} alt="Ig Icon" />
-            </Link>
+            <img src={facebook.src} alt="Facebook Icon" />
+
+            <img src={pintest.src} alt="{Pintest} Icon" />
+
+            <img src={instagram.src} alt="Ig Icon" />
           </div>
           <div className={styles.topRight}>
             <Link href="/dashboard/order" className={styles.title}>

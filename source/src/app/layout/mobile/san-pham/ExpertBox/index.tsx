@@ -30,10 +30,10 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
             </Link>
           </div>
           <div className={styles.social}>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={IconFaceBook.src} />
             </Link>
-            <Link href={""}>
+            <Link href={"#"}>
               <img src={IconInstagram.src} />
             </Link>
           </div>

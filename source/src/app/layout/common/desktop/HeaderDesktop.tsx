@@ -2,16 +2,14 @@ import Link from "next/link";
 import React from "react";
 import styles from "./Header.module.scss";
 import logo from "@/assets/images/logo.png";
-import { ActionIcon, Button, Select, Skeleton } from "@mantine/core";
+import { ActionIcon, Button } from "@mantine/core";
 import car from "@/assets/icons/car.svg";
 import HeaderTop from "./HeaderTop";
 import Container from "@/app/components/common/Container";
 import SearchFormName from "@/app/components/elements/search/SearchFormName";
 import { IconShoppingCart } from "@tabler/icons-react";
-import { callApi } from "@/lib";
-import apiConfig from "@/constants/apiConfig";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import ButtonAddCar from "./_component/ButtonAddCar";
+import { getMyAccount } from "@/utils/user";
 export default async function Header() {
   const brandData = [
     {
@@ -51,13 +49,7 @@ export default async function Header() {
       name: "KIA",
     },
   ];
-  const cars = await callApi(apiConfig.car.getList, {});
-  const dataOption = cars?.data?.map((item: any) => ({
-    value: item.id.toString(),
-    label: item.numberPlates,
-  }));
-
-  console.log(cars);
+  const myAccount: any = await getMyAccount();
 
   return (
     <header className={styles.header}>
@@ -75,24 +67,7 @@ export default async function Header() {
                   <IconShoppingCart size={28} color="#3450E7" />
                 </ActionIcon>
               </Link>
-              {cars?.data?.length > 0 ? (
-                <Select
-                  classNames={{ input: styles.inputSelect }}
-                  data={dataOption}
-                  h={56}
-                />
-              ) : (
-                <Button
-                  color="#EEF1F9"
-                  leftSection={<img src={car.src} alt="Car Icon" />}
-                  classNames={{
-                    root: styles.btnAdd,
-                    inner: styles.innerAdd,
-                  }}
-                >
-                  Thêm xe
-                </Button>
-              )}
+              <ButtonAddCar styles={styles} user={myAccount} />
 
               <Link href={"/dat-lich"}>
                 <Button
@@ -107,7 +82,11 @@ export default async function Header() {
           <div className={styles.headerNav}>
             {brandData?.map((item, index) => {
               return (
-                <Link href="/san-pham" key={index} className={styles.itemNav}>
+                <Link
+                  href="/danh-sach-san-pham"
+                  key={index}
+                  className={styles.itemNav}
+                >
                   {item?.name}
                 </Link>
               );

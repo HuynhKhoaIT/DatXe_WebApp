@@ -8,7 +8,7 @@ export default function ProductSuggestions({ data }: any) {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Gợi ý sản phẩm liên quan"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="productSuggestions"
     >
       <SlickCarousel column={4} gap={8} dots={true}>

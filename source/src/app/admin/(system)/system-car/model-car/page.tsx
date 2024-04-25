@@ -1,17 +1,15 @@
 "use client";
-export const revalidate = 0;
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Fragment, useState } from "react";
 import ListPage from "@/app/components/layout/ListPage";
-import { Badge, Button, Flex } from "@mantine/core";
+import { Button, Flex } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { statusOptions } from "@/constants/masterData";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useModelCar } from "../../../hooks/system-car/Model/useModelCar";
 import { useSearchParams } from "next/navigation";
+import { useModelCar } from "@/app/admin/(admin)/hooks/system-car/Model/useModelCar";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../../_component/ModalDeleteItem"),

@@ -20,4 +20,12 @@
     .main {
         background-color: #ffffff;
     }
+    .addressExpert {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        width: 150px;
+        font-size: 12px;
+    }
 }

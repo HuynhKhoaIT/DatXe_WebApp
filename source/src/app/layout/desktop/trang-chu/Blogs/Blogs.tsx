@@ -8,7 +8,7 @@ export default function Blogs({ blogs, isLoading }: any) {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Chia sẽ kinh nghiệm"
-      linkToList={"/news"}
+      linkToList={"/danh-sach-bai-viet"}
       id="products"
       hiddenShowMore={blogs?.length < 4}
     >

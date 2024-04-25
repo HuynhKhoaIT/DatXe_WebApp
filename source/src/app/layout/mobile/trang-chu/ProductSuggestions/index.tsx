@@ -12,7 +12,7 @@ export default function ProductSuggestions({ data }: any) {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Gợi ý sản phẩm"
-      linkToList={"/san-pham"}
+      linkToList={"/danh-sach-san-pham"}
       id="productSuggestions"
     >
       <div className={styles.rowItem}>

@@ -9,7 +9,7 @@ import { Flex } from "@mantine/core";
 import ProductTabsDes from "../../desktop/san-pham/ProductDetail/ProductTabsDes";
 const Breadcrumbs = [
   { title: "Trang Chủ", href: "../" },
-  { title: "Danh sách sản phẩm", href: "/san-pham" },
+  { title: "Danh sách sản phẩm", href: "/danh-sach-san-pham" },
   { title: "Sản phẩm" },
 ];
 const ProductDetailPageMobile = async ({

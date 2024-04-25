@@ -8,7 +8,7 @@ const BlogItem = ({ blog }: any) => {
   return (
     <div className={styles.wrapper}>
       <Box w={"100%"}>
-        <Link href={`/news/${blog?.id}`} className={styles.card}>
+        <Link href={`/bai-viet/${blog?.id}`} className={styles.card}>
           <div>
             <ImageField
               src={blog?.thumbnail ? blog?.thumbnail : null}

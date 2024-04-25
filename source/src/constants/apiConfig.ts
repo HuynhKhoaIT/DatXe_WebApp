@@ -55,6 +55,11 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+        orderCategory:{
+            baseURL: `${apiUrl}api/order-category`,
+            method: 'GET',
+            headers: baseHeader,
+        },
     },
     posts:{
         getList: {

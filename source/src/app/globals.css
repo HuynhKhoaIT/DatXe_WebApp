@@ -6472,7 +6472,7 @@ body.rtl-mode .price-wrapper {
     text-align: center;
     font-size: 18px;
     background: #fff;
-
+    border-radius: 6px;
     /* Center slide text vertically */
     display: flex;
     justify-content: center;

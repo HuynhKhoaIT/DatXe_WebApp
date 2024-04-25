@@ -53,7 +53,7 @@ const Book = () => {
         <ul className={styles.listItem}>
           <li className={styles.item}>
             <Select
-              classNames={{ label: styles.label }}
+              classNames={{ label: styles.label, input: styles.inputSelect }}
               label="Vị trí"
               variant="unstyled"
               placeholder="Chọn vị trí"
@@ -63,7 +63,7 @@ const Book = () => {
           <li className={styles.item}>
             <Select
               {...form.getInputProps("carBrandId")}
-              classNames={{ label: styles.label }}
+              classNames={{ label: styles.label, input: styles.inputSelect }}
               variant="unstyled"
               label="Hãng xe"
               placeholder="Chọn hãng xe"
@@ -80,7 +80,7 @@ const Book = () => {
           <li className={styles.item}>
             <Select
               {...form.getInputProps("carNameId")}
-              classNames={{ label: styles.label }}
+              classNames={{ label: styles.label, input: styles.inputSelect }}
               variant="unstyled"
               label="Dòng xe"
               placeholder="Chọn dòng xe"
@@ -96,7 +96,7 @@ const Book = () => {
           <li className={styles.item}>
             <Select
               {...form.getInputProps("carNameId")}
-              classNames={{ label: styles.label }}
+              classNames={{ label: styles.label, input: styles.inputSelect }}
               variant="unstyled"
               label="Năm sản xuất"
               placeholder="Chọn năm sản xuất"

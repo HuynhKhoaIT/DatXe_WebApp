@@ -15,9 +15,9 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import FooterSavePage from "../../../_component/FooterSavePage";
 import convertToSlug from "@/utils/until";
-import { useAddCategory } from "../../../hooks/category/useAddCategory";
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
+import { useAddCategory } from "@/app/admin/(admin)/hooks/category/useAddCategory";
 export default function CategoryForm({
   isEditing,
   dataDetail,

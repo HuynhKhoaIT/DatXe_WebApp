@@ -19,7 +19,6 @@ const ExpertDetailPageDesktop = ({
   socials,
   convenients,
 }: any) => {
-  console.log(blogs);
   return (
     <div className={styles.wrapper}>
       <Banner detailData={expertDetail} />
@@ -32,15 +31,15 @@ const ExpertDetailPageDesktop = ({
       </Container>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Category categories={categories} />
-        <Service data={services?.data} />
+        <Service data={services?.data} garageId={expertDetail?.id} />
       </div>
-      <Products data={products?.data} />
+      <Products data={products?.data} garageId={expertDetail?.id} />
       <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>
           <TabsComponent data={expertDetail} />
         </Container>
-        <Blogs blogs={blogs} />
+        <Blogs blogs={blogs} garageId={expertDetail?.id} />
         <SharePage bitlyUrl={expertDetail?.bitlyUrl} />
       </div>
     </div>
