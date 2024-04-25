@@ -114,37 +114,37 @@ model ProductCategory {
 }
 
 model Product {
-  id              String @id @default(uuid())
+  id              String                  @id @default(uuid())
   uuID            String?
-  productId       Int                    @default(0)
-  isProduct       Boolean                @default(true)
+  productId       Int                     @default(0)
+  isProduct       Boolean                 @default(true)
   name            String
   slug            String?
   sku             String?
   description     String?                 @db.Text
-  price           Int                    @default(0)
-  salePrice       Int                    @default(0)
-  timeSaleStart   DateTime?              @default(now())
+  price           Int                     @default(0)
+  salePrice       Int                     @default(0)
+  timeSaleStart   DateTime?               @default(now())
   timeSaleEnd     DateTime?
-  quantity        Int                    @default(1)
-  categories      CategoriesOnProducts[]
-  brands          CarModelsOnProducts[]
+  quantity        Int                     @default(1)
+  categories                              CategoriesOnProducts[]
+  brands                                  CarModelsOnProducts[]
   images          Json?
-  metaDescription String?     @db.Text
+  metaDescription String?                 @db.Text
   brandDetail     String?
-  supplier        Suppiler @relation(fields: [supplierId], references: [id])
-  supplierId      String                    @default("1")
-  productBrand    ProductBrand @relation(fields: [productBrandId], references: [id])
-  productBrandId  String                    @default("1")
-  status          STATUS                 @default(DRAFT)
-  createdBy       String                    @default("1")
-  garage          Garage @relation(fields: [garageId], references: [id])
-  garageId        String                    @default("1")
-  createdAt       DateTime               @default(now())
-  updatedAt       DateTime               @updatedAt
-  marketingCampaignDetail MarketingCampaignDetail[]
-  orderDetail     OrderDetail[]
-  reviews         ReviewsProduct[]
+  supplier        Suppiler                @relation(fields: [supplierId], references: [id])
+  supplierId      String                  @default("1")
+  productBrand    ProductBrand            @relation(fields: [productBrandId], references: [id])
+  productBrandId  String                  @default("1")
+  status          STATUS                  @default(DRAFT)
+  createdBy       String                  @default("1")
+  garage          Garage                  @relation(fields: [garageId], references: [id])
+  garageId        String                  @default("1")
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  marketingCampaignDetail                 MarketingCampaignDetail[]
+  orderDetail                             OrderDetail[]
+  reviews                                 ReviewsProduct[]
 }
 
 model CategoriesOnProducts {
@@ -179,46 +179,47 @@ model CarModelsOnProducts {
   @@id([productId, carModelId])
 }
 model Order{
-  id   String @id @default(uuid())
-  slug              String?
-  code              String
-  customerRequest   String?
-  customerNote      String?
-  note              String?
-  notePrivate       String?
-  priorityLevel     Int? @default(1)
-  orderCategory     OrderCategory @relation(fields: [orderCategoryId], references: [id])
-  orderCategoryId   String @default("1")
-  customer          Customer @relation(fields: [customerId], references: [id])
-  customerId               String
-  billingAdress            String?
-  billingPhone             String?
-  billingCustomerName      String?
-  car               Car @relation(fields: [carId], references: [id])
-  carId             String @default("1")
-  brandId           String?
-  modelId           String?
-  yearId            String?
-  subTotal          Int @default(0)
-  discount          Int @default(0)
-  total             Int @default(0)
-  dateTime          DateTime  @default(now())
-  dateExpected      DateTime  @default(now())
-  dateDone          DateTime  @default(now())
-  step              Int @default(1)
-  status            String @default("pending")
-  cancelReason      String?
-  garage            Garage @relation(fields: [garageId], references: [id])
-  garageId          String @default("0")
-  serviceAdvisor    ServiceAdvisor @relation(fields: [serviceAdvisorId], references: [id])
-  serviceAdvisorId  String @default("0")
-  createdById       String @default("0")
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt  
-  orderDetails      OrderDetail[]
-  reviews           ReviewsProduct[]
-  reviewsGarage     ReviewsGarage[]
-  method            ORDERMETHOD @default(OFFLINE)
+  id                        String @id @default(uuid())
+  slug                      String?
+  code                      String
+  customerRequest           String?
+  customerNote              String?
+  note                      String?
+  notePrivate               String?
+  priorityLevel             Int? @default(1)
+  orderCategory             OrderCategory @relation(fields: [orderCategoryId], references: [id])
+  orderCategoryId           String @default("1")
+  customer                  Customer @relation(fields: [customerId], references: [id])
+  customerId                String
+  billingAdress             String?
+  billingPhone              String?
+  billingCustomerName       String?
+  car                       Car @relation(fields: [carId], references: [id])
+  carId                     String @default("1")
+  brandId                   String?
+  modelId                   String?
+  yearId                    String?
+  subTotal                  Int @default(0)
+  discount                  Int @default(0)
+  total                     Int @default(0)
+  dateTime                  DateTime  @default(now())
+  dateExpected              DateTime  @default(now())
+  dateDone                  DateTime  @default(now())
+  step                      Int @default(1)
+  status                    String @default("pending")
+  cancelReason              String?
+  garage                    Garage @relation(fields: [garageId], references: [id])
+  garageId                  String @default("0")
+  serviceAdvisor            ServiceAdvisor @relation(fields: [serviceAdvisorId], references: [id])
+  serviceAdvisorId          String @default("0")
+  createdById               String @default("0")
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt  
+  orderDetails              OrderDetail[]
+  reviews                   ReviewsProduct[]
+  reviewsGarage             ReviewsGarage[]
+  method                    ORDERMETHOD @default(OFFLINE)
+  orderDLBDId               Int?
 }
 model OrderCategory{
   id              String @id @default(uuid())
