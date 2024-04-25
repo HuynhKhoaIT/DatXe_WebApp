@@ -110,7 +110,7 @@ model ProductCategory {
   status      STATUS                 @default(DRAFT)
   createdAt   DateTime               @default(now())
   updatedAt   DateTime               @updatedAt
-  products    CategoriesOnProducts[]
+  products    CategoriesOnProducts[]   
 }
 
 model Product {
