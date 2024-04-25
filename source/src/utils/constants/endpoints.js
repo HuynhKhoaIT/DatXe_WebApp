@@ -32,3 +32,5 @@ export const GET_PRODUCTS_DLBD_ENDPOINT = `${process.env.apiUserV3}/products`;
 export const GET_CARS_DLBD_ENDPOINT = `${process.env.apiUserV3}/cars`;
 export const GET_CARS_DLBD_GUEST = `${process.env.apiUserV3}/cars`;
 export const GET_PRODUCTS_DLBD_GUEST = `${process.env.apiUserV3}/products`;
+
+export const POST_ASYNC_ORDER_DLBD_ENDPOINT = `${process.env.apiUserV3}/order/sync-datxe`;

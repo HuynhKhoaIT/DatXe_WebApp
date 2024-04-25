@@ -249,9 +249,11 @@ export async function findOrder(id: string, request: any) {
             quantity: true,
             product: {
               select: {
+                productId: true,
                 name: true,
                 sku: true,
                 images: true,
+                isProduct: true,
               },
             },
           },
@@ -1064,4 +1066,15 @@ export async function getCodeForOrder() {
     return str;
   }
   await getCodeForOrder();
+}
+
+export async function asyncToDLDB(id: string,orderId: number) {
+  return await prisma.order.update({
+    where:{
+      id
+    },
+    data:{
+      orderDLBDId: orderId
+    }
+  })
 }

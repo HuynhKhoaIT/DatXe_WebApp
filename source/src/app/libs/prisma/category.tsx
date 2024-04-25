@@ -10,7 +10,10 @@ export async function getCategories(requestData: any) {
     if (requestData.limit) {
       take = parseInt(requestData.limit);
     }
-
+    let page = Number(requestData.page) > 0 ? Number(requestData.page) : 1;
+    if (page) {
+      currentPage = Number(page);
+    }
     const skip = take * (currentPage - 1);
     let titleFilter = "";
     if (requestData.s) {
@@ -35,9 +38,10 @@ export async function getCategories(requestData: any) {
     const [productCategories, total] = await prisma.$transaction([
       prisma.productCategory.findMany({
         orderBy: {
-          id: "desc",
+          createdAt: "desc",
         },
-        take: 10,
+        take: take,
+        skip: skip,
         where: {
           AND: [
             {
