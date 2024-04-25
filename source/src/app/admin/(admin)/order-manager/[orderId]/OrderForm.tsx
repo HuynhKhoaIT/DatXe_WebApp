@@ -163,11 +163,11 @@ export default function OrderForm({
           }))
         );
         // Khách hàng
-        form.setFieldValue("customerId", dataDetail?.customerId.toString());
+        form.setFieldValue("customerId", dataDetail?.customerId?.toString());
         form.setFieldValue("fullName", dataDetail?.customer?.fullName);
         form.setFieldValue("phoneNumber", dataDetail?.customer?.phoneNumber);
         form.setFieldValue("address", dataDetail?.customer?.address);
-        form.setFieldValue("step", dataDetail?.step.toString());
+        form.setFieldValue("step", dataDetail?.step?.toString());
         // xe
         form.setFieldValue("carBrand", dataDetail?.car?.brandName?.title);
         form.setFieldValue("carName", dataDetail?.car?.modelName?.title);
@@ -187,20 +187,20 @@ export default function OrderForm({
           // thông tin xe
           form.setFieldValue(
             "numberPlates",
-            dataDetail?.car?.numberPlates.toString()
+            dataDetail?.car?.numberPlates?.toString()
           );
 
           form.setFieldValue(
             "carBrandId",
-            dataDetail?.car?.carBrandId.toString()
+            dataDetail?.car?.carBrandId?.toString()
           );
           form.setFieldValue(
             "carNameId",
-            dataDetail?.car?.carNameId.toString()
+            dataDetail?.car?.carNameId?.toString()
           );
           form.setFieldValue(
             "carYearId",
-            dataDetail?.car?.carYearId.toString()
+            dataDetail?.car?.carYearId?.toString()
           );
 
           form.setFieldValue(

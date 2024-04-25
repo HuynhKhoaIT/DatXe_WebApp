@@ -21,7 +21,6 @@ import InfoCar from "../../InfoCar";
 import InfoCustomer from "../../InfoCustomer";
 import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import Typo from "@/app/components/elements/Typo";
-import ListPage from "@/app/components/layout/ListPage";
 import ItemProduct from "../../ItemProduct";
 import InfoCustomer2 from "../../InfoCustomer2";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
@@ -333,6 +332,7 @@ export default function OrderFormMobile({
                 <ButtonDbDLBD
                   isPendingDlbd={isPendingDlbd}
                   handleDbDLBD={handleDbDLBD}
+                  dataDetail={dataDetail}
                 />
                 <Button
                   size="md"
@@ -375,6 +375,7 @@ export default function OrderFormMobile({
                 <ButtonDbDLBD
                   isPendingDlbd={isPendingDlbd}
                   handleDbDLBD={handleDbDLBD}
+                  dataDetail={dataDetail}
                 />
               </FooterSavePage>
             ) : (
@@ -414,6 +415,7 @@ export default function OrderFormMobile({
                 <ButtonDbDLBD
                   isPendingDlbd={isPendingDlbd}
                   handleDbDLBD={handleDbDLBD}
+                  dataDetail={dataDetail}
                 />
               </FooterSavePage>
             )}

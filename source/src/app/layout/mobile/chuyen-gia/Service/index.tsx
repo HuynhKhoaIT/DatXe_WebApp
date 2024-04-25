@@ -4,12 +4,12 @@ import styles from "./index.module.scss";
 import { IProduct } from "@/interfaces/product";
 import ProductItem from "@/app/components/elements/product/ProductItem1";
 import ProductItem2 from "@/app/components/elements/product/ProductItem2";
-const Service = ({ data }: any) => {
+const Service = ({ data, garageId }: any) => {
   return (
     <OverviewPanel
       stylesProps={{ padding: "10px 0" }}
       title="Dịch vụ của chuyên gia"
-      linkToList={"/danh-sach-san-pham"}
+      linkToList={`/danh-sach-san-pham?garageId=${garageId}`}
       id="services-expert-mb"
     >
       <div className={styles.rowItem}>

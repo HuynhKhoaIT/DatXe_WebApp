@@ -3,14 +3,14 @@ import OverviewPanel from "@/app/components/layout/OverviewPanel";
 import styles from "./index.module.scss";
 import { IProduct } from "@/interfaces/product";
 import ProductItem from "@/app/components/elements/product/ProductItem1";
-const Service = ({ data }: any) => {
+const Service = ({ data, garageId }: any) => {
   return (
     <div className={styles.wrapper}>
       <OverviewPanel
         // stylesProps={{ padding: "30px 0" }}
         title="Dịch vụ của chuyên gia"
         subTitle="Các dịch vụ dành cho xe bạn"
-        linkToList={"/san-pham?isProduct=false"}
+        linkToList={`/danh-sach-san-pham?isProduct=false&garageId=${garageId}`}
         id="services-expert"
         hiddenShowMore={data?.length < 8}
       >

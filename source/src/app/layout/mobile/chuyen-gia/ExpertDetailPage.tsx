@@ -39,9 +39,9 @@ const ExpertDetailPageMobile = ({
         <CategoryCarouselList categories={categories?.data} />
       </div>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
-        <Service data={services.data} />
+        <Service data={services.data} garageId={expertDetail?.id} />
       </div>
-      <Products data={products.data} />
+      <Products data={products.data} garageId={expertDetail?.id} />
       <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>

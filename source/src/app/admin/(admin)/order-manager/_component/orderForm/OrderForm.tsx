@@ -212,6 +212,7 @@ export default function OrderFormDesktop({
                     <ButtonDbDLBD
                       isPendingDlbd={isPendingDlbd}
                       handleDbDLBD={handleDbDLBD}
+                      dataDetail={dataDetail}
                     />
                   </FooterSavePage>
                 ) : (
@@ -219,6 +220,7 @@ export default function OrderFormDesktop({
                     <ButtonDbDLBD
                       isPendingDlbd={isPendingDlbd}
                       handleDbDLBD={handleDbDLBD}
+                      dataDetail={dataDetail}
                     />
                     <Button
                       size="lg"
@@ -270,6 +272,7 @@ export default function OrderFormDesktop({
             <ButtonDbDLBD
               isPendingDlbd={isPendingDlbd}
               handleDbDLBD={handleDbDLBD}
+              dataDetail={dataDetail}
             />
           </FooterSavePage>
         )}
