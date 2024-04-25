@@ -11,7 +11,7 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useExperts } from "../../hooks/expert/useExpert";
+import { useExperts } from "../../(admin)/hooks/expert/useExpert";
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },

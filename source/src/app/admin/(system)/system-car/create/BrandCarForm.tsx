@@ -12,10 +12,7 @@ import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import FooterSavePage from "../../../_component/FooterSavePage";
-import convertToSlug from "@/utils/until";
-import { useAddCategory } from "../../../hooks/category/useAddCategory";
-import { CARBRAND } from "@/constants";
-import { useAddBrand } from "../../../hooks/system-car/Brand/useAddBrandCar";
+import { useAddBrand } from "@/app/admin/(admin)/hooks/system-car/Brand/useAddBrandCar";
 export default function BrandCarForm({
   isEditing,
   dataDetail,

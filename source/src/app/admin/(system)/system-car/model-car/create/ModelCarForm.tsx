@@ -11,17 +11,15 @@ import {
 import { useForm } from "@mantine/form";
 import { useEffect } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import convertToSlug from "@/utils/until";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-import { useAddModel } from "@/app/admin/hooks/system-car/Model/useAddModelCar";
 import { useSearchParams } from "next/navigation";
+import { useAddModel } from "@/app/admin/(admin)/hooks/system-car/Model/useAddModelCar";
 export default function BrandCarForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddModel();
   const [loading, handlers] = useDisclosure();
   const searchParam = useSearchParams();
   const brandId = searchParam.get("brandId");
   const brandName = searchParam.get("brandName");
-
 
   const form = useForm({
     initialValues: {

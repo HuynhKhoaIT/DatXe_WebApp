@@ -9,8 +9,8 @@ import { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 import ImageDefult from "@/assets/images/carService.jpeg";
-import { useBanner } from "../../hooks/banner/useBanner";
 import { statusOptions } from "@/constants/masterData";
+import { useBanner } from "../../(admin)/hooks/banner/useBanner";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
