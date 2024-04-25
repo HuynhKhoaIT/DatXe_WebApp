@@ -7,9 +7,9 @@ import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import dynamic from "next/dynamic";
-import { useAmenitites } from "../../hooks/amentity/useAmentity";
 import { useDisclosure } from "@mantine/hooks";
 import ImageDefult from "@/assets/images/carService.jpeg";
+import { useAmenitites } from "../../(admin)/hooks/amentity/useAmentity";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },

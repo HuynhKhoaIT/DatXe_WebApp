@@ -8,7 +8,7 @@ import Reassons from "../trang-chu/Reasons/Reasons";
 import bgLanding2 from "@/assets/images/bgLanding2.png";
 import ViewedProducts from "./viewedProducts";
 import Blogs from "./Blogs";
-import { useCategories } from "@/app/admin/hooks/category/useCategory";
+import { useCategories } from "@/app/admin/(admin)/hooks/category/useCategory";
 
 const CategoryDetailPageDesktop = ({
   kindProduct,

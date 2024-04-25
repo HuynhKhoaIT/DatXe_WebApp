@@ -180,7 +180,7 @@ export function AutocompleteClearable({
 }
 
 const DynamicModalCamera = dynamic(
-  () => import("@/app/admin/order-manager/_component/ModalCamera"),
+  () => import("@/app/admin/(admin)/order-manager/_component/ModalCamera"),
   {
     ssr: false,
   }

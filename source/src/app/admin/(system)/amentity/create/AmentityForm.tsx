@@ -19,8 +19,8 @@ import axios from "axios";
 import convertToSlug from "@/utils/until";
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
-import { useAddAmentity } from "@/app/admin/hooks/amentity/useAddAmentity";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import { useAddAmentity } from "@/app/admin/(admin)/hooks/amentity/useAddAmentity";
 export default function AmentityForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddAmentity();
   const [loading, handlers] = useDisclosure();

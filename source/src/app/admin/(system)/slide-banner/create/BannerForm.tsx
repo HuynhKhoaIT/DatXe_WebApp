@@ -19,7 +19,7 @@ import axios from "axios";
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/image.svg";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-import { useAddBanner } from "@/app/admin/hooks/banner/useAddBanner";
+import { useAddBanner } from "@/app/admin/(admin)/hooks/banner/useAddBanner";
 export default function BannerForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddBanner();
   const [loading, handlers] = useDisclosure();
