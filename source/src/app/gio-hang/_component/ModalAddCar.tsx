@@ -168,7 +168,7 @@ export default function ModalAddCar({
               h={{ base: 42, md: 50, lg: 50 }}
               loading={loading}
               style={{ marginLeft: "12px" }}
-              onClick={handleSubmit}
+              type="submit"
               variant="filled"
               leftSection={<IconPlus size={16} />}
             >

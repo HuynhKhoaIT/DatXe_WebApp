@@ -11,14 +11,16 @@ const DynamicModalAddCar = dynamic(() => import("../_component/ModalAddCar"), {
   ssr: false,
 });
 
-export default function InfoCar({ myAccount, form }: any) {
-  console.log(myAccount);
-  const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
-    false
-  );
-  const [value, setValue] = useState<string | null>(null);
-
-  const { cars, isLoading, isFetching, refetch } = useCars();
+export default function InfoCar({
+  myAccount,
+  form,
+  cars,
+  isLoading,
+  isFetching,
+  openModal,
+  value,
+  setValue,
+}: any) {
   return (
     <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
       <div className="checkout-widget">
@@ -77,14 +79,6 @@ export default function InfoCar({ myAccount, form }: any) {
           </Grid>
         </Card>
       </div>
-      <DynamicModalAddCar
-        openModal={openedModal}
-        close={closeModal}
-        myAccount={myAccount}
-        formData={form}
-        refetch={refetch}
-        setValue={setValue}
-      />
     </Grid.Col>
   );
 }

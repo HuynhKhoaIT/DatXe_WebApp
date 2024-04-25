@@ -3,7 +3,7 @@ import styles from "./CardBlog.module.scss";
 export default function CardBlog({ data }: any) {
   return (
     <Link
-      href={`/news/${data?.id}`}
+      href={`/bai-viet/${data?.id}`}
       className={styles.wrapper}
       style={{ backgroundImage: `url(${data?.thumbnail})` }}
     >

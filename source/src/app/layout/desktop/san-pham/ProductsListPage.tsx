@@ -7,37 +7,24 @@ import ProductItem2 from "@/app/components/elements/product/ProductItem2";
 import styles from "./index.module.scss";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
-export default function ProductsListPage({
-  categoryOption,
-  products,
-  searchParams,
-}: any) {
+export default function ProductsListPage({ products, searchParams }: any) {
   return (
-    <Body>
-      <Body.Sider>
-        <FilterRadio
-          data={categoryOption}
-          filterName="Danh mục"
-          keyName="categoryId"
+    <>
+      <Sort lengthData={products?.data?.length || 0} />
+      <Space h="md" />
+      <Box w={"100%"}>
+        <div className={styles.products}>
+          {products?.data?.map((product: IProduct, index: number) => (
+            <ProductItem2 product={product} key={index} />
+          ))}
+        </div>
+      </Box>
+      {products?.currentPage < products.totalPage && (
+        <ButtonShowMore
+          limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
+          defaultValue={DEFAULT_SIZE_LIMIT}
         />
-      </Body.Sider>
-      <Body.Content>
-        <Sort lengthData={products?.data?.length || 0} />
-        <Space h="md" />
-        <Box w={"100%"}>
-          <div className={styles.products}>
-            {products?.data?.map((product: IProduct, index: number) => (
-              <ProductItem2 product={product} key={index} />
-            ))}
-          </div>
-        </Box>
-        {products?.currentPage < products.totalPage && (
-          <ButtonShowMore
-            limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
-            defaultValue={DEFAULT_SIZE_LIMIT}
-          />
-        )}
-      </Body.Content>
-    </Body>
+      )}
+    </>
   );
 }

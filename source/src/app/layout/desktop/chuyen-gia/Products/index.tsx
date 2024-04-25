@@ -9,7 +9,7 @@ const Products = ({ data }: any) => {
       <OverviewPanel
         // stylesProps={{ padding: "30px 0" }}
         title="Sản phẩm của chuyên gia"
-        linkToList={"/san-pham"}
+        linkToList={"/danh-sach-san-pham"}
         id="products-expert"
         hiddenShowMore={data?.length < 8}
       >

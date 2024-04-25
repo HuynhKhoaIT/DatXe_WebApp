@@ -11,7 +11,7 @@ import { Suspense } from "react";
 import { LoadingComponent } from "@/app/components/loading";
 const Breadcrumbs = [
   { title: "Trang Chủ", href: "../" },
-  { title: "Danh sách sản phẩm", href: "/san-pham" },
+  { title: "Danh sách sản phẩm", href: "/danh-sach-san-pham" },
   { title: "Chi tiết sản phẩm" },
 ];
 const ProductDetailPageDesktop = async ({

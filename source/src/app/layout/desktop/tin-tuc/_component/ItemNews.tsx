@@ -13,7 +13,7 @@ const ItemNews = ({ item }: any) => {
       mb={15}
       w={"100%"}
       className={styles.item}
-      onClick={() => router.push(`/news/${item.id}`)}
+      onClick={() => router.push(`/bai-viet/${item.id}`)}
     >
       <img src={item.thumbnail} alt="Relevant Image" className={styles.image} />
       <div style={{ marginLeft: 25 }} className={styles.content}>

@@ -1,55 +1,33 @@
 "use client";
 import {
-  ActionIcon,
-  Alert,
   Box,
   Button,
-  Grid,
-  Group,
   LoadingOverlay,
   NumberInput,
-  ScrollArea,
   Select,
-  Space,
   Table,
-  Tabs,
-  TextInput,
-  Textarea,
   Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import {
-  IconPlus,
-  IconBan,
-  IconTrash,
-  IconChevronRight,
-  IconCamera,
-  IconInfoCircle,
-} from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { OptionsCancelOrder, stepOrderOptions } from "@/constants/masterData";
 import dynamic from "next/dynamic";
-import ListPage from "@/app/components/layout/ListPage";
 import Typo from "@/app/components/elements/Typo";
-import ItemProduct from "../_component/ItemProduct";
 import { modals } from "@mantine/modals";
 import {
   getOptionsModels,
   getOptionsYearCar,
   handleKeyPress,
 } from "@/utils/until";
-import FooterSavePage from "../../_component/FooterSavePage";
 import { getOptionsCar } from "../until";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
-import AutocompleteField from "@/app/components/form/AutoCompleteField";
-import InfoCustomer from "../_component/InfoCustomer";
-import InfoCart from "../_component/InfoCar";
-import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import { notifications } from "@mantine/notifications";
-import InfoCustomer2 from "../_component/InfoCustomer2";
+import OrderFormDesktop from "../_component/orderForm/OrderForm";
+import OrderFormMobile from "../_component/orderForm/mobile/OrderFormMobile";
 
 export default function OrderForm({
   isEditing = false,
@@ -172,8 +150,6 @@ export default function OrderForm({
   useEffect(() => {
     const fetchData = async () => {
       handlers.open();
-
-      console.log(dataDetail?.orderDetails);
       if (isEditing && dataDetail) {
         setCustomer(dataDetail?.customer);
         setCar(dataDetail?.car);
@@ -190,7 +166,10 @@ export default function OrderForm({
         form.setFieldValue("phoneNumber", dataDetail?.customer?.phoneNumber);
         form.setFieldValue("address", dataDetail?.customer?.address);
         form.setFieldValue("step", dataDetail?.step.toString());
-
+        // xe
+        form.setFieldValue("carBrand", dataDetail?.car?.brandName?.title);
+        form.setFieldValue("carName", dataDetail?.car?.modelName?.title);
+        form.setFieldValue("carYear", dataDetail?.car?.yearName?.title);
         try {
           const [models, yearCars] = await Promise.all([
             getOptionsModels(dataDetail?.car?.carBrandId),
@@ -228,9 +207,6 @@ export default function OrderForm({
           );
           form.setFieldValue("billingPhone", dataDetail?.billingPhone);
           form.setFieldValue("billingAdress", dataDetail?.billingAdress);
-          form.setFieldValue("carBrand", dataDetail?.car?.brandName.title);
-          form.setFieldValue("carName", dataDetail?.car?.modelName.title);
-          form.setFieldValue("carYear", dataDetail?.car?.yearName.title);
         } catch (error) {
           console.error("Error fetching data:", error);
         } finally {
@@ -383,7 +359,10 @@ export default function OrderForm({
             suffix="đ"
           />
         </Table.Td>
-        <Table.Td style={{ width: "120px", textAlign: "center" }}>
+        <Table.Td
+          className="no-print"
+          style={{ width: "120px", textAlign: "center" }}
+        >
           <>
             <Tooltip label="Xoá" withArrow position="bottom">
               <Button
@@ -499,632 +478,68 @@ export default function OrderForm({
       />
       <form onSubmit={form.onSubmit(handleSubmit)} onKeyPress={handleKeyPress}>
         {isMobile ? (
-          <Tabs
-            variant="outline"
-            // radius={0}
-            color="blue"
-            value={activeTab}
-            onChange={(value) => {
-              if (form.values.numberPlates.length === 0) {
-                handlersPlate.open();
-              } else {
-                setActiveTab(value);
-              }
-            }}
-          >
-            <Tabs.List classNames={{ list: styles.list }}>
-              {!isEditing && (
-                <Tabs.Tab classNames={{ tab: styles.tab }} value="numberPlates">
-                  Xe
-                </Tabs.Tab>
-              )}
-              <Tabs.Tab classNames={{ tab: styles.tab }} value="customer">
-                Khách hàng
-              </Tabs.Tab>
-              <Tabs.Tab classNames={{ tab: styles.tab }} value="detailOrder">
-                Chi tiết đơn hàng
-              </Tabs.Tab>
-            </Tabs.List>
-            {!isEditing && (
-              <Tabs.Panel value="numberPlates">
-                <Grid gutter={12}>
-                  <Grid.Col span={10}>
-                    <AutocompleteField
-                      size="lg"
-                      radius={0}
-                      placeholder="Biển số xe"
-                      value={numberPlate}
-                      onChange={(value: any) => {
-                        setNumberPlate(value);
-                        if (value.length > 0) {
-                          handlersPlate.close();
-                        }
-                        form.setFieldValue("numberPlates", value);
-                      }}
-                      error={errorPlate ? "Vui lòng nhập..." : false}
-                      getOptionData={getOptionsCar}
-                      form={form}
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={2}>
-                    <ActionIcon
-                      onClick={openModalCamera}
-                      size="lg"
-                      h={50}
-                      w={50}
-                      variant="filled"
-                      aria-label="Settings"
-                    >
-                      <IconCamera
-                        style={{ width: "70%", height: "70%" }}
-                        stroke={1.5}
-                      />
-                    </ActionIcon>
-                  </Grid.Col>
-                </Grid>
-
-                <div className={styles.footer}>
-                  <Button
-                    size="lg"
-                    w={"48%"}
-                    radius={0}
-                    h={{ base: 42, md: 50, lg: 50 }}
-                    variant="outline"
-                    key="cancel"
-                    color="red"
-                    leftSection={<IconBan size={16} />}
-                    onClick={() => router.back()}
-                  >
-                    Huỷ bỏ
-                  </Button>
-                  <Button
-                    size="lg"
-                    radius={0}
-                    w={"48%"}
-                    h={{ base: 42, md: 50, lg: 50 }}
-                    loading={loadingButton}
-                    style={{ marginLeft: "12px" }}
-                    variant="filled"
-                    onClick={async () => {
-                      if (form.values.numberPlates.length === 0) {
-                        handlersPlate.open();
-                      } else {
-                        await handleGetInfo(numberPlate);
-                        setActiveTab("customer");
-                      }
-                    }}
-                    leftSection={<IconChevronRight size={16} />}
-                  >
-                    Tiếp tục
-                  </Button>
-                </div>
-              </Tabs.Panel>
-            )}
-
-            <Tabs.Panel value="customer">
-              <InfoCart
-                loading={loading}
-                brandOptions={brandOptions}
-                car={car}
-                isUser={isUser}
-                setModelOptions={setModelOptions}
-                modelOptions={modelOptions}
-                yearCarOptions={yearCarOptions}
-                setYearCarOptions={setYearCarOptions}
-                form={form}
-                openModalUpdate={openModalUpdate}
-                handleGetInfo={handleGetInfo}
-                handlersIsUser
-              />
-              <Space h={30} />
-              <InfoCustomer
-                openModalUpdateCustomer={openModalUpdateCustomer}
-                form={form}
-                isUser={isUser}
-                loading={loading}
-              />
-              <div className={styles.footer}>
-                <Button
-                  size="lg"
-                  w={"48%"}
-                  radius={0}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  variant="outline"
-                  key="cancel"
-                  color="red"
-                  leftSection={<IconBan size={16} />}
-                  onClick={() => setActiveTab("numberPlates")}
-                >
-                  Quay lại
-                </Button>
-                <Button
-                  size="lg"
-                  radius={0}
-                  w={"48%"}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  style={{ marginLeft: "12px" }}
-                  variant="filled"
-                  onClick={() => {
-                    if (form.values.numberPlates.length === 0) {
-                      handlersPlate.open();
-                    } else {
-                      setActiveTab("detailOrder");
-                    }
-                  }}
-                  leftSection={<IconChevronRight size={16} />}
-                >
-                  Tiếp tục
-                </Button>
-              </div>
-            </Tabs.Panel>
-
-            <Tabs.Panel value="detailOrder">
-              <ScrollArea>
-                <div
-                  style={{ marginTop: 20 }}
-                  className={styles.cardListProduct}
-                >
-                  {dataDetail?.step === Number(ORDER_CANCEL) && (
-                    <Alert
-                      variant="light"
-                      color="red"
-                      title="Đơn hàng đã huỷ"
-                      icon={<IconInfoCircle />}
-                    >
-                      <span style={{ fontSize: "1rem" }}>
-                        Lí do: {dataDetail?.cancelReason || "Không rõ"}
-                      </span>
-                    </Alert>
-                  )}
-                  <div className={styles.top}>
-                    <Typo
-                      className={styles.title}
-                      size="primary"
-                      type="bold"
-                      style={{ color: "var(--primary-orange)" }}
-                    >
-                      Hàng hoá & Dịch vụ
-                    </Typo>
-                    <Button
-                      size="lg"
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      onClick={(e) => {
-                        openModal();
-                      }}
-                      leftSection={<IconPlus size={18} />}
-                    >
-                      Thêm
-                    </Button>
-                  </div>
-
-                  <Grid className={styles.marketingInfo}>
-                    <Grid.Col span={12}>
-                      {!isMobile ? (
-                        <ListPage
-                          style={{ height: "100%" }}
-                          baseTable={
-                            <Table>
-                              <Table.Thead>
-                                <Table.Tr>
-                                  <Table.Th>Tên sản phẩm</Table.Th>
-                                  <Table.Th>Giá</Table.Th>
-                                  <Table.Th>Số lượng</Table.Th>
-                                  <Table.Th>Tổng tiền</Table.Th>
-                                  <Table.Th>Hành động</Table.Th>
-                                </Table.Tr>
-                              </Table.Thead>
-                              <Table.Tbody>{rows}</Table.Tbody>
-                            </Table>
-                          }
-                        />
-                      ) : (
-                        form.values.detail?.map(
-                          (product: any, index: number) => {
-                            return (
-                              <ItemProduct
-                                data={product}
-                                key={index}
-                                index={index}
-                                form={form}
-                                setSelectedProducts={setSelectedProducts}
-                                selectedProducts={selectedProducts}
-                              />
-                            );
-                          }
-                        )
-                      )}
-                    </Grid.Col>
-                  </Grid>
-                  <InfoCustomer2 form={form} isUser={isUser} />
-                </div>
-                <div style={{ marginTop: 20 }} className={styles.card}>
-                  <Typo
-                    className={styles.title}
-                    size="primary"
-                    type="bold"
-                    style={{ color: "var(--primary-orange)" }}
-                  >
-                    Thông tin thanh toán
-                  </Typo>
-
-                  <Grid gutter={12} mt={24} className={styles.marketingInfo}>
-                    <Grid.Col span={12}>
-                      <div className={styles.subTotal}>
-                        <span className={styles.titleSubTotal}>Tiền hàng:</span>
-                        <span className={styles.valueSubTotal}>
-                          {calculateSubTotal()?.toLocaleString()}
-                        </span>
-                      </div>
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                      <Textarea
-                        size="lg"
-                        rows={2}
-                        radius={0}
-                        {...form.getInputProps("notePrivate")}
-                        label="Ghi chú nội bộ"
-                        autosize={true}
-                        placeholder="Ghi chú nội bộ"
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                      <Textarea
-                        size="lg"
-                        rows={2}
-                        radius={0}
-                        {...form.getInputProps("note")}
-                        label="Ghi chú của khách hàng"
-                        autosize={true}
-                        placeholder="Ghi chú của khách hàng"
-                      />
-                    </Grid.Col>
-                  </Grid>
-                  {isEditing &&
-                  dataDetail?.step !== Number(ORDER_DONE) &&
-                  dataDetail?.step !== Number(ORDER_CANCEL) ? (
-                    <div className={styles.footer}>
-                      <Button
-                        size="md"
-                        w={"33%"}
-                        radius={0}
-                        h={{ base: 42, md: 50, lg: 50 }}
-                        // variant="outline"
-                        key="cancel"
-                        color="red"
-                        // leftSection={<IconBan size={16} />}
-                        onClick={() => HandleCancelOrder("-1")}
-                      >
-                        Huỷ đơn
-                      </Button>
-                      <Button
-                        size="md"
-                        radius={0}
-                        w={"33%"}
-                        h={{ base: 42, md: 50, lg: 50 }}
-                        // loading={saveLoading}
-                        color="green"
-                        style={{ marginLeft: "12px" }}
-                        variant="filled"
-                        onClick={() => {
-                          if (dataDetail?.step == "0") {
-                            UpdateConfirm("1");
-                          } else {
-                            UpdateConfirm("4");
-                          }
-                        }}
-
-                        // leftSection={<IconPlus size={16} />}
-                      >
-                        {dataDetail?.step == "0"
-                          ? "Tiếp nhận"
-                          : dataDetail?.step == "1" && "Hoàn thành"}
-                      </Button>
-                      <Button
-                        size="md"
-                        radius={0}
-                        w={"33%"}
-                        h={{ base: 42, md: 50, lg: 50 }}
-                        loading={isPendingUpdate}
-                        style={{ marginLeft: "12px" }}
-                        key="submit"
-                        type="submit"
-                        variant="filled"
-                        // leftSection={<IconPlus size={16} />}
-                      >
-                        Cập nhật
-                      </Button>
-                    </div>
-                  ) : dataDetail?.step !== Number(ORDER_DONE) &&
-                    dataDetail?.step !== Number(ORDER_CANCEL) ? (
-                    <div className={styles.footer}>
-                      <Button
-                        size="lg"
-                        w={"48%"}
-                        radius={0}
-                        h={{ base: 42, md: 50, lg: 50 }}
-                        variant="outline"
-                        key="cancel"
-                        color="red"
-                        leftSection={<IconBan size={16} />}
-                        onClick={() => setActiveTab("customer")}
-                      >
-                        Quay lại
-                      </Button>
-                      <Button
-                        size="lg"
-                        radius={0}
-                        w={"48%"}
-                        h={{ base: 42, md: 50, lg: 50 }}
-                        loading={isPendingAdd || isPendingUpdate}
-                        style={{ marginLeft: "12px" }}
-                        variant="filled"
-                        type="submit"
-                        leftSection={<IconChevronRight size={16} />}
-                      >
-                        {isEditing ? "Cập nhật" : "Tạo đơn"}
-                      </Button>
-                    </div>
-                  ) : (
-                    <FooterSavePage
-                      saveLoading={loadingButton}
-                      cancelText="Quay lại"
-                      isOk={false}
-                    />
-                  )}
-                </div>
-              </ScrollArea>
-            </Tabs.Panel>
-          </Tabs>
+          <OrderFormMobile
+            activeTab={activeTab}
+            form={form}
+            handlersPlate={handlersPlate}
+            setActiveTab={setActiveTab}
+            styles={styles}
+            isEditing={isEditing}
+            numberPlate={numberPlate}
+            setNumberPlate={setNumberPlate}
+            errorPlate={errorPlate}
+            getOptionsCar={getOptionsCar}
+            openModalCamera={openModalCamera}
+            loadingButton={loadingButton}
+            handleGetInfo={handleGetInfo}
+            openModalUpdateCustomer={openModalUpdateCustomer}
+            loading={loading}
+            brandOptions={brandOptions}
+            car={car}
+            isUser={isUser}
+            setModelOptions={setModelOptions}
+            modelOptions={modelOptions}
+            yearCarOptions={yearCarOptions}
+            setYearCarOptions={setYearCarOptions}
+            openModalUpdate={openModalUpdate}
+            dataDetail={dataDetail}
+            openModal={openModal}
+            selectedProducts={selectedProducts}
+            setSelectedProducts={setSelectedProducts}
+            calculateSubTotal={calculateSubTotal}
+            HandleCancelOrder={HandleCancelOrder}
+            UpdateConfirm={UpdateConfirm}
+            isPendingUpdate={isPendingUpdate}
+            isPendingAdd={isPendingAdd}
+          />
         ) : (
-          <>
-            {dataDetail?.step === Number(ORDER_CANCEL) && (
-              <Alert
-                m={10}
-                variant="light"
-                color="red"
-                title="Đơn hàng đã huỷ"
-                icon={<IconInfoCircle />}
-              >
-                <span style={{ fontSize: "1rem" }}>
-                  Lí do: {dataDetail?.cancelReason || "Không rõ"}
-                </span>
-              </Alert>
-            )}
-            <Grid gutter={12}>
-              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                <InfoCart
-                  loading={loading}
-                  brandOptions={brandOptions}
-                  car={car}
-                  isUser={isUser}
-                  setModelOptions={setModelOptions}
-                  modelOptions={modelOptions}
-                  yearCarOptions={yearCarOptions}
-                  setYearCarOptions={setYearCarOptions}
-                  form={form}
-                  openModalUpdate={openModalUpdate}
-                  handleGetInfo={handleGetInfo}
-                  handlersIsUser
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                <InfoCustomer
-                  openModalUpdateCustomer={openModalUpdateCustomer}
-                  form={form}
-                  isUser={isUser}
-                  loading={loading}
-                />
-              </Grid.Col>
-              <Grid.Col span={12}>
-                <InfoCustomer2 form={form} isUser={isUser} />
-              </Grid.Col>
-            </Grid>
-            <div style={{ marginTop: 20 }} className={styles.cardListProduct}>
-              <div className={styles.top}>
-                <Typo
-                  className={styles.title}
-                  size="primary"
-                  type="bold"
-                  style={{ color: "var(--primary-orange)" }}
-                >
-                  Hàng hoá & Dịch vụ
-                </Typo>
-                <Button
-                  size="lg"
-                  radius={0}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  onClick={(e) => {
-                    openModal();
-                  }}
-                  leftSection={<IconPlus size={18} />}
-                >
-                  Thêm
-                </Button>
-              </div>
-              <Grid className={styles.marketingInfo}>
-                <Grid.Col span={12}>
-                  {!isMobile ? (
-                    <ListPage
-                      style={{ height: "100%" }}
-                      baseTable={
-                        <Table>
-                          <Table.Thead>
-                            <Table.Tr>
-                              <Table.Th>Tên sản phẩm</Table.Th>
-                              <Table.Th>Giá</Table.Th>
-                              <Table.Th>Số lượng</Table.Th>
-                              <Table.Th>Tổng tiền</Table.Th>
-                              <Table.Th>Hành động</Table.Th>
-                            </Table.Tr>
-                          </Table.Thead>
-                          <Table.Tbody>{rows}</Table.Tbody>
-                        </Table>
-                      }
-                    />
-                  ) : (
-                    form.values.detail?.map((product: any, index: number) => {
-                      return (
-                        <ItemProduct
-                          data={product}
-                          key={index}
-                          index={index}
-                          form={form}
-                          setSelectedProducts={setSelectedProducts}
-                          selectedProducts={selectedProducts}
-                        />
-                      );
-                    })
-                  )}
-                </Grid.Col>
-              </Grid>
-            </div>
-            <div style={{ marginTop: 20 }} className={styles.card}>
-              <Typo
-                className={styles.title}
-                size="primary"
-                type="bold"
-                style={{ color: "var(--primary-orange)" }}
-              >
-                Thông tin đơn hàng
-              </Typo>
-
-              <Grid gutter={12} mt={24} className={styles.marketingInfo}>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <NumberInput
-                    size="lg"
-                    radius={0}
-                    label="Tổng đơn hàng"
-                    placeholder="Tổng đơn hàng"
-                    suffix="đ"
-                    readOnly
-                    thousandSeparator=","
-                    value={calculateSubTotal()}
-                  />
-                </Grid.Col>
-                {isEditing ? (
-                  <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                    <Select
-                      size="lg"
-                      radius={0}
-                      label="Tình trạng đơn hàng"
-                      placeholder="Tình trạng đơn hàng"
-                      {...form.getInputProps("step")}
-                      data={stepOrderOptions}
-                    />
-                  </Grid.Col>
-                ) : (
-                  <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}></Grid.Col>
-                )}
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <Textarea
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("note")}
-                    label="Ghi chú của khách hàng"
-                    minRows={2}
-                    autosize={true}
-                    placeholder="Ghi chú của khách hàng"
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <Textarea
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("notePrivate")}
-                    label="Ghi chú nội bộ"
-                    minRows={2}
-                    autosize={true}
-                    placeholder="Ghi chú nội bộ"
-                  />
-                </Grid.Col>
-              </Grid>
-            </div>
-
-            {dataDetail?.step !== Number(ORDER_CANCEL) &&
-            dataDetail?.step !== Number(ORDER_DONE) ? (
-              <>
-                {isEditing ? (
-                  <>
-                    {dataDetail?.step === ORDER_CANCEL ||
-                    dataDetail?.step === ORDER_DONE ? (
-                      <Button
-                        size="lg"
-                        w={"48%"}
-                        radius={0}
-                        h={{ base: 42, md: 50, lg: 50 }}
-                        variant="outline"
-                        key="cancel"
-                        color="red"
-                        leftSection={<IconBan size={16} />}
-                        onClick={() => setActiveTab("numberPlates")}
-                      >
-                        Quay lại
-                      </Button>
-                    ) : (
-                      <Group justify="end">
-                        <Button
-                          size="lg"
-                          radius={0}
-                          h={{ base: 42, md: 50, lg: 50 }}
-                          // variant="outline"
-                          key="cancel"
-                          color="red"
-                          // leftSection={<IconBan size={16} />}
-                          onClick={() => HandleCancelOrder("-1")}
-                        >
-                          Huỷ đơn
-                        </Button>
-                        <Button
-                          size="lg"
-                          radius={0}
-                          h={{ base: 42, md: 50, lg: 50 }}
-                          // loading={saveLoading}
-                          color="green"
-                          style={{ marginLeft: "12px" }}
-                          variant="filled"
-                          onClick={() => {
-                            if (dataDetail?.step == "0") {
-                              UpdateConfirm("1");
-                            } else {
-                              UpdateConfirm("4");
-                            }
-                          }}
-                          // leftSection={<IconPlus size={16} />}
-                        >
-                          Hoàn thành
-                        </Button>
-                        <Button
-                          size="lg"
-                          radius={0}
-                          h={{ base: 42, md: 50, lg: 50 }}
-                          loading={isPendingUpdate}
-                          style={{ marginLeft: "12px" }}
-                          key="submit"
-                          type="submit"
-                          variant="filled"
-                          // leftSection={<IconPlus size={16} />}
-                        >
-                          Cập nhật
-                        </Button>
-                      </Group>
-                    )}
-                  </>
-                ) : (
-                  <FooterSavePage
-                    loading={isPendingAdd || isPendingUpdate}
-                    okText="Tạo đơn"
-                  />
-                )}
-              </>
-            ) : (
-              <FooterSavePage
-                saveLoading={loadingButton}
-                cancelText="Quay lại"
-                isOk={false}
-              />
-            )}
-          </>
+          <OrderFormDesktop
+            dataDetail={dataDetail}
+            form={form}
+            car={car}
+            loading={loading}
+            brandOptions={brandOptions}
+            isUser={isUser}
+            setModelOptions={setModelOptions}
+            modelOptions={modelOptions}
+            yearCarOptions={yearCarOptions}
+            setYearCarOptions={setYearCarOptions}
+            openModalUpdate={openModalUpdate}
+            handleGetInfo={handleGetInfo}
+            openModalUpdateCustomer={openModalUpdateCustomer}
+            styles={styles}
+            openModal={openModal}
+            rows={rows}
+            isEditing={isEditing}
+            stepOrderOptions={stepOrderOptions}
+            calculateSubTotal={calculateSubTotal}
+            setActiveTab={setActiveTab}
+            HandleCancelOrder={HandleCancelOrder}
+            UpdateConfirm={UpdateConfirm}
+            isPendingUpdate={isPendingUpdate}
+            isPendingAdd={isPendingAdd}
+            loadingButton={loadingButton}
+          />
         )}
       </form>
 

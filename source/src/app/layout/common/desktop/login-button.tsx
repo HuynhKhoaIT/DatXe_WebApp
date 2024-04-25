@@ -49,7 +49,7 @@ const SigninButton = () => {
             <Menu width={200} shadow="md">
               <Menu.Target>
                 <div className={styles.title} style={{ display: "flex" }}>
-                  <span>{session?.user.name}</span>
+                  <span className={styles.userName}>{session?.user.name}</span>
                   <IconCaretDownFilled />
                 </div>
               </Menu.Target>

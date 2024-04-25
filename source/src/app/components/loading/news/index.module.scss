@@ -1,0 +1,40 @@
+.listItem{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cardSkeleton{
+    border-radius: 10px;
+    background-color: #ffffff;
+    .infoCard{
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.image {
+    width: 350px;
+    height: 210px;
+    object-fit: fill;
+    flex-shrink: 0;
+    border-radius: 12px;
+}
+.item {
+    display: flex;
+    justify-content: start;
+    gap: 12px;
+    padding: 20px;
+    margin-top: 15px;
+    border: 1px solid #d1d7dc;
+    // border-radius: 10px;
+    cursor: pointer;
+
+    .numberstart {
+        color: var(--star-color);
+    }
+
+    .money {
+        color: var(--primary-color);
+    }
+}

@@ -11,12 +11,13 @@ const ReactPrint = ({ children }: any) => {
     <div>
       <ReactToPrint
         content={() => componentRef.current}
+        copyStyles={true}
         trigger={() => (
           <Group justify="end">
             <Button
               leftSection={<IconPrinter />}
               variant="outline"
-              color="gray"
+              color="blue"
             >
               In
             </Button>
