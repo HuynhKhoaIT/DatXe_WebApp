@@ -35,11 +35,16 @@ export default function CartComponent({ myAccount }: any) {
     if (!cars) return;
     const carDefault = cars?.data?.find((item: any) => item?.isDefault);
     if (carDefault) {
+      console.log(carDefault);
       setValue(carDefault?.numberPlates);
+      form.setFieldValue("carBrandId", carDefault?.brandName?.id);
+      form.setFieldValue("carNameId", carDefault?.modelName?.id);
+      form.setFieldValue("carYearId", carDefault?.yearName?.id);
       form.setFieldValue("carBrandName", carDefault?.brandName?.title);
       form.setFieldValue("carModelName", carDefault?.modelName?.title);
       form.setFieldValue("carYear", carDefault?.yearName?.title);
       form.setFieldValue("numberPlates", carDefault?.numberPlates);
+      form.setFieldValue("carId", carDefault?.id);
     }
   }, [cars]);
   const router = useRouter();
@@ -51,6 +56,7 @@ export default function CartComponent({ myAccount }: any) {
     setIsModalDeleteOpen(false);
     deleteItem(deleteRow?.productId);
   };
+
   const handleDeleteCancel = () => {
     setIsModalDeleteOpen(false);
   };
@@ -63,7 +69,7 @@ export default function CartComponent({ myAccount }: any) {
     const updateCartData = cartData.map((item: any) => {
       if (item.productId === idProduct) {
         item.quantity += 1;
-        item.subTotal += item.subTotal;
+        item.subTotal = item.priceSale * item.quantity;
       }
       return item;
     });

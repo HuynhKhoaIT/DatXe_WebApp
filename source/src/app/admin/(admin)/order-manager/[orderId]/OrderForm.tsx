@@ -12,7 +12,7 @@ import { useForm } from "@mantine/form";
 import { IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { OptionsCancelOrder, stepOrderOptions } from "@/constants/masterData";
 import dynamic from "next/dynamic";
@@ -28,7 +28,7 @@ import { useAddOrder } from "../../hooks/order/useAddOrder";
 import { notifications } from "@mantine/notifications";
 import OrderFormDesktop from "../_component/orderForm/OrderForm";
 import OrderFormMobile from "../_component/orderForm/mobile/OrderFormMobile";
-import { useOrderDLBDDetail } from "../../hooks/order/useOrder";
+import { useOrderDLBD, useOrderDLBDDetail } from "../../hooks/order/useOrder";
 import { useSession } from "next-auth/react";
 
 export default function OrderForm({
@@ -46,12 +46,18 @@ export default function OrderForm({
     id: dataDetail?.orderDLBDId,
   });
 
-  console.log("orderDlbdDetail", orderDlbdDetail);
+  const {
+    data: orderDlbd,
+    isLoading: isLoadingOrderDLBD,
+    isPending: isPendingOrderDLBD,
+  } = useOrderDLBD({
+    token: data?.user?.token,
+    id: dataDetail?.orderDLBDId,
+  });
 
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-  const router = useRouter();
   const {
     addItem,
     updateItem,
@@ -80,6 +86,7 @@ export default function OrderForm({
       : []
   );
 
+  console.log(orderDlbd);
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
 
@@ -240,6 +247,9 @@ export default function OrderForm({
 
   // Tính tổng tiền
   const calculateSubTotal = () => {
+    if (orderDlbd?.data) {
+      return orderDlbd?.data?.total;
+    }
     let subTotal = 0;
     form.values?.detail?.forEach((item: any) => {
       subTotal += item?.priceSale * item.quantity;
@@ -579,6 +589,7 @@ export default function OrderForm({
             isPendingUpdate={isPendingUpdate}
             isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
+            orderDlbdDetail={orderDlbdDetail}
           />
         ) : (
           <OrderFormDesktop

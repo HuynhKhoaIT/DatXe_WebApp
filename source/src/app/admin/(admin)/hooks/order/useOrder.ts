@@ -139,4 +139,23 @@ const useOrderDLBDDetail = ({token,id}:any) => {
     });
 };
 
-export { useOrderDetail, fetchOrderDetail,useOrderDLBDDetail};
+// get order DLBD
+const fetchOrderDLBD = async (token:string,id: string) => {
+    console.log(id);
+    const response = await fetch(`https://v2.dlbd.vn/api/v3/app/orders/${id}`,{method:'GET', 
+    headers: {'Authorization': 'Bearer ' + token}});
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch order ', response);
+    }
+    return await response.json();
+};
+
+const useOrderDLBD = ({token,id}:any) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.orderDLBD, id],
+        queryFn: () => fetchOrderDLBD(token,id),
+    });
+};
+
+
+export { useOrderDetail, fetchOrderDetail,useOrderDLBDDetail,useOrderDLBD};

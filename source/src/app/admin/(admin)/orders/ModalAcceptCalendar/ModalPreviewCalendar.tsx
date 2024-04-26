@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import {
   TextInput,
@@ -28,6 +29,7 @@ import useFetch from "@/app/hooks/useFetch";
 import { useSession } from "next-auth/react";
 import { useAddOrder } from "../../hooks/order/useAddOrder";
 import { useUpdateOrder } from "../../hooks/order/useUpdateOrder";
+import { useMyGarage } from "@/app/hooks/useMyGarage";
 require("dayjs/locale/vi");
 
 export const ModalPreviewCalendar = ({
@@ -37,7 +39,6 @@ export const ModalPreviewCalendar = ({
 }: any) => {
   const { updateItem, brandOptions, isPendingUpdate } = useUpdateOrder();
 
-  console.log(detail);
   const { data }: any = useSession();
   const role = data?.user?.role;
   // const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({

@@ -30,7 +30,7 @@ const ExpertDetailPageDesktop = ({
         />
       </Container>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
-        <Category categories={categories} />
+        <Category categories={categories} garageId={expertDetail?.id} />
         <Service data={services?.data} garageId={expertDetail?.id} />
       </div>
       <Products data={products?.data} garageId={expertDetail?.id} />
