@@ -1,11 +1,12 @@
 'use client';
-import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ResponseError } from '@/utils/until/ResponseError';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { QUERY_KEY } from '@/constants';
 import { useSearchParams } from 'next/navigation';
 import useFetch from '@/app/hooks/useFetch';
 import { getOptionsCategories } from '@/utils/until';
+import { notifications } from '@mantine/notifications';
 const queryClient = new QueryClient();
 
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
@@ -18,6 +19,20 @@ const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
 
 
 
+const deleteProduct = async (id: string): Promise<any> => {
+    const response = await fetch(`/api/admin/home-page/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id }),
+    });
+    if (!response.ok) {
+        throw new ResponseError('Failed to delete product', response);
+    }
+    return await response.json();
+};
+
 
 interface useServicesHome {
     products: any;
@@ -27,6 +42,7 @@ interface useServicesHome {
     page?: number;
     setPage: Dispatch<SetStateAction<number>>;
     categoryOptions: any;
+    deleteItem:any;
 }
 
 function mapError(error: unknown | undefined): undefined | string {
@@ -72,7 +88,18 @@ export const useServicesHome = (): useServicesHome => {
         } 
     }, [products, searchParams, isPlaceholderData, page, queryClient]);
 
-
+    const { mutate: deleteItem } = useMutation({
+        mutationFn: deleteProduct,
+        onSuccess: () => {
+            notifications.show({
+                title: 'Thành công',
+                message: 'Xoá sản phẩm nổi bật thành công',
+            });
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEY.serviceHome, searchParams.toString(), page],
+            });
+        },
+    });
     const { data: categoryOptions } = useFetch({
         queryKey: [QUERY_KEY.optionsCategory],
         queryFn: () => getOptionsCategories(),
@@ -90,6 +117,7 @@ export const useServicesHome = (): useServicesHome => {
         page,
         setPage,
         categoryOptions,
+        deleteItem
     };
 };
 

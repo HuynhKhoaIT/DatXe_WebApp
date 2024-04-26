@@ -41,13 +41,14 @@ const ServicesHot = () => {
     page,
     setPage,
     categoryOptions,
+    deleteItem,
   } = useServicesHome();
 
   const [deleteRow, setDeleteRow] = useState();
 
-  // const handleDeleteItem = (id: any) => {
-  //   deleteItem(id);
-  // };
+  const handleDeleteItem = (id: any) => {
+    deleteItem(id);
+  };
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
@@ -131,7 +132,7 @@ const ServicesHot = () => {
               onClick={(e) => {
                 openDeleteProduct();
                 e.stopPropagation();
-                setDeleteRow(record.id);
+                setDeleteRow(record?.product.id);
               }}
             >
               <IconTrash size={16} color="red" />
@@ -182,7 +183,7 @@ const ServicesHot = () => {
         <DynamicModalDeleteItem
           openedDeleteItem={openedDeleteItem}
           closeDeleteItem={closeDeleteItem}
-          // handleDeleteItem={handleDeleteItem}
+          handleDeleteItem={handleDeleteItem}
           deleteRow={deleteRow}
         />
       )}
