@@ -182,7 +182,7 @@ export const registerGarage = async (
         phoneNumber: phone,
         website: "",
         address: address,
-        status: "PUBLIC",
+        status: "PENDING",
         description: "",
       }),
     });
