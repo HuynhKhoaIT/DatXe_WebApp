@@ -402,9 +402,14 @@ export async function createOrder(json: any) {
     if (json.garageId) {
       garageId = json.garageId.toString();
     }
-    if (json.detail[0].garageId) {
-      garageId = json.detail[0].garageId.toString();
+    try {
+      if (json?.detail[0].garageId) {
+        garageId = json.detail[0].garageId.toString();
+      }
+    } catch (error) {
+      
     }
+    
     if (!json.customerId) {
       // check and create customer
       // check customer via phone number
@@ -518,8 +523,8 @@ export async function createOrder(json: any) {
       brandId: json.carBrandId,
       modelId: json.carNameId,
       yearId: json.carYearId,
-      subTotal: Number(json.subTotal),
-      total: Number(json.total),
+      subTotal: Number(json.subTotal ?? 0),
+      total: Number(json.total ?? 0),
       garageId: garageId,
       serviceAdvisorId: json.serviceAdvisorId ?? "1",
       createdById: json.createdById ?? "1",
@@ -611,6 +616,7 @@ export async function createOrderClient(json: any) {
           carNameId: carInAdmin?.carNameId,
           carYearId: carInAdmin?.carYearId,
           garageId: garageId,
+          customerId: customerId
         },
       });
       carId = carNewGarage.id;
