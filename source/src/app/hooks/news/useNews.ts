@@ -3,20 +3,28 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 
-const fetchNewsList = async (searchParams: any, limit = 10) => {
-    const response = await fetch(`/api/posts?${searchParams}&limit=${limit}`);
+const fetchNewsList = async (garageId:any,searchParams: any, limit = 10) => {
+    let url;
+    if(garageId){
+         url = `/api/posts?${searchParams}&limit=${limit}&garageId=${garageId}`
+    }else{
+        url = `/api/posts?${searchParams}&limit=${limit}`
+
+    }
+    const response = await fetch(url);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch news', response);
     }
     return await response.json();
 };
 
-const useNewsList = (limit: any) => {
+const useNewsList = ({garageId,limit}: any) => {
     const searchParams = useSearchParams();
+
 
     return useQuery({
         queryKey: [QUERY_KEY.news, searchParams.toString(), limit],
-        queryFn: () => fetchNewsList(searchParams.toString(), limit),
+        queryFn: () => fetchNewsList(garageId,searchParams.toString(), limit),
     });
 };
 
