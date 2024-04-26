@@ -11,6 +11,8 @@ import { useProducts } from "../../hooks/products/useProducts";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { Fragment } from "react";
+import { useAddServiceHome } from "../../hooks/home-page/useAddServiceHome";
+import { useServices } from "../../hooks/services/services";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Sản phẩm nổi bật", href: "/admin/system-products" },
@@ -19,14 +21,16 @@ const Breadcrumbs = [
 
 export default function ChooseProducts() {
   const {
-    products,
+    services,
     isLoading,
     isFetching,
     error,
     page,
     setPage,
     categoryOptions,
-  } = useProducts();
+  } = useServices();
+
+  const { addItem, isPending } = useAddServiceHome();
   const columns = [
     {
       label: (
@@ -121,7 +125,7 @@ export default function ChooseProducts() {
               style={{ margin: "0 5px" }}
               p={5}
               onClick={() => {
-                console.log(record);
+                addItem(record);
               }}
               leftSection={<IconPlus size={16} />}
             >
@@ -166,10 +170,10 @@ export default function ChooseProducts() {
         style={{ height: "100%" }}
         baseTable={
           <TableBasic
-            loading={isLoading || isFetching}
-            data={products?.data}
+            loading={isLoading || isFetching || isPending}
+            data={services?.data}
             columns={columns}
-            totalPage={products?.totalPage}
+            totalPage={services?.totalPage}
             setPage={setPage}
             activePage={page}
           />

@@ -58,10 +58,11 @@ const ProductsHot = () => {
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Hình ảnh</span>
       ),
       name: "image",
-      dataIndex: ["images"],
+      dataIndex: ["product", "images"],
       width: "90px",
       render: (data: any) => {
-        const images = JSON?.parse(data);
+        let images;
+        if (data) images = JSON?.parse(data);
         if (!images) {
           return (
             <Image
@@ -83,25 +84,18 @@ const ProductsHot = () => {
         </span>
       ),
       name: "name",
-      dataIndex: ["name"],
+      dataIndex: ["product", "name"],
       render: (dataRow: any) => {
         return <span>{dataRow}</span>;
       },
     },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Số lượng</span>
-      ),
-      name: "quantity",
-      dataIndex: ["quantity"],
-      textAlign: "center",
-    },
+
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá bán</span>
       ),
       name: "price",
-      dataIndex: ["price"],
+      dataIndex: ["product", "price"],
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -111,65 +105,12 @@ const ProductsHot = () => {
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá sale</span>
       ),
       name: "priceSale",
-      dataIndex: ["salePrice"],
+      dataIndex: ["product", "salePrice"],
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
     },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Loại</span>
-      ),
-      name: "kind",
-      dataIndex: ["isProduct"],
-      width: "100px",
-      render: (record: any, index: number) => {
-        const matchedStatus = kindProductOptions.find(
-          (item) => item.value === record?.toString()
-        );
-        if (matchedStatus) {
-          return (
-            <Badge
-              radius={0}
-              size="lg"
-              variant="light"
-              color={matchedStatus.color}
-              key={index}
-            >
-              {matchedStatus.label}
-            </Badge>
-          );
-        }
-      },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Trạng thái
-        </span>
-      ),
-      name: "status",
-      dataIndex: ["status"],
-      width: "100px",
-      render: (record: any) => {
-        const matchedStatus = statusOptions.find(
-          (item) => item.value === record
-        );
-        if (matchedStatus) {
-          return (
-            <Badge
-              variant="light"
-              radius={0}
-              size="lg"
-              color={matchedStatus.color}
-              key={record}
-            >
-              {matchedStatus.label}
-            </Badge>
-          );
-        }
-      },
-    },
+
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
@@ -181,44 +122,22 @@ const ProductsHot = () => {
       textAlign: "center",
       render: (record: any) => {
         return (
-          <>
-            <Link
-              href={{
-                pathname: `/admin/products/${record.id}`,
+          <Tooltip label="Xoá" withArrow position="bottom">
+            <Button
+              size="lg"
+              radius={0}
+              p={5}
+              variant="transparent"
+              color="red"
+              onClick={(e) => {
+                openDeleteProduct();
+                e.stopPropagation();
+                setDeleteRow(record.id);
               }}
             >
-              <Tooltip label="Cập nhật" withArrow position="bottom">
-                <Button
-                  size="lg"
-                  radius={0}
-                  style={{ margin: "0 5px" }}
-                  variant="transparent"
-                  color="gray"
-                  p={5}
-                  onClick={() => {}}
-                >
-                  <IconPencil size={16} />
-                </Button>
-              </Tooltip>
-            </Link>
-
-            <Tooltip label="Xoá" withArrow position="bottom">
-              <Button
-                size="lg"
-                radius={0}
-                p={5}
-                variant="transparent"
-                color="red"
-                onClick={(e) => {
-                  openDeleteProduct();
-                  e.stopPropagation();
-                  setDeleteRow(record.id);
-                }}
-              >
-                <IconTrash size={16} color="red" />
-              </Button>
-            </Tooltip>
-          </>
+              <IconTrash size={16} color="red" />
+            </Button>
+          </Tooltip>
         );
       },
     },
@@ -250,10 +169,10 @@ const ProductsHot = () => {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={products?.data}
+            data={products}
             columns={columns}
             loading={isLoading}
-            totalPage={products?.totalPage}
+            // totalPage={products?.totalPage}
             setPage={setPage}
             activePage={page}
             onRow={`/admin/system-products`}

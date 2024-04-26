@@ -9,7 +9,7 @@ import { getOptionsCategories } from '@/utils/until';
 const queryClient = new QueryClient();
 
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
-    const response = await fetch(`/api/admin/home-page?${searchParams}&isProduct=0&page=${page}`);
+    const response = await fetch(`/api/products?isProduct=false&${searchParams}&page=${page}`);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch products', response);
     }
@@ -19,7 +19,7 @@ const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
 
 
 
-interface useServicesHome {
+interface useServices {
     products: any;
     isLoading: boolean;
     isFetching: boolean;
@@ -36,7 +36,7 @@ function mapError(error: unknown | undefined): undefined | string {
     return 'Unknown error';
 }
 
-export const useServicesHome = (): useServicesHome => {
+export const useServices = (): useServices => {
     const queryClient = useQueryClient();
 
     const searchParams = useSearchParams();
@@ -49,7 +49,7 @@ export const useServicesHome = (): useServicesHome => {
         error,
         isPlaceholderData,
     } = useQuery({
-        queryKey: [QUERY_KEY.serviceHome, searchParams.toString(), page],
+        queryKey: [QUERY_KEY.allProducts, searchParams.toString(), page],
         queryFn: () => fetchProducts(searchParams.toString(), page),
         refetchOnWindowFocus: false,
         retry: 2,
@@ -59,13 +59,13 @@ export const useServicesHome = (): useServicesHome => {
     useEffect(() => {
         if (!isPlaceholderData && page < products?.totalPage) {
             queryClient.prefetchQuery({
-                queryKey: [QUERY_KEY.serviceHome, searchParams.toString(), page + 1],
+                queryKey: [QUERY_KEY.allProducts, searchParams.toString(), page + 1],
                 queryFn: () => fetchProducts(searchParams.toString(), page + 1),
                 retry: 2,
             });
         } else if ( !isPlaceholderData && searchParams) {
             queryClient.prefetchQuery({
-                queryKey: [QUERY_KEY.serviceHome, searchParams.toString(), page],
+                queryKey: [QUERY_KEY.allProducts, searchParams.toString(), page],
                 queryFn: () => fetchProducts(searchParams.toString(), page),
                 retry: 2,
             });
