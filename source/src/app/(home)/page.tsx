@@ -7,6 +7,7 @@ import Reasons3 from "@/assets/images/reasson3.png";
 import { getCategories } from "../libs/prisma/category";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
+import { getProductsHome } from "../libs/prisma/homepage";
 
 const reassons = [
   {
@@ -35,6 +36,8 @@ const reassons = [
 ];
 export default async function Home({ searchParams }: any) {
   const categories = await getCategories({ garageId: "2" });
+  const productsHome = await getProductsHome(1);
+  const servicesHome = await getProductsHome(0);
 
   const productsRelate = await callApi(apiConfig.products.getRelate, {
     params: {

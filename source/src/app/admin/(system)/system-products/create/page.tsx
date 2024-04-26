@@ -123,7 +123,6 @@ export default function ChooseProducts() {
             <Button
               style={{ margin: "0 5px" }}
               p={5}
-              loading={isPending}
               onClick={() => {
                 addItem(record);
               }}
@@ -162,7 +161,7 @@ export default function ChooseProducts() {
         style={{ height: "100%" }}
         baseTable={
           <TableBasic
-            loading={isLoading || isFetching}
+            loading={isLoading || isFetching || isPending}
             data={products?.data}
             columns={columns}
             totalPage={products?.totalPage}
