@@ -30,7 +30,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       images: ProductDetail?.images,
       name: ProductDetail?.name,
       garageId: ProductDetail.garageId,
-      saleValue: ProductDetail?.salePrice,
+      saleValue: 0,
       subTotal: ProductDetail?.salePrice,
     });
     localStorage.setItem("cartData", JSON.stringify(existingCartItems));
@@ -71,7 +71,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
             productId: ProductDetail?.id,
             price: ProductDetail?.price,
             priceSale: ProductDetail?.salePrice,
-            saleValue: ProductDetail?.salePrice,
+            saleValue: 0,
             images: ProductDetail?.images,
             name: ProductDetail?.name,
             garageId: ProductDetail.garageId,
