@@ -616,6 +616,7 @@ export async function createOrderClient(json: any) {
           carNameId: carInAdmin?.carNameId,
           carYearId: carInAdmin?.carYearId,
           garageId: garageId,
+          customerId: customerId
         },
       });
       carId = carNewGarage.id;

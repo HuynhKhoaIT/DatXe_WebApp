@@ -25,9 +25,9 @@ export default async function DashboardLayout({ children }: IProps) {
   if (session?.user?.role !== ROLE_CUSTOMER) {
     return redirect(`/admin`);
   }
-  if (session?.user?.role == ROLE_CUSTOMER) {
-    return redirect(`/dashboard/cars`);
-  }
+  // if (session?.user?.role == ROLE_CUSTOMER) {
+  //   return redirect(`/dashboard/cars`);
+  // }
   return (
     <Fragment>
       {isMobile ? (
