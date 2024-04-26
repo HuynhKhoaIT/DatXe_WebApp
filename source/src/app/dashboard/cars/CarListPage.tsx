@@ -187,7 +187,7 @@ export default function CarListPage({
               radius={0}
               leftSection={<IconPlus size={18} />}
             >
-              Thêm mới
+              Thêm xe
             </Button>
           </Link>
         </Flex>

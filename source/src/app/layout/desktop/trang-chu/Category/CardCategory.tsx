@@ -15,9 +15,9 @@ const CardCategory = ({
 }) => {
   return (
     <div key={key} className={styles.wrapper}>
-      {garageId > 0 ? (
+      {garageId ? (
         <Link
-          href={`/chuyen-muc/${category.id}?garage_id=${garageId}`}
+          href={`/chuyen-muc/${category.id}?garageId=${garageId}`}
           data-wow-delay=".25s"
           className={styles.ItemCat}
         >

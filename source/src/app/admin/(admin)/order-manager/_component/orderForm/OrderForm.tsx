@@ -20,7 +20,6 @@ import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import ReactPrint from "@/app/components/common/ReactToPrint";
 import ButtonDbDLBD from "../ButtonDbDLBD";
 import TableBasic from "@/app/components/table/Tablebasic";
-import ImageField from "@/app/components/form/ImageField";
 export default function OrderFormDesktop({
   dataDetail,
   form,
@@ -219,82 +218,119 @@ export default function OrderFormDesktop({
           </Grid>
         </div>
 
-        {dataDetail?.step !== Number(ORDER_CANCEL) &&
-        dataDetail?.step !== Number(ORDER_DONE) ? (
-          <>
-            {isEditing ? (
-              <>
-                {dataDetail?.step === ORDER_CANCEL ||
-                dataDetail?.step === ORDER_DONE ? (
-                  <FooterSavePage isOk={false} cancelText={"Quay lại"}>
-                    <ButtonDbDLBD
-                      isPendingDlbd={isPendingDlbd}
-                      handleDbDLBD={handleDbDLBD}
-                      dataDetail={dataDetail}
-                    />
-                  </FooterSavePage>
-                ) : (
-                  <FooterSavePage okText={"Cập nhật"} isCancel={false}>
-                    <ButtonDbDLBD
-                      isPendingDlbd={isPendingDlbd}
-                      handleDbDLBD={handleDbDLBD}
-                      dataDetail={dataDetail}
-                    />
-                    <Button
-                      size="lg"
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      // variant="outline"
-                      key="cancel"
-                      color="red"
-                      // leftSection={<IconBan size={16} />}
-                      onClick={() => HandleCancelOrder("-1")}
-                    >
-                      Huỷ đơn
-                    </Button>
-                    <Button
-                      size="lg"
-                      radius={0}
-                      h={{ base: 42, md: 50, lg: 50 }}
-                      // loading={saveLoading}
-                      color="green"
-                      style={{ marginLeft: "12px" }}
-                      variant="filled"
-                      onClick={() => {
-                        if (dataDetail?.step == "0") {
-                          UpdateConfirm("1");
-                        } else {
-                          UpdateConfirm("4");
-                        }
-                      }}
-                      // leftSection={<IconPlus size={16} />}
-                    >
-                      Hoàn thành
-                    </Button>
-                  </FooterSavePage>
-                )}
-              </>
-            ) : (
-              <FooterSavePage
-                loading={isPendingAdd || isPendingUpdate}
-                okText="Tạo đơn"
-              />
-            )}
-          </>
-        ) : (
-          <FooterSavePage
-            saveLoading={loadingButton}
-            cancelText="Quay lại"
-            isOk={false}
-          >
-            <ButtonDbDLBD
-              isPendingDlbd={isPendingDlbd}
-              handleDbDLBD={handleDbDLBD}
-              dataDetail={dataDetail}
-            />
-          </FooterSavePage>
-        )}
+        <Footer
+          dataDetail={dataDetail}
+          isEditing={isEditing}
+          isPendingDlbd={isPendingDlbd}
+          handleDbDLBD={handleDbDLBD}
+          HandleCancelOrder={HandleCancelOrder}
+          UpdateConfirm={UpdateConfirm}
+          isPendingAdd={isPendingAdd}
+          loadingButton={loadingButton}
+          isPendingUpdate={isPendingUpdate}
+        />
       </div>
     </ReactPrint>
   );
 }
+
+const Footer = ({
+  dataDetail,
+  isEditing,
+  isPendingDlbd,
+  handleDbDLBD,
+  HandleCancelOrder,
+  UpdateConfirm,
+  isPendingAdd,
+  loadingButton,
+  isPendingUpdate,
+}: any) => {
+  if (dataDetail?.orderDLBDId) {
+    return (
+      <FooterSavePage
+        saveLoading={loadingButton}
+        cancelText="Quay lại"
+        isOk={false}
+      ></FooterSavePage>
+    );
+  }
+  return (
+    <>
+      {dataDetail?.step !== Number(ORDER_CANCEL) &&
+      dataDetail?.step !== Number(ORDER_DONE) ? (
+        <>
+          {isEditing ? (
+            <>
+              {dataDetail?.step === ORDER_CANCEL ||
+              dataDetail?.step === ORDER_DONE ? (
+                <FooterSavePage isOk={false} cancelText={"Quay lại"}>
+                  <ButtonDbDLBD
+                    isPendingDlbd={isPendingDlbd}
+                    handleDbDLBD={handleDbDLBD}
+                    dataDetail={dataDetail}
+                  />
+                </FooterSavePage>
+              ) : (
+                <FooterSavePage okText={"Cập nhật"} isCancel={false}>
+                  <ButtonDbDLBD
+                    isPendingDlbd={isPendingDlbd}
+                    handleDbDLBD={handleDbDLBD}
+                    dataDetail={dataDetail}
+                  />
+                  <Button
+                    size="lg"
+                    radius={0}
+                    h={{ base: 42, md: 50, lg: 50 }}
+                    // variant="outline"
+                    key="cancel"
+                    color="red"
+                    // leftSection={<IconBan size={16} />}
+                    onClick={() => HandleCancelOrder("-1")}
+                  >
+                    Huỷ đơn
+                  </Button>
+                  <Button
+                    size="lg"
+                    radius={0}
+                    h={{ base: 42, md: 50, lg: 50 }}
+                    // loading={saveLoading}
+                    color="green"
+                    style={{ marginLeft: "12px" }}
+                    variant="filled"
+                    onClick={() => {
+                      if (dataDetail?.step == "0") {
+                        UpdateConfirm("1");
+                      } else {
+                        UpdateConfirm("4");
+                      }
+                    }}
+                    // leftSection={<IconPlus size={16} />}
+                  >
+                    Hoàn thành
+                  </Button>
+                </FooterSavePage>
+              )}
+            </>
+          ) : (
+            <FooterSavePage
+              loading={isPendingAdd || isPendingUpdate}
+              okText="Tạo đơn"
+            />
+          )}
+        </>
+      ) : (
+        <FooterSavePage
+          saveLoading={loadingButton}
+          cancelText="Quay lại"
+          isOk={false}
+        >
+          <ButtonDbDLBD
+            isPendingDlbd={isPendingDlbd}
+            handleDbDLBD={handleDbDLBD}
+            dataDetail={dataDetail}
+          />
+        </FooterSavePage>
+      )}
+    </>
+  );
+};

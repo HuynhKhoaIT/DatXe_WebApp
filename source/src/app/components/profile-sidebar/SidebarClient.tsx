@@ -10,22 +10,14 @@ const SidebarClient = () => {
   let page = parts[parts.length - 1];
   return (
     <ul className={styles.listMenu}>
-      <li>
+      {/* <li>
         <Link
           href="/dashboard"
           className={`list-group-item ${page == "dashboard" && styles.active}`}
         >
           <i className="far fa-gauge-high"></i> Tổng quan
         </Link>
-      </li>
-      <li>
-        <Link
-          href="/dashboard/profile"
-          className={`list-group-item ${page == "profile" && styles.active}`}
-        >
-          <i className="far fa-user"></i> Hồ sơ của tôi
-        </Link>
-      </li>
+      </li> */}
       <li>
         <Link
           href="/dashboard/cars"
@@ -36,6 +28,15 @@ const SidebarClient = () => {
           <i className="far fa-layer-group"></i> Danh sách xe
         </Link>
       </li>
+      <li>
+        <Link
+          href="/dashboard/profile"
+          className={`list-group-item ${page == "profile" && styles.active}`}
+        >
+          <i className="far fa-user"></i> Hồ sơ của tôi
+        </Link>
+      </li>
+
       <li>
         <Link
           href="/dashboard/order"

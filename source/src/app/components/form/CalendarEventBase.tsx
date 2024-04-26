@@ -216,9 +216,6 @@ export default function CalendarEventBase({
                       <div className={styles.customerRequest}>
                         {event?.extendedProps?.orderDetail?.customerRequest}
                       </div>
-                      <div className={styles.licensePlates}>
-                        {event?.extendedProps?.orderDetail?.customerRequest}
-                      </div>
                     </Flex>
                   ))}
                 </div>

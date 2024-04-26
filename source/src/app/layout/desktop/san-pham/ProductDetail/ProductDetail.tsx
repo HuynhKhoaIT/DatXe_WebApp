@@ -30,7 +30,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       images: ProductDetail?.images,
       name: ProductDetail?.name,
       garageId: ProductDetail.garageId,
-      saleValue: ProductDetail?.salePrice,
+      saleValue: 0,
       subTotal: ProductDetail?.salePrice,
     });
     localStorage.setItem("cartData", JSON.stringify(existingCartItems));
@@ -63,14 +63,15 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       } else {
         if (index !== -1) {
           existingCartItems[index].quantity += 1;
-          existingCartItems[index].subTotal +=
-            existingCartItems[index].subTotal;
+          existingCartItems[index].subTotal =
+            existingCartItems[index].quantity *
+            existingCartItems[index].priceSale;
         } else {
           existingCartItems.push({
             productId: ProductDetail?.id,
             price: ProductDetail?.price,
             priceSale: ProductDetail?.salePrice,
-            saleValue: ProductDetail?.salePrice,
+            saleValue: 0,
             images: ProductDetail?.images,
             name: ProductDetail?.name,
             garageId: ProductDetail.garageId,
@@ -132,9 +133,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   {ProductDetail?.categories?.map(
                     (item: any, index: number) => {
                       return (
-                        <>
+                        <div key={index}>
                           <Typo
-                            key={index}
                             style={{
                               fontSize: "1rem",
                               color: "var(--nav-color)",
@@ -146,7 +146,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                             index < ProductDetail?.categories?.length - 1 && (
                               <>, </>
                             )}
-                        </>
+                        </div>
                       );
                     }
                   )}
