@@ -53,8 +53,8 @@ const LandingPageMobile = ({
         <Advertisement />
       </div>
       <Blogs blogs={blogs?.data} />
-      <ProductsHot data={productsHot?.data} />
-      <ServicesHot data={servicesHot?.data} />
+      <ProductsHot data={productsHot} />
+      <ServicesHot data={servicesHot} />
       {/* <ProductSuggestions data={productsRelate?.data} /> */}
       <Reassons data={reassons} />
     </div>

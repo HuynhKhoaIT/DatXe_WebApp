@@ -12,8 +12,8 @@ const ServicesHot = ({ data }: any) => {
       id="services-hot-mb"
     >
       <div className={styles.rowItem}>
-        {data?.map((product: IProduct, index: number) => (
-          <ProductItem2 product={product} key={index} />
+        {data?.map((item: any, index: number) => (
+          <ProductItem2 product={item?.product} key={index} />
         ))}
       </div>
     </OverviewPanel>

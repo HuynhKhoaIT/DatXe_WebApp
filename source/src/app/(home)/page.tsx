@@ -61,6 +61,7 @@ export default async function Home({ searchParams }: any) {
   const slideData = await callApi(apiConfig.banner.getList, {});
 
   const cate = await callApi(apiConfig.category.getList, {});
+
   return (
     <RenderContext
       components={{
@@ -75,8 +76,8 @@ export default async function Home({ searchParams }: any) {
       categories={categories.data}
       reassons={reassons}
       productsRelate={productsRelate}
-      servicesHot={servicesHot}
-      productsHot={productsHot}
+      servicesHot={servicesHome}
+      productsHot={productsHome}
     />
   );
 }

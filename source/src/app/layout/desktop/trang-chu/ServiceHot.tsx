@@ -12,11 +12,10 @@ export default function ServicesHot({ data }: any) {
       subTitle="Các dịch vụ dành cho xe bạn"
       linkToList={"/danh-sach-san-pham?isProduct=false"}
       id="services"
-      hiddenShowMore={data?.length < 8}
     >
       <div className={styles.rowItem}>
-        {data?.map((product: IProduct, index: number) => (
-          <ProductItem product={product} key={index} />
+        {data?.map((item: any, index: number) => (
+          <ProductItem product={item?.product} key={index} />
         ))}
       </div>
     </OverviewPanel>
