@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
   InputBase,
   Combobox,
@@ -44,6 +43,7 @@ export default function ComboboxField({
       value={item.numberPlates}
       key={item?.id}
       active={item.isDefault === true}
+      // active={item.isDefault === true}
       onClick={() => {
         handleSetValueCar(item);
       }}

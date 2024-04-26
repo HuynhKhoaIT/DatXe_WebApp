@@ -31,6 +31,16 @@ export default function CartComponent({ myAccount }: any) {
   );
   const [value, setValue] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!cars) return;
+    const carDefault = cars?.data?.find((item: any) => item?.isDefault);
+    if (carDefault) {
+      setValue(carDefault?.numberPlates);
+      form.setFieldValue("carBrandName", carDefault?.brandName?.title);
+      form.setFieldValue("carModelName", carDefault?.modelName?.title);
+      form.setFieldValue("carYear", carDefault?.yearName?.title);
+    }
+  }, [cars]);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
