@@ -161,7 +161,7 @@ export default function ChooseProducts() {
         style={{ height: "100%" }}
         baseTable={
           <TableBasic
-            loading={isLoading || isFetching || isPending}
+            loading={isLoading || isPending}
             data={products?.data}
             columns={columns}
             totalPage={products?.totalPage}

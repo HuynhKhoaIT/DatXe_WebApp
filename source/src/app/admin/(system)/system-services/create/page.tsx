@@ -15,8 +15,8 @@ import { useAddServiceHome } from "../../hooks/home-page/useAddServiceHome";
 import { useServices } from "../../hooks/services/services";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Sản phẩm nổi bật", href: "/admin/system-products" },
-  { title: "Thêm sản phẩm" },
+  { title: "Dịch vụ nổi bật", href: "/admin/system-services" },
+  { title: "Thêm dịch vụ" },
 ];
 
 export default function ChooseProducts() {
@@ -142,17 +142,9 @@ export default function ChooseProducts() {
       placeholder: "Tên sản phẩm",
       type: FieldTypes.STRING,
     },
-
-    {
-      name: "isProduct",
-      placeholder: "Loại",
-      type: FieldTypes.SELECT,
-      data: kindProductOptions,
-    },
   ];
   const initialValuesSearch = {
     s: "",
-    isProduct: null,
   };
 
   return (

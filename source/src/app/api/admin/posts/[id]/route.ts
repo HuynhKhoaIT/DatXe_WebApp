@@ -5,6 +5,7 @@ import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
 import { findPost, updatePost } from '@/app/libs/prisma/post';
 import convertToSlug from '@/utils/until';
+import { ROLE_ADMIN, ROLE_EXPERT } from '@/constants';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
         const session = await getServerSession(authOptions);
-        if (session && session.user?.role == 'ADMINGARAGE') {
+        if (session && (session.user?.role == 'ADMINGARAGE' || session.user?.role == ROLE_ADMIN)) {
             const data = await request.json();
             const id = params.id; 
             data.createdBy = session.user.id.toString()
