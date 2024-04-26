@@ -4,9 +4,10 @@ import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { kindProductOptions, statusOptions } from "@/constants/masterData";
-import { Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
+import { Alert, Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
 import {
   IconArrowUp,
+  IconInfoCircle,
   IconPencil,
   IconPlus,
   IconTrash,
@@ -146,24 +147,39 @@ const ServicesHot = () => {
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
+      {products?.length == 8 && (
+        <Alert
+          variant="light"
+          color="yellow"
+          title="Thông báo"
+          icon={<IconInfoCircle />}
+          mb={10}
+        >
+          Danh sách dịch vụ nổi bật tối đa 8 dịch vụ, để thêm dịch vụ mới vui
+          lòng xoá dịch vụ cũ.
+        </Alert>
+      )}
+
       <ListPage
         actionBar={
-          <Flex justify={"end"} align={"center"}>
-            <Link
-              href={{
-                pathname: `/admin/system-services/create`,
-              }}
-            >
-              <Button
-                size="lg"
-                h={{ base: 42, md: 50, lg: 50 }}
-                radius={0}
-                leftSection={<IconPlus size={18} />}
+          products?.length < 8 && (
+            <Flex justify={"end"} align={"center"}>
+              <Link
+                href={{
+                  pathname: `/admin/system-services/create`,
+                }}
               >
-                Thêm mới
-              </Button>
-            </Link>
-          </Flex>
+                <Button
+                  size="lg"
+                  h={{ base: 42, md: 50, lg: 50 }}
+                  radius={0}
+                  leftSection={<IconPlus size={18} />}
+                >
+                  Thêm mới
+                </Button>
+              </Link>
+            </Flex>
+          )
         }
         style={{ height: "100%" }}
         titleTable={true}
