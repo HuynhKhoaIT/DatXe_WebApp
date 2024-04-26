@@ -14,7 +14,7 @@ import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import { IconCamera } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-
+import styles from "./index.module.scss";
 export function AutocompleteLicensePlates({
   debounceTime = 600,
   getOptionData,
@@ -111,6 +111,7 @@ export function AutocompleteLicensePlates({
           <Grid.Col span={isCamera ? 10 : 12}>
             <TextInput
               size="lg"
+              classNames={{ input: styles.input }}
               radius={0}
               data-autofocus
               label={label}

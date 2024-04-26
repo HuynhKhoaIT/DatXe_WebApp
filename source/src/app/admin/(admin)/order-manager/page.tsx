@@ -5,7 +5,12 @@ import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
 import { FieldTypes, stepOrderOptions } from "@/constants/masterData";
 import Link from "next/link";
-import { IconEye, IconPlus, IconTrash } from "@tabler/icons-react";
+import {
+  IconCircleCheck,
+  IconEye,
+  IconPlus,
+  IconTrash,
+} from "@tabler/icons-react";
 import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 import SearchForm from "@/app/components/form/SearchForm";
@@ -14,6 +19,8 @@ import ListPage from "@/app/components/layout/ListPage";
 import FilterTable from "@/app/components/common/FilterTable";
 import { getOptionsCar } from "./until";
 import { useOrders } from "../hooks/order/useOrder";
+import { IconCheck } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
   {
@@ -26,6 +33,7 @@ const Breadcrumbs = [
   { title: "Quản lý đơn hàng" },
 ];
 export default function OrdersManaga() {
+  const router = useRouter();
   const {
     orders: list,
     isLoading,
@@ -95,6 +103,7 @@ export default function OrdersManaga() {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
     },
+
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
@@ -125,6 +134,19 @@ export default function OrdersManaga() {
     },
     {
       label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Đồng bộ</span>
+      ),
+      name: "orderDLBDId",
+      textAlign: "center",
+      dataIndex: ["orderDLBDId"],
+      width: "100px",
+
+      render: (dataRow: number) => {
+        if (dataRow) return <IconCheck color="green" size={20} />;
+      },
+    },
+    {
+      label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Hành động
         </span>
@@ -134,25 +156,22 @@ export default function OrdersManaga() {
       render: (record: any) => {
         return (
           <>
-            <Link
-              href={{
-                pathname: `/admin/order-manager/${record.slug}`,
-              }}
-            >
-              <Tooltip label="Chi tiết" withArrow position="bottom">
-                <Button
-                  size="lg"
-                  radius={0}
-                  style={{ margin: "0 5px" }}
-                  variant="transparent"
-                  color="gray"
-                  p={5}
-                  onClick={() => {}}
-                >
-                  <IconEye size={16} />
-                </Button>
-              </Tooltip>
-            </Link>
+            <Tooltip label="Chi tiết" withArrow position="bottom">
+              <Button
+                size="lg"
+                radius={0}
+                style={{ margin: "0 5px" }}
+                variant="transparent"
+                color="gray"
+                p={5}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/admin/order-manager/${record?.id}`);
+                }}
+              >
+                <IconEye size={16} />
+              </Button>
+            </Tooltip>
 
             <Tooltip label="Xoá" withArrow position="bottom">
               <Button

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Container, Divider, Flex, Tooltip } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useSetState } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import styles from "./OrderDetailPage.module.scss";
 import ImageField from "@/app/components/form/ImageField";
@@ -13,11 +13,28 @@ import TableBasic from "@/app/components/table/Tablebasic";
 import ReactToPrint from "react-to-print";
 import ReactPrint from "@/app/components/common/ReactToPrint";
 import { ORDER_DONE } from "@/constants";
+import { useOrderDLBDDetail } from "@/app/admin/(admin)/hooks/order/useOrder";
+import { useSession } from "next-auth/react";
 
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
 export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
+  const { data } = useSession();
+  const [dataDLBD, setDataDLBD] = useState<any>();
+  if (dataSource?.orderDLBDId) {
+    const {
+      data: orderDlbdDetail,
+      isLoading: isLoadingDLBD,
+      isPending: isPendingDLBD,
+    } = useOrderDLBDDetail({
+      token: data?.user?.token,
+      id: dataSource?.orderDLBDId,
+    });
+
+    setDataDLBD(orderDlbdDetail);
+  }
+
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
@@ -29,6 +46,51 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
     }
   }
   const [dataReview, setDataReview] = useState<any>();
+  const columnsDLBD = [
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+          Tên sản phẩm
+        </span>
+      ),
+      name: "name",
+      dataIndex: ["name"],
+      render: (dataRow: any) => {
+        return <span>{dataRow}</span>;
+      },
+    },
+
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá bán</span>
+      ),
+      name: "price",
+      dataIndex: ["sellPrice"],
+      render: (dataRow: number) => {
+        return <span>{dataRow?.toLocaleString()}đ</span>;
+      },
+    },
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Số lượng</span>
+      ),
+      name: "quantity",
+      width: 100,
+      dataIndex: ["quantity"],
+    },
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+          Tổng tiền
+        </span>
+      ),
+      name: "priceSale",
+      dataIndex: ["total"],
+      render: (dataRow: number) => {
+        return <span>{dataRow?.toLocaleString()}đ</span>;
+      },
+    },
+  ];
 
   const columns = [
     {
@@ -162,11 +224,16 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
           variant="dashed"
         />
         <div style={{ marginTop: "20px" }}></div>
-        <TableBasic
-          loading={false}
-          columns={columns}
-          data={dataSource?.orderDetails}
-        />
+        {dataDLBD && dataSource?.orderDLBDId ? (
+          <TableBasic data={dataDLBD?.data} columns={columns} />
+        ) : (
+          <TableBasic
+            loading={false}
+            columns={columns}
+            data={dataSource?.orderDetails}
+          />
+        )}
+
         <Divider my={"lg"} color="black" size={1} variant="dashed" />
         <div
           style={{

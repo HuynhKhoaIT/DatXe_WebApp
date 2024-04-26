@@ -73,8 +73,6 @@ export default async function Orders() {
 
   return (
     <div className={styles.wrapper}>
-      <SearchForm searchData={searchData} initialValues={initialValuesSearch} />
-      <Space h={20} />
       <CalendarSchedulerGarage
         categoryOptions={categoryOptions}
         carsData={carsData}

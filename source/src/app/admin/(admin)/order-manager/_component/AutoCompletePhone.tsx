@@ -11,7 +11,7 @@ import {
 import { useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-
+import styles from "./index.module.scss";
 export function AutocompletePhone({
   debounceTime = 600,
   getOptionData,
@@ -93,6 +93,7 @@ export function AutocompletePhone({
           <Grid.Col span={12}>
             <TextInput
               size="lg"
+              classNames={{ input: styles.input }}
               radius={0}
               error={errorText}
               data-autofocus
@@ -148,10 +149,11 @@ export function AutocompletePhone({
               }}
               rightSection={
                 loading ? (
-                  <Loader size={18} />
+                  <Loader className="no-print" size={18} />
                 ) : (
                   values[name] !== "" && (
                     <CloseButton
+                      className="no-print"
                       size="sm"
                       disabled={disabled}
                       onMouseDown={(event) => event.preventDefault()}

@@ -4,6 +4,7 @@ import {
   Button,
   Grid,
   Group,
+  Image,
   NumberInput,
   Select,
   Table,
@@ -18,6 +19,8 @@ import ListPage from "@/app/components/layout/ListPage";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import ReactPrint from "@/app/components/common/ReactToPrint";
 import ButtonDbDLBD from "../ButtonDbDLBD";
+import TableBasic from "@/app/components/table/Tablebasic";
+import ImageField from "@/app/components/form/ImageField";
 export default function OrderFormDesktop({
   dataDetail,
   form,
@@ -46,6 +49,8 @@ export default function OrderFormDesktop({
   loadingButton,
   handleDbDLBD,
   isPendingDlbd,
+  orderDlbdDetail,
+  columns,
 }: any) {
   return (
     <ReactPrint>
@@ -103,7 +108,8 @@ export default function OrderFormDesktop({
               Hàng hoá & Dịch vụ
             </Typo>
             {dataDetail?.step !== Number(ORDER_CANCEL) &&
-              dataDetail?.step !== Number(ORDER_DONE) && (
+              dataDetail?.step !== Number(ORDER_DONE) &&
+              !dataDetail?.orderDLBDId && (
                 <Button
                   size="lg"
                   radius={0}
@@ -117,27 +123,35 @@ export default function OrderFormDesktop({
                 </Button>
               )}
           </div>
-          <Grid className={styles.marketingInfo}>
-            <Grid.Col span={12}>
-              <ListPage
-                style={{ height: "100%" }}
-                baseTable={
-                  <Table>
-                    <Table.Thead>
-                      <Table.Tr>
-                        <Table.Th>Tên sản phẩm</Table.Th>
-                        <Table.Th>Giá</Table.Th>
-                        <Table.Th>Số lượng</Table.Th>
-                        <Table.Th>Tổng tiền</Table.Th>
-                        <Table.Th className="no-print">Hành động</Table.Th>
-                      </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                  </Table>
-                }
-              />
-            </Grid.Col>
-          </Grid>
+          {dataDetail?.orderDLBDId && orderDlbdDetail ? (
+            <Grid className={styles.marketingInfo}>
+              <Grid.Col span={12}>
+                <TableBasic data={orderDlbdDetail?.data} columns={columns} />
+              </Grid.Col>
+            </Grid>
+          ) : (
+            <Grid className={styles.marketingInfo}>
+              <Grid.Col span={12}>
+                <ListPage
+                  style={{ height: "100%" }}
+                  baseTable={
+                    <Table>
+                      <Table.Thead>
+                        <Table.Tr>
+                          <Table.Th>Tên sản phẩm</Table.Th>
+                          <Table.Th>Giá</Table.Th>
+                          <Table.Th>Số lượng</Table.Th>
+                          <Table.Th>Tổng tiền</Table.Th>
+                          <Table.Th className="no-print">Hành động</Table.Th>
+                        </Table.Tr>
+                      </Table.Thead>
+                      <Table.Tbody>{rows}</Table.Tbody>
+                    </Table>
+                  }
+                />
+              </Grid.Col>
+            </Grid>
+          )}
         </div>
         <div style={{ marginTop: 20 }} className={styles.card}>
           <Typo
@@ -152,6 +166,7 @@ export default function OrderFormDesktop({
           <Grid gutter={12} mt={24} className={styles.marketingInfo}>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
               <NumberInput
+                classNames={{ input: styles.input }}
                 size="lg"
                 radius={0}
                 label="Tổng đơn hàng"
@@ -165,6 +180,7 @@ export default function OrderFormDesktop({
             {isEditing ? (
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <Select
+                  classNames={{ input: styles.input }}
                   size="lg"
                   radius={0}
                   label="Tình trạng đơn hàng"
@@ -179,6 +195,7 @@ export default function OrderFormDesktop({
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
               <Textarea
                 size="lg"
+                classNames={{ input: styles.input }}
                 radius={0}
                 {...form.getInputProps("note")}
                 label="Ghi chú của khách hàng"
@@ -190,6 +207,7 @@ export default function OrderFormDesktop({
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
               <Textarea
                 size="lg"
+                classNames={{ input: styles.input }}
                 radius={0}
                 {...form.getInputProps("notePrivate")}
                 label="Ghi chú nội bộ"

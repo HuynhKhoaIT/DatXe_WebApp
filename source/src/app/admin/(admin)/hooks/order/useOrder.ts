@@ -108,7 +108,7 @@ export const useOrders = (): UseOrders => {
 const fetchOrderDetail = async (id: string) => {
     const response = await fetch(`/api/admin/orders/${id}`);
     if (!response.ok) {
-        throw new ResponseError('Failed to fetch expert', response);
+        throw new ResponseError('Failed to fetch order', response);
     }
     return await response.json();
 };
@@ -120,4 +120,23 @@ const useOrderDetail = (id: string) => {
     });
 };
 
-export { useOrderDetail, fetchOrderDetail };
+
+// get detail DLBD
+const fetchOrderDLBDDetail = async (token:string,id: string) => {
+    console.log(id);
+    const response = await fetch(`https://v2.dlbd.vn/api/v3/app/order-detail/${id}`,{method:'GET', 
+    headers: {'Authorization': 'Bearer ' + token}});
+    if (!response.ok) {
+        throw new ResponseError('Failed to fetch order ', response);
+    }
+    return await response.json();
+};
+
+const useOrderDLBDDetail = ({token,id}:any) => {
+    return useQuery({
+        queryKey: [QUERY_KEY.orderDLBDDetail, id],
+        queryFn: () => fetchOrderDLBDDetail(token,id),
+    });
+};
+
+export { useOrderDetail, fetchOrderDetail,useOrderDLBDDetail};

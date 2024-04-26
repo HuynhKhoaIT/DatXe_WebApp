@@ -23,31 +23,17 @@ import {
   getOptionsYearCar,
   handleKeyPress,
 } from "@/utils/until";
-import { getOptionsCar } from "../until";
-import { useAddOrder } from "../../hooks/order/useAddOrder";
 import { notifications } from "@mantine/notifications";
-import OrderFormDesktop from "../_component/orderForm/OrderForm";
-import OrderFormMobile from "../_component/orderForm/mobile/OrderFormMobile";
-import { useOrderDLBDDetail } from "../../hooks/order/useOrder";
-import { useSession } from "next-auth/react";
+import { useAddOrder } from "../../../hooks/order/useAddOrder";
+import OrderFormDesktop from "../../_component/orderForm/OrderForm";
+import OrderFormMobile from "../../_component/orderForm/mobile/OrderFormMobile";
+import { getOptionsCar } from "../../until";
 
 export default function OrderForm({
   isEditing = false,
   dataDetail,
   isLoading,
 }: any) {
-  const { data } = useSession();
-  const {
-    data: orderDlbdDetail,
-    isLoading: isLoadingDLBD,
-    isPending: isPendingDLBD,
-  } = useOrderDLBDDetail({
-    token: data?.user?.token,
-    id: dataDetail?.orderDLBDId,
-  });
-
-  console.log("orderDlbdDetail", orderDlbdDetail);
-
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
@@ -319,52 +305,6 @@ export default function OrderForm({
     }
   };
 
-  const columns = [
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên sản phẩm
-        </span>
-      ),
-      name: "name",
-      dataIndex: ["name"],
-      render: (dataRow: any) => {
-        return <span>{dataRow}</span>;
-      },
-    },
-
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá bán</span>
-      ),
-      name: "price",
-      dataIndex: ["sellPrice"],
-      render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
-      },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Số lượng</span>
-      ),
-      name: "quantity",
-      width: 100,
-      dataIndex: ["quantity"],
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tổng tiền
-        </span>
-      ),
-      name: "priceSale",
-      dataIndex: ["total"],
-      render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
-      },
-    },
-  ];
-
   const rows = form.values.detail.map((selectedRow: any, index: number) => {
     // const images = JSON.parse(selectedRow.images);
     return (
@@ -539,7 +479,7 @@ export default function OrderForm({
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={isLoading || isLoadingDLBD}
+        visible={isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -608,8 +548,6 @@ export default function OrderForm({
             isPendingAdd={isPendingAdd}
             loadingButton={loadingButton}
             handleDbDLBD={handleDbDLBD}
-            orderDlbdDetail={orderDlbdDetail}
-            columns={columns}
           />
         )}
       </form>
@@ -668,30 +606,34 @@ export default function OrderForm({
   );
 }
 
-const DynamicModalCamera = dynamic(() => import("../_component/ModalCamera"), {
-  ssr: false,
-});
+const DynamicModalCamera = dynamic(
+  () => import("../../_component/ModalCamera"),
+  {
+    ssr: false,
+  }
+);
 const DynamicModalChooseProducts = dynamic(
-  () => import("../../marketing-campaign/choose-products/ModalChooseProducts"),
+  () =>
+    import("../../../marketing-campaign/choose-products/ModalChooseProducts"),
   {
     ssr: false,
   }
 );
 const DynamicModalNumberPlates = dynamic(
-  () => import("../_component/ModalNumberPlates"),
+  () => import("../../_component/ModalNumberPlates"),
   {
     ssr: false,
   }
 );
 const DynamicModalUpdateCar = dynamic(
-  () => import("../_component/ModalUpdateCar"),
+  () => import("../../_component/ModalUpdateCar"),
   {
     ssr: false,
   }
 );
 
 const DynamicModalUpdateCustomer = dynamic(
-  () => import("../_component/ModalUpdateCustomer"),
+  () => import("../../_component/ModalUpdateCustomer"),
   {
     ssr: false,
   }

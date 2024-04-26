@@ -37,7 +37,7 @@ export default async function DatLich({ searchParams }: any) {
     <main className="main">
       <CalendarScheduler
         categoryOptions={categoryOptions}
-        ordersData={mappedOrdersData}
+        ordersData={[]}
         orderInfo={orderInfo}
         advisorOptions={advisorOptions}
       />

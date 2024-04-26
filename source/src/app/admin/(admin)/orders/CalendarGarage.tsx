@@ -18,15 +18,24 @@ export default function CalendarSchedulerGarage({
   ordersData,
   selectable = true,
   categoryOptions,
+  brandOptions,
+  carOptions,
+  carDefault,
+  fetchDataOrders,
+  advisorOptions,
 }: any) {
   const [layoutMobile, setLayoutMobile] = useState(false);
   const [previewInfos, setPreviewInfos] = useState();
+  const [eventInfos, setEventInfos] = useState<any>();
 
   const [
     openedPreviewCalendar,
     { open: openPreviewCalendar, close: closePreviewCalendar },
   ] = useDisclosure(false);
-
+  const [
+    openedCalendar,
+    { open: openCalendar, close: closeCalendar },
+  ] = useDisclosure(false);
   useEffect(() => {
     if (window.innerWidth < 765) {
       setLayoutMobile(true);
@@ -49,11 +58,22 @@ export default function CalendarSchedulerGarage({
       setLayoutMobile(false);
     }
   };
+  // Hàm kiểm tra xem ngày đã qua hay chưa
+  const isDateInThePast = (value: any) => {
+    return dayjs().isBefore(value);
+  };
 
+  // click mở modal đặt lịch
+  const handleAddEventSelectAndOpenModal = (selectInfo: any) => {
+    setEventInfos(selectInfo);
+    openCalendar();
+    isDateInThePast(selectInfo?.start);
+  };
   return (
     <div className={styles.calendar}>
       <Box pos="relative">
         <CalendarEventBase
+          select={handleAddEventSelectAndOpenModal}
           eventClick={handleEditEventSelectAndOpenModal}
           events={ordersData}
           isResponsive={true}
@@ -81,6 +101,24 @@ export default function CalendarSchedulerGarage({
         previewInfos={previewInfos}
         categoryOptions={categoryOptions}
       />
+      <DynamicModalCalendar
+        opened={openedCalendar}
+        onClose={closeCalendar}
+        eventInfos={eventInfos}
+        brandOptions={brandOptions}
+        categoryOptions={categoryOptions}
+        carOptions={carOptions}
+        carDefault={carDefault}
+        fetchDataOrders={fetchDataOrders}
+        advisorOptions={advisorOptions}
+        typeView={eventInfos?.view?.type}
+      />
     </div>
   );
 }
+const DynamicModalCalendar = dynamic(
+  () => import("./_component/ModalCreateOrder"),
+  {
+    ssr: false,
+  }
+);
