@@ -64,6 +64,7 @@ export default function InfoCar({
           <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
             {isUser ? (
               <TextInput
+                classNames={{ input: styles.input }}
                 size="lg"
                 radius={0}
                 {...form.getInputProps("carBrand")}
@@ -76,6 +77,7 @@ export default function InfoCar({
               <Select
                 size="lg"
                 radius={0}
+                classNames={{ input: styles.input }}
                 {...form.getInputProps("carBrandId")}
                 label="Hãng xe"
                 type="text"
@@ -94,6 +96,7 @@ export default function InfoCar({
           <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
             {isUser ? (
               <TextInput
+                classNames={{ input: styles.input }}
                 size="lg"
                 radius={0}
                 {...form.getInputProps("carName")}
@@ -106,6 +109,7 @@ export default function InfoCar({
               <Select
                 size="lg"
                 radius={0}
+                classNames={{ input: styles.input }}
                 {...form.getInputProps("carNameId")}
                 label="Dòng xe"
                 type="text"
@@ -124,6 +128,7 @@ export default function InfoCar({
             {isUser ? (
               <TextInput
                 size="lg"
+                classNames={{ input: styles.input }}
                 radius={0}
                 {...form.getInputProps("carYear")}
                 label="Năm sản xuất"
@@ -135,6 +140,7 @@ export default function InfoCar({
               <Select
                 size="lg"
                 radius={0}
+                classNames={{ input: styles.input }}
                 {...form.getInputProps("carYearId")}
                 label="Năm SX"
                 data={yearCarOptions}

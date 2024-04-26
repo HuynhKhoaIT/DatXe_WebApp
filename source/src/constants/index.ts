@@ -93,7 +93,7 @@ export const QUERY_KEY = {
     customerDetail: 'customerDetail',
     newsDetail: 'newsDetail',
     orderDetail:'orderDetail',
-
+    orderDLBDDetail:'orderDLBDDetail',
     // system-car
     brandCar:'brandCar',
     modelCar:'modalCar',

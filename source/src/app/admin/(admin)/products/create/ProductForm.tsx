@@ -99,7 +99,6 @@ export default function ProductForm({
       form.setFieldValue("description", dataDetail?.description);
       form.setFieldValue("status", "PUBLIC");
       form.setFieldValue("isProduct", "1");
-      console.log([dataDetail?.categoryId]);
       if (dataDetail?.categoryId) {
         form.setFieldValue("categories", [dataDetail?.categoryId]);
       }

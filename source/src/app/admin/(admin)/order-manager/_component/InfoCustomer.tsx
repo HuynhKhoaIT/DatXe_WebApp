@@ -64,6 +64,7 @@ export default function InfoCustomer({
             <TextInput
               disabled={isUser}
               size="lg"
+              classNames={{ input: styles.input }}
               radius={0}
               {...form.getInputProps("fullName")}
               label="Tên khách hàng"
@@ -76,6 +77,7 @@ export default function InfoCustomer({
             <TextInput
               size="lg"
               disabled={isUser}
+              classNames={{ input: styles.input }}
               radius={0}
               {...form.getInputProps("address")}
               label="Địa chỉ"

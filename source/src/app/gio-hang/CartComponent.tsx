@@ -39,6 +39,7 @@ export default function CartComponent({ myAccount }: any) {
       form.setFieldValue("carBrandName", carDefault?.brandName?.title);
       form.setFieldValue("carModelName", carDefault?.modelName?.title);
       form.setFieldValue("carYear", carDefault?.yearName?.title);
+      form.setFieldValue("numberPlates", carDefault?.numberPlates);
     }
   }, [cars]);
   const router = useRouter();
