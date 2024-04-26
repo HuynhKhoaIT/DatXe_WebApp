@@ -16,14 +16,12 @@ import { IconPlus } from "@tabler/icons-react";
 import { useRef } from "react";
 import { ActionIcon, rem } from "@mantine/core";
 import { IconClock } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
-import { useRouter } from "next/navigation";
 import styles from "./index.module.scss";
-import { useCars } from "@/app/dashboard/hooks/car/useCar";
 import { AutocompletePhone } from "../../../order-manager/_component/AutoCompletePhone";
 import { getOptionsCar, getOptionsPhone } from "../../../order-manager/until";
 import { AutocompleteLicensePlates } from "../../../order-manager/_component/AutoCompleteLicensePlates";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
+import { useMyGarage } from "@/app/hooks/useMyGarage";
 
 export const ModalEventCalendar = ({
   categoryOptions,

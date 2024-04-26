@@ -94,6 +94,8 @@ export const QUERY_KEY = {
     newsDetail: 'newsDetail',
     orderDetail:'orderDetail',
     orderDLBDDetail:'orderDLBDDetail',
+    orderDLBD:'orderDLBD',
+
     // system-car
     brandCar:'brandCar',
     modelCar:'modalCar',

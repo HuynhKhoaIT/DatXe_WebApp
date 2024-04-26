@@ -13,7 +13,10 @@ import TableBasic from "@/app/components/table/Tablebasic";
 import ReactToPrint from "react-to-print";
 import ReactPrint from "@/app/components/common/ReactToPrint";
 import { ORDER_DONE } from "@/constants";
-import { useOrderDLBDDetail } from "@/app/admin/(admin)/hooks/order/useOrder";
+import {
+  useOrderDLBD,
+  useOrderDLBDDetail,
+} from "@/app/admin/(admin)/hooks/order/useOrder";
 import { useSession } from "next-auth/react";
 
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
@@ -21,19 +24,24 @@ const DynamicModalReview = dynamic(() => import("./ModalReview"), {
 });
 export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
   const { data } = useSession();
-  const [dataDLBD, setDataDLBD] = useState<any>();
-  if (dataSource?.orderDLBDId) {
-    const {
-      data: orderDlbdDetail,
-      isLoading: isLoadingDLBD,
-      isPending: isPendingDLBD,
-    } = useOrderDLBDDetail({
-      token: data?.user?.token,
-      id: dataSource?.orderDLBDId,
-    });
+  const {
+    data: orderDlbdDetail,
+    isLoading: isLoadingDLBD,
+    isPending: isPendingDLBD,
+  } = useOrderDLBDDetail({
+    token: data?.user?.token,
+    id: dataSource?.orderDLBDId,
+  });
+  const {
+    data: orderDlbd,
+    isLoading: isLoadingOrderDLBD,
+    isPending: isPendingOrderDLBD,
+  } = useOrderDLBD({
+    token: data?.user?.token,
+    id: dataSource?.orderDLBDId,
+  });
 
-    setDataDLBD(orderDlbdDetail);
-  }
+  console.log("orderDlbd", orderDlbd);
 
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
@@ -224,12 +232,12 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
           variant="dashed"
         />
         <div style={{ marginTop: "20px" }}></div>
-        {dataDLBD && dataSource?.orderDLBDId ? (
-          <TableBasic data={dataDLBD?.data} columns={columns} />
+        {orderDlbdDetail && dataSource?.orderDLBDId ? (
+          <TableBasic data={orderDlbdDetail?.data} columns={columnsDLBD} />
         ) : (
           <TableBasic
             loading={false}
-            columns={columns}
+            DcolumnsDLBD={columns}
             data={dataSource?.orderDetails}
           />
         )}
@@ -243,7 +251,11 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
           }}
         >
           <p>Tiền hàng: </p>
-          <p>{dataSource?.subTotal?.toLocaleString()}</p>
+          <p>
+            {orderDlbd?.data
+              ? orderDlbd?.data.subTotal?.toLocaleString()
+              : dataSource?.subTotal?.toLocaleString()}
+          </p>
         </div>
         <div
           style={{
@@ -262,7 +274,11 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
           }}
         >
           <p>Tổng cộng: </p>
-          <p>{dataSource?.total?.toLocaleString()}</p>
+          <p>
+            {orderDlbd?.data
+              ? orderDlbd?.data.total?.toLocaleString()
+              : dataSource?.total?.toLocaleString()}
+          </p>
         </div>
         <div className={styles.infoWifi}>
           <ImageField

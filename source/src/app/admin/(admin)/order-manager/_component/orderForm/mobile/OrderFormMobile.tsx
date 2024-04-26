@@ -26,6 +26,7 @@ import InfoCustomer2 from "../../InfoCustomer2";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useRouter } from "next/navigation";
 import ButtonDbDLBD from "../../ButtonDbDLBD";
+import ItemProductDLBD from "../../ItemProductDLBD";
 
 export default function OrderFormMobile({
   activeTab,
@@ -62,7 +63,10 @@ export default function OrderFormMobile({
   isPendingAdd,
   handleDbDLBD,
   isPendingDlbd,
+  orderDlbdDetail,
+  columns,
 }: any) {
+  console.log(orderDlbdDetail);
   const router = useRouter();
   return (
     <Tabs
@@ -199,7 +203,13 @@ export default function OrderFormMobile({
             key="cancel"
             color="red"
             leftSection={<IconBan size={16} />}
-            onClick={() => setActiveTab("numberPlates")}
+            onClick={() => {
+              if (!isEditing) {
+                setActiveTab("numberPlates");
+              } else {
+                router.back();
+              }
+            }}
           >
             Quay lại
           </Button>
@@ -250,7 +260,8 @@ export default function OrderFormMobile({
               </Typo>
 
               {dataDetail?.step !== Number(ORDER_CANCEL) &&
-                dataDetail?.step !== Number(ORDER_DONE) && (
+                dataDetail?.step !== Number(ORDER_DONE) &&
+                !dataDetail?.orderDLBDId && (
                   <Button
                     size="lg"
                     radius={0}
@@ -264,23 +275,34 @@ export default function OrderFormMobile({
                   </Button>
                 )}
             </div>
+            {dataDetail?.orderDLBDId && orderDlbdDetail ? (
+              <Grid className={styles.marketingInfo}>
+                <Grid.Col span={12}>
+                  {orderDlbdDetail.data?.map((product: any, index: number) => {
+                    console.log(product);
+                    return <ItemProductDLBD data={product} key={index} />;
+                  })}
+                </Grid.Col>
+              </Grid>
+            ) : (
+              <Grid className={styles.marketingInfo}>
+                <Grid.Col span={12}>
+                  {form.values.detail?.map((product: any, index: number) => {
+                    return (
+                      <ItemProduct
+                        data={product}
+                        key={index}
+                        index={index}
+                        form={form}
+                        setSelectedProducts={setSelectedProducts}
+                        selectedProducts={selectedProducts}
+                      />
+                    );
+                  })}
+                </Grid.Col>
+              </Grid>
+            )}
 
-            <Grid className={styles.marketingInfo}>
-              <Grid.Col span={12}>
-                {form.values.detail?.map((product: any, index: number) => {
-                  return (
-                    <ItemProduct
-                      data={product}
-                      key={index}
-                      index={index}
-                      form={form}
-                      setSelectedProducts={setSelectedProducts}
-                      selectedProducts={selectedProducts}
-                    />
-                  );
-                })}
-              </Grid.Col>
-            </Grid>
             <InfoCustomer2 form={form} isUser={isUser} />
           </div>
           <div style={{ marginTop: 20 }} className={styles.card}>
@@ -325,103 +347,108 @@ export default function OrderFormMobile({
                 />
               </Grid.Col>
             </Grid>
-            {isEditing &&
-            dataDetail?.step !== Number(ORDER_DONE) &&
-            dataDetail?.step !== Number(ORDER_CANCEL) ? (
-              <FooterSavePage okText="Cập nhật" isCancel={false}>
-                <ButtonDbDLBD
-                  isPendingDlbd={isPendingDlbd}
-                  handleDbDLBD={handleDbDLBD}
-                  dataDetail={dataDetail}
-                />
-                <Button
-                  size="md"
-                  w={"33%"}
-                  radius={0}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  // variant="outline"
-                  key="cancel"
-                  color="red"
-                  // leftSection={<IconBan size={16} />}
-                  onClick={() => HandleCancelOrder("-1")}
-                >
-                  Huỷ đơn
-                </Button>
-                <Button
-                  size="md"
-                  radius={0}
-                  w={"33%"}
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  // loading={saveLoading}
-                  color="green"
-                  style={{ marginLeft: "12px" }}
-                  variant="filled"
-                  onClick={() => {
-                    if (dataDetail?.step == "0") {
-                      UpdateConfirm("1");
-                    } else {
-                      UpdateConfirm("4");
-                    }
-                  }}
-                >
-                  {dataDetail?.step == "0"
-                    ? "Tiếp nhận"
-                    : dataDetail?.step == "1" && "Hoàn thành"}
-                </Button>
-              </FooterSavePage>
-            ) : dataDetail?.step !== Number(ORDER_DONE) &&
-              dataDetail?.step !== Number(ORDER_CANCEL) ? (
-              <FooterSavePage okText={isEditing ? "Cập nhật" : "Tạo đơn"}>
-                <ButtonDbDLBD
-                  isPendingDlbd={isPendingDlbd}
-                  handleDbDLBD={handleDbDLBD}
-                  dataDetail={dataDetail}
-                />
-              </FooterSavePage>
-            ) : (
-              // <div className={styles.footer}>
-              //   <Button
-              //     size="lg"
-              //     w={"48%"}
-              //     radius={0}
-              //     h={{ base: 42, md: 50, lg: 50 }}
-              //     variant="outline"
-              //     key="cancel"
-              //     color="red"
-              //     leftSection={<IconBan size={16} />}
-              //     onClick={() => setActiveTab("customer")}
-              //   >
-              //     Quay lại
-              //   </Button>
-              //   <Button
-              //     size="lg"
-              //     radius={0}
-              //     w={"48%"}
-              //     h={{ base: 42, md: 50, lg: 50 }}
-              //     loading={isPendingAdd || isPendingUpdate}
-              //     style={{ marginLeft: "12px" }}
-              //     variant="filled"
-              //     type="submit"
-              //     leftSection={<IconChevronRight size={16} />}
-              //   >
-
-              //   </Button>
-              // </div>
-              <FooterSavePage
-                saveLoading={loadingButton}
-                cancelText="Quay lại"
-                isOk={false}
-              >
-                <ButtonDbDLBD
-                  isPendingDlbd={isPendingDlbd}
-                  handleDbDLBD={handleDbDLBD}
-                  dataDetail={dataDetail}
-                />
-              </FooterSavePage>
-            )}
+            <Footer
+              dataDetail={dataDetail}
+              isEditing={isEditing}
+              isPendingDlbd={isPendingDlbd}
+              handleDbDLBD={handleDbDLBD}
+              HandleCancelOrder={HandleCancelOrder}
+              UpdateConfirm={UpdateConfirm}
+              loadingButton={loadingButton}
+            />
           </div>
         </ScrollArea>
       </Tabs.Panel>
     </Tabs>
   );
 }
+
+const Footer = ({
+  dataDetail,
+  isEditing,
+  isPendingDlbd,
+  handleDbDLBD,
+  HandleCancelOrder,
+  UpdateConfirm,
+  loadingButton,
+}: any) => {
+  if (dataDetail?.orderDLBDId) {
+    return (
+      <FooterSavePage
+        saveLoading={loadingButton}
+        cancelText="Quay lại"
+        isOk={false}
+      ></FooterSavePage>
+    );
+  }
+  return (
+    <>
+      {isEditing &&
+      dataDetail?.step !== Number(ORDER_DONE) &&
+      dataDetail?.step !== Number(ORDER_CANCEL) ? (
+        <FooterSavePage okText="Cập nhật" isCancel={false}>
+          <ButtonDbDLBD
+            isPendingDlbd={isPendingDlbd}
+            handleDbDLBD={handleDbDLBD}
+            dataDetail={dataDetail}
+          />
+          <Button
+            size="md"
+            w={"33%"}
+            radius={0}
+            h={{ base: 42, md: 50, lg: 50 }}
+            // variant="outline"
+            key="cancel"
+            color="red"
+            // leftSection={<IconBan size={16} />}
+            onClick={() => HandleCancelOrder("-1")}
+          >
+            Huỷ đơn
+          </Button>
+          <Button
+            size="md"
+            radius={0}
+            w={"33%"}
+            h={{ base: 42, md: 50, lg: 50 }}
+            // loading={saveLoading}
+            color="green"
+            style={{ marginLeft: "12px" }}
+            variant="filled"
+            onClick={() => {
+              if (dataDetail?.step == "0") {
+                UpdateConfirm("1");
+              } else {
+                UpdateConfirm("4");
+              }
+            }}
+          >
+            {dataDetail?.step == "0"
+              ? "Tiếp nhận"
+              : dataDetail?.step == "1" && "Hoàn thành"}
+          </Button>
+        </FooterSavePage>
+      ) : dataDetail?.step !== Number(ORDER_DONE) &&
+        dataDetail?.step !== Number(ORDER_CANCEL) ? (
+        <FooterSavePage okText={isEditing ? "Cập nhật" : "Tạo đơn"}>
+          <ButtonDbDLBD
+            isPendingDlbd={isPendingDlbd}
+            handleDbDLBD={handleDbDLBD}
+            dataDetail={dataDetail}
+          />
+        </FooterSavePage>
+      ) : (
+        <FooterSavePage
+          saveLoading={loadingButton}
+          cancelText="Quay lại"
+          isOk={false}
+        >
+          <ButtonDbDLBD
+            isPendingDlbd={isPendingDlbd}
+            handleDbDLBD={handleDbDLBD}
+            dataDetail={dataDetail}
+          />
+        </FooterSavePage>
+      )}
+    </>
+  );
+};

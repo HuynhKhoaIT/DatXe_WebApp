@@ -133,9 +133,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   {ProductDetail?.categories?.map(
                     (item: any, index: number) => {
                       return (
-                        <>
+                        <div key={index}>
                           <Typo
-                            key={index}
                             style={{
                               fontSize: "1rem",
                               color: "var(--nav-color)",
@@ -147,7 +146,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                             index < ProductDetail?.categories?.length - 1 && (
                               <>, </>
                             )}
-                        </>
+                        </div>
                       );
                     }
                   )}
