@@ -17,7 +17,8 @@ import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { QueryClient } from "@tanstack/react-query";
-import { useNewsList } from "../../(admin)/hooks/news/useNews";
+import { useServicesHome } from "../hooks/home-page/ServicesHome";
+import { useProductsHome } from "../hooks/home-page/ProductsHome";
 const queryClient = new QueryClient();
 
 const Breadcrumbs = [
@@ -31,21 +32,21 @@ const DynamicModalDeleteItem = dynamic(
   }
 );
 const ProductsHot = () => {
-  const products: any = [];
   const {
-    newsList,
+    products,
     isLoading,
     isFetching,
+    error,
     page,
     setPage,
-    deleteItem,
-  } = useNewsList();
+    categoryOptions,
+  } = useProductsHome();
 
   const [deleteRow, setDeleteRow] = useState();
 
-  const handleDeleteItem = (id: any) => {
-    deleteItem(id);
-  };
+  // const handleDeleteItem = (id: any) => {
+  //   deleteItem(id);
+  // };
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
@@ -263,7 +264,7 @@ const ProductsHot = () => {
         <DynamicModalDeleteItem
           openedDeleteItem={openedDeleteItem}
           closeDeleteItem={closeDeleteItem}
-          handleDeleteItem={handleDeleteItem}
+          // handleDeleteItem={handleDeleteItem}
           deleteRow={deleteRow}
         />
       )}

@@ -11,6 +11,7 @@ import { useProducts } from "../../hooks/products/useProducts";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { Fragment } from "react";
+import { useAddProductHome } from "../../hooks/home-page/useAddProductHome";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Sản phẩm nổi bật", href: "/admin/system-products" },
@@ -27,6 +28,8 @@ export default function ChooseProducts() {
     setPage,
     categoryOptions,
   } = useProducts();
+
+  const { addItem, isPending } = useAddProductHome();
   const columns = [
     {
       label: (
@@ -120,8 +123,9 @@ export default function ChooseProducts() {
             <Button
               style={{ margin: "0 5px" }}
               p={5}
+              loading={isPending}
               onClick={() => {
-                console.log(record);
+                addItem(record);
               }}
               leftSection={<IconPlus size={16} />}
             >

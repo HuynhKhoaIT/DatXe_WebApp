@@ -33,8 +33,10 @@ const LandingPageMobile = ({
       image: image1.src,
     },
   ];
-  const { data: blogs, isLoading } = useNewsList(10);
-
+  const { data: blogs, isLoading, isFetching } = useNewsList({
+    garageId: 14,
+    limit: 4,
+  });
   return (
     <div>
       <Hero slideshowData={slideData} />
