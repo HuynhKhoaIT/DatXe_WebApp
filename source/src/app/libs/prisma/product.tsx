@@ -146,7 +146,6 @@ export async function getProductsClient(requestData: any) {
     if (requestData.limit) {
       take = parseInt(requestData.limit);
     }
-    const skip = take * (currentPage - 1);
     let categories = {};
     let titleFilter = "";
     let brands = {};
@@ -211,7 +210,7 @@ export async function getProductsClient(requestData: any) {
     if (page) {
       currentPage = Number(page);
     }
-
+    const skip = take * (currentPage - 1);
     const [products, total] = await prisma.$transaction([
       prisma.product.findMany({
         take: take,
