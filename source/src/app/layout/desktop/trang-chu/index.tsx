@@ -39,7 +39,7 @@ const LandingPageDesktop = ({
         <Advertisement />
       </Container>
       <div className={styles.servicesBox}>
-        <ServicesHot data={servicesHot?.data} />
+        <ServicesHot data={servicesHot} />
       </div>
       <div
         className={styles.productsBox}
@@ -48,7 +48,7 @@ const LandingPageDesktop = ({
           backgroundSize: "cover",
         }}
       >
-        <ProductsHot data={productsHot?.data} />
+        <ProductsHot data={productsHot} />
       </div>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Blogs blogs={blogs?.data} isLoading={isLoading || isFetching} />

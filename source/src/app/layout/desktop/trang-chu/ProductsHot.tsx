@@ -13,8 +13,8 @@ export default function ProductsHot({ data }: any) {
       id="products"
     >
       <div className={styles.rowItem}>
-        {data?.map((product: IProduct, index: number) => (
-          <ProductItem2 product={product} key={index} />
+        {data?.map((item: any, index: number) => (
+          <ProductItem2 product={item?.product} key={index} />
         ))}
       </div>
     </OverviewPanel>
