@@ -48,6 +48,7 @@ export default function TableBasic({
                 <Table.Th
                   style={{ width: item?.width, textAlign: item?.textAlign }}
                   key={index}
+                  className={item.classNames}
                 >
                   {item.label}
                 </Table.Th>
@@ -117,6 +118,7 @@ export default function TableBasic({
                         textAlign: col?.textAlign,
                       }}
                       key={_index}
+                      className={col.classNames}
                     >
                       {render ? render(data, item) : returnFunc(data)}
                     </Table.Td>

@@ -25,8 +25,8 @@ const LandingPageDesktop = ({
   slideData,
 }: any) => {
   const { data: blogs, isLoading, isFetching } = useNewsList({
-    garageId: "2",
-    limit: 10,
+    garageId: 14,
+    limit: 4,
   });
   return (
     <div className="bg-white">
