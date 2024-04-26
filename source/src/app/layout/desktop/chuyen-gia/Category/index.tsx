@@ -4,7 +4,7 @@ import styles from "./index.module.scss";
 import { CardCategory } from "./CardCategory";
 import OverviewPanel from "@/app/components/layout/OverviewPanel";
 import SlickCarousel from "@/app/components/common/SlickCarousell";
-const Category = ({ categories }: any) => {
+const Category = ({ categories, garageId }: any) => {
   return (
     <OverviewPanel
       stylesProps={{ marginBottom: "1rem" }}
@@ -18,7 +18,13 @@ const Category = ({ categories }: any) => {
       <div className={styles.rowItem}>
         <SlickCarousel gap={8} column={4} height="200px">
           {categories?.data?.map((item: any) => {
-            return <CardCategory key={item?.id} category={item} garageId={0} />;
+            return (
+              <CardCategory
+                garageId={garageId}
+                key={item?.id}
+                category={item}
+              />
+            );
           })}
         </SlickCarousel>
       </div>

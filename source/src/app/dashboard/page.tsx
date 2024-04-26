@@ -5,7 +5,7 @@ import Statistical from "../admin/_component/Statistical";
 import OrdersListPage from "../layout/dashboard/order/OrdersListPage";
 import { getOrders } from "../libs/prisma/order";
 import useFetch from "../hooks/useFetch";
-import { useSearchParams } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import { QueryClient } from "@tanstack/react-query";
 import { CreateCustomer, getMyOrders } from "./until";
 const queryClient = new QueryClient();
@@ -44,6 +44,8 @@ export default function Dashboard() {
       });
     }
   }, [searchParams, isPlaceholderData, page, queryClient, myOrders]);
+  return redirect(`/dashboard/cars`);
+
   return (
     <>
       <div className={styles.page}>
