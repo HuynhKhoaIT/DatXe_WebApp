@@ -33,9 +33,6 @@ export async function getOrderCategories(requestData: any) {
       prisma.orderCategory.findMany({
         take: take,
         skip: skip,
-        orderBy: {
-          id: "desc",
-        },
         where: {
           title: {
             contains: titleFilter,

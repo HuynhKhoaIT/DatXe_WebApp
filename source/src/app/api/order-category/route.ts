@@ -8,7 +8,8 @@ export async function GET(request: Request) {
             s: searchParams.get('s'),
             take: searchParams.get("take"),
             page: searchParams.get("page"),
-            garageId: searchParams.get('garageId')
+            garageId: searchParams.get('garageId'),
+            orderBy: searchParams.get('orderBy')
         };
         const brands = await getOrderCategories(requestData);
         return NextResponse.json(brands);
