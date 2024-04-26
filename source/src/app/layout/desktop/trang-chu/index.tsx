@@ -24,7 +24,10 @@ const LandingPageDesktop = ({
   productsHot,
   slideData,
 }: any) => {
-  const { data: blogs, isLoading, isFetching } = useNewsList(10);
+  const { data: blogs, isLoading, isFetching } = useNewsList({
+    garageId: "2",
+    limit: 10,
+  });
   return (
     <div className="bg-white">
       <CarouselDesktop slideshowData={slideData} />

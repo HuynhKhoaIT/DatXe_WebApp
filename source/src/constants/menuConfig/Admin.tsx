@@ -2,6 +2,7 @@ import {
   IconCategory,
   IconClipboard,
   IconGasStation,
+  IconNotes,
   IconPhoto,
 } from "@tabler/icons-react";
 import { IconCalendarStats, IconUsers, IconCar } from "@tabler/icons-react";
@@ -11,6 +12,15 @@ const menuConfigAdmin = [
     label: "Danh sách chuyên gia",
     icon: IconUsers,
     link: "/admin/system-expert",
+  },
+  {
+    label: "Quản lí trang chủ",
+    icon: IconNotes,
+    initiallyOpened: true,
+    links: [
+      { label: "Sản phẩm nổi bật", link: "/admin/system-products" },
+      { label: "Dịch vụ nổi bật", link: "/admin/system-services" },
+    ],
   },
   {
     link: "/admin/amentity",

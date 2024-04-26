@@ -21,7 +21,7 @@ const addOrder = async (values: any): Promise<any> => {
     }
     return await response.json();
 };
-const dbDLBD = async (values: any): Promise<any> => {
+const handleDbDLBD = async (values: any): Promise<any> => {
     const response = await fetch(`/api/admin/orders/asyncDLBD`, {
         method: 'POST',
         headers: {
@@ -96,8 +96,8 @@ export const useAddOrder = (): UseOrders => {
         },
     });
 
-    const { mutate: DLBD,isPending:isPendingDlbd } = useMutation({
-        mutationFn: dbDLBD,
+    const { mutate: dbDLBD,isPending:isPendingDlbd } = useMutation({
+        mutationFn: handleDbDLBD,
         onSuccess: () => {
             // router.push('/admin/order-manager');
             notifications.show({

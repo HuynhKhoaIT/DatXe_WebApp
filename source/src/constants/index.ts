@@ -41,6 +41,8 @@ export const MARKETING_COMING = '2';
 export const MARKETING_ALL = '3';
 export const QUERY_KEY = {
     products: 'products',
+    allProducts:'allProducts',
+    allServices:'allServices',
     account:"account",
     productDetail: 'productDetail',
     productListReview: 'productListReview',
