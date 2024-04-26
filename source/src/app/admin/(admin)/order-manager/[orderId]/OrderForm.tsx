@@ -46,8 +46,6 @@ export default function OrderForm({
     id: dataDetail?.orderDLBDId,
   });
 
-  console.log("orderDlbdDetail", orderDlbdDetail);
-
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);

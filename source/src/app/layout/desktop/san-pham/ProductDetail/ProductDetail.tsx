@@ -63,8 +63,9 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       } else {
         if (index !== -1) {
           existingCartItems[index].quantity += 1;
-          existingCartItems[index].subTotal +=
-            existingCartItems[index].subTotal;
+          existingCartItems[index].subTotal =
+            existingCartItems[index].quantity *
+            existingCartItems[index].priceSale;
         } else {
           existingCartItems.push({
             productId: ProductDetail?.id,
