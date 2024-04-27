@@ -1,9 +1,10 @@
 module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-    antd: {
-      import: true,
-    },
-  },
+  plugins: [
+    ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
+    {
+      tailwindcss: {},
+      autoprefixer: {},
+      
+    }
+  ],
 }
