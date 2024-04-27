@@ -31,9 +31,6 @@ const nextConfig = {
     experimental: {
       serverActions: true,
     },
-    plugins: [
-      ['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }],
-    ],
     async headers() {
         return [
             {
