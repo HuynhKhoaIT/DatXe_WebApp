@@ -18,6 +18,7 @@
 .infoCustomer {
     display: flex;
     flex-direction: column;
+    font-size: 14px;
 }
 .titleThanks {
     font-size: 16px;
@@ -39,4 +40,7 @@
     @page {
       size: 80mm 180mm;
     }
-  }
+    @page :right {
+        margin:2mm;
+    }
+}
