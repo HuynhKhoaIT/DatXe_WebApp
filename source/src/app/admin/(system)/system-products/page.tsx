@@ -192,7 +192,6 @@ const ProductsHot = () => {
             // totalPage={products?.totalPage}
             setPage={setPage}
             activePage={page}
-            onRow={`/admin/system-products`}
           />
         }
       />
