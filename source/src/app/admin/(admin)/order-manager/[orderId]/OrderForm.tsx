@@ -40,7 +40,7 @@ export default function OrderForm({
   const {
     data: orderDlbdDetail,
     isLoading: isLoadingDLBD,
-    isPending: isPendingDLBD,
+    isPending: isPendingDLBDDetail,
   } = useOrderDLBDDetail({
     token: data?.user?.token,
     id: dataDetail?.orderDLBDId,
@@ -590,6 +590,7 @@ export default function OrderForm({
             isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
             orderDlbdDetail={orderDlbdDetail}
+            isPendingDlbd={isPendingDlbd}
           />
         ) : (
           <OrderFormDesktop
@@ -621,6 +622,7 @@ export default function OrderForm({
             handleDbDLBD={handleDbDLBD}
             orderDlbdDetail={orderDlbdDetail}
             columns={columns}
+            isPendingDlbd={isPendingDlbd}
           />
         )}
       </form>

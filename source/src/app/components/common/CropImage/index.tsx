@@ -1,7 +1,6 @@
 import AntdImgCrop from "antd-img-crop";
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import edit from "@assets/icons/edit_icon.png";
 import { IconPlus } from "@tabler/icons-react";
 function CropImageLink({
   shape,
@@ -29,7 +28,6 @@ function CropImageLink({
   onChange,
   requiredText = "Vui lòng thêm...",
 }: any) {
-  console.log(defaultImage);
   return (
     <div className={className}>
       <AntdImgCrop

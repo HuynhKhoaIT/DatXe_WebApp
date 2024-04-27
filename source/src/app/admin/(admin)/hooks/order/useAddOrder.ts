@@ -99,7 +99,7 @@ export const useAddOrder = (): UseOrders => {
     const { mutate: dbDLBD,isPending:isPendingDlbd } = useMutation({
         mutationFn: handleDbDLBD,
         onSuccess: () => {
-            // router.push('/admin/order-manager');
+            router.push('/admin/order-manager');
             notifications.show({
                 title: 'Thành công',
                 message: 'Đơn hàng lên sàn thành công',
