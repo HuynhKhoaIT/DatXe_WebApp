@@ -1,7 +1,9 @@
 "use client";
 import {
+  ActionIcon,
   Box,
   Button,
+  Group,
   LoadingOverlay,
   NumberInput,
   Select,
@@ -9,7 +11,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconTrash } from "@tabler/icons-react";
+import { IconPrinter, IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -40,7 +42,7 @@ export default function OrderForm({
   const {
     data: orderDlbdDetail,
     isLoading: isLoadingDLBD,
-    isPending: isPendingDLBD,
+    isPending: isPendingDLBDDetail,
   } = useOrderDLBDDetail({
     token: data?.user?.token,
     id: dataDetail?.orderDLBDId,
@@ -86,7 +88,6 @@ export default function OrderForm({
       : []
   );
 
-  console.log(orderDlbd);
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
 
@@ -105,6 +106,10 @@ export default function OrderForm({
     { open: openModalCamera, close: closeModalCamera },
   ] = useDisclosure(false);
 
+  const [
+    openedModalPrint,
+    { open: openModalPrint, close: closeModalPrint },
+  ] = useDisclosure(false);
   const [
     openedModalUpdate,
     { open: openModalUpdate, close: closeModalUpdate },
@@ -548,11 +553,22 @@ export default function OrderForm({
   };
   return (
     <Box pos="relative">
+      <Group justify="end" mr={10}>
+        <Button
+          variant="outline"
+          color="blue"
+          leftSection={<IconPrinter />}
+          onClick={openModalPrint}
+        >
+          In
+        </Button>
+      </Group>
       <LoadingOverlay
         visible={isLoading || isLoadingDLBD}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
+
       <form onSubmit={form.onSubmit(handleSubmit)} onKeyPress={handleKeyPress}>
         {isMobile ? (
           <OrderFormMobile
@@ -590,6 +606,7 @@ export default function OrderForm({
             isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
             orderDlbdDetail={orderDlbdDetail}
+            isPendingDlbd={isPendingDlbd}
           />
         ) : (
           <OrderFormDesktop
@@ -621,6 +638,7 @@ export default function OrderForm({
             handleDbDLBD={handleDbDLBD}
             orderDlbdDetail={orderDlbdDetail}
             columns={columns}
+            isPendingDlbd={isPendingDlbd}
           />
         )}
       </form>
@@ -675,6 +693,13 @@ export default function OrderForm({
           handleGetInfo={handleGetInfo}
         />
       )}
+      {openedModalPrint && (
+        <DynamicModalPrint
+          openModal={openedModalPrint}
+          close={closeModalPrint}
+          dataDetail={dataDetail}
+        />
+      )}
     </Box>
   );
 }
@@ -707,3 +732,7 @@ const DynamicModalUpdateCustomer = dynamic(
     ssr: false,
   }
 );
+
+const DynamicModalPrint = dynamic(() => import("../_component/ModalPrint"), {
+  ssr: false,
+});
