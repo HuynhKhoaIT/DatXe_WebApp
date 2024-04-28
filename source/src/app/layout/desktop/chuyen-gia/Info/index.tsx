@@ -79,7 +79,9 @@ const Info = ({ detailData }: any) => {
             </div>
           </div>
           <div className={styles.contact}>
-            <Link href={`/dat-lich?garageId=${detailData?.id}`}>
+            <Link
+              href={`/dat-lich?garageId=${detailData?.id}&name=${detailData?.name}`}
+            >
               <Button size="lg" radius={0} color="var(--primary-color)" h={56}>
                 Đặt lịch
               </Button>

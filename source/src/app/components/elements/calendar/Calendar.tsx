@@ -139,10 +139,9 @@ export default function CalendarScheduler({
         opened={openedCalendar}
         onClose={closeCalendar}
         eventInfos={eventInfos}
-        brandOptions={brandOptions}
+        // brandOptions={brandOptions}
         categoryOptions={categoryOptions}
         carOptions={carOptions}
-        carDefault={carDefault}
         fetchDataOrders={fetchDataOrders}
         advisorOptions={advisorOptions}
       />
