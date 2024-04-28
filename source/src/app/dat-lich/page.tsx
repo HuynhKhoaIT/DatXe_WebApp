@@ -24,10 +24,11 @@ export default async function DatLich({ searchParams }: any) {
   }));
 
   const orderCategory = await callApi(apiConfig.category.orderCategory, {
-    params: {
-      garageId: searchParams?.garageId,
-    },
+    // params: {
+    //   garageId: searchParams?.garageId,
+    // },
   });
+
   const categoryOptions = orderCategory?.data?.map((category: any) => ({
     value: category.id?.toString(),
     label: category.title,
