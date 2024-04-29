@@ -7,7 +7,7 @@ export async function createCustomer(json: any) {
     const data ={
         uuId: generateUUID(),
         fullName: json.fullName.toString(),
-        userId: json.userId.toString(),
+        userId: json?.userId?.toString() ?? "1",
         phoneNumber: json.phoneNumber,
         cityId: Number(json.cityId ?? 1),
         districtId: Number(json.districtId ?? 1),
@@ -19,7 +19,6 @@ export async function createCustomer(json: any) {
         garageId: json.garageId.toString(),
         status: json.status ?? "PUBLIC",
       };
-    // return data;
     const customer = await prisma.customer.create({
       data: data
     });
