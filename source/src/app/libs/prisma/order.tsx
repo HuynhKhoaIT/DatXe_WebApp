@@ -371,6 +371,7 @@ export async function reportTrafictDashboard(
         {
           dateTime: {
             gte: new Date(dateStart),
+            lte: new Date(dateEnd)
           },
           garageId,
           status: {
