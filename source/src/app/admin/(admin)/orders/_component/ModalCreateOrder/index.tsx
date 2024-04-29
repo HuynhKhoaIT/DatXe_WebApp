@@ -11,7 +11,6 @@ export default function ModalCalendar({
   onClose,
   eventInfos,
   categoryOptions,
-  fetchDataOrders,
   typeView,
 }: any) {
   const { addItem, brandOptions, isPendingAdd } = useAddOrder();
@@ -79,6 +78,9 @@ export default function ModalCalendar({
     }
   };
   const handleSubmit = async (values: any) => {
+    values?.dateTime.setHours(newDate.getHours() + 7);
+
+    console.log(values?.dateTime);
     addItem(values);
   };
   return (
