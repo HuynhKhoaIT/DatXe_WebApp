@@ -11,8 +11,6 @@ export default function ModalCalendar({
   onClose,
   eventInfos,
   categoryOptions,
-  carDefault: dataCarDefault,
-  fetchDataOrders,
   typeView,
 }: any) {
   const { addItem, brandOptions, isPendingAdd } = useAddOrder();
@@ -37,7 +35,6 @@ export default function ModalCalendar({
   });
 
   useEffect(() => {
-    console.log(eventInfos?.start);
     form.setFieldValue("dateTime", eventInfos?.start);
   }, [eventInfos, opened]);
   const [loading, handlers] = useDisclosure();
@@ -81,6 +78,9 @@ export default function ModalCalendar({
     }
   };
   const handleSubmit = async (values: any) => {
+    values?.dateTime.setHours(newDate.getHours() + 7);
+
+    console.log(values?.dateTime);
     addItem(values);
   };
   return (
@@ -110,6 +110,7 @@ export default function ModalCalendar({
           yearCarOptions={yearCarOptions}
           loadingCustomer={loadingCustomer}
           loading={loading}
+          isUser={isUser}
           handlersLoadingCustomer={handlersLoadingCustomer}
         />
       </form>
