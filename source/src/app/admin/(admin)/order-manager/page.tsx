@@ -2,12 +2,13 @@
 export const revalidate = 0;
 import React, { Fragment, useState } from "react";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import { Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
+import { ActionIcon, Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
 import { FieldTypes, stepOrderOptions } from "@/constants/masterData";
 import Link from "next/link";
 import {
   IconCircleCheck,
   IconEye,
+  IconPencil,
   IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
@@ -21,6 +22,8 @@ import { getOptionsCar } from "./until";
 import { useOrders } from "../hooks/order/useOrder";
 import { IconCheck } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import { textAlign } from "html2canvas/dist/types/css/property-descriptors/text-align";
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
   {
@@ -97,6 +100,8 @@ export default function OrdersManaga() {
           Tổng đơn hàng
         </span>
       ),
+      textAlign: "right",
+
       name: "total",
       dataIndex: ["total"],
       render: (dataRow: number) => {
@@ -154,41 +159,45 @@ export default function OrdersManaga() {
       dataIndex: [],
       width: "100px",
       render: (record: any) => {
+        const deleteDisabled =
+          record?.orderDLBDId ||
+          record?.step == ORDER_DONE ||
+          record?.step == ORDER_CANCEL;
+
         return (
           <>
-            <Tooltip label="Chi tiết" withArrow position="bottom">
+            <Tooltip label="Cập nhật" withArrow position="bottom">
               <Button
                 size="lg"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
-                color="gray"
                 p={5}
                 onClick={(e) => {
                   e.stopPropagation();
                   router.push(`/admin/order-manager/${record?.id}`);
                 }}
               >
-                <IconEye size={16} />
+                <IconPencil size={16} color="blue" />
               </Button>
             </Tooltip>
-
-            <Tooltip label="Xoá" withArrow position="bottom">
-              <Button
-                size="lg"
-                radius={0}
-                p={5}
-                variant="transparent"
-                color="red"
-                onClick={(e) => {
-                  openDeleteProduct();
-                  e.stopPropagation();
-                  setDeleteRow(record.id);
-                }}
-              >
-                <IconTrash size={16} color="red" />
-              </Button>
-            </Tooltip>
+            {!deleteDisabled && (
+              <Tooltip label="Xoá" withArrow position="bottom">
+                <ActionIcon
+                  size="lg"
+                  radius={0}
+                  p={5}
+                  variant="transparent"
+                  onClick={(e) => {
+                    openDeleteProduct();
+                    e.stopPropagation();
+                    setDeleteRow(record.id);
+                  }}
+                >
+                  <IconTrash size={16} color={"red"} />
+                </ActionIcon>
+              </Tooltip>
+            )}
           </>
         );
       },
@@ -244,7 +253,7 @@ export default function OrdersManaga() {
                 radius={0}
                 leftSection={<IconPlus size={18} />}
               >
-                Thêm mới
+                Tạo đơn
               </Button>
             </Link>
           </Flex>

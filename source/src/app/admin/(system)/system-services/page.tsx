@@ -108,6 +108,8 @@ const ServicesHot = () => {
       ),
       name: "priceSale",
       dataIndex: ["product", "salePrice"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },

@@ -5301,6 +5301,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.npmjs.org/lodash.debounce/-/lodash.debounce-4.0.8.tgz"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
@@ -6280,6 +6285,11 @@ punycode@^2.1.0:
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.3.0.tgz"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
+qrcode-generator@^1.4.1:
+  version "1.4.4"
+  resolved "https://registry.npmjs.org/qrcode-generator/-/qrcode-generator-1.4.4.tgz"
+  integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==
+
 qrcode.react@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/qrcode.react/-/qrcode.react-3.1.0.tgz"
@@ -6711,7 +6721,7 @@ react-device-detect@^2.2.3:
   dependencies:
     ua-parser-js "^1.0.33"
 
-react-dom@*, "react-dom@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react-dom@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16 || ^17 || ^18", "react-dom@^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.7.0 || ^17 || ^18", "react-dom@^17.0.2 || ^18", react-dom@^18.2.0, "react-dom@>= 0.14.0", react-dom@>=15.0.0, react-dom@>=16.0.0, react-dom@>=16.11.0, react-dom@>=16.2.0, react-dom@>=16.4.0, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=16.9.0, react-dom@18.2.0:
+react-dom@*, "react-dom@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react-dom@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16 || ^17 || ^18", "react-dom@^16.0.0 || ^17.0.0 || ^18.0.0", "react-dom@^16.7.0 || ^17 || ^18", "react-dom@^17.0.2 || ^18", react-dom@^18.2.0, "react-dom@>= 0.14.0", react-dom@>=15.0.0, react-dom@>=16.0.0, react-dom@>=16.11.0, react-dom@>=16.2.0, react-dom@>=16.4.0, react-dom@>=16.4.1, react-dom@>=16.6.0, react-dom@>=16.8, react-dom@>=16.8.0, react-dom@>=16.9.0, react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -6803,6 +6813,14 @@ react-paginate@^8.2.0:
   integrity sha512-sJCz1PW+9PNIjUSn919nlcRVuleN2YPoFBOvL+6TPgrH/3lwphqiSOgdrLafLdyLDxsgK+oSgviqacF4hxsDIw==
   dependencies:
     prop-types "^15"
+
+react-qrcode-logo@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.npmjs.org/react-qrcode-logo/-/react-qrcode-logo-2.10.0.tgz"
+  integrity sha512-Q1+jLtcyDl5rLR29YdkXVLzYk62p3+541x00HxURVBQhs6SqFyEZZVhvkU/VQ082ytXa3GdCmGWMLK5z0Vhe7g==
+  dependencies:
+    lodash.isequal "^4.5.0"
+    qrcode-generator "^1.4.1"
 
 react-quill@^2.0.0:
   version "2.0.0"
@@ -6922,7 +6940,7 @@ react-webcam@^7.2.0:
   resolved "https://registry.npmjs.org/react-webcam/-/react-webcam-7.2.0.tgz"
   integrity sha512-xkrzYPqa1ag2DP+2Q/kLKBmCIfEx49bVdgCCCcZf88oF+0NPEbkwYk3/s/C7Zy0mhM8k+hpdNkBLzxg8H0aWcg==
 
-react@*, "react@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16 || ^17 || ^18", "react@^16.0 || ^17.0.0 || ^18.0.0", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.6.0 || 17 || 18", "react@^16.7.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17 || ^18", "react@^17.0.2 || ^18", react@^18.0.0, react@^18.2.0, "react@>= 0.14.0", "react@>= 16.8 || 18.0.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=15.0.0, react@>=16.0.0, react@>=16.11.0, react@>=16.2.0, react@>=16.4.0, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=16.9.0, react@>16.0.0, react@18.2.0:
+react@*, "react@^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18", "react@^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16 || ^17 || ^18", "react@^16.0 || ^17.0.0 || ^18.0.0", "react@^16.0.0 || ^17.0.0 || ^18.0.0", "react@^16.5.1 || ^17.0.0 || ^18.0.0", "react@^16.6.0 || 17 || 18", "react@^16.7.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17 || ^18", "react@^17.0.2 || ^18", react@^18.0.0, react@^18.2.0, "react@>= 0.14.0", "react@>= 16.8 || 18.0.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=15.0.0, react@>=16.0.0, react@>=16.11.0, react@>=16.2.0, react@>=16.4.0, react@>=16.4.1, react@>=16.6.0, react@>=16.8, react@>=16.8.0, react@>=16.9.0, react@>16.0.0, react@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

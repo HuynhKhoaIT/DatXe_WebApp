@@ -150,7 +150,7 @@ export default function CarListPage({
                 color="gray"
                 p={5}
               >
-                <IconPencil size={16} />
+                <IconPencil size={16} color="blue" />
               </Button>
             </Link>
 

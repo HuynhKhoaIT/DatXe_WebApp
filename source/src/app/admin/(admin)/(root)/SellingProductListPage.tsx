@@ -115,6 +115,8 @@ export default function SellingProductListPage() {
       ),
       name: "price",
       dataIndex: ["price"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -125,6 +127,8 @@ export default function SellingProductListPage() {
       ),
       name: "priceSale",
       dataIndex: ["salePrice"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },

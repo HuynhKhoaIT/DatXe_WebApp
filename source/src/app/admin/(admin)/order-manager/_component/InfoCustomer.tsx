@@ -1,7 +1,9 @@
 import Typo from "@/app/components/elements/Typo";
 import {
+  ActionIcon,
   Box,
   Button,
+  Flex,
   Grid,
   Group,
   LoadingOverlay,
@@ -12,7 +14,7 @@ import { getOptionsPhone } from "../until";
 import { AutocompletePhone } from "./AutoCompletePhone";
 import styles from "./index.module.scss";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { IconEdit, IconUpload } from "@tabler/icons-react";
+import { IconEdit, IconPhoneCall, IconUpload } from "@tabler/icons-react";
 export default function InfoCustomer({
   form,
   isUser,
@@ -48,17 +50,28 @@ export default function InfoCustomer({
         </Group>
         <Grid gutter={12} className={styles.marketingInfo}>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-            <AutocompletePhone
-              isUser={isUser}
-              disabled={isUser}
-              placeholder="Số điện thoại"
-              label="Số điện thoại"
-              isClear={false}
-              getOptionData={getOptionsPhone}
-              form={form}
-              name="phoneNumber"
-              handlersLoadingCustomer={handlersLoadingCustomer}
-            />
+            <Grid gutter={12}>
+              <Grid.Col span={{ base: 10, sm: 9, md: 9, lg: 9 }}>
+                <AutocompletePhone
+                  isUser={isUser}
+                  disabled={isUser}
+                  placeholder="Số điện thoại"
+                  label="Số điện thoại"
+                  isClear={false}
+                  getOptionData={getOptionsPhone}
+                  form={form}
+                  name="phoneNumber"
+                  handlersLoadingCustomer={handlersLoadingCustomer}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 3, sm: 3, md: 3, lg: 2 }}>
+                <a href={`tel:${form?.values.phoneNumber}`}>
+                  <ActionIcon size={50} mt={24.8}>
+                    <IconPhoneCall />
+                  </ActionIcon>
+                </a>
+              </Grid.Col>
+            </Grid>
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <TextInput

@@ -183,7 +183,7 @@ const Expert = () => {
                   p={5}
                   onClick={() => {}}
                 >
-                  <IconPencil size={16} />
+                  <IconPencil size={16} color="blue" />
                 </Button>
               </Tooltip>
             </Link>

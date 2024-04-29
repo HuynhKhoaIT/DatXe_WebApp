@@ -2,8 +2,11 @@ import AutocompleteField from "@/app/components/form/AutoCompleteField";
 import {
   ActionIcon,
   Alert,
+  Box,
   Button,
+  Center,
   Grid,
+  Overlay,
   ScrollArea,
   Space,
   Table,
@@ -19,7 +22,12 @@ import {
 } from "@tabler/icons-react";
 import InfoCar from "../../InfoCar";
 import InfoCustomer from "../../InfoCustomer";
-import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import {
+  ORDER_ACCEPT,
+  ORDER_CANCEL,
+  ORDER_DONE,
+  ORDER_PENDING,
+} from "@/constants";
 import Typo from "@/app/components/elements/Typo";
 import ItemProduct from "../../ItemProduct";
 import InfoCustomer2 from "../../InfoCustomer2";
@@ -66,7 +74,7 @@ export default function OrderFormMobile({
   orderDlbdDetail,
   columns,
 }: any) {
-  console.log(orderDlbdDetail);
+  console.log(dataDetail?.step);
   const router = useRouter();
   return (
     <Tabs
@@ -285,22 +293,37 @@ export default function OrderFormMobile({
                 </Grid.Col>
               </Grid>
             ) : (
-              <Grid className={styles.marketingInfo}>
-                <Grid.Col span={12}>
-                  {form.values.detail?.map((product: any, index: number) => {
-                    return (
-                      <ItemProduct
-                        data={product}
-                        key={index}
-                        index={index}
-                        form={form}
-                        setSelectedProducts={setSelectedProducts}
-                        selectedProducts={selectedProducts}
-                      />
-                    );
-                  })}
-                </Grid.Col>
-              </Grid>
+              <Box pos={"relative"}>
+                {dataDetail?.step === Number(ORDER_PENDING) && (
+                  <Overlay color="#000" backgroundOpacity={0.35} blur={15}>
+                    <Center h={"100%"}>
+                      <Typo
+                        size="small"
+                        style={{ color: "#fff", textAlign: "center" }}
+                      >
+                        Vui lòng tiếp nhận đơn hàng để được xem chi tiết đơn
+                        hàng.
+                      </Typo>
+                    </Center>
+                  </Overlay>
+                )}
+                <Grid className={styles.marketingInfo}>
+                  <Grid.Col span={12}>
+                    {form.values.detail?.map((product: any, index: number) => {
+                      return (
+                        <ItemProduct
+                          data={product}
+                          key={index}
+                          index={index}
+                          form={form}
+                          setSelectedProducts={setSelectedProducts}
+                          selectedProducts={selectedProducts}
+                        />
+                      );
+                    })}
+                  </Grid.Col>
+                </Grid>
+              </Box>
             )}
 
             <InfoCustomer2 form={form} isUser={isUser} />
@@ -372,6 +395,7 @@ const Footer = ({
   UpdateConfirm,
   loadingButton,
 }: any) => {
+  const router = useRouter();
   if (dataDetail?.orderDLBDId) {
     return (
       <FooterSavePage
@@ -379,6 +403,39 @@ const Footer = ({
         cancelText="Quay lại"
         isOk={false}
       ></FooterSavePage>
+    );
+  }
+  if (dataDetail?.step === Number(ORDER_PENDING)) {
+    return (
+      <FooterSavePage saveLoading={loadingButton} isOk={false} isCancel={false}>
+        <Button
+          size="lg"
+          radius={0}
+          h={{ base: 42, md: 50, lg: 50 }}
+          variant="outline"
+          key="cancel"
+          color="red"
+          leftSection={<IconBan size={16} />}
+          onClick={() => router.back()}
+        >
+          Quay lại
+        </Button>
+        <Button
+          size="lg"
+          radius={0}
+          h={{ base: 42, md: 50, lg: 50 }}
+          // loading={saveLoading}
+          style={{ marginLeft: "12px" }}
+          variant="filled"
+          color="blue"
+          onClick={() => {
+            UpdateConfirm(ORDER_ACCEPT);
+          }}
+          // leftSection={<IconPlus size={16} />}
+        >
+          Tiếp nhận
+        </Button>
+      </FooterSavePage>
     );
   }
   return (
