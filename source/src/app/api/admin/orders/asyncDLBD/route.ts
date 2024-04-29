@@ -13,17 +13,24 @@ export async function POST(request: Request) {
         if (session) {
             const id = json.id;
             const order = await findOrder(id,{});
-            const { data } = await axios({
-                method: "POST",
-                url: `https://v2.dlbd.vn/api/v3/app/order/sync-datxe`,
-                data: JSON.stringify(order),
-                headers: {
-                    "Content-Type": 'application/json',
-                    "Authorization": `Bearer ${session.user?.token}`,
-                }
-            });
-            const rs = await asyncToDLDB(id,data.id);
-            return NextResponse.json(data);
+            if(order.orderDLBDId){
+                const { data } = await axios({
+                    method: "POST",
+                    url: `https://v2.dlbd.vn/api/v3/app/order/sync-datxe`,
+                    data: JSON.stringify(order),
+                    headers: {
+                        "Content-Type": 'application/json',
+                        "Authorization": `Bearer ${session.user?.token}`,
+                    }
+                });
+                const rs = await asyncToDLDB(id,data.id);
+                return NextResponse.json(data);
+            }
+            return NextResponse.json({
+                status: "error",
+                message:'Tồn tại'
+            })
+            
         }
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
