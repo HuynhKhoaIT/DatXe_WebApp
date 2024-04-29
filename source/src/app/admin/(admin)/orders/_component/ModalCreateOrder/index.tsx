@@ -11,7 +11,6 @@ export default function ModalCalendar({
   onClose,
   eventInfos,
   categoryOptions,
-  carDefault: dataCarDefault,
   fetchDataOrders,
   typeView,
 }: any) {
@@ -37,7 +36,6 @@ export default function ModalCalendar({
   });
 
   useEffect(() => {
-    console.log(eventInfos?.start);
     form.setFieldValue("dateTime", eventInfos?.start);
   }, [eventInfos, opened]);
   const [loading, handlers] = useDisclosure();
@@ -110,6 +108,7 @@ export default function ModalCalendar({
           yearCarOptions={yearCarOptions}
           loadingCustomer={loadingCustomer}
           loading={loading}
+          isUser={isUser}
           handlersLoadingCustomer={handlersLoadingCustomer}
         />
       </form>

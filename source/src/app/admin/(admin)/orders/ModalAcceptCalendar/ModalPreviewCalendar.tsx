@@ -172,7 +172,6 @@ export const ModalPreviewCalendar = ({
               label="Hãng xe"
               {...form.getInputProps("carBrandId")}
               name="carBrandId"
-              disabled
               data={brandOptions}
               placeholder="Hãng xe"
               allowDeselect={false}
@@ -184,6 +183,7 @@ export const ModalPreviewCalendar = ({
                 form.setFieldValue("carNameId", null);
                 form.setFieldValue("carYearId", null);
               }}
+              disabled={true}
               withAsterisk
             />
           </Grid.Col>
@@ -196,7 +196,7 @@ export const ModalPreviewCalendar = ({
               placeholder="Dòng xe"
               leftSection={<IconPlus size={22} color="blue" />}
               withAsterisk
-              disabled
+              disabled={true}
               allowDeselect={false}
               {...form.getInputProps("carNameId")}
               onChange={(value: any) => {
