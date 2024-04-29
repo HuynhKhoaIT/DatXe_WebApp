@@ -35,7 +35,6 @@ export default function CartComponent({ myAccount }: any) {
     if (!cars) return;
     const carDefault = cars?.data?.find((item: any) => item?.isDefault);
     if (carDefault) {
-      console.log(carDefault);
       setValue(carDefault?.numberPlates);
       form.setFieldValue("carBrandId", carDefault?.brandName?.id);
       form.setFieldValue("carNameId", carDefault?.modelName?.id);
