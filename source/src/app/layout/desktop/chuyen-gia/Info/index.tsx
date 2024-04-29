@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 
 import React, { useState } from "react";
-const DynamicModalQRCode = dynamic(() => import("./ModalQRCode"), {
+const DynamicModalQRCode = dynamic(() => import("./ModalQRCodeLogo"), {
   ssr: false,
 });
 
@@ -21,8 +21,6 @@ const Info = ({ detailData }: any) => {
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
-
-  console.log(detailData);
 
   return (
     <div className={styles.wrapper}>
@@ -79,7 +77,9 @@ const Info = ({ detailData }: any) => {
             </div>
           </div>
           <div className={styles.contact}>
-            <Link href={`/dat-lich?garageId=${detailData?.id}`}>
+            <Link
+              href={`/dat-lich?garageId=${detailData?.id}&name=${detailData?.name}`}
+            >
               <Button size="lg" radius={0} color="var(--primary-color)" h={56}>
                 Đặt lịch
               </Button>

@@ -42,13 +42,14 @@ interface UseOrders {
     updateItem: any;
     brandOptions: any;
     isLoadingBrand: boolean;
+    isPendingAdd: boolean;
 }
 
 export const useAddOrder = (): UseOrders => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem, isPending:isPendingAdd } = useMutation({
         mutationFn: addOrder,
         onSuccess: () => {
             router.back();
@@ -94,5 +95,6 @@ export const useAddOrder = (): UseOrders => {
         updateItem,
         brandOptions,
         isLoadingBrand,
+        isPendingAdd
     };
 };

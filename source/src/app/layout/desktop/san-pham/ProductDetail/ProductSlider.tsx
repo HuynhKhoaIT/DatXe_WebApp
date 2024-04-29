@@ -27,7 +27,7 @@ export default function ProductSlider({ images }: any) {
         }}
         modules={[FreeMode, Navigation, Thumbs]}
         className="my-swiper2"
-        style={{ height: 400 }}
+        style={{ height: 380 }}
       >
         {images?.map((image: any, index: number) => {
           return (
@@ -55,11 +55,12 @@ export default function ProductSlider({ images }: any) {
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
         className="my-swiper"
+        style={{ height: 98 }}
       >
         {images?.map((image: any, index: number) => {
           return (
             <SwiperSlide key={index}>
-              <ImageField radius={10} src={image} />
+              <ImageField style={{ height: 98 }} radius={10} src={image} />
             </SwiperSlide>
           );
         })}

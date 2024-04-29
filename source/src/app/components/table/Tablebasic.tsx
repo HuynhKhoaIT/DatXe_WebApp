@@ -19,6 +19,7 @@ export default function TableBasic({
   setSelectedRows,
   className,
   onRow,
+  isBorder = true,
 }: any) {
   const router = useRouter();
   return (
@@ -30,12 +31,16 @@ export default function TableBasic({
       />
       <Table
         // mih={loading ? 300 : 0}
-        classNames={{
-          table: styles.rootTable,
-          tr: styles.trTable,
-          td: styles.td,
-          th: styles.th,
-        }}
+        classNames={
+          isBorder
+            ? {
+                table: styles.rootTable,
+                tr: styles.trTable,
+                td: styles.td,
+                th: styles.th,
+              }
+            : {}
+        }
       >
         <Table.Thead>
           <Table.Tr>

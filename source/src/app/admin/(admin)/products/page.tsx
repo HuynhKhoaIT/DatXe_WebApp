@@ -124,6 +124,8 @@ export default function ProductsManaga() {
       ),
       name: "price",
       dataIndex: ["price"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -134,6 +136,8 @@ export default function ProductsManaga() {
       ),
       name: "priceSale",
       dataIndex: ["salePrice"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -220,7 +224,7 @@ export default function ProductsManaga() {
                     p={5}
                     onClick={() => {}}
                   >
-                    <IconPencil size={16} />
+                    <IconPencil size={16} color="blue" />
                   </Button>
                 </Tooltip>
               </Link>

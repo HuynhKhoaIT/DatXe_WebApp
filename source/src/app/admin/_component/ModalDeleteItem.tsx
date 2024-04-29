@@ -9,29 +9,28 @@ export default function ModalDeleteItem({
 }: any) {
   return (
     <Modal
-      title="Xoá sản phẩm"
+      title="Xoá"
       opened={openedDeleteItem}
       onClose={closeDeleteItem}
       lockScroll={false}
+      withCloseButton={false}
+      centered
+      size={350}
     >
-      <div>Bạn có muốn xoá không?</div>
+      <p style={{ color: "gray" }}>Xác nhận xoá ra khỏi danh sách!</p>
       <Group justify="end" style={{ marginTop: 10 }}>
         <Button
-          size="lg"
-          radius={0}
-          h={{ base: 42, md: 50, lg: 50 }}
-          variant="filled"
+          // h={{ base: 42, md: 50, lg: 50 }}
+          variant="outline"
           key="cancel"
           onClick={closeDeleteItem}
-          color="red"
+          color="gray"
           leftSection={<IconBan />}
         >
           Huỷ bỏ
         </Button>
         <Button
-          size="lg"
-          radius={0}
-          h={{ base: 42, md: 50, lg: 50 }}
+          // h={{ base: 42, md: 50, lg: 50 }}
           style={{ marginLeft: "12px" }}
           onClick={() => {
             closeDeleteItem();
@@ -39,8 +38,9 @@ export default function ModalDeleteItem({
           }}
           variant="filled"
           leftSection={<IconChevronRight />}
+          color="red"
         >
-          Tiếp tục
+          Xoá
         </Button>
       </Group>
     </Modal>

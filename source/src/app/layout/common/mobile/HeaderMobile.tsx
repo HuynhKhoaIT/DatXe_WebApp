@@ -99,7 +99,7 @@ const HeaderMobile = () => {
           )}
           {role == ROLE_CUSTOMER && (
             <li className={styles.navItem}>
-              <Link href="/admin/cart">
+              <Link href="/cart">
                 <img src={IconCart.src} alt="bell" />
                 Giỏ hàng
               </Link>

@@ -11,7 +11,7 @@ const Blogs = ({ blogs }: any) => {
       <OverviewPanel
         stylesProps={{ padding: "30px 0" }}
         title="Bài viết danh mục"
-        linkToList={"/blogs"}
+        linkToList={"/danh-sach-bai-viet"}
         id="blogs-expert"
         fullWidth={true}
         hiddenShowMore={blogs?.length < 8}

@@ -9,6 +9,7 @@ import {
   Select,
   Radio,
   Modal,
+  LoadingOverlay,
 } from "@mantine/core";
 import { useForm, hasLength } from "@mantine/form";
 import { DateTimePicker } from "@mantine/dates";
@@ -21,12 +22,14 @@ import { ModalOrderGuest } from "./ModalOrderGuest";
 import { notifications } from "@mantine/notifications";
 import { addCustomerCare } from "@/utils/customerCare";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { GenOTP } from "@/utils/user";
 import styles from "./index.module.scss";
-import ComboboxField from "@/app/gio-hang/_component/ComboboxField";
 import dynamic from "next/dynamic";
-import { useCars } from "@/app/dashboard/hooks/car/useCar";
+import { useSession } from "next-auth/react";
+import InfoCarUser from "./_component/InfoCarUser";
+import InfoCarNew from "./_component/InfoCarNew";
+import { useAddOrder } from "@/app/dashboard/hooks/order/useAddOrder";
 
 const DynamicModalAddCar = dynamic(
   () => import("@/app/gio-hang/_component/ModalAddCar"),
@@ -37,34 +40,29 @@ const DynamicModalAddCar = dynamic(
 
 export const ModalEventCalendar = ({
   user,
-  brandOptions,
-  modelOptions,
-  yearCarOptions,
-  token,
   categoryOptions,
-  setBrand,
-  setModel,
   eventInfos,
-  garage,
-  advisorOptions,
-  carOptions,
-  garageOptions,
-  dataCarDefault,
   onClose,
   fetchDataOrders,
 }: any) => {
-  const { cars, isLoading, isFetching } = useCars();
+  const { addItem, brandOptions, isPendingAdd } = useAddOrder();
+
+  const { data } = useSession();
+  const token = data?.user?.token;
+  const searchParams = useSearchParams();
+  const garageId = searchParams.get("garageId");
+  const garageName: any = searchParams.get("name");
+  const [value, setValue] = useState<string | null>(null);
+
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
-  const [value, setValue] = useState<string | null>(null);
 
   const typeView = eventInfos?.view?.type;
   const newDate = new Date(eventInfos?.start);
   newDate.setHours(newDate.getHours() + 9);
 
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
   const [openedLogin, { open: openLogin, close: closeLogin }] = useDisclosure(
     false
   );
@@ -90,38 +88,12 @@ export const ModalEventCalendar = ({
     },
   });
   const handleSubmit = async (values: any) => {
-    console.log(values);
-    values.token = token;
-    // setLoading(true);
+    if (garageId) values.garageId = garageId;
     if (!token) {
-      // const genRs = await GenOTP(phoneNumber);
-      // setLoading(false);
-      // openLogin();
-      alert("vui long dang nhap");
+      await GenOTP(values?.phoneNumber);
+      openLogin();
     } else {
-      try {
-        const createdCar = await fetch(`/api/orders`, {
-          method: "POST",
-          body: JSON.stringify(values),
-        });
-        setLoading(false);
-        notifications.show({
-          title: "Thành công",
-          message: "Đặt lịch thành công",
-        });
-        onClose();
-        fetchDataOrders();
-        // router.push('/dashboard');
-      } catch (error) {
-        console.error("Error creating customer care:", error);
-        notifications.show({
-          title: "Thất bại",
-          message: "Đặt lịch thất bại",
-        });
-        setLoading(false);
-        onClose();
-        fetchDataOrders();
-      }
+      addItem(values);
     }
   };
   const ref = useRef<HTMLInputElement>(null);
@@ -136,7 +108,8 @@ export const ModalEventCalendar = ({
   );
 
   return (
-    <Box>
+    <Box pos="relative">
+      <LoadingOverlay visible={false} loaderProps={{ type: "bars" }} />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Textarea
           size="lg"
@@ -173,117 +146,15 @@ export const ModalEventCalendar = ({
             />
           </Grid.Col>
         </Grid>
-        <Grid mt="md" justify="center">
-          <Grid.Col span={6} className="input-plate">
-            {token ? (
-              <ComboboxField
-                form={form}
-                placeholder="Biển số xe"
-                carsData={cars?.data}
-                openModal={openModal}
-                value={value}
-                setValue={setValue}
-              />
-            ) : (
-              <TextInput
-                withAsterisk
-                classNames={{
-                  root: styles.rootPlates,
-                  input: styles.inputPlates,
-                }}
-                placeholder="Nhập biển số xe"
-                size="lg"
-                radius={0}
-                {...form.getInputProps("numberPlates")}
-              ></TextInput>
-            )}
-          </Grid.Col>
-        </Grid>
-
         {token ? (
-          <Grid gutter={10} mt="md">
-            <Grid.Col span={4}>
-              <TextInput
-                size="lg"
-                radius={0}
-                label="Hãng Xe"
-                placeholder="Hãng Xe"
-                readOnly
-                value={form.values.carBrandName}
-                // {...form.getInputProps("carBrandName")}
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <TextInput
-                size="lg"
-                radius={0}
-                label="Dòng xe"
-                value={form.values.carModelName}
-                placeholder="Dòng xe"
-                readOnly
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <TextInput
-                size="lg"
-                radius={0}
-                value={form.values.carYear}
-                label="Năm sản xuất"
-                placeholder="Năm sản xuất"
-                readOnly
-              />
-            </Grid.Col>
-          </Grid>
+          <InfoCarUser
+            form={form}
+            openModal={openModal}
+            value={value}
+            setValue={setValue}
+          />
         ) : (
-          <Grid gutter={10} mt="md">
-            <Grid.Col span={4}>
-              <Select
-                size="lg"
-                radius={0}
-                {...form.getInputProps("carBrandId")}
-                name="carBrandId"
-                data={brandOptions}
-                placeholder="Hãng xe"
-                allowDeselect={false}
-                leftSection={<IconPlus size={22} color="blue" />}
-                onChange={(value) => {
-                  form.setFieldValue("carBrandId", value);
-                  form.setFieldValue("carNameId", null);
-                  setBrand(value);
-                }}
-                withAsterisk
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Select
-                size="lg"
-                radius={0}
-                data={modelOptions}
-                placeholder="Dòng xe"
-                leftSection={<IconPlus size={22} color="blue" />}
-                withAsterisk
-                allowDeselect={false}
-                {...form.getInputProps("carNameId")}
-                onChange={(value: any) => {
-                  form.setFieldValue("carNameId", value);
-                  form.setFieldValue("carYearId", null);
-                  setModel(value);
-                }}
-              />
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Select
-                size="lg"
-                radius={0}
-                data={yearCarOptions}
-                placeholder="Năm sản xuất"
-                leftSection={<IconPlus size={22} color="blue" />}
-                withAsterisk
-                allowDeselect={false}
-                {...form.getInputProps("carYearId")}
-              />
-            </Grid.Col>
-          </Grid>
+          <InfoCarNew form={form} brandOptions={brandOptions} styles={styles} />
         )}
         <Grid gutter={10} mt="md">
           <Grid.Col span={6}>
@@ -310,45 +181,18 @@ export const ModalEventCalendar = ({
             />
           </Grid.Col>
         </Grid>
-        {garage && (
-          <Grid gutter={10} mt="md">
-            <Grid.Col span={6}>
-              <Select
-                size="lg"
-                radius={0}
-                allowDeselect={false}
-                data={advisorOptions}
-                placeholder="Chọn CVDV"
-                leftSection={<IconPlus size={22} color="blue" />}
-                withAsterisk
-                {...form.getInputProps("serviceAdvisorId")}
-              />
-            </Grid.Col>
-            {token ? (
-              <Grid.Col span={6}>
-                <Select
-                  size="lg"
-                  radius={0}
-                  allowDeselect={false}
-                  data={garageOptions}
-                  placeholder="Chọn chuyên gia"
-                  withAsterisk
-                  {...form.getInputProps("garageId")}
-                />
-              </Grid.Col>
-            ) : (
-              <Grid.Col span={6}>
-                <TextInput
-                  size="lg"
-                  radius={0}
-                  readOnly
-                  placeholder="Chuyên gia"
-                  {...form.getInputProps("garageId")}
-                />
-              </Grid.Col>
-            )}
-          </Grid>
-        )}
+        <Grid gutter={10} mt="md">
+          <Grid.Col span={12}>
+            <TextInput
+              size="lg"
+              radius={0}
+              readOnly
+              placeholder="Chuyên gia"
+              value={garageName}
+              // {...form.getInputProps("garageId")}
+            />
+          </Grid.Col>
+        </Grid>
         <Grid mt="md">
           <Grid.Col span={12}>
             <Textarea
@@ -374,7 +218,7 @@ export const ModalEventCalendar = ({
           <Button
             size="lg"
             radius={0}
-            loading={loading}
+            loading={isPendingAdd}
             w={100}
             bg={"var(--theme-color)"}
             type="submit"
@@ -391,15 +235,16 @@ export const ModalEventCalendar = ({
         formData={form}
         setValue={setValue}
       />
-      {/* <ModalOrderGuest
+      <ModalOrderGuest
         close={closeLogin}
         opened={openedLogin}
         phone={form.values.phoneNumber}
         name={form.values.fullName}
-        dataDetail={newCustomerCare}
+        dataDetail={form.values}
         onClose={onClose}
         router={router}
-      /> */}
+        addItem={addItem}
+      />
     </Box>
   );
 };

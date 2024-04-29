@@ -1,7 +1,9 @@
 "use client";
 import {
+  ActionIcon,
   Box,
   Button,
+  Group,
   LoadingOverlay,
   NumberInput,
   Select,
@@ -9,7 +11,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconTrash } from "@tabler/icons-react";
+import { IconPrinter, IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -30,6 +32,12 @@ import OrderFormDesktop from "../_component/orderForm/OrderForm";
 import OrderFormMobile from "../_component/orderForm/mobile/OrderFormMobile";
 import { useOrderDLBD, useOrderDLBDDetail } from "../../hooks/order/useOrder";
 import { useSession } from "next-auth/react";
+import {
+  ORDER_ACCEPT,
+  ORDER_CANCEL,
+  ORDER_DONE,
+  ORDER_PENDING,
+} from "@/constants";
 
 export default function OrderForm({
   isEditing = false,
@@ -40,7 +48,7 @@ export default function OrderForm({
   const {
     data: orderDlbdDetail,
     isLoading: isLoadingDLBD,
-    isPending: isPendingDLBD,
+    isPending: isPendingDLBDDetail,
   } = useOrderDLBDDetail({
     token: data?.user?.token,
     id: dataDetail?.orderDLBDId,
@@ -86,7 +94,6 @@ export default function OrderForm({
       : []
   );
 
-  console.log(orderDlbd);
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
 
@@ -105,6 +112,10 @@ export default function OrderForm({
     { open: openModalCamera, close: closeModalCamera },
   ] = useDisclosure(false);
 
+  const [
+    openedModalPrint,
+    { open: openModalPrint, close: closeModalPrint },
+  ] = useDisclosure(false);
   const [
     openedModalUpdate,
     { open: openModalUpdate, close: closeModalUpdate },
@@ -349,6 +360,7 @@ export default function OrderForm({
       ),
       name: "price",
       dataIndex: ["sellPrice"],
+      textAlign: "right",
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -369,6 +381,8 @@ export default function OrderForm({
       ),
       name: "priceSale",
       dataIndex: ["total"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -464,23 +478,24 @@ export default function OrderForm({
 
   const UpdateConfirm = (step: any) => {
     var subTitle = "";
-    if (step == "-1") {
+    if (step == ORDER_CANCEL) {
       subTitle = "huỷ đơn hàng";
-    } else if (step == "1") {
+    } else if (step == ORDER_ACCEPT) {
       subTitle = "tiếp nhận đơn hàng";
-    } else if (step == "4") {
+    } else if (step == ORDER_DONE) {
       subTitle = "hoàn thành đơn hàng";
     }
     modals.openConfirmModal({
-      title: (
-        <Typo type="semi-bold" style={{ color: "red", fontSize: 20 }}>
-          Xác nhận
+      title: "Xác nhận",
+      children: (
+        <Typo size="sub" style={{ color: "gray" }}>
+          Bạn có muốn {subTitle} này không?
         </Typo>
       ),
-      children: <Typo size="sub">Bạn có muốn {subTitle} này không?</Typo>,
       size: "350px",
       centered: true,
       zIndex: 999,
+      confirmProps: { color: "blue" },
       withCloseButton: false,
       labels: { confirm: "Có", cancel: "Không" },
       onConfirm: () => updateStep({ step: step, id: dataDetail?.id }),
@@ -548,11 +563,22 @@ export default function OrderForm({
   };
   return (
     <Box pos="relative">
+      <Group justify="end" mr={10}>
+        <Button
+          variant="outline"
+          color="blue"
+          leftSection={<IconPrinter />}
+          onClick={openModalPrint}
+        >
+          In
+        </Button>
+      </Group>
       <LoadingOverlay
         visible={isLoading || isLoadingDLBD}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
+
       <form onSubmit={form.onSubmit(handleSubmit)} onKeyPress={handleKeyPress}>
         {isMobile ? (
           <OrderFormMobile
@@ -590,6 +616,7 @@ export default function OrderForm({
             isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
             orderDlbdDetail={orderDlbdDetail}
+            isPendingDlbd={isPendingDlbd}
           />
         ) : (
           <OrderFormDesktop
@@ -621,6 +648,7 @@ export default function OrderForm({
             handleDbDLBD={handleDbDLBD}
             orderDlbdDetail={orderDlbdDetail}
             columns={columns}
+            isPendingDlbd={isPendingDlbd}
           />
         )}
       </form>
@@ -675,6 +703,13 @@ export default function OrderForm({
           handleGetInfo={handleGetInfo}
         />
       )}
+      {openedModalPrint && (
+        <DynamicModalPrint
+          openModal={openedModalPrint}
+          close={closeModalPrint}
+          dataDetail={dataDetail}
+        />
+      )}
     </Box>
   );
 }
@@ -707,3 +742,7 @@ const DynamicModalUpdateCustomer = dynamic(
     ssr: false,
   }
 );
+
+const DynamicModalPrint = dynamic(() => import("../_component/ModalPrint"), {
+  ssr: false,
+});

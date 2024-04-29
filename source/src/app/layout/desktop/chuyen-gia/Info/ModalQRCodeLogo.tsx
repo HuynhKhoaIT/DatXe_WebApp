@@ -1,11 +1,16 @@
 import { Box, Button, CopyButton, Group, Input, Modal } from "@mantine/core";
-
 import html2canvas from "html2canvas";
-import { QRCodeCanvas } from "qrcode.react";
-import { useState } from "react";
+import { QRCodeSVG } from "qrcode.react";
+import { useEffect, useState } from "react";
 import Logo from "@/assets/images/avatar.png";
+import { QRCode } from "react-qrcode-logo";
 import { IconDownload } from "@tabler/icons-react";
-export default function ModalQRCode({ openModal, close, src, logoUrl }: any) {
+export default function ModalQRCodeLogo({
+  openModal,
+  close,
+  src,
+  logoUrl,
+}: any) {
   const getCanvas = () => {
     const qr = document.getElementById("QR");
     if (!qr) return;
@@ -34,6 +39,7 @@ export default function ModalQRCode({ openModal, close, src, logoUrl }: any) {
       document.body.removeChild(downloadLink);
     }
   };
+
   return (
     <Modal
       title="QR Code"
@@ -51,22 +57,21 @@ export default function ModalQRCode({ openModal, close, src, logoUrl }: any) {
           justifyContent: "center",
         }}
       >
-        <QRCodeCanvas
+        <QRCode
           id="QR"
           value={src}
           size={300}
           bgColor={"#ffffff"}
           fgColor={"#0a75ad"}
-          level={"H"}
-          includeMargin={false}
-          imageSettings={{
-            src: logoUrl,
-            x: undefined,
-            y: undefined,
-            height: 40,
-            width: 40,
-            excavate: true,
-          }}
+          // ecLevel={"L"}
+          logoImage={logoUrl}
+          logoWidth={40}
+          logoHeight={40}
+          logoOpacity={1}
+          removeQrCodeBehindLogo={true}
+          enableCORS={true}
+          // qrStyle="dots"
+          // eyeRadius={40}
         />
       </div>
       <div
@@ -92,7 +97,6 @@ export default function ModalQRCode({ openModal, close, src, logoUrl }: any) {
           )}
         </CopyButton>
       </div>
-
       <Group mt={10} justify="end">
         <Button
           leftSection={<IconDownload size={16} />}

@@ -1,28 +1,50 @@
 "use client";
-import React, { useState } from "react";
-import { Button, Container, Divider, Flex, Tooltip } from "@mantine/core";
+import React, { useRef, useState } from "react";
+import {
+  ActionIcon,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Grid,
+  Group,
+  Tooltip,
+} from "@mantine/core";
 import { useDisclosure, useSetState } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import styles from "./OrderDetailPage.module.scss";
 import ImageField from "@/app/components/form/ImageField";
-import ImageDefaul from "@/assets/images/logo.png";
 import Typo from "@/app/components/elements/Typo";
-import classNames from "classnames";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
-import ReactToPrint from "react-to-print";
-import ReactPrint from "@/app/components/common/ReactToPrint";
+import { useReactToPrint } from "react-to-print";
 import { ORDER_DONE } from "@/constants";
 import {
   useOrderDLBD,
   useOrderDLBDDetail,
 } from "@/app/admin/(admin)/hooks/order/useOrder";
 import { useSession } from "next-auth/react";
+import { IconPrinter } from "@tabler/icons-react";
 
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
-export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
+export default function OrderDetailPageMobile({
+  dataSource,
+  reviews,
+  close,
+}: any) {
+  const componentRef: any = useRef();
+  const handlePrint = useReactToPrint({
+    copyStyles: true,
+    content: () => componentRef.current,
+    onAfterPrint: () => {
+      if (close) {
+        close();
+      }
+    },
+  });
+
   const { data } = useSession();
   const {
     data: orderDlbdDetail,
@@ -41,8 +63,6 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
     id: dataSource?.orderDLBDId,
   });
 
-  console.log("orderDlbd", orderDlbd);
-
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
@@ -57,45 +77,50 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
   const columnsDLBD = [
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên sản phẩm
-        </span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Tên SP</span>
       ),
       name: "name",
       dataIndex: ["name"],
       render: (dataRow: any) => {
-        return <span>{dataRow}</span>;
+        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
       },
     },
 
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá bán</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Đ.Giá</span>
       ),
       name: "price",
       dataIndex: ["sellPrice"],
+      textAlign: "right",
       render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
+        return (
+          <span style={{ fontSize: "14px" }}>{dataRow?.toLocaleString()}đ</span>
+        );
+      },
+    },
+    {
+      label: <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>SL</span>,
+      name: "quantity",
+      width: 50,
+      dataIndex: ["quantity"],
+      render: (dataRow: any) => {
+        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
       },
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Số lượng</span>
-      ),
-      name: "quantity",
-      width: 100,
-      dataIndex: ["quantity"],
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tổng tiền
+        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>
+          T.Tiền(vnđ)
         </span>
       ),
       name: "priceSale",
       dataIndex: ["total"],
+      textAlign: "right",
       render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
+        return (
+          <span style={{ fontSize: "14px" }}>{dataRow?.toLocaleString()}</span>
+        );
       },
     },
   ];
@@ -103,42 +128,50 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
   const columns = [
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Tên Sp</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>Tên Sp</span>
       ),
-      width: 80,
+      width: 150,
       name: "product",
       dataIndex: ["product", "name"],
+      render: (dataRow: any) => {
+        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
+      },
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>Đ.Giá</span>
       ),
       name: "priceSale",
       dataIndex: ["priceSale"],
       width: 80,
 
       render: (dataRow: any) => {
-        return <span>{dataRow.toLocaleString()}đ</span>;
+        return (
+          <span style={{ fontSize: "14px" }}>{dataRow.toLocaleString()}</span>
+        );
       },
     },
     {
-      label: <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>SL</span>,
+      label: <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>SL</span>,
       name: "quantity",
       dataIndex: ["quantity"],
       textAlign: "center",
+      render: (dataRow: any) => {
+        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
+      },
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Thành tiền
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>
+          T.Tiền(vnđ)
         </span>
       ),
       name: "subTotal",
       dataIndex: [],
       render: (dataRow: any) => {
         return (
-          <span>
-            {(dataRow?.priceSale * dataRow?.quantity).toLocaleString()}đ
+          <span style={{ fontSize: "14px" }}>
+            {(dataRow?.priceSale * dataRow?.quantity).toLocaleString()}
           </span>
         );
       },
@@ -176,19 +209,30 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
     },
   ];
   return (
-    <ReactPrint>
-      <Container className="printable">
+    <Container>
+      <Group justify="end">
+        <ActionIcon color="blue" onClick={handlePrint}>
+          <IconPrinter />
+        </ActionIcon>
+      </Group>
+      <div ref={componentRef} className="printable">
         <div className={styles.infoGara}>
           <ImageField
             src={dataSource?.garage?.logo}
-            width={120}
-            height={120}
+            width={80}
+            height={80}
             radius={8}
           />
           <div>
-            <Typo type="bold">{dataSource?.garage?.shortName}</Typo>
-            <Typo size="primary">Địa chỉ: {dataSource?.garage?.address}</Typo>
-            <Typo size="primary">phone: {dataSource?.garage?.phoneNumber}</Typo>
+            <p style={{ fontSize: 16, fontWeight: 500 }}>
+              {dataSource?.garage?.shortName}
+            </p>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
+              Địa chỉ: {dataSource?.garage?.address}
+            </p>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
+              Phone: {dataSource?.garage?.phoneNumber}
+            </p>
           </div>
         </div>
         <Divider
@@ -203,25 +247,27 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
           <div className={styles.title}>
             <span>Chi tiết đơn hàng</span>
           </div>
-          <Flex px={40} w={"100%"} justify={"space-between"}>
-            <Typo size="mall">
+          <Flex px={20} w={"100%"} justify={"space-between"}>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
               {dayjs(dataSource?.dateTime).format("HH:mm DD:MM:YY")}
-            </Typo>
-            <Typo size="mall">Số:{dataSource?.code}</Typo>
+            </p>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
+              Số:{dataSource?.code}
+            </p>
           </Flex>
         </div>
         <div className={styles.infoCustomer}>
           <div style={{ display: "flex", gap: "6px" }}>
             KH:
-            <Typo size="primary">{dataSource?.customer?.fullName}</Typo>
+            <Typo size="tiny">{dataSource?.customer?.fullName}</Typo>
           </div>
           <div style={{ display: "flex", gap: "6px" }}>
             ĐT:
-            <Typo size="primary">{dataSource?.customer?.phoneNumber}</Typo>
+            <Typo size="tiny">{dataSource?.customer?.phoneNumber}</Typo>
           </div>
           <div style={{ display: "flex", gap: "6px" }}>
             XE:
-            <Typo size="primary">{dataSource?.car?.numberPlates}</Typo>
+            <Typo size="tiny">{dataSource?.car?.numberPlates}</Typo>
           </div>
         </div>
         <Divider
@@ -232,15 +278,24 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
           variant="dashed"
         />
         <div style={{ marginTop: "20px" }}></div>
-        {orderDlbdDetail && dataSource?.orderDLBDId ? (
-          <TableBasic data={orderDlbdDetail?.data} columns={columnsDLBD} />
-        ) : (
-          <TableBasic
-            loading={false}
-            DcolumnsDLBD={columns}
-            data={dataSource?.orderDetails}
-          />
-        )}
+        <Grid>
+          <Grid.Col span={12}>
+            {dataSource?.orderDLBDId ? (
+              <TableBasic
+                data={orderDlbdDetail?.data}
+                columns={columnsDLBD}
+                isBorder={false}
+              />
+            ) : (
+              <TableBasic
+                loading={false}
+                columns={columns}
+                data={dataSource?.orderDetails}
+                isBorder={false}
+              />
+            )}
+          </Grid.Col>
+        </Grid>
 
         <Divider my={"lg"} color="black" size={1} variant="dashed" />
         <div
@@ -283,24 +338,25 @@ export default function OrderDetailPageMobile({ dataSource, reviews }: any) {
         <div className={styles.infoWifi}>
           <ImageField
             src={dataSource?.garage?.qrCodeBank}
-            width={150}
-            height={150}
+            width={120}
+            height={120}
           />
           <p>Wifi:{dataSource?.garage?.wifiInfo}</p>
         </div>
         <div className={styles.titleThanks}>
           Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
         </div>
-        {openedModal && (
-          <DynamicModalReview
-            openedModal={openedModal}
-            onCloseModal={closeModal}
-            title="Đánh giá sản phẩm"
-            onCancelModal={closeModal}
-            dataDetail={dataReview}
-          />
-        )}
-      </Container>
-    </ReactPrint>
+      </div>
+
+      {openedModal && (
+        <DynamicModalReview
+          openedModal={openedModal}
+          onCloseModal={closeModal}
+          title="Đánh giá sản phẩm"
+          onCancelModal={closeModal}
+          dataDetail={dataReview}
+        />
+      )}
+    </Container>
   );
 }

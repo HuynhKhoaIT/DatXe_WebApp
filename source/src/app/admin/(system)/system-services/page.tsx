@@ -108,6 +108,8 @@ const ServicesHot = () => {
       ),
       name: "priceSale",
       dataIndex: ["product", "salePrice"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -191,7 +193,6 @@ const ServicesHot = () => {
             // totalPage={products?.totalPage}
             setPage={setPage}
             activePage={page}
-            onRow={`/admin/system-services`}
           />
         }
       />

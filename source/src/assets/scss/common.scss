@@ -186,10 +186,10 @@ img {
         visibility: visible;
     }
     .printable {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
+        page-break-inside:avoid;
+        page-break-after:auto; 
+        position:relative;
+        display:block;  
     }
    
     .no-print, .no-print *

@@ -52,6 +52,8 @@ export default function OrdersListPage({ dataSource }: any) {
       ),
       name: "total",
       dataIndex: ["total"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },

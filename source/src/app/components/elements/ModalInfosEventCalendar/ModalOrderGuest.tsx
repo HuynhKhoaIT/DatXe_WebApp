@@ -7,6 +7,7 @@ import { useForm, hasLength, matches } from "@mantine/form";
 import { CheckOtp, CheckPhone, login, register } from "@/utils/user";
 import { notifications } from "@mantine/notifications";
 import { addCustomerCareGuest } from "@/utils/customerCare";
+import { signIn } from "next-auth/react";
 export function ModalOrderGuest({
   opened,
   close,
@@ -14,6 +15,7 @@ export function ModalOrderGuest({
   router,
   dataDetail,
   onClose,
+  addItem,
 }: any) {
   const [countdown, setCountdown] = useState<number>(59);
   const [loading, setLoading] = useState(false);
@@ -40,17 +42,25 @@ export function ModalOrderGuest({
   }, [countdown]);
   const onLogin = async () => {
     const { pin } = form.values;
+    let password = phone + "@@Datxe.com@@";
+
     try {
       setLoading(true);
       const checkRs = await CheckOtp(phone, pin, "login");
-      if (checkRs.CodeResult == 100) {
+      if (checkRs.CodeResult == "100") {
+        addItem(dataDetail);
         try {
-          const createdCar = await addCustomerCareGuest(dataDetail);
+          console.log(dataDetail);
+          signIn("credentials", {
+            phone: phone,
+            password: password,
+            callbackUrl: "/dashboard",
+          });
           notifications.show({
             title: "Thành công",
             message: "Đặt lịch thành công",
           });
-          // router.push('/dashboard');
+          router.push("/dashboard");
           onClose();
           setLoading(false);
         } catch (error) {
