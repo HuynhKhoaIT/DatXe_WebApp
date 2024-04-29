@@ -29,6 +29,7 @@ import ReactPrint from "@/app/components/common/ReactToPrint";
 import ButtonDbDLBD from "../ButtonDbDLBD";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useRouter } from "next/navigation";
+import TableOrderDLBD from "./_component/TableOrderDLBD";
 export default function OrderFormDesktop({
   dataDetail,
   form,
@@ -57,7 +58,6 @@ export default function OrderFormDesktop({
   loadingButton,
   handleDbDLBD,
   isPendingDlbd,
-  orderDlbdDetail,
   columns,
 }: any) {
   return (
@@ -130,12 +130,12 @@ export default function OrderFormDesktop({
               </Button>
             )}
         </div>
-        {dataDetail?.orderDLBDId && orderDlbdDetail ? (
-          <Grid className={styles.marketingInfo}>
-            <Grid.Col span={12}>
-              <TableBasic data={orderDlbdDetail?.data} columns={columns} />
-            </Grid.Col>
-          </Grid>
+        {dataDetail?.orderDLBDId ? (
+          <TableOrderDLBD
+            styles={styles}
+            columns={columns}
+            dataDetail={dataDetail}
+          />
         ) : (
           <Box pos={"relative"}>
             {dataDetail?.step === Number(ORDER_PENDING) && (
@@ -207,6 +207,7 @@ export default function OrderFormDesktop({
                 label="Tình trạng đơn hàng"
                 placeholder="Tình trạng đơn hàng"
                 {...form.getInputProps("step")}
+                disabled
                 data={stepOrderOptions}
               />
             </Grid.Col>

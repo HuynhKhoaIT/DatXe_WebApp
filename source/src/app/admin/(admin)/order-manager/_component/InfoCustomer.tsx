@@ -51,7 +51,7 @@ export default function InfoCustomer({
         <Grid gutter={12} className={styles.marketingInfo}>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <Grid gutter={12}>
-              <Grid.Col span={{ base: 10, sm: 9, md: 9, lg: 9 }}>
+              <Grid.Col span={9}>
                 <AutocompletePhone
                   isUser={isUser}
                   disabled={isUser}
@@ -64,7 +64,7 @@ export default function InfoCustomer({
                   handlersLoadingCustomer={handlersLoadingCustomer}
                 />
               </Grid.Col>
-              <Grid.Col span={{ base: 3, sm: 3, md: 3, lg: 2 }}>
+              <Grid.Col span={3}>
                 <a href={`tel:${form?.values.phoneNumber}`}>
                   <ActionIcon size={50} mt={24.8}>
                     <IconPhoneCall />
