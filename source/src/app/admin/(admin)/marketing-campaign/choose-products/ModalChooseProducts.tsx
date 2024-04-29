@@ -143,6 +143,8 @@ export default function ModalChooseProducts({
       ),
       name: "price",
       dataIndex: ["price"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -153,6 +155,7 @@ export default function ModalChooseProducts({
       ),
       name: "priceSale",
       dataIndex: ["salePrice"],
+      textAlign: "right",
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },

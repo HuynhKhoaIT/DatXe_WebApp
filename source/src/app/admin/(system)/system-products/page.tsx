@@ -98,6 +98,8 @@ const ProductsHot = () => {
       ),
       name: "price",
       dataIndex: ["product", "price"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -108,6 +110,8 @@ const ProductsHot = () => {
       ),
       name: "priceSale",
       dataIndex: ["product", "salePrice"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },

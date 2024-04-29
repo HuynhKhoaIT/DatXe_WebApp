@@ -89,7 +89,7 @@ export default function Categories() {
                 p={5}
                 onClick={() => {}}
               >
-                <IconPencil size={16} />
+                <IconPencil size={16} color="blue" />
               </Button>
             </Link>
             <Button

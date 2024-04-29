@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconEye, IconSearch } from "@tabler/icons-react";
+import { IconEye, IconPencil, IconSearch } from "@tabler/icons-react";
 import TableBasic from "@/app/components/table/Tablebasic";
 import Link from "next/link";
 import { stepOrderOptions } from "@/constants/masterData";
@@ -84,6 +84,8 @@ export default function ModalAcceptCar({ openModal, close }: any) {
           Tổng đơn hàng
         </span>
       ),
+      textAlign: "right",
+
       name: "total",
       dataIndex: ["total"],
       render: (dataRow: number) => {
@@ -134,7 +136,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
                 pathname: `/admin/order-manager/${record.slug}`,
               }}
             >
-              <Tooltip label="Chi tiết" withArrow position="bottom">
+              <Tooltip label="Cập nhật" withArrow position="bottom">
                 <Button
                   size="lg"
                   radius={0}
@@ -144,7 +146,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
                   p={5}
                   onClick={() => {}}
                 >
-                  <IconEye size={16} />
+                  <IconPencil size={16} color="blue" />
                 </Button>
               </Tooltip>
             </Link>

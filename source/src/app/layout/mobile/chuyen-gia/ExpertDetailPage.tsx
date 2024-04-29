@@ -50,7 +50,7 @@ const ExpertDetailPageMobile = ({
         <Container>
           <TabsComponent data={expertDetail} />
         </Container>
-        <Blogs blogs={blogs} />
+        <Blogs blogs={blogs} garageId={expertDetail?.id} />
         <SharePage bitlyUrl={expertDetail?.bitlyUrl} />
       </div>
     </div>

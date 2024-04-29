@@ -36,6 +36,7 @@ export default function OrderDetailPageMobile({
 }: any) {
   const componentRef: any = useRef();
   const handlePrint = useReactToPrint({
+    copyStyles: true,
     content: () => componentRef.current,
     onAfterPrint: () => {
       if (close) {
@@ -76,9 +77,7 @@ export default function OrderDetailPageMobile({
   const columnsDLBD = [
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>
-          Tên sản phẩm
-        </span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Tên SP</span>
       ),
       name: "name",
       dataIndex: ["name"],
@@ -89,10 +88,11 @@ export default function OrderDetailPageMobile({
 
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Giá bán</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Đ.Giá</span>
       ),
       name: "price",
       dataIndex: ["sellPrice"],
+      textAlign: "right",
       render: (dataRow: number) => {
         return (
           <span style={{ fontSize: "14px" }}>{dataRow?.toLocaleString()}đ</span>
@@ -100,11 +100,9 @@ export default function OrderDetailPageMobile({
       },
     },
     {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Số lượng</span>
-      ),
+      label: <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>SL</span>,
       name: "quantity",
-      width: 100,
+      width: 50,
       dataIndex: ["quantity"],
       render: (dataRow: any) => {
         return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
@@ -118,6 +116,7 @@ export default function OrderDetailPageMobile({
       ),
       name: "priceSale",
       dataIndex: ["total"],
+      textAlign: "right",
       render: (dataRow: number) => {
         return (
           <span style={{ fontSize: "14px" }}>{dataRow?.toLocaleString()}</span>
@@ -129,9 +128,9 @@ export default function OrderDetailPageMobile({
   const columns = [
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Tên Sp</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>Tên Sp</span>
       ),
-      width: 120,
+      width: 150,
       name: "product",
       dataIndex: ["product", "name"],
       render: (dataRow: any) => {
@@ -140,7 +139,7 @@ export default function OrderDetailPageMobile({
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Đ.Giá</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>Đ.Giá</span>
       ),
       name: "priceSale",
       dataIndex: ["priceSale"],
@@ -153,7 +152,7 @@ export default function OrderDetailPageMobile({
       },
     },
     {
-      label: <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>SL</span>,
+      label: <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>SL</span>,
       name: "quantity",
       dataIndex: ["quantity"],
       textAlign: "center",
@@ -163,7 +162,7 @@ export default function OrderDetailPageMobile({
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>
           T.Tiền(vnđ)
         </span>
       ),
@@ -220,14 +219,20 @@ export default function OrderDetailPageMobile({
         <div className={styles.infoGara}>
           <ImageField
             src={dataSource?.garage?.logo}
-            width={120}
-            height={120}
+            width={80}
+            height={80}
             radius={8}
           />
           <div>
-            <Typo type="bold">{dataSource?.garage?.shortName}</Typo>
-            <Typo size="tiny">Địa chỉ: {dataSource?.garage?.address}</Typo>
-            <Typo size="tiny">phone: {dataSource?.garage?.phoneNumber}</Typo>
+            <p style={{ fontSize: 16, fontWeight: 500 }}>
+              {dataSource?.garage?.shortName}
+            </p>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
+              Địa chỉ: {dataSource?.garage?.address}
+            </p>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
+              Phone: {dataSource?.garage?.phoneNumber}
+            </p>
           </div>
         </div>
         <Divider
@@ -242,11 +247,13 @@ export default function OrderDetailPageMobile({
           <div className={styles.title}>
             <span>Chi tiết đơn hàng</span>
           </div>
-          <Flex px={40} w={"100%"} justify={"space-between"}>
-            <Typo size="mall">
+          <Flex px={20} w={"100%"} justify={"space-between"}>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
               {dayjs(dataSource?.dateTime).format("HH:mm DD:MM:YY")}
-            </Typo>
-            <Typo size="mall">Số:{dataSource?.code}</Typo>
+            </p>
+            <p style={{ fontSize: 14, fontWeight: 500 }}>
+              Số:{dataSource?.code}
+            </p>
           </Flex>
         </div>
         <div className={styles.infoCustomer}>

@@ -1,16 +1,24 @@
-import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import {
+  ORDER_ACCEPT,
+  ORDER_CANCEL,
+  ORDER_DONE,
+  ORDER_PENDING,
+} from "@/constants";
 import {
   Alert,
+  Box,
   Button,
+  Center,
   Grid,
   Group,
   Image,
   NumberInput,
+  Overlay,
   Select,
   Table,
   Textarea,
 } from "@mantine/core";
-import { IconInfoCircle, IconPlus } from "@tabler/icons-react";
+import { IconBan, IconInfoCircle, IconPlus } from "@tabler/icons-react";
 import InfoCar from "../InfoCar";
 import InfoCustomer from "../InfoCustomer";
 import InfoCustomer2 from "../InfoCustomer2";
@@ -20,6 +28,7 @@ import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import ReactPrint from "@/app/components/common/ReactToPrint";
 import ButtonDbDLBD from "../ButtonDbDLBD";
 import TableBasic from "@/app/components/table/Tablebasic";
+import { useRouter } from "next/navigation";
 export default function OrderFormDesktop({
   dataDetail,
   form,
@@ -67,7 +76,7 @@ export default function OrderFormDesktop({
         </Alert>
       )}
       <Grid gutter={12}>
-        <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+        <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12, xl: 6 }}>
           <InfoCar
             loading={loading}
             brandOptions={brandOptions}
@@ -83,7 +92,7 @@ export default function OrderFormDesktop({
             handlersIsUser
           />
         </Grid.Col>
-        <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+        <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12, xl: 6 }}>
           <InfoCustomer
             openModalUpdateCustomer={openModalUpdateCustomer}
             form={form}
@@ -128,27 +137,41 @@ export default function OrderFormDesktop({
             </Grid.Col>
           </Grid>
         ) : (
-          <Grid className={styles.marketingInfo}>
-            <Grid.Col span={12}>
-              <ListPage
-                style={{ height: "100%" }}
-                baseTable={
-                  <Table>
-                    <Table.Thead>
-                      <Table.Tr>
-                        <Table.Th>Tên sản phẩm</Table.Th>
-                        <Table.Th>Giá</Table.Th>
-                        <Table.Th>Số lượng</Table.Th>
-                        <Table.Th>Tổng tiền</Table.Th>
-                        <Table.Th className="no-print">Hành động</Table.Th>
-                      </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                  </Table>
-                }
-              />
-            </Grid.Col>
-          </Grid>
+          <Box pos={"relative"}>
+            {dataDetail?.step === Number(ORDER_PENDING) && (
+              <Overlay color="#000" backgroundOpacity={0.35} blur={15}>
+                <Center h={"100%"}>
+                  <Typo
+                    size="small"
+                    style={{ color: "#fff", textAlign: "center" }}
+                  >
+                    Vui lòng tiếp nhận đơn hàng để được xem chi tiết đơn hàng.
+                  </Typo>
+                </Center>
+              </Overlay>
+            )}
+            <Grid className={styles.marketingInfo}>
+              <Grid.Col span={12}>
+                <ListPage
+                  style={{ height: "100%" }}
+                  baseTable={
+                    <Table>
+                      <Table.Thead>
+                        <Table.Tr>
+                          <Table.Th>Tên sản phẩm</Table.Th>
+                          <Table.Th>Giá</Table.Th>
+                          <Table.Th>Số lượng</Table.Th>
+                          <Table.Th>Tổng tiền</Table.Th>
+                          <Table.Th className="no-print">Hành động</Table.Th>
+                        </Table.Tr>
+                      </Table.Thead>
+                      <Table.Tbody>{rows}</Table.Tbody>
+                    </Table>
+                  }
+                />
+              </Grid.Col>
+            </Grid>
+          </Box>
         )}
       </div>
       <div style={{ marginTop: 20 }} className={styles.card}>
@@ -243,6 +266,7 @@ const Footer = ({
   loadingButton,
   isPendingUpdate,
 }: any) => {
+  const router = useRouter();
   if (dataDetail?.orderDLBDId) {
     return (
       <FooterSavePage
@@ -250,6 +274,39 @@ const Footer = ({
         cancelText="Quay lại"
         isOk={false}
       ></FooterSavePage>
+    );
+  }
+  if (dataDetail?.step === Number(ORDER_PENDING)) {
+    return (
+      <FooterSavePage saveLoading={loadingButton} isOk={false} isCancel={false}>
+        <Button
+          size="lg"
+          radius={0}
+          h={{ base: 42, md: 50, lg: 50 }}
+          variant="outline"
+          key="cancel"
+          color="red"
+          leftSection={<IconBan size={16} />}
+          onClick={() => router.back()}
+        >
+          Quay lại
+        </Button>
+        <Button
+          size="lg"
+          radius={0}
+          h={{ base: 42, md: 50, lg: 50 }}
+          // loading={saveLoading}
+          style={{ marginLeft: "12px" }}
+          variant="filled"
+          color="blue"
+          onClick={() => {
+            UpdateConfirm(ORDER_ACCEPT);
+          }}
+          // leftSection={<IconPlus size={16} />}
+        >
+          Tiếp nhận
+        </Button>
+      </FooterSavePage>
     );
   }
   return (

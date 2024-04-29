@@ -27,6 +27,8 @@ export default function DashboardAdmin() {
     arrayDate,
     isFetching,
   } = useAdmin();
+
+  console.log(newArray);
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(

@@ -5,13 +5,13 @@ import { IProduct } from "@/interfaces/product";
 import ProductItem from "@/app/components/elements/product/ProductItem1";
 import BlogItem from "./BlogItem";
 import SlickCarousel from "@/app/components/common/SlickCarousell";
-const Blogs = ({ blogs }: any) => {
+const Blogs = ({ blogs, garageId }: any) => {
   return (
     <div className={styles.wrapper}>
       <OverviewPanel
         stylesProps={{ padding: "30px 0" }}
         title="Chia sẽ kinh nghiệm"
-        // linkToList={"/dich-vu"}
+        linkToList={`/danh-sach-bai-viet?garageId=${garageId}`}
         hiddenShowMore={true}
         id="blogs-expert"
       >
