@@ -78,9 +78,6 @@ export default function ModalCalendar({
     }
   };
   const handleSubmit = async (values: any) => {
-    values?.dateTime.setHours(newDate.getHours() + 7);
-
-    console.log(values?.dateTime);
     addItem(values);
   };
   return (
