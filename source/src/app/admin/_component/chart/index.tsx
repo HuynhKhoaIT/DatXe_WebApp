@@ -9,7 +9,12 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./index.module.scss";
-import { ORDER_ACCEPT, ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import {
+  ORDER_ACCEPT,
+  ORDER_CANCEL,
+  ORDER_DONE,
+  ORDER_PENDING,
+} from "@/constants";
 export default function Chart({ isLoading, data, arrayDate }: any) {
   const currentDate = new Date();
   const firstDayOfMonth = new Date(
@@ -104,7 +109,12 @@ export default function Chart({ isLoading, data, arrayDate }: any) {
             <div className={styles.headerChart}>
               <div className={styles.itemHeader}>
                 <p className={styles.titleItem}>Tổng tiếp nhận</p>
-                <span className={styles.valueItem}>{data?.length}</span>
+                <span className={styles.valueItem}>
+                  {data?.length -
+                    data?.filter(
+                      (item: any) => item?.step === Number(ORDER_PENDING)
+                    )?.length}
+                </span>
               </div>
               <div className={styles.itemHeader}>
                 <p className={styles.titleItem}>Nghiệm thu</p>

@@ -10,7 +10,7 @@ import SP from "@/assets/icons/sp.svg";
 import Marketing from "@/assets/icons/analysis-comparison-svgrepo-com.svg";
 import Calendar from "@/assets/icons/calendar-svgrepo-com.svg";
 import CarService from "@/assets/images/carService2.jpeg";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { ORDER_ACCEPT, ORDER_CANCEL, ORDER_DONE } from "@/constants";
@@ -18,6 +18,7 @@ import { Alert, Button } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 import { useMyGarage } from "@/app/hooks/useMyGarage";
 import { useAdmin } from "../hooks/admin/useAdmin";
+import dayjs from "dayjs";
 export default function DashboardAdmin() {
   const { myGarage } = useMyGarage();
   const {
@@ -27,8 +28,12 @@ export default function DashboardAdmin() {
     arrayDate,
     isFetching,
   } = useAdmin();
+  const searchParams = useSearchParams();
+  const startDate: any = searchParams.get("dateStart");
+  const endDate: any = searchParams.get("dateEnd");
+  const formattedStartDate = dayjs(startDate).format("DD/MM/YYYY");
+  const formattedEndDate = dayjs(endDate).format("DD/MM/YYYY");
 
-  console.log(newArray);
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 600px)");
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
@@ -179,7 +184,7 @@ export default function DashboardAdmin() {
       <div className={styles.wrapper_2}>
         <div style={{ borderBottom: "1px solid #eeeeee" }}>
           <Typo size="18px" type="bold" className={styles.title_2}>
-            Thông tin xe ra vào {getCurrentMonthDates()}
+            Thông tin xe ra vào {formattedStartDate} - {formattedEndDate}
           </Typo>
         </div>
         <div className={styles.card_2}>
@@ -198,8 +203,9 @@ export default function DashboardAdmin() {
             <p>Nghiệm thu</p>
             <span className={styles.value_3}>
               {
-                newArray?.filter((item: any) => item?.step === ORDER_ACCEPT)
-                  ?.length
+                newArray?.filter(
+                  (item: any) => item?.step === Number(ORDER_ACCEPT)
+                )?.length
               }
             </span>
           </div>
@@ -207,8 +213,9 @@ export default function DashboardAdmin() {
             <p>Xuất xưởng</p>
             <span className={styles.value_3}>
               {
-                newArray?.filter((item: any) => item?.step === ORDER_DONE)
-                  ?.length
+                newArray?.filter(
+                  (item: any) => item?.step === Number(ORDER_DONE)
+                )?.length
               }
             </span>
           </div>
@@ -216,8 +223,9 @@ export default function DashboardAdmin() {
             <p>Xe huỷ</p>
             <span className={styles.value_3}>
               {
-                newArray?.filter((item: any) => item?.step === ORDER_CANCEL)
-                  ?.length
+                newArray?.filter(
+                  (item: any) => item?.step === Number(ORDER_CANCEL)
+                )?.length
               }
             </span>
           </div>

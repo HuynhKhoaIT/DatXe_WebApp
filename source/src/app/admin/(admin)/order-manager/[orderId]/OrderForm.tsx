@@ -66,6 +66,7 @@ export default function OrderForm({
   const searchParams = useSearchParams();
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
+
   const {
     addItem,
     updateItem,
@@ -77,6 +78,7 @@ export default function OrderForm({
     dbDLBD,
     isPendingDlbd,
   } = useAddOrder();
+
   const [activeTab, setActiveTab] = useState<string | null>(
     !isEditing ? "numberPlates" : "customer"
   );
