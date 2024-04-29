@@ -561,8 +561,10 @@ export async function createOrder(json: any) {
   }
 }
 export async function createOrderClient(json: any) {
+
   try {
-    let garageId = "2";
+    return prisma.$transaction(async (tx)=>{
+      let garageId = "2";
     if (json.garageId) {
       garageId = json.garageId;
     }
@@ -584,6 +586,7 @@ export async function createOrderClient(json: any) {
     } else {
       customerId = customerInGarage.id;
     }
+    return customerId;
     //get carID
     let carId = json.carId;
     const carInAdmin = await prisma.car.findFirst({
@@ -680,6 +683,8 @@ export async function createOrderClient(json: any) {
       },
     });
     return { order };
+    })
+    
   } catch (error) {
     return { error };
   }
