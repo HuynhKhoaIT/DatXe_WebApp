@@ -571,23 +571,15 @@ export async function createOrderClient(json: any) {
     }
     let customerId = json.customerId;
     // check customer
-    const customerInGarage = await prisma.customer.findFirst({
-      where: {
-        phoneNumber: json.phoneNumber,
-        garageId,
-        status: "PUBLIC",
-      },
-    });
+    const customerInGarage = await getCustomerByPhone(json.phoneNumber,garageId);
     if (!customerInGarage) {
-      const userNewGarage = await prisma.customer.create({
-        data: {
-          phoneNumber: json.phoneNumber,
-          fullName: json.fullName,
-          garageId: garageId,
-        },
+      const userNewGarage = await createCustomer({
+        phoneNumber: json.phoneNumber,
+        fullName: json.fullName,
+        garageId: garageId,
       });
       if (userNewGarage) {
-        customerId = userNewGarage.id;
+        customerId = userNewGarage.customer?.id;
       }
     } else {
       customerId = customerInGarage.id;
