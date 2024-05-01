@@ -314,10 +314,22 @@ export const formatTimeDifference = (utcTime: any, format = DEFAULT_FORMAT) => {
   return formattedDifference;
 };
 
-export const createQrCode = async (dataInput: any)=>{
+export const createQrCode = async (dataInput: any) => {
   const { data } = await axios({
     method: "POST",
     url: `${process.env.SMS_SMS_MKT}`,
     data: dataInput,
   });
+};
+
+export function formatLargeNumber(number: any) {
+  if (number >= 1000) {
+    var result = number / 1000;
+    var remainder = number % 1000;
+    if (remainder > 0) {
+      return result.toFixed(1) + "k";
+    }
+    return result.toFixed(0) + "k";
+  }
+  return number;
 }
