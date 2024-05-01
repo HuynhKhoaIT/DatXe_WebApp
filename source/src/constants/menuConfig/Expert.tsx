@@ -11,6 +11,12 @@ import { IconUsersGroup } from "@tabler/icons-react";
 const menuConfigExpert = [
   { link: "/admin", label: "Tổng quan", icon: IconGauge },
   {
+    label: "Tài chính",
+    icon: IconNotes,
+    initiallyOpened: true,
+    links: [{ label: "Danh thu", link: "/admin/revenue" }],
+  },
+  {
     label: "Đơn hàng",
     icon: IconNotes,
     initiallyOpened: true,
