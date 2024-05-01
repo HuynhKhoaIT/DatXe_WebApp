@@ -54,6 +54,7 @@ export const QUERY_KEY = {
     newsList: 'newsList',
     marketings: 'marketings',
     ordersAdmin: 'ordersAdmin',
+    revenue:'revenue',
     news: 'news',
     blogs: 'blogs',
     orders: 'orders',
