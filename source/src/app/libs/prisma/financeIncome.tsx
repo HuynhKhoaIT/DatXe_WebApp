@@ -16,7 +16,7 @@ export async function getFinanceIncome(params:any) {
         limit = 10;
         }
         const skip = take * (currentPage - 1);
-        const [data, total] = await prisma.$transaction([
+        const [data, total,allData] = await prisma.$transaction([
             prisma.order.findMany({
                 take: take,
                 skip: skip,
@@ -42,6 +42,24 @@ export async function getFinanceIncome(params:any) {
                     }
                 }
             }),
+            prisma.order.findMany({
+                orderBy: {
+                    createdAt: 'desc'
+                },
+                select:{
+                    createdAt: true,
+                    dateDone:true,
+                    total:true
+                },
+                where:{
+                    step: Number(ORDER_DONE),
+                    garageId: params.garageId,
+                    dateDone:{
+                        gte: new Date(params.startDate),
+                        lte: new Date(params.endDate)
+                    }
+                },
+            })
         ]);
         let totalMoney = 0;
         data.forEach(d=>{
@@ -51,6 +69,7 @@ export async function getFinanceIncome(params:any) {
             data: data,
             total: total,
             totalMoney: totalMoney,
+            allData: allData,
             currentPage: currentPage, 
             limit: limit,
             totalPage: Math.ceil(total / limit),
