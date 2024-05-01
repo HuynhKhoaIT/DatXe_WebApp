@@ -5,6 +5,8 @@ import { randomString } from "@/utils";
 import { ORDERMETHOD } from "@prisma/client";
 import { getCarModelById } from "./carModel";
 import { sendSMSOrder } from "@/utils/order";
+import dayjs from "dayjs";
+import { ORDER_DONE } from "@/constants";
 
 export async function getOrders(garage: string, requestData: any) {
   try {
@@ -957,6 +959,7 @@ export async function updateOrder(id: string, json: any) {
         step: Number(json.step),
         subTotal: Number(json.subTotal),
         total: Number(json.total),
+        dateDone: Number(json.step) == Number(ORDER_DONE) ? dayjs().toString() : '',
         garage: {
           connect: {
             id: json.garageId,
@@ -1019,6 +1022,7 @@ export async function updateOrderStep(
   cancelReason: string
 ) {
   const or = await findOrder(id, {});
+  
   const order = await prisma.order.update({
     where: {
       id: id,
@@ -1026,6 +1030,7 @@ export async function updateOrderStep(
     data: {
       step: Number(step),
       cancelReason,
+      dateDone: Number(step) == Number(ORDER_DONE) ? dayjs().toString() : '',
     },
     include: {
       car: true,
