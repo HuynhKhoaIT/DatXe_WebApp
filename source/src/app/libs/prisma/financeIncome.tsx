@@ -21,7 +21,7 @@ export async function getFinanceIncome(params:any) {
                 take: take,
                 skip: skip,
                 orderBy: {
-                    createdAt: "desc",
+                    dateDone: "desc",
                 },
                 where:{
                     step: Number(ORDER_DONE),
