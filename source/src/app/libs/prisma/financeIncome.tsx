@@ -27,8 +27,8 @@ export async function getFinanceIncome(params:any) {
                     step: Number(ORDER_DONE),
                     garageId: params.garageId,
                     dateDone:{
-                        gte: new Date(params.dateStart),
-                        lte: new Date(params.dateEnd)
+                        gte: new Date(params.startDate),
+                        lte: new Date(params.endDate)
                     }
                 }
             }),
@@ -37,8 +37,8 @@ export async function getFinanceIncome(params:any) {
                     step: Number(ORDER_DONE),
                     garageId: params.garageId,
                     dateDone:{
-                        gte: new Date(params.dateStart),
-                        lte: new Date(params.dateEnd)
+                        gte: new Date(params.startDate),
+                        lte: new Date(params.endDate)
                     }
                 }
             }),

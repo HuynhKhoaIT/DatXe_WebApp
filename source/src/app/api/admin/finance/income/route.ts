@@ -14,8 +14,8 @@ export async function GET(request: NextRequest) {
             
             const requestData = {
                 garageId: garageId,
-                dateStart: searchParams.get('dateStart') ?? dayjs().add(-7,'days').endOf('day'),
-                dateEnd: searchParams.get('dateEnd') ?? dayjs().endOf('day'),
+                startDate: searchParams.get('startDate') ?? dayjs().add(-7,'days').endOf('day'),
+                endDate: searchParams.get('endDate') ?? dayjs().endOf('day'),
                 limit: searchParams.get('limit'),
                 page: searchParams.get('page'),
             };
