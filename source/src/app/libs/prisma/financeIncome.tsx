@@ -21,7 +21,7 @@ export async function getFinanceIncome(params:any) {
                 take: take,
                 skip: skip,
                 orderBy: {
-                    createdAt: "desc",
+                    dateDone: "desc",
                 },
                 where:{
                     step: Number(ORDER_DONE),
@@ -32,7 +32,7 @@ export async function getFinanceIncome(params:any) {
                     }
                 },
                 include:{
-                    customer:true
+                    customer: true
                 }
             }),
             prisma.order.count({
