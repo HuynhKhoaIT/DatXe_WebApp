@@ -10,12 +10,7 @@ import {
 import { IconUsersGroup } from "@tabler/icons-react";
 const menuConfigExpert = [
   { link: "/admin", label: "Tổng quan", icon: IconGauge },
-  {
-    label: "Tài chính",
-    icon: IconNotes,
-    initiallyOpened: true,
-    links: [{ label: "Danh thu", link: "/admin/revenue" }],
-  },
+
   {
     label: "Đơn hàng",
     icon: IconNotes,
@@ -44,6 +39,12 @@ const menuConfigExpert = [
     icon: IconUsersGroup,
   },
   { link: "/admin/marketing-campaign", label: "Marketing", icon: IconGauge },
+  {
+    label: "Tài chính",
+    icon: IconNotes,
+    initiallyOpened: true,
+    links: [{ label: "Danh thu", link: "/admin/revenue" }],
+  },
   {
     label: "Chuyên gia",
     icon: IconUsers,

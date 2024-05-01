@@ -1,6 +1,5 @@
 "use client";
 import { Box, Grid, LoadingOverlay } from "@mantine/core";
-import SimpleLineChart from "./SimpleLineChart";
 import SimpleBarChart from "./SimpleBarChart";
 import { DatePickerInput } from "@mantine/dates";
 import "dayjs/locale/vi";
@@ -15,6 +14,7 @@ import {
   ORDER_DONE,
   ORDER_PENDING,
 } from "@/constants";
+import SimpleLineChart from "./SimpleLineChart";
 export default function Chart({ isLoading, data, arrayDate }: any) {
   const currentDate = new Date();
   const firstDayOfMonth = new Date(
