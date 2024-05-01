@@ -30,6 +30,9 @@ export async function getFinanceIncome(params:any) {
                         gte: new Date(params.startDate),
                         lte: new Date(params.endDate)
                     }
+                },
+                include:{
+                    customer:true
                 }
             }),
             prisma.order.count({
@@ -61,14 +64,10 @@ export async function getFinanceIncome(params:any) {
                 },
             })
         ]);
-        let totalMoney = 0;
-        data.forEach(d=>{
-            totalMoney += d.total;
-        })
+        
         return {
             data: data,
             total: total,
-            totalMoney: totalMoney,
             allData: allData,
             currentPage: currentPage, 
             limit: limit,
