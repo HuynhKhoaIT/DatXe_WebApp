@@ -32,7 +32,7 @@ export async function getFinanceIncome(params:any) {
                     }
                 },
                 include:{
-                    customer:true
+                    customer: true
                 }
             }),
             prisma.order.count({
