@@ -12,11 +12,15 @@
     justify-content: end;
     gap: 12px;
     padding-right: 30px;
+    z-index: 9;
 }
 
 @media only screen and (max-width: 600px) {
     // Footer save page
     .footerSavePage {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
         padding-right: 10px;
     }
 }

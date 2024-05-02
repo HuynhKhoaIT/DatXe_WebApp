@@ -29,6 +29,7 @@ import Link from "next/link";
 import { IconEye } from "@tabler/icons-react";
 import SimpleLineChart from "./_component/SimpleLineChart";
 import { formatLargeNumber } from "@/utils/until";
+import SimpleBarChart from "./_component/SimpleBarChart";
 const queryClient = new QueryClient();
 
 const Breadcrumbs = [
@@ -233,7 +234,7 @@ const Revenue = () => {
         </Grid>
       </Box>
       <Box h={500} bg={"#fff"} p={30} mb={30}>
-        <SimpleLineChart dataSource={groupedArray.reverse()} />
+        <SimpleBarChart dataSource={groupedArray.reverse()} />
       </Box>
       <ListPage
         // searchForm={
