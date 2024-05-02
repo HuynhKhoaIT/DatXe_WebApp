@@ -43,7 +43,7 @@ const LandingPageMobile = ({
       <Book />
       <div
         style={{
-          padding: "340px 0 30px 0",
+          padding: "380px 0 30px 0",
           backgroundColor: "var(--background-color-light)",
         }}
       >
