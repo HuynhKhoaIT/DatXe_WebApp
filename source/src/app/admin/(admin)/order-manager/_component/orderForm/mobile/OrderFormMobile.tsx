@@ -241,7 +241,7 @@ export default function OrderFormMobile({
         </div>
       </Tabs.Panel>
 
-      <Tabs.Panel value="detailOrder">
+      <Tabs.Panel mb={40} value="detailOrder">
         <ScrollArea>
           <div style={{ marginTop: 20 }} className={styles.cardListProduct}>
             {dataDetail?.step === Number(ORDER_CANCEL) && (
@@ -447,7 +447,7 @@ const Footer = ({
           />
           <Button
             size="md"
-            w={"33%"}
+            // w={"33%"}
             radius={0}
             h={{ base: 42, md: 50, lg: 50 }}
             // variant="outline"
@@ -461,11 +461,10 @@ const Footer = ({
           <Button
             size="md"
             radius={0}
-            w={"33%"}
+            // w={"33%"}
             h={{ base: 42, md: 50, lg: 50 }}
             // loading={saveLoading}
             color="green"
-            style={{ marginLeft: "12px" }}
             variant="filled"
             onClick={() => {
               if (dataDetail?.step == "0") {

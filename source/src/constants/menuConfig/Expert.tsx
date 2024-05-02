@@ -40,10 +40,10 @@ const menuConfigExpert = [
   },
   { link: "/admin/marketing-campaign", label: "Marketing", icon: IconGauge },
   {
-    label: "Tài chính",
+    label: "Báo cáo",
     icon: IconNotes,
     initiallyOpened: true,
-    links: [{ label: "Danh thu", link: "/admin/revenue" }],
+    links: [{ label: "Doanh thu", link: "/admin/revenue" }],
   },
   {
     label: "Chuyên gia",

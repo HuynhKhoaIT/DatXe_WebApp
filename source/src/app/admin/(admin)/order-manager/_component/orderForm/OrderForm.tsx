@@ -351,7 +351,6 @@ const Footer = ({
                     h={{ base: 42, md: 50, lg: 50 }}
                     // loading={saveLoading}
                     color="green"
-                    style={{ marginLeft: "12px" }}
                     variant="filled"
                     onClick={() => {
                       if (dataDetail?.step == "0") {
