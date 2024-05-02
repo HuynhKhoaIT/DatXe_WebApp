@@ -25,12 +25,21 @@ const Hero = ({ slideshowData, height = 220 }: any) => {
       <Slider {...settings}>
         {slideshowData?.data?.map((item: any) => {
           return (
-            <BackgroundImage
-              style={{ cursor: "pointer" }}
+            <Image
               src={item?.banners ? item?.banners : image}
-              h={height}
+              // h={height}
+              // width={'100% + 30px'}
+
+              fit="cover"
               onClick={() => item?.url && window.open(`${item?.url}`)}
-            ></BackgroundImage>
+              // className={styles.img}
+            ></Image>
+            // <BackgroundImage
+            //   style={{ cursor: "pointer" }}
+            //   src={item?.banners ? item?.banners : image}
+            //   h={height}
+            //   onClick={() => item?.url && window.open(`${item?.url}`)}
+            // ></BackgroundImage>
           );
         })}
       </Slider>
