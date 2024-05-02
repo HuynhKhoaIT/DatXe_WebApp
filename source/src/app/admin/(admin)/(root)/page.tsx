@@ -105,6 +105,12 @@ export default function DashboardAdmin() {
       label: "SP đường dẫn",
       link: "/admin/products",
     },
+    {
+      id: 8,
+      icon: Calendar.src,
+      label: "Doanh thu",
+      link: "/admin/revenue",
+    },
   ];
 
   const card_3 = [
