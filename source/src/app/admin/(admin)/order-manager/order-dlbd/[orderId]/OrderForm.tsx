@@ -59,7 +59,7 @@ export default function OrderForm({
   const [loadingButton, handlersButton] = useDisclosure();
   const [selectedProducts, setSelectedProducts] = useState<any>(
     dataDetail
-      ? dataDetail?.orderDetails.map((item: any) => ({
+      ? dataDetail?.orderDetails?.map((item: any) => ({
           ...item,
           id: item.productId,
         }))
@@ -156,7 +156,7 @@ export default function OrderForm({
         setCustomer(dataDetail?.customer);
         setCar(dataDetail?.car);
         setSelectedProducts(
-          dataDetail?.orderDetails.map((item: any) => ({
+          dataDetail?.orderDetails?.map((item: any) => ({
             ...item,
             images: item?.product?.images,
             id: item.productId,
