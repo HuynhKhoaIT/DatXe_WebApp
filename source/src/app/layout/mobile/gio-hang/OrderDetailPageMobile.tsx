@@ -34,7 +34,7 @@ export default function OrderDetailPageMobile({
   reviews,
   close,
 }: any) {
-  const [containerHeight, setContainerHeight] = useState<any>("auto");
+  const [containerHeight, setContainerHeight] = useState<any>(800);
 
   const componentRef: any = useRef();
   const handlePrint = useReactToPrint({
@@ -52,7 +52,7 @@ export default function OrderDetailPageMobile({
       const height = componentRef.current.clientHeight;
       setContainerHeight(height);
     }
-  }, []);
+  }, [componentRef]);
 
   const { data } = useSession();
   const {
@@ -218,7 +218,6 @@ export default function OrderDetailPageMobile({
     },
   ];
 
-  console.log(containerHeight);
   return (
     <Container>
       <Group justify="end">
