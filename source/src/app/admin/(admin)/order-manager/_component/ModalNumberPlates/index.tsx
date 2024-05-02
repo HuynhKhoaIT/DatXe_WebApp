@@ -126,7 +126,7 @@ export default function ModalNumberPlates({
               handleGetInfo(numberPlate);
               close();
             }}
-            disabled={numberPlate?.length < 8}
+            disabled={numberPlate?.length < 3}
           >
             Tiếp tục
           </Button>
