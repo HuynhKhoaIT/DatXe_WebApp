@@ -36,11 +36,11 @@
     align-items: center;
 }
 
-@media print {
-    @page {
-      size: 80mm 180mm;
-    }
-    @page :right {
-        margin:2mm;
-    }
-}
+// @media print {
+//     @page {
+//       size: 80mm auto !important;
+//     }
+//     @page :right {
+//         margin:2mm;
+//     }
+// }
