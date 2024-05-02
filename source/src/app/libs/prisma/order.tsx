@@ -959,7 +959,7 @@ export async function updateOrder(id: string, json: any) {
         step: Number(json.step),
         subTotal: Number(json.subTotal),
         total: Number(json.total),
-        dateDone: Number(json.step) == Number(ORDER_DONE) ? new Date(dayjs().toString()) : '',
+        dateDone: Number(json.step) == Number(ORDER_DONE) ? new Date(dayjs().toString()) : orderOld?.dateDone,
         garage: {
           connect: {
             id: json.garageId,
@@ -1030,7 +1030,7 @@ export async function updateOrderStep(
     data: {
       step: Number(step),
       cancelReason,
-      dateDone: Number(step) == Number(ORDER_DONE) ? new Date(dayjs().toString()) : '',
+      dateDone: Number(step) == Number(ORDER_DONE) ? new Date(dayjs().toString()) : or.dateDone,
     },
     include: {
       car: true,
