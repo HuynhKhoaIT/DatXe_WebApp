@@ -35,6 +35,7 @@ import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useRouter } from "next/navigation";
 import ButtonDbDLBD from "../../ButtonDbDLBD";
 import ItemProductDLBD from "../../ItemProductDLBD";
+import TableOrderDLBD from "../_component/TableOrderDLBD";
 
 export default function OrderFormMobile({
   activeTab,
@@ -71,10 +72,8 @@ export default function OrderFormMobile({
   isPendingAdd,
   handleDbDLBD,
   isPendingDlbd,
-  orderDlbdDetail,
   columns,
 }: any) {
-  console.log(dataDetail?.step);
   const router = useRouter();
   return (
     <Tabs
@@ -283,15 +282,12 @@ export default function OrderFormMobile({
                   </Button>
                 )}
             </div>
-            {dataDetail?.orderDLBDId && orderDlbdDetail ? (
-              <Grid className={styles.marketingInfo}>
-                <Grid.Col span={12}>
-                  {orderDlbdDetail.data?.map((product: any, index: number) => {
-                    console.log(product);
-                    return <ItemProductDLBD data={product} key={index} />;
-                  })}
-                </Grid.Col>
-              </Grid>
+            {dataDetail?.orderDLBDId ? (
+              <TableOrderDLBD
+                styles={styles}
+                columns={columns}
+                dataDetail={dataDetail}
+              />
             ) : (
               <Box pos={"relative"}>
                 {dataDetail?.step === Number(ORDER_PENDING) && (

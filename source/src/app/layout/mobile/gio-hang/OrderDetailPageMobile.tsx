@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ActionIcon,
   Button,
@@ -34,6 +34,8 @@ export default function OrderDetailPageMobile({
   reviews,
   close,
 }: any) {
+  const [containerHeight, setContainerHeight] = useState<any>("auto");
+
   const componentRef: any = useRef();
   const handlePrint = useReactToPrint({
     copyStyles: true,
@@ -44,6 +46,13 @@ export default function OrderDetailPageMobile({
       }
     },
   });
+
+  useEffect(() => {
+    if (componentRef.current) {
+      const height = componentRef.current.clientHeight;
+      setContainerHeight(height);
+    }
+  }, []);
 
   const { data } = useSession();
   const {
@@ -208,6 +217,8 @@ export default function OrderDetailPageMobile({
       },
     },
   ];
+
+  console.log(containerHeight);
   return (
     <Container>
       <Group justify="end">
@@ -215,6 +226,23 @@ export default function OrderDetailPageMobile({
           <IconPrinter />
         </ActionIcon>
       </Group>
+      <style>
+        {`
+          @media print {
+            @page {
+              size: 80mm ${
+                containerHeight / 3.3
+              }mm; /* Đặt kích thước trang in là 80mm chiều rộng và tự động chiều cao */
+              margin: 1mm; /* Xóa lề của trang in */
+            }
+
+            body {
+              width: 80mm; /* Đặt chiều rộng của nội dung in là 80mm */
+              padding: 0; /* Xóa padding của nội dung in */
+            }
+          }
+        `}
+      </style>
       <div ref={componentRef} className="printable">
         <div className={styles.infoGara}>
           <ImageField
@@ -268,6 +296,10 @@ export default function OrderDetailPageMobile({
           <div style={{ display: "flex", gap: "6px" }}>
             XE:
             <Typo size="tiny">{dataSource?.car?.numberPlates}</Typo>
+          </div>
+          <div style={{ display: "flex", gap: "6px" }}>
+            Ghi chú:
+            <Typo size="tiny">{dataSource?.note}</Typo>
           </div>
         </div>
         <Divider

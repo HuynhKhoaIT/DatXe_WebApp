@@ -45,16 +45,7 @@ export default function OrderForm({
   isLoading,
 }: any) {
   const { data } = useSession();
-  const {
-    data: orderDlbdDetail,
-    isLoading: isLoadingDLBD,
-    isPending: isPendingDLBDDetail,
-  } = useOrderDLBDDetail({
-    token: data?.user?.token,
-    id: dataDetail?.orderDLBDId,
-  });
-
-  const {
+  var {
     data: orderDlbd,
     isLoading: isLoadingOrderDLBD,
     isPending: isPendingOrderDLBD,
@@ -576,7 +567,7 @@ export default function OrderForm({
         </Button>
       </Group>
       <LoadingOverlay
-        visible={isLoading || isLoadingDLBD}
+        visible={isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -617,7 +608,6 @@ export default function OrderForm({
             isPendingUpdate={isPendingUpdate}
             isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
-            orderDlbdDetail={orderDlbdDetail}
             isPendingDlbd={isPendingDlbd}
           />
         ) : (
@@ -648,7 +638,6 @@ export default function OrderForm({
             isPendingAdd={isPendingAdd}
             loadingButton={loadingButton}
             handleDbDLBD={handleDbDLBD}
-            orderDlbdDetail={orderDlbdDetail}
             columns={columns}
             isPendingDlbd={isPendingDlbd}
           />

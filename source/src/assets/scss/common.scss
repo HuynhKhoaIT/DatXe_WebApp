@@ -180,6 +180,7 @@ img {
 @media print {
     body * {
         visibility: hidden;
+        // width: 80mm;
     }
     .printable,
     .printable * {
