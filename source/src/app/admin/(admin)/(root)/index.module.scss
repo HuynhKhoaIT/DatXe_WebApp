@@ -25,7 +25,7 @@
     }
     .boxMenu {
         display: grid;
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(8, 1fr);
         grid-gap: 10px;
         margin-top: 12px;
         .itemMenu {
@@ -54,7 +54,7 @@
             }
         }
     }
-    @media only screen and (max-width: 1230px) {
+    @media only screen and (max-width: 1368px) {
         .boxMenu {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
