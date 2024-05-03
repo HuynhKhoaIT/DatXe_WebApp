@@ -198,5 +198,25 @@ export const sendSMSOrder = async (order: any) => {
     return error;
   }
 };
+export const sendSMSAdminOrder = async (order: any) => {
+  try {
+    let contentSMS = process.env.SMS_ORDER_ADMIN_CREATED;
+    let dataSMS = {
+      Phone: order.garage.phoneNumber,
+      Content: contentSMS,
+      ApiKey: process.env.SMS_APIKEY,
+      SecretKey: process.env.SMS_SECRET,
+      Brandname: process.env.SMS_BRANDNAME,
+      SmsType: 2,
+    };
+    const { data } = await axios({
+      method: "POST",
+      url: `${process.env.SMS_SMS_MKT}`,
+      data: dataSMS,
+    });
+  } catch (error) {
+    return error;
+  }
+};
 
 

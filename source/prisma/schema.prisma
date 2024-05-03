@@ -148,6 +148,7 @@ model Product {
   // financeIncome                           financeIncome[]
   productsHome                            productsHome[]
   reviews                                 ReviewsProduct[]
+  seoMeta                                 seoMeta?
 }
 
 model CategoriesOnProducts {
@@ -460,6 +461,7 @@ model Post{
   createdBy         String @default("1")
   garage            Garage @relation(fields: [garageId], references: [id])
   garageId          String @default("1")
+  seoMeta                                 seoMeta?
 }
 
 model PostCategory{
@@ -545,6 +547,16 @@ model productsHome{
   index               Int @default(10)
 }
 
+model seoMeta{
+  id            String    @id @default(uuid())
+  title         String?
+  description   String?   @db.Text
+  thumbnail     String?
+  product       Product?   @relation(fields: [productId], references: [id])
+  productId     String?    @unique // relation scalar field (used in the `@relation` attribute above)
+  post          Post?      @relation(fields: [postId], references: [id])
+  postId        String?    @unique // relation scalar field (used in the `@relation` attribute above)
+}
 
 enum SALETYPE {
   FIXED

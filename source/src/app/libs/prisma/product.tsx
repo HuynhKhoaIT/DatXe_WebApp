@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../prismadb";
+import { createSeoMeta } from "./seoMeta";
 
 export async function getProducts(requestData: any) {
   try {
@@ -309,6 +310,14 @@ export async function getProductsClient(requestData: any) {
 export async function createProduct(product: any) {
   try {
     const productFromDB = await prisma.product.create({ data: product });
+    if(productFromDB){
+      // create seo Meta
+      await createSeoMeta({
+        seoTitle: "Tiêu đề SEO",
+        description: "Mô tả SEO",
+        productId: productFromDB.id
+      });
+    }
     return { product: productFromDB };
   } catch (error) {
     return { error };
@@ -353,6 +362,8 @@ export async function getProductById(id: any) {
               },
             },
           },
+
+          seoMeta: true,
 
           garage: true,
           marketingCampaignDetail: {

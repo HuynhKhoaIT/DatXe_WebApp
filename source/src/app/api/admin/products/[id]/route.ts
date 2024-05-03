@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
+import { createSeoMeta } from '@/app/libs/prisma/seoMeta';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
@@ -164,6 +165,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                     categories: true,
                 },
             });
+
+            const seoData = {
+                seoTitle: json.seoTitle,
+                seoDescription: json.seoDescription,
+                seoThumbnail: json.seoThumbnail,
+                productId: id
+            }
+            const seo = await createSeoMeta(seoData);
 
             return new NextResponse(JSON.stringify(updatedPost), {
                 status: 201,
