@@ -22,8 +22,14 @@ export async function generateMetadata(
   });
 
   return {
-    title: product?.data?.product?.name,
-    description: product?.data?.product?.description,
+    title:
+      product?.data?.product?.seoMeta?.title || product?.data?.product?.name,
+    description:
+      product?.data?.product?.seoMeta?.description ||
+      product?.data?.product?.description,
+    openGraph: {
+      images: product?.data?.product?.seoMeta?.thumbnail,
+    },
   };
 }
 export default async function DetailProduct({

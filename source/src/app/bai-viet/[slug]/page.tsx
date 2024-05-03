@@ -22,10 +22,11 @@ export async function generateMetadata(
   });
 
   return {
-    title: newsData?.data?.title,
-    description: newsData?.data?.shortDescription,
+    title: newsData?.data?.seoMeta?.title || newsData?.data?.title,
+    description:
+      newsData?.data?.seoMeta?.desription || newsData?.data?.shortDescription,
     openGraph: {
-      images: newsData?.data?.thumbnail,
+      images: newsData?.data?.seoMeta?.thumbnail || newsData?.data?.thumbnail,
     },
   };
 }
