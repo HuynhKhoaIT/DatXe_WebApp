@@ -19,12 +19,13 @@ export default function Chart({ isLoading, data, arrayDate }: any) {
   const currentDate = new Date();
   const firstDayOfMonth = new Date(
     currentDate.getFullYear(),
-    currentDate.getMonth()
+    currentDate.getMonth(),
+    currentDate.getDate() - 15
   );
   const lastDayOfMonth = new Date(
     currentDate.getFullYear(),
-    currentDate.getMonth() + 1,
-    0
+    currentDate.getMonth(),
+    currentDate.getDate()
   );
 
   const [selectedDate, setSelectedDate] = useState<any>();

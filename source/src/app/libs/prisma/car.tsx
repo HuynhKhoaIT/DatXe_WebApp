@@ -5,7 +5,7 @@ import {createCustomer, getCustomerByPhone } from "./customer";
 import { getGarageByDlbdId } from "./garage";
 export async function createCar(json: any) {
   try {
-    let platesNumber = convertToPlatesNumber(json.numberPlates);
+    let platesNumber = (json.numberPlates);
     // check biển số tồn tại
     const checkIsset = await getCarsByPlates(platesNumber ?? "",json.garageId)
     if(checkIsset){
