@@ -18,9 +18,17 @@ export async function createSeoMeta(dataInput:any) {
             metaId = ob?.id;
         }
         if(metaId){
-            return await prisma.seoMeta.update({
+            return await prisma.seoMeta.updateMany({
                 where:{
-                    id: metaId,
+                    OR: (
+                        [
+                            {
+                                postId: metaId
+                            },{
+                                productId: metaId
+                            }
+                        ]
+                    )
                 },
                 data: dataInput
             })

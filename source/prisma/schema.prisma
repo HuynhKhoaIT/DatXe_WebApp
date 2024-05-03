@@ -455,13 +455,15 @@ model Post{
   title             String
   description       String @db.Text
   shortDescription  String?   @db.Text
-  thumbnail         String
+  thumbnail         String ?   @db.Text
   categories        CategoriesOnPosts[]
   status            STATUS @default(DRAFT)
   createdBy         String @default("1")
   garage            Garage @relation(fields: [garageId], references: [id])
   garageId          String @default("1")
-  seoMeta                                 seoMeta?
+  seoMeta           seoMeta?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }
 
 model PostCategory{
