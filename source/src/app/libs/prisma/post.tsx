@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import prisma from "../prismadb";
 import convertToSlug, { generateUUID } from "@/utils/until";
+import { createSeoMeta } from "./seoMeta";
 
 export async function getPosts(requestData: any) {
   try {
@@ -84,6 +85,13 @@ export async function createPost(post: any) {
   try {
     (post.uuId = generateUUID()), (post.slug = convertToSlug(post.slug));
     const rs = await prisma.post.create({ data: post });
+    const seoData = {
+        seoTitle: post.seoTitle,
+        seoDescription: post.seoDescription,
+        seoThumbnail: post.seoThumbnail,
+        postId: rs.id
+    }
+    const seo = await createSeoMeta(seoData);
     return rs;
   } catch (error) {
     return { error };
@@ -120,6 +128,13 @@ export async function updatePost(id: string,data: any) {
       },
       data: data,
     });
+    const seoData = {
+      seoTitle: data.seoTitle ?? postData.seoMeta?.title,
+      seoDescription: data.seoDescription ?? postData.seoMeta?.description,
+      seoThumbnail: data.seoThumbnail ?? postData.seoMeta?.thumbnail,
+      postId: rs.id
+  }
+  const seo = await createSeoMeta(seoData);
     return rs;
   } catch (error) {
     return { error };
@@ -135,8 +150,11 @@ export async function findPost(id: string) {
       id: id,
       garage:{
         status: 'PUBLIC'
-      }
+      },
     },
+    include: {
+      seoMeta: true
+    }
   });
 }
 

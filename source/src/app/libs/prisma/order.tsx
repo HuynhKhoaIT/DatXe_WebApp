@@ -4,7 +4,7 @@ import { createCustomer, getCustomerByPhone, getMyCustomers } from "./customer";
 import { randomString } from "@/utils";
 import { ORDERMETHOD } from "@prisma/client";
 import { getCarModelById } from "./carModel";
-import { sendSMSOrder } from "@/utils/order";
+import { sendSMSAdminOrder, sendSMSOrder } from "@/utils/order";
 import dayjs from "dayjs";
 import { ORDER_DONE } from "@/constants";
 
@@ -682,8 +682,10 @@ export async function createOrderClient(json: any) {
               },
             },
           },
+          garage: true
         },
       });
+      await sendSMSAdminOrder(order)
       return { order };
     })
     
