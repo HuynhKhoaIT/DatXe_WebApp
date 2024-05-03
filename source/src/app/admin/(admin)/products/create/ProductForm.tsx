@@ -75,6 +75,12 @@ export default function ProductForm({
     if (isEditing && dataDetail) {
       form.setInitialValues(dataDetail?.product);
       form.setValues(dataDetail?.product);
+      form.setFieldValue("seoTitle", dataDetail?.product?.seoMeta?.title);
+      form.setFieldValue(
+        "seoDescription",
+        dataDetail?.product?.seoMeta?.description
+      );
+
       if (dataDetail?.product?.brandDetail) {
         form.setFieldValue(
           "brands",
