@@ -8,6 +8,8 @@ import {
   Textarea,
   Select,
   LoadingOverlay,
+  Group,
+  Collapse,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
@@ -17,8 +19,12 @@ import QuillEditor from "@/app/components/elements/RichTextEditor";
 import { useAddNews } from "../../hooks/news/useAddNews";
 import CropImageLink from "@/app/components/common/CropImage";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import Typo from "@/app/components/elements/Typo";
+import { useDisclosure } from "@mantine/hooks";
+import { IconChevronDown } from "@tabler/icons-react";
 
 export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
+  const [opened, { toggle }] = useDisclosure(false);
   const [valueRTE, setValueRTE] = useState("");
   const { addItem, updateItem, isPendingAdd, isPendingUpdate } = useAddNews();
   const [thumbnailUrl, setThumbnailUrl] = useState<File | null>();
@@ -76,6 +82,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   const handleSubmit = async (values: any) => {
     values.slug = convertToSlug(values?.title);
     values.description = valueRTE;
+    values.seoThumbnail = values.thumbnail;
     if (isEditing) {
       updateItem(values);
     } else {
@@ -163,7 +170,50 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
             </Card>
           </Grid.Col>
         </Grid>
-
+        <Card withBorder={true} mt={20} radius={0}>
+          <Group justify="space-between">
+            <Typo
+              size="primary"
+              type="bold"
+              style={{ color: "var(--primary-orange)" }}
+            >
+              SEO META
+            </Typo>
+            {opened ? (
+              <IconChevronDown
+                onClick={toggle}
+                style={{ cursor: "pointer", rotate: "180deg" }}
+              />
+            ) : (
+              <IconChevronDown onClick={toggle} style={{ cursor: "pointer" }} />
+            )}
+          </Group>
+          <Collapse in={opened}>
+            <Grid>
+              <Grid.Col span={12}>
+                <TextInput
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("seoTitle")}
+                  label="Tiêu đề"
+                  type="text"
+                  placeholder="Tiêu đề"
+                />
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <Textarea
+                  size="lg"
+                  radius={0}
+                  label="Mô tả ngắn"
+                  minRows={4}
+                  autosize={true}
+                  {...form.getInputProps("seoDescription")}
+                  placeholder="Mô tả"
+                />
+              </Grid.Col>
+            </Grid>
+          </Collapse>
+        </Card>
         <FooterSavePage
           saveLoading={isPendingAdd || isPendingUpdate}
           okText={isEditing ? "Cập nhật" : "Thêm"}

@@ -4,7 +4,28 @@ import ProductDetailPageMobile from "@/app/layout/mobile/san-pham/ProductDetailP
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
 export const dynamic = "force-dynamic";
+import type { Metadata, ResolvingMetadata } from "next";
 
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const product = await callApi(apiConfig.products.getById, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
+
+  return {
+    title: product?.data?.product?.name,
+    description: product?.data?.product?.description,
+  };
+}
 export default async function DetailProduct({
   params,
 }: {

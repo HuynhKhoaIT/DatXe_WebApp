@@ -25,6 +25,7 @@ import ListPage from "@/app/components/layout/ListPage";
 import styles from "./index.module.scss";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
 import { useProduct } from "../hooks/product/useProduct";
+import ImageField from "@/app/components/form/ImageField";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -79,22 +80,19 @@ export default function ProductsManaga() {
       render: (data: any) => {
         if (activeTab === "first" && data) {
           const images = JSON?.parse(data);
-          if (!images) {
-            return (
-              <Image
-                radius="md"
-                src={ImageDefult.src}
-                h={40}
-                w="auto"
-                fit="contain"
-              />
-            );
-          }
           return (
-            <Image radius="md " h={40} w={40} fit="cover" src={images[0]} />
+            <ImageField
+              radius="md "
+              h={40}
+              w={40}
+              fit="cover"
+              src={images?.[0]}
+            />
           );
         } else {
-          return <Image radius="md " h={40} w={40} fit="cover" src={data} />;
+          return (
+            <ImageField radius="md " h={40} w={40} fit="cover" src={data} />
+          );
         }
       },
     },
