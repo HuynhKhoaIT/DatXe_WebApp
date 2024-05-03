@@ -75,6 +75,12 @@ export default function ProductForm({
     if (isEditing && dataDetail) {
       form.setInitialValues(dataDetail?.product);
       form.setValues(dataDetail?.product);
+      form.setFieldValue("seoTitle", dataDetail?.product?.seoMeta?.title);
+      form.setFieldValue(
+        "seoDescription",
+        dataDetail?.product?.seoMeta?.description
+      );
+
       if (dataDetail?.product?.brandDetail) {
         form.setFieldValue(
           "brands",
@@ -249,53 +255,7 @@ export default function ProductForm({
                   />
                 </Grid.Col>
               </Grid>
-              <Card withBorder={true} mt={20} radius={0}>
-                <Group justify="space-between">
-                  <Typo
-                    size="primary"
-                    type="bold"
-                    style={{ color: "var(--primary-orange)" }}
-                  >
-                    SEO META
-                  </Typo>
-                  {opened ? (
-                    <IconChevronDown
-                      onClick={toggle}
-                      style={{ cursor: "pointer", rotate: "180deg" }}
-                    />
-                  ) : (
-                    <IconChevronDown
-                      onClick={toggle}
-                      style={{ cursor: "pointer" }}
-                    />
-                  )}
-                </Group>
-                <Collapse in={opened}>
-                  <Grid>
-                    <Grid.Col span={12}>
-                      <TextInput
-                        size="lg"
-                        radius={0}
-                        {...form.getInputProps("seoTitle")}
-                        label="Tiêu đề"
-                        type="text"
-                        placeholder="Tiêu đề"
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={12}>
-                      <Textarea
-                        size="lg"
-                        radius={0}
-                        label="Mô tả ngắn"
-                        minRows={4}
-                        autosize={true}
-                        {...form.getInputProps("seoDescription")}
-                        placeholder="Mô tả"
-                      />
-                    </Grid.Col>
-                  </Grid>
-                </Collapse>
-              </Card>
+
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <QuillEditor
@@ -330,6 +290,53 @@ export default function ProductForm({
                 handleChangeNameCar={handleChangeNameCar}
                 handleChangeYearCar={handleChangeYearCar}
               />
+            </Card>{" "}
+            <Card withBorder={true} mt={20} radius={0}>
+              <Group justify="space-between">
+                <Typo
+                  size="primary"
+                  type="bold"
+                  style={{ color: "var(--primary-orange)" }}
+                >
+                  SEO META
+                </Typo>
+                {opened ? (
+                  <IconChevronDown
+                    onClick={toggle}
+                    style={{ cursor: "pointer", rotate: "180deg" }}
+                  />
+                ) : (
+                  <IconChevronDown
+                    onClick={toggle}
+                    style={{ cursor: "pointer" }}
+                  />
+                )}
+              </Group>
+              <Collapse in={opened}>
+                <Grid>
+                  <Grid.Col span={12}>
+                    <TextInput
+                      size="lg"
+                      radius={0}
+                      {...form.getInputProps("seoTitle")}
+                      label="Tiêu đề"
+                      type="text"
+                      placeholder="Tiêu đề"
+                    />
+                  </Grid.Col>
+                  <Grid.Col span={12}>
+                    <Textarea
+                      size="lg"
+                      radius={0}
+                      label="Mô tả ngắn"
+                      minRows={4}
+                      autosize={true}
+                      {...form.getInputProps("seoDescription")}
+                      placeholder="Mô tả"
+                    />
+                  </Grid.Col>
+                </Grid>
+              </Collapse>
             </Card>
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
