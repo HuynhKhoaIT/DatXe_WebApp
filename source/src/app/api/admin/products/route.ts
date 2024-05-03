@@ -7,6 +7,7 @@ type ResponseBody = { errors: { message: string }[] } | { username: string };
 import { getProducts } from '@/app/libs/prisma/product';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 import { generateUUID } from '@/utils/until';
+import { createSeoMeta } from '@/app/libs/prisma/seoMeta';
 export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
@@ -192,6 +193,7 @@ export async function POST(request: Request) {
                     brandDetail: JSON.stringify(json.brands),
                 },
             });
+            
 
             const updatedPost = await prisma.product.update({
                 where: {
@@ -201,6 +203,13 @@ export async function POST(request: Request) {
                     slug: slugify(product.name.toString()) + '-' + product.id,
                 },
             });
+            const seoData = {
+                seoTitle: json.seoTitle,
+                seoDescription: json.seoDescription,
+                seoThumbnail: json.seoThumbnail,
+                productId: product.id
+            }
+            const seo = await createSeoMeta(seoData);
 
             return new NextResponse(JSON.stringify(updatedPost), {
                 status: 201,
