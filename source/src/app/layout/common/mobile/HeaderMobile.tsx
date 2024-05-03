@@ -12,7 +12,7 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import IconCart from "@/assets/icons/cart.svg";
 import dynamic from "next/dynamic";
 import { signOut, useSession } from "next-auth/react";
@@ -24,14 +24,15 @@ const DynamicMenu = dynamic(() => import("./NavDrawer"), {
 });
 const HeaderMobile = () => {
   const { data: session } = useSession();
-
+  const searchParams = useSearchParams();
+  const s: any = searchParams.get("s");
   const role = session?.user?.role;
   const { data: profile } = useAccountDetail();
   const router = useRouter();
   const [openNav, setOpenNav] = useState(false);
   const form = useForm({
     initialValues: {
-      searchValue: "",
+      searchValue: s || "",
     },
     validate: {},
   });
