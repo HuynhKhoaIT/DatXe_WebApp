@@ -2,7 +2,9 @@
 import {
   Box,
   Card,
+  Collapse,
   Grid,
+  Group,
   LoadingOverlay,
   MultiSelect,
   NumberInput,
@@ -19,6 +21,8 @@ import QuillEditor from "@/app/components/elements/RichTextEditor";
 import InfoCar from "../[productId]/InfoCar";
 import { useAddProduct } from "../../hooks/product/useAddProduct";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import Typo from "@/app/components/elements/Typo";
+import { IconChevronDown } from "@tabler/icons-react";
 
 export default function ProductForm({
   isEditing = false,
@@ -31,6 +35,7 @@ export default function ProductForm({
     isLoadingCategory,
     categoryOptions,
   } = useAddProduct();
+  const [opened, { toggle }] = useDisclosure(false);
 
   const [loading, handlers] = useDisclosure();
   const [valueRTE, setValueRTE] = useState("");
@@ -142,6 +147,8 @@ export default function ProductForm({
         })
       );
 
+      values.seoThumbnail = responses?.[0];
+
       values.images = JSON.stringify(responses);
     } catch (error) {
       console.error("Error:", error);
@@ -242,9 +249,57 @@ export default function ProductForm({
                   />
                 </Grid.Col>
               </Grid>
+              <Card withBorder={true} mt={20} radius={0}>
+                <Group justify="space-between">
+                  <Typo
+                    size="primary"
+                    type="bold"
+                    style={{ color: "var(--primary-orange)" }}
+                  >
+                    SEO META
+                  </Typo>
+                  {opened ? (
+                    <IconChevronDown
+                      onClick={toggle}
+                      style={{ cursor: "pointer", rotate: "180deg" }}
+                    />
+                  ) : (
+                    <IconChevronDown
+                      onClick={toggle}
+                      style={{ cursor: "pointer" }}
+                    />
+                  )}
+                </Group>
+                <Collapse in={opened}>
+                  <Grid>
+                    <Grid.Col span={12}>
+                      <TextInput
+                        size="lg"
+                        radius={0}
+                        {...form.getInputProps("seoTitle")}
+                        label="Tiêu đề"
+                        type="text"
+                        placeholder="Tiêu đề"
+                      />
+                    </Grid.Col>
+                    <Grid.Col span={12}>
+                      <Textarea
+                        size="lg"
+                        radius={0}
+                        label="Mô tả ngắn"
+                        minRows={4}
+                        autosize={true}
+                        {...form.getInputProps("seoDescription")}
+                        placeholder="Mô tả"
+                      />
+                    </Grid.Col>
+                  </Grid>
+                </Collapse>
+              </Card>
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <QuillEditor
+                    label="Mô tả chi tiết"
                     theme="snow"
                     placeholder="Mô tả chi tiết"
                     className={"quill"}
@@ -267,6 +322,7 @@ export default function ProductForm({
                   />
                 </Grid.Col>
               </Grid>
+
               <InfoCar
                 carData={car}
                 setCar={setCar}

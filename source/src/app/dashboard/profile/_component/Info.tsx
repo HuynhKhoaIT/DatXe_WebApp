@@ -5,7 +5,8 @@ import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import CardImg from "@/assets/images/card.png";
 import { BackgroundImage, Center, Text } from "@mantine/core";
-export default function InfoProfile() {
+export default function InfoProfile({ myAccount, cars }: any) {
+  console.log(cars);
   return (
     <div className={styles.wrapper}>
       <div>
@@ -14,19 +15,48 @@ export default function InfoProfile() {
             Thông tin hồ sơ
           </Typo>
         </div>
-        <BackgroundImage src={CardImg.src} radius="sm" h={300} w={550}>
+        <BackgroundImage
+          src={CardImg.src}
+          radius="sm"
+          h={{ base: 200, md: 250, lg: 250 }}
+          w={{ base: "100%", md: 450, lg: 450 }}
+        >
           <ul className={styles.infoCard}>
             <li>
-              <span>Mã khách hàng:</span> <span>1232322</span>
+              <span>Mã khách hàng: </span>
+              <span style={{ fontWeight: 600, fontSize: 18 }}>
+                {myAccount?.id}
+              </span>
             </li>
             <li>
-              <span>Điểm hiện có:</span> <span>140000</span>
+              <span>Sở hữu: </span>{" "}
+              <span style={{ fontWeight: 600, fontSize: 18 }}>
+                {cars?.total} xe
+              </span>
             </li>
             <li>
-              <span>Thành viên:</span> <span>bạc</span>
+              <span>Thành viên: </span>
+              <span
+                style={{
+                  fontWeight: 600,
+                  fontSize: 18,
+                  color: "var(--theme-color)",
+                }}
+              >
+                bạc
+              </span>
             </li>
             <li>
-              <span>Mã thẻ:</span> <span>Xe747484848848</span>
+              <span>Mã thẻ: </span>
+              <span
+                style={{
+                  fontWeight: 600,
+                  fontSize: 18,
+                  color: "var(--theme-color)",
+                }}
+              >
+                {myAccount?.phoneNumber}
+              </span>
             </li>
           </ul>
         </BackgroundImage>

@@ -32,6 +32,7 @@ export default function QuillEditor({
   theme,
   style,
   disabled,
+  label,
 }: {
   value: string;
   setValue: (value: string) => void;
@@ -41,6 +42,7 @@ export default function QuillEditor({
   className?: string;
   disabled?: boolean;
   style?: any;
+  label?: string | null;
 }): JSX.Element {
   const editor = useRef<any>();
   var quill;
@@ -142,6 +144,11 @@ export default function QuillEditor({
 
   return (
     <div className={`${className}`} style={{ height: 500, fontSize: "1rem" }}>
+      {label && (
+        <span style={{ fontSize: 16, fontWeight: 600, color: "#3d4465" }}>
+          {label}
+        </span>
+      )}
       <ReactQuill
         theme={theme}
         modules={{ ...modules }}

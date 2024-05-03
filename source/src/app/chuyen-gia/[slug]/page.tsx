@@ -13,6 +13,30 @@ import IconIg from "@/assets/icons/instagram.svg";
 import { getCategories } from "@/app/libs/prisma/category";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
+import type { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const expertData: any = await callApi(apiConfig.expert.getById, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
+  return {
+    title: expertData?.shortName,
+    description: expertData?.description,
+    openGraph: {
+      images: expertData?.logo,
+    },
+  };
+}
 
 const blogs = [
   {
