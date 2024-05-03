@@ -1,14 +1,17 @@
 "use client";
 import { ActionIcon, Button, CloseButton, Grid, Input } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./SearchFormName.module.scss";
 import search from "@/assets/icons/search.svg";
 export default function SearchFormName() {
+  const searchParams = useSearchParams();
+  const s: any = searchParams.get("s");
+
   const router = useRouter();
   const form = useForm({
     initialValues: {
-      searchValue: "",
+      searchValue: s || "",
     },
     validate: {},
   });
