@@ -45,6 +45,8 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       try {
         form.setInitialValues(dataDetail);
         form.setValues(dataDetail);
+        form.setFieldValue("seoTitle", dataDetail?.seoMeta?.title);
+        form.setFieldValue("seoDescription", dataDetail?.seoMeta?.description);
         setThumbnailUrl(dataDetail?.thumbnail);
         setValueRTE(dataDetail?.description);
       } catch (error) {

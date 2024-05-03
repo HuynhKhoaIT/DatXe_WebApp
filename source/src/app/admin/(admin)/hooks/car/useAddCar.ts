@@ -53,7 +53,15 @@ export const useAddCar = (): UseCar => {
     const searchParams = useSearchParams();
     const { mutate: addItem,isPending:isPendingAdd  } = useMutation({
         mutationFn: addCar,
-        onSuccess: () => {
+        onSuccess: (res) => {
+            if(res.status == 'error'){
+                notifications.show({
+                    title: 'Thất bại',
+                    message: 'Biển số xe đã tồn tại',
+                });
+                return;
+            }
+            console.log(res)
             router.back();
             notifications.show({
                 title: 'Thành công',
