@@ -34,7 +34,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             }
             const productData = {
                 sku: productDlbd.productCode,
-                isProduct: productDlbd.isProduct,
+                isProduct: productDlbd.isProduct == true ? 1 : 0,
                 productId: productDlbd.id,
                 name: productDlbd.name,
                 description: productDlbd.description,
