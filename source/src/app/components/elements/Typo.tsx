@@ -47,6 +47,21 @@ const Typo: React.FC<TypoProps> = ({
     "semi-bold": "var(--font-semi-bold)",
   };
 
+  if(size=='big'){
+    return (
+      <h1
+        className={className}
+        style={{
+          fontSize: sizeType[size as keyof SizeType],
+          fontWeight: weightType[type as keyof WeightType],
+          ...style,
+        }}
+      >
+        {children}
+      </h1>
+    )
+  }
+
   return (
     <div
       className={className}

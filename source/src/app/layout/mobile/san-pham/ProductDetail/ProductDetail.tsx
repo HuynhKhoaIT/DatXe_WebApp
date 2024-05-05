@@ -78,7 +78,6 @@ function ProductDetail({ ProductDetail, productReview }: any) {
             subTotal: ProductDetail?.salePrice,
           });
         }
-        console.log("existingCartItems", existingCartItems);
 
         localStorage.setItem("cartData", JSON.stringify(existingCartItems));
         notifications.show({
@@ -120,6 +119,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
           <Grid.Col span={12}>
             <div className={styles.info}>
               <Typo
+                size="big"
                 type="bold"
                 style={{ marginBottom: 15, color: "var(--text-color)" }}
               >

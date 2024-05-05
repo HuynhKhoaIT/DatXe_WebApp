@@ -121,6 +121,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
             <div className={styles.info}>
               <Typo
                 type="bold"
+                size="big"
                 style={{ marginBottom: 15, color: "var(--text-color)" }}
               >
                 {ProductDetail?.name}
@@ -133,7 +134,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   {ProductDetail?.categories?.map(
                     (item: any, index: number) => {
                       return (
-                        <div key={index}>
+                        <div key={index} style={{display:'flex'}}>
                           <Typo
                             style={{
                               fontSize: "1rem",
@@ -159,6 +160,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 </div>
               </div>
               <div className={styles.salePrice}>
+              {ProductDetail?.price !=ProductDetail?.salePrice&&(
                 <Typo
                   style={{
                     fontSize: "22px",
@@ -168,6 +170,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 >
                   <del>{ProductDetail?.price?.toLocaleString()} đ</del>
                 </Typo>
+              )}
+                
                 {/* <Typo
                   style={{
                     fontSize: "14px",
