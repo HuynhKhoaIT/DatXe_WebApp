@@ -45,7 +45,7 @@ export async function getCustomers(requestData: any) {
     titleFilter = requestData.s;
   }
   let garageId = {};
-  if (requestData.garageId) {
+  if (requestData.garageId!="2") {
     garageId = requestData.garageId;
   }
   let status = {
