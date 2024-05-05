@@ -13,7 +13,8 @@ export async function POST(request: Request) {
         if (session) {
             const id = json.id;
             const order = await findOrder(id,{});
-            if(order.orderDLBDId){
+            // return NextResponse.json(order.orderDLBDId);
+            if(order.orderDLBDId==null){
                 const { data } = await axios({
                     method: "POST",
                     url: `https://v2.dlbd.vn/api/v3/app/order/sync-datxe`,
