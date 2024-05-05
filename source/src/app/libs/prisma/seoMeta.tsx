@@ -17,12 +17,13 @@ export async function createSeoMeta(dataInput:any) {
             let ob = await getByPostId(dataInput.postId);
             metaId = ob?.id;
         }
+        console.log("metaId",metaId);
         if(metaId){
-            return await prisma.seoMeta.update({
+            return await prisma.seoMeta.updateMany({
                 where:{
-                    id: metaId,
+                    id: metaId
                 },
-                data: dataInput
+                data: metaData
             })
         }
         return await prisma.seoMeta.create({

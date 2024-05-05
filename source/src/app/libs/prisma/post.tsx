@@ -41,7 +41,7 @@ export async function getPosts(requestData: any) {
         take: take,
         skip: skip,
         orderBy: {
-          id: "desc",
+          createdAt: "asc",
         },
         where: {
           title: {
@@ -81,17 +81,28 @@ export async function getPosts(requestData: any) {
   }
 }
 
-export async function createPost(post: any) {
+export async function createPost(dataInput: any) {
   try {
-    (post.uuId = generateUUID()), (post.slug = convertToSlug(post.slug));
+    const post = {
+      uuId: generateUUID(),
+      slug: convertToSlug(dataInput.slug),
+      title: dataInput.title,
+      description: dataInput.description,
+      shortDescription: dataInput.shortDescription,
+      thumbnail: dataInput.thumbnail,
+      status: dataInput.status,
+      createdBy: dataInput.createdBy,
+      garageId: dataInput.garageId,      
+    }
     const rs = await prisma.post.create({ data: post });
     const seoData = {
-        seoTitle: post.seoTitle,
-        seoDescription: post.seoDescription,
-        seoThumbnail: post.seoThumbnail,
+        seoTitle: dataInput.seoTitle,
+        seoDescription: dataInput.seoDescription,
+        seoThumbnail: dataInput.seoThumbnail,
         postId: rs.id
     }
     const seo = await createSeoMeta(seoData);
+    console.log(seo)
     return rs;
   } catch (error) {
     return { error };
@@ -99,46 +110,46 @@ export async function createPost(post: any) {
 }
 export async function updatePost(id: string,data: any) {
   try {
-    const postData = await findPost(id);
-    
-    if(data.title){
-        postData.title = data.title;
-    }
-    postData.slug = convertToSlug(postData.title)
-
-    if(data.description){
-        postData.description = data.description
-    }
-    if(data.shortDescription){
-        postData.shortDescription = data.shortDescription
-    }
-    if(data.thumbnail){
-        postData.thumbnail = data.thumbnail
-    }
-    if(data.status){
-        postData.status = data.status
-    }
-    if(data.createdBy){
-        postData.createdBy = data.createdBy.toString()
-    }
-    data.slug = convertToSlug(data.slug);
-    const rs = await prisma.post.update({
-      where: {
-        id: id,
-      },
-      data: data,
-    });
+    const postData = await findPostAdmin(id);
     const seoData = {
       seoTitle: data.seoTitle ?? postData.seoMeta?.title,
       seoDescription: data.seoDescription ?? postData.seoMeta?.description,
       seoThumbnail: data.seoThumbnail ?? postData.seoMeta?.thumbnail,
-      postId: rs.id
-  }
-  const seo = await createSeoMeta(seoData);
+      postId: id
+    }
+    
+    const seo = await createSeoMeta(seoData);
+    const rs = await prisma.post.update({
+      where: {
+        id: id,
+      },
+      data: {
+        slug: convertToSlug(data.slug),
+        title: data.title ?? postData.title,
+        description: data.description ?? postData.description,
+        shortDescription: data.shortDescription ?? postData.shortDescription,
+        thumbnail: data.thumbnail ?? postData.thumbnail,
+        status: data.status ?? postData.status,
+        createdBy: data.createdBy ?? postData.createdBy,
+        garageId: data.garageId ?? postData.garageId,
+      },
+    });
+    
     return rs;
   } catch (error) {
     return { error };
   }
+}
+
+export async function findPostAdmin(id: string) {
+  return await prisma.post.findFirstOrThrow({
+    where: {
+      id: id,
+    },
+    include: {
+      seoMeta: true
+    }
+  });
 }
 
 export async function findPost(id: string) {

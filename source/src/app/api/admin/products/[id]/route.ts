@@ -88,12 +88,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                             carBrandType: 'CARNAME',
                             carModel: {
                                 connect: {
-                                    id: (b.nameId),
+                                    id: (b.nameId).toString(),
                                 },
                             },
                         };
                         if (!brandArrTemp.includes((b.nameId))) {
-                            brandArrTemp.push(Number(b.nameId));
+                            brandArrTemp.push((b.nameId));
                             brandArr.push(bO);
                         }
                     }
@@ -101,15 +101,15 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                         let cO = {
                             assignedBy: assignedBy,
                             assignedAt: assignedAt,
-                            carBrandType: 'CARYEAR',
+                            carBrandType: 'CARBRAND',
                             carModel: {
                                 connect: {
-                                    id: Number(b.brandId),
+                                    id: (b.brandId).toString(),
                                 },
                             },
                         };
-                        if (!brandArrTemp.includes(Number(b.brandId))) {
-                            brandArrTemp.push(Number(b.brandId));
+                        if (!brandArrTemp.includes((b.brandId))) {
+                            brandArrTemp.push((b.brandId));
                             brandArr.push(cO);
                         }
                     }
