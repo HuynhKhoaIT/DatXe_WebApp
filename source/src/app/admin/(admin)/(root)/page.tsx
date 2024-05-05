@@ -28,11 +28,23 @@ export default function DashboardAdmin() {
     arrayDate,
     isFetching,
   } = useAdmin();
+  const currentDate = new Date();
+
+  const firstDayOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate() - 14
+  );
+  const lastDayOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate()
+  );
   const searchParams = useSearchParams();
   const startDate: any = searchParams.get("dateStart");
   const endDate: any = searchParams.get("dateEnd");
-  const formattedStartDate = dayjs(startDate).format("DD/MM/YYYY");
-  const formattedEndDate = dayjs(endDate).format("DD/MM/YYYY");
+  const formattedStartDate = dayjs(startDate||firstDayOfMonth).format("DD/MM/YYYY");
+  const formattedEndDate = dayjs(endDate||lastDayOfMonth).format("DD/MM/YYYY");
 
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 600px)");
@@ -242,6 +254,8 @@ export default function DashboardAdmin() {
         isLoading={isLoading || isFetching}
         data={newArray}
         arrayDate={arrayDate}
+        firstDayOfMonth={firstDayOfMonth}
+        lastDayOfMonth={lastDayOfMonth}
       />
       {openedModal && (
         <DynamicModalAcceptCart openModal={openedModal} close={closeModal} />

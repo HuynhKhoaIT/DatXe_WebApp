@@ -15,18 +15,18 @@ import {
   ORDER_PENDING,
 } from "@/constants";
 import SimpleLineChart from "./SimpleLineChart";
-export default function Chart({ isLoading, data, arrayDate }: any) {
-  const currentDate = new Date();
-  const firstDayOfMonth = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate() - 14
-  );
-  const lastDayOfMonth = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate()
-  );
+export default function Chart({ isLoading, data, arrayDate,firstDayOfMonth, lastDayOfMonth }: any) {
+  // const currentDate = new Date();
+  // const firstDayOfMonth = new Date(
+  //   currentDate.getFullYear(),
+  //   currentDate.getMonth(),
+  //   currentDate.getDate() - 14
+  // );
+  // const lastDayOfMonth = new Date(
+  //   currentDate.getFullYear(),
+  //   currentDate.getMonth(),
+  //   currentDate.getDate()
+  // );
 
   const [selectedDate, setSelectedDate] = useState<any>();
   const router = useRouter();
