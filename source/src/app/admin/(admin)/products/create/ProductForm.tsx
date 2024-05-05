@@ -105,11 +105,15 @@ export default function ProductForm({
       setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
+
+      console.log(dataDetail);
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
-      form.setFieldValue("description", dataDetail?.description);
+      form.setFieldValue("metaDescription", dataDetail?.description);
       form.setFieldValue("status", "PUBLIC");
       form.setFieldValue("isProduct", "1");
+      form.setFieldValue("sku", dataDetail?.sku);
+
       if (dataDetail?.categoryId) {
         form.setFieldValue("categories", [dataDetail?.categoryId]);
       }
