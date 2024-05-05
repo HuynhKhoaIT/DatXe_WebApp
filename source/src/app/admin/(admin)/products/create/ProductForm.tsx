@@ -106,7 +106,6 @@ export default function ProductForm({
     }
     if (isDirection) {
 
-      console.log(dataDetail);
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
       form.setFieldValue("metaDescription", dataDetail?.description);
@@ -117,6 +116,14 @@ export default function ProductForm({
       if (dataDetail?.categoryId) {
         form.setFieldValue("categories", [dataDetail?.categoryId]);
       }
+      if (dataDetail?.brandDetail) {
+        form.setFieldValue(
+          "brands",
+          JSON?.parse(dataDetail?.brandDetail)
+        );
+        setCar(JSON?.parse(dataDetail?.brandDetail));
+      }
+
     }
   }, [dataDetail]);
   const [car, setCar] = useState([{ brandId: "", nameId: "", yearId: "" }]);
