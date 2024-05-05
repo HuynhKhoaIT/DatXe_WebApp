@@ -21,6 +21,7 @@ export default function CustomersForm({
   isEditing,
   dataDetail,
   isLoading,
+  isPreview
 }: any) {
   const {
     addItem,
@@ -119,6 +120,7 @@ export default function CustomersForm({
                     label="Họ và tên"
                     type="text"
                     placeholder="Họ và tên"
+                    disabled={isPreview}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -130,6 +132,8 @@ export default function CustomersForm({
                     label="Số điện thoại"
                     type="text"
                     placeholder="Số điện thoại"
+                    disabled={isPreview}
+
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
@@ -139,6 +143,8 @@ export default function CustomersForm({
                     placeholder="Ngày sinh"
                     clearable={true}
                     maxDate={new Date()}
+                    disabled={isPreview}
+
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
@@ -150,6 +156,8 @@ export default function CustomersForm({
                     checkIconPosition="right"
                     placeholder="Giới tính"
                     data={sexOptions}
+                    disabled={isPreview}
+
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -173,7 +181,10 @@ export default function CustomersForm({
                       setProvince(value);
                       setDistrict(null);
                       setWard(null);
+                      
                     }}
+                    disabled={isPreview}
+
                   ></Select>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -182,6 +193,8 @@ export default function CustomersForm({
                     radius={0}
                     {...form.getInputProps("districtId")}
                     label="Huyện/Quận"
+                    disabled={isPreview}
+
                     placeholder="Chọn huyện/quận"
                     data={districtOptions}
                     value={district}
@@ -200,6 +213,8 @@ export default function CustomersForm({
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
+                    disabled={isPreview}
+
                     radius={0}
                     {...form.getInputProps("wardId")}
                     label="Xã/Phường"
@@ -216,6 +231,8 @@ export default function CustomersForm({
                 <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
                   <TextInput
                     size="lg"
+                    disabled={isPreview}
+
                     radius={0}
                     // withAsterisk
                     {...form.getInputProps("address")}
@@ -227,6 +244,8 @@ export default function CustomersForm({
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
+                    disabled={isPreview}
+
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -241,6 +260,8 @@ export default function CustomersForm({
                   <Textarea
                     size="lg"
                     radius={0}
+                    disabled={isPreview}
+
                     label="Mô tả chi tiết"
                     minRows={4}
                     autosize={true}
@@ -252,10 +273,19 @@ export default function CustomersForm({
             </Card>
           </Grid.Col>
         </Grid>
-        <FooterSavePage
-          saveLoading={isPendingUpdate || isPendingAdd}
-          okText={isEditing ? "Cập nhật" : "Thêm"}
+        {!isPreview?(
+
+            <FooterSavePage
+              saveLoading={isPendingUpdate || isPendingAdd}
+              okText={isEditing ? "Cập nhật" : "Thêm"}
+            />
+        ):(
+          <FooterSavePage
+            saveLoading={isPendingUpdate || isPendingAdd}
+            isOk={false}
+            cancelText="Quay lại"
         />
+        )}
       </form>
     </Box>
   );

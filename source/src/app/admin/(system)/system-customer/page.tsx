@@ -3,16 +3,17 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Fragment, useState } from "react";
-import { useCustomers } from "../../(admin)/hooks/customer/useCustomer";
 import ListPage from "@/app/components/layout/ListPage";
 import SearchForm from "@/app/components/form/SearchForm";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { IconCar, IconPencil, IconTrash } from "@tabler/icons-react";
+import { IconCar, IconEye, IconPencil, IconTrash } from "@tabler/icons-react";
 import { Badge, Button, Tooltip } from "@mantine/core";
 import Link from "next/link";
 import { FieldTypes, sexOptions, statusOptions } from "@/constants/masterData";
 import dayjs from "dayjs";
 import { useDisclosure } from "@mantine/hooks";
+import { useCustomers } from "../hooks/customers/useCustomers";
+import { useRouter } from "next/navigation";
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Quản lý khách hàng" },
@@ -22,18 +23,17 @@ export default function Customers() {
   const {
     customers,
     isLoading,
-    isLoadingDlbd,
     isFetching,
     error,
     page,
     setPage,
     deleteItem,
-    customersDlbd,
     activeTab,
     setActiveTab,
   } = useCustomers();
   const [deleteRow, setDeleteRow] = useState();
 
+  const route = useRouter();
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
@@ -138,13 +138,7 @@ export default function Customers() {
       render: (record: any) => {
         return (
           <>
-            <Link
-              href={{
-                pathname: `/admin/system-customer/cars`,
-                query: { customerId: record?.id },
-              }}
-            >
-              <Tooltip label="Xe" withArrow position="bottom">
+            <Tooltip label="Xe" withArrow position="bottom">
                 <Button
                   size="lg"
                   radius={0}
@@ -154,19 +148,18 @@ export default function Customers() {
                   p={5}
                   onClick={(e) => {
                     e.stopPropagation();
+                    route.push(`/admin/system-customer/cars?customerId=${record?.id}`)
                   }}
                 >
                   <IconCar size={16} />
                 </Button>
-              </Tooltip>
-            </Link>
-
+            </Tooltip>
             <Link
               href={{
                 pathname: `/admin/system-customer/${record.id}`,
               }}
             >
-              <Tooltip label="Chỉnh sửa" withArrow position="bottom">
+              <Tooltip label="Xem chi tiết" withArrow position="bottom">
                 <Button
                   size="lg"
                   radius={0}
@@ -176,11 +169,11 @@ export default function Customers() {
                   p={5}
                   onClick={() => {}}
                 >
-                  <IconPencil size={16} color="blue" />
+                  <IconEye size={16} color="blue" />
                 </Button>
               </Tooltip>
             </Link>
-            <Tooltip label="Xoá" withArrow position="bottom">
+            {/* <Tooltip label="Xoá" withArrow position="bottom">
               <Button
                 size="lg"
                 radius={0}
@@ -196,7 +189,7 @@ export default function Customers() {
               >
                 <IconTrash size={16} color="red" />
               </Button>
-            </Tooltip>
+            </Tooltip> */}
           </>
         );
       },
