@@ -1,42 +1,38 @@
 "use client";
-import React, { useState } from "react";
-import { Badge, Button, Flex, Image, Tabs, Tooltip } from "@mantine/core";
-import { IconCar, IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
-import { useDisclosure } from "@mantine/hooks";
-import Link from "next/link";
-import TableBasic from "@/app/components/table/Tablebasic";
-import dynamic from "next/dynamic";
-import { FieldTypes, sexOptions, statusOptions } from "@/constants/masterData";
-import SearchForm from "@/app/components/form/SearchForm";
-import dayjs from "dayjs";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+import Breadcrumb from "@/app/components/form/Breadcrumb";
+import { Fragment, useState } from "react";
+import { useCustomers } from "../../(admin)/hooks/customer/useCustomer";
 import ListPage from "@/app/components/layout/ListPage";
-import styles from "./index.module.scss";
-import { useRouter } from "next/navigation";
+import SearchForm from "@/app/components/form/SearchForm";
+import TableBasic from "@/app/components/table/Tablebasic";
+import { IconCar, IconPencil, IconTrash } from "@tabler/icons-react";
+import { Badge, Button, Tooltip } from "@mantine/core";
+import Link from "next/link";
+import { FieldTypes, sexOptions, statusOptions } from "@/constants/masterData";
+import dayjs from "dayjs";
+import { useDisclosure } from "@mantine/hooks";
+const breadcrumbs = [
+  { title: "Tổng quan", href: "/admin" },
+  { title: "Quản lý khách hàng" },
+];
 
-const DynamicModalDeleteItem = dynamic(
-  () => import("@/app/admin/_component/ModalDeleteItem"),
-  {
-    ssr: false,
-  }
-);
-
-export default function CustomerListPage({
-  customers,
-  customersDlbd,
-  activeTab,
-  setActiveTab,
-  page,
-  setPage,
-  isLoading,
-  isLoadingDlbd,
-  deleteItem,
-}: any) {
-
-  const router = useRouter();
+export default function Customers() {
+  const {
+    customers,
+    isLoading,
+    isLoadingDlbd,
+    isFetching,
+    error,
+    page,
+    setPage,
+    deleteItem,
+    customersDlbd,
+    activeTab,
+    setActiveTab,
+  } = useCustomers();
   const [deleteRow, setDeleteRow] = useState();
-  const handleDeleteItem = (id: string) => {
-    deleteItem(id);
-  };
 
   const [
     openedDeleteItem,
@@ -142,7 +138,13 @@ export default function CustomerListPage({
       render: (record: any) => {
         return (
           <>
-            <Tooltip label="Xe" withArrow position="bottom">
+            <Link
+              href={{
+                pathname: `/admin/system-customer/cars`,
+                query: { customerId: record?.id },
+              }}
+            >
+              <Tooltip label="Xe" withArrow position="bottom">
                 <Button
                   size="lg"
                   radius={0}
@@ -152,15 +154,16 @@ export default function CustomerListPage({
                   p={5}
                   onClick={(e) => {
                     e.stopPropagation();
-                    router.push(`/admin/customers/cars?customerId=${record.id}`)
                   }}
                 >
                   <IconCar size={16} />
                 </Button>
               </Tooltip>
+            </Link>
+
             <Link
               href={{
-                pathname: `/admin/customers/${record.id}`,
+                pathname: `/admin/system-customer/${record.id}`,
               }}
             >
               <Tooltip label="Chỉnh sửa" withArrow position="bottom">
@@ -199,7 +202,6 @@ export default function CustomerListPage({
       },
     },
   ];
-
   const searchData = [
     {
       name: "s",
@@ -216,89 +218,33 @@ export default function CustomerListPage({
     s: "",
     phoneNumber: "",
   };
-
   return (
-    <div>
-      <SearchForm searchData={searchData} initialValues={initialValuesSearch} />
-      <div style={{ marginBottom: 20 }}>
-        <Flex justify={"end"} align={"center"} gap={20}>
-          <Link
-            href={{
-              pathname: `/admin/customers/create`,
-            }}
-          >
-            <Button
-              size="lg"
-              h={{ base: 42, md: 50, lg: 50 }}
-              radius={0}
-              leftSection={<IconPlus size={18} />}
-            >
-              Thêm mới
-            </Button>
-          </Link>
-        </Flex>
-      </div>
-      <div style={{ background: "#fff", position: "relative" }}>
-        <div>
-          <Tabs variant="pills" value={activeTab} onChange={setActiveTab}>
-            <Tabs.List classNames={{ list: styles.list }}>
-              <Tabs.Tab
-                h={{ base: 42, md: 50, lg: 50 }}
-                classNames={{ tab: styles.tab }}
-                value="first"
-              >
-                Khách hàng trên sàn
-              </Tabs.Tab>
-              <Tabs.Tab
-                h={{ base: 42, md: 50, lg: 50 }}
-                classNames={{ tab: styles.tab }}
-                value="second"
-              >
-                Khách hàng trên phần mềm
-              </Tabs.Tab>
-            </Tabs.List>
-            <Tabs.Panel value="first">
-              <ListPage
-                style={{ height: "100%" }}
-                baseTable={
-                  <TableBasic
-                    data={customers?.data}
-                    columns={columns}
-                    loading={isLoading}
-                    totalPage={customers?.totalPage}
-                    setPage={setPage}
-                    activePage={page}
-                    onRow={`/admin/customers`}
-                  />
-                }
-              />
-            </Tabs.Panel>
-            <Tabs.Panel value="second">
-              <ListPage
-                style={{ height: "100%" }}
-                baseTable={
-                  <TableBasic
-                    data={customersDlbd?.data}
-                    columns={columns}
-                    loading={isLoadingDlbd}
+    <Fragment>
+      <Breadcrumb breadcrumbs={breadcrumbs} />
+      <ListPage
+        searchForm={
+          <SearchForm
+            searchData={searchData}
+            brandFilter={false}
+            initialValues={initialValuesSearch}
+          />
+        }
 
-                    // totalPage={marketing?.totalPage}
-                    // setPage={setPage}
-                    // activePage={page}
-                  />
-                }
-              />
-            </Tabs.Panel>
-          </Tabs>
-        </div>
-      </div>
+        style={{ height: "100%" }}
+        titleTable={true}
+        baseTable={
+          <TableBasic
+            data={customers?.data}
+            columns={columns}
+            loading={isLoading}
+            totalPage={customers?.totalPage}
+            setPage={setPage}
+            activePage={page}
+            onRow={`/admin/system-customer`}
 
-      <DynamicModalDeleteItem
-        openedDeleteItem={openedDeleteItem}
-        closeDeleteItem={closeDeleteItem}
-        handleDeleteItem={handleDeleteItem}
-        deleteRow={deleteRow}
+          />
+        }
       />
-    </div>
+    </Fragment>
   );
 }
