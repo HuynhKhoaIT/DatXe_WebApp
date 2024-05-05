@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-import { useAddCar } from "../../../hooks/car/useAddCar";
 import { useSearchParams } from "next/navigation";
+import { useAddCar } from "@/app/admin/(admin)/hooks/car/useAddCar";
 export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: any) {
   const {
     addItem,
@@ -116,6 +116,7 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
                     label="Biển số xe"
                     type="text"
                     placeholder="Biển số xe"
+                    disabled={isPreview}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -150,7 +151,6 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
-                    disabled={isPreview}
                     radius={0}
                     {...form.getInputProps("carNameId")}
                     label="Dòng xe"
@@ -164,12 +164,12 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
                       form.setFieldValue("carNameId", value);
                       form.setFieldValue("carYearId", null);
                     }}
+                    disabled={isPreview}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
                     size="lg"
-                    disabled={isPreview}
                     radius={0}
                     {...form.getInputProps("carYearId")}
                     label="Năm sản xuất"
@@ -178,27 +178,28 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
                     onChange={(value) => {
                       form.setFieldValue("carYearId", value);
                     }}
+                    disabled={isPreview}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
                     size="lg"
-                    disabled={isPreview}
                     radius={0}
                     {...form.getInputProps("vinNumber")}
                     label="Số vin"
                     type="text"
                     placeholder="Số vin"
+                    disabled={isPreview}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    disabled={isPreview}
                     size="lg"
                     radius={0}
                     {...form.getInputProps("machineNumber")}
                     label="Số máy"
                     type="text"
+                    disabled={isPreview}
                     placeholder="Số máy"
                   />
                 </Grid.Col>
@@ -206,12 +207,13 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
                   <Select
                     size="lg"
                     radius={0}
-                    disabled={isPreview}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
                     checkIconPosition="right"
                     placeholder="Trạng thái"
                     data={statusOptions}
+                    disabled={isPreview}
+
                   />
                 </Grid.Col>
               </Grid>
@@ -220,23 +222,24 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
                   <Textarea
                     size="lg"
                     radius={0}
-                    disabled={isPreview}
                     label="Mô tả chi tiết"
                     minRows={4}
                     autosize={true}
                     {...form.getInputProps("description")}
                     placeholder="Mô tả"
+                    disabled={isPreview}
                   />
                 </Grid.Col>
               </Grid>
             </Card>
           </Grid.Col>
         </Grid>
-        {!isPreview ? (
+        {!isPreview?(
           <FooterSavePage
             saveLoading={isPendingAdd || isPendingUpdate}
             okText={isEditing ? "Cập nhật" : "Thêm"}
           />
+
         ):(
           <FooterSavePage
             saveLoading={isPendingAdd || isPendingUpdate}

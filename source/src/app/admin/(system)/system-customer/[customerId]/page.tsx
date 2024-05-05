@@ -21,6 +21,7 @@ export default function UpdateCustomer({
         isEditing={true}
         dataDetail={customer}
         isLoading={isLoading || isPending}
+        isPreview = {true}
       />
     </div>
   );
