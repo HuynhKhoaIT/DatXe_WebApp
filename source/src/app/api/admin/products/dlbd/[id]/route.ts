@@ -34,6 +34,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
             }
             const productData = {
                 sku: productDlbd.productCode,
+                isProduct: productDlbd.isProduct,
                 productId: productDlbd.id,
                 name: productDlbd.name,
                 description: productDlbd.description,
