@@ -1,6 +1,7 @@
 import { STATUS } from "@prisma/client";
 import prisma from "../prismadb";
 import { getGarageIdByDLBDID } from "./garage";
+import { capitalizeFirstLetter } from "@/utils/until";
 
 export async function getCategories(requestData: any) {
   try {
@@ -153,11 +154,10 @@ export async function syncCategoryFromDlbd(catData: any, garageId: string) {
   return c;
 }
 export async function getByNameViaGarageId(productName: string,garageId: string){
-  
   const cat = await prisma.productCategory.findFirst({
     where:{
       title: {
-        contains: productName
+        contains: (productName)
       },
       garageId:{
         in: ["2",garageId.toString()]
