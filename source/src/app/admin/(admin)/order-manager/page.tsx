@@ -61,6 +61,16 @@ export default function OrdersManaga() {
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+          Mã ĐH
+        </span>
+      ),
+      name: "code",
+      dataIndex: ["code"],
+  
+    },
+    {
+      label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Tên khách hàng
         </span>
       ),
