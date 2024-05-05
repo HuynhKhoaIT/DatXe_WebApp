@@ -38,6 +38,7 @@ export async function POST(request: Request) {
         if (session) {
             const json = await request.json();
             json.garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+            json.createdBy = session.user?.id.toString();
             const post = await createPost(json);
             return new NextResponse(JSON.stringify(post), {
                 status: 201,

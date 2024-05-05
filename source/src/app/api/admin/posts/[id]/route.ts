@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
-import { findPost, updatePost } from '@/app/libs/prisma/post';
+import { findPost, findPostAdmin, updatePost } from '@/app/libs/prisma/post';
 import convertToSlug from '@/utils/until';
 import { ROLE_ADMIN, ROLE_EXPERT } from '@/constants';
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         }
         const session = await getServerSession(authOptions);
         if (session) {
-            const post = await findPost(id);
+            const post = await findPostAdmin(id);
             return NextResponse.json({ data: post });
         }
         throw new Error('Chua dang nhap');
@@ -32,7 +32,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             const data = await request.json();
             const id = params.id; 
             data.createdBy = session.user.id.toString()
-            // return NextResponse.json(data);
             const rs = await updatePost(id,data);
             return new NextResponse(JSON.stringify(rs), {
                 status: 201,

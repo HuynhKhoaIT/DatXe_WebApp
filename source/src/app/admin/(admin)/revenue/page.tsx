@@ -46,7 +46,7 @@ const Revenue = () => {
   const firstDayOfMonth = new Date(
     currentDate.getFullYear(),
     currentDate.getMonth(),
-    currentDate.getDate() - 14
+    currentDate.getDate() - 15
   );
   const lastDayOfMonth = new Date(
     currentDate.getFullYear(),
