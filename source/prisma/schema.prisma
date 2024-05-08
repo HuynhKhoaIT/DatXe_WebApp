@@ -222,7 +222,6 @@ model Order{
   orderDetails              OrderDetail[]
   // financeIncome             financeIncome[]
   reviews                   ReviewsProduct[]
-  reviewsGarage             ReviewsGarage[]
   method                    ORDERMETHOD @default(OFFLINE)
   orderDLBDId               Int?
 }
@@ -435,11 +434,9 @@ model ReviewsProduct {
 }
 
 model ReviewsGarage {
-  id                  Int @id @default(autoincrement())
+  id                  String @id @default(uuid())
   garage              Garage @relation(fields: [garageId],references: [id])
   garageId            String
-  order               Order @relation(fields: [orderId],references: [id])
-  orderId             String
   star                Int @default(4)
   message             String?
   createdId           Int
