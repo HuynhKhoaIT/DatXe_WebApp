@@ -78,7 +78,7 @@ model Garage {
   wifiInfo            String? @db.Text
   qrCodeBank          String?
   createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   // financeIncome       financeIncome[]
 }
 
@@ -222,7 +222,6 @@ model Order{
   orderDetails              OrderDetail[]
   // financeIncome             financeIncome[]
   reviews                   ReviewsProduct[]
-  reviewsGarage             ReviewsGarage[]
   method                    ORDERMETHOD @default(OFFLINE)
   orderDLBDId               Int?
 }
@@ -435,11 +434,9 @@ model ReviewsProduct {
 }
 
 model ReviewsGarage {
-  id                  Int @id @default(autoincrement())
+  id                  String @id @default(uuid())
   garage              Garage @relation(fields: [garageId],references: [id])
   garageId            String
-  order               Order @relation(fields: [orderId],references: [id])
-  orderId             String
   star                Int @default(4)
   message             String?
   createdId           Int
@@ -532,7 +529,7 @@ model User{
 model slideBanner {
   id                String @id @default(uuid())
   title             String
-  description       String?      @db.Text
+  description       String?     @db.Text
   shortDescription  String?     @db.Text
   banners           String
   url               String?
@@ -540,6 +537,7 @@ model slideBanner {
   createdBy         String @default("1")
   garage            Garage @relation(fields: [garageId], references: [id])
   garageId          String @default("1")
+  kind              String @default("1")
 }
 
 model productsHome{

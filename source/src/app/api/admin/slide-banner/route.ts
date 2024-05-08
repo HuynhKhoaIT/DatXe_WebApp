@@ -12,6 +12,7 @@ export async function GET(request: Request) {
         if(session){
             const requestData = {
                 s: searchParams.get('s'),
+                kind: searchParams.get('kind'),
                 garageId: garageId
             }
             const slideBanners = await getSlideBanners(requestData);

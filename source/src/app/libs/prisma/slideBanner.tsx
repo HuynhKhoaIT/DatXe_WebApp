@@ -29,6 +29,10 @@ export async function getSlideBanners(requestData: any) {
     if (requestData.createdById) {
       createdById = 1;
     }
+    let kind = {}
+    if(requestData.kind){
+      kind = requestData.kind
+    }
     const [data, total] = await prisma.$transaction([
       prisma.slideBanner.findMany({
         take: take,
@@ -44,6 +48,7 @@ export async function getSlideBanners(requestData: any) {
             not: "DELETE",
           },
           garageId: garageId,
+          kind
         },
       }),
       prisma.slideBanner.count({
@@ -92,6 +97,7 @@ export async function updateSlideBanner(id: string, json: any) {
             url: json.url ?? slide?.url,
             banners: json.banner ?? slide?.banners,
             status: json.status ?? slide?.status,
+            kind: json.kind ?? slide?.kind,
         }
     })
 }
@@ -105,7 +111,8 @@ export async function createSlideBanner(json: any) {
             url: json.url,
             status: json.status,
             banners:json.banners,
-            garageId: json.garageId ?? "2"
+            garageId: json.garageId ?? "2",
+            kind: json.kind ?? "1"
         }
     })
 }
