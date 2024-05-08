@@ -2,7 +2,7 @@
 import { IProduct } from "@/interfaces/product";
 import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { Grid, Modal, Button, Group, Skeleton } from "@mantine/core";
+import { Grid, Modal, Button, Group, Skeleton, Flex } from "@mantine/core";
 import styles from "./Product.module.scss";
 import { notifications } from "@mantine/notifications";
 import Typo from "@/app/components/elements/Typo";
@@ -139,17 +139,18 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   </Typo>
                 </div>
               </div>
-              <div className={styles.salePrice}>
-                <Typo
-                  style={{
-                    fontSize: "22px",
-                    color: "var(--text-color-sale-price)",
-                  }}
-                  type="bold"
-                >
-                  <del>{ProductDetail?.price?.toLocaleString()} đ</del>
-                </Typo>
-                {/* <Typo
+              <Flex gap={20}>
+                <div className={styles.salePrice}>
+                  <Typo
+                    style={{
+                      fontSize: "22px",
+                      color: "var(--text-color-sale-price)",
+                    }}
+                    type="bold"
+                  >
+                    <del>{ProductDetail?.price?.toLocaleString()} đ</del>
+                  </Typo>
+                  {/* <Typo
                   style={{
                     fontSize: "14px",
                     color: "var(--text-color-sale-price)",
@@ -157,13 +158,14 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 >
                   30% OFF
                 </Typo> */}
-              </div>
-              <Typo
-                type="bold"
-                style={{ fontSize: "22px", color: "var(--primary-color)" }}
-              >
-                {ProductDetail?.salePrice?.toLocaleString()} đ
-              </Typo>
+                </div>
+                <Typo
+                  type="bold"
+                  style={{ fontSize: "22px", color: "var(--primary-color)" }}
+                >
+                  {ProductDetail?.salePrice?.toLocaleString()} đ
+                </Typo>
+              </Flex>
               <Button
                 size="lg"
                 radius={0}

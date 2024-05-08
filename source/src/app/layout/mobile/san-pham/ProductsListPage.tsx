@@ -11,7 +11,7 @@ const ProductsListPageMobile = ({ products, searchParams }: any) => {
       {/* <Filter kindProduct={kindProduct?.data} /> */}
       <Container>
         <Products products={products?.data} />
-        {products?.currentPage < products.totalPage && (
+        {products?.currentPage < products?.totalPage && (
           <ButtonShowMore
             limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
             defaultValue={DEFAULT_SIZE_LIMIT}

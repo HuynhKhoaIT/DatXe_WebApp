@@ -1,4 +1,3 @@
-"use client";
 import { DEFAULT_SIZE_LIMIT, apiUrl } from "@/constants";
 import BlogImage1 from "@/assets/images/blog/blog1.png";
 import BlogImage2 from "@/assets/images/blog/blog2.png";
@@ -19,6 +18,8 @@ import {
 } from "@/app/hooks/products/useProducts";
 import { useState } from "react";
 import { kindProduct } from "@/constants/masterData";
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
 
 const blogs = [
   {
@@ -165,21 +166,27 @@ const slideshowData = [
   },
 ];
 
-export default function DetailCategory({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const [productCount, setProductCount] = useState(DEFAULT_SIZE_LIMIT);
-  const { data: products, isPending, isFetching } = useProductByCategory(
-    productCount,
-    params?.slug
-  );
-  const {
-    data: productRelate,
-    isPending: isPendingProductRelate,
-    isFetching: isFetchingProductRealate,
-  } = useProductRelate(productCount);
+export default async function DetailCategory({ params, searchParams }: any) {
+  const products = await callApi(apiConfig.products.getList, {
+    params: {
+      categoryId: searchParams?.categoryId,
+      isProduct: searchParams?.isProduct || true,
+      limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
+      garageId: searchParams?.garageId,
+    },
+  });
+
+  const productsRelate = await callApi(apiConfig.products.getRelate, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
+
+  // const {
+  //   data: productRelate,
+  //   isPending: isPendingProductRelate,
+  //   isFetching: isFetchingProductRealate,
+  // } = useProductRelate(productCount);
   return (
     <RenderContextClient
       components={{
@@ -194,10 +201,11 @@ export default function DetailCategory({
       blogs={blogs}
       kindProduct={kindProduct}
       slideshowData={slideshowData}
-      productRelate={productRelate}
-      isFetching={isFetching}
-      productCount={productCount}
-      setProductCount={setProductCount}
+      productRelate={products}
+      // isFetching={isFetching}
+      // productCount={productCount}
+      // setProductCount={setProductCount}
+      searchParams={searchParams}
       reassons={reassons}
     />
   );

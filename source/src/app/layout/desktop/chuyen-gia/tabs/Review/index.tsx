@@ -1,6 +1,6 @@
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
-import { Rating, Select } from "@mantine/core";
+import { Button, Flex, Rating, Select, Textarea } from "@mantine/core";
 import ReviewItem from "./ReviewItem";
 const reviews = [
   {
@@ -51,6 +51,40 @@ const reviews = [
 const Reviews = () => {
   return (
     <div className={styles.wrapper}>
+      <form className={styles.sendReview}>
+        <div className={styles.title}>
+          <Typo
+            type="bold"
+            style={{ color: "var(--title-color)", fontSize: "24px" }}
+          >
+            Viết đánh giá
+          </Typo>
+        </div>
+        <div className={styles.rating}>
+          <Typo size="primary">Chất lượng garage</Typo>
+          <Rating defaultValue={5} size="lg" />
+        </div>
+        <div className={styles.review}>
+          <Textarea
+            size="lg"
+            radius={0}
+            label="Chất lượng garage:"
+            placeholder="Để lại đánh giá"
+            variant="unstyled"
+            bg={"#ffffff"}
+            p={20}
+            classNames={{
+              root: styles.rootTextArea,
+              label: styles.labelTextArea,
+              input: styles.iputTextArea,
+            }}
+            style={{ border: "1px solid #333" }}
+          />
+        </div>
+        <Flex py={20} justify={"end"}>
+          <Button color="var(--primary-color)">Gửi</Button>
+        </Flex>
+      </form>
       <div className={styles.header}>
         <Typo size="sub" type="bold" style={{ color: "var(--title-color)" }}>
           Đánh giá

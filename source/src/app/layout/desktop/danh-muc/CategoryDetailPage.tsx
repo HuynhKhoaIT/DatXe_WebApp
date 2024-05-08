@@ -9,6 +9,11 @@ import bgLanding2 from "@/assets/images/bgLanding2.png";
 import ViewedProducts from "./viewedProducts";
 import Blogs from "./Blogs";
 import { useCategories } from "@/app/admin/(admin)/hooks/category/useCategory";
+import { Box } from "@mantine/core";
+import ProductItem2 from "@/app/components/elements/product/ProductItem2";
+import { IProduct } from "@/interfaces/product";
+import ButtonShowMore from "@/app/components/form/ButtonShowMore";
+import { DEFAULT_SIZE_LIMIT } from "@/constants";
 
 const CategoryDetailPageDesktop = ({
   kindProduct,
@@ -17,11 +22,9 @@ const CategoryDetailPageDesktop = ({
   productRelate,
   blogs,
   reassons,
-  productCount,
-  setProductCount,
-  isFetching,
+  searchParams,
 }: any) => {
-  const { categories } = useCategories();
+  console.log(productRelate);
   return (
     <div className={styles.wrapper}>
       <CarouselDesktop height={320} slideshowData={slideshowData} />
@@ -41,12 +44,19 @@ const CategoryDetailPageDesktop = ({
         </div>
 
         <div className={styles.body}>
-          <Products
-            products={products}
-            productCount={productCount}
-            setProductCount={setProductCount}
-            isFetching={isFetching}
-          />
+          <Box w={"100%"}>
+            <div className={styles.products}>
+              {products?.data?.map((product: IProduct, index: number) => (
+                <ProductItem2 product={product} key={index} />
+              ))}
+            </div>
+          </Box>
+          {products?.currentPage < products?.totalPage && (
+            <ButtonShowMore
+              limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
+              defaultValue={DEFAULT_SIZE_LIMIT}
+            />
+          )}
         </div>
       </Container>
       <Blogs blogs={blogs} />

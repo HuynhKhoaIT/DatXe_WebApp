@@ -8,7 +8,7 @@
 
     /* ======== Colors ======== */
     /* Color mode HSL (hue, saturation, lightness) */
-    --primary-color: #1505cc;
+    --primary-color: rgb(21, 5, 204);
     --primary-orange: #fd7e14;
     --nav-color: #111;
     --sub-color: #69658c;
@@ -49,8 +49,8 @@
     --h1-font-size: 34px;
     --h2-font-size: 32px;
     --h3-font-size: 30px;
-    --primary-font-size: 16px;
-    --sub-font-size: 18px;
+    --primary-font-size: 18px;
+    --sub-font-size: 16px;
     --small-font-size: 14px;
 
     /* ======= color for category ======== */
@@ -69,6 +69,8 @@
 
     // --box-shadow: 0px -2px 15px 0px rgba(0, 172, 193, 0.2);
     --box-shadow: none;
+    --box-shadow-primary: 0px -2px 15px 0px rgba(21, 5, 204, 0.2);
+
     // mantine
     --mantine-color-dark-0: #c9c9c9;
     --mantine-color-dark-1: #b8b8b8;
