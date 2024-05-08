@@ -78,7 +78,7 @@ model Garage {
   wifiInfo            String? @db.Text
   qrCodeBank          String?
   createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
   // financeIncome       financeIncome[]
 }
 
@@ -532,7 +532,7 @@ model User{
 model slideBanner {
   id                String @id @default(uuid())
   title             String
-  description       String?      @db.Text
+  description       String?     @db.Text
   shortDescription  String?     @db.Text
   banners           String
   url               String?
@@ -540,6 +540,7 @@ model slideBanner {
   createdBy         String @default("1")
   garage            Garage @relation(fields: [garageId], references: [id])
   garageId          String @default("1")
+  kind              String @default("1")
 }
 
 model productsHome{

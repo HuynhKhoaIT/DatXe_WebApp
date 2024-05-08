@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
                 statusFilter = searchParams.get('status')!.toUpperCase();
             }
             let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
-
+            // return NextResponse.json(session.user?.garageId)
             const requestData = {
                 category: categoryId,
                 brand: brandIdFilter,

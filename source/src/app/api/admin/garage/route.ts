@@ -6,8 +6,10 @@ import { authOptions } from '../../auth/[...nextauth]/route';
 export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
+        
         if (session) {
             let garageId = session.user?.garageId;
+            
             if(session.user?.role == 'ADMIN'){
                 garageId = '';
             }
