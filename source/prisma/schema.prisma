@@ -439,7 +439,8 @@ model ReviewsGarage {
   garageId            String
   star                Int @default(4)
   message             String?
-  createdId           Int
+  user                User @relation(fields: [createdId],references: [id])
+  createdId           String
   status              STATUS @default(PUBLIC)
   createdAt   DateTime               @default(now())
   updatedAt   DateTime               @updatedAt
@@ -506,6 +507,7 @@ model User{
   garage              Garage @relation(fields: [garageId], references: [id])
   garageId            String @default("1")
   reviewsProduct      ReviewsProduct[]
+  reviewsGarage      ReviewsGarage[]
   cars                Car[]
   @@fulltext([fullName])
   @@fulltext([fullName, phoneNumber])

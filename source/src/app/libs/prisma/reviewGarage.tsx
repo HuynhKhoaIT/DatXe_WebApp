@@ -7,7 +7,7 @@ export async function createReviewGarage(data: any) {
                 garageId: (data.garageId),
                 star: Number(data.star ?? 1),
                 message: data.message?.toString(),
-                createdId: Number(data.createdId),
+                createdId: (data.createdId).toString(),
                 status: 'PUBLIC',
             }
         });
@@ -73,6 +73,9 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
             where: {
                 garageId,
                 status: 'PUBLIC'
+            },
+            include: {
+                user: true
             }
         }),
         prisma.reviewsGarage.count({
@@ -101,4 +104,12 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
         totalPage: totalPage,
         status: 200,
     };
+}
+
+export async function getReviewOfCustomer(userId:string,garageId: string) {
+    return await prisma.reviewsGarage.findFirst({
+        where: {
+            garageId
+        }
+    })
 }
