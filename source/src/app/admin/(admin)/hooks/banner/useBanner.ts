@@ -7,8 +7,8 @@ import { useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 const queryClient = new QueryClient();
 
-const fetchBanner = async (searchParams: any, page: number): Promise<any> => {
-    const response = await fetch(`/api/admin/slide-banner?${searchParams}&page=${page}`);
+const fetchBanner = async (kind:any,searchParams: any, page: number): Promise<any> => {
+    const response = await fetch(`/api/admin/slide-banner?${searchParams}&page=${page}&kind=${kind}`);
     if (!response.ok) {
         throw new ResponseError('Failed to fetch categories', response);
     }
@@ -46,10 +46,7 @@ function mapError(error: unknown | undefined): undefined | string {
     return 'Unknown error';
 }
 
-export const useBanner = ({kind=2}:any): UseBanner => {
-
-
-    console.log(kind);
+export const useBanner = ({kind=1}:any): UseBanner => {
 
     const queryClient = useQueryClient();
 
@@ -64,7 +61,7 @@ export const useBanner = ({kind=2}:any): UseBanner => {
         isPlaceholderData,
     } = useQuery({
         queryKey: [QUERY_KEY.banner, searchParams.toString(), page],
-        queryFn: () => fetchBanner(searchParams.toString(), page),
+        queryFn: () => fetchBanner(kind,searchParams.toString(), page),
         refetchOnWindowFocus: false,
         retry: 2,
     });
@@ -73,12 +70,12 @@ export const useBanner = ({kind=2}:any): UseBanner => {
         if (!isPlaceholderData && page < banner?.totalPage) {
             queryClient.prefetchQuery({
                 queryKey: [QUERY_KEY.banner, searchParams.toString(), page + 1],
-                queryFn: () => fetchBanner(searchParams.toString(), page + 1),
+                queryFn: () => fetchBanner(kind,searchParams.toString(), page + 1),
             });
         } else if (!isPlaceholderData && searchParams.toString()) {
             queryClient.prefetchQuery({
                 queryKey: [QUERY_KEY.banner, searchParams.toString(), page],
-                queryFn: () => fetchBanner(searchParams.toString(), page),
+                queryFn: () => fetchBanner(kind,searchParams.toString(), page),
             });
         }
     }, [banner, searchParams, isPlaceholderData, page, queryClient]);

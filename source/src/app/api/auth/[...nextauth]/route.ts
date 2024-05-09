@@ -22,7 +22,7 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 const user = await res.json();
-                if (user) {
+                if (user?.success) {
                     // Any object returned will be saved in `user` property of the JWT
                     // return user.user;
                     return Promise.resolve(user.user);

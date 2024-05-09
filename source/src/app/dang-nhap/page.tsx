@@ -6,7 +6,12 @@ import styles from "./index.module.scss";
 import { Avatar, Button } from "@mantine/core";
 import Link from "next/link";
 import FormLogin from "./_component/FormLogin";
+import { IconKey } from "@tabler/icons-react";
+import { useDisclosure } from "@mantine/hooks";
+import FormLoginPassword from "./_component/FormLoginPassword";
 export default function Login() {
+  const [loginPass, handlersLogin] = useDisclosure(false);
+
   const { data: session } = useSession();
   if (session && session.user) {
     redirect("/dashboard");
@@ -28,7 +33,7 @@ export default function Login() {
           <p>Đăng nhập hoặc tạo tài khoản</p>
         </div>
 
-        <FormLogin />
+        {loginPass ? <FormLoginPassword /> : <FormLogin />}
         <div className="other-login">
           <p className="other-login__title">Hoặc tiếp tục bằng</p>
           <div className="other-login__btn ">
@@ -36,6 +41,16 @@ export default function Login() {
               variant="outline"
               color="gray"
               style={{ marginRight: "5px" }}
+              w={60}
+              onClick={() => handlersLogin.toggle()}
+            >
+              <IconKey />
+            </Button>
+            <Button
+              variant="outline"
+              color="gray"
+              style={{ marginRight: "5px" }}
+              w={60}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +71,7 @@ export default function Login() {
                 ></path>
               </svg>
             </Button>
-            <Button variant="outline" color="gray">
+            <Button w={60} variant="outline" color="gray">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

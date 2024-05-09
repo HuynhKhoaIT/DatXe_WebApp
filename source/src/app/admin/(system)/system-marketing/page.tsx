@@ -32,7 +32,7 @@ export default function bannerListPage() {
     page,
     setPage,
     deleteItem,
-  } = useBanner(2);
+  } = useBanner({ kind: 2 });
   const [deleteRow, setDeleteRow] = useState();
 
   const [
