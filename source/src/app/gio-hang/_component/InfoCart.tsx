@@ -147,12 +147,12 @@ export default function InfoCart({
     },
   ];
   return (
-    <Card className="shop-cart-wrapper">
+    <Card className="shop-cart-wrapper" p={0} pb={10}>
       <TableBasic data={cartData} columns={columns} />
-      <Card className="cart-footer">
+      <Card className="cart-footer" p={0}>
         <Grid justify="space-between">
           <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
-            <Group className="cart-coupon " pos="relative">
+            {/* <Group className="cart-coupon " pos="relative">
               <TextInput
                 radius={0}
                 type="text"
@@ -160,14 +160,14 @@ export default function InfoCart({
                 placeholder="Your Coupon Code"
               />
               <Button
-                radius={0}
+                // radius={0}
                 className="coupon-btn"
                 variant="filled"
                 pos="absolute"
               >
                 Apply
               </Button>
-            </Group>
+            </Group> */}
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
             <ul className={styles.calculateSubTotal}>
@@ -183,7 +183,7 @@ export default function InfoCart({
             <Group justify="end">
               <Button
                 size="lg"
-                radius={0}
+                // radius={0}
                 className="theme-btn"
                 variant="filled"
                 // type="submit"

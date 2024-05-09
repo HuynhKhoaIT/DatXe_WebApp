@@ -29,6 +29,7 @@ export default function ProductForm({
   dataDetail,
   isDirection = false,
 }: any) {
+  console.log(dataDetail);
   const {
     addItem,
     updateItem,
@@ -105,7 +106,6 @@ export default function ProductForm({
       setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
-
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
       form.setFieldValue("metaDescription", dataDetail?.description);
@@ -117,13 +117,9 @@ export default function ProductForm({
         form.setFieldValue("categories", [dataDetail?.categoryId]);
       }
       if (dataDetail?.brandDetail) {
-        form.setFieldValue(
-          "brands",
-          JSON?.parse(dataDetail?.brandDetail)
-        );
+        form.setFieldValue("brands", JSON?.parse(dataDetail?.brandDetail));
         setCar(JSON?.parse(dataDetail?.brandDetail));
       }
-
     }
   }, [dataDetail]);
   const [car, setCar] = useState([{ brandId: "", nameId: "", yearId: "" }]);

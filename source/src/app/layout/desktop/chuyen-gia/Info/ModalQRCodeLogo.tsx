@@ -2,7 +2,7 @@ import { Box, Button, CopyButton, Group, Input, Modal } from "@mantine/core";
 import html2canvas from "html2canvas";
 import { QRCodeSVG } from "qrcode.react";
 import { useEffect, useState } from "react";
-import Logo from "@/assets/images/avatar.png";
+import Logo from "@/assets/images/avatar.jpeg";
 import { QRCode } from "react-qrcode-logo";
 import { IconDownload } from "@tabler/icons-react";
 export default function ModalQRCodeLogo({

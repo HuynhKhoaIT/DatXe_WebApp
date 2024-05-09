@@ -18,6 +18,8 @@ const ExpertDetailPageDesktop = ({
   blogs,
   socials,
   convenients,
+  reviews,
+  expertId,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -37,7 +39,11 @@ const ExpertDetailPageDesktop = ({
       <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>
-          <TabsComponent data={expertDetail} />
+          <TabsComponent
+            data={expertDetail}
+            expertId={expertId}
+            reviews={reviews}
+          />
         </Container>
         <Blogs blogs={blogs} garageId={expertDetail?.id} />
         <SharePage bitlyUrl={expertDetail?.bitlyUrl} />

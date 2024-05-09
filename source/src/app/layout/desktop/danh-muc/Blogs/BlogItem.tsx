@@ -4,7 +4,9 @@ import styles from "./BlogItem.module.scss";
 import Link from "next/link";
 import ImageField from "@/app/components/form/ImageField";
 import Typo from "@/app/components/elements/Typo";
+import { fitString, formatTimeDifference } from "@/utils/until";
 const BlogItem = ({ blog }: any) => {
+  console.log(blog);
   return (
     <div className={styles.wrapper}>
       <Box w={"100%"}>
@@ -12,7 +14,7 @@ const BlogItem = ({ blog }: any) => {
           <div>
             <div style={{ width: "100%" }}>
               <ImageField
-                src={blog?.image ? blog?.image : null}
+                src={blog?.thumbnail ? blog?.thumbnail : null}
                 height={160}
                 radius={12}
               />
@@ -25,7 +27,7 @@ const BlogItem = ({ blog }: any) => {
                 size="sub"
                 type="bold"
                 style={{ color: "var(--title-color)" }}
-                className={styles.productName}
+                className={styles.title}
               >
                 {blog.title}
               </Typo>
@@ -35,7 +37,7 @@ const BlogItem = ({ blog }: any) => {
               style={{ color: "var(--title-color-sub)" }}
               className={styles.description}
             >
-              Đăng bởi{" "}
+              {formatTimeDifference(blog.createdAt)}
               <span style={{ fontWeight: "600" }}>{blog?.expert?.name}</span>
             </Typo>
             <Typo
@@ -43,7 +45,7 @@ const BlogItem = ({ blog }: any) => {
               style={{ color: "var(--title-color)" }}
               className={styles.description}
             >
-              {blog.description}
+              {fitString(blog.shortDescription, 120)}
             </Typo>
           </div>
         </div>

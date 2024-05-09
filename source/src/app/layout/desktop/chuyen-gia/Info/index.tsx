@@ -3,7 +3,7 @@ import Typo from "@/app/components/elements/Typo";
 
 import styles from "./index.module.scss";
 import Star from "@/assets/icons/star.svg";
-import Avatar from "@/assets/images/avatar.png";
+import Avatar from "@/assets/images/avatar.jpeg";
 import Qr from "@/assets/icons/qr.svg";
 import Check from "@/assets/icons/checkExpert.svg";
 import { ActionIcon, Button } from "@mantine/core";
@@ -13,15 +13,24 @@ import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 
 import React, { useState } from "react";
+import { IconQrcode, IconShare, IconShare3 } from "@tabler/icons-react";
 const DynamicModalQRCode = dynamic(() => import("./ModalQRCodeLogo"), {
   ssr: false,
 });
-
+const DynamicModalShare = dynamic(
+  () => import("@/app/components/common/ModalShare/BasicSocialShare"),
+  {
+    ssr: false,
+  }
+);
 const Info = ({ detailData }: any) => {
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
-
+  const [
+    openedModalShare,
+    { open: openModalShare, close: closeModalShare },
+  ] = useDisclosure(false);
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -105,7 +114,18 @@ const Info = ({ detailData }: any) => {
                 openModal();
               }}
             >
-              <img src={Qr.src} />
+              <IconQrcode />
+            </ActionIcon>
+            <ActionIcon
+              w={56}
+              h={56}
+              variant="outline"
+              color="#000"
+              onClick={() => {
+                openModalShare();
+              }}
+            >
+              <IconShare3 />
             </ActionIcon>
           </div>
         </div>
@@ -116,6 +136,7 @@ const Info = ({ detailData }: any) => {
         src={`${detailData?.bitlyUrl}`}
         logoUrl={detailData?.logo}
       />
+      <DynamicModalShare opened={openedModalShare} close={closeModalShare} />
     </div>
   );
 };
