@@ -106,6 +106,7 @@ export default function ProductForm({
       setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
+      console.log(dataDetail)
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
       setValueRTE(dataDetail?.description);

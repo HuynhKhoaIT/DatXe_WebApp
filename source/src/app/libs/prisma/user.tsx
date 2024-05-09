@@ -10,6 +10,61 @@ export async function getMyAccount(id: string) {
   })
 }
 
+export async function getUsers(requestData: any) {
+  let currentPage = 1;
+  let take = 10;
+  let limit = Number(requestData.limit);
+  let page = requestData.page;
+
+  if (page) {
+    currentPage = Number(page);
+  }
+  if (limit) {
+    take = Number(limit);
+  } else {
+    limit = 10;
+  }
+  const skip = take * (currentPage - 1);
+  let phoneNumber = "";
+  if (requestData.phoneNumber) {
+    phoneNumber = requestData.phoneNumber;
+  }
+  const [data, total] = await prisma.$transaction([
+    prisma.user.findMany({
+      take: take,
+      skip: skip,
+      orderBy: {
+        id: "desc",
+      },
+      where:{
+        AND:[
+          {
+            phoneNumber: {
+              contains: phoneNumber,
+            },
+            status: 'PUBLIC'
+          }
+        ]
+      }
+    }),
+    prisma.user.count({
+      where: {
+        status: {
+          not: "DELETE",
+        },
+      },
+    }),
+  ]);
+  return {
+    data: data,
+    total: total,
+    currentPage: currentPage,
+    limit: limit,
+    totalPage: Math.ceil(total / limit),
+    status: 201,
+  };
+}
+
 export async function updateUser(dataInput:any) {
   const user = await getMyAccount(dataInput.id);
   if(user){
@@ -28,6 +83,7 @@ export async function updateUser(dataInput:any) {
         dob: dataInput.dob ?? user.dob,
         description: dataInput.description ?? user.description,
         sex: dataInput.sex ?? user.sex,
+        garageId: dataInput.garageId ?? user.garageId,
       }
       
     });
