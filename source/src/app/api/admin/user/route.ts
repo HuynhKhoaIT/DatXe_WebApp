@@ -18,7 +18,8 @@ export async function GET(request: Request) {
                 take: 10,
                 page: page,
             };
-            return await getUsers(requestData)
+            const data =  await getUsers(requestData);
+            return NextResponse.json(data)
         }else {
             throw new Error('Chua dang nhap');
         }
