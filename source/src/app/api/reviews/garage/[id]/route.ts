@@ -16,6 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const data = await getReviewsGarage(id,{
             page: page,
             limit: limit,
+            userId: searchParams.get('userId')
         });
         return NextResponse.json(data);
     } catch (error: any) {

@@ -62,17 +62,19 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
     if (page) {
         currentPage = Number(page);
     }
+    
     const skip = take * (currentPage - 1);
     const [reviews, total,avg] = await prisma.$transaction([
         prisma.reviewsGarage.findMany({
             take: take,
             skip: skip,
             orderBy: {
-                id: "desc",
+                createdAt:'desc'
             },
             where: {
                 garageId,
-                status: 'PUBLIC'
+                status: 'PUBLIC',
+                createdId: requestData.userId ?? {}
             },
             include: {
                 user: true
@@ -81,7 +83,8 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
         prisma.reviewsGarage.count({
             where: {
                 garageId,
-                status: 'PUBLIC'
+                status: 'PUBLIC',
+                createdId: requestData.userId ?? {}
             }
         }),
         prisma.reviewsGarage.aggregate({
@@ -91,6 +94,8 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
             _count: true,
             where: {
                 garageId: garageId,
+                status: 'PUBLIC',
+                createdId: requestData.userId ?? {}
             },
         })
     ]);
