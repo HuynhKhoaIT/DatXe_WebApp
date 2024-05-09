@@ -167,6 +167,8 @@ const slideshowData = [
 ];
 
 export default async function DetailCategory({ params, searchParams }: any) {
+  const newsData = await callApi(apiConfig.posts.getList, {});
+
   const products = await callApi(apiConfig.products.getList, {
     params: {
       categoryId: searchParams?.categoryId,
@@ -198,7 +200,7 @@ export default async function DetailCategory({ params, searchParams }: any) {
         },
       }}
       products={products}
-      blogs={blogs}
+      blogs={newsData?.data || blogs}
       kindProduct={kindProduct}
       slideshowData={slideshowData}
       productRelate={products}

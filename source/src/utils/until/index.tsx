@@ -334,7 +334,14 @@ export function formatLargeNumber(number: any) {
   return number;
 }
 
-export function capitalizeFirstLetter(str:string) {
+export function capitalizeFirstLetter(str: string) {
   str = str.toLowerCase();
   return `${str[0].toUpperCase()}${str.slice(1)}`;
 }
+
+export const fitString = (text = "", length = 0) => {
+  if (!text) return text;
+
+  if (text.length < length) return text;
+  else return `${text.slice(0, length)}...`;
+};

@@ -31,6 +31,7 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
       banners: "",
       title: "",
       url: "",
+      kind: 1,
       shortDescription: "",
       description: "",
     },

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, CopyButton, Input, Modal } from "@mantine/core";
+import { ActionIcon, Button, CopyButton, Input, Modal } from "@mantine/core";
 import {
   EmailIcon,
   EmailShareButton,
@@ -53,36 +53,59 @@ import {
   WorkplaceShareButton,
   XIcon,
 } from "react-share";
-import SlickCarousel from "./SlickCarousell";
-import Typo from "../elements/Typo";
-import arrowRight from "@/assets/icons/arowrightbtn.svg";
-
-import ImgButton from "./SlickCarousell/Button";
+import SlickCarousel from "../SlickCarousell";
+import Typo from "../../elements/Typo";
+import styles from "./index.module.scss";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
+import { useMediaQuery } from "@mantine/hooks";
 const BasicSocialShare = ({ opened, close }: any) => {
+  const isMobile = useMediaQuery("(max-width: 576px)");
+
   const url = window.location.origin + window.location.pathname;
   const shareUrl = `${url}`;
   return (
     <Modal
-      // size="calc(30vw)"
       opened={opened}
       onClose={close}
-      // isOpen={opened}
-      // onCloseModal={close}
       centered
-      title="Chia sẽ"
-      // style={{ position: 'relative', width: '50vw', height: '50vh' }}
+      classNames={{ title: styles.titleModal }}
+      size={600}
+      title="Chia sẻ"
     >
-      <div style={{ padding: "0 10px" }}>
+      <div style={{ padding: "0 20px" }}>
         <SlickCarousel
           gap={"10"}
-          column={6}
+          column={isMobile ? 4 : 6}
           slidesToScroll={4}
           height={100}
           responsive={false}
           prevArrow={
-            <ImgButton img={arrowRight} revert={true} width={40} height={40} />
+            <div>
+              <IconChevronLeft
+                color="blue"
+                size={40}
+                style={{
+                  background: "#fff",
+                  boxShadow: "var(--box-shadow-primary)",
+                  borderRadius: "50%",
+                }}
+              />
+            </div>
           }
-          nextArrow={<ImgButton img={arrowRight} width={40} height={40} />}
+          nextArrow={
+            <div>
+              <IconChevronRight
+                color="blue"
+                size={40}
+                style={{
+                  background: "#fff",
+                  boxShadow: "var(--box-shadow-primary)",
+                  borderRadius: "50%",
+                  marginLeft: "-20px",
+                }}
+              />
+            </div>
+          }
         >
           <FacebookShareButton url={shareUrl}>
             <FacebookIcon size={68} round />
@@ -92,6 +115,13 @@ const BasicSocialShare = ({ opened, close }: any) => {
             <FacebookMessengerIcon size={68} round />
             <Typo size="tiny">messenger</Typo>
           </FacebookMessengerShareButton>
+          <TelegramShareButton
+            url={shareUrl}
+            className="Demo__some-network__share-button"
+          >
+            <TelegramIcon size={68} round />
+            <Typo size="tiny">Telegram</Typo>
+          </TelegramShareButton>
           <TwitterShareButton
             url={shareUrl}
             title={"title"}
@@ -100,13 +130,7 @@ const BasicSocialShare = ({ opened, close }: any) => {
             <XIcon size={68} round />
             <Typo size="tiny">X</Typo>
           </TwitterShareButton>
-          <TelegramShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <TelegramIcon size={68} round />
-            <Typo size="tiny">Telegram</Typo>
-          </TelegramShareButton>
+
           <WhatsappShareButton
             url={shareUrl}
             separator=":: "

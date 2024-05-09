@@ -81,6 +81,12 @@ const MyFooter = () => (
                 </li>
               </ul>
             </div>
+            <Link
+              href={"/dang-ky-chuyen-gia"}
+              style={{ paddingBottom: "20px" }}
+            >
+              <Button color={"var(--yellow-btn)"}>Trở thành chuyên gia</Button>
+            </Link>
             <Input
               size="lg"
               radius={0}

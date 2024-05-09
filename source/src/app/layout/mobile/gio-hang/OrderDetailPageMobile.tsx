@@ -26,9 +26,12 @@ import {
 import { useSession } from "next-auth/react";
 import { IconPrinter } from "@tabler/icons-react";
 
-const DynamicModalReview = dynamic(() => import("./ModalReview"), {
-  ssr: false,
-});
+const DynamicModalReview = dynamic(
+  () => import("@/app/layout/dashboard/order/ModalReview"),
+  {
+    ssr: false,
+  }
+);
 export default function OrderDetailPageMobile({
   dataSource,
   reviews,

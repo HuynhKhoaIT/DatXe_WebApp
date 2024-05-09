@@ -46,7 +46,11 @@ function mapError(error: unknown | undefined): undefined | string {
     return 'Unknown error';
 }
 
-export const useBanner = (): UseBanner => {
+export const useBanner = ({kind=2}:any): UseBanner => {
+
+
+    console.log(kind);
+
     const queryClient = useQueryClient();
 
     const searchParams = useSearchParams();

@@ -19,6 +19,8 @@ const ExpertDetailPageMobile = ({
   blogs,
   socials,
   convenients,
+  reviews,
+  expertId,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -48,7 +50,11 @@ const ExpertDetailPageMobile = ({
       <Convenients amenities={expertDetail?.amenities || convenients} />
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Container>
-          <TabsComponent data={expertDetail} />
+          <TabsComponent
+            data={expertDetail}
+            reviews={reviews}
+            expertId={expertId}
+          />
         </Container>
         <Blogs blogs={blogs} garageId={expertDetail?.id} />
         <SharePage bitlyUrl={expertDetail?.bitlyUrl} />

@@ -140,6 +140,11 @@ const apiConfig = {
             method: 'GET',
             headers: baseHeader,
         },
+        getReviews: {
+            baseURL: `${apiUrl}api/reviews/garage/:id`,
+            method: 'GET',
+            headers: baseHeader,
+        },
     },
     banner:{
         getList: {

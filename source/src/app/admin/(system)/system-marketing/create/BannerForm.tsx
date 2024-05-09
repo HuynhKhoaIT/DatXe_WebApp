@@ -32,6 +32,7 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
       title: "",
       url: "",
       shortDescription: "",
+      kind: 2,
       description: "",
     },
     validate: {

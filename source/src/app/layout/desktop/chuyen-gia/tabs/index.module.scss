@@ -1,10 +1,11 @@
 .list {
     margin-bottom: 21px;
     .tabLabel {
-        font-size: var(--primary-font-size);
         font-weight: 500;
-        color: var(--title-color);
         padding-top: 10px;
+        font-size: var(--sub-font-size);
+        font-weight: var(--font-bold);
+        color: var(--title-color);
     }
 }
 .list button[data-active] {

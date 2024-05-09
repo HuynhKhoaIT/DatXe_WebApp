@@ -24,7 +24,6 @@ const CategoryDetailPageDesktop = ({
   reassons,
   searchParams,
 }: any) => {
-  console.log(productRelate);
   return (
     <div className={styles.wrapper}>
       <CarouselDesktop height={320} slideshowData={slideshowData} />

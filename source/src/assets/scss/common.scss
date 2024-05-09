@@ -139,14 +139,14 @@ img {
 }
 
 .slick-dots li button:before {
-    color: white;
+    color: #ddd;
     opacity: 1;
     // :hover{
     //     color: var(--dots-color) !important;
     // }
 }
 .slick-dots li button:before {
-    color: #fff !important;
+    color: #ddd !important;
 }
 
 .slick-dots li button:before {
@@ -177,6 +177,7 @@ img {
         bottom: 15px;
     }
 }
+
 
 @media print {
     body * {

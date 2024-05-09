@@ -18,10 +18,18 @@ const menuConfigAdmin = [
     icon: IconNotes,
     initiallyOpened: true,
     links: [
-      { label: "Danh sách banner", link: "/admin/slide-banner" },
+      // { label: "Danh sách banner", link: "/admin/slide-banner" },
       { label: "Sản phẩm nổi bật", link: "/admin/system-products" },
       { label: "Dịch vụ nổi bật", link: "/admin/system-services" },
-      // { label: "Chương trình Marketing", link: "/admin/system-marketing" },
+    ],
+  },
+  {
+    label: "Quản lí banner",
+    icon: IconNotes,
+    initiallyOpened: true,
+    links: [
+      { label: "Danh sách banner", link: "/admin/slide-banner" },
+      { label: "Danh sách merketing", link: "/admin/system-marketing" },
     ],
   },
   {
