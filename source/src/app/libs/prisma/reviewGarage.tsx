@@ -68,7 +68,7 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
             take: take,
             skip: skip,
             orderBy: {
-                id: "desc",
+                createdAt:'desc'
             },
             where: {
                 garageId,
