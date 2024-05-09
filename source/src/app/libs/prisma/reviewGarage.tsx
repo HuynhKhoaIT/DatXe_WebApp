@@ -109,7 +109,8 @@ export async function getReviewsGarage(garageId:string,requestData: any) {
 export async function getReviewOfCustomer(userId:string,garageId: string) {
     return await prisma.reviewsGarage.findFirst({
         where: {
-            garageId
+            garageId,
+            createdId:userId
         }
     })
 }

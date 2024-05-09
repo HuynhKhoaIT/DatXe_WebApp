@@ -1,4 +1,4 @@
-import { getReviewsGarage } from "@/app/libs/prisma/reviewGarage";
+import { getReviewOfCustomer, getReviewsGarage } from "@/app/libs/prisma/reviewGarage";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -19,6 +19,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         });
         return NextResponse.json(data);
     } catch (error: any) {
+        return new NextResponse(error.message, { status: 500 });
+    }
+}
+export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
+    try {
+        const id = params.id;
+        const json = await request.json();
+        return await getReviewOfCustomer(json.userId,id);
+    }catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
 }
