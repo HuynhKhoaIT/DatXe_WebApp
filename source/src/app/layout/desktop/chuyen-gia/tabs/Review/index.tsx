@@ -128,7 +128,7 @@ const Reviews = ({ garageDetail, reviews, expertId }: any) => {
       <div className={styles.average}>
         <Rating defaultValue={4.5} />
         <Typo size="primary" style={{ color: "var(--title-color-sub)" }}>
-          Tuyệt vời 4.6/5
+          Tuyệt vời
         </Typo>
       </div>
       <div className={styles.body}>

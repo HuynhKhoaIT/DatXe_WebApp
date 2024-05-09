@@ -129,6 +129,13 @@ export default async function DetailGarage({
       id: params?.slug,
     },
   });
+  const review: any = await callApi(apiConfig.garage.getReviews, {
+    pathParams: {
+      id: params?.slug,
+    },
+    params,
+  });
+
   const categories = await getCategories({ garageId: params?.slug });
   const services = await getProducts({
     isProduct: "0",
