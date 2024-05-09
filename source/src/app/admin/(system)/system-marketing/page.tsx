@@ -14,7 +14,7 @@ import { useBanner } from "../../(admin)/hooks/banner/useBanner";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Danh sách banner" },
+  { title: "Danh sách marketing" },
 ];
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -32,7 +32,7 @@ export default function bannerListPage() {
     page,
     setPage,
     deleteItem,
-  } = useBanner();
+  } = useBanner(2);
   const [deleteRow, setDeleteRow] = useState();
 
   const [
@@ -112,7 +112,7 @@ export default function bannerListPage() {
           <Flex>
             <Link
               href={{
-                pathname: `/admin/slide-banner/${record.id}`,
+                pathname: `/admin/system-marketing/${record.id}`,
               }}
             >
               <Button
@@ -162,7 +162,7 @@ export default function bannerListPage() {
           <Flex justify={"end"} align={"center"} gap={20}>
             <Link
               href={{
-                pathname: `/admin/slide-banner/create`,
+                pathname: `/admin/system-marketing/create`,
               }}
             >
               <Button

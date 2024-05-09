@@ -1,7 +1,10 @@
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
-import { Rating, Select } from "@mantine/core";
+import { Button, Flex, Rating, Select, Textarea } from "@mantine/core";
 import ReviewItem from "./ReviewItem";
+import { useForm } from "@mantine/form";
+import Garages from "@/app/components/elements/garage/garages";
+import { useAddReview } from "@/app/hooks/reviewsExpert/useAddReview";
 const reviews = [
   {
     id: 1,
@@ -48,12 +51,71 @@ const reviews = [
       "Had a wonderful time being at the beach with family. Even though the weather didn’t always cooperate, we had a blast! We were supposed to stay at Quiet Surf townhomes, but because of hurricane Sally and some plumbing issues, we found Costa del Sol which fit the bill just fine. The location was perfect! Newman-Dailey will always be our choice for our beach trips. Very helpful staff.",
   },
 ];
-const Reviews = () => {
+const Reviews = ({ garageDetail, reviews, expertId }: any) => {
+  console.log(reviews);
+  const { addItem, updateItem } = useAddReview();
+  const form = useForm({
+    initialValues: {
+      garageId: expertId,
+      star: 5,
+      message: "",
+    },
+    validate: {},
+  });
+  const handleSubmit = async (values: any) => {
+    addItem(values);
+  };
   return (
     <div className={styles.wrapper}>
+      <form
+        className={styles.sendReview}
+        onSubmit={form.onSubmit(handleSubmit)}
+      >
+        <div className={styles.title}>
+          <Typo
+            type="bold"
+            style={{ color: "var(--title-color)", fontSize: "24px" }}
+          >
+            Viết đánh giá
+          </Typo>
+        </div>
+        <div className={styles.rating}>
+          <Typo size="primary">Chất lượng chuyên gia</Typo>
+          <Rating
+            defaultValue={5}
+            size="lg"
+            onChange={(value) => {
+              form.setFieldValue("star", value);
+            }}
+          />
+        </div>
+        <div className={styles.review}>
+          <Textarea
+            size="lg"
+            radius={0}
+            label="Đánh giá chuyên gia:"
+            placeholder="Để lại đánh giá"
+            variant="unstyled"
+            bg={"#ffffff"}
+            p={20}
+            classNames={{
+              root: styles.rootTextArea,
+              label: styles.labelTextArea,
+              input: styles.iputTextArea,
+            }}
+            {...form.getInputProps("message")}
+            style={{ border: "1px solid #333" }}
+          />
+        </div>
+        <Flex py={20} justify={"end"}>
+          <Button color="var(--primary-color)" type="submit" key="submit">
+            Gửi đánh giá
+          </Button>
+        </Flex>
+      </form>
       <div className={styles.header}>
         <Typo size="sub" type="bold" style={{ color: "var(--title-color)" }}>
-          Đánh giá
+          Đánh giá ({reviews?.total})
         </Typo>
         <Select
           size="lg"
@@ -70,7 +132,7 @@ const Reviews = () => {
         </Typo>
       </div>
       <div className={styles.body}>
-        {reviews?.map((item: any, index: number) => {
+        {reviews?.data?.map((item: any, index: number) => {
           return <ReviewItem dataDetail={item} key={index} />;
         })}
       </div>

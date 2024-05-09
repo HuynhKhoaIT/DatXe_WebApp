@@ -163,13 +163,11 @@ export default function ModalAddCar({
           </Grid>
           <Group justify="end" mt={60}>
             <Button
-              size="lg"
-              radius={0}
-              h={{ base: 42, md: 50, lg: 50 }}
               loading={loading}
               style={{ marginLeft: "12px" }}
               type="submit"
               variant="filled"
+              color="var(--primary-color)"
               leftSection={<IconPlus size={16} />}
             >
               Thêm

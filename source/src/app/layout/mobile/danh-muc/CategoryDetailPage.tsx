@@ -9,6 +9,8 @@ import Blogs from "./Blogs";
 import Hero from "../trang-chu/Hero";
 import Reassons from "../trang-chu/Reasons";
 import Filter from "./Filter";
+import ButtonShowMore from "@/app/components/form/ButtonShowMore";
+import { DEFAULT_SIZE_LIMIT } from "@/constants";
 
 const CategoryDetailPageMobile = ({
   kindProduct,
@@ -17,6 +19,7 @@ const CategoryDetailPageMobile = ({
   productRelate,
   blogs,
   reassons,
+  searchParams,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -24,6 +27,12 @@ const CategoryDetailPageMobile = ({
       <Filter kindProduct={kindProduct} />
       <Container>
         <Products products={products?.data} />
+        {products?.currentPage < products?.totalPage && (
+          <ButtonShowMore
+            limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
+            defaultValue={DEFAULT_SIZE_LIMIT}
+          />
+        )}
       </Container>
       <Blogs blogs={blogs} />
       <ViewedProducts viewedProducts={productRelate?.data} />

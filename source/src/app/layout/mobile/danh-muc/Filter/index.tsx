@@ -48,10 +48,18 @@ const Filter = ({ kindProduct }: any) => {
     // setQueryParams({ query: currentParams.query });
     closeNav();
   };
+
+  function handleClick(value: any) {
+    params?.set("isProduct", `${value}`);
+
+    const path = pathname + "?" + params?.toString();
+    router.push(path);
+  }
+
   return (
     <Container>
       <Group py={20} justify="space-between">
-        <Button
+        {/* <Button
           size="lg"
           radius={0}
           color="#2D3C52"
@@ -60,15 +68,15 @@ const Filter = ({ kindProduct }: any) => {
           onClick={openNav}
         >
           Lọc
-        </Button>
-        <Switch
+        </Button> */}
+        {/* <Switch
           classNames={{ trackLabel: styles.trackLabel, track: styles.track }}
           thumbIcon={<img src={IconSwitch.src} />}
           color="#292A2E"
           size="xl"
           offLabel={"Mới nhất"}
           onLabel={"Mặc định"}
-        />
+        /> */}
         <Switch
           classNames={{ trackLabel: styles.trackLabel, track: styles.track }}
           thumbIcon={<img src={IconSwitch.src} />}
@@ -76,6 +84,7 @@ const Filter = ({ kindProduct }: any) => {
           size="xl"
           offLabel={"Dịch vụ"}
           onLabel={"Sản phẩm"}
+          onChange={(event) => handleClick(event.currentTarget.checked)}
         />
       </Group>
       <DynamicNavFilter

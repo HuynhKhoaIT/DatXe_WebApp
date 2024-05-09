@@ -26,6 +26,9 @@ export async function generateMetadata(
     description:
       newsData?.data?.seoMeta?.desription || newsData?.data?.shortDescription,
     openGraph: {
+      title: newsData?.data?.seoMeta?.title || newsData?.data?.title,
+      description:
+        newsData?.data?.seoMeta?.desription || newsData?.data?.shortDescription,
       images: newsData?.data?.seoMeta?.thumbnail || newsData?.data?.thumbnail,
     },
   };

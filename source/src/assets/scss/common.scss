@@ -57,6 +57,7 @@ img {
     max-width: 100%;
 }
 
+
 // @media (max-width: 3000px) {
 //     .container {
 //         max-width: 1620px;
@@ -138,14 +139,14 @@ img {
 }
 
 .slick-dots li button:before {
-    color: white;
+    color: #ddd;
     opacity: 1;
     // :hover{
     //     color: var(--dots-color) !important;
     // }
 }
 .slick-dots li button:before {
-    color: #fff !important;
+    color: #ddd !important;
 }
 
 .slick-dots li button:before {
@@ -177,6 +178,7 @@ img {
     }
 }
 
+
 @media print {
     body * {
         visibility: hidden;
@@ -200,3 +202,5 @@ img {
     
    
 }
+
+

@@ -9,12 +9,24 @@ import ProductSlider from "./ProductSlider";
 import Typo from "@/app/components/elements/Typo";
 import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
+import dynamic from "next/dynamic";
 
-import { IconBan, IconChevronRight } from "@tabler/icons-react";
+const DynamicModalShare = dynamic(
+  () => import("@/app/components/common/ModalShare/BasicSocialShare"),
+  {
+    ssr: false,
+  }
+);
+import { IconBan, IconChevronRight, IconShare3 } from "@tabler/icons-react";
 import ImageField from "@/app/components/form/ImageField";
+import { useDisclosure } from "@mantine/hooks";
 function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [
+    openedModalShare,
+    { open: openModalShare, close: closeModalShare },
+  ] = useDisclosure(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -134,7 +146,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   {ProductDetail?.categories?.map(
                     (item: any, index: number) => {
                       return (
-                        <div key={index} style={{display:'flex'}}>
+                        <div key={index} style={{ display: "flex" }}>
                           <Typo
                             style={{
                               fontSize: "1rem",
@@ -160,18 +172,18 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 </div>
               </div>
               <div className={styles.salePrice}>
-              {ProductDetail?.price !=ProductDetail?.salePrice&&(
-                <Typo
-                  style={{
-                    fontSize: "22px",
-                    color: "var(--title-color-2)",
-                  }}
-                  type="bold"
-                >
-                  <del>{ProductDetail?.price?.toLocaleString()} đ</del>
-                </Typo>
-              )}
-                
+                {ProductDetail?.price != ProductDetail?.salePrice && (
+                  <Typo
+                    style={{
+                      fontSize: "22px",
+                      color: "var(--title-color-2)",
+                    }}
+                    type="bold"
+                  >
+                    <del>{ProductDetail?.price?.toLocaleString()} đ</del>
+                  </Typo>
+                )}
+
                 {/* <Typo
                   style={{
                     fontSize: "14px",
@@ -189,16 +201,29 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 {ProductDetail?.salePrice?.toLocaleString()} đ
               </Typo>
 
-              <Button
-                size="lg"
-                // radius={0}
-                mt={22}
-                color={"var(--primary-color)"}
-                leftSection={<img src={Book.src} />}
-                onClick={addProductToLocalStorage}
-              >
-                Đặt lịch
-              </Button>
+              <Flex gap={10}>
+                <Button
+                  // size="lg"
+                  // radius={0}
+                  mt={22}
+                  color={"var(--primary-color)"}
+                  leftSection={<img src={Book.src} />}
+                  onClick={addProductToLocalStorage}
+                >
+                  Đặt lịch
+                </Button>
+                <Button
+                  // size="lg"
+                  // radius={0}
+                  leftSection={<IconShare3 />}
+                  mt={22}
+                  variant="outline"
+                  color={"gray"}
+                  onClick={openModalShare}
+                >
+                  Chia sẻ
+                </Button>
+              </Flex>
               <div className={styles.boxText}>
                 Đặt lịch trước không chờ đợi, an toàn, cộng điểm
               </div>
@@ -213,9 +238,9 @@ function ProductDetail({ ProductDetail, productReview }: any) {
         </div>
         <Group justify="end" style={{ marginTop: 10 }}>
           <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
+            // size="lg"
+            // radius={0}
+            // h={{ base: 42, md: 50, lg: 50 }}
             variant="outline"
             key="cancel"
             onClick={handleCancel}
@@ -225,18 +250,20 @@ function ProductDetail({ ProductDetail, productReview }: any) {
             Huỷ bỏ
           </Button>
           <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
+            // size="lg"
+            // radius={0}
+            // h={{ base: 42, md: 50, lg: 50 }}
             style={{ marginLeft: "12px" }}
             onClick={handleOk}
             variant="filled"
+            color="blue"
             leftSection={<IconChevronRight size={12} />}
           >
             Tiếp tục
           </Button>
         </Group>
       </Modal>
+      <DynamicModalShare opened={openedModalShare} close={closeModalShare} />
     </Grid>
   );
 }

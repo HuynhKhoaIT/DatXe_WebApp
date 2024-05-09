@@ -28,7 +28,7 @@ const Blogs = ({ blogs }: any) => {
             <BlogItem blog={blog} key={index} />
           ))}
         </SlickCarousel>
-      </OverviewPanel>{" "}
+      </OverviewPanel>
     </div>
   );
 };

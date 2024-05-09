@@ -19,7 +19,7 @@ export default function ProductsListPage({ products, searchParams }: any) {
           ))}
         </div>
       </Box>
-      {products?.currentPage < products.totalPage && (
+      {products?.currentPage < products?.totalPage && (
         <ButtonShowMore
           limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
           defaultValue={DEFAULT_SIZE_LIMIT}

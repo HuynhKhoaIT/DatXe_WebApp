@@ -5,6 +5,7 @@ import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
 export const dynamic = "force-dynamic";
 import type { Metadata, ResolvingMetadata } from "next";
+import imageDefault from "../../../../public/assets/images/no_image.png";
 
 type Props = {
   params: { slug: string };
@@ -21,6 +22,8 @@ export async function generateMetadata(
     },
   });
 
+  console.log(imageDefault);
+
   return {
     title:
       product?.data?.product?.seoMeta?.title || product?.data?.product?.name,
@@ -28,7 +31,12 @@ export async function generateMetadata(
       product?.data?.product?.seoMeta?.description ||
       product?.data?.product?.description,
     openGraph: {
-      images: product?.data?.product?.seoMeta?.thumbnail,
+      title:
+        product?.data?.product?.seoMeta?.title || product?.data?.product?.name,
+      description:
+        product?.data?.product?.seoMeta?.description ||
+        product?.data?.product?.description,
+      images: product?.data?.product?.seoMeta?.thumbnail || imageDefault.src,
     },
   };
 }

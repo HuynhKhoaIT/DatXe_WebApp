@@ -123,6 +123,12 @@ export default async function DetailGarage({
       id: params?.slug,
     },
   });
+
+  const reviews: any = await callApi(apiConfig.garage.getReviews, {
+    pathParams: {
+      id: params?.slug,
+    },
+  });
   const categories = await getCategories({ garageId: params?.slug });
   const services = await getProducts({
     isProduct: "0",
@@ -161,7 +167,9 @@ export default async function DetailGarage({
       products={products}
       blogs={newsList?.data?.length > 0 ? newsList?.data : blogs}
       socials={socials}
+      reviews={reviews}
       convenients={convenients}
+      expertId={params?.slug}
     />
   );
 }
