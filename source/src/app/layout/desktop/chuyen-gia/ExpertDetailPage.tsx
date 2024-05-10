@@ -20,6 +20,7 @@ const ExpertDetailPageDesktop = ({
   convenients,
   reviews,
   expertId,
+  review,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -43,6 +44,7 @@ const ExpertDetailPageDesktop = ({
             data={expertDetail}
             expertId={expertId}
             reviews={reviews}
+            review={review}
           />
         </Container>
         <Blogs blogs={blogs} garageId={expertDetail?.id} />

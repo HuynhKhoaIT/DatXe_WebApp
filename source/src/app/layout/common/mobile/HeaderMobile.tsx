@@ -107,7 +107,7 @@ const HeaderMobile = () => {
             </li>
           )}
 
-          {role !== ROLE_CUSTOMER && (
+          {role !== ROLE_CUSTOMER && session?.user && (
             <li className={styles.navItem}>
               <Link href="/admin">
                 <IconUser size={18} />

@@ -14,6 +14,8 @@ import { getCategories } from "@/app/libs/prisma/category";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 import type { Metadata, ResolvingMetadata } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type Props = {
   params: { slug: string };
@@ -118,18 +120,25 @@ export default async function DetailGarage({
 }: {
   params: { slug: string };
 }) {
+  const session = await getServerSession(authOptions);
   const expertData: any = await callApi(apiConfig.expert.getById, {
     pathParams: {
       id: params?.slug,
     },
   });
 
+  if (session?.user) {
+    var review: any = await callApi(apiConfig.garage.getReviews, {
+      pathParams: {
+        id: params?.slug,
+      },
+      params: {
+        userId: session?.user?.id,
+      },
+    });
+  }
+
   const reviews: any = await callApi(apiConfig.garage.getReviews, {
-    pathParams: {
-      id: params?.slug,
-    },
-  });
-  const review: any = await callApi(apiConfig.garage.getReviews, {
     pathParams: {
       id: params?.slug,
     },
@@ -175,6 +184,7 @@ export default async function DetailGarage({
       blogs={newsList?.data?.length > 0 ? newsList?.data : blogs}
       socials={socials}
       reviews={reviews}
+      review={review}
       convenients={convenients}
       expertId={params?.slug}
     />

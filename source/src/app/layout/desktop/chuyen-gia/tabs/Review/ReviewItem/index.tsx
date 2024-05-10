@@ -9,18 +9,18 @@ const ReviewItem = ({ dataDetail }: any) => {
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className={styles.avatar}>
-          <img src={Avatar.src} />
+          <img src={dataDetail?.user?.avatar || Avatar.src} />
         </div>
         <div className={styles.content}>
           <div className={styles.info}>
             <div className={styles.infoUser}>
               <Typo size="tiny" type="bold">
-                {dataDetail?.user?.name}
+                {dataDetail?.user?.fullName}
               </Typo>
               <div className={styles.star}>
-                <Rating defaultValue={dataDetail?.star} />
+                <Rating defaultValue={dataDetail?.star} readOnly />
                 <Typo style={{ fontSize: "12px", color: "var(--sub-color)" }}>
-                  {formatTimeDifference(dataDetail?.createdAt)}
+                  {formatTimeDifference(dataDetail?.updatedAt)}
                 </Typo>
               </div>
             </div>

@@ -21,6 +21,7 @@ const ExpertDetailPageMobile = ({
   convenients,
   reviews,
   expertId,
+  review,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -54,6 +55,7 @@ const ExpertDetailPageMobile = ({
             data={expertDetail}
             reviews={reviews}
             expertId={expertId}
+            review={review}
           />
         </Container>
         <Blogs blogs={blogs} garageId={expertDetail?.id} />
