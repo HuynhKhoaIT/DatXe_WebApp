@@ -554,3 +554,13 @@ export async function relatedProducts(productId: string) {
   }
   return relatedProducts;
 }
+
+export async function getProductBySKU(sku:string,garageId: string) {
+  return await prisma.product.findFirst({
+    where:{
+      sku,
+      status:'PUBLIC',
+      garageId
+    }
+  })
+}

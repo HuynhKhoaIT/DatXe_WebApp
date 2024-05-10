@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getProductById } from '@/app/libs/prisma/product';
-import { findPost, findPostAdmin, updatePost } from '@/app/libs/prisma/post';
+import { deletePost, findPost, findPostAdmin, updatePost } from '@/app/libs/prisma/post';
 import convertToSlug from '@/utils/until';
 import { ROLE_ADMIN, ROLE_EXPERT } from '@/constants';
 
@@ -48,15 +48,6 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     if (!id) {
         return new NextResponse("Missing 'id' parameter");
     }
-    const postData = await findPost(id);
-    const post = await prisma.post.update({
-        where: {
-            id: (postData.id),
-        },
-        data: {
-            status: 'DELETE',
-        },
-    });
-
+    const postData = await deletePost(id);
     return NextResponse.json({ success: 1, message: 'Delete success' });
 }
