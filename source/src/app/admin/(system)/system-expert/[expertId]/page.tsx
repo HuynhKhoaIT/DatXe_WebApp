@@ -39,6 +39,7 @@ export default function UpdateCategory({
         createQr={createQr}
         isPendingQr={isPendingQr}
         isCreateQr={expert?.bitlyUrl}
+        isSystem={true}
       />
     </Box>
   );
