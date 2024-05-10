@@ -20,7 +20,7 @@ import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/image.svg";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useAddBanner } from "@/app/admin/(admin)/hooks/banner/useAddBanner";
-export default function BannerForm({ isEditing, dataDetail }: any) {
+export default function BannerForm({ kind = 1, isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddBanner();
   const [loading, handlers] = useDisclosure();
   const resetRef = useRef<() => void>(null);
@@ -28,10 +28,10 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
 
   const form = useForm({
     initialValues: {
+      kind: kind,
       banners: "",
       title: "",
       url: "",
-      kind: 1,
       shortDescription: "",
       description: "",
     },
@@ -76,6 +76,7 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
   };
 
   const handleSubmit = async (values: any) => {
+    values.kind = values.kind.toString();
     handlers.open();
     if (isEditing) {
       updateItem(values);
@@ -103,7 +104,7 @@ export default function BannerForm({ isEditing, dataDetail }: any) {
                   </Text>
                   <CropImageLink
                     shape="rect"
-                    aspect={16 / 6}
+                    aspect={kind == 1 ? 16 / 6 : 15 / 8}
                     placeholder={"Cập nhật hình ảnh"}
                     defaultImage={dataDetail?.banners || ImageUpload.src}
                     uploadFileThumbnail={uploadFileThumbnail}

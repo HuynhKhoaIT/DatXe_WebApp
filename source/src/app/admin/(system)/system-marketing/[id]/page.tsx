@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import BannerForm from "../create/BannerForm";
+import BannerForm from "../../slide-banner/create/BannerForm";
 export const revalidate = 60;
 export default function UpdateAmentity({ params }: { params: { id: number } }) {
   const [banner, setBanner] = useState(null);
@@ -20,5 +20,5 @@ export default function UpdateAmentity({ params }: { params: { id: number } }) {
 
     fetchData();
   }, [params?.id]);
-  return <BannerForm isEditing={true} dataDetail={banner} />;
+  return <BannerForm kind={2} isEditing={true} dataDetail={banner} />;
 }

@@ -5,7 +5,7 @@ import { Tabs, rem } from "@mantine/core";
 import Address from "./Address";
 import Reviews from "./Review";
 
-const TabsComponent = ({ data, reviews, expertId }: any) => {
+const TabsComponent = ({ data, reviews, expertId, review }: any) => {
   return (
     <div>
       <Tabs
@@ -21,7 +21,12 @@ const TabsComponent = ({ data, reviews, expertId }: any) => {
         <Tabs.Panel value="introduce">{data?.description}</Tabs.Panel>
 
         <Tabs.Panel value="evaluate">
-          <Reviews reviews={reviews} garageDetail={data} expertId={expertId} />
+          <Reviews
+            reviews={reviews}
+            garageDetail={data}
+            expertId={expertId}
+            review={review}
+          />
         </Tabs.Panel>
 
         <Tabs.Panel value="address">

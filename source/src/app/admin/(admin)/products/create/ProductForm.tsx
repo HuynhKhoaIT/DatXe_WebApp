@@ -109,9 +109,9 @@ export default function ProductForm({
       console.log(dataDetail)
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
-      form.setFieldValue("metaDescription", dataDetail?.description);
+      setValueRTE(dataDetail?.description);
       form.setFieldValue("status", "PUBLIC");
-      form.setFieldValue("isProduct", "1");
+      form.setFieldValue("isProduct", dataDetail?.isProduct.toString());
       form.setFieldValue("sku", dataDetail?.sku);
 
       if (dataDetail?.categoryId) {

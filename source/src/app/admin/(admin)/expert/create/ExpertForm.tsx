@@ -41,7 +41,9 @@ export default function ExpertForm({
   createQr,
   isPendingQr,
   isCreateQr,
+  isSystem,
 }: any) {
+  console.log(dataDetail);
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
@@ -246,7 +248,7 @@ export default function ExpertForm({
                 </Grid.Col>
               </Grid>
               <Grid gutter={10} mt={24}>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <Grid.Col span={{ base: 6, sm: 3, md: 2, lg: 2 }}>
                   <TextInput
                     size="lg"
                     radius={0}
@@ -255,6 +257,17 @@ export default function ExpertForm({
                     type="text"
                     disabled
                     placeholder="Mã số"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 6, sm: 3, md: 2, lg: 2 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("routeId")}
+                    label="ID"
+                    type="text"
+                    disabled={!isSystem}
+                    placeholder="ID"
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
