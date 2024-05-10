@@ -23,6 +23,7 @@ const LandingPageDesktop = ({
   servicesHot,
   productsHot,
   slideData,
+  advertisement,
 }: any) => {
   const { data: blogs, isLoading, isFetching } = useNewsList({
     garageId: 14,
@@ -36,7 +37,7 @@ const LandingPageDesktop = ({
         <Category categories={categories} />
       </div>
       <Container className={styles.AdvertisementBox}>
-        <Advertisement />
+        <Advertisement advertisement={advertisement?.data} />
       </Container>
       <div className={styles.servicesBox}>
         <ServicesHot data={servicesHot} />

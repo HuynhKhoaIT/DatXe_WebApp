@@ -18,7 +18,7 @@ const ReviewItem = ({ dataDetail }: any) => {
                 {dataDetail?.user?.fullName}
               </Typo>
               <div className={styles.star}>
-                <Rating defaultValue={dataDetail?.star} readOnly />
+                <Rating value={dataDetail?.star} readOnly fractions={2} />
                 <Typo style={{ fontSize: "12px", color: "var(--sub-color)" }}>
                   {formatTimeDifference(dataDetail?.updatedAt)}
                 </Typo>

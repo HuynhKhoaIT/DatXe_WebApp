@@ -18,7 +18,6 @@ const menuConfigAdmin = [
     icon: IconNotes,
     initiallyOpened: true,
     links: [
-      // { label: "Danh sách banner", link: "/admin/slide-banner" },
       { label: "Sản phẩm nổi bật", link: "/admin/system-products" },
       { label: "Dịch vụ nổi bật", link: "/admin/system-services" },
     ],
@@ -43,15 +42,19 @@ const menuConfigAdmin = [
     icon: IconClipboard,
   },
   {
-    label: "Danh sách khách hàng",
+    label: "Quản lí người dùng",
     icon: IconUsers,
-    link: "/admin/system-customer",
+    links: [
+      {
+        label: "Danh sách khách hàng",
+        link: "/admin/system-customer",
+      },
+      {
+        label: "Danh sách người dùng",
+        link: "/admin/system-users",
+      },
+    ],
   },
-  // {
-  //   label: "Danh sách xe",
-  //   icon: IconUsers,
-  //   link: "/admin/system-cars",
-  // },
   {
     label: "Danh mục",
     link: "/admin/system-categories",

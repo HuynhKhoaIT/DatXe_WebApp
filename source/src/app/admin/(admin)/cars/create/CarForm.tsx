@@ -15,7 +15,13 @@ import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-export default function CarForm({ isEditing, dataDetail, isLoading }: any) {
+export default function CarForm({
+  isEditing,
+  dataDetail,
+  isLoading,
+  isPreview,
+  isPending,
+}: any) {
   const {
     addItem,
     updateItem,
@@ -82,7 +88,7 @@ export default function CarForm({ isEditing, dataDetail, isLoading }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={isLoadingBrand || isLoadingCustomer || isLoading}
+        visible={isLoadingBrand || isLoadingCustomer || isLoading || isPending}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
@@ -220,10 +226,18 @@ export default function CarForm({ isEditing, dataDetail, isLoading }: any) {
             </Card>
           </Grid.Col>
         </Grid>
-        <FooterSavePage
-          saveLoading={isPendingAdd || isPendingUpdate}
-          okText={isEditing ? "Cập nhật" : "Thêm"}
-        />
+        {isPreview ? (
+          <FooterSavePage
+            saveLoading={isPendingAdd || isPendingUpdate}
+            isOk={false}
+            cancelText="Quay lại"
+          />
+        ) : (
+          <FooterSavePage
+            saveLoading={isPendingAdd || isPendingUpdate}
+            okText={isEditing ? "Cập nhật" : "Thêm"}
+          />
+        )}
       </form>
     </Box>
   );

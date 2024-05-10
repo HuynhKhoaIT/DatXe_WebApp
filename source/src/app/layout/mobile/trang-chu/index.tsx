@@ -14,7 +14,7 @@ import ProductsHot from "./ProductsHot";
 import Blogs from "./Blogs";
 import Book from "./Book";
 import { useNewsList } from "@/app/hooks/news/useNews";
-
+import styles from "./index.module.scss";
 const LandingPageMobile = ({
   categories,
   reassons,
@@ -22,6 +22,7 @@ const LandingPageMobile = ({
   productsRelate,
   productsHot,
   slideData,
+  advertisement,
 }: any) => {
   const slideshowData = [
     {
@@ -49,6 +50,9 @@ const LandingPageMobile = ({
       >
         <CategoryCarouselList categories={categories} />
       </div>
+      <Container className={styles.AdvertisementBox}>
+        <Advertisement advertisement={advertisement?.data} />
+      </Container>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
         <Advertisement />
       </div>

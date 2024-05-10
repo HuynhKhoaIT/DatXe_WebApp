@@ -10,6 +10,7 @@ import { FieldTypes, statusOptions } from "@/constants/masterData";
 import ListPage from "@/app/components/layout/ListPage";
 import { useSearchParams } from "next/navigation";
 import { getOptionsCar } from "@/app/admin/(admin)/order-manager/until";
+import SearchForm from "@/app/components/form/SearchForm";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("@/app/admin/_component/ModalDeleteItem"),
@@ -136,6 +137,7 @@ export default function CarsListPage({
             <Link
               href={{
                 pathname: `/admin/system-customer/cars/${record.id}`,
+                query: { customerId },
               }}
             >
               <Button
@@ -145,7 +147,6 @@ export default function CarsListPage({
                 variant="transparent"
                 color="gray"
                 p={5}
-                onClick={() => {}}
               >
                 <IconEye size={16} color="blue" />
               </Button>
@@ -172,54 +173,16 @@ export default function CarsListPage({
     yearId: null,
   };
   return (
-    // <Fragment>
-    //   <div style={{ background: "#fff", marginBottom: 30 }}>
-    //     {/* <SearchForm
-    //       searchData={searchData}
-    //       initialValues={initialValuesSearch}
-    //       brandFilter={true}
-    //     /> */}
-    //   </div>
-    //   <div style={{ marginBottom: 20 }}>
-    //     <Flex justify={"end"} align={"center"}>
-    //       <Link
-    //         href={{
-    //           pathname: `/admin/cars/create`,
-    //         }}
-    //       >
-    //         <Button
-    //           size="lg"
-    //           h={{ base: 42, md: 50, lg: 50 }}
-    //           radius={0}
-    //           leftSection={<IconPlus size={18} />}
-    //         >
-    //           Thêm mới
-    //         </Button>
-    //       </Link>
-    //     </Flex>
-    //   </div>
-    //   <div style={{ background: "#fff", position: "relative" }}>
-    //     <TableBasic
-    //       data={cars?.data}
-    //       columns={columns}
-    //       loading={loading}
-    //       totalPage={cars?.totalPage}
-    //       setPage={setPage}
-    //       activePage={page}
-    //       onRow={`/admin/cars`}
-    //     />
-    //   </div>
-
-    //   <DynamicModalDeleteItem
-    //     openedDeleteItem={openedDeleteItem}
-    //     closeDeleteItem={closeDeleteItem}
-    //     handleDeleteItem={handleDeleteItem}
-    //     deleteRow={deleteRow}
-    //   />
-    // </Fragment>
     <ListPage
       style={{ height: "100%" }}
       titleTable={true}
+      searchForm={
+        <SearchForm
+          searchData={searchData}
+          initialValues={initialValuesSearch}
+          brandFilter={true}
+        />
+      }
       baseTable={
         <TableBasic
           data={cars?.data}
@@ -228,7 +191,7 @@ export default function CarsListPage({
           totalPage={cars?.totalPage}
           setPage={setPage}
           activePage={page}
-          onRow={`/admin/system-customer/cars`}
+          // onRow={`/admin/system-customer/cars`}
         />
       }
     />

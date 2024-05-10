@@ -14,14 +14,15 @@ import dayjs from "dayjs";
 import { useDisclosure } from "@mantine/hooks";
 import { useCustomers } from "../hooks/customers/useCustomers";
 import { useRouter } from "next/navigation";
+import { useUsers } from "../hooks/users/useUsers";
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Danh sách khách hàng" },
+  { title: "Danh sách người dùng" },
 ];
 
-export default function Customers() {
+export default function UserListPage() {
   const {
-    customers,
+    users,
     isLoading,
     isFetching,
     error,
@@ -30,7 +31,7 @@ export default function Customers() {
     deleteItem,
     activeTab,
     setActiveTab,
-  } = useCustomers();
+  } = useUsers();
   const [deleteRow, setDeleteRow] = useState();
 
   const route = useRouter();
@@ -43,11 +44,11 @@ export default function Customers() {
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên khách hàng
+          Họ và tên
         </span>
       ),
       name: "fullname",
-      dataIndex: activeTab === "first" ? ["fullName"] : ["name"],
+      dataIndex: ["fullName"],
       render: (dataRow: any) => {
         return <span>{dataRow}</span>;
       },
@@ -135,10 +136,15 @@ export default function Customers() {
       ),
       dataIndex: [],
       width: "140px",
+      textAlign: "center",
       render: (record: any) => {
         return (
-          <>
-            <Tooltip label="Xe" withArrow position="bottom">
+          <Link
+            href={{
+              pathname: `/admin/system-users/${record.id}`,
+            }}
+          >
+            <Tooltip label="Xem chi tiết" withArrow position="bottom">
               <Button
                 size="lg"
                 radius={0}
@@ -146,63 +152,17 @@ export default function Customers() {
                 variant="transparent"
                 color="gray"
                 p={5}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  route.push(
-                    `/admin/system-customer/cars?customerId=${record?.id}`
-                  );
-                }}
+                onClick={() => {}}
               >
-                <IconCar size={16} />
+                <IconEye size={16} color="blue" />
               </Button>
             </Tooltip>
-            <Link
-              href={{
-                pathname: `/admin/system-customer/${record.id}`,
-              }}
-            >
-              <Tooltip label="Xem chi tiết" withArrow position="bottom">
-                <Button
-                  size="lg"
-                  radius={0}
-                  style={{ margin: "0 5px" }}
-                  variant="transparent"
-                  color="gray"
-                  p={5}
-                  onClick={() => {}}
-                >
-                  <IconEye size={16} color="blue" />
-                </Button>
-              </Tooltip>
-            </Link>
-            {/* <Tooltip label="Xoá" withArrow position="bottom">
-              <Button
-                size="lg"
-                radius={0}
-                p={5}
-                variant="transparent"
-                color="red"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  openDeleteProduct();
-                  e.stopPropagation();
-                  setDeleteRow(record.id);
-                }}
-              >
-                <IconTrash size={16} color="red" />
-              </Button>
-            </Tooltip> */}
-          </>
+          </Link>
         );
       },
     },
   ];
   const searchData = [
-    {
-      name: "s",
-      placeholder: "Tên",
-      type: FieldTypes.STRING,
-    },
     {
       name: "phoneNumber",
       placeholder: "Số điện thoại",
@@ -210,7 +170,6 @@ export default function Customers() {
     },
   ];
   const initialValuesSearch = {
-    s: "",
     phoneNumber: "",
   };
   return (
@@ -228,13 +187,13 @@ export default function Customers() {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={customers?.data}
+            data={users?.data}
             columns={columns}
             loading={isLoading}
-            totalPage={customers?.totalPage}
+            totalPage={users?.totalPage}
             setPage={setPage}
             activePage={page}
-            onRow={`/admin/system-customer`}
+            onRow={`/admin/system-users`}
           />
         }
       />

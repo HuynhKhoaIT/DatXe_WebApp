@@ -9,8 +9,8 @@ interface IProps {
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Danh sách khách hàng", href: "/admin/system-customer" },
-  { title: "Cập nhật khách hàng" },
+  { title: "Danh sách người dùng", href: "/admin/system-users" },
+  { title: "Chi tiết người dùng" },
 ];
 export default function CreateLayout({ children }: IProps) {
   const { isMobile } = getSelectorsByUserAgent(
