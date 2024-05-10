@@ -169,6 +169,7 @@ export async function POST(request: Request) {
                     name: json.title,
                     uuID: generateUUID(),
                     slug: json.title,
+                    sku: json.sku,
                     price: json.price,
                     salePrice: json.salePrice,
                     productId: json.productId ?? 0,
