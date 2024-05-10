@@ -40,6 +40,13 @@ export default function FormLoginPassword() {
       });
       const user = await res.json();
       if (user?.success) {
+        const resA = await fetch("/api/admin/init-garage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user.user),
+        });
         signIn("credentials", {
           ...values,
           callbackUrl: callbackUrl || "/dashboard",

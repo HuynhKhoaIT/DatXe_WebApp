@@ -13,7 +13,6 @@ export async function POST(request: Request) {
         if (session) {
             const id = json.id;
             const order = await findOrder(id,{});
-            // return NextResponse.json(order.orderDLBDId);
             if(order.orderDLBDId==null){
                 const { data } = await axios({
                     method: "POST",
