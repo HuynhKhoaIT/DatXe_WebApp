@@ -46,7 +46,7 @@ function mapError(error: unknown | undefined): undefined | string {
     return 'Unknown error';
 }
 
-export const useNewsList = (): UseNews => {
+export const useNewsList = ({garageId}:any): UseNews => {
     const queryClient = useQueryClient();
 
     const searchParams = useSearchParams();

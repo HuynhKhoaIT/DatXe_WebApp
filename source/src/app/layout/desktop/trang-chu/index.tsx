@@ -26,7 +26,7 @@ const LandingPageDesktop = ({
   advertisement,
 }: any) => {
   const { data: blogs, isLoading, isFetching } = useNewsList({
-    garageId: 14,
+    garageId: 2,
     limit: 4,
   });
   return (

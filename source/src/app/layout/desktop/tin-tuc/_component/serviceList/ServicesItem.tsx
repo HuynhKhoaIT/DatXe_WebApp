@@ -6,6 +6,7 @@ import classNames from "classnames";
 
 import Typo from "@/app/components/elements/Typo";
 import { useRouter } from "next/navigation";
+import { fitString, formatTimeDifference } from "@/utils/until";
 
 const ServicesItem = ({ data }: any) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -71,7 +72,7 @@ const ServicesItem = ({ data }: any) => {
                 size="tiny"
                 style={{ color: "var(--text-color)", marginTop: 5 }}
               >
-                {" Chủ đề "} {data?.category?.name}
+                Đăng lúc {formatTimeDifference(data?.updatedAt)}
               </Typo>
             </Flex>
           </Flex>

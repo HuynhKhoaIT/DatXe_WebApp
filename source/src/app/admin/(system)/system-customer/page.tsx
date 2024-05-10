@@ -43,7 +43,7 @@ export default function Customers() {
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên khách hàng
+          Họ và tên
         </span>
       ),
       name: "fullname",

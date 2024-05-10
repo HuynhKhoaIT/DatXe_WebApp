@@ -204,6 +204,7 @@ export default function ProductsManaga() {
       width: "100px",
       textAlign: "center",
       render: (record: any) => {
+        console.log(record);
         if (activeTab === "first") {
           return (
             <>

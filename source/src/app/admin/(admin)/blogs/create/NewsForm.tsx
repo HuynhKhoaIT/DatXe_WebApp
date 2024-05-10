@@ -28,10 +28,13 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   const [valueRTE, setValueRTE] = useState("");
   const { addItem, updateItem, isPendingAdd, isPendingUpdate } = useAddNews();
   const [thumbnailUrl, setThumbnailUrl] = useState<File | null>();
+  const [banner, setBannerUrl] = useState<File | null>();
+
   const form = useForm({
     initialValues: {
       thumbnail: "",
       title: "",
+      banner: "",
       description: "",
     },
     validate: {
@@ -48,6 +51,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
         form.setFieldValue("seoTitle", dataDetail?.seoMeta?.title);
         form.setFieldValue("seoDescription", dataDetail?.seoMeta?.description);
         setThumbnailUrl(dataDetail?.thumbnail);
+        setBannerUrl(dataDetail?.banner);
         setValueRTE(dataDetail?.description);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -81,6 +85,22 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       console.error("Error:", error);
     }
   };
+  const uploadFileBanner = async (file: File) => {
+    try {
+      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const options = { headers: { "Content-Type": "multipart/form-data" } };
+
+      const formData = new FormData();
+      if (file) {
+        formData.append("image", file);
+      }
+      const response = await axios.post(baseURL, formData, options);
+      form.setFieldValue("banner", response.data);
+      setBannerUrl(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   const handleSubmit = async (values: any) => {
     values.slug = convertToSlug(values?.title);
     values.description = valueRTE;
@@ -104,16 +124,34 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
           <Grid.Col span={12}>
             <Card withBorder shadow="sm">
               <Grid>
-                <Grid.Col span={12}>
+                <Grid.Col span={6}>
                   <Text size={"16px"} c={"#999999"} mb={"6px"}>
                     Hình ảnh
                   </Text>
                   <CropImageLink
                     shape="rect"
-                    aspect={2 / 1}
+                    aspect={1 / 1}
                     placeholder={"Cập nhật ảnh "}
                     defaultImage={thumbnailUrl}
                     uploadFileThumbnail={uploadFileThumbnail}
+                    idImageContainer="thumbnailId"
+                    idUpload="idUploadThumbnail"
+                    idResult="image-result-thumbnail"
+                  />
+                </Grid.Col>
+                <Grid.Col span={6}>
+                  <Text size={"16px"} c={"#999999"} mb={"6px"}>
+                    Banner
+                  </Text>
+                  <CropImageLink
+                    shape="rect"
+                    aspect={3 / 1}
+                    placeholder={"Cập nhật ảnh "}
+                    defaultImage={banner}
+                    uploadFileThumbnail={uploadFileBanner}
+                    idImageContainer="bannerId"
+                    idUpload="idUploadBanner"
+                    idResult="image-result-banner"
                   />
                 </Grid.Col>
               </Grid>

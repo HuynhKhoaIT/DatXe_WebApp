@@ -3,6 +3,7 @@ import styles from "./index.module.scss";
 import classNames from "classnames";
 import { Flex, Image, Title } from "@mantine/core";
 import Typo from "@/app/components/elements/Typo";
+import { fitString, formatTimeDifference } from "@/utils/until";
 
 const Banner = ({ data }: any) => {
   return (
@@ -12,17 +13,14 @@ const Banner = ({ data }: any) => {
           {data?.title}
         </Typo>
         <div>
-          <Title
-            fw="400"
-            size="18px"
-            c="var(--text-color-light)"
-            className={styles.breadscrumbs}
-          >
-            {" Chủ đề "} {data?.category?.name}
-          </Title>
+          <p className={styles.timeTile}>
+            Đăng lúc {formatTimeDifference(data?.updatedAt)}
+          </p>
           <Flex>
             {/* <div style={{ marginTop:5, fontSize:'20px', fontWeight: 500, color:'white' }}>{data?.title}</div> */}
-            <div className={styles.breadscrumblast}>{data?.title}</div>
+            <div className={styles.subDes}>
+              {fitString(data?.shortDescription, 300)}
+            </div>
           </Flex>
         </div>
       </div>

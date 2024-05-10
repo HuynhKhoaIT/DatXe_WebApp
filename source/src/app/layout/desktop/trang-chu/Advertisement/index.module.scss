@@ -16,13 +16,32 @@
         line-height: 28px;
     }
 }
+.wrapper{
+    position: relative;
+    cursor: pointer;
+}
 .info {
+    flex: 1;
+    height: 90px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    width: 50%;
-    gap: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0 22px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    .title {
+        font-size: var(--primary-font-size);
+        color: var(--title-white);
+        font-weight: 600;
+    }
+    .view {
+        font-size: var(--small-font-size);
+        color: var(--title-white);
+    }
 }
 .itemCard1 {
     // background: linear-gradient(0deg, #ffd345 0%, #ffef9e 81.91%);

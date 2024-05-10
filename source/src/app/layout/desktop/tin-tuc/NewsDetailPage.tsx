@@ -5,6 +5,7 @@ import Typo from "@/app/components/elements/Typo";
 import Container from "@/app/components/common/Container";
 import Banner from "./_component/Banner";
 import ServiceList from "./_component/serviceList/ServiceList";
+import RichTextRender from "@/app/components/elements/RichTextRender";
 export default function NewDetailPage({ newsData, newsDataList }: any) {
   return (
     <div>
@@ -14,11 +15,7 @@ export default function NewDetailPage({ newsData, newsDataList }: any) {
           <Grid.Col span={9}>
             <Box w={"100%"}>
               {newsData ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: newsData?.data?.description,
-                  }}
-                ></div>
+                <RichTextRender data={newsData?.data?.description} />
               ) : (
                 <Skeleton style={{ marginTop: 25 }} />
               )}
