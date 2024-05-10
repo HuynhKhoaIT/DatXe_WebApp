@@ -10,6 +10,14 @@ export async function getMyAccount(id: string) {
   })
 }
 
+export async function findUser(id:string) {
+  return await prisma.user.findFirst({
+    where: {
+      id
+    }
+  });
+}
+
 export async function getUsers(requestData: any) {
   let currentPage = 1;
   let take = 10;

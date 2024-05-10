@@ -454,6 +454,7 @@ model Post{
   description       String @db.Text
   shortDescription  String?   @db.Text
   thumbnail         String ?   @db.Text
+  banner            String ?   @db.Text
   categories        CategoriesOnPosts[]
   status            STATUS @default(DRAFT)
   createdBy         String @default("1")
