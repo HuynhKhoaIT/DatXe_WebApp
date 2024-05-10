@@ -58,7 +58,16 @@ export default async function Home({ searchParams }: any) {
     },
   });
 
-  const slideData = await callApi(apiConfig.banner.getList, {});
+  const slideData = await callApi(apiConfig.banner.getList, {
+    params: {
+      kind: 1,
+    },
+  });
+  const advertisement = await callApi(apiConfig.banner.getList, {
+    params: {
+      kind: 2,
+    },
+  });
 
   const cate = await callApi(apiConfig.category.getList, {});
 
@@ -78,6 +87,7 @@ export default async function Home({ searchParams }: any) {
       productsRelate={productsRelate}
       servicesHot={servicesHome}
       productsHot={productsHome}
+      advertisement={advertisement}
     />
   );
 }

@@ -9,7 +9,8 @@ export async function GET(request: Request) {
         let garageId = "2";
         const requestData = {
             s: searchParams.get('s'),
-            garageId: garageId
+            garageId: garageId,
+            kind: searchParams.get('kind'),
         }
         const slideBanners = await getSlideBanners(requestData);
         return NextResponse.json(slideBanners);

@@ -4,58 +4,11 @@ import styles from "./index.module.scss";
 import { Button, Flex, Rating, Select, Textarea } from "@mantine/core";
 import ReviewItem from "./ReviewItem";
 import { useForm } from "@mantine/form";
-import Garages from "@/app/components/elements/garage/garages";
 import { useAddReview } from "@/app/hooks/reviewsExpert/useAddReview";
 import { useSession } from "next-auth/react";
-const reviews = [
-  {
-    id: 1,
-    user: {
-      id: 1,
-      name: "Nguyễn Văn A",
-    },
-    star: 3,
-    created: "29/1/2024",
-    message:
-      "Had a wonderful time being at the beach with family. Even though the weather didn’t always cooperate, we had a blast! We were supposed to stay at Quiet Surf townhomes, but because of hurricane Sally and some plumbing issues, we found Costa del Sol which fit the bill just fine. The location was perfect! Newman-Dailey will always be our choice for our beach trips. Very helpful staff.",
-  },
-  {
-    id: 2,
-    user: {
-      id: 2,
-      name: "Nguyễn Huỳnh Khoa",
-    },
-    star: 5,
-    created: "20/1/2024",
-    message:
-      "Had a wonderful time being at the beach with family. Even though the weather didn’t always cooperate, we had a blast! We were supposed to stay at Quiet Surf townhomes, but because of hurricane Sally and some plumbing issues, we found Costa del Sol which fit the bill just fine. The location was perfect! Newman-Dailey will always be our choice for our beach trips. Very helpful staff.",
-  },
-  {
-    id: 3,
-    user: {
-      id: 3,
-      name: "Nguyễn Văn Tài",
-    },
-    star: 4,
-    created: "29/1/2023",
-    message:
-      "Had a wonderful time being at the beach with family. Even though the weather didn’t always cooperate, we had a blast! We were supposed to stay at Quiet Surf townhomes, but because of hurricane Sally and some plumbing issues, we found Costa del Sol which fit the bill just fine. The location was perfect! Newman-Dailey will always be our choice for our beach trips. Very helpful staff.",
-  },
-  {
-    id: 4,
-    user: {
-      id: 4,
-      name: "Nguyễn Văn Long",
-    },
-    star: 2,
-    created: "23/1/2023",
-    message:
-      "Had a wonderful time being at the beach with family. Even though the weather didn’t always cooperate, we had a blast! We were supposed to stay at Quiet Surf townhomes, but because of hurricane Sally and some plumbing issues, we found Costa del Sol which fit the bill just fine. The location was perfect! Newman-Dailey will always be our choice for our beach trips. Very helpful staff.",
-  },
-];
-const Reviews = ({ garageDetail, reviews, expertId, review }: any) => {
-  const { data }: any = useSession();
 
+const Reviews = ({ reviews, expertId, review }: any) => {
+  const { data }: any = useSession();
   const { addItem, updateItem } = useAddReview();
   const form = useForm({
     initialValues: {
@@ -66,10 +19,14 @@ const Reviews = ({ garageDetail, reviews, expertId, review }: any) => {
     validate: {},
   });
   const handleSubmit = async (values: any) => {
-    addItem(values);
+    if (review?.data?.length > 0) {
+      updateItem({ id: review?.data[0]?.id, ...values });
+    } else {
+      addItem(values);
+    }
+    form.reset();
   };
 
-  console.log(review);
   return (
     <div className={styles.wrapper}>
       {data?.user && (
@@ -84,6 +41,16 @@ const Reviews = ({ garageDetail, reviews, expertId, review }: any) => {
             >
               Viết đánh giá
             </Typo>
+          </div>
+          <div className={styles.rating}>
+            <Typo size="primary">Chất lượng chuyên gia</Typo>
+            <Rating
+              defaultValue={5}
+              size="lg"
+              onChange={(value) => {
+                form.setFieldValue("star", value);
+              }}
+            />
           </div>
           <div className={styles.review}>
             <Textarea

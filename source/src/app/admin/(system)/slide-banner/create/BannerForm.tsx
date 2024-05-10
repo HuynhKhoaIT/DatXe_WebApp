@@ -106,7 +106,7 @@ export default function BannerForm({ kind = 1, isEditing, dataDetail }: any) {
                     shape="rect"
                     aspect={kind == 1 ? 16 / 6 : 15 / 8}
                     placeholder={"Cập nhật hình ảnh"}
-                    defaultImage={dataDetail?.banners || ImageUpload.src}
+                    defaultImage={dataDetail?.banners}
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>

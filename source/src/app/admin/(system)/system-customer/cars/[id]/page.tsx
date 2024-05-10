@@ -1,10 +1,29 @@
 "use client";
 import React from "react";
-import CarForm from "../create/CarForm";
 import { useCarDetail } from "@/app/admin/(admin)/hooks/car/useCar";
-export const revalidate = 60;
-export default function UpdateCar({ params }: { params: { id: string } }) {
-  const { data: car, isLoading } = useCarDetail(params?.id);
-
-  return <CarForm isPreview={true} isEditing={true} dataDetail={car} isLoading={isLoading} />;
+import Breadcrumb from "@/app/components/form/Breadcrumb";
+import CarForm from "@/app/admin/(admin)/cars/create/CarForm";
+export default function UpdateCar({ params, searchParams }: any) {
+  const { data: car, isLoading, isPending } = useCarDetail(params?.id);
+  const Breadcrumbs = [
+    { title: "Tổng quan", href: "/admin" },
+    { title: "Danh sách khách hàng", href: "/admin/system-customer" },
+    {
+      title: "Danh sách xe",
+      href: `/admin/system-customer/cars?customerId=${searchParams?.customerId}`,
+    },
+    { title: "Chi tiết xe" },
+  ];
+  return (
+    <>
+      <Breadcrumb breadcrumbs={Breadcrumbs} />
+      <CarForm
+        isPreview={true}
+        isEditing={true}
+        dataDetail={car}
+        isLoading={isLoading}
+        isPending={isPending}
+      />
+    </>
+  );
 }

@@ -267,22 +267,11 @@ export default function OrderForm({
     values.total = calculateSubTotal();
     values.dateTime = new Date();
     handlersButton.open();
-
-    if (values.detail?.length == 0) {
-      notifications.show({
-        title: "Cảnh báo",
-        message: "Vui lòng thêm sản phẩm hoặc dịch vụ",
-      });
-      handlersButton.close();
+    if (isEditing) {
+      updateItem(values);
     } else {
-      if (isEditing) {
-        updateItem(values);
-      } else {
-        addItem(values);
-      }
+      addItem(values);
     }
-
-    //
   };
 
   const [customer, setCustomer] = useState({});

@@ -11,6 +11,14 @@ export default function ProductSavePage({
 }: {
   params: { productId: string };
 }) {
-  const { data: productDetail } = useProductDetail(params?.productId);
-  return <ProductForm isEditing={true} dataDetail={productDetail?.data} />;
+  const { data: productDetail, isPending, isLoading } = useProductDetail(
+    params?.productId
+  );
+  return (
+    <ProductForm
+      isEditing={true}
+      dataDetail={productDetail?.data}
+      isLoading={isPending || isLoading}
+    />
+  );
 }

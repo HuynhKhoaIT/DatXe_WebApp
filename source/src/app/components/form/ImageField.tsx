@@ -12,6 +12,7 @@ export default function ImageField({
   fit,
   alt,
   style,
+  onClick,
 }: any) {
   return (
     <Image
@@ -24,6 +25,7 @@ export default function ImageField({
       fit={fit}
       alt={alt}
       style={style}
+      onClick={onClick}
     />
   );
 }

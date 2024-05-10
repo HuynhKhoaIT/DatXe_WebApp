@@ -28,8 +28,8 @@ export default function ProductForm({
   isEditing = false,
   dataDetail,
   isDirection = false,
+  isLoading,
 }: any) {
-  console.log(dataDetail);
   const {
     addItem,
     updateItem,
@@ -106,7 +106,7 @@ export default function ProductForm({
       setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
-      console.log(dataDetail)
+      console.log(dataDetail);
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
       setValueRTE(dataDetail?.description);
@@ -183,7 +183,7 @@ export default function ProductForm({
   return (
     <Box pos="relative">
       <LoadingOverlay
-        visible={loading || isLoadingCategory}
+        visible={loading || isLoadingCategory || isLoading}
         zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />

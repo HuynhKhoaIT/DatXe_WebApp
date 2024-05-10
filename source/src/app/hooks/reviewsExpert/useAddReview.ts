@@ -21,6 +21,7 @@ const addReview = async (values: any): Promise<any> => {
 };
 
 const updateReview = async (values: any): Promise<any> => {
+    
     const response = await fetch(`/api/client/reviews/garage/${values?.id}`, {
         method: 'PUT',
         headers: {

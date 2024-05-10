@@ -55,6 +55,8 @@ export const QUERY_KEY = {
     marketings: 'marketings',
     ordersAdmin: 'ordersAdmin',
     revenue:'revenue',
+    users:'users',
+    user:'user',
     news: 'news',
     blogs: 'blogs',
     orders: 'orders',
