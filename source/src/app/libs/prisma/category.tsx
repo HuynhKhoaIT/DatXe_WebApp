@@ -149,6 +149,7 @@ export async function syncCategoryFromDlbd(catData: any, garageId: string) {
       garageId: garageId,
       slug: catData.name,
       image: catData.thumbnail,
+      status: 'PUBLIC'
     },
   });
   return c;
