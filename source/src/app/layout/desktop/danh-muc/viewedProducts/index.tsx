@@ -14,7 +14,7 @@ const ViewedProducts = ({ viewedProducts }: any) => {
       id="viewedProducts"
       hiddenShowMore={viewedProducts?.length < 8}
     >
-      <SlickCarousel column={4} gap={8} dots={true}>
+      <SlickCarousel column={4} gap={8} dots={false}>
         {viewedProducts?.map((product: IProduct, index: number) => (
           <ProductItem2 product={product} key={index} />
         ))}
