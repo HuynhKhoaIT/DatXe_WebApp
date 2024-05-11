@@ -13,7 +13,16 @@ export default function ModalCalendar({
   categoryOptions,
   typeView,
 }: any) {
-  const { addItem, brandOptions, isPendingAdd } = useAddOrder();
+  const { addItem, brandOptions, isPendingAdd, isSuccessAdd } = useAddOrder({
+    isBack: false,
+  });
+  useEffect(() => {
+    if (isSuccessAdd) {
+      onClose();
+      form.reset();
+      handlersIsUser.close();
+    }
+  }, [isSuccessAdd]);
   const newDate = new Date(eventInfos?.start);
   newDate.setHours(newDate.getHours() + 9);
   const form = useForm<any>({
@@ -87,8 +96,10 @@ export default function ModalCalendar({
       onCloseModal={() => {
         onClose();
         form.reset();
+        handlersIsUser.close();
       }}
       footer={false}
+      trapFocus={false}
       title="Đặt lịch"
       style={{ position: "relative" }}
     >

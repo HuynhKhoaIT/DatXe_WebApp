@@ -75,16 +75,22 @@ interface UseOrders {
     isPendingUpdate:boolean;
     isPendingUpdateStep:boolean;
     isPendingDlbd:boolean;
+    isSuccessAdd:boolean;
 }
 
-export const useAddOrder = (): UseOrders => {
+export const useAddOrder = ({isBack=true,...prop}:any): UseOrders => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem,isPending:isPendingAdd } = useMutation({
+    const { mutate: addItem,isPending:isPendingAdd ,isSuccess:isSuccessAdd } = useMutation({
         mutationFn: addOrder,
         onSuccess: () => {
-            router.push('/admin/order-manager');
+            if(!isBack){
+                router.refresh();
+            }
+            else{
+                router.push('/admin/order-manager');
+            }
             notifications.show({
                 title: 'Thành công',
                 message: 'Thêm đơn hàng thành công',
@@ -114,7 +120,13 @@ export const useAddOrder = (): UseOrders => {
     const { mutate: updateItem,isPending:isPendingUpdate } = useMutation({
         mutationFn: updateOrder,
         onSuccess: () => {
-            router.back();
+            if(!isBack){
+                router.refresh();
+                prop.onClose();
+            }
+            else{
+                router.back();
+            }
 
             notifications.show({
                 title: 'Thành công',
@@ -159,6 +171,7 @@ export const useAddOrder = (): UseOrders => {
         isPendingUpdate,
         isPendingUpdateStep,
         dbDLBD,
-        isPendingDlbd
+        isPendingDlbd,
+        isSuccessAdd
     };
 };
