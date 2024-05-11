@@ -10,7 +10,7 @@ export default async function SearchPage({ searchParams }: any) {
     params: {
       s: searchParams?.s,
       categoryId: searchParams?.categoryId,
-      isProduct: searchParams?.isProduct || true,
+      isProduct: searchParams?.isProduct,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
     },
   });
