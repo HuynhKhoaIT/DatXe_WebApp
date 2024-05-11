@@ -10,25 +10,40 @@ export default function Advertisement({ advertisement }: any) {
   return (
     <Container>
       <div className={styles.flex}>
-        {advertisement?.map((item: any) => {
-          return (
-            <div
-              className={styles.wrapper}
-              onClick={() => item?.url && window.open(`${item?.url}`)}
-            >
-              <ImageField
-                src={item?.banners}
-                height={{ base: 240, md: 300, lg: 300 }}
-                radius={20}
-                fit="cover"
-                className={styles.img}
-              />
-              <div className={styles.info}>
-                <div className={styles.title}>{item?.title}</div>
-              </div>
-            </div>
-          );
-        })}
+        <div
+          className={styles.wrapper}
+          onClick={() =>
+            advertisement?.[0]?.url && window.open(`${advertisement?.[0]?.url}`)
+          }
+        >
+          <ImageField
+            src={advertisement?.[0]?.banners}
+            height={{ base: 240, md: 300, lg: 300 }}
+            radius={20}
+            fit="cover"
+            className={styles.img}
+          />
+          <div className={styles.info}>
+            <div className={styles.title}>{advertisement?.[0]?.title}</div>
+          </div>
+        </div>
+        <div
+          className={styles.wrapper}
+          onClick={() =>
+            advertisement?.[0]?.url && window.open(`${advertisement?.[0]?.url}`)
+          }
+        >
+          <ImageField
+            src={advertisement?.[0]?.banners}
+            height={{ base: 240, md: 300, lg: 300 }}
+            radius={20}
+            fit="cover"
+            className={styles.img}
+          />
+          <div className={styles.info}>
+            <div className={styles.title}>{advertisement?.[0]?.title}</div>
+          </div>
+        </div>
       </div>
     </Container>
   );
