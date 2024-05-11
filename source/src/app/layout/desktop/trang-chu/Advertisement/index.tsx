@@ -7,7 +7,6 @@ import Container from "@/app/components/common/Container";
 import ImageField from "@/app/components/form/ImageField";
 
 export default function Advertisement({ advertisement }: any) {
-  console.log(advertisement);
   return (
     <Container>
       <div className={styles.flex}>
@@ -19,8 +18,7 @@ export default function Advertisement({ advertisement }: any) {
             >
               <ImageField
                 src={item?.banners}
-                // h={height}
-                // width={'100% + 30px'}
+                height={{ base: 240, md: 300, lg: 300 }}
                 radius={20}
                 fit="cover"
                 className={styles.img}

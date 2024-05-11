@@ -33,7 +33,7 @@ const Blogs = () => {
     page,
     setPage,
     deleteItem,
-  } = useNewsList({ garageId: "14" });
+  } = useNewsList();
   const [deleteRow, setDeleteRow] = useState();
 
   const handleDeleteItem = (id: any) => {
