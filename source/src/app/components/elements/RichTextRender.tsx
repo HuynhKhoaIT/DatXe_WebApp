@@ -52,18 +52,19 @@ const RichTextRender = ({
           fontFamily: "SFPro, sans-serif",
         }}
       >
-        <ReactQuill
-          value={showFullText ? data : truncatedText}
-          readOnly={true}
-          theme={"bubble"}
-          style={{ lineHeight: "2" }}
-          {...props}
-        />
-        {/* <div
-          dangerouslySetInnerHTML={{
-            __html: {showFullText ? data : truncatedText},
-          }}
-        ></div> */}
+        {showFullText ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: data,
+            }}
+          ></div>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: truncatedText,
+            }}
+          ></div>
+        )}
       </div>
       {!showFullText && data?.length > maxLength && (
         <Button
@@ -72,7 +73,11 @@ const RichTextRender = ({
           rightSection={<IconChevronDown size={20} />}
           onClick={toggleShowFullText}
         >
-          <Typo size="primary" type="semi-bold">
+          <Typo
+            size="primary"
+            style={{ color: "var(--primary-color)" }}
+            type="semi-bold"
+          >
             Xem thêm
           </Typo>
         </Button>

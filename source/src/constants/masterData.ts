@@ -36,6 +36,7 @@ export const statusOptions = [
     // { value: STATUS_DELETE, label: 'Xoá', color: 'red' },
 ];
 
+
 export const kindProductOptions = [
     { value: IS_PRODUCT, label: 'Sản phẩm', color: 'green' },
     { value: IS_SERVICE, label: 'Dịch vụ', color: 'blue' },
