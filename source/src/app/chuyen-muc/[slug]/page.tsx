@@ -171,7 +171,7 @@ export default async function DetailCategory({ params, searchParams }: any) {
 
   const products = await callApi(apiConfig.products.getList, {
     params: {
-      categoryId: searchParams?.categoryId,
+      categoryId: params?.slug,
       isProduct: searchParams?.isProduct || true,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
       garageId: searchParams?.garageId,
