@@ -4,13 +4,13 @@
         box-shadow: 0px -2px 15px 0px rgba(0, 172, 193, 0.25);
     }
 }
-.product-title {
+.productTitle {
     color: var(--text-color);
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
     -webkit-line-clamp: 2;
-    height: max-content;
+    -webkit-box-orient: vertical;
 }
 
 .product-author {

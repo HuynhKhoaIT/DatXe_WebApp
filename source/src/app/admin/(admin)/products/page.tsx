@@ -3,7 +3,15 @@ export const revalidate = 0;
 import React, { Fragment, useState } from "react";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { useRouter } from "next/navigation";
-import { Badge, Button, Flex, Image, Tabs, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Button,
+  Flex,
+  Image,
+  Tabs,
+  Tooltip,
+} from "@mantine/core";
 import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
 import {
   FieldTypes,
@@ -166,7 +174,7 @@ export default function ProductsManaga() {
         }
       },
     },
-    {
+    activeTab === "first" && {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Trạng thái
@@ -204,6 +212,7 @@ export default function ProductsManaga() {
       width: "100px",
       textAlign: "center",
       render: (record: any) => {
+        console.log(record?.isAsync);
         if (activeTab === "first") {
           return (
             <>
@@ -249,20 +258,20 @@ export default function ProductsManaga() {
         return (
           <>
             <Tooltip label="Lên sàn" withArrow position="bottom">
-              <Button
-                size="lg"
-                radius={0}
-                p={5}
+              <ActionIcon
+                disabled={record?.isAsync == 1}
                 variant="transparent"
-                color="red"
                 onClick={(e) => {
                   router.push(
                     `/admin/products/direction?productId=${record.id}`
                   );
                 }}
               >
-                <IconArrowUp size={16} color="red" />
-              </Button>
+                <IconArrowUp
+                  size={16}
+                  color={record?.isAsync == 1 ? "gray" : "red"}
+                />
+              </ActionIcon>
             </Tooltip>
           </>
         );

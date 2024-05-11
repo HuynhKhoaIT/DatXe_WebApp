@@ -149,6 +149,7 @@ export default async function DetailGarage({
   const services = await getProducts({
     isProduct: "0",
     garageId: params?.slug,
+    limit: 8,
   });
   // const products = await getProducts({
   //   isProduct: "1",
@@ -158,6 +159,7 @@ export default async function DetailGarage({
     params: {
       isProduct: "1",
       garageId: params?.slug,
+      limit: 8,
     },
   });
 

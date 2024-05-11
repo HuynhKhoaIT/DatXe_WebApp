@@ -9,12 +9,15 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
-    filter: brightness(35%);
+    filter: brightness(50%);
     z-index: 0;
     position: absolute;
     top: 0;
 }
+.timeTile{
+    font-size: 1rem;
 
+}
 .content {
     display: flex;
     z-index: 1;
@@ -64,7 +67,7 @@
     line-height: normal;
 }
 
-.breadscrumbs {
+.subDes {
     font-size: 20px !important;
     font-weight: 500;
     color: white;

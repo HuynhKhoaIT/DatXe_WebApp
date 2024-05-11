@@ -1,25 +1,34 @@
 "use client";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Fragment, useState } from "react";
 import ListPage from "@/app/components/layout/ListPage";
 import SearchForm from "@/app/components/form/SearchForm";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { IconCar, IconEye, IconPencil, IconTrash } from "@tabler/icons-react";
+import {
+  IconCar,
+  IconEye,
+  IconPencil,
+  IconRepeat,
+  IconTrash,
+} from "@tabler/icons-react";
 import { Badge, Button, Tooltip } from "@mantine/core";
 import Link from "next/link";
 import { FieldTypes, sexOptions, statusOptions } from "@/constants/masterData";
 import dayjs from "dayjs";
 import { useDisclosure } from "@mantine/hooks";
-import { useCustomers } from "../hooks/customers/useCustomers";
-import { useRouter } from "next/navigation";
 import { useUsers } from "../hooks/users/useUsers";
+import dynamic from "next/dynamic";
+
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Danh sách người dùng" },
 ];
-
+const DynamicModalChangeGarage = dynamic(
+  () => import("./_component/ModalChangeGarage"),
+  {
+    ssr: false,
+  }
+);
 export default function UserListPage() {
   const {
     users,
@@ -32,13 +41,11 @@ export default function UserListPage() {
     activeTab,
     setActiveTab,
   } = useUsers();
-  const [deleteRow, setDeleteRow] = useState();
 
-  const route = useRouter();
-  const [
-    openedDeleteItem,
-    { open: openDeleteProduct, close: closeDeleteItem },
-  ] = useDisclosure(false);
+  const [userId, setUserId] = useState();
+  const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
+    false
+  );
 
   const columns = [
     {
@@ -139,12 +146,8 @@ export default function UserListPage() {
       textAlign: "center",
       render: (record: any) => {
         return (
-          <Link
-            href={{
-              pathname: `/admin/system-users/${record.id}`,
-            }}
-          >
-            <Tooltip label="Xem chi tiết" withArrow position="bottom">
+          <>
+            <Tooltip label="Điều hướng chuyên gia" withArrow position="bottom">
               <Button
                 size="lg"
                 radius={0}
@@ -152,12 +155,35 @@ export default function UserListPage() {
                 variant="transparent"
                 color="gray"
                 p={5}
-                onClick={() => {}}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setUserId(record.id);
+                  openModal();
+                }}
               >
-                <IconEye size={16} color="blue" />
+                <IconRepeat size={16} color="blue" />
               </Button>
             </Tooltip>
-          </Link>
+            <Link
+              href={{
+                pathname: `/admin/system-users/${record.id}`,
+              }}
+            >
+              <Tooltip label="Xem chi tiết" withArrow position="bottom">
+                <Button
+                  size="lg"
+                  radius={0}
+                  style={{ margin: "0 5px" }}
+                  variant="transparent"
+                  color="gray"
+                  p={5}
+                  onClick={() => {}}
+                >
+                  <IconEye size={16} color="blue" />
+                </Button>
+              </Tooltip>
+            </Link>
+          </>
         );
       },
     },
@@ -196,6 +222,11 @@ export default function UserListPage() {
             onRow={`/admin/system-users`}
           />
         }
+      />
+      <DynamicModalChangeGarage
+        opened={openedModal}
+        close={closeModal}
+        userId={userId}
       />
     </Fragment>
   );

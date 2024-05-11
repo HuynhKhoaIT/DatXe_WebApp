@@ -13,16 +13,22 @@ export default function Advertisement({ advertisement }: any) {
       <div className={styles.flex}>
         {advertisement?.map((item: any) => {
           return (
-            <ImageField
-              src={item?.banners}
-              // h={height}
-              // width={'100% + 30px'}
-              radius={20}
-              fit="cover"
+            <div
+              className={styles.wrapper}
               onClick={() => item?.url && window.open(`${item?.url}`)}
-              className={styles.img}
-              style={{ cursor: "pointer" }}
-            ></ImageField>
+            >
+              <ImageField
+                src={item?.banners}
+                // h={height}
+                // width={'100% + 30px'}
+                radius={20}
+                fit="cover"
+                className={styles.img}
+              />
+              <div className={styles.info}>
+                <div className={styles.title}>{item?.title}</div>
+              </div>
+            </div>
           );
         })}
       </div>
