@@ -35,7 +35,7 @@ const LandingPageMobile = ({
     },
   ];
   const { data: blogs, isLoading, isFetching } = useNewsList({
-    garageId: 14,
+    garageId: 2,
     limit: 4,
   });
   return (
@@ -50,15 +50,13 @@ const LandingPageMobile = ({
       >
         <CategoryCarouselList categories={categories} />
       </div>
-      <Container className={styles.AdvertisementBox}>
-        <Advertisement advertisement={advertisement?.data} />
-      </Container>
       <div style={{ backgroundColor: "var(--background-color-light)" }}>
-        <Advertisement />
+        <Advertisement advertisement={advertisement?.data} />
       </div>
-      <Blogs blogs={blogs?.data} />
       <ProductsHot data={productsHot} />
       <ServicesHot data={servicesHot} />
+      <Blogs blogs={blogs?.data} />
+
       {/* <ProductSuggestions data={productsRelate?.data} /> */}
       <Reassons data={reassons} />
     </div>
