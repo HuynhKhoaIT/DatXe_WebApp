@@ -1,5 +1,5 @@
 "use client";
-import { Button, TextInput } from "@mantine/core";
+import { Button, PasswordInput, TextInput } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, hasLength } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
@@ -83,13 +83,12 @@ export default function FormLoginPassword() {
         {...form.getInputProps("phone")}
         mb={20}
       />
-      <TextInput
+      <PasswordInput
         size="md"
         withAsterisk
         style={{ borderBottom: "1px solid #ddd" }}
         variant="unstyled"
         placeholder="Mật khẩu"
-        type="password"
         {...form.getInputProps("password")}
         mb={20}
       />

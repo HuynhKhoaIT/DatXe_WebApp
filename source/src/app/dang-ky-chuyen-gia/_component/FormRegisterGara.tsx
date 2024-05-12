@@ -2,7 +2,7 @@
 import { Button, TextInput } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { notifications } from "@mantine/notifications";
-import { useForm, hasLength } from "@mantine/form";
+import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 export function FormRegisterGara() {
@@ -17,19 +17,9 @@ export function FormRegisterGara() {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 30 }, "Name must be 2-30 characters long"),
-      garageName: hasLength(
-        { min: 2, max: 30 },
-        "Name must be 2-30 characters long"
-      ),
-      address: hasLength(
-        { min: 2, max: 30 },
-        "Name must be 2-30 characters long"
-      ),
-      phone: hasLength(
-        { min: 2, max: 11 },
-        "phone must be 2-10 characters long"
-      ),
+      name: isNotEmpty("Vui lòng nhập tên của bạn"),
+      phone: (value) =>
+        /^0[1-9][0-9]{8}$/.test(value) ? null : "Số điện thoại sai định dạng",
     },
   });
   const onSubmit = async () => {

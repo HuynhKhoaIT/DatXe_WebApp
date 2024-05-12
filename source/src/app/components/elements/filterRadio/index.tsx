@@ -14,12 +14,13 @@ export function FilterRadio({
   if (params.has(keyName)) {
     valueRadio = params.get(keyName);
   }
+
   return (
     <div className={styles.shopSidebar}>
       <div className={styles.shopWidgets}>
         <h4 className={styles.shopWidgetTitle}>{filterName}</h4>
         <Radio.Group
-          defaultValue={String(valueRadio)}
+          value={String(valueRadio)}
           classNames={{ root: styles.root }}
         >
           {data?.map((item: any, index: number) => (

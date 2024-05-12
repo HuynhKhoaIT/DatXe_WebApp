@@ -2,7 +2,7 @@
 import { Button, TextInput } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { notifications } from "@mantine/notifications";
-import { useForm, hasLength } from "@mantine/form";
+import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 interface FormInputs {
@@ -20,11 +20,9 @@ export function FormRegister() {
     },
 
     validate: {
-      name: hasLength({ min: 2, max: 30 }, "Name must be 2-30 characters long"),
-      phone: hasLength(
-        { min: 2, max: 11 },
-        "phone must be 2-10 characters long"
-      ),
+      name: isNotEmpty("Vui lòng nhập tên của bạn"),
+      phone: (value) =>
+        /^0[1-9][0-9]{8}$/.test(value) ? null : "Số điện thoại sai định dạng",
     },
   });
   const onSubmit = async () => {
@@ -32,10 +30,9 @@ export function FormRegister() {
     const { name, phone } = form.values;
     const res = await CheckPhone(phone);
     if (!res) {
-      
       const genRs = await GenOTP(phone);
       if (genRs.CodeResult == 100) {
-      // if (100 == 100) {
+        // if (100 == 100) {
         router.push(`./dang-ky/xac-thuc?name=${name}&phone=${phone}`);
       } else {
         notifications.show({

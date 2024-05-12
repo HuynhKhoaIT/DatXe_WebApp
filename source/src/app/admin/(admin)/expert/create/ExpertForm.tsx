@@ -14,7 +14,7 @@ import {
   Space,
   Button,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { isNotEmpty, useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -43,15 +43,12 @@ export default function ExpertForm({
   isCreateQr,
   isSystem,
 }: any) {
-  console.log(dataDetail);
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
   const [qrUrl, setQrUrl] = useState(null);
 
   const session = useSession();
-
-  console.log(session);
   const handleChangeImage = (index: number, value: any) => {
     const newImage = [...imagesUrl];
     newImage[index] = value;
@@ -72,8 +69,19 @@ export default function ExpertForm({
       amenities: [],
       photos: [],
       bitlyUrl: null,
+      provinceId: "",
+      districtId: "",
+      wardId: "",
+      name: "",
+      phoneNumber: "",
     },
-    validate: {},
+    validate: {
+      phoneNumber: isNotEmpty("Bắt buộc"),
+      name: isNotEmpty("Bắt buộc"),
+      wardId: isNotEmpty("Bắt buộc"),
+      districtId: isNotEmpty("Bắt buộc"),
+      provinceId: isNotEmpty("Bắt buộc"),
+    },
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -272,6 +280,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
+                    withAsterisk
                     size="lg"
                     radius={0}
                     {...form.getInputProps("name")}
@@ -294,6 +303,7 @@ export default function ExpertForm({
                   <TextInput
                     size="lg"
                     radius={0}
+                    withAsterisk
                     {...form.getInputProps("phoneNumber")}
                     label="Điện thoại"
                     type="text"
@@ -361,6 +371,7 @@ export default function ExpertForm({
                     {...form.getInputProps("provinceId")}
                     label="Tỉnh/Thành phố"
                     placeholder="Chọn tỉnh"
+                    withAsterisk
                     data={provinceOptions}
                     value={province}
                     onChange={async (value) => {
@@ -384,6 +395,7 @@ export default function ExpertForm({
                     radius={0}
                     {...form.getInputProps("districtId")}
                     label="Huyện/Quận"
+                    withAsterisk
                     placeholder="Chọn huyện/quận"
                     data={districtOptions}
                     value={district}
@@ -405,6 +417,7 @@ export default function ExpertForm({
                     radius={0}
                     {...form.getInputProps("wardId")}
                     label="Xã/Phường"
+                    withAsterisk
                     placeholder="Chọn xã/phường"
                     data={wardOptions}
                     value={ward}
