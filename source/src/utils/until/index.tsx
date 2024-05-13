@@ -174,7 +174,7 @@ export async function getOptionsCustomers() {
 // get danh sách options danh mục của chuyên gia
 export async function getOptionsCategories() {
   try {
-    const res = await axios.get(`/api/admin/product-category`);
+    const res = await axios.get(`/api/admin/product-category?limit=30`);
     const dataOption = res.data?.data?.map((item: any) => ({
       value: item.id.toString(),
       label: item.title,

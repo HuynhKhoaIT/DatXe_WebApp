@@ -7,7 +7,7 @@ const Carousel = ({ slideshowData, height }: any) => {
     <div className="carousel_landing">
       <SlickCarousel
         column={1}
-        dots={true}
+        // dots={true}
         nextArrow={<></>}
         prevArrow={<></>}
         speed={2000}

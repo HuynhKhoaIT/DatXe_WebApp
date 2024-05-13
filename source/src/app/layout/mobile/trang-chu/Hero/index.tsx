@@ -6,7 +6,7 @@ import image from "@/assets/images/carousel1.png";
 
 const Hero = ({ slideshowData, height = 220 }: any) => {
   const settings: Settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 1000,
     slidesToShow: 1,
@@ -23,9 +23,10 @@ const Hero = ({ slideshowData, height = 220 }: any) => {
       }}
     >
       <Slider {...settings}>
-        {slideshowData?.data?.map((item: any) => {
+        {slideshowData?.data?.map((item: any, index: number) => {
           return (
             <Image
+              key={index}
               src={item?.banners ? item?.banners : image}
               // h={height}
               // width={'100% + 30px'}

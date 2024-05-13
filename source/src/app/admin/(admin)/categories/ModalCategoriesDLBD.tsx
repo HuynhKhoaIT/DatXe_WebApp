@@ -10,21 +10,19 @@ import {
 } from "@mantine/core";
 import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
 import { IconArrowBarUp } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
-import convertToSlug from "@/utils/until";
 import { useRouter, useSearchParams } from "next/navigation";
 import { getCategoriesDlbd } from "./until";
 import { QUERY_KEY } from "@/constants";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { useAddCategory } from "../hooks/category/useAddCategory";
+import { useEffect } from "react";
 export default function ModalCategoriesDLBD({
   openedModalCategories,
   closeModalCategories,
   profile,
 }: any) {
   const router = useRouter();
-  const queryClient = useQueryClient();
-  const searchParams = useSearchParams();
-
+  const { syncItem, isSuccessSync } = useAddCategory();
   const {
     data: categoriesDlbd,
     isLoading,
@@ -100,41 +98,14 @@ export default function ModalCategoriesDLBD({
   ];
 
   const handleSynchronized = async (data: any) => {
-    const values = {
-      image: data?.thumbnail,
-      title: data?.name,
-      slug: convertToSlug(data?.name),
-      description: data?.description,
-    };
-    try {
-      const sync = await fetch(`/api/admin/product-category/sync`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.categories, searchParams.toString(), 1],
-      });
-      if (sync) {
-        notifications.show({
-          title: "Thành công",
-          message: "Điều hướng danh mục thành công",
-        });
-      } else {
-        notifications.show({
-          title: "Thất bại",
-          message: "Thất bại",
-        });
-      }
-      closeModalCategories();
-      router.refresh();
-    } catch (error) {
-      closeModalCategories();
-      notifications.show({
-        title: "Thất bại",
-        message: "Thất bại",
-      });
-    }
+    syncItem(data);
   };
+  useEffect(() => {
+    if (isSuccessSync) {
+      router.refresh();
+      closeModalCategories();
+    }
+  }, [isSuccessSync]);
   return (
     <Modal
       title="Đồng bộ danh mục"

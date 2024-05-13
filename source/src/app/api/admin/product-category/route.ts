@@ -20,7 +20,7 @@ export async function GET(request: Request) {
             }
             const requestData = {
                 s: searchParams.get('s'),
-                limit: 10,
+                limit: searchParams.get('limit') || 10,
                 take: 10,
                 page: page,
                 garageId: garageId,

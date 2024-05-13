@@ -41,16 +41,16 @@ interface UseProduct {
     updateItem: any;
     categoryOptions: any;
     isLoadingCategory: boolean;
+    isSuccessAdd:boolean;
 }
 
 export const useAddProduct = (): UseProduct => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: addItem } = useMutation({
+    const { mutate: addItem ,isSuccess: isSuccessAdd} = useMutation({
         mutationFn: addProduct,
         onSuccess: () => {
-            router.back();
             notifications.show({
                 title: 'Thành công',
                 message: 'Thêm sản phẩm thành công',
@@ -92,5 +92,6 @@ export const useAddProduct = (): UseProduct => {
         updateItem,
         categoryOptions,
         isLoadingCategory,
+        isSuccessAdd,
     };
 };

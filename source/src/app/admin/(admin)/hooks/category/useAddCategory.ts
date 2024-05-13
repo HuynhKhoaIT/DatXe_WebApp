@@ -20,6 +20,20 @@ const addCategory = async (values: any): Promise<any> => {
     return await response.json();
 };
 
+const syncCategory = async (values: any): Promise<any> => {
+    const response = await fetch(`/api/admin/product-category/sync`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+    });
+    if (!response.ok) {
+        throw new ResponseError('Failed to insert new category', response);
+    }
+    return await response.json();
+};
+
 const updateCategory = async (values: any): Promise<any> => {
     const response = await fetch(`/api/admin/product-category/${values?.id}`, {
         method: 'PUT',
@@ -39,6 +53,8 @@ interface UseCategory {
     updateItem: any;
     isPendingCreate:boolean,
     isPendingUpdate:boolean,
+    syncItem:any,
+    isSuccessSync: boolean,
 }
 
 export const useAddCategory = (): UseCategory => {
@@ -74,11 +90,25 @@ export const useAddCategory = (): UseCategory => {
             });
         },
     });
+    const { mutate: syncItem, isPending:isPendingSync, isSuccess:isSuccessSync } = useMutation({
+        mutationFn: syncCategory,
+        onSuccess: () => {
+            notifications.show({
+                title: 'Thành công',
+                message: 'Điều hướng danh mục thành công',
+            });
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEY.categories, searchParams.toString(), 1],
+            });
+        },
+    });
 
     return {
         addItem,
         updateItem,
         isPendingCreate,
         isPendingUpdate,
+        syncItem,
+        isSuccessSync
     };
 };
