@@ -10,7 +10,7 @@ import { ActionIcon, Button } from "@mantine/core";
 import Container from "@/app/components/common/Container";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 import React, { useState } from "react";
 import { IconQrcode, IconShare, IconShare3 } from "@tabler/icons-react";
@@ -31,6 +31,7 @@ const Info = ({ detailData }: any) => {
     openedModalShare,
     { open: openModalShare, close: closeModalShare },
   ] = useDisclosure(false);
+  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   return (
     <div className={styles.wrapper}>
       <Container>
