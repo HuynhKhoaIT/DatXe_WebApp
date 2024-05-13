@@ -8473,11 +8473,6 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-mobile-share@^1.0.31:
-  version "1.0.31"
-  resolved "https://registry.npmjs.org/react-mobile-share/-/react-mobile-share-1.0.31.tgz"
-  integrity sha512-UHbIWRwTXtGFACiIgyZPaVznmLwqvEWSNUMH5HWqoluPhChpvPQapj5b8S9Dqt++5+qZrb/fIVzgR9D+SBjzxQ==
-
 react-modal@^3.16.1:
   version "3.16.1"
   resolved "https://registry.npmjs.org/react-modal/-/react-modal-3.16.1.tgz"
