@@ -188,6 +188,25 @@ export default function ModalAcceptCar({ openModal, close }: any) {
             </Grid.Col>
           </Grid>
         </form>
+        <div
+          style={{
+            width: "100%",
+            left: 0,
+            display: "flex",
+            justifyContent: "end",
+            paddingTop: 20,
+          }}
+        >
+          <Button
+            onClick={() => {
+              router.push(
+                `/admin/order-manager/create?numberPlate=${numberPlate}`
+              );
+            }}
+          >
+            Tạo đơn
+          </Button>
+        </div>
         <Box h={500} mt={30}>
           {list ? (
             <TableBasic
@@ -205,29 +224,6 @@ export default function ModalAcceptCar({ openModal, close }: any) {
             </div>
           )}
         </Box>
-        <div
-          style={{
-            width: "100%",
-            position: "fixed",
-            gap: "20px",
-            bottom: 0,
-            left: 0,
-            display: "flex",
-            justifyContent: "end",
-            padding: 10,
-            borderTop: "1px solid #ddd",
-          }}
-        >
-          <Button
-            onClick={() => {
-              router.push(
-                `/admin/order-manager/create?numberPlate=${numberPlate}`
-              );
-            }}
-          >
-            Tạo đơn
-          </Button>
-        </div>
       </Box>
     </Modal>
   );

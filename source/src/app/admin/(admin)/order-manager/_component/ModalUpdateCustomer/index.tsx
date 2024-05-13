@@ -15,6 +15,8 @@ import { IconChevronRight } from "@tabler/icons-react";
 import { IconBan } from "@tabler/icons-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { AutocompletePhone } from "../AutoCompletePhone";
+import { getOptionsPhone } from "../../until";
 
 export default function ModalUpdateCustomer({
   openModal,
@@ -23,6 +25,8 @@ export default function ModalUpdateCustomer({
   formOrder,
 }: any) {
   const [loading, handlers] = useDisclosure();
+  const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
+
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: {
@@ -59,6 +63,7 @@ export default function ModalUpdateCustomer({
       formOrder.setFieldValue("fullName", values?.fullName);
       formOrder.setFieldValue("address", values?.address);
       formOrder.setFieldValue("phoneNumber", values?.phoneNumber);
+      formOrder.setFieldValue("customerId", values?.customerId);
 
       handlers.close();
       close();
@@ -83,7 +88,7 @@ export default function ModalUpdateCustomer({
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Grid gutter={16}>
             <Grid.Col span={6}>
-              <TextInput
+              {/* <TextInput
                 size="lg"
                 radius={0}
                 // withAsterisk
@@ -91,6 +96,16 @@ export default function ModalUpdateCustomer({
                 label="Số điện thoại"
                 type="text"
                 placeholder="Số điện thoại"
+              /> */}
+              <AutocompletePhone
+                // isUser={isUser}
+                placeholder="Số điện thoại"
+                label="Số điện thoại"
+                isClear={false}
+                getOptionData={getOptionsPhone}
+                form={form}
+                name="phoneNumber"
+                handlersLoadingCustomer={handlersLoadingCustomer}
               />
             </Grid.Col>
             <Grid.Col span={6}>

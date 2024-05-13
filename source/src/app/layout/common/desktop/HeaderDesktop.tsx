@@ -10,6 +10,7 @@ import SearchFormName from "@/app/components/elements/search/SearchFormName";
 import { IconShoppingCart } from "@tabler/icons-react";
 import ButtonAddCar from "./_component/ButtonAddCar";
 import { getMyAccount } from "@/utils/user";
+import ButtonAddAddress from "./_component/ButtonAddAddress";
 export default async function Header() {
   const brandData = [
     {
@@ -61,6 +62,8 @@ export default async function Header() {
               <img style={{ cursor: "pointer" }} src={logo.src} alt="" />
             </Link>
             <div className={styles.search}>
+              <ButtonAddAddress styles={styles} user={myAccount} />
+
               <SearchFormName />
               <Link href={"/gio-hang"}>
                 <ActionIcon color="#EEF1F9" size={56}>
@@ -69,14 +72,14 @@ export default async function Header() {
               </Link>
               <ButtonAddCar styles={styles} user={myAccount} />
 
-              <Link href={"/dat-lich"}>
+              {/* <Link href={"/dat-lich"}>
                 <Button
                   color="#3450E7"
                   classNames={{ root: styles.btnBook, inner: styles.innerBook }}
                 >
                   Book Lịch
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className={styles.headerNav}>
