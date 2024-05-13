@@ -1,24 +1,12 @@
+"use client";
 import useFetch from "@/app/hooks/useFetch";
-import { QUERY_KEY } from "@/constants";
+import { QUERY_KEY, storageKeys } from "@/constants";
 import {
-  getOptionsBrands,
   getOptionsDistrict,
-  getOptionsModels,
   getOptionsProvince,
   getOptionsWard,
-  getOptionsYearCar,
 } from "@/utils/until";
-import {
-  Box,
-  Button,
-  Grid,
-  Group,
-  LoadingOverlay,
-  Modal,
-  ScrollArea,
-  Select,
-  TextInput,
-} from "@mantine/core";
+import { Box, LoadingOverlay, Modal, ScrollArea } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronLeft, IconPlus, IconX } from "@tabler/icons-react";
@@ -26,6 +14,7 @@ import { useEffect, useState } from "react";
 import styles from "./ModalAddress.module.scss";
 import Scroll from "@/app/components/common/Scroll";
 import classNames from "classnames";
+import { setData } from "@/utils/until/localStorage";
 export default function ModalAddAddress({ openModal, close, myAccount }: any) {
   const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
     queryKey: [QUERY_KEY.optionsProvince],
@@ -181,6 +170,22 @@ export default function ModalAddAddress({ openModal, close, myAccount }: any) {
                           form.setFieldValue("wardId", item.value);
                           setWard(item.value);
                           setWardName(item.label);
+                          const address = {
+                            province: {
+                              id: province,
+                              name: provinceName,
+                            },
+                            district: {
+                              id: district,
+                              name: districtName,
+                            },
+                            ward: {
+                              id: ward,
+                              name: wardName,
+                            },
+                          };
+                          setData(storageKeys.ADDRESS_DEFAULT, address);
+                          close();
                         }}
                       >
                         {item?.label}
