@@ -25,6 +25,7 @@ export default function ProductItem2({
     totalStars = totalStars / product?.reviews?.length;
   }
   const images = JSON.parse(product.images);
+
   return (
     <Box w={"100%"}>
       <Card shadow="sm" radius="md" mb={5}>

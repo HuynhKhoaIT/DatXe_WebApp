@@ -12,16 +12,18 @@ import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
 import { IconArrowBarUp } from "@tabler/icons-react";
 import { notifications } from "@mantine/notifications";
 import convertToSlug from "@/utils/until";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getCategoriesDlbd } from "./until";
 import { QUERY_KEY } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 export default function ModalCategoriesDLBD({
   openedModalCategories,
   closeModalCategories,
   profile,
 }: any) {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const searchParams = useSearchParams();
 
   const {
     data: categoriesDlbd,
@@ -108,6 +110,9 @@ export default function ModalCategoriesDLBD({
       const sync = await fetch(`/api/admin/product-category/sync`, {
         method: "POST",
         body: JSON.stringify(data),
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEY.categories, searchParams.toString(), 1],
       });
       if (sync) {
         notifications.show({
