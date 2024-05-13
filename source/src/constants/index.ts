@@ -121,4 +121,9 @@ export const ORDER_CANCEL_7 = 'Nguyên nhân khác';
 export const CARBRAND = 'Hãng xe';
 export const CARNAME = 'Dòng xe';
 export const CARYEAR = 'Năm sản xuất'
+export const appName = 'datxe';
 
+export const storageKeys = {
+    USER_ACCESS_TOKEN:`${appName}-user-access-token`,
+    ADDRESS_DEFAULT: `${appName}-address-default`
+}
