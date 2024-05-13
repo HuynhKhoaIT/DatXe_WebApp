@@ -57,6 +57,7 @@ const HeaderMobile = () => {
         >
           <Input
             {...form.getInputProps("searchValue")}
+            size="md"
             leftSectionPointerEvents="all"
             leftSection={
               <ActionIcon variant="transparent" type="submit">

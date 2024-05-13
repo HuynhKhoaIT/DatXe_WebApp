@@ -15,6 +15,7 @@ export default function ProductItem({ product }: { product: any }) {
     );
     totalStars = totalStars / product?.reviews?.length;
   }
+
   return (
     <Box w={"100%"}>
       <Card shadow="sm" radius="md">
