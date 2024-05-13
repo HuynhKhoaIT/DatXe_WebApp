@@ -1,6 +1,7 @@
 "use client";
 import {
   Box,
+  Button,
   Card,
   Collapse,
   Grid,
@@ -22,20 +23,28 @@ import InfoCar from "../[productId]/InfoCar";
 import { useAddProduct } from "../../hooks/product/useAddProduct";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import Typo from "@/app/components/elements/Typo";
-import { IconChevronDown } from "@tabler/icons-react";
+import {
+  IconBan,
+  IconChevronDown,
+  IconChevronRight,
+} from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 export default function ProductForm({
   isEditing = false,
   dataDetail,
   isDirection = false,
   isLoading,
+  closeModalSync,
 }: any) {
   const {
     addItem,
     updateItem,
     isLoadingCategory,
     categoryOptions,
+    isSuccessAdd,
   } = useAddProduct();
+  const route = useRouter();
   const [opened, { toggle }] = useDisclosure(false);
 
   const [loading, handlers] = useDisclosure();
@@ -106,7 +115,6 @@ export default function ProductForm({
       setValueRTE(dataDetail?.product?.metaDescription);
     }
     if (isDirection) {
-      console.log(dataDetail);
       form.setFieldValue("name", dataDetail?.name);
       form.setFieldValue("price", dataDetail?.price);
       setValueRTE(dataDetail?.description);
@@ -162,7 +170,6 @@ export default function ProductForm({
       );
 
       values.seoThumbnail = responses?.[0];
-
       values.images = JSON.stringify(responses);
     } catch (error) {
       console.error("Error:", error);
@@ -179,6 +186,17 @@ export default function ProductForm({
     }
     handlers.close();
   };
+
+  useEffect(() => {
+    if (isSuccessAdd) {
+      if (isDirection) {
+        route.refresh();
+        closeModalSync();
+      } else {
+        route.back();
+      }
+    }
+  }, [isSuccessAdd]);
 
   return (
     <Box pos="relative">
@@ -377,10 +395,27 @@ export default function ProductForm({
             </Card>
           </Grid.Col>
         </Grid>
-        <FooterSavePage
-          saveLoading={loading}
-          okText={isEditing ? "Cập nhật" : isDirection ? "Điều hướng" : "Thêm"}
-        />
+        {!isDirection ? (
+          <FooterSavePage
+            saveLoading={loading}
+            okText={isEditing ? "Cập nhật" : "Thêm"}
+          />
+        ) : (
+          <Group justify="end" style={{ marginTop: 10 }}>
+            <Button
+              size="lg"
+              radius={0}
+              h={{ base: 42, md: 50, lg: 50 }}
+              style={{ marginLeft: "12px" }}
+              variant="filled"
+              type="submit"
+              key="submit"
+              leftSection={<IconChevronRight size={16} />}
+            >
+              Điều hướng
+            </Button>
+          </Group>
+        )}
       </form>
     </Box>
   );

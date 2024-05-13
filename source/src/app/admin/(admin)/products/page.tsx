@@ -41,6 +41,13 @@ const DynamicModalDeleteItem = dynamic(
     ssr: false,
   }
 );
+
+const DynamicModalSyncProduct = dynamic(
+  () => import("./_component/ModalSyncProduct"),
+  {
+    ssr: false,
+  }
+);
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Sản phẩm" },
@@ -68,6 +75,11 @@ export default function ProductsManaga() {
   const router = useRouter();
 
   const [deleteRow, setDeleteRow] = useState();
+  const [onRowId, setOnRowId] = useState();
+  const [
+    openedSync,
+    { open: openSyncProduct, close: closeSyncProduct },
+  ] = useDisclosure(false);
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
@@ -262,9 +274,9 @@ export default function ProductsManaga() {
                 disabled={record?.isAsync == 1}
                 variant="transparent"
                 onClick={(e) => {
-                  router.push(
-                    `/admin/products/direction?productId=${record.id}`
-                  );
+                  setOnRowId(record.id);
+                  e.stopPropagation();
+                  openSyncProduct();
                 }}
               >
                 <IconArrowUp
@@ -406,6 +418,13 @@ export default function ProductsManaga() {
         handleDeleteItem={handleDeleteItem}
         deleteRow={deleteRow}
       />
+      {openedSync && (
+        <DynamicModalSyncProduct
+          opened={openedSync}
+          close={closeSyncProduct}
+          productId={onRowId}
+        />
+      )}
     </Fragment>
   );
 }
