@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
                 token.garageId = user.garageId;
                 token.isAdmin = user.garageId;
                 token.role = user.phone == '0964824588' ? 'ADMIN' : user.role;
+                token.useDLBD = user.useDLBD ?? 0;
             }
             if (account) {
                 token.accessToken = account.access_token;
