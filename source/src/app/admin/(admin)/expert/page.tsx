@@ -12,6 +12,7 @@ import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useExperts } from "../hooks/expert/useExpert";
+import { AppConstants } from "@/constants";
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -65,7 +66,15 @@ const Expert = () => {
             />
           );
         }
-        return <Image radius="md " h={40} w={80} fit="contain" src={data} />;
+        return (
+          <Image
+            radius="md "
+            h={40}
+            w={80}
+            fit="contain"
+            src={data && `${AppConstants.contentRootUrl}${data}`}
+          />
+        );
       },
     },
     {

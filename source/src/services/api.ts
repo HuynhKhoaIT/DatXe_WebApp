@@ -8,8 +8,6 @@ const sendRequest = async (options:any, payload:any, token:any) => {
     if (!ignoreAuth && token) {
         headers.Authorization = `Bearer ${token}`;
     }
-
-
     // update path params
     for (let key of Object.keys(pathParams)) {
         const keyCompare = `:${key}`;
@@ -17,7 +15,6 @@ const sendRequest = async (options:any, payload:any, token:any) => {
             baseURL = baseURL.replace(keyCompare, pathParams[key]);
         }
     }
-    console.log(data);
 
     // handle multipart
     if (options.headers['Content-Type'] === 'multipart/form-data') {

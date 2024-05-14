@@ -1,5 +1,6 @@
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/image.svg";
+import { AppConstants } from "@/constants";
 
 export default function ImageItem({
   dataDetail,
@@ -14,7 +15,9 @@ export default function ImageItem({
       shape="rect"
       placeholder={"Cập nhật ảnh bìa"}
       defaultImage={dataDetail || ImageUpload.src}
-      uploadFileThumbnail={uploadFile}
+      uploadFileThumbnail={
+        uploadFile && `${AppConstants.contentRootUrl}${uploadFile}`
+      }
       aspect={1 / 1}
       idUpload={`image-uploader-${index}`}
       idResult={`image-result-${index}`}

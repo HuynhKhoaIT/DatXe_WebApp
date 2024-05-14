@@ -127,3 +127,8 @@ export const storageKeys = {
     USER_ACCESS_TOKEN:`${appName}-user-access-token`,
     ADDRESS_DEFAULT: `${appName}-address-default`
 }
+export const AppConstants = {
+    apiRootUrl: process.env.REACT_APP_API,
+    contentRootUrl: 'https://datlichbaoduong.vcos.cloudstorage.com.vn/dat-xe.com/',
+};
+

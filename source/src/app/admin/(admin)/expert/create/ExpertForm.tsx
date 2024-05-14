@@ -26,9 +26,10 @@ import Typo from "@/app/components/elements/Typo";
 import DropZone from "../_component/DropZone";
 import { IconQrcode } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
-import { ROLE_ADMIN } from "@/constants";
+import { AppConstants, ROLE_ADMIN, apiUrl } from "@/constants";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
+import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
 export default function ExpertForm({
   isLoading,
   isEditing,
@@ -125,58 +126,29 @@ export default function ExpertForm({
 
   const uploadFileThumbnail = async (file: File) => {
     try {
-      const baseURL = "http://localhost:3000/api/upload";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
-
-      const formData = new FormData();
-      if (file) {
-        formData.append("file", file);
-      }
-      const res = await callApi(apiConfig.file.upload, {
-        data: {
-          file: file,
-        },
-      });
-
-      console.log(res);
-
-      const response = await axios.post(baseURL, formData, options);
-      console.log(response);
-      form.setFieldValue("logo", response.data);
-      setLogoUrl(response.data);
-      return response.data;
+      const imageUrl = await uploadFileImage(file);
+      form.setFieldValue("logo", imageUrl);
+      setLogoUrl(imageUrl);
+      return imageUrl;
     } catch (error) {
       console.error("Error:", error);
     }
   };
   const uploadFileBanner = async (file: File) => {
     try {
-      const baseURL = "http://localhost:3000/api/upload";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
-
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("banner", response.data);
-      setBannerUrl(response.data);
+      const imageUrl = await uploadFileImage(file);
+      form.setFieldValue("banner", imageUrl);
+      setBannerUrl(imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
   };
   const uploadFileQrCodeBank = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
+      const imageUrl = await uploadFileImage(file);
 
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("qrCodeBank", response.data);
-      setQrUrl(response.data);
+      form.setFieldValue("qrCodeBank", imageUrl);
+      setQrUrl(imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -184,15 +156,9 @@ export default function ExpertForm({
 
   const uploadFileImages = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
+      const imageUrl = await uploadFileImage(file);
 
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      return response.data;
+      return imageUrl;
     } catch (error) {
       console.error("Error:", error);
     }
@@ -226,7 +192,9 @@ export default function ExpertForm({
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật logo"}
-                    defaultImage={logoUrl}
+                    defaultImage={
+                      logoUrl && `${AppConstants.contentRootUrl}${logoUrl}`
+                    }
                     uploadFileThumbnail={uploadFileThumbnail}
                     aspect={1 / 1}
                     form={form}
@@ -240,7 +208,9 @@ export default function ExpertForm({
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật ảnh bìa"}
-                    defaultImage={bannerUrl}
+                    defaultImage={
+                      bannerUrl && `${AppConstants.contentRootUrl}${bannerUrl}`
+                    }
                     uploadFileThumbnail={uploadFileBanner}
                     aspect={16 / 9}
                     idUpload="image-uploader-banner"
@@ -256,7 +226,9 @@ export default function ExpertForm({
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật QR thanh toán"}
-                    defaultImage={qrUrl}
+                    defaultImage={
+                      qrUrl && `${AppConstants.contentRootUrl}${qrUrl}`
+                    }
                     uploadFileThumbnail={uploadFileQrCodeBank}
                     aspect={1 / 1}
                     idUpload="image-uploader-qrCodeBank"

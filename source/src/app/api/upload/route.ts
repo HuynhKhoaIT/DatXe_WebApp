@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
         const key = `${uuidv4()}_${file.name}`;
         const Body = (await file.arrayBuffer()) as Buffer;
         
-        s3.send(new PutObjectCommand({ Bucket, Key: key, Body,ACL:'public-read' }));
+        await s3.send(new PutObjectCommand({ Bucket, Key: key, Body,ACL:'public-read' }));
         return key;
     })
   );
