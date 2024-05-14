@@ -21,6 +21,8 @@ import { QueryClient } from "@tanstack/react-query";
 import { useNewsList } from "../../(admin)/hooks/news/useNews";
 import { useProductsHome } from "../hooks/home-page/ProductsHome";
 import { useServicesHome } from "../hooks/home-page/ServicesHome";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 const queryClient = new QueryClient();
 
 const Breadcrumbs = [
@@ -65,18 +67,15 @@ const ServicesHot = () => {
       width: "90px",
       render: (data: any) => {
         const images = JSON?.parse(data);
-        if (!images) {
-          return (
-            <Image
-              radius="md"
-              src={ImageDefult.src}
-              h={40}
-              w="auto"
-              fit="contain"
-            />
-          );
-        }
-        return <Image radius="md " h={40} w={40} fit="cover" src={images[0]} />;
+
+        return (
+          <ImageField
+            radius="md "
+            height={40}
+            width={40}
+            src={images[0] && `${AppConstants.contentRootUrl}${images[0]}`}
+          />
+        );
       },
     },
     {

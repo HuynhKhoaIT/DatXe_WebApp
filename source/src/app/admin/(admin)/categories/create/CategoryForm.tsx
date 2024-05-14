@@ -18,6 +18,8 @@ import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import convertToSlug from "@/utils/until";
 import { useAddCategory } from "../../hooks/category/useAddCategory";
 import CropImageLink from "@/app/components/common/CropImage";
+import { AppConstants } from "@/constants";
+import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
 export default function CategoryForm({
   isEditing,
   dataDetail,
@@ -61,16 +63,9 @@ export default function CategoryForm({
 
   const uploadFileThumbnail = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
-
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("image", response.data);
-      setImageField(response.data);
+      const imageUrl = await uploadFileImage(file);
+      form.setFieldValue("image", imageUrl);
+      setImageField(imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -105,7 +100,10 @@ export default function CategoryForm({
                     shape="rect"
                     aspect={1 / 1}
                     placeholder={"Cập nhật avatar"}
-                    defaultImage={imageField}
+                    defaultImage={
+                      imageField &&
+                      `${AppConstants.contentRootUrl}${imageField}`
+                    }
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>

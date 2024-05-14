@@ -4,6 +4,7 @@ import { Group } from "@mantine/core";
 import ImageField from "@/app/components/form/ImageField";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./CardCategory.module.scss";
+import { AppConstants } from "@/constants";
 const CardCategory = ({
   key,
   category,
@@ -22,7 +23,10 @@ const CardCategory = ({
           className={styles.ItemCat}
         >
           <div>
-            <ImageField src={category.image} width={60} />
+            <ImageField
+              src={`${AppConstants.contentRootUrl}${category.image}`}
+              width={60}
+            />
           </div>
           <Typo
             size="primary"
@@ -39,7 +43,11 @@ const CardCategory = ({
           className={styles.ItemCat}
         >
           <div>
-            <ImageField src={category.image} width={60} height={60} fit />
+            <ImageField
+              src={`${AppConstants.contentRootUrl}${category.image}`}
+              width={60}
+              height={60}
+            />
           </div>
           <Typo
             size="primary"

@@ -2,6 +2,7 @@ import { Skeleton } from "@mantine/core";
 import styles from "./CardBlog.module.scss";
 import blog4 from "@/assets/images/blog4.png";
 import Link from "next/link";
+import { AppConstants } from "@/constants";
 
 export default function CardBlog({ data, isLoading }: any) {
   if (!data) {
@@ -17,7 +18,9 @@ export default function CardBlog({ data, isLoading }: any) {
       href={`/bai-viet/${data?.id}`}
       className={styles.wrapper}
       style={{
-        backgroundImage: isLoading ? blog4.src : `url(${data?.thumbnail})`,
+        backgroundImage: isLoading
+          ? blog4.src
+          : `url(${AppConstants.contentRootUrl}${data?.thumbnail})`,
       }}
     >
       <div className={styles.info}>

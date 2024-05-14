@@ -12,6 +12,7 @@ import Breadcrumb from "@/app/components/form/Breadcrumb";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { Fragment } from "react";
 import { useAddProductHome } from "../../hooks/home-page/useAddProductHome";
+import { AppConstants } from "@/constants";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Sản phẩm nổi bật", href: "/admin/system-products" },
@@ -43,10 +44,9 @@ export default function ChooseProducts() {
         return (
           <ImageField
             radius="md"
-            h={40}
-            w={80}
-            fit="contain"
-            src={images?.[0]}
+            height={40}
+            width={80}
+            src={images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`}
           />
         );
       },

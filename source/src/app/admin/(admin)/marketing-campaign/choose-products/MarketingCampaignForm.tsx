@@ -28,6 +28,8 @@ import { useAddMarketing } from "../../hooks/marketingCampaign/useAddMarketing";
 import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
 import axios from "axios";
+import { AppConstants } from "@/constants";
+import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
 
 const DynamicModalChooseProducts = dynamic(
   () => import("./ModalChooseProducts"),
@@ -47,15 +49,8 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
 
   const uploadFileBanner = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
-
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("banner", response.data);
+      const imageUrl = await uploadFileImage(file);
+      form.setFieldValue("banner", imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -318,7 +313,10 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
                 <CropImageLink
                   shape="rect"
                   placeholder={"Cập nhật ảnh bìa"}
-                  defaultImage={dataDetail?.banner || ImageUpload.src}
+                  defaultImage={
+                    dataDetail?.banners &&
+                    `${AppConstants.contentRootUrl}${dataDetail?.banners}`
+                  }
                   uploadFileThumbnail={uploadFileBanner}
                   aspect={3 / 2}
                   idUpload="image-uploader-banner"

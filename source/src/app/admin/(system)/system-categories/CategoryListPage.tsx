@@ -11,6 +11,8 @@ import { FieldTypes, statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
 import { useCategories } from "../../(admin)/hooks/category/useCategory";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -61,7 +63,14 @@ export default function CategoryListPage() {
             />
           );
         }
-        return <Image radius="md " h={40} w={80} fit="contain" src={data} />;
+        return (
+          <ImageField
+            radius="md"
+            height={40}
+            width={80}
+            src={data && `${AppConstants.contentRootUrl}${data}`}
+          />
+        );
       },
     },
     {
