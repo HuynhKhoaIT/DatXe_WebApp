@@ -22,8 +22,6 @@ export async function generateMetadata(
     },
   });
 
-  console.log(imageDefault);
-
   return {
     title:
       product?.data?.product?.seoMeta?.title || product?.data?.product?.name,

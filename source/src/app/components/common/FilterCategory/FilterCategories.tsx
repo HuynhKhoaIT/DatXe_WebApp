@@ -35,9 +35,10 @@ const FilterCategories = ({ categories, shadow = false, loading }: any) => {
             >
               Tất cả
             </Button>
-            {categories?.map((item: any) => {
+            {categories?.map((item: any, index: number) => {
               return (
                 <Button
+                  key={index}
                   variant={activeCateory === item.value ? "filled" : "outline"}
                   color={
                     activeCateory === item.value

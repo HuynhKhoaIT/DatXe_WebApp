@@ -34,6 +34,7 @@ import styles from "./index.module.scss";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
 import { useProduct } from "../hooks/product/useProduct";
 import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -106,7 +107,9 @@ export default function ProductsManaga() {
               h={40}
               w={40}
               fit="cover"
-              src={images?.[0]}
+              src={
+                images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`
+              }
             />
           );
         } else {

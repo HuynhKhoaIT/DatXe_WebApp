@@ -1,14 +1,11 @@
 "use client";
 import Link from "next/link";
-import { IProduct } from "@/interfaces/product";
 import { Card, Image, Badge, Group, Flex, Box } from "@mantine/core";
 import styles from "./ProductItem.module.scss";
 import Typo from "../Typo";
 import ImageField from "../../form/ImageField";
 import Star from "@/assets/icons/star.svg";
-import Heart from "@/assets/icons/heart.svg";
-import Cart from "@/assets/icons/cart.svg";
-import Point from "@/assets/icons/point.svg";
+import { AppConstants } from "@/constants";
 
 export default function ProductItem2({
   product,
@@ -31,7 +28,10 @@ export default function ProductItem2({
       <Card shadow="sm" radius="md" mb={5}>
         <Card.Section>
           <Link href={`/san-pham/${product.id}`} style={{ width: "100%" }}>
-            <ImageField src={images ? images[0] : null} height={160} />
+            <ImageField
+              src={images && `${AppConstants.contentRootUrl}${images[0]}`}
+              height={160}
+            />
           </Link>
         </Card.Section>
 

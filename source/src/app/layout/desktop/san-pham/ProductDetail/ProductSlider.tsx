@@ -13,6 +13,7 @@ import "swiper/css/thumbs";
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 
 export default function ProductSlider({ images }: any) {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
@@ -34,7 +35,7 @@ export default function ProductSlider({ images }: any) {
             <SwiperSlide style={{ height: 380 }} key={index}>
               <ImageField
                 radius={10}
-                src={image}
+                src={image && `${AppConstants.contentRootUrl}${image}`}
                 // style={{ objectFit: "contain" }}
               />
             </SwiperSlide>
@@ -60,7 +61,11 @@ export default function ProductSlider({ images }: any) {
         {images?.map((image: any, index: number) => {
           return (
             <SwiperSlide key={index}>
-              <ImageField style={{ height: 98 }} radius={10} src={image} />
+              <ImageField
+                style={{ height: 98 }}
+                radius={10}
+                src={image && `${AppConstants.contentRootUrl}${image}`}
+              />
             </SwiperSlide>
           );
         })}
