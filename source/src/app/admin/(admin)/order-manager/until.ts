@@ -52,3 +52,20 @@ export async function getOptionsPhone( {s} : any) {
         console.error('error: ', error);
     }
 }
+
+export async function getOptionsCustomer( {s} : any) {
+    try {
+        const res = await axios.get(`/api/admin/customer/autocomplete?s=${s}`);
+        if (!res.data) {
+            throw new Error('Failed to fetch data');
+        }
+        const dataOption = res?.data?.map((item: any) => ({
+            value: item.id.toString(),
+            label: item.phoneNumber + '-' + item.fullName,
+            otherData: item,
+        }));
+        return dataOption;
+    } catch (error) {
+        console.error('error: ', error);
+    }
+}
