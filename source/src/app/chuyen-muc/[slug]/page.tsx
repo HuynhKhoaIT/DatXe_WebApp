@@ -172,7 +172,7 @@ export default async function DetailCategory({ params, searchParams }: any) {
   const products = await callApi(apiConfig.products.getList, {
     params: {
       categoryId: params?.slug,
-      isProduct: searchParams?.isProduct || true,
+      isProduct: searchParams?.isProduct,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
       garageId: searchParams?.garageId,
     },

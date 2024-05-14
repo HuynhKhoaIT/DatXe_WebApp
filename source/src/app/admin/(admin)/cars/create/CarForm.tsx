@@ -15,6 +15,10 @@ import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import { AutocompletePhone } from "../../order-manager/_component/AutoCompletePhone";
+import { getOptionsCustomer, getOptionsPhone } from "../../order-manager/until";
+import { useDisclosure } from "@mantine/hooks";
+import AutocompleteField from "@/app/components/form/AutoCompleteField";
 export default function CarForm({
   isEditing,
   dataDetail,
@@ -34,7 +38,8 @@ export default function CarForm({
   } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
-
+  const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
+  const [phoneNumber, setPhoneNumber] = useState<any>();
   const form = useForm({
     initialValues: {
       customerId: "",
@@ -74,6 +79,11 @@ export default function CarForm({
           form.setInitialValues(dataDetail);
           form.setValues(dataDetail);
           form.setFieldValue("customerId", dataDetail?.customerId.toString());
+          const name =
+            dataDetail?.customer?.phoneNumber +
+            "-" +
+            dataDetail?.customer?.fullName;
+          setPhoneNumber(name);
           form.setFieldValue("carBrandId", dataDetail?.carBrandId.toString());
           form.setFieldValue("carNameId", dataDetail?.carNameId.toString());
           form.setFieldValue("carYearId", dataDetail?.carYearId.toString());
@@ -85,6 +95,8 @@ export default function CarForm({
 
     if (isEditing) fetchData();
   }, [dataDetail]);
+
+  console.log(customerOptions);
   return (
     <Box pos="relative">
       <LoadingOverlay
@@ -98,7 +110,7 @@ export default function CarForm({
             <Card withBorder shadow="sm">
               <Grid gutter={10}>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <Select
+                  {/* <Select
                     size="lg"
                     radius={0}
                     withAsterisk
@@ -107,7 +119,34 @@ export default function CarForm({
                     type="text"
                     placeholder="Khách hàng"
                     data={customerOptions}
+                  /> */}
+                  <AutocompleteField
+                    size="lg"
+                    radius={0}
+                    placeholder="Khách hàng"
+                    w="100%"
+                    label="Khách hàng"
+                    value={phoneNumber}
+                    onOptionSubmit={(value: any) => {
+                      form.setFieldValue("customerId", value);
+                    }}
+                    onChange={(value: any) => {
+                      setPhoneNumber(value);
+                    }}
+                    // error={errorPlate ? "Vui lòng nhập..." : false}
+                    getOptionData={getOptionsCustomer}
+                    name="customerId"
+                    form={form}
                   />
+                  {/* <AutocompletePhone
+                    placeholder="Số điện thoại"
+                    label="Số điện thoại"
+                    isClear={false}
+                    getOptionData={customerOptions}
+                    form={form}
+                    name="customerId"
+                    handlersLoadingCustomer={handlersLoadingCustomer}
+                  /> */}
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
