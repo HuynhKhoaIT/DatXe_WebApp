@@ -26,6 +26,7 @@ export default function Layout({ children }: IProps) {
       ) : (
         <main>
           <Header />
+          
           <div>{children}</div>
           <MyFooter />
         </main>
