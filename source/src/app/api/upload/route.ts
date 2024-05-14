@@ -6,6 +6,9 @@ import {
   PutObjectCommand,
   GetObjectCommand
 } from "@aws-sdk/client-s3";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 
 const Bucket = process.env.AWS_BUCKET_NAME;
 const s3 = new S3Client({
@@ -37,17 +40,20 @@ const command = new GetObjectCommand({
 
 // endpoint to upload a file to the bucket
 export async function POST(request: NextRequest) {
-  const formData = await request.formData();
-  const files = formData.getAll("file") as File[];
-  const response = await Promise.all(
-    files.map(async (file) => {
-        const key = `${uuidv4()}_${file.name}`;
-        const Body = (await file.arrayBuffer()) as Buffer;
-        
-        await s3.send(new PutObjectCommand({ Bucket, Key: key, Body,ACL:'public-read' }));
-        return key;
-    })
-  );
-
-  return NextResponse.json(response);
+    const session = await getServerSession(authOptions);
+        if(session){
+            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
+            const formData = await request.formData();
+            const files = formData.getAll("file") as File[];
+            const response = await Promise.all(
+                files.map(async (file) => {
+                    const key = `${garageId}/${uuidv4()}_${file.name}`;
+                    const Body = (await file.arrayBuffer()) as Buffer;
+                    await s3.send(new PutObjectCommand({ Bucket, Key: key, Body,ACL:'public-read' }));
+                    return key;
+                })
+            );
+            return NextResponse.json(response)
+        }
+        throw new Error('Chua dang nhap');
 }
