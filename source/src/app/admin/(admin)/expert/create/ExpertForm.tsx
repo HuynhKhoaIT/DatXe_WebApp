@@ -27,6 +27,8 @@ import DropZone from "../_component/DropZone";
 import { IconQrcode } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { ROLE_ADMIN } from "@/constants";
+import apiConfig from "@/constants/apiConfig";
+import { callApi } from "@/lib";
 export default function ExpertForm({
   isLoading,
   isEditing,
@@ -123,14 +125,23 @@ export default function ExpertForm({
 
   const uploadFileThumbnail = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const baseURL = "http://localhost:3000/api/upload";
       const options = { headers: { "Content-Type": "multipart/form-data" } };
 
       const formData = new FormData();
       if (file) {
-        formData.append("image", file);
+        formData.append("file", file);
       }
+      const res = await callApi(apiConfig.file.upload, {
+        data: {
+          file: file,
+        },
+      });
+
+      console.log(res);
+
       const response = await axios.post(baseURL, formData, options);
+      console.log(response);
       form.setFieldValue("logo", response.data);
       setLogoUrl(response.data);
       return response.data;
@@ -140,7 +151,7 @@ export default function ExpertForm({
   };
   const uploadFileBanner = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
+      const baseURL = "http://localhost:3000/api/upload";
       const options = { headers: { "Content-Type": "multipart/form-data" } };
 
       const formData = new FormData();
