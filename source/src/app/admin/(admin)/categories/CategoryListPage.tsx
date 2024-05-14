@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
-import { Badge, Button, Flex, Image } from "@mantine/core";
+import { Badge, Button, Flex } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
@@ -11,6 +10,9 @@ import { FieldTypes, statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
 import { useCategories } from "../hooks/category/useCategory";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
+import { useSession } from "next-auth/react";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("@/app/admin/_component/ModalDeleteItem"),
@@ -31,6 +33,7 @@ export default function CategoryListPage({ profile }: any) {
     deleteItem,
   } = useCategories();
 
+  const { data } = useSession();
   const [deleteRow, setDeleteRow] = useState();
 
   const handleDeleteItem = (id: any) => {
@@ -56,18 +59,14 @@ export default function CategoryListPage({ profile }: any) {
       dataIndex: ["image"],
       width: "90px",
       render: (data: any) => {
-        if (!data) {
-          return (
-            <Image
-              radius="md"
-              src={ImageDefult.src}
-              h={40}
-              w="auto"
-              fit="contain"
-            />
-          );
-        }
-        return <Image radius="md " h={40} w={80} fit="contain" src={data} />;
+        return (
+          <ImageField
+            radius="md"
+            height={40}
+            width={80}
+            src={data && `${AppConstants.contentRootUrl}${data}`}
+          />
+        );
       },
     },
     {
@@ -189,15 +188,20 @@ export default function CategoryListPage({ profile }: any) {
         }
         actionBar={
           <Flex justify={"end"} align={"center"} gap={20}>
-            <Button
-              size="lg"
-              h={{ base: 42, md: 50, lg: 50 }}
-              radius={0}
-              onClick={openModalCategories}
-              leftSection={<IconPlus size={18} />}
-            >
-              Đồng bộ
-            </Button>
+            {data?.user?.useDLBD ? (
+              <Button
+                size="lg"
+                h={{ base: 42, md: 50, lg: 50 }}
+                radius={0}
+                onClick={openModalCategories}
+                leftSection={<IconPlus size={18} />}
+              >
+                Đồng bộ
+              </Button>
+            ) : (
+              <></>
+            )}
+
             <Link
               href={{
                 pathname: `/admin/categories/create`,

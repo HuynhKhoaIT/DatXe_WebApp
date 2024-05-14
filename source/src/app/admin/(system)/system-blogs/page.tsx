@@ -13,6 +13,8 @@ import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { QueryClient } from "@tanstack/react-query";
 import { useNewsList } from "../../(admin)/hooks/news/useNews";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 const queryClient = new QueryClient();
 
 const Breadcrumbs = [
@@ -54,12 +56,11 @@ const Blogs = () => {
       width: "90px",
       render: (data: any) => {
         return (
-          <Image
+          <ImageField
             radius="md "
-            h={40}
-            w={80}
-            fit="contain"
-            src={data || ImageDefult.src}
+            height={40}
+            width={80}
+            src={data && `${AppConstants.contentRootUrl}${data}`}
           />
         );
       },

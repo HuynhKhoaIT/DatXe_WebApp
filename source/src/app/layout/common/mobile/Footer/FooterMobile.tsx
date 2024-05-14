@@ -20,6 +20,9 @@ const FooterMobile = () => {
       <Typo size="primary" className={styles.contentAbout}>
         Datxe.com trang web đặt dịch vụ ô tô trực tuyến.
       </Typo>
+      <Link href={"/dang-ky-chuyen-gia"} style={{ paddingBottom: "20px" }}>
+        <Button color={"var(--yellow-btn)"}>Trở thành chuyên gia</Button>
+      </Link>
       <div className={styles.iconSocial}>
         <ul className={styles.listSocial}>
           <li className={styles.itemSocial}>

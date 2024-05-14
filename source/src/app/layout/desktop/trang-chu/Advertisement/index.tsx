@@ -5,6 +5,7 @@ import oto1 from "@/assets/images/oto1.png";
 import oto2 from "@/assets/images/oto2.png";
 import Container from "@/app/components/common/Container";
 import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 
 export default function Advertisement({ advertisement }: any) {
   return (
@@ -17,10 +18,9 @@ export default function Advertisement({ advertisement }: any) {
           }
         >
           <ImageField
-            src={advertisement?.[0]?.banners}
+            src={`${AppConstants.contentRootUrl}${advertisement?.[0]?.banners}`}
             height={{ base: 240, md: 300, lg: 300 }}
             radius={20}
-            fit="cover"
             className={styles.img}
           />
           <div className={styles.info}>
@@ -34,10 +34,9 @@ export default function Advertisement({ advertisement }: any) {
           }
         >
           <ImageField
-            src={advertisement?.[1]?.banners}
+            src={`${AppConstants.contentRootUrl}${advertisement?.[1]?.banners}`}
             height={{ base: 240, md: 300, lg: 300 }}
             radius={20}
-            fit="cover"
             className={styles.img}
           />
           <div className={styles.info}>

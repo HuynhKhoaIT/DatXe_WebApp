@@ -13,6 +13,7 @@ import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { Fragment } from "react";
 import { useAddServiceHome } from "../../hooks/home-page/useAddServiceHome";
 import { useServices } from "../../hooks/services/services";
+import { AppConstants } from "@/constants";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
   { title: "Dịch vụ nổi bật", href: "/admin/system-services" },
@@ -44,10 +45,9 @@ export default function ChooseProducts() {
         return (
           <ImageField
             radius="md"
-            h={40}
-            w={80}
-            fit="contain"
-            src={images?.[0]}
+            height={40}
+            width={80}
+            src={images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`}
           />
         );
       },

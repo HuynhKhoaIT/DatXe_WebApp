@@ -34,6 +34,8 @@ import styles from "./index.module.scss";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
 import { useProduct } from "../hooks/product/useProduct";
 import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
+import { useSession } from "next-auth/react";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -73,7 +75,7 @@ export default function ProductsManaga() {
 
   if (error) return <>error</>;
   const router = useRouter();
-
+  const { data } = useSession();
   const [deleteRow, setDeleteRow] = useState();
   const [onRowId, setOnRowId] = useState();
   const [
@@ -102,17 +104,16 @@ export default function ProductsManaga() {
           const images = JSON?.parse(data);
           return (
             <ImageField
-              radius="md "
-              h={40}
-              w={40}
-              fit="cover"
-              src={images?.[0]}
+              radius="md"
+              height={40}
+              width={80}
+              src={
+                images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`
+              }
             />
           );
         } else {
-          return (
-            <ImageField radius="md " h={40} w={40} fit="cover" src={data} />
-          );
+          return <ImageField radius="md" height={40} width={80} src={data} />;
         }
       },
     },
@@ -361,13 +362,17 @@ export default function ProductsManaga() {
               >
                 Sản phẩm trên sàn
               </Tabs.Tab>
-              <Tabs.Tab
-                h={{ base: 42, md: 50, lg: 50 }}
-                classNames={{ tab: styles.tab }}
-                value="second"
-              >
-                Sản phẩm trên phần mềm
-              </Tabs.Tab>
+              {data?.user?.useDLBD ? (
+                <Tabs.Tab
+                  h={{ base: 42, md: 50, lg: 50 }}
+                  classNames={{ tab: styles.tab }}
+                  value="second"
+                >
+                  Sản phẩm trên phần mềm
+                </Tabs.Tab>
+              ) : (
+                <></>
+              )}
             </Tabs.List>
             <Tabs.Panel value="first">
               <ListPage
@@ -394,21 +399,25 @@ export default function ProductsManaga() {
                 }
               />
             </Tabs.Panel>
-            <Tabs.Panel value="second">
-              <ListPage
-                style={{ height: "100%" }}
-                baseTable={
-                  <TableBasic
-                    data={productsDlbd?.data}
-                    columns={columns}
-                    loading={isLoadingDlbd}
-                    totalPage={productsDlbd?.meta?.last_page}
-                    setPage={setPageDlbd}
-                    activePage={pageDlbd}
-                  />
-                }
-              />
-            </Tabs.Panel>
+            {data?.user?.useDLBD ? (
+              <Tabs.Panel value="second">
+                <ListPage
+                  style={{ height: "100%" }}
+                  baseTable={
+                    <TableBasic
+                      data={productsDlbd?.data}
+                      columns={columns}
+                      loading={isLoadingDlbd}
+                      totalPage={productsDlbd?.meta?.last_page}
+                      setPage={setPageDlbd}
+                      activePage={pageDlbd}
+                    />
+                  }
+                />
+              </Tabs.Panel>
+            ) : (
+              <></>
+            )}
           </Tabs>
         </div>
       </div>

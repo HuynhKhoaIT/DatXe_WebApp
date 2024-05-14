@@ -1,6 +1,5 @@
 import { Image } from "@mantine/core";
 import React from "react";
-import styles from "./ImageField.module.scss";
 import imageDefault from "../../../../public/assets/images/no_image.png";
 export default function ImageField({
   src,

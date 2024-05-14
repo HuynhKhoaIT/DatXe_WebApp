@@ -26,10 +26,11 @@ import useFetch from "@/app/hooks/useFetch";
 import { getOptionsCategories } from "@/utils/until";
 import { QueryClient } from "@tanstack/react-query";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
-import { QUERY_KEY } from "@/constants";
+import { AppConstants, QUERY_KEY } from "@/constants";
 import { ResponseError } from "@/utils/until/ResponseError";
 const queryClient = new QueryClient();
 import styles from "./index.module.scss";
+import ImageField from "@/app/components/form/ImageField";
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
   const response = await fetch(
     `/api/admin/products?${searchParams}&page=${page}`
@@ -101,19 +102,13 @@ export default function ModalChooseProducts({
       width: "90px",
       render: (data: any) => {
         const images = JSON.parse(data);
-        if (!images) {
-          return (
-            <Image
-              radius="md"
-              src={ImageDefult.src}
-              h={40}
-              w="auto"
-              fit="contain"
-            />
-          );
-        }
         return (
-          <Image radius="md " h={40} w={80} fit="contain" src={images[0]} />
+          <ImageField
+            radius="md"
+            height={40}
+            width={80}
+            src={images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`}
+          />
         );
       },
     },

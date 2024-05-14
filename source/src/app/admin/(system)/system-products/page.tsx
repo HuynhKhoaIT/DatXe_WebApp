@@ -20,6 +20,8 @@ import dynamic from "next/dynamic";
 import { QueryClient } from "@tanstack/react-query";
 import { useServicesHome } from "../hooks/home-page/ServicesHome";
 import { useProductsHome } from "../hooks/home-page/ProductsHome";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 const queryClient = new QueryClient();
 
 const Breadcrumbs = [
@@ -76,7 +78,14 @@ const ProductsHot = () => {
             />
           );
         }
-        return <Image radius="md " h={40} w={40} fit="cover" src={images[0]} />;
+        return (
+          <ImageField
+            radius="md "
+            height={40}
+            width={40}
+            src={images[0] && `${AppConstants.contentRootUrl}${images[0]}`}
+          />
+        );
       },
     },
     {

@@ -43,8 +43,12 @@ export default function DashboardAdmin() {
   const searchParams = useSearchParams();
   const startDate: any = searchParams.get("dateStart");
   const endDate: any = searchParams.get("dateEnd");
-  const formattedStartDate = dayjs(startDate||firstDayOfMonth).format("DD/MM/YYYY");
-  const formattedEndDate = dayjs(endDate||lastDayOfMonth).format("DD/MM/YYYY");
+  const formattedStartDate = dayjs(startDate || firstDayOfMonth).format(
+    "DD/MM/YYYY"
+  );
+  const formattedEndDate = dayjs(endDate || lastDayOfMonth).format(
+    "DD/MM/YYYY"
+  );
 
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 600px)");
@@ -142,6 +146,7 @@ export default function DashboardAdmin() {
       id: 3,
     },
   ];
+
   return (
     <div className={styles.main}>
       {myGarage?.status === "PENDING" && (

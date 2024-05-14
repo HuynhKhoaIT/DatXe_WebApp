@@ -22,6 +22,8 @@ import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import Typo from "@/app/components/elements/Typo";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown } from "@tabler/icons-react";
+import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
+import { AppConstants } from "@/constants";
 
 export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   const [opened, { toggle }] = useDisclosure(false);
@@ -39,7 +41,6 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
     },
     validate: {
       title: (value) => (value.length < 1 ? "Không được để trống" : null),
-      // image: (value) => (value.length < 1 ? "Không được để trống" : null),
     },
   });
 
@@ -71,32 +72,19 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
 
   const uploadFileThumbnail = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
-
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("thumbnail", response.data);
-      setThumbnailUrl(response.data);
+      const imageUrl = await uploadFileImage(file);
+      form.setFieldValue("thumbnail", imageUrl);
+      setThumbnailUrl(imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
   };
   const uploadFileBanner = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
+      const imageUrl = await uploadFileImage(file);
 
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("banner", response.data);
-      setBannerUrl(response.data);
+      form.setFieldValue("banner", imageUrl);
+      setBannerUrl(imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -132,7 +120,10 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
                     shape="rect"
                     aspect={1 / 1}
                     placeholder={"Cập nhật ảnh "}
-                    defaultImage={thumbnailUrl}
+                    defaultImage={
+                      thumbnailUrl &&
+                      `${AppConstants.contentRootUrl}${thumbnailUrl}`
+                    }
                     uploadFileThumbnail={uploadFileThumbnail}
                     idImageContainer="thumbnailId"
                     idUpload="idUploadThumbnail"
@@ -147,7 +138,9 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
                     shape="rect"
                     aspect={3 / 1}
                     placeholder={"Cập nhật ảnh "}
-                    defaultImage={banner}
+                    defaultImage={
+                      banner && `${AppConstants.contentRootUrl}${banner}`
+                    }
                     uploadFileThumbnail={uploadFileBanner}
                     idImageContainer="bannerId"
                     idUpload="idUploadBanner"

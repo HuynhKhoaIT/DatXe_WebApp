@@ -20,6 +20,8 @@ import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/image.svg";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useAddBanner } from "@/app/admin/(admin)/hooks/banner/useAddBanner";
+import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
+import { AppConstants } from "@/constants";
 export default function BannerForm({ kind = 1, isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddBanner();
   const [loading, handlers] = useDisclosure();
@@ -61,15 +63,8 @@ export default function BannerForm({ kind = 1, isEditing, dataDetail }: any) {
 
   const uploadFileThumbnail = async (file: File) => {
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
-      const options = { headers: { "Content-Type": "multipart/form-data" } };
-
-      const formData = new FormData();
-      if (file) {
-        formData.append("image", file);
-      }
-      const response = await axios.post(baseURL, formData, options);
-      form.setFieldValue("banners", response.data);
+      const imageUrl = await uploadFileImage(file);
+      form.setFieldValue("banners", imageUrl);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -106,7 +101,10 @@ export default function BannerForm({ kind = 1, isEditing, dataDetail }: any) {
                     shape="rect"
                     aspect={kind == 1 ? 16 / 6 : 15 / 8}
                     placeholder={"Cập nhật hình ảnh"}
-                    defaultImage={dataDetail?.banners}
+                    defaultImage={
+                      dataDetail?.banners &&
+                      `${AppConstants.contentRootUrl}${dataDetail?.banners}`
+                    }
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>

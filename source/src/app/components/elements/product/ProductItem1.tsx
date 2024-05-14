@@ -5,6 +5,7 @@ import styles from "./ProductItem.module.scss";
 import Typo from "../Typo";
 import ImageField from "../../form/ImageField";
 import Star from "@/assets/icons/star.svg";
+import { AppConstants } from "@/constants";
 export default function ProductItem({ product }: { product: any }) {
   const images = JSON?.parse(product.images);
   let totalStars;
@@ -21,7 +22,10 @@ export default function ProductItem({ product }: { product: any }) {
       <Card shadow="sm" radius="md">
         <Card.Section>
           <Link href={`/san-pham/${product.id}`} style={{ width: "100%" }}>
-            <ImageField src={images ? images[0] : null} height={160} />
+            <ImageField
+              src={images && `${AppConstants.contentRootUrl}${images[0]}`}
+              height={160}
+            />
           </Link>
         </Card.Section>
 

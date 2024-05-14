@@ -16,7 +16,7 @@ export function FilterRadio({
   if (params.has(keyName)) {
     valueRadio = params.get(keyName);
   }
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle }] = useDisclosure(true);
 
   return (
     <div className={styles.shopSidebar}>

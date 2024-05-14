@@ -3,6 +3,7 @@ import React from "react";
 import { BackgroundImage, Image } from "@mantine/core";
 import Slider, { Settings } from "react-slick";
 import image from "@/assets/images/carousel1.png";
+import { AppConstants } from "@/constants";
 
 const Hero = ({ slideshowData, height = 220 }: any) => {
   const settings: Settings = {
@@ -27,20 +28,13 @@ const Hero = ({ slideshowData, height = 220 }: any) => {
           return (
             <Image
               key={index}
-              src={item?.banners ? item?.banners : image}
-              // h={height}
-              // width={'100% + 30px'}
-
+              src={
+                item?.banners &&
+                `${AppConstants.contentRootUrl}${item?.banners}`
+              }
               fit="cover"
               onClick={() => item?.url && window.open(`${item?.url}`)}
-              // className={styles.img}
             ></Image>
-            // <BackgroundImage
-            //   style={{ cursor: "pointer" }}
-            //   src={item?.banners ? item?.banners : image}
-            //   h={height}
-            //   onClick={() => item?.url && window.open(`${item?.url}`)}
-            // ></BackgroundImage>
           );
         })}
       </Slider>
