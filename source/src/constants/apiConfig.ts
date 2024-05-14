@@ -11,7 +11,7 @@ const multipartFormHeader = {
 const apiConfig = {
     file: {
         upload: {
-            baseURL: `https://up-image.dlbd.vn/api/image`,
+            baseURL: `${apiUrl}api/upload`,
             method: 'POST',
             headers: multipartFormHeader,
         },

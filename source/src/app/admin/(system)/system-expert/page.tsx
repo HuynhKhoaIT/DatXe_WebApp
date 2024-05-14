@@ -13,6 +13,8 @@ import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { useExperts } from "../../(admin)/hooks/expert/useExpert";
 import FilterTable from "@/app/components/common/FilterTable";
+import { AppConstants } from "@/constants";
+import ImageField from "@/app/components/form/ImageField";
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -56,18 +58,15 @@ const Expert = () => {
       dataIndex: ["logo"],
       width: "90px",
       render: (data: any) => {
-        if (!data) {
-          return (
-            <Image
-              radius="md"
-              src={ImageDefult.src}
-              h={40}
-              w="auto"
-              fit="contain"
-            />
-          );
-        }
-        return <Image radius="md " h={40} w={80} fit="contain" src={data} />;
+        return (
+          <ImageField
+            radius="md "
+            h={40}
+            w={80}
+            fit="contain"
+            src={data && `${AppConstants.contentRootUrl}${data}`}
+          />
+        );
       },
     },
     {
