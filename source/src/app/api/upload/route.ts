@@ -56,5 +56,4 @@ export async function POST(request: NextRequest) {
             return NextResponse.json(response)
         }
         throw new Error('Chua dang nhap');
-  ;
 }

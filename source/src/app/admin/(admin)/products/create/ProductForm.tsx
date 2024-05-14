@@ -157,14 +157,12 @@ export default function ProductForm({
   const handleSubmit = async (values: any) => {
     values.metaDescription = valueRTE;
     try {
-      const baseURL = "https://up-image.dlbd.vn/api/image";
       const options = { headers: { "Content-Type": "multipart/form-data" } };
-
       const responses = await Promise.all(
         images.map(async (image: string | Blob) => {
           const formData = new FormData();
-          formData.append("image", image);
-          const response = await axios.post(baseURL, formData, options);
+          formData.append("file", image);
+          const response = await axios.post("/api/upload", formData, options);
           return response.data;
         })
       );

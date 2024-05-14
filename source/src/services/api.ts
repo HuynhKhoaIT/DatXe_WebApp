@@ -31,9 +31,12 @@ const sendRequest = async (options:any, payload:any, token:any) => {
                 },
             })
             .then((res) => {
+
+                console.log(res);
                 return { data: res.data };
             })
             .catch((err) => {
+                
                 console.log(err);
             });
     }

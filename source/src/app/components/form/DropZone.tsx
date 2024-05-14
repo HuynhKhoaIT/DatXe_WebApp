@@ -17,9 +17,9 @@ import {
   MIME_TYPES,
 } from "@mantine/dropzone";
 import { useEffect, useState } from "react";
+import { AppConstants } from "@/constants";
 
 export function BasicDropzone({ setImages, maxFiles, images, props }: any) {
-  console.log(images);
   const [files, setFiles] = useState<FileWithPath[]>([]);
   const handleDelete = (index: number) => {
     const updatedFiles = files.filter((_, i) => i !== index);
@@ -116,7 +116,12 @@ export function BasicDropzone({ setImages, maxFiles, images, props }: any) {
         {files?.length == 0 && (
           <>
             {images?.map((file: any, index: number) => {
-              return <Image src={file} key={index} />;
+              return (
+                <Image
+                  src={file && `${AppConstants.contentRootUrl}${file}`}
+                  key={index}
+                />
+              );
             })}
           </>
         )}

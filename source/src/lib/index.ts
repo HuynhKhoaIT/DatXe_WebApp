@@ -12,6 +12,7 @@ async function getData() {
   }
 
 async function callApi(options:any, payload:any) {
+
     let {session}:any = await getData();
 
     let token;
