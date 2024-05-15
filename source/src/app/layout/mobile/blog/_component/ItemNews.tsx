@@ -4,16 +4,21 @@ import styles from "./ItemNews.module.scss";
 import category from "@assets/images/category.png";
 import Typo from "@/app/components/elements/Typo";
 import Link from "next/link";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 const ItemNews = ({ item, index }: any) => {
   return (
     <Group mt={20} className={styles.item}>
       <Link href={`/bai-viet/${item?.id}`}>
-        <Image
-          src={item?.thumbnail}
+        <ImageField
+          src={
+            item?.thumbnail &&
+            `${AppConstants.contentRootUrl}${item?.thumbnail}`
+          }
           alt="Relevant Image"
           radius="10px 10px 0 0"
-          h={"220px"}
-          w={"100%"}
+          height={220}
+          width={"100%"}
           mb="-18px"
         />
         <div
