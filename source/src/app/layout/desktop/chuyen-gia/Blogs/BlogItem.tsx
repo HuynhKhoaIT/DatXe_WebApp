@@ -4,6 +4,7 @@ import styles from "./BlogItem.module.scss";
 import Link from "next/link";
 import ImageField from "@/app/components/form/ImageField";
 import Typo from "@/app/components/elements/Typo";
+import { AppConstants } from "@/constants";
 const BlogItem = ({ blog }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -11,7 +12,10 @@ const BlogItem = ({ blog }: any) => {
         <Link href={`/bai-viet/${blog?.id}`} className={styles.card}>
           <div>
             <ImageField
-              src={blog?.thumbnail ? blog?.thumbnail : null}
+              src={
+                blog?.thumbnail &&
+                `${AppConstants.contentRootUrl}${blog?.thumbnail}`
+              }
               height={"160"}
               radius={8}
             />

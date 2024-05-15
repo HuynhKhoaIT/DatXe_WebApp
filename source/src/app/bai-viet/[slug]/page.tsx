@@ -48,6 +48,7 @@ export default async function DetailNews({
       limit: 5,
     },
   });
+
   return (
     <RenderContextClient
       components={{

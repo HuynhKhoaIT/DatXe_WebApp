@@ -5,6 +5,7 @@ import Link from "next/link";
 import ImageField from "@/app/components/form/ImageField";
 import Typo from "@/app/components/elements/Typo";
 import { fitString, formatTimeDifference } from "@/utils/until";
+import { AppConstants } from "@/constants";
 const BlogItem = ({ blog }: any) => {
   console.log(blog);
   return (
@@ -14,7 +15,10 @@ const BlogItem = ({ blog }: any) => {
           <div>
             <div style={{ width: "100%" }}>
               <ImageField
-                src={blog?.thumbnail ? blog?.thumbnail : null}
+                src={
+                  blog?.thumbnail &&
+                  `${AppConstants.contentRootUrl}${blog?.thumbnail}`
+                }
                 height={160}
                 radius={12}
               />
