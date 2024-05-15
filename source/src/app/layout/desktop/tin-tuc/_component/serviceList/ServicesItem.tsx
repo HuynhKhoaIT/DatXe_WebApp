@@ -7,6 +7,7 @@ import classNames from "classnames";
 import Typo from "@/app/components/elements/Typo";
 import { useRouter } from "next/navigation";
 import { fitString, formatTimeDifference } from "@/utils/until";
+import { AppConstants } from "@/constants";
 
 const ServicesItem = ({ data }: any) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -37,7 +38,10 @@ const ServicesItem = ({ data }: any) => {
               onMouseLeave={handleMouseLeave}
             >
               <Image
-                src={data?.thumbnail}
+                src={
+                  data?.thumbnail &&
+                  `${AppConstants.contentRootUrl}${data?.thumbnail}`
+                }
                 alt="Product Image"
                 w={"100%"}
                 className={styles.image}
