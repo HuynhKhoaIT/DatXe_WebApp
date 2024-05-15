@@ -4,6 +4,7 @@ import styles from "./BlogItem.module.scss";
 import Link from "next/link";
 import ImageField from "@/app/components/form/ImageField";
 import Typo from "@/app/components/elements/Typo";
+import { AppConstants } from "@/constants";
 const BlogItem = ({ blog }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -12,7 +13,9 @@ const BlogItem = ({ blog }: any) => {
           <div>
             <div style={{ width: "100%" }}>
               <ImageField
-                src={blog?.image ? blog?.image : null}
+                src={
+                  blog?.image && `${AppConstants.contentRootUrl}${blog?.image}`
+                }
                 height={160}
                 radius={12}
               />

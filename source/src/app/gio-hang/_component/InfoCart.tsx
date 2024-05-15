@@ -15,6 +15,7 @@ import { IconPlus, IconMinus, IconTrash } from "@tabler/icons-react";
 import styles from "./InfoCart.module.scss";
 import { notifications } from "@mantine/notifications";
 import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 export default function InfoCart({
   loading,
   calculateSubTotal,
@@ -48,7 +49,12 @@ export default function InfoCart({
           return <ImageField radius="md" h={40} width="auto" fit="contain" />;
         }
         return (
-          <Image radius="md " h={40} w={80} fit="contain" src={images[0]} />
+          <ImageField
+            radius="md "
+            height={40}
+            width={80}
+            src={images[0] && `${AppConstants.contentRootUrl}${images[0]}`}
+          />
         );
       },
     },

@@ -7,6 +7,7 @@ import Banner from "./_component/Banner";
 import ServiceList from "./_component/serviceList/ServiceList";
 import RichTextRender from "@/app/components/elements/RichTextRender";
 export default function NewDetailPage({ newsData, newsDataList }: any) {
+  console.log("newsData", newsData);
   return (
     <div>
       <Banner data={newsData?.data} />

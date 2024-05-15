@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./index.module.scss";
 import ImageField from "@/app/components/form/ImageField";
 import dynamic from "next/dynamic";
+import { AppConstants } from "@/constants";
 
 export default function ItemProductDLBD({ data }: any) {
   return (
@@ -9,7 +10,10 @@ export default function ItemProductDLBD({ data }: any) {
       <div className={styles.itemLeft}>
         <div className={styles.imgItem}>
           <ImageField
-            src={data?.thumbnail}
+            src={
+              data?.thumbnail &&
+              `${AppConstants.contentRootUrl}${data?.thumbnail}`
+            }
             alt="Relevant Image"
             width="80px"
             height={"80px"}

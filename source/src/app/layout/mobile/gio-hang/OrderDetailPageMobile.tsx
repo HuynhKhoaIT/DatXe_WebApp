@@ -18,7 +18,7 @@ import Typo from "@/app/components/elements/Typo";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useReactToPrint } from "react-to-print";
-import { ORDER_DONE } from "@/constants";
+import { AppConstants, ORDER_DONE } from "@/constants";
 import {
   useOrderDLBD,
   useOrderDLBDDetail,
@@ -248,7 +248,10 @@ export default function OrderDetailPageMobile({
       <div ref={componentRef} className="printable">
         <div className={styles.infoGara}>
           <ImageField
-            src={dataSource?.garage?.logo}
+            src={
+              dataSource?.garage?.logo &&
+              `${AppConstants.contentRootUrl}${dataSource?.garage?.logo}`
+            }
             width={80}
             height={80}
             radius={8}
@@ -371,7 +374,10 @@ export default function OrderDetailPageMobile({
         </div>
         <div className={styles.infoWifi}>
           <ImageField
-            src={dataSource?.garage?.qrCodeBank}
+            src={
+              dataSource?.garage?.qrCodeBank &&
+              `${AppConstants.contentRootUrl}${dataSource?.garage?.qrCodeBank}`
+            }
             width={120}
             height={120}
           />

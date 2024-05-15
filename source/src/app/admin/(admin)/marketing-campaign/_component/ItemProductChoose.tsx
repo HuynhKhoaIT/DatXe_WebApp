@@ -8,6 +8,7 @@ import { modals } from "@mantine/modals";
 
 import Typo from "@/app/components/elements/Typo";
 import { useRouter } from "next/navigation";
+import { AppConstants } from "@/constants";
 export default function ItemProductChoose({
   data,
   removeItem,
@@ -66,7 +67,7 @@ export default function ItemProductChoose({
         </div>
         <div className={styles.imgItem}>
           <ImageField
-            src={images?.[0]}
+            src={images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`}
             alt="Relevant Image"
             width="80px"
             height={"80px"}

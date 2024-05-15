@@ -8,6 +8,7 @@ import { IconDotsVertical } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
+import { AppConstants } from "@/constants";
 
 const DynamicModalUpdate = dynamic(() => import("./ModalUpdate"), {
   ssr: false,
@@ -55,7 +56,7 @@ export default function ItemProduct({
       <div className={styles.itemLeft}>
         <div className={styles.imgItem}>
           <ImageField
-            src={images?.[0]}
+            src={images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`}
             alt="Relevant Image"
             width="80px"
             height={"80px"}

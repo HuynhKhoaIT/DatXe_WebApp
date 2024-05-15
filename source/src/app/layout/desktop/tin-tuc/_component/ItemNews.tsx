@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./ItemNews.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import { useRouter } from "next/navigation";
+import { AppConstants } from "@/constants";
 const ItemNews = ({ item }: any) => {
   const router = useRouter();
   return (
@@ -15,7 +16,13 @@ const ItemNews = ({ item }: any) => {
       className={styles.item}
       onClick={() => router.push(`/bai-viet/${item.id}`)}
     >
-      <img src={item.thumbnail} alt="Relevant Image" className={styles.image} />
+      <img
+        src={
+          item.thumbnail && `${AppConstants.contentRootUrl}${item.thumbnail}`
+        }
+        alt="Relevant Image"
+        className={styles.image}
+      />
       <div style={{ marginLeft: 25 }} className={styles.content}>
         <Typo
           className={styles.title}

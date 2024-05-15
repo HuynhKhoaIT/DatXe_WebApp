@@ -11,7 +11,7 @@ import ImageDefaul from "@/assets/images/logo.png";
 import Typo from "@/app/components/elements/Typo";
 import classNames from "classnames";
 import dayjs from "dayjs";
-import { ORDER_DONE } from "@/constants";
+import { AppConstants, ORDER_DONE } from "@/constants";
 const DynamicModalReview = dynamic(() => import("./ModalReview"), {
   ssr: false,
 });
@@ -109,7 +109,13 @@ export default function OrderDetailPage({ dataSource }: any) {
       <div className={styles.infoGara}>
         <div className={styles.info}>
           <div className={styles.imageGara}>
-            <ImageField src={ImageDefaul.src} width={160} />
+            <ImageField
+              src={
+                ImageDefaul.src &&
+                `${AppConstants.contentRootUrl}${ImageDefaul.src}`
+              }
+              width={160}
+            />
           </div>
           <div className={styles.detailInfo}>
             <Typo type="bold" style={{ color: "var(--primary-color)" }}>

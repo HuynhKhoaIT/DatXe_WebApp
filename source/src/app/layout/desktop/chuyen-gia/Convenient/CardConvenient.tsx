@@ -4,6 +4,7 @@ import styles from "./Convenient.module.scss";
 import Link from "next/link";
 import ImageField from "@/app/components/form/ImageField";
 import Typo from "@/app/components/elements/Typo";
+import { AppConstants } from "@/constants";
 const CardConvenient = ({ convenient }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -12,7 +13,10 @@ const CardConvenient = ({ convenient }: any) => {
           <div>
             <div style={{ width: "100%" }}>
               <ImageField
-                src={convenient?.thumbnail ? convenient?.thumbnail : null}
+                src={
+                  convenient?.thumbnail &&
+                  `${AppConstants.contentRootUrl}${convenient?.thumbnail}`
+                }
                 height={222}
                 width={266}
               />
