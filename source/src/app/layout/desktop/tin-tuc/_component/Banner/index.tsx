@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { Flex, Image, Title } from "@mantine/core";
 import Typo from "@/app/components/elements/Typo";
 import { fitString, formatTimeDifference } from "@/utils/until";
+import { AppConstants } from "@/constants";
 
 const Banner = ({ data }: any) => {
   return (
@@ -25,7 +26,7 @@ const Banner = ({ data }: any) => {
         </div>
       </div>
       <Image
-        src={data?.thumbnail}
+        src={data?.banner && `${AppConstants.contentRootUrl}${data?.banner}`}
         alt=""
         className={styles.banner}
         // h={'100%'}
