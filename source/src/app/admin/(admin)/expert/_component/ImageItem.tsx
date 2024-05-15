@@ -14,10 +14,8 @@ export default function ImageItem({
     <CropImageLink
       shape="rect"
       placeholder={"Cập nhật ảnh bìa"}
-      defaultImage={dataDetail || ImageUpload.src}
-      uploadFileThumbnail={
-        uploadFile && `${AppConstants.contentRootUrl}${uploadFile}`
-      }
+      defaultImage={dataDetail && `${AppConstants.contentRootUrl}${dataDetail}`}
+      uploadFileThumbnail={uploadFile}
       aspect={1 / 1}
       idUpload={`image-uploader-${index}`}
       idResult={`image-result-${index}`}

@@ -55,6 +55,8 @@ export default function ExpertForm({
   const handleChangeImage = (index: number, value: any) => {
     const newImage = [...imagesUrl];
     newImage[index] = value;
+
+    console.log(newImage);
     setImagesUrl(newImage);
   };
 
