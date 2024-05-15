@@ -6,6 +6,7 @@ import { callApi } from "@/lib";
 export const dynamic = "force-dynamic";
 import type { Metadata, ResolvingMetadata } from "next";
 import imageDefault from "../../../../public/assets/images/no_image.png";
+import { AppConstants } from "@/constants";
 
 type Props = {
   params: { slug: string };
@@ -34,7 +35,9 @@ export async function generateMetadata(
       description:
         product?.data?.product?.seoMeta?.description ||
         product?.data?.product?.description,
-      images: product?.data?.product?.seoMeta?.thumbnail || imageDefault.src,
+      images:
+        `${AppConstants}${product?.data?.product?.seoMeta?.thumbnail}` ||
+        `${AppConstants}${imageDefault.src}`,
     },
   };
 }

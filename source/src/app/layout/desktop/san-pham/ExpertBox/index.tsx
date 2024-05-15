@@ -5,6 +5,7 @@ import Link from "next/link";
 import avatar from "@/assets/images/avatar.jpeg";
 import IconFaceBook from "@/assets/icons/fbIcon.svg";
 import IconInstagram from "@/assets/icons/igIcon.svg";
+import { AppConstants } from "@/constants";
 
 const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
   return (
@@ -12,7 +13,11 @@ const ExpertBox = ({ ProductDetail }: { ProductDetail: IProduct }) => {
       <div className={styles.avatar}>
         <img
           className={styles.avatarImg}
-          src={ProductDetail?.garage?.logo || avatar.src}
+          src={
+            ProductDetail?.garage?.logo
+              ? `${AppConstants.contentRootUrl}${ProductDetail?.garage?.logo}`
+              : avatar.src
+          }
           alt="avatar"
         />
       </div>
