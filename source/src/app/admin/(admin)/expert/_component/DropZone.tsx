@@ -8,7 +8,6 @@ export default function DropZone({
   uploadFile,
   handleChangeImage,
 }: any) {
-  console.log(imagesUrl);
   const addImage = () => {
     if (imagesUrl.length < 4) {
       setImagesUrl([...imagesUrl, ""]);
