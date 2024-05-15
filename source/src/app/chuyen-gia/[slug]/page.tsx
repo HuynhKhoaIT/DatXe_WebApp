@@ -2,7 +2,7 @@ import RenderContext from "@/app/components/elements/RenderContext";
 import ExpertDetailPageDesktop from "@/app/layout/desktop/chuyen-gia/ExpertDetailPage";
 import ExpertDetailPageMobile from "@/app/layout/mobile/chuyen-gia/ExpertDetailPage";
 import { getProducts } from "@/app/libs/prisma/product";
-import { apiUrl } from "@/constants";
+import { AppConstants, apiUrl } from "@/constants";
 import BlogImage1 from "@/assets/images/blog/blog1.png";
 import BlogImage2 from "@/assets/images/blog/blog2.png";
 import BlogImage3 from "@/assets/images/blog/blog3.png";
@@ -35,7 +35,7 @@ export async function generateMetadata(
     title: expertData?.shortName,
     description: expertData?.description,
     openGraph: {
-      images: expertData?.logo,
+      images: `${AppConstants.contentRootUrl}${expertData?.logo}`,
     },
   };
 }
