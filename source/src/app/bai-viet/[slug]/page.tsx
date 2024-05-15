@@ -1,6 +1,7 @@
 import RenderContextClient from "@/app/components/elements/RenderContextClient";
 import NewDetailPage from "@/app/layout/desktop/tin-tuc/NewsDetailPage";
 import BlogDetailPageMobile from "@/app/layout/mobile/blog/BlogDetailPage";
+import { AppConstants } from "@/constants";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
 export const dynamic = "force-dynamic";
@@ -29,7 +30,9 @@ export async function generateMetadata(
       title: newsData?.data?.seoMeta?.title || newsData?.data?.title,
       description:
         newsData?.data?.seoMeta?.desription || newsData?.data?.shortDescription,
-      images: newsData?.data?.seoMeta?.thumbnail || newsData?.data?.thumbnail,
+      images:
+        `${AppConstants.contentRootUrl}${newsData?.data?.seoMeta?.thumbnail}` ||
+        `${AppConstants.contentRootUrl}${newsData?.data?.thumbnail}`,
     },
   };
 }

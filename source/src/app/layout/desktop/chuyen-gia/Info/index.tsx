@@ -14,6 +14,8 @@ import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 import React, { useState } from "react";
 import { IconQrcode, IconShare, IconShare3 } from "@tabler/icons-react";
+import { AppConstants } from "@/constants";
+import ImageField from "@/app/components/form/ImageField";
 const DynamicModalQRCode = dynamic(() => import("./ModalQRCodeLogo"), {
   ssr: false,
 });
@@ -38,8 +40,11 @@ const Info = ({ detailData }: any) => {
         <div className={styles.body}>
           <div className={styles.info}>
             <div className={styles.avatar}>
-              <img
-                src={detailData?.logo ? detailData?.logo : Avatar.src}
+              <ImageField
+                src={
+                  detailData?.logo &&
+                  `${AppConstants.contentRootUrl}${detailData?.logo}`
+                }
                 alt="avatar"
               />
             </div>
