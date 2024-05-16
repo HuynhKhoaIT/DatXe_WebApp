@@ -269,6 +269,12 @@ export async function getProductsClient(requestData: any) {
             },
             include: {
               marketingCampaign: true,
+              garage: {
+                include: {
+                  province: true,
+                  district: true
+                }
+              }
             },
           },
         },
