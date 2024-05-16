@@ -8,7 +8,10 @@ export function ButtonDeleteFilter() {
   const s = searchParams.get("s");
   let params = new URLSearchParams(searchParams);
   function handleClick() {
-    const path = pathname + "?" + `s=${s}`;
+    var path = pathname;
+    if (s) {
+      path += `?s=${s}`;
+    }
     router.push(path);
   }
 

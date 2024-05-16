@@ -10,10 +10,10 @@ const ProductsRelate = ({ productRelate }: any) => {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Sản phẩm liên quan"
-      linkToList={"/danh-sach-san-pham"}
+      linkToList={"/danh-sach-san-pham?isProduct=true"}
       id="productsRelate"
     >
-      <SlickCarousel column={4} gap={8} dots={true}>
+      <SlickCarousel column={5} gap={8} dots={true}>
         {productRelate?.map((product: IProduct, index: number) => (
           <ProductItem2 product={product} key={index} />
         ))}
