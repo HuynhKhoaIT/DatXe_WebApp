@@ -8,6 +8,8 @@ import FooterMobile from "../layout/common/mobile/Footer/FooterMobile";
 import Body from "../components/layout/Body";
 import { FilterRadio } from "../components/elements/filterRadio";
 import { getCategories } from "../libs/prisma/category";
+import { kindProduct } from "@/constants/masterData";
+import { ButtonDeleteFilter } from "../components/elements/ButtonDeleteFilter";
 export const dynamic = "force-dynamic";
 
 interface IProps {
@@ -44,6 +46,12 @@ export default async function Layout({ children }: IProps) {
                   filterName="Danh mục"
                   keyName="categoryId"
                 />
+                <FilterRadio
+                  data={kindProduct}
+                  filterName="Loại"
+                  keyName="isProduct"
+                />
+                <ButtonDeleteFilter />
               </Body.Sider>
               <Body.Content>{children}</Body.Content>
             </Body>

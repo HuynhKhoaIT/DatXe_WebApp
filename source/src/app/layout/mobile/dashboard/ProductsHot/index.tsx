@@ -9,7 +9,7 @@ const ProductsHot = ({ data }: any) => {
     <OverviewPanel
       stylesProps={{ padding: "30px 0" }}
       title="Sản phẩm thịnh hành"
-      linkToList={"/danh-sach-san-pham"}
+      linkToList={"/danh-sach-san-pham?isProduct=true"}
       id="services-hot-mb"
     >
       <div style={{ marginRight: "-12px" }}>
