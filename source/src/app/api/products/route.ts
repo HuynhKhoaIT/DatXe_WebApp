@@ -39,6 +39,7 @@ export async function GET(request: NextRequest) {
             limit: limit,
             page: page,
             garageId:garageId,
+            locationId: searchParams.get('locationId'),
             isProduct: searchParams.get('isProduct'),
         };
         const products = await getProductsClient(requestData);

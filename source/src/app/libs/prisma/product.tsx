@@ -210,7 +210,7 @@ export async function getProductsClient(requestData: any) {
 
     let districtId = {}
     if(requestData.locationId){
-      districtId = requestData.locationId;
+      districtId = Number(requestData.locationId);
     }
 
     let page = requestData.page;
@@ -246,6 +246,12 @@ export async function getProductsClient(requestData: any) {
         include: {
           reviews: true,
           categories: true,
+          garage: {
+            include: {
+              province: true,
+              district: true
+            }
+          },
           marketingCampaignDetail: {
             take: 1,
             where: {
@@ -269,12 +275,7 @@ export async function getProductsClient(requestData: any) {
             },
             include: {
               marketingCampaign: true,
-              garage: {
-                include: {
-                  province: true,
-                  district: true
-                }
-              }
+              
             },
           },
         },
