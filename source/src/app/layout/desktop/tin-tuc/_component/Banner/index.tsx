@@ -17,20 +17,17 @@ const Banner = ({ data }: any) => {
           <p className={styles.timeTile}>
             Đăng lúc {formatTimeDifference(data?.updatedAt)}
           </p>
-          <Flex>
-            {/* <div style={{ marginTop:5, fontSize:'20px', fontWeight: 500, color:'white' }}>{data?.title}</div> */}
+          {/* <Flex>
             <div className={styles.subDes}>
               {fitString(data?.shortDescription, 300)}
             </div>
-          </Flex>
+          </Flex> */}
         </div>
       </div>
       <Image
         src={data?.banner && `${AppConstants.contentRootUrl}${data?.banner}`}
         alt=""
         className={styles.banner}
-        // h={'100%'}
-        // mih={400}
       ></Image>
     </div>
   );

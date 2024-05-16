@@ -95,24 +95,24 @@ const Info = ({ detailData }: any) => {
             <Link
               href={`/dat-lich?garageId=${detailData?.id}&name=${detailData?.name}`}
             >
-              <Button size="lg" radius={0} color="var(--primary-color)" h={56}>
+              <Button color="var(--primary-color)" h={50}>
                 Đặt lịch
               </Button>
             </Link>
             <a href={`tel:${detailData.phoneNumber}`}>
               <Button
-                size="lg"
-                radius={0}
+                // size="lg"
+                // radius={0}
                 variant="outline"
                 color="#000"
-                h={56}
+                h={50}
               >
                 Liên hệ
               </Button>
             </a>
             <ActionIcon
-              w={56}
-              h={56}
+              w={50}
+              h={50}
               variant="outline"
               color="#000"
               onClick={() => {
@@ -123,8 +123,8 @@ const Info = ({ detailData }: any) => {
               <IconQrcode />
             </ActionIcon>
             <ActionIcon
-              w={56}
-              h={56}
+              w={50}
+              h={50}
               variant="outline"
               color="#000"
               onClick={() => {
