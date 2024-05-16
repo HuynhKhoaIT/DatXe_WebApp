@@ -208,6 +208,11 @@ export async function getProductsClient(requestData: any) {
       }
     }
 
+    let districtId = {}
+    if(requestData.locationId){
+      districtId = requestData.locationId;
+    }
+
     let page = requestData.page;
     if (page) {
       currentPage = Number(page);
@@ -233,6 +238,7 @@ export async function getProductsClient(requestData: any) {
               isProduct,
               garage: {
                 status: "PUBLIC",
+                districtId
               },
             },
           ],
@@ -254,7 +260,8 @@ export async function getProductsClient(requestData: any) {
                       gte: new Date(),
                     },
                     garage:{
-                      status: 'PUBLIC'
+                      status: 'PUBLIC',
+                      districtId
                     }
                   },
                 ],
