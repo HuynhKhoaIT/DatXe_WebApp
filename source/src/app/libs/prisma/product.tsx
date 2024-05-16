@@ -97,6 +97,7 @@ export async function getProducts(requestData: any) {
               },
               garageId,
               isProduct,
+              
             },
           ],
         },
