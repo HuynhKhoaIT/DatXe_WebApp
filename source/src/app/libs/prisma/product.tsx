@@ -97,6 +97,7 @@ export async function getProducts(requestData: any) {
               },
               garageId,
               isProduct,
+              
             },
           ],
         },
@@ -207,6 +208,11 @@ export async function getProductsClient(requestData: any) {
       }
     }
 
+    let districtId = {}
+    if(requestData.locationId){
+      districtId = Number(requestData.locationId);
+    }
+
     let page = requestData.page;
     if (page) {
       currentPage = Number(page);
@@ -232,6 +238,7 @@ export async function getProductsClient(requestData: any) {
               isProduct,
               garage: {
                 status: "PUBLIC",
+                districtId
               },
             },
           ],
@@ -239,6 +246,12 @@ export async function getProductsClient(requestData: any) {
         include: {
           reviews: true,
           categories: true,
+          garage: {
+            include: {
+              province: true,
+              district: true
+            }
+          },
           marketingCampaignDetail: {
             take: 1,
             where: {
@@ -253,7 +266,8 @@ export async function getProductsClient(requestData: any) {
                       gte: new Date(),
                     },
                     garage:{
-                      status: 'PUBLIC'
+                      status: 'PUBLIC',
+                      districtId
                     }
                   },
                 ],
@@ -261,6 +275,7 @@ export async function getProductsClient(requestData: any) {
             },
             include: {
               marketingCampaign: true,
+              
             },
           },
         },

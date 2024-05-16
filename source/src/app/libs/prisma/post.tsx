@@ -81,6 +81,7 @@ export async function getPosts(requestData: any) {
   }
 }
 
+
 export async function createPost(dataInput: any) {
   try {
     const post = {
