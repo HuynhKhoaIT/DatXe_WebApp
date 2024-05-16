@@ -161,7 +161,7 @@ const ProductsHot = () => {
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
-      {products?.length == 8 && (
+      {products?.length == 10 && (
         <Alert
           variant="light"
           color="yellow"
@@ -169,14 +169,14 @@ const ProductsHot = () => {
           icon={<IconInfoCircle />}
           mb={10}
         >
-          Danh sách sản phẩm nổi bật tối đa 8 sản phẩm, để thêm sản phẩm mới vui
-          lòng xoá sản phẩm cũ.
+          Danh sách sản phẩm nổi bật tối đa 10 sản phẩm, để thêm sản phẩm mới
+          vui lòng xoá sản phẩm cũ.
         </Alert>
       )}
 
       <ListPage
         actionBar={
-          products?.length < 8 && (
+          products?.length < 10 && (
             <Flex justify={"end"} align={"center"}>
               <Link
                 href={{

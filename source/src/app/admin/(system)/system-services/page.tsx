@@ -148,7 +148,7 @@ const ServicesHot = () => {
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
-      {products?.length == 8 && (
+      {products?.length == 10 && (
         <Alert
           variant="light"
           color="yellow"
@@ -156,14 +156,14 @@ const ServicesHot = () => {
           icon={<IconInfoCircle />}
           mb={10}
         >
-          Danh sách dịch vụ nổi bật tối đa 8 dịch vụ, để thêm dịch vụ mới vui
+          Danh sách dịch vụ nổi bật tối đa 10 dịch vụ, để thêm dịch vụ mới vui
           lòng xoá dịch vụ cũ.
         </Alert>
       )}
 
       <ListPage
         actionBar={
-          products?.length < 8 && (
+          products?.length < 10 && (
             <Flex justify={"end"} align={"center"}>
               <Link
                 href={{

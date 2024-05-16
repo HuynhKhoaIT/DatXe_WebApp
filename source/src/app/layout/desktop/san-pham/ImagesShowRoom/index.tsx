@@ -25,27 +25,37 @@ const ImagesShowRoom = ({ ProductDetail }: any) => {
       <div className={styles.body}>
         <div className={styles.left}>
           {/* <img src={images?.[0] || Image1.src} /> */}
-          <ImageField
-            src={images?.[0] && `${AppConstants.contentRootUrl}${images?.[0]}`}
+          <img
+            src={
+              images?.[0]
+                ? `${AppConstants.contentRootUrl}${images?.[0]}`
+                : Image1.src
+            }
           />
         </div>
         <div className={styles.right}>
           <div className={styles.rightTop}>
-            <ImageField
+            <img
               src={
-                images?.[1] && `${AppConstants.contentRootUrl}${images?.[1]}`
+                images?.[1]
+                  ? `${AppConstants.contentRootUrl}${images?.[1]}`
+                  : Image2.src
               }
             />
           </div>
           <div className={styles.rightBottom}>
-            <ImageField
+            <img
               src={
-                images?.[2] && `${AppConstants.contentRootUrl}${images?.[2]}`
+                images?.[2]
+                  ? `${AppConstants.contentRootUrl}${images?.[2]}`
+                  : Image3.src
               }
             />
-            <ImageField
+            <img
               src={
-                images?.[3] && `${AppConstants.contentRootUrl}${images?.[3]}`
+                images?.[3]
+                  ? `${AppConstants.contentRootUrl}${images?.[3]}`
+                  : Image4.src
               }
             />
           </div>
