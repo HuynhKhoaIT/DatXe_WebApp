@@ -3,13 +3,13 @@ importScripts('https://www.gstatic.com/firebasejs/10.5.0/firebase-messaging-comp
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID",
+    apiKey: "AIzaSyBgr8zol35-SoPt4VAa11zfLQni80-pij4",
+    authDomain: "ungdungdatxe-245906.firebaseapp.com",
+    databaseURL: "https://ungdungdatxe-245906.firebaseio.com",
+    projectId: "ungdungdatxe-245906",
+    storageBucket: "ungdungdatxe-245906.appspot.com",
+    messagingSenderId: "112109930907",
+    appId: "1:112109930907:web:fa1f6c3a89dcccd137b93e",
 };
 
 firebase.initializeApp(firebaseConfig);
