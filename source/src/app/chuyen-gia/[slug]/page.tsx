@@ -44,7 +44,6 @@ const blogs = [
   {
     id: "1",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    thumbnail: BlogImage1.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -56,7 +55,6 @@ const blogs = [
   {
     id: "2",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    thumbnail: BlogImage2.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -68,7 +66,6 @@ const blogs = [
   {
     id: "3",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    thumbnail: BlogImage3.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -80,7 +77,6 @@ const blogs = [
   {
     id: "4",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    thumbnail: BlogImage4.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
@@ -92,7 +88,6 @@ const blogs = [
   {
     id: "5",
     title: "Mách bạn cách sửa động cơ Mitsubishi Grandis....",
-    thumbnail: BlogImage1.src,
     expert: {
       id: "1",
       name: "Đặt lịch bảo dưỡng",
