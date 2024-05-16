@@ -6,6 +6,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
+import FcmTokenComp from "./firebaseForeground";
 
 import "@/assets/scss/index.scss";
 import "slick-carousel/slick/slick.css";
@@ -15,13 +16,14 @@ import ProviderAuth from "./Provider";
 import { ReactNode } from "react";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { QueryProvider } from "./QueryProvider";
-import Logo  from '../assets/images/logo.png'
+import Logo from "../assets/images/logo.png";
 // import StoreProvider from "./StoreProvider";
 export const dynamic = "force-dynamic";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
-  title:  "DatXE trang đặt lịch sửa chữa ô tô trực tuyến",
-  description: "Đặt lịch sửa chữa ô tô tại 63 tỉnh thành, đặt lịch rửa xe, đặt lịch bảo dưỡng định kỳ, Garage ô tô uy tín, garage ô tô gần đây, trung tâm chăm sóc xe ô tô uy tín, cung cấp phụ tùng và dịch vụ ô tô, giải pháp quản lý garage ô tô hiệu quả, đặt lịch sửa xe giá rẻ,...",
+  title: "DatXE trang đặt lịch sửa chữa ô tô trực tuyến",
+  description:
+    "Đặt lịch sửa chữa ô tô tại 63 tỉnh thành, đặt lịch rửa xe, đặt lịch bảo dưỡng định kỳ, Garage ô tô uy tín, garage ô tô gần đây, trung tâm chăm sóc xe ô tô uy tín, cung cấp phụ tùng và dịch vụ ô tô, giải pháp quản lý garage ô tô hiệu quả, đặt lịch sửa xe giá rẻ,...",
   openGraph: {
     images: Logo.src,
   },
@@ -70,6 +72,7 @@ export default function RootLayout({ children }: IProps) {
               <ProviderAuth>
                 {/* <StoreProvider> */}
                 <Notifications position="top-right" />
+                <FcmTokenComp />
                 {children}
                 {/* </StoreProvider> */}
               </ProviderAuth>
