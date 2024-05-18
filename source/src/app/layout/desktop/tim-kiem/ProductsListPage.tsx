@@ -7,6 +7,7 @@ import ProductItem2 from "@/app/components/elements/product/ProductItem2";
 import styles from "./index.module.scss";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
+import ProductItem from "@/app/components/elements/product/ProductItem1";
 export default function SearchListPage({ products, searchParams }: any) {
   return (
     <>
@@ -15,7 +16,7 @@ export default function SearchListPage({ products, searchParams }: any) {
       <Box w={"100%"}>
         <div className={styles.products}>
           {products?.data?.map((product: IProduct, index: number) => (
-            <ProductItem2 product={product} key={index} />
+            <ProductItem product={product} key={index} />
           ))}
         </div>
       </Box>

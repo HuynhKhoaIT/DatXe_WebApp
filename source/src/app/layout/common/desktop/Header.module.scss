@@ -8,6 +8,10 @@
     height: var(--header-height-top);
     display: flex;
     align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 99;
     .topWrapper {
         display: flex;
         align-items: center;
@@ -32,8 +36,8 @@
 }
 
 .headerContent {
-    height: var(--header-content);
-
+    // height: var(--header-content);
+    padding-top: var(--header-height-top);
     .headerSearch {
         display: flex;
         padding-top: 18px;

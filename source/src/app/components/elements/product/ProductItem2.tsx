@@ -60,6 +60,9 @@ export default function ProductItem2({
               </Typo>
             </div>
           )}
+          {/* <Typo size="tiny" className={styles.address}>
+            {product?.garage?.province?.name}
+          </Typo> */}
           {product?.salePrice !== product?.price && (
             <Badge variant="light" classNames={{ root: styles.productOnSale }}>
               On Sale

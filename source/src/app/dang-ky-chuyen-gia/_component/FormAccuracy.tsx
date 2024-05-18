@@ -5,6 +5,7 @@ import { useForm, hasLength } from "@mantine/form";
 import { CheckOtp, registerGarage } from "@/utils/user";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
+import useFcmToken from "@/app/hooks/useFCMToken";
 
 export function FormAccuracy() {
   const [opened, handlers] = useDisclosure(false);
@@ -13,7 +14,7 @@ export function FormAccuracy() {
   const phone = searchParams.get("phone");
   const garageName = searchParams.get("garageName");
   const address = searchParams.get("address");
-
+  const { fcmToken } = useFcmToken();
   const form = useForm({
     initialValues: {
       name: name || "",
@@ -46,7 +47,8 @@ export function FormAccuracy() {
             password,
             passwordConfirmation,
             address,
-            garageName
+            garageName,
+            fcmToken
           );
 
           notifications.show({
@@ -76,7 +78,6 @@ export function FormAccuracy() {
       handlers.close();
       form.setErrors({ pin: "Mã Otp không hợp lệ!" });
     }
-
   };
   return (
     <form className="login-accuracy-input" onSubmit={form.onSubmit(onSubmit)}>
