@@ -9,8 +9,9 @@ import Body from "../components/layout/Body";
 import { FilterRadio } from "../components/elements/filterRadio";
 import { getCategories } from "../libs/prisma/category";
 import { kindProduct } from "@/constants/masterData";
-import { Button } from "@mantine/core";
+import { Button, Flex, Select } from "@mantine/core";
 import { ButtonDeleteFilter } from "../components/elements/ButtonDeleteFilter";
+import FillterList from "../components/elements/Filter";
 export const dynamic = "force-dynamic";
 
 interface IProps {
@@ -54,7 +55,10 @@ export default async function Layout({ children }: IProps) {
                 />
                 <ButtonDeleteFilter />
               </Body.Sider>
-              <Body.Content>{children}</Body.Content>
+              <Body.Content>
+                <FillterList />
+                {children}
+              </Body.Content>
             </Body>
           </div>
           <MyFooter />
