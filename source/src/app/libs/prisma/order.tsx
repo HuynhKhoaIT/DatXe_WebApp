@@ -1041,7 +1041,7 @@ export async function updateOrderStep(
     console.log("sms", smsRs);
   }
 
-  return order;
+  return orderRs;
 }
 export async function codeGeneration(garageId: string) {
   let num = "1";

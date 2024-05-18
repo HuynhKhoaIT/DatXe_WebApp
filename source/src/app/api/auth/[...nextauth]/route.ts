@@ -1,3 +1,4 @@
+
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 export const authOptions: NextAuthOptions = {
@@ -9,6 +10,7 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Mật khẩu', type: 'password' },
             },
             async authorize(credentials, req) {
+                
                 // Add logic here to look up the user from the credentials supplied
                 const res = await fetch('https://v2.dlbd.vn/api/login', {
                     method: 'POST',
@@ -20,11 +22,20 @@ export const authOptions: NextAuthOptions = {
                         password: credentials?.password,
                     }),
                 });
-
                 const user = await res.json();
                 if (user?.success) {
-                    // Any object returned will be saved in `user` property of the JWT
-                    // return user.user;
+                    // create firebase token
+                    const tokenRs = await fetch("http://localhost:3000/api/notification/token/create",{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            token: req?.body?.tokenFirebase,
+                            userId: user.user.id.toString()
+                        }),
+                    })
+                    // end create firebase token
                     return Promise.resolve(user.user);
                 } else {
                     // If you return null then an error will be displayed advising the user to check their details.
