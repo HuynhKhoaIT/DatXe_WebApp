@@ -58,6 +58,7 @@ export const QUERY_KEY = {
     users:'users',
     user:'user',
     news: 'news',
+    notiList: 'notiList',
     blogs: 'blogs',
     orders: 'orders',
     cars: 'cars',

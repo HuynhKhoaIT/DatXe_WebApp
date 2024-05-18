@@ -6,8 +6,11 @@ import styles from "./NotificationDropDown.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import { useState } from "react";
 import IconBellEmpty from "@/assets/icons/iconbell.svg";
+import { useNotiList } from "@/app/hooks/noti/useNoti";
 export default function NotificationDropDown() {
   const { data } = useSession();
+  const { data: noti } = useNotiList({ limit: 10 });
+  console.log(noti);
   const [activeIcon, setActiveIcon] = useState(false);
   const [activeButtonAll, setActiveButtonAll] = useState(true);
   const dataNotification: any = [];
