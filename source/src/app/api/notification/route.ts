@@ -8,11 +8,10 @@ export async function GET(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
         
-        if (1) {
+        if (session?.user?.id) {
             const { searchParams } = new URL(request.url);
             const requestData = {
-                // userId: session?.user?.id,
-                userId: 2103,
+                userId: session?.user?.id,
                 limit: searchParams.get('limit'),
                 page: searchParams.get('page'),
             };
