@@ -2,6 +2,7 @@ import { updateOrderStep } from '@/app/libs/prisma/order';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
+import { sendNotificationUntil } from '@/utils/notification';
 
 export async function POST(request: Request) {
     try {
@@ -12,6 +13,9 @@ export async function POST(request: Request) {
             const orderStep = json.step;
             const cancelReason = json.cancelReason;
             const order = await updateOrderStep(orderId, orderStep, cancelReason);
+
+            // send noiti
+            // await sendNotificationUntil({})
             return new NextResponse(JSON.stringify(order), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },

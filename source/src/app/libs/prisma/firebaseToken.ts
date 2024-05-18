@@ -10,6 +10,20 @@ export async function createFirebaseToken(json: any){
     });
 }
 
+export async function getFirebaseTokenByPhone(phoneNumber:string) {
+    return await prisma.firebaseToken.findFirst({
+        select: {
+            token: true,
+            userId: true,
+        },
+        where:{
+            user:{
+                phoneNumber
+            }
+        }
+    });
+}
+
 export async function getFirebaseTokenByUserId(userId:string) {
     return await prisma.firebaseToken.findMany({
         where:{
