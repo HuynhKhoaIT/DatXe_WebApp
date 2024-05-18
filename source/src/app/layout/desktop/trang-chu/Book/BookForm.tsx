@@ -7,7 +7,7 @@ import styles from "./index.module.scss";
 import ArrowDown from "@/assets/icons/arrow-down.svg";
 import { useState } from "react";
 import { useForm } from "@mantine/form";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   getOptionsBrands,
   getOptionsModels,
@@ -16,6 +16,10 @@ import {
 } from "@/utils/until";
 import useFetch from "@/app/hooks/useFetch";
 export default function BookForm() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let params = new URLSearchParams(searchParams);
+
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
     queryKey: ["provinceOptions"],
     queryFn: () => getOptionsProvince(),
@@ -40,17 +44,29 @@ export default function BookForm() {
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
 
   const handleSubmit = async (values: any) => {
-    let queryString = "";
-    if (values?.provinceId) {
-      queryString = "provinceId" + "=" + values?.provinceId;
-    }
+    let brand = "";
+    // if (values?.provinceId) {
+    //   queryString = "provinceId" + "=" + values?.provinceId;
+    // }
     if (values?.carBrandId) {
-      queryString = "brand" + "=" + values?.carBrandId;
+      brand = values?.carBrandId;
+      params.set("brandId", values?.carBrandId);
     }
-    if (values?.carNameId) queryString = "brand" + "=" + values?.carNameId;
-    if (values?.carYearId) queryString = "brand" + "=" + values?.carYearId;
+    if (values?.carNameId) {
+      brand = values?.carNameId;
+      params.set("modelId", values?.carNameId);
+    }
+    if (values?.carYearId) {
+      brand = values?.carYearId;
+      params.set("yearId", values?.carYearId);
+    }
+    if (brand != "") {
+      params.set("brand", brand);
+    }
+
     try {
-      router.push(`/tim-kiem?${queryString}`);
+      const path = pathname + "?" + params?.toString();
+      router.push(path);
     } catch (error) {
       console.error("Search error:", error);
     }

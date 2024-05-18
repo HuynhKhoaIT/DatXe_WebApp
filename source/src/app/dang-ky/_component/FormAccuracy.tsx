@@ -5,9 +5,10 @@ import { useForm, hasLength } from "@mantine/form";
 import { CheckOtp, register } from "@/utils/user";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
+import useFcmToken from "@/app/hooks/useFCMToken";
 export function FormAccuracy() {
   const [opened, handlers] = useDisclosure(false);
-
+  const { fcmToken } = useFcmToken();
   const searchParams = useSearchParams();
   const name = searchParams.get("name");
   const phone = searchParams.get("phone");
@@ -31,14 +32,14 @@ export function FormAccuracy() {
     try {
       const checkRs = await CheckOtp(phone, pin, "register");
       if (checkRs.CodeResult == 100) {
-      // if (100 == 100) {
+        // if (100 == 100) {
         notifications.show({
           title: "Thành công",
           message: "Xác thực thành công",
         });
         try {
-          await register(name, phone, password, passwordConfirmation);
-          
+          await register(name, phone, password, passwordConfirmation, fcmToken);
+
           notifications.show({
             title: "Thành công",
             message: "Đăng ký thành công",

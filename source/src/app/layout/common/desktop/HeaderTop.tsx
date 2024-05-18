@@ -5,6 +5,7 @@ import pintest from "@/assets/icons/pinterest.svg";
 import instagram from "@/assets/icons/instagram.svg";
 import Container from "@/app/components/common/Container";
 import SigninButton from "@/app/layout/common/desktop/login-button";
+import NotificationDropDown from "./_component/NotificationDropDown";
 
 export default function HeaderTop() {
   return (
@@ -22,6 +23,7 @@ export default function HeaderTop() {
             <Link href="/dashboard/order" className={styles.title}>
               Kiểm tra lịch hẹn
             </Link>
+            <NotificationDropDown />
             <SigninButton />
           </div>
         </div>

@@ -14,15 +14,17 @@ import { useEffect, useState } from "react";
 import styles from "./ModalAddress.module.scss";
 import Scroll from "@/app/components/common/Scroll";
 import classNames from "classnames";
-import { setData } from "@/utils/until/localStorage";
+import { getData, setData } from "@/utils/until/localStorage";
 export default function ModalAddAddress({ openModal, close, myAccount }: any) {
+  const addressDefault = getData(storageKeys.ADDRESS_DEFAULT);
+
   const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
     queryKey: [QUERY_KEY.optionsProvince],
     queryFn: () => getOptionsProvince(),
   });
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
-  const [province, setProvince] = useState<any>();
+  const [province, setProvince] = useState<any>(addressDefault?.province?.id);
   const [district, setDistrict] = useState<any>();
   const [ward, setWard] = useState<any>();
   const [provinceName, setProvinceName] = useState<any>();
@@ -180,8 +182,8 @@ export default function ModalAddAddress({ openModal, close, myAccount }: any) {
                               name: districtName,
                             },
                             ward: {
-                              id: ward,
-                              name: wardName,
+                              id: item.value,
+                              name: item.label,
                             },
                           };
                           setData(storageKeys.ADDRESS_DEFAULT, address);

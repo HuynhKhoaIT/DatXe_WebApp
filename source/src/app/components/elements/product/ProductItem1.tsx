@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { IProduct } from "@/interfaces/product";
 import { Card, Image, Badge, Group, Flex, Box } from "@mantine/core";
@@ -36,7 +37,7 @@ export default function ProductItem({ product }: { product: any }) {
             </Typo>
           </Link>
           <Typo size="tiny" className={styles.address}>
-            Hồ Chí Minh
+            {product?.garage?.province?.name}
           </Typo>
           {product?.salePrice !== product?.price && (
             <Badge variant="light" classNames={{ root: styles.productOnSale }}>
