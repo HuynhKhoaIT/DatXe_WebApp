@@ -45,7 +45,7 @@ export async function POST(request: Request) {
                 console.log('userNew',userNew)
                 return garage;
             }
-            return user;
+            return NextResponse.json(user);
         })
     } catch (error: any) {
         console.log(error)

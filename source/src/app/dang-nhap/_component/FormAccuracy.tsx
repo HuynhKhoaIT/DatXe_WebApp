@@ -32,7 +32,8 @@ export function FormAccuracy() {
         signIn("credentials", {
           phone: phone,
           password: password,
-          callbackUrl: callbackUrl || "/dashboard",
+          tokenA: "abc",
+          callbackUrl: callbackUrl || "/dashboard"
         });
         notifications.show({
           title: "Thành công",

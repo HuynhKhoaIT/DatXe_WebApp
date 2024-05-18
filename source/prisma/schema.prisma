@@ -287,6 +287,9 @@ model Customer{
   orders              Order[]
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+  notifications       notification[]
+  notificationOnUser  notificationOnUser[]
+  firebaseToken       firebaseToken[]
   @@fulltext([fullName])
   @@fulltext([fullName, phoneNumber])
 }
@@ -508,7 +511,10 @@ model User{
   garage              Garage @relation(fields: [garageId], references: [id])
   garageId            String @default("1")
   reviewsProduct      ReviewsProduct[]
-  reviewsGarage      ReviewsGarage[]
+  reviewsGarage       ReviewsGarage[]
+  notifications       notification[]
+  notificationOnUser  notificationOnUser[]
+  firebaseToken       firebaseToken[]
   cars                Car[]
   @@fulltext([fullName])
   @@fulltext([fullName, phoneNumber])
@@ -559,6 +565,48 @@ model seoMeta{
   productId     String?    @unique // relation scalar field (used in the `@relation` attribute above)
   post          Post?      @relation(fields: [postId], references: [id])
   postId        String?    @unique // relation scalar field (used in the `@relation` attribute above)
+}
+
+model notification {
+  id                      String    @id @default(uuid())
+  title                   String
+  content                 String
+  icon                    String?
+  image                   String?
+  action                  String?
+  data                    String?
+  kind                    Int?          @default(1)  
+  user                    User?         @relation(fields: [userId],references: [id])
+  userId                  String?       @default("1")
+  customer                Customer?     @relation(fields: [customerId],references: [id])
+  customerId              String?       @default("1")  
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
+  notificationOnUser      notificationOnUser[]
+}
+
+model notificationOnUser{
+  id                String        @id @default(uuid())
+  notifictaion      notification  @relation(fields: [notifictaionId], references: [id])
+  notifictaionId    String
+  user              User?         @relation(fields: [userId],references: [id])
+  userId            String?       @default("1")
+  customer          Customer?     @relation(fields: [customerId],references: [id])
+  customerId        String?       @default("1")
+  readed            Boolean       @default(false)
+  deleted           Boolean       @default(false)
+  assignedAt        DateTime      @default(now())
+}
+
+model firebaseToken {
+  id            String    @id @default(uuid())
+  token         String
+  user          User?     @relation(fields: [userId],references: [id])
+  userId        String?   @default("1")
+  customer      Customer? @relation(fields: [customerId],references: [id])
+  customerId    String?   @default("1")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 enum SALETYPE {

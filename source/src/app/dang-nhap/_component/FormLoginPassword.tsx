@@ -29,11 +29,14 @@ export default function FormLoginPassword() {
   const handleSubmit = async (values: any) => {
     handlers.open();
     try {
+      console.log('----1')
+      Object.assign(values, {tokenFirebase: "value3"});
+      console.log(values)
       const res = await fetch("https://v2.dlbd.vn/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },
+        },  
         body: JSON.stringify({
           ...values,
         }),
@@ -47,6 +50,7 @@ export default function FormLoginPassword() {
           },
           body: JSON.stringify(user.user),
         });
+        
         signIn("credentials", {
           ...values,
           callbackUrl: callbackUrl || "/dashboard",
