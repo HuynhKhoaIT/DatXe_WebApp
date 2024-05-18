@@ -15,6 +15,7 @@ export default function FormLoginPassword() {
   const callbackUrl = searchParams.get("callbackUrl");
   const error = searchParams.get("error");
 
+  console.log(fcmToken);
   const form = useForm({
     initialValues: {
       phone: "",
