@@ -32,7 +32,7 @@ export function FormAccuracy() {
         signIn("credentials", {
           phone: phone,
           password: password,
-          tokenA: "abc",
+          tokenFirebase: "abc",
           callbackUrl: callbackUrl || "/dashboard"
         });
         notifications.show({
