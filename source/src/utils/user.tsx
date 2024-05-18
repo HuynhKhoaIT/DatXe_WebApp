@@ -94,7 +94,8 @@ export const register = async (
   name: string,
   phone: string,
   password: string,
-  password_confirmation: string
+  password_confirmation: string,
+  fcmToken: string
 ): Promise<void> => {
   try {
     const res = await axios.post(
@@ -115,13 +116,13 @@ export const register = async (
     const userNew = await fetch("/api/user/register", {
       method: "POST",
       body: JSON.stringify({
-        "id": res.data.user.id.toString(),
-        "email": res.data.user.email,
-        "phoneNumber": res.data.user.phone,
-        "name":res.data.user.name,
-        "hash": sha256(`${res.data.user.phone}|@|${Number(res.data.user.id)}`),
-        "garageId": "2",
-        "role": "CUSTOMER"
+        id: res.data.user.id.toString(),
+        email: res.data.user.email,
+        phoneNumber: res.data.user.phone,
+        name: res.data.user.name,
+        hash: sha256(`${res.data.user.phone}|@|${Number(res.data.user.id)}`),
+        garageId: "2",
+        role: "CUSTOMER",
       }),
     });
     const customerNew = await fetch("/api/client/customer", {
@@ -131,13 +132,14 @@ export const register = async (
         fullName: res.data.user.name,
         phoneNumber: res.data.user.phone,
         hash: sha256(`${res.data.user.phone}|@|${res.data.user.name}`),
-        garageId: "2"
+        garageId: "2",
       }),
     });
-    console.log('customerNew',customerNew)
+    console.log("customerNew", customerNew);
     signIn("credentials", {
       phone: phone,
       password: password,
+      tokenFirebase: fcmToken,
       callbackUrl: `/dashboard`,
     });
   } catch (error) {
@@ -152,7 +154,8 @@ export const registerGarage = async (
   password: string,
   password_confirmation: string,
   address: string,
-  garageName: string
+  garageName: string,
+  fcmToken: string
 ): Promise<void> => {
   try {
     const res = await axios.post(
@@ -186,25 +189,25 @@ export const registerGarage = async (
         description: "",
       }),
     });
-    
-    
-    const garageData = await garageNew.json()
-    
+
+    const garageData = await garageNew.json();
+
     const userNew = await fetch("/api/user/register", {
       method: "POST",
       body: JSON.stringify({
-        "id": res.data.id.toString(),
-        "email": res.data.email,
-        "phoneNumber": res.data.phone,
-        "name":res.data.name,
-        "hash": sha256(`${res.data.phone}|@|${Number(res.data.id)}`),
-        "garageId": (garageData.id ?? "2"),
-        "role": "ADMINGARAGE"
+        id: res.data.id.toString(),
+        email: res.data.email,
+        phoneNumber: res.data.phone,
+        name: res.data.name,
+        hash: sha256(`${res.data.phone}|@|${Number(res.data.id)}`),
+        garageId: garageData.id ?? "2",
+        role: "ADMINGARAGE",
       }),
     });
     signIn("credentials", {
       phone: phone,
       password: password,
+      tokenFirebase: fcmToken,
       callbackUrl: "/admin",
     });
   } catch (error) {

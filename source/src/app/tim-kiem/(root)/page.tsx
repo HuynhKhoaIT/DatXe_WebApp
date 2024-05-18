@@ -12,6 +12,8 @@ export default async function SearchPage({ searchParams }: any) {
       categoryId: searchParams?.categoryId,
       isProduct: searchParams?.isProduct,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
+      locationId: searchParams?.locationId,
+      brand: searchParams?.brand,
     },
   });
 

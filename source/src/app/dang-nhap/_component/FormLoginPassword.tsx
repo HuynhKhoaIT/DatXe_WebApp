@@ -6,7 +6,9 @@ import { CheckPhone, GenOTP } from "@/utils/user";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { signIn } from "next-auth/react";
+import useFcmToken from "@/app/hooks/useFCMToken";
 export default function FormLoginPassword() {
+  const { fcmToken } = useFcmToken();
   const [opened, handlers] = useDisclosure(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,14 +31,14 @@ export default function FormLoginPassword() {
   const handleSubmit = async (values: any) => {
     handlers.open();
     try {
-      console.log('----1')
-      Object.assign(values, {tokenFirebase: "value3"});
-      console.log(values)
+      console.log("----1");
+      Object.assign(values, { tokenFirebase: "value3" });
+      console.log(values);
       const res = await fetch("https://v2.dlbd.vn/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        },  
+        },
         body: JSON.stringify({
           ...values,
         }),
@@ -50,9 +52,10 @@ export default function FormLoginPassword() {
           },
           body: JSON.stringify(user.user),
         });
-        
+
         signIn("credentials", {
           ...values,
+          tokenFirebase: fcmToken,
           callbackUrl: callbackUrl || "/dashboard",
         });
         notifications.show({
