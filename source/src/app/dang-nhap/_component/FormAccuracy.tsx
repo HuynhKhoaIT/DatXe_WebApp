@@ -6,8 +6,10 @@ import { CheckOtp } from "@/utils/user";
 import { notifications } from "@mantine/notifications";
 import { signIn } from "next-auth/react";
 import { useDisclosure } from "@mantine/hooks";
+import useFcmToken from "@/app/hooks/useFCMToken";
 export function FormAccuracy() {
   const [opened, handlers] = useDisclosure(false);
+  const { fcmToken } = useFcmToken();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const phone = searchParams.get("phone");
@@ -32,8 +34,8 @@ export function FormAccuracy() {
         signIn("credentials", {
           phone: phone,
           password: password,
-          tokenA: "abc",
-          callbackUrl: callbackUrl || "/dashboard"
+          tokenFirebase: fcmToken,
+          callbackUrl: callbackUrl || "/dashboard",
         });
         notifications.show({
           title: "Thành công",
