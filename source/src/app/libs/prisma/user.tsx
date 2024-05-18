@@ -120,3 +120,12 @@ export async function registerUser(json: any) {
     return { error };
   }
 }
+
+export async function getUserByPhone(phoneNumber:string) {
+  return await prisma.user.findFirst({
+    where:{
+      phoneNumber,
+      status: 'PUBLIC'
+    }
+  })
+}
