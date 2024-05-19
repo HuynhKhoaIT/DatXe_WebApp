@@ -46,7 +46,7 @@ export default function Layout({ children }: IProps) {
       footer={{ height: 60 }}
       navbar={{
         width: 300,
-        breakpoint: "sm",
+        breakpoint: "md",
         collapsed: { mobile: !opened, desktop: !desktopOpened },
       }}
       padding={{ base: 10, md: 30, lg: 30 }}
