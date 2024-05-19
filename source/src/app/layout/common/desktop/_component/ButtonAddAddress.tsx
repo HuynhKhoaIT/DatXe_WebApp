@@ -41,6 +41,7 @@ export default function ButtonAddAddress({ styles, user }: any) {
             root: styles.btnAdd,
             inner: styles.innerAdd,
           }}
+          maw={300}
           onClick={() => {
             openModal();
           }}

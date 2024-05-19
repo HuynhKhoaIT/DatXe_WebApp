@@ -65,7 +65,7 @@ export default function BookForm() {
     }
 
     try {
-      const path = pathname + "?" + params?.toString();
+      const path = pathname + "tim-kiem" + "?" + params?.toString();
       router.push(path);
     } catch (error) {
       console.error("Search error:", error);
@@ -90,18 +90,8 @@ export default function BookForm() {
                 <Grid.Col span={10}>
                   <Flex mt={16}>
                     <Select
-                      classNames={{ input: styles.input1 }}
-                      variant="unstyled"
-                      leftSection={icon}
-                      leftSectionPointerEvents="none"
-                      rightSection={<></>}
-                      placeholder="Vị trí"
-                      data={provinceOptions}
-                      {...form.getInputProps("provinceId")}
-                    />
-                    <Select
                       {...form.getInputProps("carBrandId")}
-                      classNames={{ input: styles.input2 }}
+                      classNames={{ input: styles.input1 }}
                       leftSection={icon}
                       variant="unstyled"
                       leftSectionPointerEvents="none"

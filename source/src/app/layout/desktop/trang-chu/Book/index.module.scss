@@ -9,6 +9,7 @@
     transform: translateX(-50%);
     .container {
         width: 90%;
+        // width: 800px;
         padding: 1.5rem 2rem;
     }
 }
@@ -48,4 +49,13 @@
 }
 .input4 {
     border-radius: 0 8px 8px 0;
+}
+
+@media screen and (max-width: 1025PX) {
+    .wrapper {
+       
+        .container {
+            width: 700px;
+        }
+    }
 }

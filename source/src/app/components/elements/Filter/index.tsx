@@ -19,12 +19,19 @@ export default function FillterList() {
   const searchParams = useSearchParams();
   let params = new URLSearchParams(searchParams);
   const s = searchParams.get("s");
+  const brandId = searchParams.get("brandId");
+  const modelId = searchParams.get("modelId");
+  const yearId = searchParams.get("yearId");
+
   const addRess = getData(storageKeys.ADDRESS_DEFAULT);
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [province, setProvince] = useState<any>(addRess?.province?.id);
   const [district, setDistrict] = useState<any>(addRess?.district?.id);
+  const [brand, setBrand] = useState<any>(brandId);
+  const [model, setModel] = useState<any>(modelId);
+  const [year, setYear] = useState<any>(yearId);
 
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
     queryKey: ["provinceOptions"],
@@ -43,20 +50,34 @@ export default function FillterList() {
 
   useEffect(() => {
     const fetchOptionsData = async () => {
-      if (addRess?.province?.id) {
-        try {
-          const optionsData = await getOptionsDistrict(
-            Number(addRess?.province?.id)
+      try {
+        const promises = [];
+
+        if (addRess?.province?.id) {
+          const districtPromise = getOptionsDistrict(
+            Number(addRess.province.id)
           );
-          setDistrictOptions(optionsData);
-        } catch (error) {
-          console.error("Error fetching district options:", error);
+          promises.push(districtPromise.then(setDistrictOptions));
         }
+
+        if (brandId) {
+          const modelPromise = getOptionsModels(Number(brandId));
+          promises.push(modelPromise.then(setModelOptions));
+        }
+
+        if (modelId) {
+          const yearCarPromise = getOptionsYearCar(Number(modelId));
+          promises.push(yearCarPromise.then(setYearCarOptions));
+        }
+
+        await Promise.all(promises);
+      } catch (error) {
+        console.error("Lỗi khi lấy các tùy chọn:", error);
       }
     };
 
     fetchOptionsData();
-  }, [addRess?.province?.id]);
+  }, [addRess?.province?.id, brandId, modelId]);
 
   useEffect(() => {
     params?.set("locationId", `${district || province}`);
@@ -67,7 +88,22 @@ export default function FillterList() {
     router.push(path);
   }, [province, district, s]);
 
-  console.log(addRess);
+  useEffect(() => {
+    params?.set("brand", `${year || model || brand}`);
+    if (year == null) {
+      params?.delete("yearId");
+    }
+    if (model == null) {
+      params?.delete("modelId");
+    }
+    if (brand == null) {
+      params?.delete("brandId");
+      params?.delete("brand");
+    }
+
+    const path = pathname + "?" + params?.toString();
+    router.push(path);
+  }, [brand, model, year]);
   return (
     <Flex gap={10} mb={20}>
       <Select
@@ -93,29 +129,40 @@ export default function FillterList() {
         clearable
       />
       <Select
+        value={brand}
         leftSectionPointerEvents="none"
         placeholder="Hãng xe"
         data={brandOptions}
         onChange={async (value) => {
           const optionsData = await getOptionsModels(Number(value));
           setModelOptions(optionsData);
+          setBrand(value);
+          setModel(null);
+          setYear(null);
         }}
         clearable
       />
       <Select
         leftSectionPointerEvents="none"
         placeholder="Dòng xe"
+        value={model}
         data={modelOptions}
         onChange={async (value) => {
           const optionsData = await getOptionsYearCar(Number(value));
           setYearCarOptions(optionsData);
+          setModel(value);
+          setYear(null);
         }}
         clearable
       />
       <Select
         leftSectionPointerEvents="none"
         placeholder="Năm sản xuất"
+        value={year}
         data={yearCarOptions}
+        onChange={(value) => {
+          setYear(value);
+        }}
         clearable
       />
     </Flex>
