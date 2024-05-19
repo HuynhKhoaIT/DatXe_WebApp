@@ -111,6 +111,19 @@
 .inputSelect{
     height: 56px;
 }
+@media (max-width: 1025px) {
+    .headerContent{
+        // .headerNav{
+        //     display: none;
+        // }
+        // .headerSearch{
+        //     justify-content: flex-start;
+        //     gap: 20px;
+        // }
+    }
+    
+}
+
 @media (max-width: 578px) {
     .userName{
         text-overflow: ellipsis;

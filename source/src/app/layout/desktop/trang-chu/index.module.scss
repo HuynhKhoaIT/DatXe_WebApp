@@ -14,3 +14,10 @@
 .AdvertisementBox {
     padding: 24px 0;
 }
+
+
+@media screen and (max-width: 1025px) {
+    .rowItem{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
