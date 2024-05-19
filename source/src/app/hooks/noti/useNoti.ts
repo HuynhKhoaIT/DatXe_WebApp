@@ -17,7 +17,6 @@ const useNotiList = ({limit = 10}: any) => {
     return useQuery({
         queryKey: [QUERY_KEY.notiList, searchParams.toString(), limit],
         queryFn: () => fetchNotiList(searchParams.toString(), limit),
-
     });
 };
 
