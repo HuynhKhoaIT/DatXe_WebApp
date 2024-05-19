@@ -26,11 +26,34 @@ export async function getFirebaseTokenByPhone(phoneNumber:string) {
 
 export async function getFirebaseTokenByUserId(userId:string) {
     return await prisma.firebaseToken.findMany({
+        select: {
+            token: true,
+            userId: true,
+        },
         where:{
             userId
         }
     });
 }
+
+export async function getFirebaseTokenByGarageId(garageId: string) {
+    return await prisma.firebaseToken.findMany({
+        select: {
+            token: true,
+            userId: true,
+        },
+        where:{            
+            user:{
+                role: 'ADMINGARAGE',
+                status:'PUBLIC',
+                garage:{
+                    id: garageId
+                }
+            }
+        }
+    })
+}
+
 export async function getFirebaseTokenByCustomerId(customerId:string) {
     return await prisma.firebaseToken.findMany({
         where:{
