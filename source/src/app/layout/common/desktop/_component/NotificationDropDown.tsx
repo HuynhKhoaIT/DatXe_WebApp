@@ -1,5 +1,11 @@
 "use client";
-import { Button, Flex, LoadingOverlay, ScrollArea } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  Indicator,
+  LoadingOverlay,
+  ScrollArea,
+} from "@mantine/core";
 import { IconBell, IconCircle, IconDots } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import styles from "./NotificationDropDown.module.scss";
@@ -7,13 +13,14 @@ import Typo from "@/app/components/elements/Typo";
 import { useState } from "react";
 import IconBellEmpty from "@/assets/icons/iconbell.svg";
 import { useNotiList } from "@/app/hooks/noti/useNoti";
+import { formatTimeDifference } from "@/utils/until";
 export default function NotificationDropDown() {
   const { data } = useSession();
-  const { data: noti } = useNotiList({ limit: 10 });
-  console.log(noti);
+  const { data: dataNotification, isPending, isLoading } = useNotiList({
+    limit: 10,
+  });
   const [activeIcon, setActiveIcon] = useState(false);
   const [activeButtonAll, setActiveButtonAll] = useState(true);
-  const dataNotification: any = [];
   //   const dataNotification = [
   //     {
   //       id: 1,
@@ -76,18 +83,20 @@ export default function NotificationDropDown() {
     <div>
       {data?.user && (
         <i style={{ cursor: "pointer" }}>
-          <IconBell
-            color="#fff"
-            onClick={() => {
-              activeIcon ? setActiveIcon(false) : setActiveIcon(true);
-            }}
-          />
+          <Indicator color="red" size={10} processing>
+            <IconBell
+              color="#fff"
+              onClick={() => {
+                activeIcon ? setActiveIcon(false) : setActiveIcon(true);
+              }}
+            />
+          </Indicator>
         </i>
       )}
       {activeIcon && (
         <div className={styles.notiBox}>
           <LoadingOverlay
-            // visible={loading}
+            visible={isPending || isLoading}
             zIndex={0}
             overlayProps={{ radius: "sm" }}
             loaderProps={{ type: "bars" }}
@@ -116,8 +125,8 @@ export default function NotificationDropDown() {
             </Button>
           </Flex>
           <ScrollArea h={"90%"} mt={20}>
-            {dataNotification?.length > 0 ? (
-              dataNotification?.map((item: any, index: number) => {
+            {dataNotification?.data?.length > 0 ? (
+              dataNotification?.data?.map((item: any, index: number) => {
                 return (
                   <div
                     key={index}
@@ -137,10 +146,14 @@ export default function NotificationDropDown() {
                         {/* {iconNotification(item?.kind)} */}
                         <IconBell />
                         <Flex direction="column" w={370} justify="center">
-                          <span className={styles.title}>{item?.content}</span>
-                          <Typo size="tiny">3 phút trước</Typo>
+                          <span className={styles.title}>{item?.title}</span>
+                          <Typo size="tiny">
+                            {formatTimeDifference(item.createdAt)}
+                          </Typo>
                         </Flex>
-                        <i className={styles.iconDot}></i>
+                        {!item?.notificationOnUser?.readed && (
+                          <i className={styles.iconDot}></i>
+                        )}
                       </Flex>
                     </div>
                   </div>
