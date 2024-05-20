@@ -91,6 +91,9 @@ export async function showNotification(id:string) {
     return prisma.notification.findFirst({
         where:{
             id
+        },
+        include: {
+            notificationOnUser: true
         }
     });
 }
