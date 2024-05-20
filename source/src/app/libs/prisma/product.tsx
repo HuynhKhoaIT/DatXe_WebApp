@@ -237,8 +237,16 @@ export async function getProductsClient(requestData: any) {
               garageId,
               isProduct,
               garage: {
-                status: "PUBLIC",
-                districtId
+                OR: [
+                  {
+                    status: "PUBLIC",
+                    districtId
+                  },
+                  {
+                    status: "PUBLIC",
+                    provinceId: districtId
+                  }
+                ]
               },
             },
           ],

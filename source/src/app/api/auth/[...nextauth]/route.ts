@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
                 const user = await res.json();
                 if (user?.success) {
                     // create firebase token
-                    const tokenRs = await fetch("http://localhost:3000/api/notification/token/create",{
+                    const tokenRs = await fetch(`${process.env.NEXTAUTH_URL}/api/notification/token/create`,{
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
