@@ -1,3 +1,4 @@
+import { notifications } from '@mantine/notifications';
 import { apiUrl } from '.';
 
 const baseHeader = {
@@ -187,6 +188,18 @@ const apiConfig = {
             headers: baseHeader,
         },
 
+    },
+    notifications:{
+        getList: {
+            baseURL: `${apiUrl}api/notification`,
+            method: 'GET',
+            headers: baseHeader,
+        },
+        getById: {
+            baseURL: `${apiUrl}api/notification/:id`,
+            method: 'GET',
+            headers: baseHeader,
+        },
     },
 
 };

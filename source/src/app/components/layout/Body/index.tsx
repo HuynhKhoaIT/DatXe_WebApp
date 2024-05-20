@@ -17,9 +17,30 @@ function Body({ children, className }: any) {
     <Container className={classNames(styles.body, className)}>
       <main className={styles.main}>
         {Top}
-        <div className={styles.row}>
-          <div className={styles.col_3}>{Sider}</div>
-          <div className={styles.col_9}>{Content}</div>
+        <div
+          className={styles.row}
+          style={{
+            display: "flex",
+            width: " 100%",
+            gap: "10px",
+          }}
+        >
+          <div
+            className={styles.col_3}
+            style={{
+              width: "25%",
+            }}
+          >
+            {Sider}
+          </div>
+          <div
+            className={styles.col_9}
+            style={{
+              width: "75%",
+            }}
+          >
+            {Content}
+          </div>
         </div>
       </main>
     </Container>

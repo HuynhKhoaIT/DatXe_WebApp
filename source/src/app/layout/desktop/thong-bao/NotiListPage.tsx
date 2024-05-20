@@ -1,22 +1,21 @@
 "use client";
-import { Button, Flex, LoadingOverlay, ScrollArea } from "@mantine/core";
-import styles from "./NotificationDropDown.module.scss";
+import { Grid, Box, Flex, Button, ScrollArea } from "@mantine/core";
+import Container from "@/app/components/common/Container";
+import Banner from "../chuyen-gia/Banner";
+import NotiItem from "./_component/NotiItem";
+import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
-import { IconBell, IconX } from "@tabler/icons-react";
-import IconBellEmpty from "@/assets/icons/iconbell.svg";
-import { useNotiList } from "@/app/hooks/noti/useNoti";
-import { formatTimeDifference } from "@/utils/until";
 import { useEffect, useState } from "react";
 import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
-import { useMediaQuery } from "@mantine/hooks";
-import Link from "next/link";
+import { useNotiList } from "@/app/hooks/noti/useNoti";
+import { IconBell } from "@tabler/icons-react";
+import IconBellEmpty from "@/assets/icons/iconbell.svg";
 
-export default function MenuNoti({ close }: any) {
+import { formatTimeDifference } from "@/utils/until";
+export default function NotiListPage({ notifications }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
-
-  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
   const [data, setData] = useState([]);
   const { getDetail } = useUpdateNoti();
@@ -34,47 +33,36 @@ export default function MenuNoti({ close }: any) {
       setData(res);
     }
   }, [activeButtonAll, dataNotification]);
+
   return (
-    <div className={styles.notiBox}>
-      <LoadingOverlay
-        visible={isPending || isLoading}
-        zIndex={0}
-        overlayProps={{ radius: "sm" }}
-        loaderProps={{ type: "bars" }}
-      />
-      <Flex justify={"space-between"}>
+    <Container className={styles.container}>
+      <div className={styles.notiBox}>
         <Typo type="bold" size="small" style={{ color: "#000" }}>
           Thông báo
         </Typo>
-        {isMobile && <IconX onClick={close} />}
-      </Flex>
-      <Flex gap={10}>
-        <Button
-          radius={10}
-          variant={activeButtonAll ? "filled" : "default"}
-          onClick={() => {
-            setActiveButtonAll(true);
-          }}
-        >
-          Tất cả
-        </Button>
-        <Button
-          variant={!activeButtonAll ? "filled" : "default"}
-          onClick={() => {
-            setActiveButtonAll(false);
-          }}
-          radius={10}
-        >
-          Chưa đọc
-        </Button>
-      </Flex>
-      <Flex justify={"space-between"}>
-        <span className={styles.befforeText}>Trước đó</span>
-        <Link href={"thong-bao"} className={styles.readAllText}>
-          Xem tất cả
-        </Link>
-      </Flex>
-      <ScrollArea h={"90%"} mt={20}>
+        <Flex gap={10}>
+          <Button
+            radius={10}
+            variant={activeButtonAll ? "filled" : "default"}
+            onClick={() => {
+              setActiveButtonAll(true);
+            }}
+          >
+            Tất cả
+          </Button>
+          <Button
+            variant={!activeButtonAll ? "filled" : "default"}
+            onClick={() => {
+              setActiveButtonAll(false);
+            }}
+            radius={10}
+          >
+            Chưa đọc
+          </Button>
+        </Flex>
+        <Flex justify={"space-between"}>
+          <span className={styles.befforeText}>Trước đó</span>
+        </Flex>
         {data?.length > 0 ? (
           data?.map((item: any, index: number) => {
             return (
@@ -98,11 +86,7 @@ export default function MenuNoti({ close }: any) {
                   <Flex justify={"space-evenly"} align={"center"}>
                     {/* {iconNotification(item?.kind)} */}
                     <IconBell />
-                    <Flex
-                      direction="column"
-                      w={{ base: 200, md: 370, lg: 370 }}
-                      justify="center"
-                    >
+                    <Flex direction="column" w={370} justify="center">
                       <span className={styles.title}>{item?.title}</span>
                       <Typo size="tiny">
                         {formatTimeDifference(item.createdAt)}
@@ -122,7 +106,7 @@ export default function MenuNoti({ close }: any) {
             <div className={styles.empty__title}>Không có thông báo</div>
           </div>
         )}
-      </ScrollArea>
-    </div>
+      </div>
+    </Container>
   );
 }

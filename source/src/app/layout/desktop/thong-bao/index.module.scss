@@ -1,3 +1,8 @@
+.container{
+    width: 600px;
+    padding: 20px;
+}
+
 .rootNotification {
     background-color: #fff;
     min-width: 543px;
@@ -60,28 +65,22 @@
     color: var(--primary-color);
 }
 .notiBox{
-    background: #eef4ff;
     box-shadow: var(--box-shadow-primary);
-    position: absolute;
-    right: 0;
     border-radius: 4px;
-    z-index: 9999;
     min-width: 543px;
     padding: 24px;
     height: 90vh;
 }
 
-@media  (max-width:'600px') {
-    .rootNotification{
-        min-width: none;
-    }
-    .notiBox{
+@media (max-width: 600px){
+    .container{
         width: 100%;
-        min-width: 300px !important;
-        padding: 5px;
-        top: 0;
-        height: 100vh;
+        padding: 0;
 
     }
-    
+    .notiBox{
+        min-width: 300px;
+        padding: 10px;
+
+    }
 }

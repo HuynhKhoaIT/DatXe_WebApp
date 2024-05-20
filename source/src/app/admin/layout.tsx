@@ -19,6 +19,7 @@ import SearchFormName from "../components/elements/search/SearchFormName";
 import { useSession } from "next-auth/react";
 import { useMyGarage } from "../hooks/useMyGarage";
 import PageUnauthorized from "../components/page/unauthorized";
+import NotificationDropDown from "../layout/common/desktop/_component/NotificationDropDown";
 interface IProps {
   children: ReactNode;
 }
@@ -83,7 +84,17 @@ export default function Layout({ children }: IProps) {
               <p className={styles.addressExpert}>{myGarage?.address}</p>
             </div>
           </div>
-          <SigninButton />
+          <div
+            style={{
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <NotificationDropDown color="black" />
+            <SigninButton />
+          </div>
         </Group>
       </AppShell.Header>
       <AppShell.Navbar zIndex={100}>
