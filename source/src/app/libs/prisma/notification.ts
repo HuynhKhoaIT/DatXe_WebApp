@@ -87,3 +87,73 @@ export async function createNotification(json: any){
     });
 }
 
+export async function showNotification(id:string) {
+    return prisma.notification.findFirst({
+        where:{
+            id
+        }
+    });
+}
+
+export async function readedNotification(id:string) {
+    const noti = await prisma.notification.findFirst({
+        where: {
+            id
+        }
+    })
+    const notiUser = await prisma.notificationOnUser.findFirst({
+        where: {
+            notifictaionId: id,
+        }
+    });
+    if(!notiUser){
+        return await prisma.notificationOnUser.create({
+            data: {
+                notifictaionId: id,
+                readed: true,
+                userId: noti?.userId,
+                customerId: noti?.customerId
+            }
+        });
+    }
+    return await prisma.notificationOnUser.updateMany({
+        where: {
+            notifictaionId: id,
+        },
+        data: {
+            readed: true,
+        }
+    })
+}
+
+export async function deletedNotification(id:string) {
+    const noti = await prisma.notification.findFirst({
+        where: {
+            id
+        }
+    })
+    const notiUser = await prisma.notificationOnUser.findFirst({
+        where: {
+            notifictaionId: id,
+        }
+    });
+    if(!notiUser){
+        return await prisma.notificationOnUser.create({
+            data: {
+                notifictaionId: id,
+                deleted: true,
+                userId: noti?.userId,
+                customerId: noti?.customerId
+            }
+        });
+    }
+    return await prisma.notificationOnUser.updateMany({
+        where: {
+            notifictaionId: id,
+        },
+        data: {
+            deleted: true,
+        }
+    })
+}
+

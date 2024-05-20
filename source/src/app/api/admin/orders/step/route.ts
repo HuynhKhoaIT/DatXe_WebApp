@@ -2,7 +2,7 @@ import { updateOrderStep } from '@/app/libs/prisma/order';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
-import { sendNotificationUntil } from '@/utils/notification';
+import { sendNotificationOrderUntil, sendNotificationUntil } from '@/utils/notification';
 import { getFirebaseTokenByPhone } from '@/app/libs/prisma/firebaseToken';
 
 export async function POST(request: Request) {
@@ -14,19 +14,7 @@ export async function POST(request: Request) {
             const orderStep = json.step;
             const cancelReason = json.cancelReason;
             const order = await updateOrderStep(orderId, orderStep, cancelReason);
-            const fbToken = await getFirebaseTokenByPhone(order.customer.phoneNumber);
-            if(fbToken?.token){
-                await sendNotificationUntil({
-                    title: `Đơn hàng được cập nhật ${order.code}`,
-                    body: "Đơn hàng được cập nhật",
-                    userId: fbToken.userId,
-                    to: fbToken?.token,
-                    kind: 1,
-                    data:JSON.stringify({
-                        id: order.id
-                    })
-                });
-            }
+            const fbToken = await sendNotificationOrderUntil(order)
             
             return new NextResponse(JSON.stringify(order), {
                 status: 201,

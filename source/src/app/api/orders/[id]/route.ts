@@ -40,6 +40,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 garageId = Number(session.user.garageId);
             }
             const updatedOrder = await updateOrder(id, json);
+            const nt = await sendNotificationAdminOrderUntil(order);
             return new NextResponse(JSON.stringify(updatedOrder), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },

@@ -19,13 +19,7 @@ import { IUser } from "@/interfaces/user";
 import { signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { createGarage } from "@/app/libs/prisma/garage";
-import { createCustomer } from "@/app/libs/prisma/customer";
-import { registerUser } from "@/app/libs/prisma/user";
-import prisma from "@/app/libs/prismadb";
-import { generateUUID } from "./until";
 import { sha256 } from "js-sha256";
-import { createBitlyGarage } from "./garage";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.

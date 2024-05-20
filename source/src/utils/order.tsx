@@ -104,7 +104,7 @@ export const getOrderDetail = async (orderId = 0) => {
   }
 };
 
-export function showStatus(status: any) {
+export function showStatusOrder(status: any) {
   let s = "Đang tiếp nhận";
   switch (status) {
     case "0":
