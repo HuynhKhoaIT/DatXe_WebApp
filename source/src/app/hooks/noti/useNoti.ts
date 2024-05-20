@@ -15,7 +15,7 @@ const fetchNotiList = async (searchParams: any, limit = 10) => {
 const useNotiList = ({limit = 10}: any) => {
     const searchParams = useSearchParams();
     return useQuery({
-        queryKey: [QUERY_KEY.notiList, searchParams.toString(), limit],
+        queryKey: [QUERY_KEY.notiList, searchParams.toString()],
         queryFn: () => fetchNotiList(searchParams.toString(), limit),
     });
 };

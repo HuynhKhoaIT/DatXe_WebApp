@@ -18,6 +18,7 @@ import dynamic from "next/dynamic";
 import { signOut, useSession } from "next-auth/react";
 import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
 import { ROLE_CUSTOMER } from "@/constants";
+import NotificationDropDown from "../desktop/_component/NotificationDropDown";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
@@ -68,6 +69,7 @@ const HeaderMobile = () => {
           />
         </form>
         <div className={styles.headerNav}>
+          <NotificationDropDown color="#000" />
           <Link href={"/gio-hang"} className={styles.cart}>
             <img src={IconCart.src} alt="bell" />
           </Link>

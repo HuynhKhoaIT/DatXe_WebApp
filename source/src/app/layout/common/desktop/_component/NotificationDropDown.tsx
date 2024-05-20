@@ -8,7 +8,7 @@ import { useDisclosure } from "@mantine/hooks";
 const DynamicMenuNoti = dynamic(() => import("./MenuNoti"), {
   ssr: false,
 });
-export default function NotificationDropDown() {
+export default function NotificationDropDown({ color = "#fff" }: any) {
   const { data } = useSession();
   const [opened, handlers] = useDisclosure(false);
 
@@ -18,7 +18,7 @@ export default function NotificationDropDown() {
         <i style={{ cursor: "pointer" }}>
           <Indicator color="red" size={10} processing>
             <IconBell
-              color="#fff"
+              color={color}
               onClick={() => {
                 handlers.toggle();
               }}
@@ -26,7 +26,13 @@ export default function NotificationDropDown() {
           </Indicator>
         </i>
       )}
-      {opened && <DynamicMenuNoti />}
+      {opened && (
+        <DynamicMenuNoti
+          close={() => {
+            handlers.toggle();
+          }}
+        />
+      )}
     </div>
   );
 }
