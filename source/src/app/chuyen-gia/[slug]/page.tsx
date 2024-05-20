@@ -140,7 +140,10 @@ export default async function DetailGarage({
     params,
   });
 
-  const categories = await getCategories({ garageId: params?.slug });
+  const categories = await getCategories({
+    garageId: params?.slug,
+    limit: 100,
+  });
   const services = await getProducts({
     isProduct: "0",
     garageId: params?.slug,

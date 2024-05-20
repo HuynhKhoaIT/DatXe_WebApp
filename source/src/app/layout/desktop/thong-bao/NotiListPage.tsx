@@ -14,7 +14,7 @@ import IconBellEmpty from "@/assets/icons/iconbell.svg";
 import { formatTimeDifference } from "@/utils/until";
 export default function NotiListPage({ notifications }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
-    limit: 10,
+    limit: 100,
   });
 
   const [data, setData] = useState([]);
@@ -26,7 +26,7 @@ export default function NotiListPage({ notifications }: any) {
       setData(dataNotification?.data);
     } else {
       const res = dataNotification?.data
-        ?.filter((item: any) => !item.notificationOnUser?.readed)
+        ?.filter((item: any) => !item.notificationOnUser[0]?.readed)
         .map((item: any) => {
           return item;
         });
@@ -72,13 +72,13 @@ export default function NotiListPage({ notifications }: any) {
                 style={{
                   //   backgroundColor: "#fff",
                   margin: "4px 0",
-                  opacity: item?.notificationOnUser?.readed ? "50%" : "100%",
+                  opacity: item?.notificationOnUser[0]?.readed ? "50%" : "100%",
                   //   display: deleteAll ? "none" : "",
                   cursor: "pointer",
                   borderRadius: "10px",
                 }}
                 onClick={() => {
-                  if (!item?.notificationOnUser?.readed)
+                  if (!item?.notificationOnUser[0]?.readed)
                     getDetail({ id: item?.id });
                 }}
               >
@@ -92,8 +92,10 @@ export default function NotiListPage({ notifications }: any) {
                         {formatTimeDifference(item.createdAt)}
                       </Typo>
                     </Flex>
-                    {!item?.notificationOnUser?.readed && (
+                    {!item?.notificationOnUser[0]?.readed ? (
                       <i className={styles.iconDot}></i>
+                    ) : (
+                      <i className={styles.iconDotNone}></i>
                     )}
                   </Flex>
                 </div>

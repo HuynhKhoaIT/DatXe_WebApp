@@ -71,6 +71,12 @@
     height: 90vh;
 }
 
+.iconDotNone{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
 @media  (max-width:'600px') {
     .rootNotification{
         min-width: none;

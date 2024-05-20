@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
 import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
+import classNames from "classnames";
 
 export default function MenuNoti({ close }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
@@ -27,7 +28,7 @@ export default function MenuNoti({ close }: any) {
       setData(dataNotification?.data);
     } else {
       const res = dataNotification?.data
-        ?.filter((item: any) => !item.notificationOnUser?.readed)
+        ?.filter((item: any) => !item.notificationOnUser[0]?.readed)
         .map((item: any) => {
           return item;
         });
@@ -84,13 +85,13 @@ export default function MenuNoti({ close }: any) {
                 style={{
                   //   backgroundColor: "#fff",
                   margin: "4px 0",
-                  opacity: item?.notificationOnUser?.readed ? "50%" : "100%",
+                  opacity: item?.notificationOnUser[0]?.readed ? "50%" : "100%",
                   //   display: deleteAll ? "none" : "",
                   cursor: "pointer",
                   borderRadius: "10px",
                 }}
                 onClick={() => {
-                  if (!item?.notificationOnUser?.readed)
+                  if (!item?.notificationOnUser[0]?.readed)
                     getDetail({ id: item?.id });
                 }}
               >
@@ -108,9 +109,14 @@ export default function MenuNoti({ close }: any) {
                         {formatTimeDifference(item.createdAt)}
                       </Typo>
                     </Flex>
-                    {!item?.notificationOnUser?.readed && (
-                      <i className={styles.iconDot}></i>
-                    )}
+
+                    <i
+                      className={classNames(
+                        item?.notificationOnUser[0]?.readed
+                          ? styles.iconDotNone
+                          : styles.iconDot
+                      )}
+                    ></i>
                   </Flex>
                 </div>
               </div>
