@@ -925,7 +925,6 @@ export async function updateOrder(id: string, json: any) {
         id: id,
       },
       data: {
-        code: (await codeGeneration(json.garageId)).toString(),
         customer: {
           connect: {
             id: customerId,

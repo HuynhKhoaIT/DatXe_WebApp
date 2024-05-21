@@ -56,6 +56,7 @@ export async function sendNotificationAdminOrderUntil(order:any) {
 export async function sendNotificationOrderUntil(order:any) {
     // get token of gara
     const tokenFB = await getFirebaseTokenByPhone(order.customer.phoneNumber);
+    console.log('token',tokenFB)
     for (var t of tokenFB) {
         const statusOrder = showStatusOrder(order.step.toString());
         const dataNoti = {
