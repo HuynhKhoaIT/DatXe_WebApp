@@ -12,12 +12,16 @@ import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
 
 export default function MenuNoti({ close }: any) {
   const router = useRouter();
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
+
+  const { data: session } = useSession();
 
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
@@ -73,7 +77,7 @@ export default function MenuNoti({ close }: any) {
       </Flex>
       <Flex justify={"space-between"}>
         <span className={styles.befforeText}>Trước đó</span>
-        <Link href={"thong-bao"} className={styles.readAllText}>
+        <Link href={"/thong-bao"} className={styles.readAllText}>
           Xem tất cả
         </Link>
       </Flex>
@@ -94,11 +98,24 @@ export default function MenuNoti({ close }: any) {
                   borderRadius: "10px",
                 }}
                 onClick={() => {
-                  console.log(JSON.parse(item.data));
                   if (!item?.notificationOnUser[0]?.readed)
-                    getDetail({ id: JSON.parse(item.data)?.id });
+                    getDetail({ id: item?.id });
 
-                  router.push(`/dashboard/order`);
+                  if (
+                    session?.user?.role == ROLE_EXPERT &&
+                    item?.kind == NOTIFICATION_ORDER_KIND
+                  ) {
+                    router.push(`/admin/order-manager`);
+                  }
+                  if (
+                    JSON.parse(item.data)?.code &&
+                    item?.kind == NOTIFICATION_ORDER_KIND
+                  ) {
+                    router.push(
+                      `/dashboard/order${JSON.parse(item.data)?.code}`
+                    );
+                  }
+                  close();
                 }}
               >
                 <div>
