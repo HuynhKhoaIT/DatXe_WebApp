@@ -18,7 +18,9 @@ export async function getFirebaseTokenByPhone(phoneNumber:string) {
         },
         where:{
             user:{
-                phoneNumber
+                phoneNumber: {
+                    contains: phoneNumber
+                }
             }
         }
     });

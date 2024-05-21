@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { findOrder, updateOrder } from '@/app/libs/prisma/order';
 import { sendSMSOrder } from '@/utils/order';
+import { sendNotificationOrderUntil } from '@/utils/notification';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
@@ -40,6 +41,8 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
                 garageId = Number(session.user.garageId);
             }
             const updatedOrder = await updateOrder(id, json);
+            const fbToken = await sendNotificationOrderUntil(updatedOrder.order)
+            console.log('fbtoken',updatedOrder.order)
             return new NextResponse(JSON.stringify(updatedOrder), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },
