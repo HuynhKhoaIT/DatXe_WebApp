@@ -9,8 +9,11 @@ export async function POST(request: Request) {
             userId: json.userId,
             customerId: json.customerId
         };
-        const data = await createFirebaseToken(dataInput);
-        return NextResponse.json(data);
+        if(json.token){
+            const data = await createFirebaseToken(dataInput);
+            return NextResponse.json(data);
+        }
+        return NextResponse.json({});
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }
