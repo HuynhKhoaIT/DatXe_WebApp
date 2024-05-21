@@ -222,7 +222,7 @@ export default function OrderDetailPageMobile({
   ];
 
   return (
-    <Container>
+    <Container className={styles.container}>
       <Group justify="end">
         <ActionIcon color="blue" onClick={handlePrint}>
           <IconPrinter />

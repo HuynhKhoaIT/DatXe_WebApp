@@ -11,8 +11,10 @@ import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
 import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
 
 export default function MenuNoti({ close }: any) {
+  const router = useRouter();
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
@@ -78,6 +80,7 @@ export default function MenuNoti({ close }: any) {
       <ScrollArea h={"90%"} mt={20}>
         {data?.length > 0 ? (
           data?.map((item: any, index: number) => {
+            console.log(item);
             return (
               <div
                 key={index}
@@ -91,8 +94,11 @@ export default function MenuNoti({ close }: any) {
                   borderRadius: "10px",
                 }}
                 onClick={() => {
+                  console.log(JSON.parse(item.data));
                   if (!item?.notificationOnUser[0]?.readed)
-                    getDetail({ id: item?.id });
+                    getDetail({ id: JSON.parse(item.data)?.id });
+
+                  router.push(`/dashboard/order`);
                 }}
               >
                 <div>

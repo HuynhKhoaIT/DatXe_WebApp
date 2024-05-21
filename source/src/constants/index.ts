@@ -133,3 +133,6 @@ export const AppConstants = {
     contentRootUrl: 'https://datlichbaoduong.vcos.cloudstorage.com.vn/dat-xe.com/',
 };
 
+export const NOTIFICATION_SYSTEM_KIND = 0;
+export const NOTIFICATION_ORDER_KIND = 1;
+export const NOTIFICATION_MARKETING_KIND = 2;
