@@ -19,6 +19,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
 import { ROLE_CUSTOMER } from "@/constants";
 import NotificationDropDown from "../desktop/_component/NotificationDropDown";
+import { deleteToken } from "@/utils/notification";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
@@ -129,7 +130,10 @@ const HeaderMobile = () => {
           ) : (
             <Link
               href={"/"}
-              onClick={() => signOut()}
+              onClick={async () => {
+                await deleteToken();
+                // signOut();
+              }}
               className={styles.navLogout}
             >
               <IconLogout size={18} />

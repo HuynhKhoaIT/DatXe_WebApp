@@ -28,6 +28,7 @@ const fetchNotiDetail = async (id: string) => {
     return await response.json();
 };
 
+
 const useNotiDetail = (id: any) => {
     const searchParams = useSearchParams();
 
@@ -36,5 +37,6 @@ const useNotiDetail = (id: any) => {
         queryFn: () => fetchNotiDetail(id),
     });
 };
+
 
 export { useNotiList, fetchNotiList, useNotiDetail, fetchNotiDetail };

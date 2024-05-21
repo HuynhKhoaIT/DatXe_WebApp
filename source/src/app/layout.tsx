@@ -7,6 +7,7 @@ import "@mantine/dates/styles.css";
 import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import FcmTokenComp from "./firebaseForeground";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import "@/assets/scss/index.scss";
 import "slick-carousel/slick/slick.css";
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: IProps) {
           </MantineProvider>
         </QueryProvider>
       </body>
+      <GoogleAnalytics gaId="G-FXK6HYZ7YC" />
     </html>
   );
 }

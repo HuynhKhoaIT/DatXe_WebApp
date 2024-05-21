@@ -12,6 +12,7 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { deleteToken } from "@/utils/notification";
 const SigninButton = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -95,7 +96,10 @@ const SigninButton = () => {
                 <Menu.Divider />
                 <Menu.Item
                   component="a"
-                  onClick={() => signOut()}
+                  onClick={async () => {
+                    await deleteToken();
+                    // signOut();
+                  }}
                   color="red"
                   leftSection={
                     <IconLogout style={{ width: rem(14), height: rem(14) }} />

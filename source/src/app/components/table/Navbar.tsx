@@ -6,6 +6,7 @@ import styles from "./index.module.scss";
 import Logo from "../../assets/images/logoDatxe.png";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { deleteToken } from "@/utils/notification";
 export function Navbar({ data }: any) {
   const [active, setActive] = useState(data[0].label);
   const links = data?.map((item: any) => (
@@ -33,7 +34,14 @@ export function Navbar({ data }: any) {
       </div>
 
       <div className={styles.footer}>
-        <Link href={"/"} className={styles.link} onClick={() => signOut()}>
+        <Link
+          href={"/"}
+          className={styles.link}
+          onClick={async () => {
+            await deleteToken();
+            // signOut();
+          }}
+        >
           <IconLogout className={styles.linkIcon} stroke={1.5} />
           <span>Đăng xuất</span>
         </Link>
