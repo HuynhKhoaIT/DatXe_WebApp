@@ -112,7 +112,7 @@ export default function MenuNoti({ close }: any) {
                     item?.kind == NOTIFICATION_ORDER_KIND
                   ) {
                     router.push(
-                      `/dashboard/order${JSON.parse(item.data)?.code}`
+                      `/dashboard/order/${JSON.parse(item.data)?.code}`
                     );
                   }
                   close();
