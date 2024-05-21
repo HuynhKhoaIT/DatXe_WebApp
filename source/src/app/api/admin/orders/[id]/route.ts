@@ -42,7 +42,6 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             }
             const updatedOrder = await updateOrder(id, json);
             const fbToken = await sendNotificationOrderUntil(updatedOrder.order)
-            console.log('fbtoken',updatedOrder.order)
             return new NextResponse(JSON.stringify(updatedOrder), {
                 status: 201,
                 headers: { 'Content-Type': 'application/json' },

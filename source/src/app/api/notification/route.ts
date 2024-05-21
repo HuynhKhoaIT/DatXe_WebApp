@@ -27,6 +27,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: Request) {
     const json = await request.json();
+    
     const notiRs = await createNotification({
         title: json.title,
         content: json.content,
