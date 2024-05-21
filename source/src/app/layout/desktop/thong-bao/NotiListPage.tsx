@@ -12,10 +12,16 @@ import { IconBell } from "@tabler/icons-react";
 import IconBellEmpty from "@/assets/icons/iconbell.svg";
 
 import { formatTimeDifference } from "@/utils/until";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
 export default function NotiListPage({ notifications }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 100,
   });
+
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const [data, setData] = useState([]);
   const { getDetail } = useUpdateNoti();
@@ -80,6 +86,21 @@ export default function NotiListPage({ notifications }: any) {
                 onClick={() => {
                   if (!item?.notificationOnUser[0]?.readed)
                     getDetail({ id: item?.id });
+
+                  if (
+                    session?.user?.role == ROLE_EXPERT &&
+                    item?.kind == NOTIFICATION_ORDER_KIND
+                  ) {
+                    router.push(`/admin/order-manager`);
+                  }
+                  if (
+                    JSON.parse(item.data)?.code &&
+                    item?.kind == NOTIFICATION_ORDER_KIND
+                  ) {
+                    router.push(
+                      `/dashboard/order/${JSON.parse(item.data)?.code}`
+                    );
+                  }
                 }}
               >
                 <div>
