@@ -44,7 +44,8 @@ export async function sendNotificationAdminOrderUntil(order:any) {
             userId: t.userId,
             to: t.token,
             data: JSON.stringify({
-                id: order.id
+                id: order.id,
+                code: order.code
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
@@ -66,7 +67,8 @@ export async function sendNotificationOrderUntil(order:any) {
             userId: t.userId,
             to: t.token,
             data: JSON.stringify({
-                id: order.id
+                id: order.id,
+                code: order.code
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
