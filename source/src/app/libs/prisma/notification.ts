@@ -66,6 +66,16 @@ export async function getNotications(requestData: any) {
 
 
 export async function createNotification(json: any){
+    const noti = await prisma.notification.findFirst({
+        where: {
+            userId: json.userId,
+            title: json.title,
+            data: json.data
+        }
+    })
+    if(noti){
+        return;
+    }
     return await prisma.notification.create({
         data: {
             title: json.title,
