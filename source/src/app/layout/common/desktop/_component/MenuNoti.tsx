@@ -11,11 +11,17 @@ import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
 import { useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
 
 export default function MenuNoti({ close }: any) {
+  const router = useRouter();
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
+
+  const { data: session } = useSession();
 
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
@@ -71,13 +77,14 @@ export default function MenuNoti({ close }: any) {
       </Flex>
       <Flex justify={"space-between"}>
         <span className={styles.befforeText}>Trước đó</span>
-        <Link href={"thong-bao"} className={styles.readAllText}>
+        <Link href={"/thong-bao"} className={styles.readAllText}>
           Xem tất cả
         </Link>
       </Flex>
       <ScrollArea h={"90%"} mt={20}>
         {data?.length > 0 ? (
           data?.map((item: any, index: number) => {
+            console.log(item);
             return (
               <div
                 key={index}
@@ -93,6 +100,22 @@ export default function MenuNoti({ close }: any) {
                 onClick={() => {
                   if (!item?.notificationOnUser[0]?.readed)
                     getDetail({ id: item?.id });
+
+                  if (
+                    session?.user?.role == ROLE_EXPERT &&
+                    item?.kind == NOTIFICATION_ORDER_KIND
+                  ) {
+                    router.push(`/admin/order-manager`);
+                  }
+                  if (
+                    JSON.parse(item.data)?.code &&
+                    item?.kind == NOTIFICATION_ORDER_KIND
+                  ) {
+                    router.push(
+                      `/dashboard/order${JSON.parse(item.data)?.code}`
+                    );
+                  }
+                  close();
                 }}
               >
                 <div>
