@@ -113,6 +113,19 @@
 }
 @media (max-width: 1025px) {
     .headerContent{
+        .headerSearch{
+            .search{
+                .btnAdd {
+                    height: 3.5rem;
+                    .innerAdd {
+                        color: #3761bf;
+                        font-size: var(--primary-font-size);
+                        font-weight: var(--font-big);
+                        padding: 0px;
+                    }
+                }
+            }
+        }
         // .headerNav{
         //     display: none;
         // }

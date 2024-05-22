@@ -8,9 +8,9 @@ export default function Loading() {
   return (
     <div>
       <Skeleton h={320} />
-      <Container>
+      {/* <Container>
         <ListnewsSkeleton />
-      </Container>
+      </Container> */}
     </div>
   );
 }

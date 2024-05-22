@@ -2,7 +2,6 @@
 import { Grid, Box, Flex, Button, ScrollArea } from "@mantine/core";
 import Container from "@/app/components/common/Container";
 import Banner from "../chuyen-gia/Banner";
-import NotiItem from "./_component/NotiItem";
 import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import { useEffect, useState } from "react";
@@ -12,10 +11,17 @@ import { IconBell } from "@tabler/icons-react";
 import IconBellEmpty from "@/assets/icons/iconbell.svg";
 
 import { formatTimeDifference } from "@/utils/until";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
+import NotiItem from "../../common/desktop/_component/NotiItem";
 export default function NotiListPage({ notifications }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 100,
   });
+
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const [data, setData] = useState([]);
   const { getDetail } = useUpdateNoti();
@@ -47,6 +53,7 @@ export default function NotiListPage({ notifications }: any) {
             onClick={() => {
               setActiveButtonAll(true);
             }}
+            color="var(--theme-color)"
           >
             Tất cả
           </Button>
@@ -56,6 +63,7 @@ export default function NotiListPage({ notifications }: any) {
               setActiveButtonAll(false);
             }}
             radius={10}
+            color="var(--theme-color)"
           >
             Chưa đọc
           </Button>
@@ -64,43 +72,8 @@ export default function NotiListPage({ notifications }: any) {
           <span className={styles.befforeText}>Trước đó</span>
         </Flex>
         {data?.length > 0 ? (
-          data?.map((item: any, index: number) => {
-            return (
-              <div
-                key={index}
-                className={styles.itemNotification}
-                style={{
-                  //   backgroundColor: "#fff",
-                  margin: "4px 0",
-                  opacity: item?.notificationOnUser[0]?.readed ? "50%" : "100%",
-                  //   display: deleteAll ? "none" : "",
-                  cursor: "pointer",
-                  borderRadius: "10px",
-                }}
-                onClick={() => {
-                  if (!item?.notificationOnUser[0]?.readed)
-                    getDetail({ id: item?.id });
-                }}
-              >
-                <div>
-                  <Flex justify={"space-evenly"} align={"center"}>
-                    {/* {iconNotification(item?.kind)} */}
-                    <IconBell />
-                    <Flex direction="column" w={370} justify="center">
-                      <span className={styles.title}>{item?.title}</span>
-                      <Typo size="tiny">
-                        {formatTimeDifference(item.createdAt)}
-                      </Typo>
-                    </Flex>
-                    {!item?.notificationOnUser[0]?.readed ? (
-                      <i className={styles.iconDot}></i>
-                    ) : (
-                      <i className={styles.iconDotNone}></i>
-                    )}
-                  </Flex>
-                </div>
-              </div>
-            );
+          data?.map((item: any) => {
+            return <NotiItem item={item} key={item?.id} />;
           })
         ) : (
           <div className={styles.empty}>

@@ -19,12 +19,15 @@ import { signOut, useSession } from "next-auth/react";
 import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
 import { ROLE_CUSTOMER } from "@/constants";
 import NotificationDropDown from "../desktop/_component/NotificationDropDown";
+import { deleteToken } from "@/utils/notification";
+import useFcmToken from "@/app/hooks/useFCMToken";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
 });
 const HeaderMobile = () => {
   const { data: session } = useSession();
+  const { fcmToken } = useFcmToken();
   const searchParams = useSearchParams();
   const s: any = searchParams.get("s");
   const role = session?.user?.role;
@@ -129,7 +132,10 @@ const HeaderMobile = () => {
           ) : (
             <Link
               href={"/"}
-              onClick={() => signOut()}
+              onClick={async () => {
+                await deleteToken({ token: fcmToken });
+                signOut();
+              }}
               className={styles.navLogout}
             >
               <IconLogout size={18} />

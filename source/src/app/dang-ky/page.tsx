@@ -21,7 +21,7 @@ export default function Register() {
         </div>
         <FormRegister />
         <div className="other-login">
-          <p className="other-login__title">Hoặc tiếp tục bằng</p>
+          {/* <p className="other-login__title">Hoặc tiếp tục bằng</p>
           <div className="other-login__btn ">
             <Button
               variant="outline"
@@ -74,12 +74,7 @@ export default function Register() {
                 ></path>
               </svg>
             </Button>
-          </div>
-          {/* <div className="login-footer">
-                <p>
-                    Bạn không có tài khoản? <Link href="dang-ky">Đăng Ký</Link>
-                </p>
-            </div> */}
+          </div> */}
           <div className={styles.accept}>
             Bằng việc tiếp tục, bạn đã chấp nhận{" "}
             <div className={styles.acceptRules}>

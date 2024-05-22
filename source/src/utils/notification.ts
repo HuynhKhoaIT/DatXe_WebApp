@@ -94,3 +94,17 @@ export async function sendNotificationGarageNew(garage: any) {
     }
     return tokenFB;
 }
+export async function deleteToken({token}:any) {
+
+    const response = await fetch('/api/notification/token', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({token})
+    },
+    );   
+      
+    return await response.json();
+}
+

@@ -1,21 +1,40 @@
 "use client";
-import { Button, Flex, LoadingOverlay, ScrollArea } from "@mantine/core";
+import { Button, Flex, LoadingOverlay, Menu, ScrollArea } from "@mantine/core";
 import styles from "./NotificationDropDown.module.scss";
 import Typo from "@/app/components/elements/Typo";
-import { IconBell, IconX } from "@tabler/icons-react";
+import {
+  IconBell,
+  IconCheck,
+  IconDots,
+  IconSettings,
+  IconSquareX,
+  IconTrash,
+  IconX,
+} from "@tabler/icons-react";
 import IconBellEmpty from "@/assets/icons/iconbell.svg";
 import { useNotiList } from "@/app/hooks/noti/useNoti";
 import { formatTimeDifference } from "@/utils/until";
 import { useEffect, useState } from "react";
 import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
-import { useMediaQuery } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import classNames from "classnames";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
+import { IconDotsVertical } from "@tabler/icons-react";
+import { IconSquare } from "@tabler/icons-react";
+import ActionNoti from "./ActionNoti";
+import NotiItem from "./NotiItem";
 
 export default function MenuNoti({ close }: any) {
+  const [opened, { toggle }] = useDisclosure();
+  const router = useRouter();
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
+
+  const { data: session } = useSession();
 
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
@@ -56,6 +75,7 @@ export default function MenuNoti({ close }: any) {
           onClick={() => {
             setActiveButtonAll(true);
           }}
+          color="var(--theme-color)"
         >
           Tất cả
         </Button>
@@ -65,62 +85,21 @@ export default function MenuNoti({ close }: any) {
             setActiveButtonAll(false);
           }}
           radius={10}
+          color="var(--theme-color)"
         >
           Chưa đọc
         </Button>
       </Flex>
       <Flex justify={"space-between"}>
         <span className={styles.befforeText}>Trước đó</span>
-        <Link href={"thong-bao"} className={styles.readAllText}>
+        <Link href={"/thong-bao"} className={styles.readAllText}>
           Xem tất cả
         </Link>
       </Flex>
       <ScrollArea h={"90%"} mt={20}>
         {data?.length > 0 ? (
           data?.map((item: any, index: number) => {
-            return (
-              <div
-                key={index}
-                className={styles.itemNotification}
-                style={{
-                  //   backgroundColor: "#fff",
-                  margin: "4px 0",
-                  opacity: item?.notificationOnUser[0]?.readed ? "50%" : "100%",
-                  //   display: deleteAll ? "none" : "",
-                  cursor: "pointer",
-                  borderRadius: "10px",
-                }}
-                onClick={() => {
-                  if (!item?.notificationOnUser[0]?.readed)
-                    getDetail({ id: item?.id });
-                }}
-              >
-                <div>
-                  <Flex justify={"space-evenly"} align={"center"}>
-                    {/* {iconNotification(item?.kind)} */}
-                    <IconBell />
-                    <Flex
-                      direction="column"
-                      w={{ base: 200, md: 370, lg: 370 }}
-                      justify="center"
-                    >
-                      <span className={styles.title}>{item?.title}</span>
-                      <Typo size="tiny">
-                        {formatTimeDifference(item.createdAt)}
-                      </Typo>
-                    </Flex>
-
-                    <i
-                      className={classNames(
-                        item?.notificationOnUser[0]?.readed
-                          ? styles.iconDotNone
-                          : styles.iconDot
-                      )}
-                    ></i>
-                  </Flex>
-                </div>
-              </div>
-            );
+            return <NotiItem item={item} key={index} />;
           })
         ) : (
           <div className={styles.empty}>
