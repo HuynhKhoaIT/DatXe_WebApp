@@ -77,14 +77,17 @@ export async function sendNotificationOrderUntil(order:any) {
     return tokenFB;
 }
 
-export async function deleteToken() {
+export async function deleteToken({token}:any) {
+
     const response = await fetch('/api/notification/token', {
         method: 'DELETE',
-      });   
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({token})
+    },
+    );   
       
-      if (!response.ok) {
-        throw new ResponseError('Failed to delete news', response);
-    }
     return await response.json();
 }
 

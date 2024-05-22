@@ -7,7 +7,9 @@ import Logo from "../../assets/images/logoDatxe.png";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { deleteToken } from "@/utils/notification";
+import useFcmToken from "@/app/hooks/useFCMToken";
 export function Navbar({ data }: any) {
+  const { fcmToken } = useFcmToken();
   const [active, setActive] = useState(data[0].label);
   const links = data?.map((item: any) => (
     <Link
@@ -38,8 +40,8 @@ export function Navbar({ data }: any) {
           href={"/"}
           className={styles.link}
           onClick={async () => {
-            await deleteToken();
-            // signOut();
+            await deleteToken({ token: fcmToken });
+            signOut();
           }}
         >
           <IconLogout className={styles.linkIcon} stroke={1.5} />

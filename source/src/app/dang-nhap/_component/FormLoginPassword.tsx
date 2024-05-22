@@ -15,7 +15,6 @@ export default function FormLoginPassword() {
   const callbackUrl = searchParams.get("callbackUrl");
   const error = searchParams.get("error");
 
-  console.log(fcmToken);
   const form = useForm({
     initialValues: {
       phone: "",
@@ -32,9 +31,6 @@ export default function FormLoginPassword() {
   const handleSubmit = async (values: any) => {
     handlers.open();
     try {
-      console.log("----1");
-      Object.assign(values, { tokenFirebase: "value3" });
-      console.log(values);
       const res = await fetch("https://v2.dlbd.vn/api/login", {
         method: "POST",
         headers: {

@@ -2,7 +2,7 @@
 import { Button } from "@mantine/core";
 import car from "@/assets/icons/car.svg";
 import dynamic from "next/dynamic";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { useRouter } from "next/navigation";
 
 const DynamicModalAddCar = dynamic(() => import("./ModalAddCar"), {
@@ -14,11 +14,13 @@ export default function ButtonAddCar({ styles, user }: any) {
     false
   );
 
+  const isTablet = useMediaQuery(`(max-width: ${"1024px"})`);
+
   return (
     <>
       <Button
         color="#EEF1F9"
-        leftSection={<img src={car.src} alt="Car Icon" />}
+        leftSection={!isTablet && <img src={car.src} alt="Car Icon" />}
         classNames={{
           root: styles.btnAdd,
           inner: styles.innerAdd,
