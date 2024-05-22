@@ -17,8 +17,16 @@
 
 .itemNotification {
     position: relative;
+    padding: 10px 5px;
     &:hover{
         background: #dce8ff;
+        // z-index: -1;
+
+        .actionNoti{
+            display: block;
+            z-index: 99999;
+
+        }
 
     }
 }
@@ -65,7 +73,7 @@
     position: absolute;
     right: 0;
     border-radius: 4px;
-    z-index: 9999;
+    z-index: 1;
     min-width: 543px;
     padding: 24px;
     height: 90vh;
@@ -75,6 +83,43 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
+}
+
+.actionNoti{
+    display: none;
+    position: absolute;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    background-color: #ddd;
+    border-radius: 50%;
+    text-align: center;
+    &:hover{
+        background: #555;
+    }
+}
+
+.listAction{
+    // display: none;
+    flex-direction: column;
+    background-color: #fff;
+    position: absolute;
+    z-index: 99999;
+    top: 33px;
+    right: -16px;
+    width: 200px;
+    gap: 5px;
+    .actionItem{
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        &:hover{
+            background: #ddd;
+        }
+    }
 }
 
 @media  (max-width:'600px') {
@@ -91,3 +136,4 @@
     }
     
 }
+

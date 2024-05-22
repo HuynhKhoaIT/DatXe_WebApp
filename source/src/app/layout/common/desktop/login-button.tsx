@@ -12,7 +12,10 @@ import {
   IconUserCircle,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { deleteToken } from "@/utils/notification";
+import useFcmToken from "@/app/hooks/useFCMToken";
 const SigninButton = () => {
+  const { fcmToken } = useFcmToken();
   const router = useRouter();
   const { data: session, status } = useSession();
   const handleCar = (event: { preventDefault: () => void }) => {
@@ -95,7 +98,10 @@ const SigninButton = () => {
                 <Menu.Divider />
                 <Menu.Item
                   component="a"
-                  onClick={() => signOut()}
+                  onClick={async () => {
+                    await deleteToken({ token: fcmToken });
+                    signOut();
+                  }}
                   color="red"
                   leftSection={
                     <IconLogout style={{ width: rem(14), height: rem(14) }} />

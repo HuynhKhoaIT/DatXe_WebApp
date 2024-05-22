@@ -2,6 +2,7 @@ import { getFirebaseTokenByGarageId, getFirebaseTokenByPhone, getFirebaseTokenBy
 import { createNotification } from "@/app/libs/prisma/notification";
 import axios from "axios";
 import { showStatusOrder } from "./order";
+import { ResponseError } from "./until/ResponseError";
 
 export async function sendNotificationUntil(json:any){
 
@@ -75,3 +76,18 @@ export async function sendNotificationOrderUntil(order:any) {
     }
     return tokenFB;
 }
+
+export async function deleteToken({token}:any) {
+
+    const response = await fetch('/api/notification/token', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({token})
+    },
+    );   
+      
+    return await response.json();
+}
+

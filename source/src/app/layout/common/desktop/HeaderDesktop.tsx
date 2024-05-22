@@ -63,7 +63,6 @@ export default async function Header() {
             </Link>
             <div className={styles.search}>
               <ButtonAddAddress styles={styles} user={myAccount} />
-
               <SearchFormName />
               <Link href={"/gio-hang"}>
                 <ActionIcon color="#EEF1F9" size={56}>
@@ -71,15 +70,6 @@ export default async function Header() {
                 </ActionIcon>
               </Link>
               <ButtonAddCar styles={styles} user={myAccount} />
-
-              {/* <Link href={"/dat-lich"}>
-                <Button
-                  color="#3450E7"
-                  classNames={{ root: styles.btnBook, inner: styles.innerBook }}
-                >
-                  Book Lịch
-                </Button>
-              </Link> */}
             </div>
           </div>
           <div className={styles.headerNav}>

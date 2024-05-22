@@ -22,6 +22,19 @@ const getItem = async (values: any): Promise<any> => {
     return await response.json();
 };
 
+const deleteNoti = async (values: any): Promise<any> => {
+    const response = await fetch(`/api/notification/delete/${values?.id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        throw new ResponseError('Failed to read', response);
+    }
+    return await response.json();
+};
+
 const updateCar = async (values: any): Promise<any> => {
     const response = await fetch(`/api/admin/car/${values?.id}`, {
         method: 'PUT',
@@ -37,20 +50,15 @@ const updateCar = async (values: any): Promise<any> => {
 };
 interface UseCar {
     getDetail: any;
-    updateItem: any;
-    brandOptions: any;
-    customerOptions: any;
-    isLoadingBrand: boolean;
-    isLoadingCustomer: boolean;
-    isPendingUpdate:boolean;
-    isPendingRead:boolean;
+    deleteItem:any;
+    isPendingDelete:boolean;
 }
 
 export const useUpdateNoti = (): UseCar => {
     const router = useRouter();
     const queryClient = useQueryClient();
     const searchParams = useSearchParams();
-    const { mutate: getDetail,isPending:isPendingRead  } = useMutation({
+    const { mutate: getDetail, isPending:isPendingRead  } = useMutation({
         mutationFn: getItem,
         onSuccess: (res) => {
             queryClient.invalidateQueries({
@@ -59,48 +67,22 @@ export const useUpdateNoti = (): UseCar => {
         },
     });
 
-    const { mutate: updateItem,isPending:isPendingUpdate } = useMutation({
-        mutationFn: updateCar,
-        onSuccess: () => {
-            router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật xe thành công',
-            });
+    const { mutate: deleteItem, isPending:isPendingDelete  } = useMutation({
+        mutationFn: deleteNoti,
+        onSuccess: (res) => {
             queryClient.invalidateQueries({
-                queryKey: [QUERY_KEY.notiList, searchParams.toString(), 1],
+                queryKey: [QUERY_KEY.notiList, searchParams.toString()],
             });
         },
     });
 
-    const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({
-        queryKey: [QUERY_KEY.optionsBrandCar],
-        queryFn: () => getOptionsBrands(),
-        options: {
-            refetchOnWindowFocus: false,
-            staleTime: Infinity,
-            refetchInterval: false,
-        },
-    });
+   
+ 
 
-    const { data: customerOptions, isLoading: isLoadingCustomer } = useFetch({
-        queryKey: [QUERY_KEY.optionsCustomer],
-        queryFn: () => getOptionsCustomers(),
-        // options: {
-        //     refetchOnWindowFocus: false,
-        //     staleTime: Infinity,
-        //     refetchInterval: false,
-        // },
-    });
 
     return {
         getDetail,
-        updateItem,
-        brandOptions,
-        isLoadingBrand,
-        customerOptions,
-        isLoadingCustomer,
-        isPendingRead,
-        isPendingUpdate
+        deleteItem,
+        isPendingDelete,
     };
 };
