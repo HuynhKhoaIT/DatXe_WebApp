@@ -6,6 +6,7 @@ import { CheckOtp, registerGarage } from "@/utils/user";
 import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import { sendNotificationGarageNew } from "@/utils/notification";
 
 export function FormAccuracy() {
   const [opened, handlers] = useDisclosure(false);
@@ -41,7 +42,7 @@ export function FormAccuracy() {
           message: "Xác thực thành công",
         });
         try {
-          await registerGarage(
+          const garage = await registerGarage(
             name,
             phone,
             password,
@@ -50,6 +51,9 @@ export function FormAccuracy() {
             garageName,
             fcmToken
           );
+
+          
+
 
           notifications.show({
             title: "Thành công",

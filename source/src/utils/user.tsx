@@ -20,6 +20,7 @@ import { signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sha256 } from "js-sha256";
+import { sendNotificationGarageNew } from "./notification";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.
@@ -198,6 +199,7 @@ export const registerGarage = async (
         role: "ADMINGARAGE",
       }),
     });
+    await sendNotificationGarageNew(garageData)
     signIn("credentials", {
       phone: phone,
       password: password,
