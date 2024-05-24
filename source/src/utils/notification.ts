@@ -36,6 +36,7 @@ export async function sendNotificationUntil(json:any){
 export async function sendNotificationAdminOrderUntil(order:any) {
     // get token of gara
     const tokenFB = await getFirebaseTokenByGarageId(order.garageId);
+    
     for (var t of tokenFB) {
         const dataNoti = {
             title: "Bạn có đơn hàng mới",
@@ -49,6 +50,7 @@ export async function sendNotificationAdminOrderUntil(order:any) {
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
+
     }
     return tokenFB;
 }
@@ -72,6 +74,7 @@ export async function sendNotificationOrderUntil(order:any) {
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
+        console.log('token',rs)
     }
     return tokenFB;
 }
