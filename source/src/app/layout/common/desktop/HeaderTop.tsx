@@ -20,7 +20,7 @@ export default function HeaderTop() {
             <img src={instagram.src} alt="Ig Icon" />
           </div>
           <div className={styles.topRight}>
-            <Link href="/dashboard/order" className={styles.title}>
+            <Link href="/dashboard/danh-sach-don-hang" className={styles.title}>
               Kiểm tra lịch hẹn
             </Link>
             <NotificationDropDown />

@@ -1,0 +1,22 @@
+.wrapper {
+    background-color: white;
+
+    .title {
+        padding: 1rem 30px;
+        color: var(--primary-orange);
+    }
+    .table {
+        padding: 20px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .wrapper {
+        .title {
+            padding: 0.6rem 0;
+        }
+        .table {
+            padding: 0;
+        }
+    }
+   
+}

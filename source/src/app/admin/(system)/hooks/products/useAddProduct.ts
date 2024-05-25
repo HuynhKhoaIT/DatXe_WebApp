@@ -7,6 +7,7 @@ import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { getOptionsBrands, getOptionsCategories, getOptionsCustomers } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addProduct = async (values: any): Promise<any> => {
@@ -51,10 +52,8 @@ export const useAddProduct = (): UseProduct => {
         mutationFn: addProduct,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm sản phẩm thành công',
-            });
+            
+            toast.success("Thêm sản phẩm thành công");
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.products, searchParams.toString(), 1],
@@ -66,11 +65,8 @@ export const useAddProduct = (): UseProduct => {
         mutationFn: updateProduct,
         onSuccess: () => {
             router.back();
+            toast.success("Cập nhật sản phẩm thành công");
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật sản phẩm thành công',
-            });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.products, searchParams.toString(), 1],
             });

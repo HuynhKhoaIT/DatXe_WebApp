@@ -4,6 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addNews = async (values: any): Promise<any> => {
@@ -49,10 +50,8 @@ export const useAddNews = (): UseCategory => {
         mutationFn: addNews,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm tin tức thành công',
-            });
+            
+            toast.success('Thêm tin thành công')
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.newsList, searchParams.toString(), 1],
@@ -65,10 +64,8 @@ export const useAddNews = (): UseCategory => {
         onSuccess: () => {
             router.back();
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật tin tức thành công',
-            });
+            toast.success('Cập nhật tin thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.newsList, searchParams.toString(), 1],
             });

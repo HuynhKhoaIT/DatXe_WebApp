@@ -6,8 +6,10 @@ import styles from "./ModalReview.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import { useForm } from "@mantine/form";
 import axios from "axios";
-import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 export default function ModalReview({
   openedModal,
   onCloseModal,
@@ -15,6 +17,7 @@ export default function ModalReview({
   dataDetail,
   orderId,
 }: any) {
+  console.log(dataDetail);
   const router = useRouter();
   const images = JSON.parse(dataDetail?.product?.images);
   const form = useForm({
@@ -28,18 +31,18 @@ export default function ModalReview({
   });
   const handleSubmit = async (values: any) => {
     try {
-      await axios.post("/api/client/reviews", values);
+      const res = await axios.post("/api/client/reviews", values);
       router.refresh();
-      notifications.show({
-        title: "Thành công",
-        message: "Gửi đánh giá thành công.",
-      });
+      console.log(res);
+      if (res.data.data && res.data.data.error) {
+        toast.error("Gửi đánh giá thất bại");
+      } else {
+        toast.success("Gửi đánh giá thành công");
+      }
       onCloseModal();
     } catch (error) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Gửi đánh giá thất bại.",
-      });
+      toast.error("Gửi đánh giá thất bại");
+
       onCloseModal();
     }
   };
@@ -60,7 +63,12 @@ export default function ModalReview({
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <div className={styles.listProduct}>
           <div className={styles.itemProduct}>
-            <Image radius="md " h={60} w={80} fit="contain" src={images[0]} />
+            <ImageField
+              radius="md"
+              height={60}
+              width={80}
+              src={images[0] && `${AppConstants.contentRootUrl}${images[0]}`}
+            />
             <Typo size="sub" type="semi-bold">
               {dataDetail?.product?.name}
             </Typo>

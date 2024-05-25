@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import { getOptionsProvince, getUltilities } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addExpert = async (values: any): Promise<any> => {
@@ -71,10 +72,8 @@ export const useAddExpert = (): UseExpert => {
         mutationFn: addExpert,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm chuyên gia thành công',
-            });
+            
+            toast.success('Thêm chuyên gia thành công')
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.experts, searchParams.toString(), 1],
@@ -87,10 +86,8 @@ export const useAddExpert = (): UseExpert => {
         onSuccess: () => {
             router.back();
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật chuyên gia thành công',
-            });
+            toast.success('Cập nhật chuyên gia thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.experts, searchParams.toString(), 1],
             });
@@ -101,10 +98,8 @@ export const useAddExpert = (): UseExpert => {
         mutationFn: createQrCode,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Tạo Qr code thành công',
-            });
+            
+            toast.success('Tạo Qr code thành công')
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.experts],

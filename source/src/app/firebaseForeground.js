@@ -3,7 +3,7 @@ import useFcmToken from "./hooks/useFCMToken";
 import { getMessaging, onMessage } from 'firebase/messaging';
 import firebaseApp from '../utils/firebase';
 import { useEffect } from 'react';
-import { notifications } from "@mantine/notifications";
+import { toast } from "react-toastify";
 
 export default function FcmTokenComp() {
   const {  notificationPermissionStatus } = useFcmToken();
@@ -14,10 +14,13 @@ export default function FcmTokenComp() {
         const messaging = getMessaging(firebaseApp);
         const unsubscribe = onMessage(messaging, (payload) =>{
           new Notification(payload.data.title)
-          notifications.show({
-            title: payload.data.title,
-            message: payload.data.body,
-          });
+          toast.success((t) => (
+            <Link href={"/gio-hang"}>{payload.data.title}</Link>
+          ));
+          // notifications.show({
+          //   title: payload.data.title,
+          //   message: payload.data.body,
+          // });
         });
         return () => {
           unsubscribe(); // Unsubscribe from the onMessage event on cleanup

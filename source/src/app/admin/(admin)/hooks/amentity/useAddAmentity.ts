@@ -3,7 +3,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addAmentity = async (values: any): Promise<any> => {
@@ -47,11 +47,7 @@ export const useAddAmentity = (): UseAmentity => {
         mutationFn: addAmentity,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm tiện ích thành công',
-            });
-
+            toast.success('Thêm tiện ích thành công');
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.amenities, searchParams.toString(), 1],
             });
@@ -62,11 +58,7 @@ export const useAddAmentity = (): UseAmentity => {
         mutationFn: updateAmentity,
         onSuccess: () => {
             router.back();
-
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật tiện ích thành công',
-            });
+            toast.success('Cập nhật tiện ích thành công');
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.amenities, searchParams.toString(), 1],
             });

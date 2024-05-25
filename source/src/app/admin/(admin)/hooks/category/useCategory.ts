@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { QUERY_KEY } from '@/constants';
 import { useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const fetchCategories = async (searchParams: any, page: number): Promise<any> => {
@@ -82,10 +83,8 @@ export const useCategories = (): UseCategories => {
     const { mutate: deleteItem } = useMutation({
         mutationFn: deleteCategory,
         onSuccess: () => {
-            notifications.show({
-                title: 'Thành công',
-                message: 'Xoá danh mục thành công',
-            });
+            toast.success('Xoá mục thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.categories, searchParams.toString(), page],
             });

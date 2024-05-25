@@ -4,7 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { QUERY_KEY } from '@/constants';
 import { useSearchParams } from 'next/navigation';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const fetchAmentity = async (searchParams: any, page: number): Promise<any> => {
@@ -82,10 +82,8 @@ export const useAmenitites = (): UseAmenitites => {
     const { mutate: deleteItem } = useMutation({
         mutationFn: deleteAmentity,
         onSuccess: () => {
-            notifications.show({
-                title: 'Thành công',
-                message: 'Xoá tiện ích thành công',
-            });
+            toast.success('Xoá tiện ích thành công');
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.amenities, searchParams.toString(), page],
             });

@@ -7,7 +7,7 @@ import styles from "./index.module.scss";
 const SidebarClient = () => {
   const pathname = usePathname();
   const parts = pathname.split("/");
-  let page = parts[parts.length - 1];
+  let page = parts[2];
   return (
     <ul className={styles.listMenu}>
       {/* <li>
@@ -20,9 +20,9 @@ const SidebarClient = () => {
       </li> */}
       <li>
         <Link
-          href="/dashboard/cars"
+          href="/dashboard/danh-sach-xe"
           className={`list-group-item ${
-            (page == "cars" || page == "add-car") && styles.active
+            (page == "danh-sach-xe" || page == "add-car") && styles.active
           }`}
         >
           <i className="far fa-layer-group"></i> Danh sách xe
@@ -30,8 +30,8 @@ const SidebarClient = () => {
       </li>
       <li>
         <Link
-          href="/dashboard/profile"
-          className={`list-group-item ${page == "profile" && styles.active}`}
+          href="/dashboard/ho-so"
+          className={`list-group-item ${page == "ho-so" && styles.active}`}
         >
           <i className="far fa-user"></i> Hồ sơ của tôi
         </Link>
@@ -39,8 +39,8 @@ const SidebarClient = () => {
 
       <li>
         <Link
-          href="/dashboard/order"
-          className={`${page == "order" && styles.active}`}
+          href="/dashboard/danh-sach-don-hang"
+          className={`${page == "danh-sach-don-hang" && styles.active}`}
         >
           <i className="far fa-plus-circle"></i> Đơn hàng
         </Link>

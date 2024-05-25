@@ -3,8 +3,8 @@ import { Button, TextInput } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, hasLength } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
-import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
+import { toast } from "react-toastify";
 export default function FormLogin() {
   const [opened, handlers] = useDisclosure(false);
 
@@ -42,26 +42,20 @@ export default function FormLogin() {
           }
           handlers.close();
         } else {
-          notifications.show({
-            title: "Error",
-            message: "Lỗi tạo OTP, Vui lòng thử lại sau!",
-          });
+          toast.error("Lỗi tạo OTP, Vui lòng thử lại sau!");
+
           handlers.close();
         }
       } else {
-        notifications.show({
-          title: "Error",
-          message: "Số điện thoại chưa được đăng ký vui lòng đăng ký!",
-        });
+        toast.error("Số điện thoại chưa được đăng ký vui lòng đăng ký!");
+
         handlers.close();
 
         form.setErrors({ phone: "Số điện thoại chưa được đăng ký!" });
       }
     } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau!",
-      });
+      toast.error("Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau!");
+
       handlers.close();
     }
   };

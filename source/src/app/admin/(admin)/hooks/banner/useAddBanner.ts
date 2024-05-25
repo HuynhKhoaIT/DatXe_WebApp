@@ -3,7 +3,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addBanner = async (values: any): Promise<any> => {
@@ -47,11 +47,7 @@ export const useAddBanner = (): UseBanner => {
         mutationFn: addBanner,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm banner thành công',
-            });
-
+            toast.success('Thêm banner thành công');
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.banner, searchParams.toString(), 1],
             });
@@ -62,11 +58,8 @@ export const useAddBanner = (): UseBanner => {
         mutationFn: updateBanner,
         onSuccess: () => {
             router.back();
+            toast.success('Cập nhật banner thành công');
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật banner thành công',
-            });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.banner, searchParams.toString(), 1],
             });

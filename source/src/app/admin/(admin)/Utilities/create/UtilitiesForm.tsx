@@ -17,11 +17,11 @@ import { useForm } from "@mantine/form";
 import { IconPlus, IconBan } from "@tabler/icons-react";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useRef, useState } from "react";
-import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 import { useDisclosure } from "@mantine/hooks";
 import axios from "axios";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import { toast } from "react-toastify";
 export default function CategoryForm({ isEditing, dataDetail }: any) {
   const [loading, handlers] = useDisclosure();
   const [file, setFile] = useState<File | null>(null);
@@ -97,16 +97,12 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
       handlers.close();
       router.back();
       router.refresh();
-      notifications.show({
-        title: "Thành công",
-        message: "Thành công",
-      });
+
+      toast.success("Thành công");
     } catch (error) {
       handlers.close();
-      notifications.show({
-        title: "Thất bại",
-        message: "Thất bại",
-      });
+
+      toast.error("Thất bại");
     }
   };
 
