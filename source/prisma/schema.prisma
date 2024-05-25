@@ -610,6 +610,38 @@ model firebaseToken {
   updatedAt     DateTime  @updatedAt
 }
 
+
+// model ProductCombo {
+//   id              String                  @id @default(uuid())
+//   uuID            String?
+//   productId       Int                     @default(0)
+//   isProduct       Boolean                 @default(true)
+//   name            String
+//   slug            String?
+//   sku             String?
+//   description     String?                 @db.Text
+//   price           Int                     @default(0)
+//   salePrice       Int                     @default(0)
+//   timeSaleStart   DateTime?               @default(now())
+//   timeSaleEnd     DateTime?
+//   quantity        Int                     @default(1)
+//   images          Json?
+//   metaDescription String?                 @db.Text
+//   productBrandId  String                  @default("1")
+//   status          STATUS                  @default(DRAFT)
+//   createdBy       String                  @default("1")
+//   garage          Garage                  @relation(fields: [garageId], references: [id])
+//   garageId        String                  @default("1")
+//   createdAt       DateTime                @default(now())
+//   updatedAt       DateTime                @updatedAt
+//   marketingCampaignDetail                 MarketingCampaignDetail[]
+//   orderDetail                             OrderDetail[]
+//   // financeIncome                           financeIncome[]
+//   productsHome                            productsHome[]
+//   reviews                                 ReviewsProduct[]
+//   seoMeta                                 seoMeta?
+// }
+
 enum SALETYPE {
   FIXED
   PERCENT

@@ -31,7 +31,6 @@ interface UseAccount {
 export const useAddAccount = (): UseAccount => {
     const router = useRouter();
     const queryClient = useQueryClient();
-   
 
     const { mutate: updateItem,isPending } = useMutation({
         mutationFn: updateAccount,
