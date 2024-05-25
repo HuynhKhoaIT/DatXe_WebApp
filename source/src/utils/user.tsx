@@ -283,6 +283,7 @@ export const updateAccount = async (profileData: any, token: string) => {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
+      profileData.name = profileData.fullName;
       const res = await axios.put(
         `${GET_PROFILE_ENDPOINT}`,
         profileData,

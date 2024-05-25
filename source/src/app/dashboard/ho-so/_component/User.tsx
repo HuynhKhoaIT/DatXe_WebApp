@@ -11,13 +11,11 @@ import {
   Text,
   LoadingOverlay,
 } from "@mantine/core";
-import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
-import { updateAccount } from "@/utils/user";
+import { notifications } from "@mantine/notifications";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import styles from "./index.module.scss";
-import ImageUpload from "@/assets/icons/image.svg";
 
 import {
   getOptionsDistrict,
