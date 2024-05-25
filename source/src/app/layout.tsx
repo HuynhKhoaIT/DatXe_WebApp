@@ -12,12 +12,12 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import "@/assets/scss/index.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Notifications } from "@mantine/notifications";
-import ProviderAuth from "./Provider";
+import ProviderAuth from "./providers/Provider";
 import { ReactNode } from "react";
 import { MantineProvider, createTheme } from "@mantine/core";
-import { QueryProvider } from "./QueryProvider";
+import { QueryProvider } from "./providers/QueryProvider";
 import Logo from "../assets/images/logo.png";
+import ToastProvider from "./providers/toaster-provider";
 // import StoreProvider from "./StoreProvider";
 export const dynamic = "force-dynamic";
 const inter = Inter({ subsets: ["latin"] });
@@ -72,7 +72,7 @@ export default function RootLayout({ children }: IProps) {
             <ModalsProvider>
               <ProviderAuth>
                 {/* <StoreProvider> */}
-                <Notifications position="top-right" zIndex={9999999} />
+                <ToastProvider />
                 <FcmTokenComp />
                 {children}
                 {/* </StoreProvider> */}

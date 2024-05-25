@@ -3,6 +3,7 @@ import styles from "./index.module.scss";
 import { Button } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { IconBan, IconPlus } from "@tabler/icons-react";
+import classNames from "classnames";
 export default function FooterSavePage({
   saveLoading,
   okText = "Thêm",
@@ -10,10 +11,13 @@ export default function FooterSavePage({
   isOk = true,
   isCancel = true,
   children,
+  isAbsolute = true,
 }: any) {
   const router = useRouter();
   return (
-    <div className={styles.footerSavePage}>
+    <div
+      className={classNames(isAbsolute ? styles.footerSavePage : styles.footer)}
+    >
       {children}
       {isCancel && (
         <Button

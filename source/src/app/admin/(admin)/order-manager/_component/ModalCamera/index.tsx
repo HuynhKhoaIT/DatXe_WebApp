@@ -4,7 +4,7 @@ import Webcam from "react-webcam";
 import { Modal, Box, Button } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import axios from "axios";
-import { notifications } from "@mantine/notifications";
+import { toast } from "react-toastify";
 const ModalCamera = ({
   openModal,
   close,
@@ -45,10 +45,8 @@ const ModalCamera = ({
       const processedBase64 = image.substring(image.indexOf(",") + 1);
       const plate: any = await TakePlatesNumber(processedBase64);
       if (!plate?.data) {
-        notifications.show({
-          title: "Lỗi",
-          message: "Vui lòng quét lại",
-        });
+        toast.error("Vui lòng quét lại");
+
         return;
       }
       if (formOrder) {

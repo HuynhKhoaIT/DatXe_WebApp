@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import { getOptionsBrands } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addOrder = async (values: any): Promise<any> => {
@@ -91,10 +92,7 @@ export const useAddOrder = ({isBack=true,...prop}:any): UseOrders => {
             else{
                 router.push('/admin/order-manager');
             }
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm đơn hàng thành công',
-            });
+            toast.success('Thêm đơn hàng thành công')
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
@@ -106,10 +104,7 @@ export const useAddOrder = ({isBack=true,...prop}:any): UseOrders => {
         mutationFn: handleDbDLBD,
         onSuccess: () => {
             router.push('/admin/order-manager');
-            notifications.show({
-                title: 'Thành công',
-                message: 'Đơn hàng lên sàn thành công',
-            });
+            toast.success('Đơn hàng lên sàn thành công')
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
@@ -128,10 +123,9 @@ export const useAddOrder = ({isBack=true,...prop}:any): UseOrders => {
                 router.back();
             }
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật đơn hàng thành công',
-            });
+          
+            toast.success('Cập nhật đơn hàng thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
             });
@@ -142,10 +136,8 @@ export const useAddOrder = ({isBack=true,...prop}:any): UseOrders => {
         mutationFn: updateStepOrder,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật trạng thái  thành công',
-            });
+            toast.success('Cập nhật trạng thái thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
             });

@@ -16,7 +16,6 @@ import { useDisclosure } from "@mantine/hooks";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { notifications } from "@mantine/notifications";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
 import { useAddCar } from "../hooks/car/useAddCar";
@@ -141,7 +140,7 @@ export default function CarListPage({
             >
               <IconEye size={16} />
             </Button> */}
-            <Link href={`/dashboard/cars/${record.id}`}>
+            <Link href={`/dashboard/danh-sach-xe/${record.id}`}>
               <Button
                 size="lg"
                 radius={0}
@@ -174,17 +173,17 @@ export default function CarListPage({
   ];
   return (
     <div className={styles.wrapper}>
-      <div style={{ marginBottom: 20 }}>
+      <div>
         <Flex justify={"end"} align={"center"}>
           <Link
             href={{
-              pathname: `/dashboard/cars/create`,
+              pathname: `/dashboard/danh-sach-xe/create`,
             }}
           >
             <Button
               size="lg"
-              h={{ base: 42, md: 50, lg: 50 }}
-              radius={0}
+              h={{ base: 40, md: 50, lg: 50 }}
+              // radius={0}
               leftSection={<IconPlus size={18} />}
             >
               Thêm xe

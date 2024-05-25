@@ -1,14 +1,11 @@
 "use client";
-import Container from "@/app/components/common/Container";
 import { FilterRadio } from "@/app/components/elements/filterRadio";
 import styles from "./CategoryDetailPage.module.scss";
 import CarouselDesktop from "../trang-chu/Carousel/Carousel";
-import Products from "./Products";
 import Reassons from "../trang-chu/Reasons/Reasons";
 import bgLanding2 from "@/assets/images/bgLanding2.png";
 import ViewedProducts from "./viewedProducts";
 import Blogs from "./Blogs";
-import { useCategories } from "@/app/admin/(admin)/hooks/category/useCategory";
 import { Box } from "@mantine/core";
 import ProductItem2 from "@/app/components/elements/product/ProductItem2";
 import { IProduct } from "@/interfaces/product";
@@ -56,7 +53,6 @@ const CategoryDetailPageDesktop = ({
           </Box>
         </Body.Content>
       </Body>
-
       <Blogs blogs={blogs} />
       <ViewedProducts viewedProducts={productRelate?.data} />
       <div

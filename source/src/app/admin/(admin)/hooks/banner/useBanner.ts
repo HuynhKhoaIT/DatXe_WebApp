@@ -4,7 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { QUERY_KEY } from '@/constants';
 import { useSearchParams } from 'next/navigation';
-import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const fetchBanner = async (kind:any,searchParams: any, page: number): Promise<any> => {
@@ -83,10 +83,9 @@ export const useBanner = ({kind=1}:any): UseBanner => {
     const { mutate: deleteItem } = useMutation({
         mutationFn: deleteBanner,
         onSuccess: () => {
-            notifications.show({
-                title: 'Thành công',
-                message: 'Xoá banner thành công',
-            });
+           
+            toast.success('Xoá banner thành công');
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.banner, searchParams.toString(), page],
             });

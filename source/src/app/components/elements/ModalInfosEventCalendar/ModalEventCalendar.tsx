@@ -19,7 +19,6 @@ import { ActionIcon, rem } from "@mantine/core";
 import { IconClock } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { ModalOrderGuest } from "./ModalOrderGuest";
-import { notifications } from "@mantine/notifications";
 import { addCustomerCare } from "@/utils/customerCare";
 import dayjs from "dayjs";
 import { useRouter, useSearchParams } from "next/navigation";

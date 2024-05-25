@@ -3,9 +3,9 @@ import { Button, PinInput } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { useForm, hasLength } from "@mantine/form";
 import { CheckOtp, register } from "@/utils/user";
-import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import { toast } from "react-toastify";
 export function FormAccuracy() {
   const [opened, handlers] = useDisclosure(false);
   const { fcmToken } = useFcmToken();
@@ -33,37 +33,27 @@ export function FormAccuracy() {
       const checkRs = await CheckOtp(phone, pin, "register");
       if (checkRs.CodeResult == 100) {
         // if (100 == 100) {
-        notifications.show({
-          title: "Thành công",
-          message: "Xác thực thành công",
-        });
+
+        toast.success("Xác thực thành công");
+
         try {
           await register(name, phone, password, passwordConfirmation, fcmToken);
+          toast.success("Đăng ký thành công");
 
-          notifications.show({
-            title: "Thành công",
-            message: "Đăng ký thành công",
-          });
           handlers.close();
         } catch (error) {
-          notifications.show({
-            title: "Thất bại",
-            message: "Đăng ký thất bại",
-          });
+          toast.error("Đăng ký thất bại");
+
           handlers.close();
         }
       } else {
-        notifications.show({
-          title: "Error",
-          message: "Xác thực thất bại",
-        });
+        toast.error("Xác thực thất bại");
+
         handlers.close();
       }
     } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: "Xác thực thất bại",
-      });
+      toast.error("Xác thực thất bại");
+
       handlers.close();
       form.setErrors({ pin: "Mã Otp không hợp lệ!" });
     }

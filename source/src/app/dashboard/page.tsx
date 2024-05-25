@@ -1,9 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import styles from "./index.module.scss";
-import Statistical from "../admin/_component/Statistical";
-import OrdersListPage from "../layout/dashboard/order/OrdersListPage";
-import { getOrders } from "../libs/prisma/order";
 import useFetch from "../hooks/useFetch";
 import { redirect, useSearchParams } from "next/navigation";
 import { QueryClient } from "@tanstack/react-query";
@@ -44,14 +40,5 @@ export default function Dashboard() {
       });
     }
   }, [searchParams, isPlaceholderData, page, queryClient, myOrders]);
-  return redirect(`/dashboard/cars`);
-
-  return (
-    <>
-      <div className={styles.page}>
-        <Statistical />
-      </div>
-      <OrdersListPage dataSource={myOrders} />
-    </>
-  );
+  return redirect(`/dashboard/danh-sach-xe`);
 }

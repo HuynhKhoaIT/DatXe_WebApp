@@ -13,9 +13,9 @@ import TableBasic from "../../components/table/Tablebasic";
 import ImageDefult from "../../../../public/assets/images/logoDatxe.png";
 import { IconPlus, IconMinus, IconTrash } from "@tabler/icons-react";
 import styles from "./InfoCart.module.scss";
-import { notifications } from "@mantine/notifications";
 import ImageField from "@/app/components/form/ImageField";
 import { AppConstants } from "@/constants";
+import { toast } from "react-toastify";
 export default function InfoCart({
   loading,
   calculateSubTotal,
@@ -195,10 +195,8 @@ export default function InfoCart({
                 // type="submit"
                 onClick={() => {
                   if (form.values.carId == null) {
-                    notifications.show({
-                      title: "Thất bại",
-                      message: "Vui lòng chọn xe",
-                    });
+                    toast.error("Vui lòng chọn xe");
+
                     return;
                   }
                   ModalAcceptOrder();

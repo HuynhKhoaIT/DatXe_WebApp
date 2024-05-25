@@ -31,7 +31,7 @@ const FilterBox = ({ options, queryName, queryKey, form }: any) => {
       <Collapse in={opened} className={styles.lessonWrapper} mb={12}>
         <Radio.Group
           {...form.getInputProps(queryKey)}
-          value={String(valueRadio)}
+          // value={String(valueRadio)}
         >
           <Flex direction={"column"} gap={10} mt="xs">
             {options?.map((data: any, index: number) => {

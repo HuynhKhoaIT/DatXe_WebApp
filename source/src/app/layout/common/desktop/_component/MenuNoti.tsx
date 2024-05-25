@@ -16,7 +16,7 @@ import { useNotiList } from "@/app/hooks/noti/useNoti";
 import { formatTimeDifference } from "@/utils/until";
 import { useEffect, useState } from "react";
 import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useClickOutside, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
@@ -27,9 +27,7 @@ import { IconSquare } from "@tabler/icons-react";
 import ActionNoti from "./ActionNoti";
 import NotiItem from "./NotiItem";
 
-export default function MenuNoti({ close }: any) {
-  const [opened, { toggle }] = useDisclosure();
-  const router = useRouter();
+export default function MenuNoti({ close, setOpened }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
@@ -54,8 +52,10 @@ export default function MenuNoti({ close }: any) {
       setData(res);
     }
   }, [activeButtonAll, dataNotification]);
+  const ref = useClickOutside(() => setOpened(false));
+
   return (
-    <div className={styles.notiBox}>
+    <div className={styles.notiBox} ref={ref}>
       <LoadingOverlay
         visible={isPending || isLoading}
         zIndex={0}

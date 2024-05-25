@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import { getOptionsBrands } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addCar = async (values: any): Promise<any> => {
@@ -66,12 +67,7 @@ export const useAddCar = (): UseCar => {
         mutationFn: addCar,
         onSuccess: (res) => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm xe thành công',
-            });
-
-
+            toast.success("Thêm xe thành công");
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
             });
@@ -81,10 +77,8 @@ export const useAddCar = (): UseCar => {
     const { mutate: setDefault } = useMutation({
         mutationFn: addCarDefault,
         onSuccess: () => {
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm xe mặc định thành công',
-            });
+            toast.success("Thêm xe mặc định thành công");
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
             });
@@ -95,11 +89,8 @@ export const useAddCar = (): UseCar => {
         mutationFn: updateCar,
         onSuccess: () => {
             router.back();
+            toast.success("Cập nhật xe thành công");
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật xe thành công',
-            });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars,'client', searchParams.toString(), 1],
             });

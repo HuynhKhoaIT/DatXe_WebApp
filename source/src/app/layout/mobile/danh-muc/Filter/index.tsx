@@ -29,7 +29,7 @@ const Filter = ({ kindProduct }: any) => {
   const form = useForm({
     initialValues: {
       isProduct: null,
-      fieldId: null,
+      categoryId: null,
     },
 
     validate: {},
@@ -50,7 +50,7 @@ const Filter = ({ kindProduct }: any) => {
     params.delete("categoryId");
     params.delete("isProduct");
 
-    var path = pathname + params?.toString();
+    var path = pathname + "?" + params?.toString();
     router.push(path);
     closeNav();
   };

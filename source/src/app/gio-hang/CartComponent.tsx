@@ -9,7 +9,6 @@ import {
   Card,
   Box,
 } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import InfoCar from "./_component/InfoCar";
 import InfoCart from "./_component/InfoCart";
@@ -23,7 +22,8 @@ import { DateTimePicker } from "@mantine/dates";
 import dynamic from "next/dynamic";
 import { useCars } from "../dashboard/hooks/car/useCar";
 import { useDisclosure } from "@mantine/hooks";
-
+import Empty from "@/assets/images/empty-box.png";
+import { toast } from "react-toastify";
 export default function CartComponent({ myAccount }: any) {
   const { cars, isLoading, isFetching, refetch } = useCars();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
@@ -173,10 +173,7 @@ export default function CartComponent({ myAccount }: any) {
   };
   const handleSubmit = async (values: any, dateTime: Date) => {
     if (cartData?.length == 0) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Vui lòng thêm sản phẩm vào giỏ hàng",
-      });
+      toast.error("Vui lòng thêm sản phẩm vào giỏ hàng");
       return;
     }
     setLoading(true);
@@ -193,15 +190,10 @@ export default function CartComponent({ myAccount }: any) {
       const data = await res.json();
 
       if (!data?.order) {
-        notifications.show({
-          title: "Thất bại",
-          message: "Đặt hàng thất bại: " + (data?.error || "Unknown error"),
-        });
+        toast.error("Đặt hàng thất bại: " + (data?.error || "Unknown error"));
       } else {
-        notifications.show({
-          title: "Thành công",
-          message: "Đặt hàng thành công",
-        });
+        toast.error("Đặt hàng thành công");
+
         // const sms = await fetch(`/api/orders/sendSMS`, {
         //   method: "POST",
         //   body: JSON.stringify(data?.order),
@@ -211,15 +203,21 @@ export default function CartComponent({ myAccount }: any) {
       }
     } catch (error) {
       console.error("Error during API call:", error);
-      notifications.show({
-        title: "Lỗi",
-        message: "Đã xảy ra lỗi trong quá trình xử lý yêu cầu.",
-      });
+
+      toast.error("Đã xảy ra lỗi trong quá trình xử lý yêu cầu");
     } finally {
       setLoading(false);
     }
   };
 
+  if (cartData?.length == 0) {
+    return (
+      <div className={styles.emptyData}>
+        <img src={Empty.src} />
+        <h3>Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng</h3>
+      </div>
+    );
+  }
   return (
     <>
       <form>

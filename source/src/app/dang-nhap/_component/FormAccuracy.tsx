@@ -3,10 +3,10 @@ import { Button, PinInput } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { useForm, hasLength } from "@mantine/form";
 import { CheckOtp } from "@/utils/user";
-import { notifications } from "@mantine/notifications";
 import { signIn } from "next-auth/react";
 import { useDisclosure } from "@mantine/hooks";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import { toast } from "react-toastify";
 export function FormAccuracy() {
   const [opened, handlers] = useDisclosure(false);
   const { fcmToken } = useFcmToken();
@@ -37,22 +37,15 @@ export function FormAccuracy() {
           callbackUrl: callbackUrl || "/dashboard",
           tokenFirebase: fcmToken,
         });
-        notifications.show({
-          title: "Thành công",
-          message: "Đăng nhập thành công",
-        });
+
+        toast.success("Đăng nhập thành công");
       } else {
-        notifications.show({
-          title: "Thất bại",
-          message: "Đăng nhập thất bại",
-        });
+        toast.error("Đăng nhập thất bại");
       }
       handlers.close();
     } catch (error) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Đăng nhập thất bại",
-      });
+      toast.error("Đăng nhập thất bại");
+
       handlers.close();
     }
   };

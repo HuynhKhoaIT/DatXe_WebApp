@@ -4,6 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addProduct = async (values: any): Promise<any> => {
@@ -35,10 +36,7 @@ export const useAddProductHome = (): UseProduct => {
         mutationFn: addProduct,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm sản phẩm thành công',
-            });
+            toast.success("Thêm sản phẩm thành công");
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.productHome, searchParams.toString(), 1],

@@ -1,10 +1,10 @@
 "use client";
 import { Button, TextInput } from "@mantine/core";
 import { useRouter } from "next/navigation";
-import { notifications } from "@mantine/notifications";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
+import { toast } from "react-toastify";
 interface FormInputs {
   name: string;
   phone: string;
@@ -35,17 +35,12 @@ export function FormRegister() {
         // if (100 == 100) {
         router.push(`./dang-ky/xac-thuc?name=${name}&phone=${phone}`);
       } else {
-        notifications.show({
-          title: "Error",
-          message: "Hệ thống gửi OTP thất bại, vui lòng thử lại sau!",
-        });
+        toast.error("Hệ thống gửi OTP thất bại, vui lòng thử lại sau!");
       }
       handlers.close();
     } else {
-      notifications.show({
-        title: "Error",
-        message: "Số điện thoại đã được đăng ký!",
-      });
+      toast.error("Số điện thoại đã được đăng ký!");
+
       handlers.close();
       form.setErrors({ phone: "Số điện thoại đã được đăng ký!" });
     }

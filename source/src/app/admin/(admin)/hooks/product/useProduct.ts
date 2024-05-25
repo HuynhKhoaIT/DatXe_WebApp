@@ -7,6 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import useFetch from '@/app/hooks/useFetch';
 import { getOptionsCategories } from '@/utils/until';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
@@ -128,10 +129,9 @@ export const useProduct = (): useProduct => {
     const { mutate: deleteItem } = useMutation({
         mutationFn: deleteProduct,
         onSuccess: () => {
-            notifications.show({
-                title: 'Thành công',
-                message: 'Xoá sản phẩm thành công',
-            });
+            
+            toast.success('Xoá sản phẩm thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.products, searchParams.toString(), page],
             });

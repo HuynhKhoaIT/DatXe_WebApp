@@ -10,12 +10,12 @@ import {
 } from "@mantine/core";
 import ImageDefult from "../../../../public/assets/images/logoDatxe.png";
 import { IconArrowBarUp } from "@tabler/icons-react";
-import { notifications } from "@mantine/notifications";
 import convertToSlug from "@/utils/until";
 import { useRouter } from "next/navigation";
 import { getCategoriesDlbd } from "./until";
 import { QUERY_KEY } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 export default function ModalCategoriesDLBD({
   openedModalCategories,
   closeModalCategories,
@@ -110,24 +110,15 @@ export default function ModalCategoriesDLBD({
         body: JSON.stringify(data),
       });
       if (sync) {
-        notifications.show({
-          title: "Thành công",
-          message: "Điều hướng danh mục thành công",
-        });
+        toast.success("Điều hướng danh mục thành công");
       } else {
-        notifications.show({
-          title: "Thất bại",
-          message: "Thất bại",
-        });
+        toast.error("Điều hướng danh mục thất bại");
       }
       closeModalCategories();
       router.refresh();
     } catch (error) {
       closeModalCategories();
-      notifications.show({
-        title: "Thất bại",
-        message: "Thất bại",
-      });
+      toast.error("Điều hướng danh mục thất bại");
     }
   };
   return (

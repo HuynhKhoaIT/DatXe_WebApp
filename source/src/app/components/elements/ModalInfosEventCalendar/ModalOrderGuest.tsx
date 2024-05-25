@@ -5,9 +5,9 @@ import { Box, Avatar, Grid, Input, Button, PinInput } from "@mantine/core";
 import Link from "next/link";
 import { useForm, hasLength, matches } from "@mantine/form";
 import { CheckOtp, CheckPhone, login, register } from "@/utils/user";
-import { notifications } from "@mantine/notifications";
 import { addCustomerCareGuest } from "@/utils/customerCare";
 import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 export function ModalOrderGuest({
   opened,
   close,
@@ -56,34 +56,24 @@ export function ModalOrderGuest({
             password: password,
             callbackUrl: "/dashboard",
           });
-          notifications.show({
-            title: "Thành công",
-            message: "Đặt lịch thành công",
-          });
+          toast.success("Đặt lịch thành công");
+
           router.push("/dashboard");
           onClose();
           setLoading(false);
         } catch (error) {
           console.error("Error creating customer care:", error);
-          notifications.show({
-            title: "Thất bại",
-            message: "Đặt lịch thất bại",
-          });
+          toast.error("Đặt lịch thất bại");
 
           setLoading(false);
         }
       } else {
-        notifications.show({
-          title: "Thất bại",
-          message: "Xác thực thất bại",
-        });
+        toast.error("Xác thực thất bại");
       }
       setLoading(false);
     } catch (error) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Xác thực thất bại",
-      });
+      toast.error("Xác thực thất bại");
+
       setLoading(false);
     }
   };

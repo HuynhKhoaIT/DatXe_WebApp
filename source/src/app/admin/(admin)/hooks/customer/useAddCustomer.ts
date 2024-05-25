@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import useFetch from '@/app/hooks/useFetch';
 import { getOptionsProvince } from '@/utils/until';
+import { toast } from 'react-toastify';
 
 const queryClient = new QueryClient();
 
@@ -53,10 +54,9 @@ export const useAddCustomer = (): UseCustomer => {
         mutationFn: addCustomer,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm khách hàng thành công',
-            });
+            
+            toast.success('Thêm khách hàng thành công')
+
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.customers, searchParams.toString(), 1],
@@ -69,10 +69,8 @@ export const useAddCustomer = (): UseCustomer => {
         onSuccess: () => {
             router.back();
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật khách hàng thành công',
-            });
+            toast.success('Cập nhật khách hàng thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.customers, searchParams.toString(), 1],
             });

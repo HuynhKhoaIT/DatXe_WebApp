@@ -27,16 +27,12 @@ import { useSession } from "next-auth/react";
 import { IconPrinter } from "@tabler/icons-react";
 
 const DynamicModalReview = dynamic(
-  () => import("@/app/layout/dashboard/order/ModalReview"),
+  () => import("@/app/layout/dashboard/danh-sach-don-hang/ModalReview"),
   {
     ssr: false,
   }
 );
-export default function OrderDetailPageMobile({
-  dataSource,
-  reviews,
-  close,
-}: any) {
+export default function OrderDetailPageMobile({ dataSource, close }: any) {
   const [containerHeight, setContainerHeight] = useState<any>(800);
 
   const componentRef: any = useRef();
@@ -79,7 +75,8 @@ export default function OrderDetailPageMobile({
     false
   );
   function checkId(id: string) {
-    if (reviews?.includes(id)) {
+    const item = dataSource.reviews?.find((item: any) => item.productId == id);
+    if (item) {
       return 1;
     } else {
       return -1;
@@ -204,8 +201,9 @@ export default function OrderDetailPageMobile({
         }
         return (
           <Button
-            size="lg"
-            radius={0}
+            // size="lg"
+            // radius={0}
+            color="blue"
             variant="outline"
             onClick={() => {
               setDataReview(record);
@@ -393,6 +391,7 @@ export default function OrderDetailPageMobile({
           title="Đánh giá sản phẩm"
           onCancelModal={closeModal}
           dataDetail={dataReview}
+          orderId={dataSource.id}
         />
       )}
     </Container>
