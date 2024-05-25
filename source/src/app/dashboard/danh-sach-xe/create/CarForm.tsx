@@ -201,6 +201,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
           </Grid.Col>
         </Grid>
         <FooterSavePage
+          isAbsolute={false}
           saveLoading={loading}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />

@@ -12,7 +12,6 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import styles from "./Product.module.scss";
-import { notifications } from "@mantine/notifications";
 import Typo from "@/app/components/elements/Typo";
 import Star from "@/assets/icons/star.svg";
 import Book from "@/assets/icons/book.svg";
@@ -21,6 +20,7 @@ import ProductSlider from "@/app/layout/desktop/san-pham/ProductDetail/ProductSl
 import ImageField from "@/app/components/form/ImageField";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const DynamicModalShare = dynamic(
   () => import("@/app/components/common/ModalShare/BasicSocialShare"),
@@ -54,10 +54,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       subTotal: ProductDetail?.salePrice,
     });
     localStorage.setItem("cartData", JSON.stringify(existingCartItems));
-    notifications.show({
-      title: "Thành công",
-      message: "Sản phẩm được thêm vào giỏ hàng.",
-    });
+
+    toast.success("Sản phẩm được thêm vào giỏ hàng");
   };
 
   const handleCancel = () => {
@@ -101,10 +99,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
         }
 
         localStorage.setItem("cartData", JSON.stringify(existingCartItems));
-        notifications.show({
-          title: "Thành công",
-          message: "Sản phẩm được thêm vào giỏ hàng.",
-        });
+
+        toast.success("Sản phẩm được thêm vào giỏ hàng");
       }
     } else {
       signIn();

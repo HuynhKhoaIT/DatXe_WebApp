@@ -14,3 +14,17 @@
     font-weight: 500;
     padding: 30px;
 }
+.formUser{
+    padding: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .wrapper {
+        .title {
+            padding: 0.6rem 0;
+        }
+    }
+    .formUser{
+        padding: 0;
+    }
+}

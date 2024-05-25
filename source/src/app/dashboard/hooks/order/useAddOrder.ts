@@ -7,6 +7,7 @@ import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { getOptionsBrands } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addOrder = async (values: any): Promise<any> => {
@@ -53,10 +54,7 @@ export const useAddOrder = (): UseOrders => {
         mutationFn: addOrder,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm đơn hàng thành công',
-            });
+            toast.success("Thêm đơn hàng thành công");
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
@@ -68,11 +66,7 @@ export const useAddOrder = (): UseOrders => {
         mutationFn: updateOrder,
         onSuccess: () => {
             router.back();
-
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật đơn hàng thành công',
-            });
+            toast.success("Cập nhật đơn hàng thành công");
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
             });

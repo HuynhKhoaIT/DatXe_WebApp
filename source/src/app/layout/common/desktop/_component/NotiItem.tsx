@@ -46,7 +46,9 @@ export default function NotiItem({ item }: any) {
                 JSON.parse(item.data)?.code &&
                 item?.kind == NOTIFICATION_ORDER_KIND
               ) {
-                router.push(`/dashboard/order/${JSON.parse(item.data)?.code}`);
+                router.push(
+                  `/dashboard/danh-sach-don-hang/${JSON.parse(item.data)?.code}`
+                );
               }
               close();
             }}

@@ -11,7 +11,7 @@ export function ButtonDeleteFilter() {
     params.delete("categoryId");
     params.delete("isProduct");
 
-    var path = pathname + params?.toString();
+    var path = pathname + "?" + params?.toString();
     router.push(path);
   }
 

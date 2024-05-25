@@ -1,10 +1,10 @@
 "use client";
 import { Button, Group, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { notifications } from "@mantine/notifications";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 export default function ModelChangeGarage({ userId, opened, close }: any) {
   const { data } = useSession();
@@ -26,17 +26,13 @@ export default function ModelChangeGarage({ userId, opened, close }: any) {
           },
         }
       );
-      notifications.show({
-        title: "Thành công",
-        message: "Điều hướng chuyên gia thành công",
-      });
+      toast.success("Điều hướng chuyên gia thành công");
+
       close();
       form.reset();
     } catch (error) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Điều hướng chuyên gia thất bại",
-      });
+      toast.error("Điều hướng chuyên gia thất bại");
+
       form.reset();
     }
   };

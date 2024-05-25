@@ -29,6 +29,7 @@ import CropImageLink from "@/app/components/common/CropImage";
 import axios from "axios";
 import { QUERY_KEY } from "@/constants";
 import { useAddAccount } from "../../hooks/profile/useAddProfile";
+import { toast } from "react-toastify";
 export default function UserProfile({ myAccount, isLoading }: any) {
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
@@ -77,10 +78,7 @@ export default function UserProfile({ myAccount, isLoading }: any) {
       updateItem(values);
       router.refresh();
     } catch (error) {
-      notifications.show({
-        title: "Thất bại",
-        message: "Cập nhật thất bại",
-      });
+      toast.error("Cập nhật thất bại");
     }
   };
 
@@ -128,10 +126,11 @@ export default function UserProfile({ myAccount, isLoading }: any) {
 
         <Box pos={"relative"}>
           <LoadingOverlay visible={isLoading} />
-          <Card w={"100%"} px={20}>
+          <Card w={"100%"} p={0}>
             <form
               name="userProfileForm"
               onSubmit={form.onSubmit((values) => handleUpdateProfile(values))}
+              className={styles.formUser}
             >
               <Grid gutter={12}>
                 <Grid.Col span={{ base: 6 }}>
@@ -247,7 +246,7 @@ export default function UserProfile({ myAccount, isLoading }: any) {
                 </Grid.Col>
               </Grid>
               <Group pt={20} justify="end" className="col-12 text-right ">
-                <Button size="lg" radius={0} type="submit" loading={isPending}>
+                <Button type="submit" loading={isPending}>
                   Cập nhật
                 </Button>
               </Group>

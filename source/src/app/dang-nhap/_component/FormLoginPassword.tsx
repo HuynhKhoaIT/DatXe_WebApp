@@ -3,10 +3,10 @@ import { Button, PasswordInput, TextInput } from "@mantine/core";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, hasLength } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
-import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { signIn } from "next-auth/react";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import { toast } from "react-toastify";
 export default function FormLoginPassword() {
   const { fcmToken } = useFcmToken();
   const [opened, handlers] = useDisclosure(false);
@@ -55,21 +55,13 @@ export default function FormLoginPassword() {
           tokenFirebase: fcmToken,
           callbackUrl: callbackUrl || "/dashboard",
         });
-        notifications.show({
-          title: "Thành công",
-          message: "Đăng nhập thành công",
-        });
+
+        toast.success("Đăng nhập thành công");
       } else {
-        notifications.show({
-          title: "Error",
-          message: "Đăng nhập thật bại",
-        });
+        toast.error("Đăng nhập thật bại");
       }
     } catch (error) {
-      notifications.show({
-        title: "Error",
-        message: "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau!",
-      });
+      toast.error("Đã xảy ra lỗi không mong muốn. Vui lòng thử lại sau!");
     } finally {
       handlers.close();
     }

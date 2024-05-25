@@ -59,7 +59,11 @@ export default async function Header() {
         <Container>
           <div className={styles.headerSearch}>
             <Link href={"/"}>
-              <img style={{ cursor: "pointer" }} src={logo.src} alt="" />
+              <img
+                style={{ cursor: "pointer", height: 56 }}
+                src={logo.src}
+                alt=""
+              />
             </Link>
             <div className={styles.search}>
               <ButtonAddAddress />

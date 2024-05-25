@@ -8,7 +8,16 @@ import styles from "./index.module.scss";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 import ProductItem from "@/app/components/elements/product/ProductItem1";
+import Empty from "@/assets/images/empty-box.png";
 export default function SearchListPage({ products, searchParams }: any) {
+  if (products?.data?.length == 0) {
+    return (
+      <div className={styles.emptyData}>
+        <img src={Empty.src} />
+        <h3>Không có kết quả phù hợp, hãy thử tìm kiếm sản phẩm khác.</h3>
+      </div>
+    );
+  }
   return (
     <>
       <Sort lengthData={products?.data?.length || 0} />

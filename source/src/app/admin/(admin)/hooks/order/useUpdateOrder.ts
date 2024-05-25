@@ -7,6 +7,7 @@ import { notifications } from '@mantine/notifications';
 import axios from 'axios';
 import { getOptionsBrands } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 
@@ -42,10 +43,9 @@ export const useUpdateOrder = (): UseOrders => {
         mutationFn: updateOrder,
         onSuccess: () => {
             router.refresh();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật đơn hàng thành công',
-            });
+         
+            toast.success('Cập nhật đơn hàng thành công')
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.orders, searchParams.toString(), 1],
             });

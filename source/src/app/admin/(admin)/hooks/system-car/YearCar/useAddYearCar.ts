@@ -4,6 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addYearCar = async (values: any): Promise<any> => {
@@ -47,10 +48,7 @@ export const useAddYear = (): UseCategory => {
         mutationFn: addYearCar,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm năm sản xuất thành công',
-            });
+            toast.success('Thêm năm sản xuất thành công')
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.yearCar, searchParams.toString(), 1],
@@ -62,11 +60,8 @@ export const useAddYear = (): UseCategory => {
         mutationFn: updateYearCar,
         onSuccess: () => {
             router.back();
+            toast.success('Cập nhật năm sản xuất thành công')
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật năm sản xuất thành công',
-            });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.yearCar, searchParams.toString(), 1],
             });

@@ -4,6 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addReview = async (values: any): Promise<any> => {
@@ -47,13 +48,8 @@ export const useAddReview = (): UseReview => {
     const { mutate: addItem } = useMutation({
         mutationFn: addReview,
         onSuccess: () => {
-            router.refresh();
-
-            notifications.show({
-                title: 'Thành công',
-                message: 'Gửi đánh giá thành công',
-            });
-
+            router.refresh();   
+            toast.success("Gửi đánh giá thành công");
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.reviewsExpert, searchParams.toString(), 1],
             });
@@ -64,11 +60,7 @@ export const useAddReview = (): UseReview => {
         mutationFn: updateReview,
         onSuccess: () => {
             router.refresh();
-
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật đánh giá thành công',
-            });
+            toast.success("Cập nhật đánh giá thành công");
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.reviewsExpert, searchParams.toString(), 1],
             });

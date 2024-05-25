@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { Grid, Modal, Button, Group, Skeleton, Flex } from "@mantine/core";
 import styles from "./Product.module.scss";
-import { notifications } from "@mantine/notifications";
 import ProductSlider from "./ProductSlider";
 import Typo from "@/app/components/elements/Typo";
 import Star from "@/assets/icons/star.svg";
@@ -20,6 +19,8 @@ const DynamicModalShare = dynamic(
 import { IconBan, IconChevronRight, IconShare3 } from "@tabler/icons-react";
 import ImageField from "@/app/components/form/ImageField";
 import { useDisclosure } from "@mantine/hooks";
+import Link from "next/link";
+import { toast } from "react-toastify";
 function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,10 +47,9 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       subTotal: ProductDetail?.salePrice,
     });
     localStorage.setItem("cartData", JSON.stringify(existingCartItems));
-    notifications.show({
-      title: "Thành công",
-      message: "Sản phẩm được thêm vào giỏ hàng.",
-    });
+    toast.success((t) => (
+      <Link href={"/gio-hang"}>Sản phẩm được thêm vào giỏ hàng</Link>
+    ));
   };
 
   const handleCancel = () => {
@@ -92,10 +92,9 @@ function ProductDetail({ ProductDetail, productReview }: any) {
           });
         }
         localStorage.setItem("cartData", JSON.stringify(existingCartItems));
-        notifications.show({
-          title: "Thành công",
-          message: "Sản phẩm được thêm vào giỏ hàng.",
-        });
+        toast.success((t) => (
+          <Link href={"/gio-hang"}>Sản phẩm được thêm vào giỏ hàng</Link>
+        ));
       }
     } else {
       signIn();

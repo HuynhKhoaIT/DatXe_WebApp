@@ -6,12 +6,13 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
 import { getOptionsBrands } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 
 
 const updateAccount = async (values: any): Promise<any> => {
-    const response = await fetch(`/api/client/account`, {
+    const response = await fetch(`/api/client/user/account`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -36,10 +37,8 @@ export const useAddAccount = (): UseAccount => {
         mutationFn: updateAccount,
         onSuccess: () => {
             router.refresh();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật thông tin thành công',
-            });
+            toast.success("Cập nhật thông tin thành công");
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.account,'client'],
             });

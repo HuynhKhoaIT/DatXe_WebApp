@@ -3,10 +3,9 @@ import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/re
 import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { notifications } from '@mantine/notifications';
-import axios from 'axios';
 import { getOptionsBrands, getOptionsCustomers } from '@/utils/until';
 import useFetch from '@/app/hooks/useFetch';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addCar = async (values: any): Promise<any> => {
@@ -55,18 +54,12 @@ export const useAddCar = (): UseCar => {
         mutationFn: addCar,
         onSuccess: (res) => {
             if(res.status == 'error'){
-                notifications.show({
-                    title: 'Thất bại',
-                    message: 'Biển số xe đã tồn tại',
-                });
+                toast.error('Biển số xe đã tồn tại');
                 return;
             }
-            console.log(res)
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm xe thành công',
-            });
+            toast.success('Thêm xe thành công');
+
 
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars, searchParams.toString(), 1],
@@ -78,10 +71,8 @@ export const useAddCar = (): UseCar => {
         mutationFn: updateCar,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật xe thành công',
-            });
+            toast.success('Cập nhật xe thành công');
+
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.cars, searchParams.toString(), 1],
             });

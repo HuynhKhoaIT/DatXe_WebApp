@@ -4,6 +4,7 @@ import { ResponseError } from '@/utils/until/ResponseError';
 import { QUERY_KEY } from '@/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { notifications } from '@mantine/notifications';
+import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
 const addModelCar = async (values: any): Promise<any> => {
@@ -47,11 +48,8 @@ export const useAddModel = (): UseCategory => {
         mutationFn: addModelCar,
         onSuccess: () => {
             router.back();
-            notifications.show({
-                title: 'Thành công',
-                message: 'Thêm dòng xe thành công',
-            });
-
+           
+            toast.success('Thêm dòng xe thành công')
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.modelCar, searchParams.toString(), 1],
             });
@@ -62,11 +60,8 @@ export const useAddModel = (): UseCategory => {
         mutationFn: updateModelCar,
         onSuccess: () => {
             router.back();
+            toast.success('Cập nhật dòng xe thành công')
 
-            notifications.show({
-                title: 'Thành công',
-                message: 'Cập nhật dòng xe thành công',
-            });
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEY.modelCar, searchParams.toString(), 1],
             });

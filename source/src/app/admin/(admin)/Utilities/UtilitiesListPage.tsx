@@ -6,12 +6,12 @@ import { Badge, Button, Flex, Image } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
-import { notifications } from "@mantine/notifications";
 import TableBasic from "@/app/components/table/Tablebasic";
 import dynamic from "next/dynamic";
 import { statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("@/app/admin/_component/ModalDeleteItem"),
@@ -24,10 +24,8 @@ export default function UtilitiesListPage({ dataSource }: any) {
   const handleDeleteItem = async (id: any) => {
     try {
       await axios.delete(`/api/admin/product-category/${id}`);
-      notifications.show({
-        title: "Thành công",
-        message: "Xoá danh mục thành công",
-      });
+
+      toast.success("Xoá danh mục thành công");
     } catch (error) {}
   };
   const [

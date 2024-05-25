@@ -23,11 +23,11 @@ import {
   getOptionsYearCar,
   handleKeyPress,
 } from "@/utils/until";
-import { notifications } from "@mantine/notifications";
 import { useAddOrder } from "../../../hooks/order/useAddOrder";
 import OrderFormDesktop from "../../_component/orderForm/OrderForm";
 import OrderFormMobile from "../../_component/orderForm/mobile/OrderFormMobile";
 import { getOptionsCar } from "../../until";
+import { toast } from "react-toastify";
 
 export default function OrderForm({
   isEditing = false,
@@ -241,10 +241,7 @@ export default function OrderForm({
     handlersButton.open();
 
     if (values.detail?.length == 0) {
-      notifications.show({
-        title: "Cảnh báo",
-        message: "Vui lòng thêm sản phẩm hoặc dịch vụ",
-      });
+      toast.warning("Vui lòng thêm sản phẩm hoặc dịch vụ");
       handlersButton.close();
     } else {
       if (isEditing) {
