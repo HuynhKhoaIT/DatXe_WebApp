@@ -7,7 +7,7 @@ import { DEFAULT_SIZE_LIMIT } from "@/constants";
 const SearchPageMobile = ({ kindProduct, products, searchParams }: any) => {
   return (
     <div className={styles.wrapper}>
-      <Filter kindProduct={kindProduct.data} />
+      <Filter kindProduct={kindProduct} />
       <Container>
         <Products products={products?.data} />
         {products?.currentPage < products?.totalPage && (

@@ -72,7 +72,7 @@ export default function RootLayout({ children }: IProps) {
             <ModalsProvider>
               <ProviderAuth>
                 {/* <StoreProvider> */}
-                <Notifications position="top-right" />
+                <Notifications position="top-right" zIndex={9999999} />
                 <FcmTokenComp />
                 {children}
                 {/* </StoreProvider> */}

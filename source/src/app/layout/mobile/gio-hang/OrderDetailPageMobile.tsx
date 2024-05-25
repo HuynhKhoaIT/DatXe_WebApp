@@ -203,19 +203,17 @@ export default function OrderDetailPageMobile({
           return;
         }
         return (
-          <Tooltip label="Đánh giá" withArrow position="bottom">
-            <Button
-              size="lg"
-              radius={0}
-              variant="outline"
-              onClick={() => {
-                setDataReview(record);
-                openModal();
-              }}
-            >
-              Đánh giá
-            </Button>
-          </Tooltip>
+          <Button
+            size="lg"
+            radius={0}
+            variant="outline"
+            onClick={() => {
+              setDataReview(record);
+              openModal();
+            }}
+          >
+            Đánh giá
+          </Button>
         );
       },
     },
