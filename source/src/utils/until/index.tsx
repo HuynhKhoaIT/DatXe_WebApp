@@ -185,6 +185,22 @@ export async function getOptionsCategories() {
   }
 }
 
+// get danh sách options danh mục của admin
+export async function getOptionsCategoriesAdmin() {
+  try {
+    const res = await axios.get(
+      `/api/admin/product-category?garageId=2&limit=30`
+    );
+    const dataOption = res.data?.data?.map((item: any) => ({
+      value: item.id.toString(),
+      label: item.title,
+    }));
+    return dataOption;
+  } catch (error) {
+    console.error("error:", error);
+  }
+}
+
 // Get danh sách Tỉnh/Tp
 
 export async function getOptionsProvince() {

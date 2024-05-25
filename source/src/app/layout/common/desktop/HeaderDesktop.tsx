@@ -62,7 +62,7 @@ export default async function Header() {
               <img style={{ cursor: "pointer" }} src={logo.src} alt="" />
             </Link>
             <div className={styles.search}>
-              <ButtonAddAddress styles={styles} user={myAccount} />
+              <ButtonAddAddress />
               <SearchFormName />
               <Link href={"/gio-hang"}>
                 <ActionIcon color="#EEF1F9" size={56}>

@@ -1,3 +1,12 @@
+ .btnAdd {
+    height: 3.5rem;
+    .innerAdd {
+        color: #3761bf;
+        font-size: var(--primary-font-size);
+        font-weight: var(--font-big);
+        padding: 0 1.5rem;
+    }
+}
 .body{
     padding: 0;
 }
@@ -37,6 +46,18 @@
     .headerTitle{
         font-size: var(--small-font-size);
         color: #fff;
+    }
+} 
+
+@media screen and (max-width:600px){
+    .btnAdd {
+        height: 36px;
+        .innerAdd {
+            color: #3761bf;
+            font-size: 14px;
+            font-weight: var(--font-big);
+            padding: 0 ;
+        }
     }
 }
 

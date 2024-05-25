@@ -32,7 +32,14 @@ export default async function Layout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderMobile />
-          <div style={{ minHeight: "calc(100vh - 67px)", marginTop: "67px" }}>
+          <div
+            style={{
+              minHeight: "calc(100vh - 67px)",
+              marginTop: "var(--header-height-mobile)",
+            }}
+          >
+            <FillterList />
+
             {children}
           </div>
           <FooterMobile />

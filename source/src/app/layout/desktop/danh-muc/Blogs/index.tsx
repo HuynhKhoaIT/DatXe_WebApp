@@ -20,7 +20,7 @@ const Blogs = ({ blogs }: any) => {
           column={7}
           responsive={true}
           gap={8}
-          dots={true}
+          dots={false}
           infinite={true}
           autoplay={true}
         >
