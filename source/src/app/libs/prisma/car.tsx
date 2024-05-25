@@ -9,7 +9,7 @@ export async function createCar(json: any) {
     // check biển số tồn tại
     const checkIsset = await getCarsByPlates(platesNumber ?? "",json.garageId)
     
-    if(checkIsset.length > 0){
+    if( json.garageId != '2' && checkIsset.length > 0){
       return {
         status: "error",
         message: "Đã tồn tại biển số"

@@ -2,7 +2,6 @@ import { getFirebaseTokenByGarageId, getFirebaseTokenByPhone, getFirebaseTokenBy
 import { createNotification } from "@/app/libs/prisma/notification";
 import axios from "axios";
 import { showStatusOrder } from "./order";
-import { ResponseError } from "./until/ResponseError";
 
 export async function sendNotificationUntil(json:any){
 
@@ -37,6 +36,7 @@ export async function sendNotificationUntil(json:any){
 export async function sendNotificationAdminOrderUntil(order:any) {
     // get token of gara
     const tokenFB = await getFirebaseTokenByGarageId(order.garageId);
+    
     for (var t of tokenFB) {
         const dataNoti = {
             title: "Bạn có đơn hàng mới",
@@ -50,6 +50,7 @@ export async function sendNotificationAdminOrderUntil(order:any) {
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
+
     }
     return tokenFB;
 }
@@ -58,7 +59,7 @@ export async function sendNotificationAdminOrderUntil(order:any) {
 export async function sendNotificationOrderUntil(order:any) {
     // get token of gara
     const tokenFB = await getFirebaseTokenByPhone(order.customer.phoneNumber);
-    console.log('token',tokenFB)
+    
     for (var t of tokenFB) {
         const statusOrder = showStatusOrder(order.step.toString());
         const dataNoti = {
@@ -73,10 +74,29 @@ export async function sendNotificationOrderUntil(order:any) {
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
+        console.log('token',rs)
     }
     return tokenFB;
 }
 
+export async function sendNotificationGarageNew(garage: any) {
+    const tokenFB = await getFirebaseTokenByPhone('0964824588');
+    for (var t of tokenFB) {
+        const dataNoti = {
+            title: `Có chuyên gia mới ${garage.shortName}`,
+            body: `Có chuyên gia mới ${garage.shortName}`,
+            kind: 1,
+            userId: t.userId,
+            to: t.token,
+            data: JSON.stringify({
+                id: garage.id,
+                code: garage.code
+            })
+        }
+        const rs = await sendNotificationUntil(dataNoti);
+    }
+    return tokenFB;
+}
 export async function deleteToken({token}:any) {
 
     const response = await fetch('/api/notification/token', {

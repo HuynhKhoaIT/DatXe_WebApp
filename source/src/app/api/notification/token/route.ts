@@ -6,6 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(request: NextRequest) {
     const json = await request.json();
+    return NextResponse.json(json)
     const session = await getServerSession(authOptions);
     if(session){
         let userId = session?.user?.id ?? '';
