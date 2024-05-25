@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextResponse } from "next/server";
 import { getMyAccount, updateUser } from "@/app/libs/prisma/user";
+import { updateAccount } from "@/utils/user";
 
 export async function GET() {
   try {
@@ -21,6 +22,8 @@ export async function PUT(request: Request) {
     const session = await getServerSession(authOptions);
     if (session) {
       json.id = session.user?.id.toString();
+      const token = session.user?.token as string;
+      await updateAccount(json,token);
       const user = await updateUser(json);
       return new NextResponse(JSON.stringify(user), {
         status: 201,

@@ -1,4 +1,5 @@
 
+import { findUser } from '@/app/libs/prisma/user';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 export const authOptions: NextAuthOptions = {
@@ -34,7 +35,7 @@ export const authOptions: NextAuthOptions = {
                             token: req?.body?.tokenFirebase,
                             userId: user.user.id.toString()
                         }),
-                    })
+                    });
                     // end create firebase token
                     return Promise.resolve(user.user);
                 } else {
