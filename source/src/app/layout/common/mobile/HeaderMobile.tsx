@@ -21,10 +21,50 @@ import { ROLE_CUSTOMER } from "@/constants";
 import NotificationDropDown from "../desktop/_component/NotificationDropDown";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import ButtonAddAddress from "../desktop/_component/ButtonAddAddress";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
 });
+
+const brandData = [
+  {
+    id: "1",
+    name: "VinFast",
+  },
+  {
+    id: "2",
+    name: "Toyota",
+  },
+  {
+    id: "3",
+    name: "BMW",
+  },
+  {
+    id: "4",
+    name: "mercedes",
+  },
+  {
+    id: "5",
+    name: "Audi",
+  },
+  {
+    id: "6",
+    name: "Ford",
+  },
+  {
+    id: "7",
+    name: "Honda",
+  },
+  {
+    id: "8",
+    name: "Mazda",
+  },
+  {
+    id: "9",
+    name: "KIA",
+  },
+];
 const HeaderMobile = () => {
   const { data: session } = useSession();
   const { fcmToken } = useFcmToken();
@@ -42,7 +82,7 @@ const HeaderMobile = () => {
   });
   const handleSubmit = (values: any) => {
     try {
-      router.push(`/tim-kiem?q=${values?.searchValue}`);
+      router.push(`/tim-kiem?s=${values?.searchValue}`);
     } catch (error) {
       console.error("Search error:", error);
     }
@@ -50,46 +90,63 @@ const HeaderMobile = () => {
   return (
     <>
       <div className={styles.wrapper}>
-        <div className={styles.logo}>
-          <Link href={"/"}>
-            <img src={logo.src} alt="logo" />
-          </Link>
-        </div>
-        <form
-          onSubmit={form.onSubmit((values) => handleSubmit(values))}
-          className={styles.searchForm}
-        >
-          <Input
-            {...form.getInputProps("searchValue")}
-            size="md"
-            leftSectionPointerEvents="all"
-            leftSection={
-              <ActionIcon variant="transparent" type="submit">
-                <IconSearch />
-              </ActionIcon>
-            }
-            placeholder="Vui lòng nhập..."
-          />
-        </form>
-        <div className={styles.headerNav}>
-          <NotificationDropDown color="#000" />
-          <Link href={"/gio-hang"} className={styles.cart}>
-            <img src={IconCart.src} alt="bell" />
-          </Link>
-          {profile?.data?.avatar && (
-            <Link href={"/dashboard"}>
-              <img
-                src={profile?.data?.avatar}
-                alt="avatar"
-                style={{ width: 40, height: 40, borderRadius: 40 }}
-              />
+        <div className={styles.headerTop}>
+          <div className={styles.logo}>
+            <Link href={"/"}>
+              <img src={logo.src} alt="logo" />
             </Link>
-          )}
-          <div className={styles.menu} onClick={() => setOpenNav(true)}>
-            <img src={IconMenu.src} alt="menu" />
+          </div>
+          <div className={styles.headerNav}>
+            <NotificationDropDown color="#000" />
+            <Link href={"/gio-hang"} className={styles.cart}>
+              <img src={IconCart.src} alt="bell" />
+            </Link>
+            {profile?.data?.avatar && (
+              <Link href={"/dashboard"}>
+                <img
+                  src={profile?.data?.avatar}
+                  alt="avatar"
+                  style={{ width: 40, height: 40, borderRadius: 40 }}
+                />
+              </Link>
+            )}
+            <div className={styles.menu} onClick={() => setOpenNav(true)}>
+              <img src={IconMenu.src} alt="menu" />
+            </div>
           </div>
         </div>
+        <div className={styles.searchForm}>
+          <ButtonAddAddress />
+
+          <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+            <Input
+              {...form.getInputProps("searchValue")}
+              // size="md"
+              leftSectionPointerEvents="all"
+              leftSection={
+                <ActionIcon variant="transparent" type="submit">
+                  <IconSearch />
+                </ActionIcon>
+              }
+              placeholder="Vui lòng nhập..."
+            />
+          </form>
+        </div>
+        <div className={styles.headerNav}>
+          {brandData?.map((item, index) => {
+            return (
+              <Link
+                href="/danh-sach-san-pham"
+                key={index}
+                className={styles.itemNav}
+              >
+                {item?.name}
+              </Link>
+            );
+          })}
+        </div>
       </div>
+
       <DynamicMenu
         open={openNav}
         onClose={() => setOpenNav(false)}

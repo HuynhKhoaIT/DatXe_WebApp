@@ -11,6 +11,9 @@ import FilterBox from "./FilterBox";
 import SliderRange from "./SliderRange";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import useFetch from "@/app/hooks/useFetch";
+import { QUERY_KEY } from "@/constants";
+import { getOptionsCategories, getOptionsCategoriesAdmin } from "@/utils/until";
 const DynamicNavFilter = dynamic(
   () => import("@/app/layout/common/mobile/NavDrawer"),
   {
@@ -19,7 +22,6 @@ const DynamicNavFilter = dynamic(
 );
 const Filter = ({ kindProduct }: any) => {
   const router = useRouter();
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   let params = new URLSearchParams(searchParams);
@@ -34,18 +36,22 @@ const Filter = ({ kindProduct }: any) => {
   });
 
   const handleSubmit = (values: any) => {
-    const filteredValues = Object.fromEntries(
-      Object.entries(values).filter(([key, value]) => value !== null)
-    ); // lọc các giá trị null từ đối tượng values
-    console.log(filteredValues?.toString());
-    const path = pathname + "?" + values?.toString();
-    // router.push(path);
-    console.log(path);
-    // setQueryParams({ ...currentParams, ...filteredValues });
-    // setOpenNavDraw(false);
+    Object.entries(values).forEach(([key, value]: any) => {
+      if (value !== null) {
+        params.set(key, value);
+      }
+    });
+
+    const path = pathname + "?" + params.toString();
+    router.push(path);
+    closeNav();
   };
   const handleReset = () => {
-    // setQueryParams({ query: currentParams.query });
+    params.delete("categoryId");
+    params.delete("isProduct");
+
+    var path = pathname + params?.toString();
+    router.push(path);
     closeNav();
   };
 
@@ -56,28 +62,24 @@ const Filter = ({ kindProduct }: any) => {
     router.push(path);
   }
 
+  const {
+    data: categoryOptions,
+    isLoading: isLoadingCategory,
+    isError,
+  } = useFetch({
+    queryKey: [QUERY_KEY.optionsCategory, "admin"],
+    queryFn: () => getOptionsCategoriesAdmin(),
+    options: {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      refetchInterval: false,
+    },
+  });
+
   return (
     <Container>
       <Group py={20} justify="space-between">
-        {/* <Button
-          size="lg"
-          radius={0}
-          color="#2D3C52"
-          h={34}
-          leftSection={<img src={IconFilter.src} />}
-          onClick={openNav}
-        >
-          Lọc
-        </Button> */}
         {/* <Switch
-          classNames={{ trackLabel: styles.trackLabel, track: styles.track }}
-          thumbIcon={<img src={IconSwitch.src} />}
-          color="#292A2E"
-          size="xl"
-          offLabel={"Mới nhất"}
-          onLabel={"Mặc định"}
-        /> */}
-        <Switch
           classNames={{ trackLabel: styles.trackLabel, track: styles.track }}
           thumbIcon={<img src={IconSwitch.src} />}
           color="#292A2E"
@@ -85,7 +87,15 @@ const Filter = ({ kindProduct }: any) => {
           offLabel={"Dịch vụ"}
           onLabel={"Sản phẩm"}
           onChange={(event) => handleClick(event.currentTarget.checked)}
-        />
+        /> */}
+        <Button
+          color="#2D3C52"
+          h={34}
+          leftSection={<img src={IconFilter.src} />}
+          onClick={openNav}
+        >
+          Lọc
+        </Button>
       </Group>
       <DynamicNavFilter
         open={openedNav}
@@ -95,26 +105,24 @@ const Filter = ({ kindProduct }: any) => {
       >
         <ul className={styles.nav}>
           <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
-            <SliderRange step={10} min={0} max={100000000} label="Giá" />
+            {/* <SliderRange step={10} min={0} max={100000000} label="Giá" /> */}
             <FilterBox
               options={kindProduct}
               queryKey="isProduct"
               queryName="Loại"
               form={form}
             />
+            <FilterBox
+              options={categoryOptions}
+              queryKey="categoryId"
+              queryName="Danh mục"
+              form={form}
+            />
             <Flex gap={10} mt={32}>
-              <Button
-                size="lg"
-                radius={0}
-                w={"50%"}
-                type="submit"
-                color={"var(--primary-color)"}
-              >
+              <Button w={"50%"} type="submit" color={"var(--primary-color)"}>
                 Lọc
               </Button>
               <Button
-                size="lg"
-                radius={0}
                 w={"50%"}
                 variant="outline"
                 color="gray"

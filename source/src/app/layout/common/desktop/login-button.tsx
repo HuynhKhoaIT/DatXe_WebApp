@@ -14,6 +14,8 @@ import {
 import { useRouter } from "next/navigation";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import { useTheme } from "next-themes";
+
 const SigninButton = () => {
   const { fcmToken } = useFcmToken();
   const router = useRouter();
@@ -34,6 +36,11 @@ const SigninButton = () => {
     return <></>;
   }
 
+  const { setTheme, resolvedTheme } = useTheme();
+  const handleChangeTheme = () => {
+    if (resolvedTheme === "dark") setTheme("light");
+    else setTheme("dark");
+  };
   return (
     <>
       <div className={styles.buttonLogin}>
@@ -80,6 +87,19 @@ const SigninButton = () => {
                     >
                       Đơn mua
                     </Menu.Item>
+                    {/* <Menu.Item
+                      leftSection={
+                        <IconExternalLink
+                          style={{ width: rem(14), height: rem(14) }}
+                        />
+                      }
+                      component="a"
+                      onClick={handleChangeTheme}
+                    >
+                      <span>
+                        {resolvedTheme === "dark" ? "Light" : "Dark"} Mode
+                      </span>
+                    </Menu.Item> */}
                   </>
                 )}
 

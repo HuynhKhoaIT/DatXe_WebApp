@@ -1,8 +1,5 @@
 .wrapper {
-    height: 67px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    height: var(--header-height-mobile);
     padding: 0 1rem;
     gap: 10px;
     background-color: var(--white-bg);
@@ -10,8 +7,30 @@
     width: 100%;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: 999;
     box-shadow: var(--box-shadow-primary);
+    .headerTop{
+        padding-top: 4px;
+        height: 47px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .searchForm{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 0;
+    }
+    .headerNav{
+        font-size: 14px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+    }
+    .headerNav::-webkit-scrollbar {
+        display: none;
+    }
+    
     .cart,
     .menu {
         width: 22px;

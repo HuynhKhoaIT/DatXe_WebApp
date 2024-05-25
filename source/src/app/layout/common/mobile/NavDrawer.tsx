@@ -11,6 +11,7 @@ const NavDrawer = ({
   direction = "left",
   children,
   headerTitle = "",
+  lockBackgroundScroll = true,
 }: any) => {
   return (
     <Drawer
@@ -19,6 +20,7 @@ const NavDrawer = ({
       onClose={onClose}
       direction={direction}
       className={styles.drawer}
+      lockBackgroundScroll={false}
     >
       <div className={styles.header}>
         <div className={styles.title}>

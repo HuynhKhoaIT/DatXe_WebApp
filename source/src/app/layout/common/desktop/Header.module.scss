@@ -5,7 +5,7 @@
 }
 .headerTop {
     background-color: var(--primary-color);
-    height: var(--header-height-top);
+    height: var(--header-height-mobile);
     display: flex;
     align-items: center;
     position: fixed;
@@ -37,7 +37,7 @@
 
 .headerContent {
     // height: var(--header-content);
-    padding-top: var(--header-height-top);
+    padding-top: var(--header-height-mobile);
     .headerSearch {
         display: flex;
         padding-top: 18px;

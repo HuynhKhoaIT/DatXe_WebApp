@@ -5,10 +5,11 @@ import styles from "./index.module.scss";
 import { Button, Flex } from "@mantine/core";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
+import { kindProduct } from "@/constants/masterData";
 const ProductsListPageMobile = ({ products, searchParams }: any) => {
   return (
     <div className={styles.wrapper}>
-      {/* <Filter kindProduct={kindProduct?.data} /> */}
+      <Filter kindProduct={kindProduct} />
       <Container>
         <Products products={products?.data} />
         {products?.currentPage < products?.totalPage && (

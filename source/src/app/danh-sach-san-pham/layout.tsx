@@ -10,6 +10,7 @@ import { FilterRadio } from "../components/elements/filterRadio";
 import { getCategories } from "../libs/prisma/category";
 import { kindProduct } from "@/constants/masterData";
 import { ButtonDeleteFilter } from "../components/elements/ButtonDeleteFilter";
+import FillterList from "../components/elements/Filter";
 export const dynamic = "force-dynamic";
 
 interface IProps {
@@ -30,7 +31,13 @@ export default async function Layout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderMobile />
-          <div style={{ minHeight: "calc(100vh - 67px)", marginTop: "67px" }}>
+          <div
+            style={{
+              minHeight: "calc(100vh - 67px)",
+              marginTop: "var(--header-height-mobile)",
+            }}
+          >
+            <FillterList />
             {children}
           </div>
           <FooterMobile />
@@ -53,7 +60,10 @@ export default async function Layout({ children }: IProps) {
                 />
                 <ButtonDeleteFilter />
               </Body.Sider>
-              <Body.Content>{children}</Body.Content>
+              <Body.Content>
+                <FillterList />
+                {children}
+              </Body.Content>
             </Body>
           </div>
           <MyFooter />

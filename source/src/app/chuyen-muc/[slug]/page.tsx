@@ -175,6 +175,8 @@ export default async function DetailCategory({ params, searchParams }: any) {
       isProduct: searchParams?.isProduct,
       limit: searchParams?.limit || DEFAULT_SIZE_LIMIT,
       garageId: searchParams?.garageId,
+      locationId: searchParams?.locationId,
+      brand: searchParams?.brand,
     },
   });
 
@@ -184,11 +186,6 @@ export default async function DetailCategory({ params, searchParams }: any) {
     },
   });
 
-  // const {
-  //   data: productRelate,
-  //   isPending: isPendingProductRelate,
-  //   isFetching: isFetchingProductRealate,
-  // } = useProductRelate(productCount);
   return (
     <RenderContextClient
       components={{
