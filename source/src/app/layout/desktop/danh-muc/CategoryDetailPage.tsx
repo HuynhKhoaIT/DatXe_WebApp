@@ -15,6 +15,8 @@ import { IProduct } from "@/interfaces/product";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 import Body from "@/app/components/layout/Body";
+import FillterList from "@/app/components/elements/Filter";
+import { ButtonDeleteFilter } from "@/app/components/elements/ButtonDeleteFilter";
 
 const CategoryDetailPageDesktop = ({
   kindProduct,
@@ -35,8 +37,10 @@ const CategoryDetailPageDesktop = ({
             filterName="Loại"
             keyName="isProduct"
           />
+          <ButtonDeleteFilter />
         </Body.Sider>
         <Body.Content>
+          <FillterList />
           <Box w={"100%"}>
             <div className={styles.products}>
               {products?.data?.map((product: IProduct, index: number) => (

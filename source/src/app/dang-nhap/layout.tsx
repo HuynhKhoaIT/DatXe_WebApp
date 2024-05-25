@@ -18,7 +18,9 @@ export default function LoginLayout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderMobile />
-          <div style={{ marginTop: "67px" }}>{children}</div>
+          <div style={{ marginTop: "var(--header-height-mobile)" }}>
+            {children}
+          </div>
           <FooterMobile />
         </main>
       ) : (

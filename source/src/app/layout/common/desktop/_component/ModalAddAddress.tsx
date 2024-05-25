@@ -15,7 +15,7 @@ import styles from "./ModalAddress.module.scss";
 import Scroll from "@/app/components/common/Scroll";
 import classNames from "classnames";
 import { getData, setData } from "@/utils/until/localStorage";
-export default function ModalAddAddress({ openModal, close, myAccount }: any) {
+export default function ModalAddAddress({ openModal, close }: any) {
   const addressDefault = getData(storageKeys.ADDRESS_DEFAULT);
 
   const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
@@ -53,6 +53,7 @@ export default function ModalAddAddress({ openModal, close, myAccount }: any) {
       classNames={{
         body: styles.body,
       }}
+      zIndex={9991}
     >
       <Box pos="relative">
         <LoadingOverlay
@@ -149,7 +150,18 @@ export default function ModalAddAddress({ openModal, close, myAccount }: any) {
                           form.setFieldValue("wardId", "");
                           setDistrictName(item.label);
                           setDistrict(item.value);
-                          setWard(null);
+                          const address = {
+                            province: {
+                              id: province,
+                              name: provinceName,
+                            },
+                            district: {
+                              id: district,
+                              name: item.label,
+                            },
+                          };
+                          setData(storageKeys.ADDRESS_DEFAULT, address);
+                          close();
                         }}
                       >
                         {item?.label}
@@ -158,7 +170,7 @@ export default function ModalAddAddress({ openModal, close, myAccount }: any) {
                   })}
                 </div>
               )}
-              {active == "ward" && (
+              {/* {active == "ward" && (
                 <div className={styles.content}>
                   {wardOptions?.map((item: any, index: number) => {
                     return (
@@ -195,7 +207,7 @@ export default function ModalAddAddress({ openModal, close, myAccount }: any) {
                     );
                   })}
                 </div>
-              )}
+              )} */}
             </ScrollArea>
           </div>
         </form>

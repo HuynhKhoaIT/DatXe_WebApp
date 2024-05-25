@@ -12,7 +12,8 @@ import { getData } from "@/utils/until/localStorage";
 import { Flex, Select } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import styles from "./index.module.scss";
+import Scroll from "../../common/Scroll";
 export default function FillterList() {
   const router = useRouter();
   const pathname = usePathname();
@@ -105,34 +106,43 @@ export default function FillterList() {
     router.push(path);
   }, [brand, model, year]);
   return (
-    <Flex gap={10} mb={20}>
+    <Scroll>
       <Select
         placeholder="Chọn tỉnh"
         data={provinceOptions}
         value={province}
+        classNames={{ dropdown: styles.dropdown }}
+        w={140}
+        miw={140}
         onChange={async (value) => {
           const optionsData: any = await getOptionsDistrict(Number(value));
           setDistrictOptions(optionsData);
           setProvince(value);
           setDistrict(null);
         }}
-        clearable
+        // clearable
       />
 
       <Select
         placeholder="Huyện/Phường"
         value={district}
+        classNames={{ dropdown: styles.dropdown }}
         data={districtOptions}
         onChange={(value) => {
           setDistrict(value);
         }}
-        clearable
+        // clearable
+        w={140}
+        miw={140}
       />
       <Select
         value={brand}
         leftSectionPointerEvents="none"
         placeholder="Hãng xe"
+        classNames={{ dropdown: styles.dropdown }}
         data={brandOptions}
+        w={140}
+        miw={140}
         onChange={async (value) => {
           const optionsData = await getOptionsModels(Number(value));
           setModelOptions(optionsData);
@@ -140,12 +150,15 @@ export default function FillterList() {
           setModel(null);
           setYear(null);
         }}
-        clearable
+        // clearable
       />
       <Select
         leftSectionPointerEvents="none"
         placeholder="Dòng xe"
         value={model}
+        w={140}
+        miw={140}
+        classNames={{ dropdown: styles.dropdown }}
         data={modelOptions}
         onChange={async (value) => {
           const optionsData = await getOptionsYearCar(Number(value));
@@ -153,18 +166,21 @@ export default function FillterList() {
           setModel(value);
           setYear(null);
         }}
-        clearable
+        // clearable
       />
       <Select
         leftSectionPointerEvents="none"
         placeholder="Năm sản xuất"
         value={year}
+        w={140}
+        miw={140}
+        classNames={{ dropdown: styles.dropdown }}
         data={yearCarOptions}
         onChange={(value) => {
           setYear(value);
         }}
-        clearable
+        // clearable
       />
-    </Flex>
+    </Scroll>
   );
 }

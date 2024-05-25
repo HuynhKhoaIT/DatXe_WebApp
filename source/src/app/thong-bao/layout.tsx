@@ -20,7 +20,12 @@ export default function Layout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderMobile />
-          <div style={{ minHeight: "calc(100vh - 67px)", marginTop: "67px" }}>
+          <div
+            style={{
+              minHeight: "calc(100vh - 67px)",
+              marginTop: "var(--header-height-mobile)",
+            }}
+          >
             {children}
           </div>
           <FooterMobile />

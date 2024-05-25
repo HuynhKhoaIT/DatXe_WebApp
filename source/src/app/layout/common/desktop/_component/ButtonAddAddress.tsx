@@ -8,11 +8,11 @@ import { fitString } from "@/utils/until";
 import { getData } from "@/utils/until/localStorage";
 import { storageKeys } from "@/constants";
 import { Suspense, useEffect, useState } from "react";
-
+import styles from "./ModalAddress.module.scss";
 const DynamicModalAddAddress = dynamic(() => import("./ModalAddAddress"), {
   ssr: false,
 });
-export default function ButtonAddAddress({ styles, user }: any) {
+export default function ButtonAddAddress() {
   const router = useRouter();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
@@ -26,9 +26,7 @@ export default function ButtonAddAddress({ styles, user }: any) {
     const address =
       `${addressData?.province?.name && addressData?.province?.name}` +
       ", " +
-      `${addressData?.district?.name && addressData?.district?.name}` +
-      ", " +
-      `${addressData?.ward?.name && addressData?.ward?.name}`;
+      `${addressData?.district?.name && addressData?.district?.name}`;
     setAddress(address);
   }, [addressData]);
   return (
@@ -36,7 +34,7 @@ export default function ButtonAddAddress({ styles, user }: any) {
       <Tooltip label={address} position="bottom">
         <Button
           color="#EEF1F9"
-          leftSection={<IconMapPin />}
+          leftSection={<IconMapPin size={20} />}
           classNames={{
             root: styles.btnAdd,
             inner: styles.innerAdd,
@@ -51,11 +49,7 @@ export default function ButtonAddAddress({ styles, user }: any) {
         </Button>
       </Tooltip>
 
-      <DynamicModalAddAddress
-        openModal={openedModal}
-        close={closeModal}
-        myAccount={user}
-      />
+      <DynamicModalAddAddress openModal={openedModal} close={closeModal} />
     </div>
   );
 }

@@ -2,7 +2,6 @@
     background-color: var(--body-color) !important;
     z-index: 999 !important;
     position: relative;
-    overflow-y: auto;
 }
 
 .header {
@@ -23,7 +22,7 @@
 }
 
 .close {
-    cursor: pointer;        
+    cursor: pointer;
     position: absolute;
     right: -24%;
     width: 40px;

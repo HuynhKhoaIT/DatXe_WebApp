@@ -7,7 +7,6 @@ import { useState } from "react";
 import {
   getOptionsBrands,
   getOptionsModels,
-  getOptionsProvince,
   getOptionsYearCar,
 } from "@/utils/until";
 import useFetch from "@/app/hooks/useFetch";
@@ -17,11 +16,6 @@ const Book = () => {
     initialValues: {},
     validate: {},
   });
-  const { data: provinceOptions, isLoading: isLoading } = useFetch({
-    queryKey: ["provinceOptions"],
-    queryFn: () => getOptionsProvince(),
-  });
-
   const { data: brandOptions, isLoading: isLoadingBrand } = useFetch({
     queryKey: ["brandOptions"],
     queryFn: () => getOptionsBrands(),
@@ -51,15 +45,6 @@ const Book = () => {
     <div className={styles.wrapper}>
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <ul className={styles.listItem}>
-          <li className={styles.item}>
-            <Select
-              classNames={{ label: styles.label, input: styles.inputSelect }}
-              label="Vị trí"
-              variant="unstyled"
-              placeholder="Chọn vị trí"
-              data={provinceOptions}
-            />
-          </li>
           <li className={styles.item}>
             <Select
               {...form.getInputProps("carBrandId")}
