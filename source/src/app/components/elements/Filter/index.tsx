@@ -23,7 +23,6 @@ export default function FillterList() {
   const brandId = searchParams.get("brandId");
   const modelId = searchParams.get("modelId");
   const yearId = searchParams.get("yearId");
-
   const addRess = getData(storageKeys.ADDRESS_DEFAULT);
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
@@ -34,6 +33,7 @@ export default function FillterList() {
   const [model, setModel] = useState<any>(modelId);
   const [year, setYear] = useState<any>(yearId);
 
+  console.log("brand", brand);
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
     queryKey: ["provinceOptions"],
     queryFn: () => getOptionsProvince(),
@@ -62,6 +62,7 @@ export default function FillterList() {
         }
 
         if (brandId) {
+          setBrand(brandId);
           const modelPromise = getOptionsModels(Number(brandId));
           promises.push(modelPromise.then(setModelOptions));
         }
@@ -120,7 +121,7 @@ export default function FillterList() {
           setProvince(value);
           setDistrict(null);
         }}
-        // clearable
+        clearable
       />
 
       <Select
@@ -131,7 +132,7 @@ export default function FillterList() {
         onChange={(value) => {
           setDistrict(value);
         }}
-        // clearable
+        clearable
         w={140}
         miw={140}
       />
@@ -150,7 +151,7 @@ export default function FillterList() {
           setModel(null);
           setYear(null);
         }}
-        // clearable
+        clearable
       />
       <Select
         leftSectionPointerEvents="none"
@@ -166,7 +167,7 @@ export default function FillterList() {
           setModel(value);
           setYear(null);
         }}
-        // clearable
+        clearable
       />
       <Select
         leftSectionPointerEvents="none"
@@ -179,7 +180,7 @@ export default function FillterList() {
         onChange={(value) => {
           setYear(value);
         }}
-        // clearable
+        clearable
       />
     </Scroll>
   );

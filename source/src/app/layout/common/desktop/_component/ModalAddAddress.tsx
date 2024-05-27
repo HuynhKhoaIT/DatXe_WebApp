@@ -156,7 +156,7 @@ export default function ModalAddAddress({ openModal, close }: any) {
                               name: provinceName,
                             },
                             district: {
-                              id: district,
+                              id: item.value,
                               name: item.label,
                             },
                           };

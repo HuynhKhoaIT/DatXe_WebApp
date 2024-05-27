@@ -1,26 +1,59 @@
-'use client'
+"use client";
 import useFcmToken from "./hooks/useFCMToken";
-import { getMessaging, onMessage } from 'firebase/messaging';
-import firebaseApp from '../utils/firebase';
-import { useEffect } from 'react';
+import { getMessaging, onMessage } from "firebase/messaging";
+import firebaseApp from "../utils/firebase";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
-
+import { useRouter } from "next/navigation";
+import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
+import { useSession } from "next-auth/react";
+import logo from "@/assets/images/logo.png";
+import { IconBell } from "@tabler/icons-react";
 export default function FcmTokenComp() {
-  const {  notificationPermissionStatus } = useFcmToken();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const { notificationPermissionStatus } = useFcmToken();
   useEffect(() => {
-    
-    if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
-      if (notificationPermissionStatus === 'granted') {
+    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+      if (notificationPermissionStatus === "granted") {
         const messaging = getMessaging(firebaseApp);
-        const unsubscribe = onMessage(messaging, (payload) =>{
-          new Notification(payload.data.title)
+        const unsubscribe = onMessage(messaging, (payload) => {
+          // new Notification(payload.data.title);
+          const notification = new Notification(payload.data.title, {
+            // badge: "https://oga.datxe.com/_next/static/media/logo.4089ae22.png",
+            // image: "https://oga.datxe.com/_next/static/media/logo.4089ae22.png",
+            icon: "https://oga.datxe.com/_next/static/media/logo.4089ae22.png",
+          });
+          notification.onclick = (event) => {
+            event.preventDefault();
+
+            window.open(`https://oga.datxe.com/thong-bao`, "_blank");
+          };
           toast.success((t) => (
-            <Link href={"/gio-hang"}>{payload.data.title}</Link>
+            <div
+              onClick={() => {
+                if (
+                  session?.user?.role == ROLE_EXPERT &&
+                  payload.data?.kind == NOTIFICATION_ORDER_KIND
+                ) {
+                  router.push(`/admin/order-manager`);
+                }
+                if (
+                  JSON.parse(payload.data.data)?.code &&
+                  payload.data?.kind == NOTIFICATION_ORDER_KIND
+                ) {
+                  router.push(
+                    `/dashboard/danh-sach-don-hang/${
+                      JSON.parse(payload.data.data)?.code
+                    }`
+                  );
+                }
+                close();
+              }}
+            >
+              {payload.data.title}
+            </div>
           ));
-          // notifications.show({
-          //   title: payload.data.title,
-          //   message: payload.data.body,
-          // });
         });
         return () => {
           unsubscribe(); // Unsubscribe from the onMessage event on cleanup
@@ -28,8 +61,6 @@ export default function FcmTokenComp() {
       }
     }
   }, [notificationPermissionStatus]);
-
-
 
   return null; // This component is primarily for handling foreground notifications
 }

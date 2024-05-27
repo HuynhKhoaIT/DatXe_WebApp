@@ -97,3 +97,42 @@ export const kindProduct = [
         name: 'Dịch  vụ',
     },
 ];
+
+export const brandData = [
+    {
+      id: "12742",
+      name: "VinFast",
+    },
+    {
+      id: "25",
+      name: "Toyota",
+    },
+    {
+      id: "2",
+      name: "BMW",
+    },
+    {
+      id: "2192",
+      name: "mercedes",
+    },
+    {
+      id: "6841",
+      name: "Audi",
+    },
+    {
+      id: "5265",
+      name: "Ford",
+    },
+    {
+      id: "5007",
+      name: "Honda",
+    },
+    {
+      id: "3172",
+      name: "Mazda",
+    },
+    {
+      id: "3987",
+      name: "KIA",
+    },
+  ];

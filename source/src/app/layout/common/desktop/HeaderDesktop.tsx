@@ -11,45 +11,8 @@ import { IconShoppingCart } from "@tabler/icons-react";
 import ButtonAddCar from "./_component/ButtonAddCar";
 import { getMyAccount } from "@/utils/user";
 import ButtonAddAddress from "./_component/ButtonAddAddress";
+import { brandData } from "@/constants/masterData";
 export default async function Header() {
-  const brandData = [
-    {
-      id: "1",
-      name: "VinFast",
-    },
-    {
-      id: "2",
-      name: "Toyota",
-    },
-    {
-      id: "3",
-      name: "BMW",
-    },
-    {
-      id: "4",
-      name: "mercedes",
-    },
-    {
-      id: "5",
-      name: "Audi",
-    },
-    {
-      id: "6",
-      name: "Ford",
-    },
-    {
-      id: "7",
-      name: "Honda",
-    },
-    {
-      id: "8",
-      name: "Mazda",
-    },
-    {
-      id: "9",
-      name: "KIA",
-    },
-  ];
   const myAccount: any = await getMyAccount();
 
   return (
@@ -80,7 +43,7 @@ export default async function Header() {
             {brandData?.map((item, index) => {
               return (
                 <Link
-                  href="/danh-sach-san-pham"
+                  href={`/danh-sach-san-pham?brandId=${item.id}&brand=${item.id}`}
                   key={index}
                   className={styles.itemNav}
                 >

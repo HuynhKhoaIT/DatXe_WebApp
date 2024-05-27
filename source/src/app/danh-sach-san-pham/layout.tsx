@@ -45,9 +45,8 @@ export default async function Layout({ children }: IProps) {
       ) : (
         <main>
           <Header />
-          <div style={{ minHeight: "calc(100vh - 195px)" }}>
+          <div style={{ minHeight: "calc(100vh - 195px)", marginTop: "1rem" }}>
             <Body>
-              
               <Body.Sider>
                 <FilterRadio
                   data={categoryOption}
