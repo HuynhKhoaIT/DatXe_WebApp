@@ -11,15 +11,15 @@ import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 export default async function Orders() {
   const session: any = await getServerSession(authOptions);
-
   let garageId = (
     await getGarageIdByDLBDID(Number(session.user?.garageId))
   ).toString();
 
-  const orders: any = await getOrders(garageId, {});
+  const orders: any = await getOrders(garageId, {
+    limit: 100,
+  });
 
   const mappedOrdersData = mapArrayEventCalendar(orders?.data);
-
   // lấy danh sách category
   const orderCategory = await callApi(apiConfig.category.orderCategory, {});
 

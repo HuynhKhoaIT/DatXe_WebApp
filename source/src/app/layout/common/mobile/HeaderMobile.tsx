@@ -22,49 +22,12 @@ import NotificationDropDown from "../desktop/_component/NotificationDropDown";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import ButtonAddAddress from "../desktop/_component/ButtonAddAddress";
+import { brandData } from "@/constants/masterData";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
 });
 
-const brandData = [
-  {
-    id: "1",
-    name: "VinFast",
-  },
-  {
-    id: "2",
-    name: "Toyota",
-  },
-  {
-    id: "3",
-    name: "BMW",
-  },
-  {
-    id: "4",
-    name: "mercedes",
-  },
-  {
-    id: "5",
-    name: "Audi",
-  },
-  {
-    id: "6",
-    name: "Ford",
-  },
-  {
-    id: "7",
-    name: "Honda",
-  },
-  {
-    id: "8",
-    name: "Mazda",
-  },
-  {
-    id: "9",
-    name: "KIA",
-  },
-];
 const HeaderMobile = () => {
   const { data: session } = useSession();
   const { fcmToken } = useFcmToken();
@@ -136,7 +99,7 @@ const HeaderMobile = () => {
           {brandData?.map((item, index) => {
             return (
               <Link
-                href="/danh-sach-san-pham"
+                href={`/danh-sach-san-pham?brandId=${item.id}&brand=${item.id}`}
                 key={index}
                 className={styles.itemNav}
               >

@@ -9,8 +9,6 @@ import useFetch from '@/app/hooks/useFetch';
 import { toast } from 'react-toastify';
 const queryClient = new QueryClient();
 
-
-
 const updateAccount = async (values: any): Promise<any> => {
     const response = await fetch(`/api/client/account`, {
         method: 'PUT',
