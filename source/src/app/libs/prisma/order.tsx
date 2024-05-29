@@ -123,7 +123,6 @@ export async function getOrders(garage: string, requestData: any) {
   }
 }
 export async function getMyOrders(requestData: any) {
-  console.log(requestData.phoneNumber);
   try {
     const customers = await getMyCustomers(requestData.phoneNumber);
     let customerIdArray: [string] = ["0"];
@@ -168,7 +167,7 @@ export async function getMyOrders(requestData: any) {
           take: take,
           skip: skip,
           orderBy: {
-            id: "desc",
+            createdAt: "desc",
           },
           where: {
             status: {

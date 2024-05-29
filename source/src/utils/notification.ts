@@ -35,18 +35,17 @@ export async function sendNotificationUntil(json:any){
 
 export async function sendNotificationAdminOrderUntil(order:any) {
     // get token of gara
-    const tokenFB = await getFirebaseTokenByGarageId(order.garageId);
-    
+    const tokenFB = await getFirebaseTokenByGarageId(order.order.garageId);
     for (var t of tokenFB) {
         const dataNoti = {
-            title: "Bạn có đơn hàng mới",
-            body: "Bạn có đơn hàng mới",
+            title: `Bạn có đơn hàng mới ${order.order.code}`,
+            body: `Bạn có đơn hàng mới ${order.order.code}`,
             kind: 1,
             userId: t.userId,
             to: t.token,
             data: JSON.stringify({
-                id: order.id,
-                code: order.code
+                id: order.order.id,
+                code: order.order.code
             })
         }
         const rs = await sendNotificationUntil(dataNoti);
