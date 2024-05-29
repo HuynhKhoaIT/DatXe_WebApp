@@ -24,7 +24,7 @@ const ExpertDetailPageDesktop = ({
 }: any) => {
   return (
     <div className={styles.wrapper}>
-      <Banner detailData={expertDetail} />
+      <Banner detailData={expertDetail} heigth={400} />
       <Container>
         <Info detailData={expertDetail} />
         <ImagesShowRoom

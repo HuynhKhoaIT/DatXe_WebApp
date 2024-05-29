@@ -192,7 +192,7 @@ export default function CartComponent({ myAccount }: any) {
       if (!data?.order) {
         toast.error("Đặt hàng thất bại: " + (data?.error || "Unknown error"));
       } else {
-        toast.error("Đặt hàng thành công");
+        toast.success("Đặt hàng thành công");
 
         // const sms = await fetch(`/api/orders/sendSMS`, {
         //   method: "POST",

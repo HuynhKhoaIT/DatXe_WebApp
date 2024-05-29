@@ -10,11 +10,13 @@ import {
   IconEye,
   IconCaretDownFilled,
   IconUserCircle,
+  IconBuildingStore,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import { useTheme } from "next-themes";
+import { ROLE_EXPERT } from "@/constants";
 
 const SigninButton = () => {
   const { fcmToken } = useFcmToken();
@@ -41,6 +43,8 @@ const SigninButton = () => {
     if (resolvedTheme === "dark") setTheme("light");
     else setTheme("dark");
   };
+
+  console.log(session);
   return (
     <>
       <div className={styles.buttonLogin}>
@@ -60,7 +64,7 @@ const SigninButton = () => {
               <Menu.Target>
                 <div className={styles.title} style={{ display: "flex" }}>
                   <span className={styles.userName}>{session?.user.name}</span>
-                  <IconCaretDownFilled />
+                  <IconCaretDownFilled style={{ cursor: "pointer" }} />
                 </div>
               </Menu.Target>
 
@@ -101,6 +105,19 @@ const SigninButton = () => {
                       </span>
                     </Menu.Item> */}
                   </>
+                )}
+                {session?.user?.role === ROLE_EXPERT && (
+                  <Menu.Item
+                    component="a"
+                    onClick={handleAdmin}
+                    leftSection={
+                      <IconBuildingStore
+                        style={{ width: rem(14), height: rem(14) }}
+                      />
+                    }
+                  >
+                    Cửa hàng của tôi
+                  </Menu.Item>
                 )}
 
                 {session?.user?.role !== "CUSTOMER" && (

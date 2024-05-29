@@ -63,18 +63,16 @@ export default function SearchForm({
     validate: {},
   });
   const handleSubmit = (values: any) => {
-    if (values?.carBrandId) {
-      values.carBrandId = values?.carBrandId;
-      // values.carBrandId = null;
+    if (values?.brandId) {
+      values.brand = values?.brandId;
     }
-    if (values?.carNameId) {
-      values.carNameId = values?.carNameId;
-      // values.nameId = null;
+    if (values?.nameId) {
+      values.brand = values?.nameId;
     }
-    if (values?.carYearId) {
-      values.carYearId = values?.carYearId;
-      // values.yearId = null;
+    if (values?.yearId) {
+      values.brand = values?.yearId;
     }
+    console.log("values", values);
     const queryString = Object.keys(values)
       .filter((key) => values[key] !== null)
       .map(
