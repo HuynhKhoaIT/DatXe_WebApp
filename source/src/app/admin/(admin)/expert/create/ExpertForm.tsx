@@ -214,7 +214,7 @@ export default function ExpertForm({
                       bannerUrl && `${AppConstants.contentRootUrl}${bannerUrl}`
                     }
                     uploadFileThumbnail={uploadFileBanner}
-                    aspect={16 / 9}
+                    aspect={16 / 4}
                     idUpload="image-uploader-banner"
                     idResult="image-result-banner"
                     idImageContainer="image-container-banner"

@@ -6,16 +6,23 @@ import Star from "@/assets/icons/star.svg";
 import Avatar from "@/assets/images/avatar.jpeg";
 import Qr from "@/assets/icons/qr.svg";
 import Check from "@/assets/icons/checkExpert.svg";
-import { ActionIcon, Button } from "@mantine/core";
+import { ActionIcon, Button, Text } from "@mantine/core";
 import Container from "@/app/components/common/Container";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 
 import React, { useState } from "react";
-import { IconQrcode, IconShare, IconShare3 } from "@tabler/icons-react";
+import {
+  IconMap2,
+  IconQrcode,
+  IconShare,
+  IconShare3,
+} from "@tabler/icons-react";
 import { AppConstants } from "@/constants";
 import ImageField from "@/app/components/form/ImageField";
+import { modals } from "@mantine/modals";
+import MapLink from "@/app/components/common/Map/MapLink";
 const DynamicModalQRCode = dynamic(() => import("./ModalQRCodeLogo"), {
   ssr: false,
 });
@@ -34,6 +41,24 @@ const Info = ({ detailData }: any) => {
     { open: openModalShare, close: closeModalShare },
   ] = useDisclosure(false);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
+
+  const openModalMap = () =>
+    modals.openConfirmModal({
+      title: "Chỉ đường đến trung tâm chuyên gia",
+      children: (
+        <Text size="sm">Chuyển hướng đến trang chỉ đường của google maps.</Text>
+      ),
+      labels: { confirm: "Tiếp tục", cancel: "Huỷ" },
+      confirmProps: { color: "blue" },
+      zIndex: 9999,
+      onConfirm: () => {
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+          "10.813794573008531, 106.72712990568188"
+        )}`;
+        window.open(googleMapsUrl, "_blank");
+      },
+    });
+
   return (
     <div className={styles.wrapper}>
       <Container>
@@ -132,6 +157,15 @@ const Info = ({ detailData }: any) => {
               }}
             >
               <IconShare3 />
+            </ActionIcon>
+            <ActionIcon
+              w={50}
+              h={50}
+              variant="outline"
+              color="#000"
+              onClick={openModalMap}
+            >
+              <IconMap2 />
             </ActionIcon>
           </div>
         </div>

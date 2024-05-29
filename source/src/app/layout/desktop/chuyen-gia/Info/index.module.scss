@@ -1,9 +1,8 @@
 .wrapper {
     display: flex;
-    position: absolute;
-    top: 220px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: sticky;
+    margin-top: -102px;
+    z-index: 99;
     .body {
         display: flex;
         align-items: center;

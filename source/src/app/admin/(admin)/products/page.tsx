@@ -310,6 +310,7 @@ export default function ProductsManaga() {
     brandId: null,
     nameId: null,
     yearId: null,
+    brand: null,
   };
 
   return (

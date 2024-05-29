@@ -20,6 +20,7 @@ export default async function Layout({ children }: IProps) {
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
   );
+
   const categories = await getCategories({ garageId: "2" });
 
   const categoryOption = categories?.data?.map((item: any) => ({
