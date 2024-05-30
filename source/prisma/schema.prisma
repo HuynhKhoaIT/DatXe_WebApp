@@ -79,7 +79,7 @@ model Garage {
   qrCodeBank          String?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
-  // financeIncome       financeIncome[]
+  servicePacks        ServicePack[]
 }
 
 
@@ -239,7 +239,9 @@ model OrderDetail {
   order               Order @relation(fields: [orderId], references: [id])
   orderId             String  // relation scalar field (used in the `@relation` attribute above)
   product             Product @relation(fields: [productId],references: [id])
-  productId           String
+  productId           String @default("0")
+  // servicePack         ServicePack @relation(fields: [servicePackId],references: [id])
+  // servicePackId       String @default("0")
   note                String?
   price               Int
   priceSale           Int
@@ -247,7 +249,7 @@ model OrderDetail {
   saleValue           String @default("0")
   quantity            Float
   subTotal            Int
-  total               Int @default(0)
+  total               Int   @default(0)
   garage              Garage @relation(fields: [garageId], references: [id])
   garageId            String @default("1")
   createdBy           String @default("1")
@@ -339,6 +341,10 @@ model Car {
   user                User @relation(fields: [userId],references: [id])
   userId              String  @default("1")
   isDefault           Boolean @default(false)
+  maintenanceDeadline           DateTime?
+  registrationDeadline          DateTime?
+  materialInsuranceDeadline     DateTime?
+  civilInsuranceDeadline        DateTime?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
 }
@@ -522,20 +528,6 @@ model User{
 
 }
 
-// model financeIncome{
-//   id                  String    @id @default(uuid())
-//   product             Product   @relation(fields: [productId],references: [id])
-//   productId           String
-//   order               Order     @relation(fields: [orderId], references: [id])
-//   orderId             String
-//   money               Int
-//   dateTime            DateTime
-//   garage              Garage    @relation(fields: [garageId], references: [id])
-//   garageId            String    @default("1")
-//   createdAt           DateTime  @default(now())
-//   updatedAt           DateTime  @default(now())
-// }
-
 model slideBanner {
   id                String @id @default(uuid())
   title             String
@@ -566,6 +558,8 @@ model seoMeta{
   productId     String?    @unique // relation scalar field (used in the `@relation` attribute above)
   post          Post?      @relation(fields: [postId], references: [id])
   postId        String?    @unique // relation scalar field (used in the `@relation` attribute above)
+  servicePack   ServicePack? @relation(fields: [servicePackId],references: [id])
+  servicePackId String?    @unique
 }
 
 model notification {
@@ -610,37 +604,51 @@ model firebaseToken {
   updatedAt     DateTime  @updatedAt
 }
 
+model ServicePack{
+  id                  String                  @id @default(uuid())
+  parentId            String                  @default("0")
+  name                String
+  sku                 String?
+  description         String?                 @db.Text
+  shortdescription    String?                 @db.Text
+  price               Int                     @default(0)
+  salePrice           Int                     @default(0)
+  images              Json?
+  carModels           String?
+  status              STATUS                  @default(DRAFT)
+  createdBy           String                  @default("1")
+  garage              Garage                  @relation(fields: [garageId], references: [id])
+  garageId            String                  @default("1")
+  servicePackLable    ServicePackLable[]
+  seoMeta             seoMeta?
+  // orderDetail         OrderDetail[]
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+  
+}
 
-// model ProductCombo {
-//   id              String                  @id @default(uuid())
-//   uuID            String?
-//   productId       Int                     @default(0)
-//   isProduct       Boolean                 @default(true)
-//   name            String
-//   slug            String?
-//   sku             String?
-//   description     String?                 @db.Text
-//   price           Int                     @default(0)
-//   salePrice       Int                     @default(0)
-//   timeSaleStart   DateTime?               @default(now())
-//   timeSaleEnd     DateTime?
-//   quantity        Int                     @default(1)
-//   images          Json?
-//   metaDescription String?                 @db.Text
-//   productBrandId  String                  @default("1")
-//   status          STATUS                  @default(DRAFT)
-//   createdBy       String                  @default("1")
-//   garage          Garage                  @relation(fields: [garageId], references: [id])
-//   garageId        String                  @default("1")
-//   createdAt       DateTime                @default(now())
-//   updatedAt       DateTime                @updatedAt
-//   marketingCampaignDetail                 MarketingCampaignDetail[]
-//   orderDetail                             OrderDetail[]
-//   // financeIncome                           financeIncome[]
-//   productsHome                            productsHome[]
-//   reviews                                 ReviewsProduct[]
-//   seoMeta                                 seoMeta?
-// }
+model ServicePackLable{
+  id                      String                      @id @default(uuid())
+  servicePack             ServicePack                 @relation(fields: [servicePackId], references: [id])
+  servicePackId           String
+  servicePackItem         ServicePackItem[]
+  title                   String
+  ordering                Int                         @default(100)
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
+}
+
+model ServicePackItem{
+  id                  String @id @default(uuid())
+  servicePackId       String
+  servicePackLable    ServicePackLable @relation(fields: [servicePackLableId], references: [id])
+  servicePackLableId  String
+  productId           String
+  price               String
+  quantity            Float
+  createdAt           DateTime                @default(now())
+  updatedAt           DateTime                @updatedAt
+}
 
 enum SALETYPE {
   FIXED
