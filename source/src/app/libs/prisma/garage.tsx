@@ -1,6 +1,7 @@
 import { createBitlyGarage } from "@/utils/garage";
 import prisma from "../prismadb";
 import { randomString } from "@/utils";
+import { IGarage } from "@/interfaces/garage";
 
 export async function getGarages(requestData: any) {
   try {
