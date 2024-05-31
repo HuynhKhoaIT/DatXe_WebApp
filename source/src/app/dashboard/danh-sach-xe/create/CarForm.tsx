@@ -16,6 +16,8 @@ import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
+import DateField from "@/app/components/form/DateField";
+import dayjs from "dayjs";
 export default function CarForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem, brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
@@ -63,6 +65,30 @@ export default function CarForm({ isEditing, dataDetail }: any) {
           form.setFieldValue("carBrandId", dataDetail?.carBrandId.toString());
           form.setFieldValue("carNameId", dataDetail?.carNameId.toString());
           form.setFieldValue("carYearId", dataDetail?.carYearId.toString());
+          if (dataDetail?.maintenanceDeadline) {
+            form.setFieldValue(
+              "maintenanceDeadline",
+              dayjs(dataDetail?.maintenanceDeadline).toDate()
+            );
+          }
+          if (dataDetail?.registrationDeadline) {
+            form.setFieldValue(
+              "registrationDeadline",
+              dayjs(dataDetail?.registrationDeadline).toDate()
+            );
+          }
+          if (dataDetail?.materialInsuranceDeadline) {
+            form.setFieldValue(
+              "materialInsuranceDeadline",
+              dayjs(dataDetail?.materialInsuranceDeadline).toDate()
+            );
+          }
+          if (dataDetail?.civilInsuranceDeadline) {
+            form.setFieldValue(
+              "civilInsuranceDeadline",
+              dayjs(dataDetail?.civilInsuranceDeadline).toDate()
+            );
+          }
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -71,6 +97,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
 
     if (isEditing) fetchData();
   }, [dataDetail]);
+
   return (
     <Box pos="relative">
       <LoadingOverlay
@@ -170,6 +197,42 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     label="Số máy"
                     type="text"
                     placeholder="Số máy"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                  <DateField
+                    {...form.getInputProps("maintenanceDeadline")}
+                    label="Hạn bảo dưỡng"
+                    placeholder="Hạn bảo dưỡng"
+                    clearable={true}
+                    maxDate={new Date()}
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                  <DateField
+                    {...form.getInputProps("registrationDeadline")}
+                    label="Hạng đăng kiểm"
+                    placeholder="Hạng đăng kiểm"
+                    clearable={true}
+                    maxDate={new Date()}
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                  <DateField
+                    {...form.getInputProps("materialInsuranceDeadline")}
+                    label="Hạn BHVC"
+                    placeholder="Hạn BHVC"
+                    clearable={true}
+                    maxDate={new Date()}
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                  <DateField
+                    {...form.getInputProps("civilInsuranceDeadline")}
+                    label="Hạn BHDS"
+                    placeholder="Hạn BHDS"
+                    clearable={true}
+                    maxDate={new Date()}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
