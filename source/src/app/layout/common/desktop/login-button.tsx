@@ -34,6 +34,7 @@ const SigninButton = () => {
     event.preventDefault();
     router.push("/admin");
   };
+
   if (status == "loading") {
     return <></>;
   }
@@ -44,7 +45,6 @@ const SigninButton = () => {
     else setTheme("dark");
   };
 
-  console.log(session);
   return (
     <>
       <div className={styles.buttonLogin}>
@@ -109,7 +109,9 @@ const SigninButton = () => {
                 {session?.user?.role === ROLE_EXPERT && (
                   <Menu.Item
                     component="a"
-                    onClick={handleAdmin}
+                    onClick={() => {
+                      router.push("/cua-hang-cua-toi");
+                    }}
                     leftSection={
                       <IconBuildingStore
                         style={{ width: rem(14), height: rem(14) }}
