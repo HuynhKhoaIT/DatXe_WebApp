@@ -1,12 +1,12 @@
 "use client";
 import styles from "./Header.module.scss";
 import logo from "@/assets/images/logo.png";
-import IconMenu from "@/assets/icons/menu.svg";
 import { useForm } from "@mantine/form";
 import { ActionIcon, Input } from "@mantine/core";
 import {
   IconLogin,
   IconLogout,
+  IconMenu,
   IconSearch,
   IconUser,
 } from "@tabler/icons-react";
@@ -23,6 +23,7 @@ import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import ButtonAddAddress from "../desktop/_component/ButtonAddAddress";
 import { brandData } from "@/constants/masterData";
+import ActionIconCartMobile from "./_component/ActionIconCart";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
@@ -60,10 +61,8 @@ const HeaderMobile = () => {
             </Link>
           </div>
           <div className={styles.headerNav}>
-            <NotificationDropDown color="#000" />
-            <Link href={"/gio-hang"} className={styles.cart}>
-              <img src={IconCart.src} alt="bell" />
-            </Link>
+            <NotificationDropDown color={"var(--title-color)"} />
+            <ActionIconCartMobile />
             {profile?.data?.avatar && (
               <Link href={"/dashboard"}>
                 <img
@@ -73,9 +72,13 @@ const HeaderMobile = () => {
                 />
               </Link>
             )}
-            <div className={styles.menu} onClick={() => setOpenNav(true)}>
+            <IconMenu
+              onClick={() => setOpenNav(true)}
+              color={"var(--title-color)"}
+            />
+            {/* <div className={styles.menu} onClick={() => setOpenNav(true)}>
               <img src={IconMenu.src} alt="menu" />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={styles.searchForm}>
@@ -88,7 +91,7 @@ const HeaderMobile = () => {
               leftSectionPointerEvents="all"
               leftSection={
                 <ActionIcon variant="transparent" type="submit">
-                  <IconSearch />
+                  <IconSearch color="var(--blue-color)" />
                 </ActionIcon>
               }
               placeholder="Vui lòng nhập..."

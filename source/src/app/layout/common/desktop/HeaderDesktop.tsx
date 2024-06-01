@@ -12,6 +12,7 @@ import ButtonAddCar from "./_component/ButtonAddCar";
 import { getMyAccount } from "@/utils/user";
 import ButtonAddAddress from "./_component/ButtonAddAddress";
 import { brandData } from "@/constants/masterData";
+import ActionIconCart from "./_component/ActionIconCart";
 export default async function Header() {
   const myAccount: any = await getMyAccount();
 
@@ -31,11 +32,7 @@ export default async function Header() {
             <div className={styles.search}>
               <ButtonAddAddress />
               <SearchFormName />
-              <Link href={"/gio-hang"}>
-                <ActionIcon color="#EEF1F9" size={56}>
-                  <IconShoppingCart size={28} color="#3450E7" />
-                </ActionIcon>
-              </Link>
+              <ActionIconCart />
               <ButtonAddCar styles={styles} user={myAccount} />
             </div>
           </div>

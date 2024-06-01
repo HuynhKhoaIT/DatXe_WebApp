@@ -24,7 +24,12 @@ import { useCars } from "../dashboard/hooks/car/useCar";
 import { useDisclosure } from "@mantine/hooks";
 import Empty from "@/assets/images/empty-box.png";
 import { toast } from "react-toastify";
+import { useGlobalContext } from "@/app/Context/store";
+import { getData, removeItem, setData } from "@/utils/until/localStorage";
+import { storageKeys } from "@/constants";
 export default function CartComponent({ myAccount }: any) {
+  const { setCart } = useGlobalContext();
+
   const { cars, isLoading, isFetching, refetch } = useCars();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
@@ -72,7 +77,7 @@ export default function CartComponent({ myAccount }: any) {
       }
       return item;
     });
-    localStorage.setItem("cartData", JSON.stringify(updateCartData));
+    setData(storageKeys.CART_DATA, updateCartData);
     setCartData(updateCartData);
   };
   // giảm số lượng sản phẩm
@@ -87,7 +92,7 @@ export default function CartComponent({ myAccount }: any) {
 
       return item;
     });
-    localStorage.setItem("cartData", JSON.stringify(updateCartData));
+    setData(storageKeys.CART_DATA, updateCartData);
     setCartData(updateCartData);
   };
 
@@ -104,14 +109,14 @@ export default function CartComponent({ myAccount }: any) {
     const updatedCartData = cartData.filter(
       (item: any) => item?.productId !== idProduct
     );
-    localStorage.setItem("cartData", JSON.stringify(updatedCartData));
+    setData(storageKeys.CART_DATA, updatedCartData);
+    setCart(updatedCartData?.length);
     setCartData(updatedCartData);
   };
   useEffect(() => {
-    const existingCartData = localStorage.getItem("cartData");
+    const existingCartData = getData(storageKeys.CART_DATA);
     if (existingCartData) {
-      const parsedCartData = JSON.parse(existingCartData);
-      setCartData(parsedCartData);
+      setCartData(existingCartData);
     }
   }, []);
 
@@ -198,7 +203,9 @@ export default function CartComponent({ myAccount }: any) {
         //   method: "POST",
         //   body: JSON.stringify(data?.order),
         // });
-        localStorage.setItem("cartData", JSON.stringify([]));
+        // localStorage.setItem("cartData", JSON.stringify([]));
+        removeItem(storageKeys.CART_DATA);
+        setCart(0);
         router.push(`/order/${data?.order?.slug}`);
       }
     } catch (error) {

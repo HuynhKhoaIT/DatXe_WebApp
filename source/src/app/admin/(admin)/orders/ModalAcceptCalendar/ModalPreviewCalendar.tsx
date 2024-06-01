@@ -99,7 +99,11 @@ export const ModalPreviewCalendar = ({
 
   return (
     <Box w={"100%"} pos={"relative"}>
-      <LoadingOverlay visible={loading} loaderProps={{ type: "bars" }} />
+      <LoadingOverlay
+        zIndex={9}
+        visible={loading}
+        loaderProps={{ type: "bars" }}
+      />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Textarea
           size="lg"

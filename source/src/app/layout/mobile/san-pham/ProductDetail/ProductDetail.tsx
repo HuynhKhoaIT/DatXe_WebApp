@@ -21,7 +21,9 @@ import ImageField from "@/app/components/form/ImageField";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { toast } from "react-toastify";
-
+import { useGlobalContext } from "@/app/Context/store";
+import { getData, setData } from "@/utils/until/localStorage";
+import { storageKeys } from "@/constants";
 const DynamicModalShare = dynamic(
   () => import("@/app/components/common/ModalShare/BasicSocialShare"),
   {
@@ -30,6 +32,8 @@ const DynamicModalShare = dynamic(
 );
 function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
+  const { cart, setCart } = useGlobalContext();
+
   const [
     openedModalShare,
     { open: openModalShare, close: closeModalShare },
@@ -53,8 +57,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       saleValue: 0,
       subTotal: ProductDetail?.salePrice,
     });
-    localStorage.setItem("cartData", JSON.stringify(existingCartItems));
-
+    setData(storageKeys.CART_DATA, existingCartItems);
+    setCart(1);
     toast.success("Sản phẩm được thêm vào giỏ hàng");
   };
 
@@ -66,9 +70,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
     if (ProductDetail && session?.user) {
       const productId = ProductDetail.id;
       const garageId = ProductDetail.garageId;
-      const existingCartItems = JSON.parse(
-        localStorage.getItem("cartData") || "[]"
-      );
+      const existingCartItems = getData(storageKeys.CART_DATA) ?? [];
       const index = existingCartItems.findIndex(
         (item: any) => item.productId === productId
       );
@@ -97,9 +99,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
             subTotal: ProductDetail?.salePrice,
           });
         }
-
-        localStorage.setItem("cartData", JSON.stringify(existingCartItems));
-
+        setData(storageKeys.CART_DATA, existingCartItems);
+        setCart(existingCartItems?.length);
         toast.success("Sản phẩm được thêm vào giỏ hàng");
       }
     } else {
@@ -178,7 +179,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 </div>
                 <Typo
                   type="bold"
-                  style={{ fontSize: "22px", color: "var(--primary-color)" }}
+                  style={{ fontSize: "22px", color: "var(--blue-color)" }}
                 >
                   {ProductDetail?.salePrice?.toLocaleString()} đ
                 </Typo>

@@ -16,7 +16,12 @@ import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useAddCar } from "../../../hooks/car/useAddCar";
 import { useSearchParams } from "next/navigation";
-export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: any) {
+export default function CarForm({
+  isEditing,
+  dataDetail,
+  isLoading,
+  isPreview,
+}: any) {
   const {
     addItem,
     updateItem,
@@ -86,7 +91,7 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
     <Box pos="relative">
       <LoadingOverlay
         visible={isLoadingBrand || isLoadingCustomer || isLoading}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -237,7 +242,7 @@ export default function CarForm({ isEditing, dataDetail, isLoading,isPreview }: 
             saveLoading={isPendingAdd || isPendingUpdate}
             okText={isEditing ? "Cập nhật" : "Thêm"}
           />
-        ):(
+        ) : (
           <FooterSavePage
             saveLoading={isPendingAdd || isPendingUpdate}
             isOk={false}

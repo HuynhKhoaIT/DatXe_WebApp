@@ -9,16 +9,20 @@ import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
 import { useSession } from "next-auth/react";
 import logo from "@/assets/images/logo.png";
 import { IconBell } from "@tabler/icons-react";
+import { useGlobalContext } from '@/app/Context/store';
 export default function FcmTokenComp() {
   const router = useRouter();
   const { data: session } = useSession();
   const { notificationPermissionStatus } = useFcmToken();
+  const { noti, setNoti } = useGlobalContext();
+
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       if (notificationPermissionStatus === "granted") {
         const messaging = getMessaging(firebaseApp);
         const unsubscribe = onMessage(messaging, (payload) => {
           // new Notification(payload.data.title);
+          setNoti(true);
           const notification = new Notification(payload.data.title, {
             // badge: "https://oga.datxe.com/_next/static/media/logo.4089ae22.png",
             // image: "https://oga.datxe.com/_next/static/media/logo.4089ae22.png",

@@ -86,7 +86,7 @@ export default function CategoryForm({
     <Box pos="relative">
       <LoadingOverlay
         visible={isLoading}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>

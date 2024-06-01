@@ -22,7 +22,7 @@ const ProductDetailPageDesktop = async ({
   return (
     <div className={styles.wrapper}>
       <Container>
-        <Breadcrumb breadcrumbs={Breadcrumbs} />
+        <Breadcrumb breadcrumbs={Breadcrumbs} color={"var(--blue-color)"} />
         <Flex direction={"column"} gap={40}>
           <Suspense fallback={<LoadingComponent />}>
             <ProductDetail

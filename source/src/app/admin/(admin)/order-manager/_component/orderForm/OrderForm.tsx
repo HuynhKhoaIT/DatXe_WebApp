@@ -139,7 +139,12 @@ export default function OrderFormDesktop({
         ) : (
           <Box pos={"relative"}>
             {dataDetail?.step === Number(ORDER_PENDING) && (
-              <Overlay color="#000" backgroundOpacity={0.35} blur={15}>
+              <Overlay
+                zIndex={9}
+                color="#000"
+                backgroundOpacity={0.35}
+                blur={15}
+              >
                 <Center h={"100%"}>
                   <Typo
                     size="small"

@@ -22,7 +22,7 @@ export default function InfoCustomer2({ form, isUser }: any) {
   return (
     <div className={classNames(styles.cardInfo, "no-print")}>
       <Box pos={"relative"}>
-        {/* <LoadingOverlay
+        {/* <LoadingOverlay zIndex={9}
           visible={loadingCustomer}
           loaderProps={{ type: "bars" }}
         /> */}
