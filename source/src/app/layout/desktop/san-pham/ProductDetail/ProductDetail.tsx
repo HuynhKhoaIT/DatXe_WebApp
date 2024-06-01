@@ -1,6 +1,6 @@
 "use client";
 import { IProduct } from "@/interfaces/product";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { Grid, Modal, Button, Group, Skeleton, Flex } from "@mantine/core";
 import styles from "./Product.module.scss";
@@ -21,8 +21,13 @@ import ImageField from "@/app/components/form/ImageField";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { useGlobalContext } from "@/app/Context/store";
+import { storageKeys } from "@/constants";
+import { getData, setData } from "@/utils/until/localStorage";
 function ProductDetail({ ProductDetail, productReview }: any) {
   const { data: session } = useSession();
+  const { cart, setCart } = useGlobalContext();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [
     openedModalShare,
@@ -46,10 +51,11 @@ function ProductDetail({ ProductDetail, productReview }: any) {
       saleValue: 0,
       subTotal: ProductDetail?.salePrice,
     });
-    localStorage.setItem("cartData", JSON.stringify(existingCartItems));
+    setData(storageKeys.CART_DATA, existingCartItems);
     toast.success((t) => (
       <Link href={"/gio-hang"}>Sản phẩm được thêm vào giỏ hàng</Link>
     ));
+    setCart(1);
   };
 
   const handleCancel = () => {
@@ -60,9 +66,11 @@ function ProductDetail({ ProductDetail, productReview }: any) {
     if (ProductDetail && session?.user) {
       const productId = ProductDetail.id;
       const garageId = ProductDetail.garageId;
-      const existingCartItems = JSON.parse(
-        localStorage.getItem("cartData") || "[]"
-      );
+      // const existingCartItems = JSON.parse(
+      //   localStorage.getItem("cartData") || "[]"
+      // );
+      const existingCartItems = getData(storageKeys.CART_DATA) ?? [];
+
       const index = existingCartItems.findIndex(
         (item: any) => item.productId === productId
       );
@@ -91,7 +99,8 @@ function ProductDetail({ ProductDetail, productReview }: any) {
             subTotal: ProductDetail?.salePrice,
           });
         }
-        localStorage.setItem("cartData", JSON.stringify(existingCartItems));
+        setCart(existingCartItems?.length);
+        setData(storageKeys.CART_DATA, existingCartItems);
         toast.success((t) => (
           <Link href={"/gio-hang"}>Sản phẩm được thêm vào giỏ hàng</Link>
         ));
@@ -195,7 +204,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
 
               <Typo
                 type="bold"
-                style={{ fontSize: "22px", color: "var(--primary-color)" }}
+                style={{ fontSize: "22px", color: "var(--blue-color)" }}
               >
                 {ProductDetail?.salePrice?.toLocaleString()} đ
               </Typo>

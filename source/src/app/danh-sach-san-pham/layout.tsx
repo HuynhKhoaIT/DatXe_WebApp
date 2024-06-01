@@ -11,6 +11,7 @@ import { getCategories } from "../libs/prisma/category";
 import { kindProduct } from "@/constants/masterData";
 import { ButtonDeleteFilter } from "../components/elements/ButtonDeleteFilter";
 import FillterList from "../components/elements/Filter";
+import FillterCompoent from "../components/elements/Filter";
 export const dynamic = "force-dynamic";
 
 interface IProps {
@@ -38,7 +39,7 @@ export default async function Layout({ children }: IProps) {
               marginTop: "var(--header-height-mobile)",
             }}
           >
-            <FillterList />
+            <FillterCompoent isFilterLocation={false} />
             {children}
           </div>
           <FooterMobile />
@@ -62,7 +63,7 @@ export default async function Layout({ children }: IProps) {
                 <ButtonDeleteFilter />
               </Body.Sider>
               <Body.Content>
-                <FillterList />
+                <FillterCompoent isFilterLocation={false} />
                 {children}
               </Body.Content>
             </Body>

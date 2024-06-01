@@ -76,10 +76,10 @@ const Info = ({ detailData }: any) => {
             <div className={styles.infoBox}>
               <div className={styles.headerInfo}>
                 <div className={styles.name}>
-                  <Typo size="small" type="semi-bold" className={styles.text}>
+                  <Typo size="small" type="bold" className={styles.text}>
                     {detailData?.shortName}
                   </Typo>
-                  <img src={Check.src} />
+                  {/* <img src={Check.src} /> */}
                 </div>
                 <Typo size="primary" style={{ color: "var(--title-white)" }}>
                   Chuyên gia xe SUV/CUV

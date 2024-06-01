@@ -102,7 +102,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
     <Box pos="relative">
       <LoadingOverlay
         visible={isLoadingBrand}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>

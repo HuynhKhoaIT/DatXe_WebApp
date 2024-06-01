@@ -33,7 +33,7 @@ export default function Layout({ children }: IProps) {
   if (isLoading) {
     return (
       <Box pos={"relative"} w="100vw" h="100vh">
-        <LoadingOverlay visible={true} />
+        <LoadingOverlay zIndex={9} visible={true} />
       </Box>
     );
   }

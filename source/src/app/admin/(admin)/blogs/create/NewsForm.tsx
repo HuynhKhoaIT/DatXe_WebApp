@@ -103,8 +103,8 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
   return (
     <Box pos="relative">
       <LoadingOverlay
+        zIndex={99}
         visible={isLoading}
-        zIndex={1000}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>

@@ -53,7 +53,7 @@
 @media only screen and (max-width: 600px) {
     .wrapper {
         display: flex;
-        position: absolute;
+        position: relative;
         top: 108px;
         left: 50%;
         width: 100%;
@@ -64,10 +64,20 @@
             align-items: center;
             gap: 1rem;
             justify-content: space-between;
+            // .bg {
+            //     height: 95px;
+            //     width: 100%;
+            //     background: rgba(17, 17, 17, 0.4);
+            //     filter: blur(2px);
+            //     backdrop-filter: blur(5.5px);
+            //     position: absolute;
+            //     bottom: 0;
+            // }
         }
         .info {
             display: flex;
             gap: 1.2rem;
+           
             .avatar {
                 width: 67px;
                 height: 67px;
@@ -85,7 +95,7 @@
                 flex-direction: column;
                 justify-content: space-between;
                 .name {
-                    color: var(--title-white);
+                    color: var(--title-color);
                     display: flex;
                     gap: 10px;
                     align-items: center;

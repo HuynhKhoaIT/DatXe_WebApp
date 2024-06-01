@@ -125,7 +125,7 @@ export default function UserProfile({ myAccount, isLoading }: any) {
         </div>
 
         <Box pos={"relative"}>
-          <LoadingOverlay visible={isLoading} />
+          <LoadingOverlay zIndex={9} visible={isLoading} />
           <Card w={"100%"} p={0}>
             <form
               name="userProfileForm"

@@ -556,7 +556,7 @@ export default function OrderForm({
       </Group>
       <LoadingOverlay
         visible={isLoading}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
 

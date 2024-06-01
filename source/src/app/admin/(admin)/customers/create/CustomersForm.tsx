@@ -21,7 +21,7 @@ export default function CustomersForm({
   isEditing,
   dataDetail,
   isLoading,
-  isPreview
+  isPreview,
 }: any) {
   const {
     addItem,
@@ -103,7 +103,7 @@ export default function CustomersForm({
     <Box pos="relative">
       <LoadingOverlay
         visible={isLoadingProvince || isLoading}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -133,7 +133,6 @@ export default function CustomersForm({
                     type="text"
                     placeholder="Số điện thoại"
                     disabled={isPreview}
-
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
@@ -144,7 +143,6 @@ export default function CustomersForm({
                     clearable={true}
                     maxDate={new Date()}
                     disabled={isPreview}
-
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
@@ -157,7 +155,6 @@ export default function CustomersForm({
                     placeholder="Giới tính"
                     data={sexOptions}
                     disabled={isPreview}
-
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -181,10 +178,8 @@ export default function CustomersForm({
                       setProvince(value);
                       setDistrict(null);
                       setWard(null);
-                      
                     }}
                     disabled={isPreview}
-
                   ></Select>
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -194,7 +189,6 @@ export default function CustomersForm({
                     {...form.getInputProps("districtId")}
                     label="Huyện/Quận"
                     disabled={isPreview}
-
                     placeholder="Chọn huyện/quận"
                     data={districtOptions}
                     value={district}
@@ -214,7 +208,6 @@ export default function CustomersForm({
                   <Select
                     size="lg"
                     disabled={isPreview}
-
                     radius={0}
                     {...form.getInputProps("wardId")}
                     label="Xã/Phường"
@@ -232,7 +225,6 @@ export default function CustomersForm({
                   <TextInput
                     size="lg"
                     disabled={isPreview}
-
                     radius={0}
                     // withAsterisk
                     {...form.getInputProps("address")}
@@ -245,7 +237,6 @@ export default function CustomersForm({
                   <Select
                     size="lg"
                     disabled={isPreview}
-
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -261,7 +252,6 @@ export default function CustomersForm({
                     size="lg"
                     radius={0}
                     disabled={isPreview}
-
                     label="Mô tả chi tiết"
                     minRows={4}
                     autosize={true}
@@ -273,18 +263,17 @@ export default function CustomersForm({
             </Card>
           </Grid.Col>
         </Grid>
-        {!isPreview?(
-
-            <FooterSavePage
-              saveLoading={isPendingUpdate || isPendingAdd}
-              okText={isEditing ? "Cập nhật" : "Thêm"}
-            />
-        ):(
+        {!isPreview ? (
+          <FooterSavePage
+            saveLoading={isPendingUpdate || isPendingAdd}
+            okText={isEditing ? "Cập nhật" : "Thêm"}
+          />
+        ) : (
           <FooterSavePage
             saveLoading={isPendingUpdate || isPendingAdd}
             isOk={false}
             cancelText="Quay lại"
-        />
+          />
         )}
       </form>
     </Box>

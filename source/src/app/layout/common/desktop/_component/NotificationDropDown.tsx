@@ -11,21 +11,38 @@ import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 import { useClickOutside } from "@mantine/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useGlobalContext } from "@/app/Context/store";
+import { useNotiList } from "@/app/hooks/noti/useNoti";
 
 const DynamicMenuNoti = dynamic(() => import("./MenuNoti"), {
   ssr: false,
 });
 export default function NotificationDropDown({ color = "#fff" }: any) {
+  const { data: dataNotification, isPending, isLoading } = useNotiList({
+    limit: 10,
+  });
   const { data } = useSession();
   const [opened, setOpened] = useState(false);
+  const { noti, setNoti } = useGlobalContext();
 
-  console.log(opened);
+  useEffect(() => {
+    if (dataNotification) {
+      let isNoti = dataNotification?.data?.some((item: any) => {
+        return item?.notificationOnUser[0]?.readed === false;
+      });
+      if (isNoti) {
+        setNoti(true);
+      } else {
+        setNoti(false);
+      }
+    }
+  }, [dataNotification]);
   return (
     <div>
       {data?.user && (
         <i style={{ cursor: "pointer" }}>
-          <Indicator color="red" size={10} processing>
+          <Indicator color="red" size={noti ? 10 : 0}>
             {opened ? (
               <IconBell
                 color={color}

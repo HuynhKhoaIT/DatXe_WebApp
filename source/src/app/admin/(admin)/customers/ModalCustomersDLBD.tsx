@@ -78,7 +78,7 @@ export default function ModalCustomersDLBD({
       <Box>
         <LoadingOverlay
           visible={opened}
-          zIndex={1000}
+          zIndex={99}
           overlayProps={{ radius: "sm", blur: 2 }}
         />
 

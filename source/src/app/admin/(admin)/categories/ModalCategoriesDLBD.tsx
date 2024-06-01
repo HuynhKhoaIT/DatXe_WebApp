@@ -116,7 +116,7 @@ export default function ModalCategoriesDLBD({
       <Box>
         <LoadingOverlay
           visible={isLoading}
-          zIndex={1000}
+          zIndex={99}
           loaderProps={{ type: "bars" }}
         />
 

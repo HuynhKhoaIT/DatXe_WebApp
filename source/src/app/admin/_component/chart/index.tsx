@@ -15,7 +15,13 @@ import {
   ORDER_PENDING,
 } from "@/constants";
 import SimpleLineChart from "./SimpleLineChart";
-export default function Chart({ isLoading, data, arrayDate,firstDayOfMonth, lastDayOfMonth }: any) {
+export default function Chart({
+  isLoading,
+  data,
+  arrayDate,
+  firstDayOfMonth,
+  lastDayOfMonth,
+}: any) {
   // const currentDate = new Date();
   // const firstDayOfMonth = new Date(
   //   currentDate.getFullYear(),
@@ -105,7 +111,11 @@ export default function Chart({ isLoading, data, arrayDate,firstDayOfMonth, last
           </Grid>
         </Box>
         <Box pos="relative">
-          <LoadingOverlay visible={isLoading} loaderProps={{ type: "bars" }} />
+          <LoadingOverlay
+            zIndex={9}
+            visible={isLoading}
+            loaderProps={{ type: "bars" }}
+          />
           <div className={styles.wrapper_chart}>
             <div className={styles.headerChart}>
               <div className={styles.itemHeader}>

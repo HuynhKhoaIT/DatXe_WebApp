@@ -48,7 +48,11 @@ export default function InfoCar({
         )}
       </Group>
       <Box pos="relative">
-        <LoadingOverlay visible={loading} loaderProps={{ type: "bars" }} />
+        <LoadingOverlay
+          zIndex={9}
+          visible={loading}
+          loaderProps={{ type: "bars" }}
+        />
         <Grid gutter={12} className={styles.marketingInfo}>
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <AutocompleteLicensePlates

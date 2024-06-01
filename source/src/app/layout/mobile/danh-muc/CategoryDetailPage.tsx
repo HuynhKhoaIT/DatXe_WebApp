@@ -12,6 +12,7 @@ import Filter from "./Filter";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 import FillterList from "@/app/components/elements/Filter";
+import FillterCompoent from "@/app/components/elements/Filter";
 
 const CategoryDetailPageMobile = ({
   kindProduct,
@@ -25,7 +26,7 @@ const CategoryDetailPageMobile = ({
   return (
     <div className={styles.wrapper}>
       <Hero slideshowData={slideshowData} height={135} />
-      <FillterList />
+      <FillterCompoent />
 
       <Filter kindProduct={kindProduct} />
       <Container>
