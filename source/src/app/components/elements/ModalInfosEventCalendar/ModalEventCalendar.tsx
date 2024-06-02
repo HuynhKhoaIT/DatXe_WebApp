@@ -108,7 +108,11 @@ export const ModalEventCalendar = ({
 
   return (
     <Box pos="relative">
-      <LoadingOverlay visible={false} loaderProps={{ type: "bars" }} />
+      <LoadingOverlay
+        zIndex={9}
+        visible={false}
+        loaderProps={{ type: "bars" }}
+      />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Textarea
           size="lg"

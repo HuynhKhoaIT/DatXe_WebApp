@@ -51,7 +51,11 @@ export const ModalEventCalendar = ({
 
   return (
     <Box pos={"relative"}>
-      <LoadingOverlay loaderProps={{ type: "bars" }} visible={loading} />
+      <LoadingOverlay
+        zIndex={9}
+        loaderProps={{ type: "bars" }}
+        visible={loading}
+      />
       <Textarea
         size="lg"
         radius={0}

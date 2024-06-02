@@ -1,15 +1,15 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import FillterListGarage from "./_component/FilterGarage";
-import FillterListNoGarage from "./_component/FilterList";
-export default function FillterList() {
+import FillterListNoLocation from "./_component/FilterGarage";
+import FillterList from "./_component/FilterList";
+export default function FillterCompoent({ isFilterLocation }: any) {
   const searchParams = useSearchParams();
   const garageId = searchParams.get("garageId");
 
   if (garageId) {
-    return <FillterListGarage />;
+    return <FillterListNoLocation />;
   } else {
-    return <FillterListNoGarage />;
+    return <FillterList isFilterLocation={isFilterLocation} />;
   }
 }

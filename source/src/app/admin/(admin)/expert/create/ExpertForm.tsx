@@ -179,7 +179,7 @@ export default function ExpertForm({
     <Box pos="relative">
       <LoadingOverlay
         visible={isLoading || isLoadingUltilities}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form onSubmit={form.onSubmit(handleSubmit)}>

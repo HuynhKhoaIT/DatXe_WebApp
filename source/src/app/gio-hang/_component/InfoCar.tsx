@@ -30,7 +30,7 @@ export default function InfoCar({
         <Card pos="relative">
           <LoadingOverlay
             visible={isLoading || isFetching}
-            zIndex={1000}
+            zIndex={99}
             overlayProps={{ radius: "sm", blur: 2 }}
           />
 

@@ -26,13 +26,14 @@ import { IconDotsVertical } from "@tabler/icons-react";
 import { IconSquare } from "@tabler/icons-react";
 import ActionNoti from "./ActionNoti";
 import NotiItem from "./NotiItem";
-
+import { useGlobalContext } from "@/app/Context/store";
 export default function MenuNoti({ close, setOpened }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
 
   const { data: session } = useSession();
+  const { noti, setNoti } = useGlobalContext();
 
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
@@ -50,6 +51,16 @@ export default function MenuNoti({ close, setOpened }: any) {
           return item;
         });
       setData(res);
+    }
+    if (dataNotification) {
+      let isNoti = dataNotification?.data?.some((item: any) => {
+        return item?.notificationOnUser[0]?.readed === false;
+      });
+      if (isNoti) {
+        setNoti(true);
+      } else {
+        setNoti(false);
+      }
     }
   }, [activeButtonAll, dataNotification]);
   const ref = useClickOutside(() => setOpened(false));
@@ -96,7 +107,7 @@ export default function MenuNoti({ close, setOpened }: any) {
           Xem tất cả
         </Link>
       </Flex>
-      <ScrollArea h={"90%"} mt={20}>
+      <ScrollArea h={"84%"} mt={20}>
         {data?.length > 0 ? (
           data?.map((item: any, index: number) => {
             return <NotiItem item={item} key={index} />;

@@ -27,6 +27,7 @@ export default function InfoCustomer({
     <div className={styles.cardInfo}>
       <Box pos={"relative"}>
         <LoadingOverlay
+          zIndex={9}
           visible={loadingCustomer || loading}
           loaderProps={{ type: "bars" }}
         />

@@ -291,7 +291,7 @@ export default function MarketingCampaignForm({ dataDetail, isEditing }: any) {
     <Box pos="relative">
       <LoadingOverlay
         visible={loading}
-        zIndex={1000}
+        zIndex={99}
         overlayProps={{ radius: "sm", blur: 2 }}
       />
       <form className={styles.form} onSubmit={form.onSubmit(handleSubmit)}>

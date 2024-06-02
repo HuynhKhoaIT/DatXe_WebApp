@@ -126,7 +126,8 @@ export const appName = 'datxe';
 
 export const storageKeys = {
     USER_ACCESS_TOKEN:`${appName}-user-access-token`,
-    ADDRESS_DEFAULT: `${appName}-address-default`
+    ADDRESS_DEFAULT: `${appName}-address-default`,
+    CART_DATA: `${appName}-cart-data` 
 }
 export const AppConstants = {
     apiRootUrl: process.env.REACT_APP_API,

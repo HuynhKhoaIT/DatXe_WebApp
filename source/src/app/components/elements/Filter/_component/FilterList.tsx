@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import FillterListGarage from "./FilterGarage";
 import Scroll from "@/app/components/common/Scroll";
-export default function FillterListNoGarage() {
+export default function FillterList({ isFilterLocation = true }: any) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -33,8 +33,12 @@ export default function FillterListNoGarage() {
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [districtOptions, setDistrictOptions] = useState<any>([]);
-  const [province, setProvince] = useState<any>(addRess?.province?.id);
-  const [district, setDistrict] = useState<any>(addRess?.district?.id);
+  const [province, setProvince] = useState<any>(
+    isFilterLocation && addRess?.province?.id
+  );
+  const [district, setDistrict] = useState<any>(
+    isFilterLocation && addRess?.district?.id
+  );
   const [brand, setBrand] = useState<any>(brandId);
   const [model, setModel] = useState<any>(modelId);
   const [year, setYear] = useState<any>(yearId);
@@ -88,7 +92,9 @@ export default function FillterListNoGarage() {
   }, [addRess?.province?.id, brandId, modelId]);
 
   useEffect(() => {
-    params?.set("locationId", `${district || province}`);
+    if (isFilterLocation) {
+      params?.set("locationId", `${district || province}`);
+    }
     if (province == null) {
       params?.delete("locationId");
     }

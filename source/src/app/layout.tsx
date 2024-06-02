@@ -19,6 +19,8 @@ import { QueryProvider } from "./providers/QueryProvider";
 import Logo from "../assets/images/logo.png";
 import ToastProvider from "./providers/toaster-provider";
 // import StoreProvider from "./StoreProvider";
+import { GlobalContextProvider } from "./Context/store";
+
 export const dynamic = "force-dynamic";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -67,19 +69,21 @@ export default function RootLayout({ children }: IProps) {
   return (
     <html lang="vi" suppressHydrationWarning>
       <body className={inter.className}>
-        <QueryProvider>
-          <MantineProvider theme={theme}>
-            <ModalsProvider>
-              <ProviderAuth>
-                {/* <StoreProvider> */}
-                <ToastProvider />
-                <FcmTokenComp />
-                {children}
-                {/* </StoreProvider> */}
-              </ProviderAuth>
-            </ModalsProvider>
-          </MantineProvider>
-        </QueryProvider>
+        <GlobalContextProvider>
+          <QueryProvider>
+            <MantineProvider theme={theme}>
+              <ModalsProvider>
+                <ProviderAuth>
+                  {/* <StoreProvider> */}
+                  <ToastProvider />
+                  <FcmTokenComp />
+                  {children}
+                  {/* </StoreProvider> */}
+                </ProviderAuth>
+              </ModalsProvider>
+            </MantineProvider>
+          </QueryProvider>
+        </GlobalContextProvider>
       </body>
       <GoogleAnalytics gaId="G-FXK6HYZ7YC" />
     </html>
