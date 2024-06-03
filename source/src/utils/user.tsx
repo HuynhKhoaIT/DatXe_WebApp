@@ -21,6 +21,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sha256 } from "js-sha256";
 import { sendNotificationGarageNew } from "./notification";
+import prisma from "@/app/libs/prismadb";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.
@@ -41,6 +42,8 @@ export async function getUserByValidSessionToken(token: string) {
     username: data.name,
   };
 }
+
+
 
 export const getMyAccount = async () => {
   const session = await getServerSession(authOptions);
