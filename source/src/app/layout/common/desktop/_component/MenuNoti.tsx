@@ -2,43 +2,20 @@
 import { Button, Flex, LoadingOverlay, Menu, ScrollArea } from "@mantine/core";
 import styles from "./NotificationDropDown.module.scss";
 import Typo from "@/app/components/elements/Typo";
-import {
-  IconBell,
-  IconCheck,
-  IconDots,
-  IconSettings,
-  IconSquareX,
-  IconTrash,
-  IconX,
-} from "@tabler/icons-react";
+import { IconX } from "@tabler/icons-react";
 import IconBellEmpty from "@/assets/icons/iconbell.svg";
 import { useNotiList } from "@/app/hooks/noti/useNoti";
-import { formatTimeDifference } from "@/utils/until";
 import { useEffect, useState } from "react";
 import { useUpdateNoti } from "@/app/hooks/noti/useUpdateNoti";
 import { useClickOutside, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import Link from "next/link";
-import classNames from "classnames";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
-import { IconDotsVertical } from "@tabler/icons-react";
-import { IconSquare } from "@tabler/icons-react";
-import ActionNoti from "./ActionNoti";
 import NotiItem from "./NotiItem";
-import { useGlobalContext } from "@/app/Context/store";
 export default function MenuNoti({ close, setOpened }: any) {
   const { data: dataNotification, isPending, isLoading } = useNotiList({
     limit: 10,
   });
-
-  const { data: session } = useSession();
-  const { noti, setNoti } = useGlobalContext();
-
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-
   const [data, setData] = useState([]);
-  const { getDetail } = useUpdateNoti();
   const [activeButtonAll, setActiveButtonAll] = useState(true);
 
   useEffect(() => {
@@ -51,16 +28,6 @@ export default function MenuNoti({ close, setOpened }: any) {
           return item;
         });
       setData(res);
-    }
-    if (dataNotification) {
-      let isNoti = dataNotification?.data?.some((item: any) => {
-        return item?.notificationOnUser[0]?.readed === false;
-      });
-      if (isNoti) {
-        setNoti(true);
-      } else {
-        setNoti(false);
-      }
     }
   }, [activeButtonAll, dataNotification]);
   const ref = useClickOutside(() => setOpened(false));

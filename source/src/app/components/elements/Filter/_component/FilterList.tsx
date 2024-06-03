@@ -11,7 +11,7 @@ import {
 import { getData } from "@/utils/until/localStorage";
 import { Flex, Select } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import FillterListGarage from "./FilterGarage";
 import Scroll from "@/app/components/common/Scroll";
@@ -22,6 +22,7 @@ export default function FillterList({ isFilterLocation = true }: any) {
   let params = new URLSearchParams(searchParams);
   const s = searchParams.get("s");
   const garageId = searchParams.get("garageId");
+  const locationId = searchParams.get("locationId");
 
   if (garageId) {
     return <FillterListGarage />;
@@ -33,17 +34,26 @@ export default function FillterList({ isFilterLocation = true }: any) {
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [districtOptions, setDistrictOptions] = useState<any>([]);
-  const [province, setProvince] = useState<any>(
-    isFilterLocation && addRess?.province?.id
-  );
-  const [district, setDistrict] = useState<any>(
-    isFilterLocation && addRess?.district?.id
-  );
+  const [province, setProvince] = useState<any>();
+  const [district, setDistrict] = useState<any>();
+
+  useEffect(() => {
+    if (isFilterLocation && locationId) {
+      if (addRess?.district?.id == locationId) {
+        setDistrict(locationId);
+        setProvince(addRess?.province?.id);
+      } else if (addRess?.province?.id == locationId) {
+        setProvince(locationId);
+      }
+    } else if (isFilterLocation) {
+      setProvince(addRess?.province?.id);
+      setDistrict(addRess?.district?.id);
+    }
+  }, []);
   const [brand, setBrand] = useState<any>(brandId);
   const [model, setModel] = useState<any>(modelId);
   const [year, setYear] = useState<any>(yearId);
 
-  console.log("brand", brand);
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
     queryKey: ["provinceOptions"],
     queryFn: () => getOptionsProvince(),
@@ -100,7 +110,8 @@ export default function FillterList({ isFilterLocation = true }: any) {
     }
     const path = pathname + "?" + params?.toString();
     router.push(path);
-  }, [province, district, s]);
+    console.log("brand", brand);
+  }, [province, district, s, locationId]);
 
   useEffect(() => {
     params?.set("brand", `${year || model || brand}`);

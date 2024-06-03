@@ -8,7 +8,7 @@ export default function Loading() {
   return (
     <div>
       <Container>
-        <ListnewsSkeleton />
+        <ListCategorySkeleton />
       </Container>
     </div>
   );

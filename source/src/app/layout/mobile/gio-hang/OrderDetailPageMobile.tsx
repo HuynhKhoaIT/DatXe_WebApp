@@ -228,14 +228,14 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
         {`
           @media print {
             @page {
-              size: 80mm ${
+              size: 120mm ${
                 containerHeight / 3.3
               }mm; /* Đặt kích thước trang in là 80mm chiều rộng và tự động chiều cao */
               margin: 1mm; /* Xóa lề của trang in */
             }
 
             body {
-              width: 80mm; /* Đặt chiều rộng của nội dung in là 80mm */
+              width: 100%; /* Đặt chiều rộng của nội dung in là 80mm */
               padding: 0; /* Xóa padding của nội dung in */
             }
           }

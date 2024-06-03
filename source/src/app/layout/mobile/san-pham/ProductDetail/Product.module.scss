@@ -47,12 +47,11 @@
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    margin-bottom: 1rem;
-    .starBox {
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
+}
+.starBox {
+    display: flex;
+    gap: 12px;
+    align-items: center;
 }
 .salePrice {
     display: flex;

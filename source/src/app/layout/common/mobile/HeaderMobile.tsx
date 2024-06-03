@@ -4,6 +4,7 @@ import logo from "@/assets/images/logo.png";
 import { useForm } from "@mantine/form";
 import { ActionIcon, Input } from "@mantine/core";
 import {
+  IconBuildingStore,
   IconLogin,
   IconLogout,
   IconMenu,
@@ -17,13 +18,14 @@ import IconCart from "@/assets/icons/cart.svg";
 import dynamic from "next/dynamic";
 import { signOut, useSession } from "next-auth/react";
 import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
-import { ROLE_CUSTOMER } from "@/constants";
+import { ROLE_CUSTOMER, ROLE_EXPERT, storageKeys } from "@/constants";
 import NotificationDropDown from "../desktop/_component/NotificationDropDown";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import ButtonAddAddress from "../desktop/_component/ButtonAddAddress";
 import { brandData } from "@/constants/masterData";
 import ActionIconCartMobile from "./_component/ActionIconCart";
+import { removeItem } from "@/utils/until/localStorage";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
@@ -84,10 +86,16 @@ const HeaderMobile = () => {
         <div className={styles.searchForm}>
           <ButtonAddAddress />
 
-          <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+          <form
+            style={{ flex: "1" }}
+            onSubmit={form.onSubmit((values) => handleSubmit(values))}
+          >
             <Input
               {...form.getInputProps("searchValue")}
               // size="md"
+              classNames={{
+                input: styles.inputSearch,
+              }}
               leftSectionPointerEvents="all"
               leftSection={
                 <ActionIcon variant="transparent" type="submit">
@@ -120,8 +128,8 @@ const HeaderMobile = () => {
       >
         <ul className={styles.nav}>
           {role == ROLE_CUSTOMER && (
-            <li className={styles.navItem}>
-              <Link href="/dashboard">
+            <li>
+              <Link href="/dashboard" className={styles.navItem}>
                 <IconUser size={18} />
                 Hồ sơ
               </Link>
@@ -135,10 +143,17 @@ const HeaderMobile = () => {
               </Link>
             </li>
           )}
-
+          {session?.user?.role === ROLE_EXPERT && (
+            <li>
+              <Link href="/cua-hang-cua-toi" className={styles.navItem}>
+                <IconBuildingStore size={18} />
+                Cửa hàng của tôi
+              </Link>
+            </li>
+          )}
           {role !== ROLE_CUSTOMER && session?.user && (
-            <li className={styles.navItem}>
-              <Link href="/admin">
+            <li>
+              <Link href="/admin" className={styles.navItem}>
                 <IconUser size={18} />
                 Quản trị
               </Link>
@@ -157,6 +172,7 @@ const HeaderMobile = () => {
               href={"/"}
               onClick={async () => {
                 await deleteToken({ token: fcmToken });
+                removeItem(storageKeys.CART_DATA);
                 signOut();
               }}
               className={styles.navLogout}

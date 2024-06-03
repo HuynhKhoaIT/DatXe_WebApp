@@ -6,15 +6,7 @@ import StoreListPage from "../layout/desktop/cua-hang-cua-toi/StoreListPage";
 import { useExperts } from "../admin/(admin)/hooks/expert/useExpert";
 
 export default function News() {
-  const {
-    experts,
-    isLoading,
-    isFetching,
-    error,
-    page,
-    setPage,
-    deleteItem,
-  } = useExperts();
+  const { experts, isLoading, isFetching } = useExperts();
   return (
     <RenderContextClient
       components={{

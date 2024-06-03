@@ -22,7 +22,7 @@ export default function Layout({ children }: IProps) {
           <HeaderMobile />
           <div
             style={{
-              minHeight: "calc(100vh - 67px)",
+              minHeight: "calc(80vh - 67px)",
               marginTop: "var(--header-height-mobile)",
             }}
           >

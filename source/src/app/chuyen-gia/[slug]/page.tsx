@@ -144,14 +144,17 @@ export default async function DetailGarage({
     garageId: params?.slug,
     limit: 100,
   });
-  const services = await getProducts({
-    isProduct: "0",
-    garageId: params?.slug,
-  });
+
   // const products = await getProducts({
   //   isProduct: "1",
   //   garageId: expertDetail.id,
   // });
+  const services = await callApi(apiConfig.products.getList, {
+    params: {
+      isProduct: "0",
+      garageId: params?.slug,
+    },
+  });
   const products = await callApi(apiConfig.products.getList, {
     params: {
       isProduct: "1",

@@ -8,6 +8,8 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
+import { removeItem } from "@/utils/until/localStorage";
+import { storageKeys } from "@/constants";
 export function Navbar({ data }: any) {
   const { fcmToken } = useFcmToken();
   const [active, setActive] = useState(data[0].label);
@@ -41,6 +43,7 @@ export function Navbar({ data }: any) {
           className={styles.link}
           onClick={async () => {
             await deleteToken({ token: fcmToken });
+            removeItem(storageKeys.CART_DATA);
             signOut();
           }}
         >
