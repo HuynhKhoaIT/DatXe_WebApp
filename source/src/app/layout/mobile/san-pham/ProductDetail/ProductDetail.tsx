@@ -147,15 +147,42 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 {ProductDetail?.code}
               </Typo>
               <div className={styles.category}>
-                <Typo style={{ fontSize: "1rem", color: "var(--nav-color)" }}>
-                  Mâm lốp
-                </Typo>
-                <div className={styles.starBox}>
-                  <img src={Star.src} />
-                  <Typo style={{ fontSize: "1rem", color: "var(--nav-color)" }}>
-                    {totalStars} ({productReview?.data?.length || 0} reviews)
+                <Flex align="center">
+                  <Typo
+                    style={{
+                      fontSize: "0.8rem",
+                      color: "var(--nav-color)",
+                    }}
+                  >
+                    Danh mục:
                   </Typo>
-                </div>
+                  {ProductDetail?.categories?.map(
+                    (item: any, index: number) => {
+                      return (
+                        <div key={index} style={{ display: "flex" }}>
+                          <Typo
+                            style={{
+                              fontSize: "0.8rem",
+                              color: "var(--nav-color)",
+                            }}
+                          >
+                            {item?.category?.title}
+                          </Typo>
+                          {index >= 0 &&
+                            index < ProductDetail?.categories?.length - 1 && (
+                              <>, </>
+                            )}
+                        </div>
+                      );
+                    }
+                  )}
+                </Flex>
+              </div>
+              <div className={styles.starBox}>
+                <img src={Star.src} />
+                <Typo style={{ fontSize: "1rem", color: "var(--nav-color)" }}>
+                  {totalStars} ({productReview?.data?.length || 0} reviews)
+                </Typo>
               </div>
               <Flex gap={20}>
                 <div className={styles.salePrice}>

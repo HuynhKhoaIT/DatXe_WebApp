@@ -16,7 +16,8 @@ import { useRouter } from "next/navigation";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import { useTheme } from "next-themes";
-import { ROLE_EXPERT } from "@/constants";
+import { ROLE_EXPERT, storageKeys } from "@/constants";
+import { removeItem } from "@/utils/until/localStorage";
 
 const SigninButton = () => {
   const { fcmToken } = useFcmToken();
@@ -139,6 +140,7 @@ const SigninButton = () => {
                   component="a"
                   onClick={async () => {
                     await deleteToken({ token: fcmToken });
+                    removeItem(storageKeys.CART_DATA);
                     signOut();
                   }}
                   color="red"

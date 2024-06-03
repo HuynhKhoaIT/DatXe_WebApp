@@ -158,7 +158,7 @@ const Info = ({ detailData }: any) => {
             >
               <IconShare3 />
             </ActionIcon>
-            <ActionIcon
+            {/* <ActionIcon
               w={50}
               h={50}
               variant="outline"
@@ -166,7 +166,7 @@ const Info = ({ detailData }: any) => {
               onClick={openModalMap}
             >
               <IconMap2 />
-            </ActionIcon>
+            </ActionIcon> */}
           </div>
         </div>
       </Container>

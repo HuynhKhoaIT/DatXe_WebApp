@@ -4,6 +4,7 @@ import { useForm } from "@mantine/form";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./SearchFormName.module.scss";
 import search from "@/assets/icons/search.svg";
+import { IconSearch } from "@tabler/icons-react";
 export default function SearchFormName() {
   const searchParams = useSearchParams();
   const s: any = searchParams.get("s");
@@ -38,11 +39,17 @@ export default function SearchFormName() {
             rightSectionPointerEvents="all"
             rightSection={
               <ActionIcon variant="transparent" color="gray" type="submit">
-                <img
+                <IconSearch
+                  onClick={handleSubmit}
+                  size={28}
+                  style={{ cursor: "pointer" }}
+                  color="var(--blue-color)"
+                />
+                {/* <img
                   src={search.src}
                   style={{ cursor: "pointer" }}
                   onClick={handleSubmit}
-                />
+                /> */}
               </ActionIcon>
             }
           />
