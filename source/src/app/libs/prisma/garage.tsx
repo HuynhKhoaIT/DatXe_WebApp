@@ -9,7 +9,10 @@ export async function getGarages(requestData: any) {
     let take = 10;
     let limit = Number(requestData.limit);
     let page = requestData.page;
-
+    let includes: string[] = [""];
+    if(requestData.includes){
+      includes = requestData.includes.split(",");
+    }
     if (page) {
       currentPage = Number(page);
     }
@@ -21,6 +24,17 @@ export async function getGarages(requestData: any) {
     let garageId = 0;
     if (requestData.garageId) {
       garageId = requestData.garageId;
+    }
+    let include:any = {
+      amenities: false
+    };
+
+    if(includes.includes("amenities")){
+      include.amenities =  {
+        include: {
+          amenities: true,
+        },
+      }
     }
     const skip = take * (currentPage - 1);
     const [data, total] = await prisma.$transaction([
@@ -40,13 +54,7 @@ export async function getGarages(requestData: any) {
             },
           ],
         },
-        include: {
-          amenities: {
-            include: {
-              amenities: true,
-            },
-          },
-        },
+        include: include,
       }),
       prisma.garage.count({
         where: {
