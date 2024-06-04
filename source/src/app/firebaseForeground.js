@@ -30,8 +30,18 @@ export default function FcmTokenComp() {
           });
           notification.onclick = (event) => {
             event.preventDefault();
-
-            window.open(`https://oga.datxe.com/thong-bao`, "_blank");
+            if (
+              session?.user?.role == ROLE_EXPERT &&
+              payload.data?.kind == NOTIFICATION_ORDER_KIND
+            ) {
+              window.open(`https://oga.datxe.com//admin/order-manager`, "_blank");
+            }
+            if (
+              JSON.parse(payload.data.data)?.code &&
+              payload.data?.kind == NOTIFICATION_ORDER_KIND
+            ) {
+              window.open(`https://oga.datxe.com//dashboard/danh-sach-don-hang/${JSON.parse(payload.data.data)?.code}`, "_blank");
+            }
           };
           toast.success((t) => (
             <div
@@ -47,12 +57,10 @@ export default function FcmTokenComp() {
                   payload.data?.kind == NOTIFICATION_ORDER_KIND
                 ) {
                   router.push(
-                    `/dashboard/danh-sach-don-hang/${
-                      JSON.parse(payload.data.data)?.code
+                    `/dashboard/danh-sach-don-hang/${JSON.parse(payload.data.data)?.code
                     }`
                   );
                 }
-                close();
               }}
             >
               {payload.data.title}
