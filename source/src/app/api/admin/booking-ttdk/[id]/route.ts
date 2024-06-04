@@ -1,4 +1,5 @@
 import { deleted, find } from "@/app/libs/prisma/bookingTTDK";
+import { checkAuthToken } from "@/utils/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
@@ -16,10 +17,17 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-    const id = params.id;
-    if (!id) {
-        return new NextResponse("Missing 'id' parameter");
+    const getAuth = await checkAuthToken(request);
+    if(getAuth!=null && getAuth.role == 'ADMINGARAGE'){
+        const id = params.id;
+        if (!id) {
+            return new NextResponse("Missing 'id' parameter");
+        }
+        const rs = await deleted(id);
+        return NextResponse.json({ success: 1, message: 'Delete success' });
     }
-    const rs = await deleted(id);
-    return NextResponse.json({ success: 1, message: 'Delete success' });
+    return NextResponse.json({
+        status: "error",
+        message: "Bearer token not defined"
+    })
 }
