@@ -160,7 +160,7 @@ export const ModalEventCalendar = ({
           <InfoCarNew form={form} brandOptions={brandOptions} styles={styles} />
         )}
         <Grid gutter={10} mt="md">
-          <Grid.Col span={6}>
+          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
             <Select
               size="lg"
               radius={0}
@@ -172,7 +172,7 @@ export const ModalEventCalendar = ({
               {...form.getInputProps("orderCategoryId")}
             />
           </Grid.Col>
-          <Grid.Col span={6} className="input-date">
+          <Grid.Col span={{ base: 12, md: 6, lg: 6 }} className="input-date">
             <DateTimePicker
               size="lg"
               radius={0}
@@ -214,10 +214,10 @@ export const ModalEventCalendar = ({
           mt="md"
           className="footer-modal-schedule"
         >
-          <div>
+          {/* <div>
             Đăng ký <a href="/">DatXe</a> để quản lý lịch sử xe, hoặc{" "}
             <a href="/">đăng nhập</a>
-          </div>
+          </div> */}
           <Button
             size="lg"
             radius={0}
