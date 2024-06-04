@@ -23,7 +23,7 @@ const BasicModal = ({
   return (
     <Modal
       size={size}
-      style={{ top: top || "auto", zIndex: 9999 }}
+      style={{ top: top || "auto" }}
       opened={isOpen}
       onClose={onCloseModal}
       title={title}
@@ -31,6 +31,7 @@ const BasicModal = ({
       lockScroll={true}
       centered={centered}
       withCloseButton={withCloseButton}
+      // zIndex={999}
     >
       <div className={styles.modalContent}>{children}</div>
       {footer && (

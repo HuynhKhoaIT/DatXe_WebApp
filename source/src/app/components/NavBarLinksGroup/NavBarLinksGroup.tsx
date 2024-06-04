@@ -25,26 +25,29 @@ export function LinksGroup({
 }: LinksGroupProps) {
   const hasLinks = Array.isArray(links);
   const pathname = usePathname();
+  const parts = pathname.split("/");
   const [opened, setOpened] = useState(initiallyOpened || false);
-  const items = (hasLinks ? links : []).map((link) => (
-    <Link
-      data-active={link.link === pathname || undefined}
-      href={link.link}
-      key={link.label}
-      className={classNames(classes.link)}
-      onClick={() => {
-        setTimeout(toggle, 1000);
-      }}
-    >
-      {link.label}
-    </Link>
-  ));
+  const items = (hasLinks ? links : []).map((link) => {
+    return (
+      <Link
+        data-active={link.link?.split("/")?.[2] === parts?.[2] || undefined}
+        href={link.link}
+        key={link.label}
+        className={classNames(classes.link)}
+        onClick={() => {
+          setTimeout(toggle, 1000);
+        }}
+      >
+        {link.label}
+      </Link>
+    );
+  });
 
   return (
     <>
       {link ? (
         <Link
-          data-active={link === pathname || undefined}
+          data-active={link?.split("/")?.[2] === parts?.[2] || undefined}
           onClick={() => {
             setOpened((o) => !o);
             setTimeout(toggle, 1000);
