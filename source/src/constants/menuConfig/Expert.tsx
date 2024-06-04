@@ -24,6 +24,7 @@ const menuConfigExpert = [
   {
     label: "Sản phẩm",
     icon: IconCalendarStats,
+    initiallyOpened: true,
     links: [
       { label: "Danh sách sản phẩm", link: "/admin/products" },
       { label: "Danh mục", link: "/admin/categories" },
@@ -42,7 +43,6 @@ const menuConfigExpert = [
   {
     label: "Báo cáo",
     icon: IconNotes,
-    initiallyOpened: true,
     links: [{ label: "Doanh thu", link: "/admin/revenue" }],
   },
   {
