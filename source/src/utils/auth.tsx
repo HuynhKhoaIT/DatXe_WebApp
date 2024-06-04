@@ -7,23 +7,11 @@ import prisma from "@/app/libs/prismadb";
 export async function checkAuthToken(request: NextRequest){
     const BearerToken = request.headers.get("authorization") as string;
     if(!BearerToken){
-        return {
-            status: "error",
-            message: "Bearer token not defined"
-        }
+        return ;
     }
     const token = BearerToken?.split(' ')[1];
     const user =  await getUser(token);
-    if(!user){
-        return {
-            data: '',
-            status: 'error'
-        }
-    }
-    return {
-        data: user,
-        status: 'susscess'
-    }
+    return user;
 }
 
 async function getUser(token:string) {
