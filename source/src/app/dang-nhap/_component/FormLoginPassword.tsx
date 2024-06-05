@@ -55,7 +55,6 @@ export default function FormLoginPassword() {
           tokenFirebase: fcmToken,
           callbackUrl: callbackUrl || "/dashboard",
         });
-
         toast.success("Đăng nhập thành công");
       } else {
         toast.error("Đăng nhập thật bại");

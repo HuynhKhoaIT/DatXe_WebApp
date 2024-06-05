@@ -86,40 +86,40 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
   const columnsDLBD = [
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Tên SP</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>Tên SP</span>
       ),
       name: "name",
       dataIndex: ["name"],
       render: (dataRow: any) => {
-        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
+        return <span style={{ fontSize: "12px" }}>{dataRow}</span>;
       },
     },
 
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>Đ.Giá</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>Đ.Giá</span>
       ),
       name: "price",
       dataIndex: ["sellPrice"],
       textAlign: "right",
       render: (dataRow: number) => {
         return (
-          <span style={{ fontSize: "14px" }}>{dataRow?.toLocaleString()}đ</span>
+          <span style={{ fontSize: "12px" }}>{dataRow?.toLocaleString()}đ</span>
         );
       },
     },
     {
-      label: <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>SL</span>,
+      label: <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>SL</span>,
       name: "quantity",
       width: 50,
       dataIndex: ["quantity"],
       render: (dataRow: any) => {
-        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
+        return <span style={{ fontSize: "12px" }}>{dataRow}</span>;
       },
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "14px" }}>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>
           T.Tiền(vnđ)
         </span>
       ),
@@ -128,7 +128,7 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
       textAlign: "right",
       render: (dataRow: number) => {
         return (
-          <span style={{ fontSize: "14px" }}>{dataRow?.toLocaleString()}</span>
+          <span style={{ fontSize: "12px" }}>{dataRow?.toLocaleString()}</span>
         );
       },
     },
@@ -143,7 +143,7 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
       name: "product",
       dataIndex: ["product", "name"],
       render: (dataRow: any) => {
-        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
+        return <span style={{ fontSize: "12px" }}>{dataRow}</span>;
       },
     },
     {
@@ -153,10 +153,10 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
       name: "priceSale",
       dataIndex: ["priceSale"],
       width: 80,
-
+      textAlign: "right",
       render: (dataRow: any) => {
         return (
-          <span style={{ fontSize: "14px" }}>{dataRow.toLocaleString()}</span>
+          <span style={{ fontSize: "12px" }}>{dataRow.toLocaleString()}</span>
         );
       },
     },
@@ -166,7 +166,7 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
       dataIndex: ["quantity"],
       textAlign: "center",
       render: (dataRow: any) => {
-        return <span style={{ fontSize: "14px" }}>{dataRow}</span>;
+        return <span style={{ fontSize: "12px" }}>{dataRow}</span>;
       },
     },
     {
@@ -177,9 +177,10 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
       ),
       name: "subTotal",
       dataIndex: [],
+      textAlign: "right",
       render: (dataRow: any) => {
         return (
-          <span style={{ fontSize: "14px" }}>
+          <span style={{ fontSize: "12px" }}>
             {(dataRow?.priceSale * dataRow?.quantity).toLocaleString()}
           </span>
         );
@@ -187,7 +188,7 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
     },
     dataSource?.step.toString() == ORDER_DONE && {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+        <span style={{ whiteSpace: "nowrap", fontSize: "12px" }}>
           Hành động
         </span>
       ),
@@ -228,16 +229,32 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
         {`
           @media print {
             @page {
-              size: 120mm ${
-                containerHeight / 3.3
-              }mm; /* Đặt kích thước trang in là 80mm chiều rộng và tự động chiều cao */
-              margin: 1mm; /* Xóa lề của trang in */
+              size: 100%; /* Đặt kích thước trang in là 80mm chiều rộng và tự động chiều cao */
+              margin: 2mm 14mm 0 14mm; /* Xóa lề của trang in */
             }
-
             body {
               width: 100%; /* Đặt chiều rộng của nội dung in là 80mm */
               padding: 0; /* Xóa padding của nội dung in */
             }
+            table {
+              p,span{
+                font-size: 10px !important;  
+              }
+            }
+            p,span{
+              font-size: 10px !important;  
+            }
+            h6,h4,h3{
+              font-size: 12px !important;  
+            }
+            td{
+              padding: 0px !important;  
+              line-height: 1 !important;
+            }
+            table { page-break-inside:auto }
+            tr    { page-break-inside:avoid; page-break-after:auto }
+            thead { display:table-header-group }
+            tfoot { display:table-footer-group }
           }
         `}
       </style>
@@ -253,9 +270,9 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
             radius={8}
           />
           <div>
-            <p style={{ fontSize: 16, fontWeight: 500 }}>
+            <h4 style={{ fontSize: 16, fontWeight: 500 }}>
               {dataSource?.garage?.shortName}
-            </p>
+            </h4>
             <p style={{ fontSize: 14, fontWeight: 500 }}>
               Địa chỉ: {dataSource?.garage?.address}
             </p>
@@ -264,19 +281,13 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
             </p>
           </div>
         </div>
-        <Divider
-          my={"lg"}
-          mx={"lg"}
-          color="black"
-          size={1.5}
-          variant="dashed"
-        />
+        <Divider my={5} mx={5} color="black" size={1.5} variant="dashed" />
 
         <div className={styles.box}>
           <div className={styles.title}>
-            <span>Chi tiết đơn hàng</span>
+            <h3>Chi tiết đơn hàng</h3>
           </div>
-          <Flex px={20} w={"100%"} justify={"space-between"}>
+          <Flex px={10} w={"100%"} justify={"space-between"}>
             <p style={{ fontSize: 14, fontWeight: 500 }}>
               {dayjs(dataSource?.dateTime).format("HH:mm DD:MM:YY")}
             </p>
@@ -286,31 +297,36 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
           </Flex>
         </div>
         <div className={styles.infoCustomer}>
-          <div style={{ display: "flex", gap: "6px" }}>
+          <p style={{ display: "flex", gap: "6px" }}>
             KH:
-            <Typo size="tiny">{dataSource?.customer?.fullName}</Typo>
-          </div>
-          <div style={{ display: "flex", gap: "6px" }}>
+            <Typo size="tiny">
+              <p>
+                {dataSource?.customer?.fullName} -{" "}
+                {dataSource?.customer?.phoneNumber}
+              </p>
+            </Typo>
+          </p>
+          {/* <p style={{ display: "flex", gap: "6px" }}>
             ĐT:
-            <Typo size="tiny">{dataSource?.customer?.phoneNumber}</Typo>
-          </div>
-          <div style={{ display: "flex", gap: "6px" }}>
+            <Typo size="tiny">
+              <p>{dataSource?.customer?.phoneNumber}</p>
+            </Typo>
+          </p> */}
+          <p style={{ display: "flex", gap: "6px" }}>
             XE:
-            <Typo size="tiny">{dataSource?.car?.numberPlates}</Typo>
-          </div>
-          <div style={{ display: "flex", gap: "6px" }}>
+            <Typo size="tiny">
+              <p>{dataSource?.car?.numberPlates}</p>
+            </Typo>
+          </p>
+          <p style={{ display: "flex", gap: "6px" }}>
             Ghi chú:
-            <Typo size="tiny">{dataSource?.note}</Typo>
-          </div>
+            <Typo size="tiny">
+              <p>{dataSource?.note}</p>
+            </Typo>
+          </p>
         </div>
-        <Divider
-          my={"lg"}
-          mx={"lg"}
-          color="black"
-          size={1.5}
-          variant="dashed"
-        />
-        <div style={{ marginTop: "20px" }}></div>
+        <Divider my={5} mx={5} color="black" size={1.5} variant="dashed" />
+        <div style={{ marginTop: "10px" }}></div>
         <Grid>
           <Grid.Col span={12}>
             {dataSource?.orderDLBDId ? (
@@ -325,16 +341,18 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
                 columns={columns}
                 data={dataSource?.orderDetails}
                 isBorder={false}
+                fontSize={12}
               />
             )}
           </Grid.Col>
         </Grid>
 
-        <Divider my={"lg"} color="black" size={1} variant="dashed" />
+        <Divider my={5} color="black" size={1} variant="dashed" />
         <div
           style={{
-            marginTop: "40px",
+            marginTop: "10px",
             display: "flex",
+            width: "100%",
             justifyContent: "space-between",
           }}
         >
@@ -354,7 +372,7 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
           <p>VAT: </p>
           <p>0</p>
         </div>
-        <Divider my={"lg"} color="black" size={1} variant="dashed" />
+        <Divider my={5} color="black" size={1} variant="dashed" />
         <div
           style={{
             display: "flex",
@@ -374,14 +392,14 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
               dataSource?.garage?.qrCodeBank &&
               `${AppConstants.contentRootUrl}${dataSource?.garage?.qrCodeBank}`
             }
-            width={120}
-            height={120}
+            width={100}
+            height={100}
           />
           <p>Wifi:{dataSource?.garage?.wifiInfo}</p>
         </div>
-        <div className={styles.titleThanks}>
+        <h6 className={styles.titleThanks}>
           Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
-        </div>
+        </h6>
       </div>
 
       {openedModal && (

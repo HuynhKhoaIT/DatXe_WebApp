@@ -20,6 +20,7 @@ export default function TableBasic({
   className,
   onRow,
   isBorder = true,
+  fontSize,
 }: any) {
   const router = useRouter();
   return (

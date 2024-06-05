@@ -16,6 +16,8 @@ import styles from "./InfoCart.module.scss";
 import ImageField from "@/app/components/form/ImageField";
 import { AppConstants } from "@/constants";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "@mantine/hooks";
+import ItemCartMobile from "./ItemCartMobile";
 export default function InfoCart({
   loading,
   calculateSubTotal,
@@ -26,6 +28,8 @@ export default function InfoCart({
   form,
   ModalAcceptOrder,
 }: any) {
+  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
+
   useEffect(() => {
     const fetchData = async () => {
       form.setFieldValue("subTotal", calculateSubTotal());
@@ -50,7 +54,7 @@ export default function InfoCart({
         }
         return (
           <ImageField
-            radius="md "
+            radius="md"
             height={40}
             width={80}
             src={images[0] && `${AppConstants.contentRootUrl}${images[0]}`}
@@ -152,9 +156,26 @@ export default function InfoCart({
       },
     },
   ];
+
   return (
     <Card className="shop-cart-wrapper" p={0} pb={10}>
-      <TableBasic data={cartData} columns={columns} />
+      {!useMediaQuery ? (
+        <TableBasic data={cartData} columns={columns} />
+      ) : (
+        <div>
+          {cartData?.map((item: any, index: number) => {
+            return (
+              <ItemCartMobile
+                data={item}
+                incrementQuantity={incrementQuantity}
+                decrementQuantity={decrementQuantity}
+                handleOpenModalDelete={handleOpenModalDelete}
+                key={index}
+              />
+            );
+          })}
+        </div>
+      )}
       <Card className="cart-footer" p={0}>
         <Grid justify="space-between">
           <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
