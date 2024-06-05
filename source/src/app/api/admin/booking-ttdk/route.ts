@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       message: "Bearer token not defined",
     });
   } catch (error) {
-    return new NextResponse(error.message, { status: 500 });
+    return new NextResponse("error.message", { status: 500 });
   }
 }
 
@@ -43,6 +43,6 @@ export async function POST(request: NextRequest) {
     //     headers: { 'Content-Type': 'application/json' },
     // });
   } catch (error) {
-    return new NextResponse(error.message, { status: 500 });
+    return new NextResponse("error.message", { status: 500 });
   }
 }
