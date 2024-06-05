@@ -23,8 +23,13 @@ async function getUser(token: string) {
   };
   const res = await axios.get(`${GET_PROFILE_ENDPOINT}`, config);
   const us = res.data.data as Promise<IUser>;
+  // return us;
   if (await us) {
-    return await prisma.user.findFirst(res.data.data.id);
+    return await prisma.user.findFirst({
+      where: {
+        id: res.data.data.id.toString()
+      }
+    });
   }
   return;
 }
