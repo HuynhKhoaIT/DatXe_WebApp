@@ -182,19 +182,20 @@ img {
 @media print {
     body * {
         visibility: hidden;
-        // width: 80mm;
+        // width: 140mm;
     }
     .printable,
     .printable * {
         visibility: visible;
     }
     .printable {
-        page-break-inside:avoid;
-        page-break-after:auto; 
+        // page-break-inside:avoid;
+        // page-break-after:auto; 
         position:relative;
         display:block;  
     }
-   
+    
+
     .no-print, .no-print *
     {
         display: none !important;

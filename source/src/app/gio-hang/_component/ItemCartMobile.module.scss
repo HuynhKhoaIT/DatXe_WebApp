@@ -1,0 +1,48 @@
+.item{
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    .infoItem{
+        flex: 1;
+        flex-shrink: 0;
+        .infoName{
+            display: flex;
+            justify-content: space-between;
+            .name{
+                font-size: 1rem;
+                font-weight: 500;
+                color: var(--title-color);
+                margin-right: 1rem;
+                flex: 1;
+            }
+        }
+        .infoPrice{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .priceSale{
+                font-size: 1rem;
+                font-weight: 700;
+                color: var(--primary-color);
+            }
+            .priceProduct{
+                font-size: 0.8rem;
+                color:var(--text-color-sale-price)
+            }
+        }
+
+        .infoQuantity{
+            display: flex;
+            border: 1px solid #ddd;
+            border-radius: 0.2rem;
+            .minus,.plus{
+                width: 2rem;
+                text-align: center;
+            }
+            .quantity{
+                width: 2rem;
+                text-align: center;
+            }
+        }
+    }
+}

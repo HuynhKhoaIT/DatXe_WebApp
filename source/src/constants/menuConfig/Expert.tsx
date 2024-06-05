@@ -20,6 +20,12 @@ const menuConfigExpert = [
       { label: "Công việc & Lịch đặt", link: "/admin/orders" },
     ],
   },
+  {
+    label: "TTDK",
+    icon: IconNotes,
+    initiallyOpened: true,
+    links: [{ label: "Danh sách đơn hàng", link: "/admin/booking-ttdk" }],
+  },
 
   {
     label: "Sản phẩm",

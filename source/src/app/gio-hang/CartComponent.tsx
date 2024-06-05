@@ -82,16 +82,21 @@ export default function CartComponent({ myAccount }: any) {
   };
   // giảm số lượng sản phẩm
   const decrementQuantity = (idProduct: number) => {
-    const updateCartData = cartData.map((item: any) => {
-      if (item.quantity === 1) {
-        deleteItem(idProduct);
-      } else if (item.productId === idProduct && item.quantity > 1) {
-        item.quantity -= 1;
-        item.subTotal -= item.subTotal;
+    const updateCartData = cartData.reduce((updatedCart: any[], item: any) => {
+      if (item.productId === idProduct) {
+        if (item.quantity === 1) {
+          deleteItem(idProduct);
+          return updatedCart;
+        } else if (item.quantity > 1) {
+          item.quantity -= 1;
+          item.subTotal -= item.price;
+        }
       }
+      updatedCart.push(item);
+      return updatedCart;
+    }, []);
 
-      return item;
-    });
+    console.log(updateCartData);
     setData(storageKeys.CART_DATA, updateCartData);
     setCartData(updateCartData);
   };

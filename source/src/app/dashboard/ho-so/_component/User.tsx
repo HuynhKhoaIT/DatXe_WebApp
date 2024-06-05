@@ -12,7 +12,7 @@ import {
   LoadingOverlay,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { notifications } from "@mantine/notifications";
+
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import styles from "./index.module.scss";
