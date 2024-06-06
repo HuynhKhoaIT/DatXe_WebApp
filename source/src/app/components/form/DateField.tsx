@@ -16,6 +16,7 @@ export default function DateField({
   required = false,
   defaultValue,
   type,
+  classNames,
 }: any) {
   return (
     <DateInput
@@ -33,6 +34,7 @@ export default function DateField({
       defaultValue={defaultValue}
       size="lg"
       radius={0}
+      classNames={classNames}
       type={type}
     />
   );

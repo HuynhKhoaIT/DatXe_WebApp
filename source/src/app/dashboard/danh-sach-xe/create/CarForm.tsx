@@ -18,6 +18,7 @@ import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
+import styles from "./index.module.scss";
 export default function CarForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem, brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
@@ -99,7 +100,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
   }, [dataDetail]);
 
   return (
-    <Box pos="relative">
+    <Box
+      pos="relative"
+      style={{ backgroundColor: "var(--background-color-light)" }}
+    >
       <LoadingOverlay
         visible={isLoadingBrand}
         zIndex={99}
@@ -108,13 +112,20 @@ export default function CarForm({ isEditing, dataDetail }: any) {
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Grid gutter={12}>
           <Grid.Col span={12}>
-            <Card withBorder shadow="sm">
+            <Card
+              withBorder
+              shadow="sm"
+              style={{ backgroundColor: "var(--background-color-light)" }}
+            >
               <Grid gutter={10}>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
                     withAsterisk
                     {...form.getInputProps("numberPlates")}
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Biển số xe"
                     type="text"
@@ -123,7 +134,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("color")}
                     label="Màu xe"
@@ -133,7 +147,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("carBrandId")}
                     label="Hãng xe"
@@ -150,7 +167,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("carNameId")}
                     label="Dòng xe"
@@ -168,7 +188,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("carYearId")}
                     label="Năm sản xuất"
@@ -181,7 +204,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("vinNumber")}
                     label="Số vin"
@@ -191,7 +217,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("machineNumber")}
                     label="Số máy"
@@ -201,6 +230,9 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
                     {...form.getInputProps("maintenanceDeadline")}
                     label="Hạn bảo dưỡng"
                     placeholder="Hạn bảo dưỡng"
@@ -210,6 +242,9 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
                     {...form.getInputProps("registrationDeadline")}
                     label="Hạng đăng kiểm"
                     placeholder="Hạng đăng kiểm"
@@ -219,6 +254,9 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
                     {...form.getInputProps("materialInsuranceDeadline")}
                     label="Hạn BHVC"
                     placeholder="Hạn BHVC"
@@ -228,6 +266,9 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
                     {...form.getInputProps("civilInsuranceDeadline")}
                     label="Hạn BHDS"
                     placeholder="Hạn BHDS"
@@ -237,7 +278,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -250,7 +294,10 @@ export default function CarForm({ isEditing, dataDetail }: any) {
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    classNames={{
+                      input: styles.inputDashboard,
+                    }}
+                    size="md"
                     radius={0}
                     label="Mô tả chi tiết"
                     minRows={4}

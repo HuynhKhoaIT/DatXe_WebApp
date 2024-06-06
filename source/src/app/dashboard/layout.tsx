@@ -13,6 +13,8 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ROLE_CUSTOMER } from "@/constants";
+import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
+import HeaderTopMobileApp from "../layout/common/mobile/HeaderTopMobileApp";
 
 interface IProps {
   children: ReactNode;
@@ -30,11 +32,12 @@ export default async function DashboardLayout({ children }: IProps) {
     <Fragment>
       {isMobile ? (
         <main>
-          <HeaderTopMobile />
+          <HeaderTopMobileApp />
           <Container className={styles.wrapperMobile}>
             <div className={styles.content}>{children}</div>
           </Container>
-          <FooterMobile />
+          {/* <FooterMobile /> */}
+          <FooterMobileApp />
         </main>
       ) : (
         <main>
