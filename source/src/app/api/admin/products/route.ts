@@ -52,7 +52,53 @@ export async function GET(request: NextRequest) {
             const products = await getProducts(requestData);
 
             return NextResponse.json(products);
-        } else {
+        }else if(session && session.user?.role == 'ADMIN'){
+            const { searchParams } = new URL(request.url);
+            const categoryId = searchParams.get('categoryId');
+            const brandIdFilter = searchParams.get('brand');
+            let titleFilter = '';
+            const searchText = searchParams.get('s');
+            if (searchText) {
+                titleFilter = searchText;
+            }
+            let currentPage = 1;
+            let take = 10;
+            let limit = Number(searchParams.get('limit'));
+            let page = searchParams.get('page');
+
+            if (page) {
+                currentPage = Number(page);
+            }
+            if (limit) {
+                take = Number(limit);
+            } else {
+                limit = 10;
+            }
+            const skip = take * (currentPage - 1);
+            let statusFilter = 'PUBLIC';
+            if (searchParams.get('status')) {
+                statusFilter = searchParams.get('status')!.toUpperCase();
+            }
+            let garageId: any = {};
+            if(searchParams.get("garageId")){
+                garageId = searchParams.get('garageId');
+            }
+            // return NextResponse.json(session.user?.garageId)
+            const requestData = {
+                category: categoryId,
+                brand: brandIdFilter,
+                s: titleFilter,
+                limit: limit,
+                page: page,
+                garageId: garageId,
+                isProduct: searchParams.get('isProduct'),
+            };
+            const products = await getProducts(requestData);
+
+            return NextResponse.json(products);
+        } 
+        
+        else {
             throw new Error(' ');
         }
     } catch (error: any) {
