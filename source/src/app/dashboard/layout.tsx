@@ -33,9 +33,9 @@ export default async function DashboardLayout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderTopMobileApp />
-          <Container className={styles.wrapperMobile}>
+          <div className={styles.wrapperMobile}>
             <div className={styles.content}>{children}</div>
-          </Container>
+          </div>
           {/* <FooterMobile /> */}
           <FooterMobileApp />
         </main>

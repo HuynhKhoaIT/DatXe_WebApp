@@ -4,12 +4,10 @@ import React, { Fragment, useState } from "react";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { ActionIcon, Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
 import { FieldTypes, stepOrderOptions } from "@/constants/masterData";
-import Link from "next/link";
 import {
   IconCircleCheck,
   IconEye,
   IconPencil,
-  IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
@@ -17,15 +15,12 @@ import { useDisclosure } from "@mantine/hooks";
 import SearchForm from "@/app/components/form/SearchForm";
 import TableBasic from "@/app/components/table/Tablebasic";
 import ListPage from "@/app/components/layout/ListPage";
-import FilterTable from "@/app/components/common/FilterTable";
-import { useOrders } from "../hooks/order/useOrder";
-import { IconCheck } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
-import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
-import { textAlign } from "html2canvas/dist/types/css/property-descriptors/text-align";
+import { DATE_FORMAT_DISPLAY, ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import { getOptionsCar } from "../order-manager/until";
 import { useBookingTTDK } from "../hooks/bookingTTDK/useBookingTTDK";
 import { useSession } from "next-auth/react";
+import dayjs from "dayjs";
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
   {
@@ -76,10 +71,7 @@ export default function BookingTTDK() {
         </span>
       ),
       name: "fullName",
-      dataIndex: ["customer"],
-      render: (dataRow: any) => {
-        return <span>{dataRow.fullName}</span>;
-      },
+      dataIndex: ["fullname"],
     },
     {
       label: (
@@ -88,10 +80,7 @@ export default function BookingTTDK() {
         </span>
       ),
       name: "phoneNumber",
-      dataIndex: ["customer"],
-      render: (dataRow: any) => {
-        return <span>{dataRow.phoneNumber}</span>;
-      },
+      dataIndex: ["phone"],
     },
     {
       label: (
@@ -100,7 +89,7 @@ export default function BookingTTDK() {
         </span>
       ),
       name: "phoneNumber",
-      dataIndex: ["car", "numberPlates"],
+      dataIndex: ["licensePlates"],
       render: (dataRow: any) => {
         return <span>{dataRow}</span>;
       },
@@ -108,57 +97,24 @@ export default function BookingTTDK() {
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tổng đơn hàng
+          Ngày đặt lịch
         </span>
       ),
+      name: "dateSchedule",
+      dataIndex: ["dateSchedule"],
       textAlign: "right",
-
-      name: "total",
-      dataIndex: ["total"],
-      render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
-      },
-    },
-
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tình trạng
-        </span>
-      ),
-      name: "kind",
-      dataIndex: ["step"],
-      width: "100px",
-      render: (record: any, index: number) => {
-        const matchedStatus = stepOrderOptions.find(
-          (item) => item.value === record.toString()
-        );
-        if (matchedStatus) {
-          return (
-            <Badge
-              radius={0}
-              size="lg"
-              variant="light"
-              color={matchedStatus.color}
-              key={index}
-            >
-              {matchedStatus.label}
-            </Badge>
-          );
-        }
+      render: (dataRow: any) => {
+        return <span>{dayjs(dataRow).format(DATE_FORMAT_DISPLAY)}</span>;
       },
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Đồng bộ</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giờ</span>
       ),
-      name: "orderDLBDId",
-      textAlign: "center",
-      dataIndex: ["orderDLBDId"],
-      width: "100px",
-
-      render: (dataRow: number) => {
-        if (dataRow) return <IconCheck color="green" size={20} />;
+      name: "time",
+      dataIndex: ["time"],
+      render: (dataRow: any) => {
+        return <span>{dataRow}</span>;
       },
     },
     {
@@ -186,7 +142,7 @@ export default function BookingTTDK() {
                 p={5}
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push(`/admin/order-manager/${record?.id}`);
+                  router.push(`/admin/booking-ttdk/${record?.id}`);
                 }}
               >
                 <IconPencil size={16} color="blue" />
@@ -251,27 +207,6 @@ export default function BookingTTDK() {
             initialValues={initialValuesSearch}
           />
         }
-        actionBar={
-          <Flex justify={"end"} align={"center"}>
-            <Link
-              href={{
-                pathname: `/admin/order-manager/create`,
-              }}
-            >
-              <Button
-                size="lg"
-                h={{ base: 42, md: 50, lg: 50 }}
-                radius={0}
-                leftSection={<IconPlus size={18} />}
-              >
-                Tạo đơn
-              </Button>
-            </Link>
-          </Flex>
-        }
-        filterCategory={
-          <FilterTable stepOptions={stepOrderOptions} keyQuery="step" />
-        }
         style={{ height: "100%" }}
         titleTable={true}
         baseTable={
@@ -282,7 +217,7 @@ export default function BookingTTDK() {
             totalPage={list?.totalPage}
             setPage={setPage}
             activePage={page}
-            onRow={`/admin/order-manager`}
+            onRow={`/admin/booking-ttdk`}
           />
         }
       />

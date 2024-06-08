@@ -17,6 +17,7 @@ export default function HeaderTopMobileApp() {
   });
 
   let lastPage: any = parts?.[parts?.length - 1];
+  console.log(lastPage);
   return (
     <div className={styles.headerTop}>
       <Container>
@@ -31,6 +32,8 @@ export default function HeaderTopMobileApp() {
           <div className={styles.title}>
             {lastPage == "create" ? (
               <h2>{res.create}</h2>
+            ) : parts?.length - 1 == 3 ? (
+              <h2>{res.detail}</h2>
             ) : (
               <h2>{res.label}</h2>
             )}

@@ -82,11 +82,13 @@
         border-radius: 12px;
     }
 }
+
 .wrapperMobile {
-    margin-top: 5rem;
+    margin-top: 4rem;
     margin-bottom: 1rem;
-    min-height: 80vh;
+    // min-height: 80vh;
     margin-bottom: 70px;
+    background-color: #ededed;
 }
 .wrapperAdmin {
     display: flex;

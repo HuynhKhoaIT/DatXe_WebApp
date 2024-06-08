@@ -1,7 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { deleteCar, setCarDefault } from "@/utils/car";
-import { useSession } from "next-auth/react";
 import {
   IconChevronRight,
   IconEye,
@@ -17,8 +15,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
-import { useAddCar } from "@/app/dashboard/hooks/car/useAddCar";
 import PreviewModal from "./_component/PreviewModal";
+import ModalSetCarDefault from "./_component/ModalSetCarDefault";
+import ModalDeleteCar from "./_component/ModalDeleteCar";
 export default function CarsListPage({
   carsData,
   page,
@@ -26,7 +25,6 @@ export default function CarsListPage({
   deleteItem,
   loading,
 }: any) {
-  const { setDefault } = useAddCar();
   const [
     openedPreviewCar,
     { open: openPreviewCar, close: closePreviewCar },
@@ -44,19 +42,11 @@ export default function CarsListPage({
   const [detail, setDetail] = useState<any>({});
   const [deleteRow, setDeleteRow] = useState("");
 
-  const handleDeleteCar = (carId: string) => {
-    deleteItem(carId);
-  };
-
   const [dataCarDefault, setdataCarDefault] = useState<any>();
 
   const handleRadioChange = (selectedRecord: any) => {
     openSetDefault();
     setdataCarDefault(selectedRecord);
-  };
-  const handleCarDefault = () => {
-    setDefault({ uuId: dataCarDefault?.uuId });
-    closeSetDefault();
   };
 
   const columns = [
@@ -173,7 +163,7 @@ export default function CarsListPage({
   ];
   return (
     <div className={styles.wrapper}>
-      <div>
+      <div className={styles.createCar}>
         <Flex justify={"end"} align={"center"}>
           <Link
             href={{
@@ -208,69 +198,18 @@ export default function CarsListPage({
           activePage={page}
         />
       </div>
-      <Modal title="Delete" opened={openedDeleteCar} onClose={closeDeleteCar}>
-        <div>Bạn có muốn xoá không?</div>
-        <Group justify="end" style={{ marginTop: 10 }}>
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            variant="filled"
-            key="cancel"
-            onClick={closeDeleteCar}
-            color="red"
-            leftSection={<IconBan />}
-          >
-            Huỷ bỏ
-          </Button>
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            style={{ marginLeft: "12px" }}
-            onClick={() => {
-              closeDeleteCar();
-              handleDeleteCar(deleteRow);
-            }}
-            variant="filled"
-            leftSection={<IconChevronRight />}
-          >
-            Tiếp tục
-          </Button>
-        </Group>
-      </Modal>
 
-      <Modal
-        size={400}
-        opened={openedSetDefault}
-        onClose={closeSetDefault}
-        title="Xe mặc định"
-        lockScroll={false}
-      >
-        <div>Biển số: {dataCarDefault?.numberPlates}</div>
-        <Group justify="end" style={{ marginTop: 10 }}>
-          <Button
-            size="lg"
-            radius={0}
-            h={{ base: 42, md: 50, lg: 50 }}
-            variant="outline"
-            color="red"
-            onClick={closeSetDefault}
-            leftSection={<IconBan />}
-          >
-            Huỷ bỏ
-          </Button>
-          <Button
-            size="lg"
-            h={{ base: 42, md: 50, lg: 50 }}
-            radius={0}
-            variant="filled"
-            onClick={() => handleCarDefault()}
-          >
-            Cập nhật
-          </Button>
-        </Group>
-      </Modal>
+      <ModalDeleteCar
+        openedDeleteCar={openedDeleteCar}
+        closeDeleteCar={closeDeleteCar}
+        deleteItem={deleteItem}
+        deleteRow={deleteRow}
+      />
+      <ModalSetCarDefault
+        openedSetDefault={openedSetDefault}
+        closeSetDefault={closeSetDefault}
+        dataCarDefault={dataCarDefault}
+      />
       <PreviewModal
         opened={openedPreviewCar}
         onOk={closePreviewCar}

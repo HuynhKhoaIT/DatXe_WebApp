@@ -100,10 +100,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
   }, [dataDetail]);
 
   return (
-    <Box
-      pos="relative"
-      style={{ backgroundColor: "var(--background-color-light)" }}
-    >
+    <Box pos="relative">
       <LoadingOverlay
         visible={isLoadingBrand}
         zIndex={99}
@@ -237,6 +234,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     label="Hạn bảo dưỡng"
                     placeholder="Hạn bảo dưỡng"
                     clearable={true}
+                    size="md"
                     maxDate={new Date()}
                   />
                 </Grid.Col>
@@ -245,6 +243,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     classNames={{
                       input: styles.inputDashboard,
                     }}
+                    size="md"
                     {...form.getInputProps("registrationDeadline")}
                     label="Hạng đăng kiểm"
                     placeholder="Hạng đăng kiểm"
@@ -259,6 +258,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     }}
                     {...form.getInputProps("materialInsuranceDeadline")}
                     label="Hạn BHVC"
+                    size="md"
                     placeholder="Hạn BHVC"
                     clearable={true}
                     maxDate={new Date()}
@@ -269,6 +269,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     classNames={{
                       input: styles.inputDashboard,
                     }}
+                    size="md"
                     {...form.getInputProps("civilInsuranceDeadline")}
                     label="Hạn BHDS"
                     placeholder="Hạn BHDS"

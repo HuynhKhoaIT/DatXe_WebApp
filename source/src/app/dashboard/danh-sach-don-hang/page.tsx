@@ -1,5 +1,6 @@
 import RenderContext from "@/app/components/elements/RenderContext";
 import OrdersListPage from "@/app/layout/dashboard/danh-sach-don-hang/OrdersListPage";
+import OrdersListPageMobile from "@/app/layout/mobile/dashboard/danh-sach-don-hang/OrdersListPageMobile";
 import { getMyOrders } from "@/app/libs/prisma/order";
 import { getMyAccount } from "@/utils/user";
 export default async function Products() {
@@ -12,7 +13,7 @@ export default async function Products() {
           defaultTheme: OrdersListPage,
         },
         mobile: {
-          defaultTheme: OrdersListPage,
+          defaultTheme: OrdersListPageMobile,
         },
       }}
       dataSource={orders}

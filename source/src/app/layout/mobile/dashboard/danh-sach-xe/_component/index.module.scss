@@ -1,5 +1,6 @@
 .boxCar{
     padding: 1rem;
+    padding-top: 2rem;
     border-radius: 10px;
     background-color: var(--background-color-light);
     margin-bottom: 1.8rem;
@@ -7,12 +8,55 @@
     min-height: 280px;
     box-shadow: var(--box-shadow-primary);
 }
+.carDefault{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 28px;
+    gap: 1rem;
+    top: -12px;
+    left: -4px;
+    background-color: var(--theme-color);
+    color:var(--title-white);
+    font-size: 1rem;
+    font-weight: 550;
+    padding: 0 10px;
+    border-radius: 8px;
+    .iconCheck{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--title-white);
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+    }
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(238, 244, 255, 0.5); /* Đặt màu nền mờ với độ mờ */
+    backdrop-filter: blur(3px); /* Làm mờ */
+}
+.action{
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    right: 0;
+}
 .listInfo{
     display: flex;
+    position: relative;
+    z-index: 1;
     flex-direction: column;
     // color: var(--title-white);
     font-size: 1rem;
     padding-bottom: 1rem;
+   
     .plates{
         // color: var(--title-white);
     }

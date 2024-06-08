@@ -1,0 +1,90 @@
+.itemOrder{
+    background-color: var(--white-background);
+    padding: 0 10px;
+
+}
+.row_1{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0.8rem 0 0 0 ;
+    .numberPlates{
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--blue-color);
+    }
+    .step{
+        color: var(--primary-color);
+    }
+}
+.row_2{
+    padding-bottom: 0.2rem;
+    border-bottom: 0.5px solid #ddd;
+    .numberPlates{
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--blue-color);
+    }
+    
+}
+.row_3{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 0.5px solid #ddd;
+    padding: 2px 0;
+    .totalPrice{
+        color: var(--primary-color);
+    
+    }
+
+}
+.itemProduct{
+    display: flex;
+    gap:0.5rem;
+    padding-top: 0.6rem;
+    padding-bottom: 12px;
+    .infoProduct{
+        flex: 1;
+        flex-shrink: 0;
+        .quantity{
+            display: flex;
+            justify-content: flex-end;
+            font-size: 0.8rem;
+        }
+        .infoPrice{
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.3rem;
+            .price{
+                font-size: 12px;
+                color:var(--text-color-sale-price)
+            }
+            .priceSale{
+                font-size: 14px;
+                color: var(--primary-color);
+            }
+        }
+    }
+    
+}
+.buttonDetail{
+    display: flex;
+    margin-top: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border-top: 0.5px solid #ddd;
+    border-bottom: 0.5px solid #ddd;
+    padding: 2px 0;
+}
+.btnReview{
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.code{
+    font-size: 12px;
+    color: var(--title-color-2);
+}

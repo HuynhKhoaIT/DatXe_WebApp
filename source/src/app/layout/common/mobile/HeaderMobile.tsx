@@ -5,10 +5,14 @@ import { useForm } from "@mantine/form";
 import { ActionIcon, Input } from "@mantine/core";
 import {
   IconBuildingStore,
+  IconCar,
+  IconClipboard,
+  IconKey,
   IconLogin,
   IconLogout,
   IconMenu,
   IconSearch,
+  IconShoppingCart,
   IconUser,
 } from "@tabler/icons-react";
 import { useState } from "react";
@@ -26,6 +30,7 @@ import ButtonAddAddress from "../desktop/_component/ButtonAddAddress";
 import { brandData } from "@/constants/masterData";
 import ActionIconCartMobile from "./_component/ActionIconCart";
 import { removeItem } from "@/utils/until/localStorage";
+import { IconBell } from "@tabler/icons-react";
 
 const DynamicMenu = dynamic(() => import("./NavDrawer"), {
   ssr: false,
@@ -128,17 +133,40 @@ const HeaderMobile = () => {
       >
         <ul className={styles.nav}>
           {role == ROLE_CUSTOMER && (
-            <li>
-              <Link href="/dashboard" className={styles.navItem}>
-                <IconUser size={18} />
-                Hồ sơ
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link href="/dashboard/ho-so" className={styles.navItem}>
+                  <IconUser size={18} />
+                  Thông tin cá nhân
+                </Link>
+              </li>
+              <li>
+                <Link href="/dashboard/danh-sach-xe" className={styles.navItem}>
+                  <IconKey size={18} />
+                  Danh sách xe
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/dashboard/danh-sach-don-hang"
+                  className={styles.navItem}
+                >
+                  <IconClipboard size={18} />
+                  Đơn hàng
+                </Link>
+              </li>
+              <li>
+                <Link href="/thong-bao" className={styles.navItem}>
+                  <IconBell size={18} />
+                  Thông báo
+                </Link>
+              </li>
+            </>
           )}
           {role == ROLE_CUSTOMER && (
-            <li className={styles.navItem}>
-              <Link href="/gio-hang">
-                <img src={IconCart.src} alt="bell" />
+            <li>
+              <Link href="/gio-hang" className={styles.navItem}>
+                <IconShoppingCart size={18} />
                 Giỏ hàng
               </Link>
             </li>
