@@ -16,6 +16,8 @@ export default function DateField({
   required = false,
   defaultValue,
   type,
+  classNames,
+  size = "lg",
 }: any) {
   return (
     <DateInput
@@ -31,8 +33,9 @@ export default function DateField({
       locale={locale}
       required={required}
       defaultValue={defaultValue}
-      size="lg"
+      size={size}
       radius={0}
+      classNames={classNames}
       type={type}
     />
   );

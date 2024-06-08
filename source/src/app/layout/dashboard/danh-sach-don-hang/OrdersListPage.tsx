@@ -9,8 +9,10 @@ import { IconEye } from "@tabler/icons-react";
 import Link from "next/link";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
+import { textAlign } from "html2canvas/dist/types/css/property-descriptors/text-align";
 export default function OrdersListPage({ dataSource }: any) {
   // pagination
+  const router = useRouter();
   const itemsPerPage: number = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const paginatedData = dataSource?.data?.slice(
@@ -20,6 +22,31 @@ export default function OrdersListPage({ dataSource }: any) {
   const columns = [
     {
       label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
+          Mã đơn hàng
+        </span>
+      ),
+      dataIndex: [],
+      name: "code",
+      render: (dataRow: any) => {
+        return (
+          <span
+            onClick={() => {
+              router.push(`/dashboard/danh-sach-don-hang/${dataRow.slug}`);
+            }}
+            style={{
+              color: "blue",
+              cursor: "pointer",
+              borderBottom: "1px solid blue",
+            }}
+          >
+            {dataRow?.code}
+          </span>
+        );
+      },
+    },
+    {
+      label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Biển số</span>
       ),
       name: "licensePlates",
@@ -27,18 +54,10 @@ export default function OrdersListPage({ dataSource }: any) {
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Mã đơn hàng
-        </span>
-      ),
-      name: "code",
-      dataIndex: ["code"],
-    },
-    {
-      label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Ngày sửa</span>
       ),
       name: "dateTime",
+      textAlign: "right",
       dataIndex: ["dateTime"],
       render: (dataRow: Date) => {
         return <span>{dayjs(dataRow).format("DD/MM/YYYY HH:mm")}</span>;
@@ -65,8 +84,9 @@ export default function OrdersListPage({ dataSource }: any) {
         </span>
       ),
       name: "kind",
+      textAlign: "center",
       dataIndex: ["step"],
-      width: "100px",
+      width: "140px",
       render: (record: any, index: number) => {
         const matchedStatus = stepOrderOptions.find(
           (item) => item.value === record.toString()
@@ -84,40 +104,6 @@ export default function OrdersListPage({ dataSource }: any) {
             </Badge>
           );
         }
-      },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Hành động
-        </span>
-      ),
-      dataIndex: [],
-      width: "100px",
-      render: (record: any) => {
-        return (
-          <>
-            <Link
-              href={{
-                pathname: `/dashboard/danh-sach-don-hang/${record.slug}`,
-              }}
-            >
-              <Tooltip label="Chi tiết" withArrow position="bottom">
-                <Button
-                  size="lg"
-                  radius={0}
-                  style={{ margin: "0 5px" }}
-                  variant="transparent"
-                  color="gray"
-                  p={5}
-                  onClick={() => {}}
-                >
-                  <IconEye size={16} />
-                </Button>
-              </Tooltip>
-            </Link>
-          </>
-        );
       },
     },
   ];

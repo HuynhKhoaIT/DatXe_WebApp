@@ -23,11 +23,7 @@ export default function CarSavePage({ params }: { params: { slug: string } }) {
   }, [params?.slug]);
   return (
     <>
-      <Box maw={"100%"} mx="auto" className={styles.content}>
-        <Typo size="small" type="bold" style={{ color: "var(--theme-color)" }}>
-          Cập nhật xe
-        </Typo>
-        <Space h="md" />
+      <Box maw={"100%"} mx="auto">
         <Suspense fallback={<LoadingComponent />}>
           <CarForm isEditing={true} dataDetail={car} />
         </Suspense>

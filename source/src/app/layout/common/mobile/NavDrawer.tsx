@@ -27,9 +27,6 @@ const NavDrawer = ({
           {/* <ArrowLeft onClick={onClose}/> */}
           <Typo size="small">{headerTitle}</Typo>
         </div>
-        <div onClick={onClose} className={styles.close}>
-          <IconX />
-        </div>
       </div>
       {children}
     </Drawer>

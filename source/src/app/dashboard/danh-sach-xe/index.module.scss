@@ -12,6 +12,7 @@
 }
 @media screen and (max-width: 600px) {
     .wrapper {
+        background-color: var(--background-color-light);
         .content {
             .title {
                 padding: 0.6rem 0;

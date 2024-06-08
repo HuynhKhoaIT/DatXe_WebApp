@@ -1,0 +1,17 @@
+.wrapper {
+    position: relative;
+    .content {
+        background-color: var(--white-background);
+        .title {
+            padding: 1rem 30px;
+            color: var(--primary-orange);
+        }
+        .table {
+            padding: 20px;
+        }
+    }
+    .createCar{
+        position: absolute;
+        right: 0;
+    }
+}

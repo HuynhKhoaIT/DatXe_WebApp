@@ -139,3 +139,25 @@ export const AppConstants = {
 export const NOTIFICATION_SYSTEM_KIND = 0;
 export const NOTIFICATION_ORDER_KIND = 1;
 export const NOTIFICATION_MARKETING_KIND = 2;
+
+export const MY_CAR_TITLE = "Xe của tôi";
+export const MY_CAR_DETAIL_TITLE = "Chi tiết xe";
+export const MY_CAR_CREATE_TITLE = "Thêm xe mới";
+export const MY_CAR_EDIT_TITLE = "Sửa thông tin xe";
+
+export const PROFILE_TITLE = "Hồ sơ";
+export const ORDERS_TITLE = "Đơn hàng";
+export const ORDERS_DETAIL_TITLE = "Thông tin đơn hàng";
+
+export const NOTI_TITLE = "Thông báo";
+
+export const titleHeaderKeys = {
+  MY_CAR_TITLE,
+  MY_CAR_DETAIL_TITLE,
+  MY_CAR_CREATE_TITLE,
+  MY_CAR_EDIT_TITLE,
+  PROFILE_TITLE,
+  ORDERS_TITLE,
+  ORDERS_DETAIL_TITLE,
+  NOTI_TITLE,
+};

@@ -128,11 +128,11 @@ const fetchOrderDetail = async (id: string) => {
   return await response.json();
 };
 
-const useOrderDetail = (id: string) => {
+const useBookingDetail = (id: string) => {
   return useQuery({
     queryKey: [QUERY_KEY.orderDetail, id],
     queryFn: () => fetchOrderDetail(id),
   });
 };
 
-export { useOrderDetail, fetchOrderDetail };
+export { useBookingDetail, fetchOrderDetail };

@@ -19,6 +19,8 @@ const BasicModal = ({
   okText = "Ok",
   cancelText = "Cancel",
   withCloseButton = true,
+  fullScreen,
+  radius,
 }: any) => {
   return (
     <Modal
@@ -31,7 +33,9 @@ const BasicModal = ({
       lockScroll={true}
       centered={centered}
       withCloseButton={withCloseButton}
-      // zIndex={999}
+      fullScreen={fullScreen}
+      zIndex={999}
+      radius={radius}
     >
       <div className={styles.modalContent}>{children}</div>
       {footer && (
