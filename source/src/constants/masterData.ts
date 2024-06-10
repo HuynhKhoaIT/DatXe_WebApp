@@ -51,8 +51,8 @@ export const sexOptions = [
 ];
 
 export const stepOrderOptions = [
-  { value: ORDER_PENDING, label: "Đang chờ", color: "pink" },
-  { value: ORDER_ACCEPT, label: "Tiếp nhận", color: "blue" },
+  { value: ORDER_PENDING, label: "Chờ xác nhận", color: "pink" },
+  { value: ORDER_ACCEPT, label: "Đã xác nhận", color: "blue" },
   // { value: ORDER_QUOTE, label: 'Báo giá', color: 'yellow' },
   // { value: ORDER_REPAIR, label: 'Đang sửa chữa', color: 'orange' },
   { value: ORDER_DONE, label: "Hoàn thành", color: "green" },

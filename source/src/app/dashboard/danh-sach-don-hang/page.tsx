@@ -3,9 +3,12 @@ import OrdersListPage from "@/app/layout/dashboard/danh-sach-don-hang/OrdersList
 import OrdersListPageMobile from "@/app/layout/mobile/dashboard/danh-sach-don-hang/OrdersListPageMobile";
 import { getMyOrders } from "@/app/libs/prisma/order";
 import { getMyAccount } from "@/utils/user";
-export default async function Products() {
+export default async function Products({ searchParams }: any) {
   const profile = await getMyAccount();
-  const orders = await getMyOrders({ phoneNumber: profile?.phone });
+  const orders = await getMyOrders({
+    phoneNumber: profile?.phone,
+    step: searchParams.step,
+  });
   return (
     <RenderContext
       components={{

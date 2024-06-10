@@ -18,8 +18,9 @@ const menuConfigAdmin = [
     icon: IconNotes,
     initiallyOpened: true,
     links: [
-      { label: "Sản phẩm nổi bật", link: "/admin/system-products" },
-      { label: "Dịch vụ nổi bật", link: "/admin/system-services" },
+      { label: "Danh sách sản phẩm", link: "/admin/system-products" },
+      { label: "Sản phẩm nổi bật", link: "/admin/products-hot" },
+      { label: "Dịch vụ nổi bật", link: "/admin/services-hot" },
     ],
   },
   {

@@ -1,43 +1,24 @@
 "use client";
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ResponseError } from "@/utils/until/ResponseError";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { QUERY_KEY } from "@/constants";
 import { useSearchParams } from "next/navigation";
 import useFetch from "@/app/hooks/useFetch";
 import { getOptionsCategories } from "@/utils/until";
-import { toast } from "react-toastify";
 const queryClient = new QueryClient();
 
 const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
   const response = await fetch(
-    `/api/admin/home-page?${searchParams}&page=${page}&isProduct=1`
+    `/api/admin/products?${searchParams}&page=${page}`
   );
   if (!response.ok) {
     throw new ResponseError("Failed to fetch products", response);
   }
   return await response.json();
 };
-const deleteProduct = async (id: string): Promise<any> => {
-  const response = await fetch(`/api/admin/home-page/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id }),
-  });
-  if (!response.ok) {
-    throw new ResponseError("Failed to delete product", response);
-  }
-  return await response.json();
-};
 
-interface useProductsHome {
+interface useProduct {
   products: any;
   isLoading: boolean;
   isFetching: boolean;
@@ -45,7 +26,6 @@ interface useProductsHome {
   page?: number;
   setPage: Dispatch<SetStateAction<number>>;
   categoryOptions: any;
-  deleteItem: any;
 }
 
 function mapError(error: unknown | undefined): undefined | string {
@@ -55,9 +35,8 @@ function mapError(error: unknown | undefined): undefined | string {
   return "Unknown error";
 }
 
-export const useProductsHome = (): useProductsHome => {
+export const useProduct = (): useProduct => {
   const queryClient = useQueryClient();
-
   const searchParams = useSearchParams();
   const [page, setPage] = useState<number>(1);
 
@@ -68,7 +47,7 @@ export const useProductsHome = (): useProductsHome => {
     error,
     isPlaceholderData,
   } = useQuery({
-    queryKey: [QUERY_KEY.productHome, searchParams.toString(), page],
+    queryKey: [QUERY_KEY.products, searchParams.toString(), page],
     queryFn: () => fetchProducts(searchParams.toString(), page),
     refetchOnWindowFocus: false,
     retry: 2,
@@ -77,29 +56,18 @@ export const useProductsHome = (): useProductsHome => {
   useEffect(() => {
     if (!isPlaceholderData && page < products?.totalPage) {
       queryClient.prefetchQuery({
-        queryKey: [QUERY_KEY.productHome, searchParams.toString(), page + 1],
+        queryKey: [QUERY_KEY.products, searchParams.toString(), page + 1],
         queryFn: () => fetchProducts(searchParams.toString(), page + 1),
         retry: 2,
       });
     } else if (!isPlaceholderData && searchParams) {
       queryClient.prefetchQuery({
-        queryKey: [QUERY_KEY.productHome, searchParams.toString(), page],
+        queryKey: [QUERY_KEY.products, searchParams.toString(), page],
         queryFn: () => fetchProducts(searchParams.toString(), page),
         retry: 2,
       });
     }
   }, [products, searchParams, isPlaceholderData, page, queryClient]);
-
-  const { mutate: deleteItem } = useMutation({
-    mutationFn: deleteProduct,
-    onSuccess: () => {
-      toast.success("Xoá sản phẩm nổi bật thành công");
-
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEY.productHome, searchParams.toString(), page],
-      });
-    },
-  });
 
   const { data: categoryOptions } = useFetch({
     queryKey: [QUERY_KEY.optionsCategory],
@@ -118,6 +86,23 @@ export const useProductsHome = (): useProductsHome => {
     page,
     setPage,
     categoryOptions,
-    deleteItem,
   };
 };
+
+// get detail
+const fetchProductDetail = async (id: string) => {
+  const response = await fetch(`/api/admin/products/${id}`);
+  if (!response.ok) {
+    throw new ResponseError("Failed to fetch products", response);
+  }
+  return await response.json();
+};
+
+const useProductDetail = (id: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEY.productDetail, id],
+    queryFn: () => fetchProductDetail(id),
+  });
+};
+
+export { useProductDetail, fetchProductDetail };

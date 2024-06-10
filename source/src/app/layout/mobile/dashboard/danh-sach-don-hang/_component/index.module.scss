@@ -88,3 +88,36 @@
     font-size: 12px;
     color: var(--title-color-2);
 }
+
+// filter order
+.filterOrder{
+    display: flex;
+    gap: 1.2rem;
+    padding: 0 10px;
+    line-height: 28px;
+    // justify-content: space-between;
+
+    overflow-x: auto;
+    background-color: var(--white-background);
+    box-shadow: var(--box-shadow-primary);
+    margin-bottom: 10px;
+    .itemFilter{
+        font-size: 1rem;
+        text-wrap: nowrap;
+    }
+    .itemFitlerActive{
+        text-wrap: nowrap;
+        color: var(--primary-color);
+        border-bottom: 1.6px solid var(--primary-color);
+    }
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.filterOrder::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.filterOrder {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

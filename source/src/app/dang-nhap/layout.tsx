@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import HeaderMobile from "@/app/layout/common/mobile/HeaderMobile";
 import FooterMobile from "@/app/layout/common/mobile/Footer/FooterMobile";
+import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
 interface IProps {
   children: ReactNode;
 }
@@ -18,10 +19,15 @@ export default function LoginLayout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderMobile />
-          <div style={{ marginTop: "var(--header-height-mobile)" }}>
+          <div
+            style={{
+              marginTop: "var(--header-height-mobile)",
+              marginBottom: "var(--bottom-height-mobile)",
+            }}
+          >
             {children}
           </div>
-          <FooterMobile />
+          <FooterMobileApp />
         </main>
       ) : (
         <main>

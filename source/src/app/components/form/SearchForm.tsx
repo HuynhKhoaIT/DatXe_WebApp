@@ -29,11 +29,9 @@ import {
   getOptionsYearCar,
 } from "@/utils/until";
 import useFetch from "@/app/hooks/useFetch";
-import AutocompleteField from "./AutoCompleteField";
 import { FieldTypes } from "@/constants/masterData";
 import { AutocompleteClearable } from "./AutoCompleteClear";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { DatePickerInput } from "@mantine/dates";
 export default function SearchForm({
   searchData,
   brandFilter = false,
@@ -72,7 +70,6 @@ export default function SearchForm({
     if (values?.yearId) {
       values.brand = values?.yearId;
     }
-    console.log("values", values);
     const queryString = Object.keys(values)
       .filter((key) => values[key] !== null)
       .map(
