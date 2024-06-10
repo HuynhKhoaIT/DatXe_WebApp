@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./globals.css";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
-import "@mantine/notifications/styles.css";
 import { ModalsProvider } from "@mantine/modals";
 import FcmTokenComp from "./firebaseForeground";
 import { GoogleAnalytics } from "@next/third-parties/google";

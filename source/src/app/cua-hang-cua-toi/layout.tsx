@@ -5,6 +5,7 @@ import Header from "../layout/common/desktop/HeaderDesktop";
 import { MyFooter } from "../layout/common/desktop/Footer/FooterDesktop";
 import HeaderMobile from "../layout/common/mobile/HeaderMobile";
 import FooterMobile from "../layout/common/mobile/Footer/FooterMobile";
+import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
 export const dynamic = "force-dynamic";
 
 interface IProps {
@@ -24,11 +25,12 @@ export default function Layout({ children }: IProps) {
             style={{
               minHeight: "calc(80vh - 67px)",
               marginTop: "var(--header-height-mobile)",
+              marginBottom: "var(--bottom-height-mobile)",
             }}
           >
             {children}
           </div>
-          <FooterMobile />
+          <FooterMobileApp />
         </main>
       ) : (
         <main>

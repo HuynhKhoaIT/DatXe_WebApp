@@ -30,12 +30,14 @@ import axios from "axios";
 import { QUERY_KEY } from "@/constants";
 import { useAddAccount } from "../../hooks/profile/useAddProfile";
 import { toast } from "react-toastify";
+import { useMediaQuery } from "@mantine/hooks";
 export default function UserProfile({ myAccount, isLoading }: any) {
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
   const { updateItem, isPending } = useAddAccount();
   const [ward, setWard] = useState<any>();
@@ -132,22 +134,22 @@ export default function UserProfile({ myAccount, isLoading }: any) {
               onSubmit={form.onSubmit((values) => handleUpdateProfile(values))}
               className={styles.formUser}
             >
-              <Grid gutter={12}>
-                <Grid.Col span={{ base: 6 }}>
+              <Grid gutter={16} w={"100%"}>
+                <Grid.Col span={{ base: 5 }}>
                   <Text size={"16px"} c={"#3d4465"} mb={"6px"}>
                     Ảnh đại diện
                   </Text>
-                  <CropImageLink
-                    shape="round"
-                    defaultImage={avatarUrl}
-                    uploadFileThumbnail={uploadFileThumbnail}
-                    aspect={1 / 1}
-                    form={form}
-                    name="avatar"
-                  />
+                  <div className={styles.avatar}>
+                    <CropImageLink
+                      shape="round"
+                      defaultImage={avatarUrl}
+                      uploadFileThumbnail={uploadFileThumbnail}
+                      aspect={1 / 1}
+                      form={form}
+                      name="avatar"
+                    />
+                  </div>
                 </Grid.Col>
-              </Grid>
-              <Grid gutter={16} w={"100%"}>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                   <TextInput
                     size="lg"
@@ -246,7 +248,7 @@ export default function UserProfile({ myAccount, isLoading }: any) {
                 </Grid.Col>
               </Grid>
               <Group pt={20} justify="end" className="col-12 text-right ">
-                <Button type="submit" loading={isPending}>
+                <Button fullWidth={isMobile} type="submit" loading={isPending}>
                   Cập nhật
                 </Button>
               </Group>

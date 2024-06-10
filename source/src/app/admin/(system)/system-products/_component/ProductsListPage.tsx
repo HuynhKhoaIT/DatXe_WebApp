@@ -1,36 +1,23 @@
 "use client";
-import { Badge, Box, Button, Tooltip } from "@mantine/core";
-import { FieldTypes, kindProductOptions } from "@/constants/masterData";
-import ListPage from "@/app/components/layout/ListPage";
-import SearchForm from "@/app/components/form/SearchForm";
-import TableBasic from "@/app/components/table/Tablebasic";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
-import ImageField from "@/app/components/form/ImageField";
-import { IconPlus } from "@tabler/icons-react";
-import { useProducts } from "../../hooks/products/useProducts";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-import { Fragment } from "react";
-import { useAddProductHome } from "../../hooks/home-page/useAddProductHome";
+import ImageField from "@/app/components/form/ImageField";
+import SearchForm from "@/app/components/form/SearchForm";
+import ListPage from "@/app/components/layout/ListPage";
+import TableBasic from "@/app/components/table/Tablebasic";
 import { AppConstants } from "@/constants";
+import {
+  FieldTypes,
+  kindProductOptions,
+  statusOptions,
+} from "@/constants/masterData";
+import { Badge } from "@mantine/core";
+import { Fragment } from "react";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Sản phẩm nổi bật", href: "/admin/system-products" },
-  { title: "Thêm sản phẩm" },
+  { title: "Sản phẩm" },
 ];
-
-export default function ChooseProducts() {
-  const {
-    products,
-    isLoading,
-    isFetching,
-    error,
-    page,
-    setPage,
-    categoryOptions,
-  } = useProducts();
-
-  const { addItem, isPending } = useAddProductHome();
+export default function ProductsListPage({ products }: any) {
   const columns = [
     {
       label: (
@@ -40,7 +27,7 @@ export default function ChooseProducts() {
       dataIndex: ["images"],
       width: "90px",
       render: (data: any) => {
-        const images = JSON.parse(data);
+        const images = JSON?.parse(data);
         return (
           <ImageField
             radius="md"
@@ -96,7 +83,7 @@ export default function ChooseProducts() {
       width: "100px",
       render: (record: any, index: number) => {
         const matchedStatus = kindProductOptions.find(
-          (item) => item.value === record.toString()
+          (item) => item.value === record?.toString()
         );
         if (matchedStatus) {
           return (
@@ -116,26 +103,29 @@ export default function ChooseProducts() {
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Hành động
+          Trạng thái
         </span>
       ),
-      dataIndex: [],
+      name: "status",
+      dataIndex: ["status"],
       width: "100px",
       render: (record: any) => {
-        return (
-          <Tooltip label="Thêm" withArrow position="bottom">
-            <Button
-              style={{ margin: "0 5px" }}
-              p={5}
-              onClick={() => {
-                addItem(record);
-              }}
-              leftSection={<IconPlus size={16} />}
-            >
-              Thêm
-            </Button>
-          </Tooltip>
+        const matchedStatus = statusOptions.find(
+          (item) => item.value === record
         );
+        if (matchedStatus) {
+          return (
+            <Badge
+              variant="light"
+              radius={0}
+              size="lg"
+              color={matchedStatus.color}
+              key={record}
+            >
+              {matchedStatus.label}
+            </Badge>
+          );
+        }
       },
     },
   ];
@@ -145,36 +135,43 @@ export default function ChooseProducts() {
       placeholder: "Tên sản phẩm",
       type: FieldTypes.STRING,
     },
+    {
+      name: "isProduct",
+      placeholder: "Loại",
+      type: FieldTypes.SELECT,
+      data: kindProductOptions,
+    },
   ];
   const initialValuesSearch = {
     s: "",
+    isProduct: null,
+    brandId: null,
+    nameId: null,
+    yearId: null,
+    brand: null,
   };
-
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
+      {/* <FilterCategories categories={categoryOptions} /> */}
       <ListPage
         searchForm={
           <SearchForm
             searchData={searchData}
-            brandFilter={true}
+            brandFilter={false}
             initialValues={initialValuesSearch}
           />
         }
-        filterCategory={<FilterCategories categories={categoryOptions} />}
         style={{ height: "100%" }}
+        titleTable={true}
         baseTable={
           <TableBasic
-            loading={isLoading || isPending}
             data={products?.data}
             columns={columns}
             totalPage={products?.totalPage}
-            setPage={setPage}
-            activePage={page}
           />
         }
       />
-      <FooterSavePage isOk={false} />
     </Fragment>
   );
 }

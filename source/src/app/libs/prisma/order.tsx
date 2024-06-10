@@ -372,7 +372,7 @@ export async function reportTrafictDashboard(
         {
           dateTime: {
             gte: new Date(dateStart),
-            lte: new Date(dateEnd)
+            lte: new Date(dateEnd),
           },
           garageId,
           status: {
@@ -408,9 +408,7 @@ export async function createOrder(json: any) {
       if (json?.detail[0].garageId) {
         garageId = json.detail[0].garageId.toString();
       }
-    } catch (error) {
-      
-    }
+    } catch (error) {}
 
     return await prisma.$transaction(async (tx) => {
       if (!json.customerId) {
@@ -455,7 +453,7 @@ export async function createOrder(json: any) {
       let carId = json.carId;
       if (carId) {
         let carOrder = await showCar(carId);
-  
+
         if (carOrder?.garageId != garageId) {
           const carNewData = JSON.parse(JSON.stringify(carOrder));
           carNewData.garageId = garageId;
@@ -475,7 +473,7 @@ export async function createOrder(json: any) {
           garageId: garageId,
           userId: json.userId,
         });
-        console.log("carNew",carNew)
+        console.log("carNew", carNew);
         if (carNew) {
           carId = carNew.car?.id;
         }
@@ -521,7 +519,7 @@ export async function createOrder(json: any) {
         garageId: garageId,
         serviceAdvisorId: json.serviceAdvisorId ?? "1",
         createdById: json.createdById ?? "1",
-  
+
         orderDetails: {
           createMany: {
             data: orderDetails,
@@ -549,17 +547,14 @@ export async function createOrder(json: any) {
         },
       });
       return { order };
-    })
-    
-    
+    });
   } catch (error) {
     return { error };
   }
 }
 export async function createOrderClient(json: any) {
-
   try {
-    return prisma.$transaction(async (tx)=>{
+    return prisma.$transaction(async (tx) => {
       let garageId = "2";
       if (json.garageId) {
         garageId = json.garageId;
@@ -569,7 +564,10 @@ export async function createOrderClient(json: any) {
       }
       let customerId = json.customerId;
       // check customer
-      const customerInGarage = await getCustomerByPhone(json.phoneNumber,garageId);
+      const customerInGarage = await getCustomerByPhone(
+        json.phoneNumber,
+        garageId
+      );
       // return customerInGarage;
       if (!customerInGarage) {
         const userNewGarage = await createCustomer({
@@ -607,7 +605,7 @@ export async function createOrderClient(json: any) {
             carNameId: carInAdmin?.carNameId,
             carYearId: carInAdmin?.carYearId,
             garageId: garageId,
-            customerId: customerId
+            customerId: customerId,
           },
         });
         carId = carNewGarage.id;
@@ -676,13 +674,12 @@ export async function createOrderClient(json: any) {
               },
             },
           },
-          garage: true
+          garage: true,
         },
       });
-      await sendSMSAdminOrder(order)
+      await sendSMSAdminOrder(order);
       return { order };
-    })
-    
+    });
   } catch (error) {
     return { error };
   }
@@ -954,7 +951,10 @@ export async function updateOrder(id: string, json: any) {
         step: Number(json.step),
         subTotal: Number(json.subTotal),
         total: Number(json.total),
-        dateDone: Number(json.step) == Number(ORDER_DONE) ? new Date(dayjs().toString()) : orderOld?.dateDone,
+        dateDone:
+          Number(json.step) == Number(ORDER_DONE)
+            ? new Date(dayjs().toString())
+            : orderOld?.dateDone,
         garage: {
           connect: {
             id: json.garageId,
@@ -1017,7 +1017,7 @@ export async function updateOrderStep(
   cancelReason: string
 ) {
   const or = await findOrder(id, {});
-  
+
   const order = await prisma.order.update({
     where: {
       id: id,
@@ -1025,7 +1025,10 @@ export async function updateOrderStep(
     data: {
       step: Number(step),
       cancelReason,
-      dateDone: Number(step) == Number(ORDER_DONE) ? new Date(dayjs().toString()) : or.dateDone,
+      dateDone:
+        Number(step) == Number(ORDER_DONE)
+          ? new Date(dayjs().toString())
+          : or.dateDone,
     },
     include: {
       car: true,
@@ -1071,13 +1074,13 @@ export async function getCodeForOrder() {
   await getCodeForOrder();
 }
 
-export async function asyncToDLDB(id: string,orderId: number) {
+export async function asyncToDLDB(id: string, orderId: number) {
   return await prisma.order.update({
-    where:{
-      id
+    where: {
+      id,
     },
-    data:{
-      orderDLBDId: orderId
-    }
-  })
+    data: {
+      orderDLBDId: orderId,
+    },
+  });
 }

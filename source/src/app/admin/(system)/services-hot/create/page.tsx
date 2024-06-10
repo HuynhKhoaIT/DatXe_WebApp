@@ -16,7 +16,7 @@ import { useServices } from "../../hooks/services/services";
 import { AppConstants } from "@/constants";
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Dịch vụ nổi bật", href: "/admin/system-services" },
+  { title: "Dịch vụ nổi bật", href: "/admin/services-hot" },
   { title: "Thêm dịch vụ" },
 ];
 

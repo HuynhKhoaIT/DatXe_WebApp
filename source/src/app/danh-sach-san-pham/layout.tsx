@@ -12,6 +12,7 @@ import { kindProduct } from "@/constants/masterData";
 import { ButtonDeleteFilter } from "../components/elements/ButtonDeleteFilter";
 import FillterList from "../components/elements/Filter";
 import FillterCompoent from "../components/elements/Filter";
+import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
 export const dynamic = "force-dynamic";
 
 interface IProps {
@@ -37,12 +38,13 @@ export default async function Layout({ children }: IProps) {
             style={{
               minHeight: "calc(100vh - 67px)",
               marginTop: "var(--header-height-mobile)",
+              marginBottom: "var(--bottom-height-mobile)",
             }}
           >
             <FillterCompoent isFilterLocation={false} />
             {children}
           </div>
-          <FooterMobile />
+          <FooterMobileApp />
         </main>
       ) : (
         <main>

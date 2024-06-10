@@ -18,16 +18,15 @@ import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import { QueryClient } from "@tanstack/react-query";
-import { useNewsList } from "../../(admin)/hooks/news/useNews";
-import { useProductsHome } from "../hooks/home-page/ProductsHome";
 import { useServicesHome } from "../hooks/home-page/ServicesHome";
+import { useProductsHome } from "../hooks/home-page/ProductsHome";
 import ImageField from "@/app/components/form/ImageField";
 import { AppConstants } from "@/constants";
 const queryClient = new QueryClient();
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Dịch vụ nổi bật" },
+  { title: "Sản phẩm nổi bật" },
 ];
 const DynamicModalDeleteItem = dynamic(
   () => import("@/app/admin/_component/ModalDeleteItem"),
@@ -35,7 +34,7 @@ const DynamicModalDeleteItem = dynamic(
     ssr: false,
   }
 );
-const ServicesHot = () => {
+const ProductsHot = () => {
   const {
     products,
     isLoading,
@@ -45,7 +44,7 @@ const ServicesHot = () => {
     setPage,
     categoryOptions,
     deleteItem,
-  } = useServicesHome();
+  } = useProductsHome();
 
   const [deleteRow, setDeleteRow] = useState();
 
@@ -66,8 +65,19 @@ const ServicesHot = () => {
       dataIndex: ["product", "images"],
       width: "90px",
       render: (data: any) => {
-        const images = JSON?.parse(data);
-
+        let images;
+        if (data) images = JSON?.parse(data);
+        if (!images) {
+          return (
+            <Image
+              radius="md"
+              src={ImageDefult.src}
+              h={40}
+              w="auto"
+              fit="contain"
+            />
+          );
+        }
         return (
           <ImageField
             radius="md "
@@ -97,6 +107,8 @@ const ServicesHot = () => {
       ),
       name: "price",
       dataIndex: ["product", "price"],
+      textAlign: "right",
+
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -113,6 +125,7 @@ const ServicesHot = () => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
     },
+
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
@@ -134,7 +147,7 @@ const ServicesHot = () => {
               onClick={(e) => {
                 openDeleteProduct();
                 e.stopPropagation();
-                setDeleteRow(record?.product.id);
+                setDeleteRow(record.product?.id);
               }}
             >
               <IconTrash size={16} color="red" />
@@ -156,8 +169,8 @@ const ServicesHot = () => {
           icon={<IconInfoCircle />}
           mb={10}
         >
-          Danh sách dịch vụ nổi bật tối đa 10 dịch vụ, để thêm dịch vụ mới vui
-          lòng xoá dịch vụ cũ.
+          Danh sách sản phẩm nổi bật tối đa 10 sản phẩm, để thêm sản phẩm mới
+          vui lòng xoá sản phẩm cũ.
         </Alert>
       )}
 
@@ -167,7 +180,7 @@ const ServicesHot = () => {
             <Flex justify={"end"} align={"center"}>
               <Link
                 href={{
-                  pathname: `/admin/system-services/create`,
+                  pathname: `/admin/products-hot/create`,
                 }}
               >
                 <Button
@@ -206,4 +219,4 @@ const ServicesHot = () => {
     </Fragment>
   );
 };
-export default ServicesHot;
+export default ProductsHot;

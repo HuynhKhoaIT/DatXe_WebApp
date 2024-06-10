@@ -26,7 +26,7 @@ export default function Layout({ children }: IProps) {
             style={{
               minHeight: "calc(100vh - 67px)",
               marginTop: "var(--header-height)",
-              marginBottom: "var(--footer-height)",
+              marginBottom: "var(--bottom-height-mobile)",
             }}
           >
             {children}

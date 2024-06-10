@@ -51,7 +51,7 @@
 }
 .footer{
     display: flex;
-    height: 50px;
+    height: var(--bottom-height-mobile);
     justify-content: space-between;
     align-items: center ;
     background: var(--primary-orange);

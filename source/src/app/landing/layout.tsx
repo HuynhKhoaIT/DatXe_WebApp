@@ -7,6 +7,7 @@ import Header from "@/app/layout/common/desktop/HeaderDesktop";
 import { MyFooter } from "@/app/layout/common/desktop/Footer/FooterDesktop";
 import HeaderTop from "../layout/common/desktop/HeaderTop";
 import HeaderLanding from "../layout/common/desktop/HeaderLanding";
+import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
 interface IProps {
   children: ReactNode;
 }
@@ -20,10 +21,15 @@ export default function Layout({ children }: IProps) {
       {isMobile ? (
         <main>
           <HeaderMobile />
-          <div style={{ marginTop: "var(--header-height-mobile)" }}>
+          <div
+            style={{
+              marginTop: "var(--header-height-mobile)",
+              marginBottom: "var(--bottom-height-mobile)",
+            }}
+          >
             {children}
           </div>
-          <FooterMobile />
+          <FooterMobileApp />
         </main>
       ) : (
         <main>
