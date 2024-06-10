@@ -5,12 +5,13 @@ import { sendSMSOrder } from '@/utils/order';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { sendNotificationAdminOrderUntil } from '@/utils/notification';
+import { checkAuthToken } from '@/utils/auth';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (session) {
-            let garageId = (await getGarageIdByDLBDID(Number(session.user?.garageId))).toString();
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
+            let garageId = getAuth.garageId;
             const { searchParams } = new URL(request.url);
             let page = 1;
             let limit = 10;
