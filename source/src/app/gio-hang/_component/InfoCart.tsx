@@ -159,7 +159,7 @@ export default function InfoCart({
 
   return (
     <Card className="shop-cart-wrapper" p={0} pb={10}>
-      {!useMediaQuery ? (
+      {!isMobile ? (
         <TableBasic data={cartData} columns={columns} />
       ) : (
         <div>

@@ -121,7 +121,7 @@ export const useBookingTTDK = ({ token }: any): UseBookingTTDK => {
 
 // get detail
 const fetchOrderDetail = async (id: string) => {
-  const response = await fetch(`/api/admin/orders/${id}`);
+  const response = await fetch(`/api/admin/booking-ttdk/${id}`);
   if (!response.ok) {
     throw new ResponseError("Failed to fetch order", response);
   }

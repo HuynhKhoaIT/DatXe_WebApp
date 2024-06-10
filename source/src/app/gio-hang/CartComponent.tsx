@@ -8,6 +8,7 @@ import {
   TextInput,
   Card,
   Box,
+  Textarea,
 } from "@mantine/core";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import InfoCar from "./_component/InfoCar";
@@ -147,6 +148,7 @@ export default function CartComponent({ myAccount }: any) {
 
   const ModalAcceptOrder = () => {
     var dateTime = new Date();
+    var note: string = "";
     modals.openConfirmModal({
       title: (
         <Typo
@@ -158,18 +160,31 @@ export default function CartComponent({ myAccount }: any) {
         </Typo>
       ),
       children: (
-        <DateTimePicker
-          size="md"
-          // label="Thời gian"
-          defaultValue={dateTime}
-          placeholder="Chọn thời gian "
-          locale="vi"
-          onChange={(value) => {
-            if (value) {
-              dateTime = value;
-            }
-          }}
-        />
+        <div>
+          <DateTimePicker
+            size="md"
+            // label="Thời gian"
+            defaultValue={dateTime}
+            placeholder="Chọn thời gian "
+            locale="vi"
+            onChange={(value) => {
+              if (value) {
+                dateTime = value;
+              }
+            }}
+          />
+          <Textarea
+            size="lg"
+            radius={0}
+            label="Ghi chú của khách hàng"
+            minRows={2}
+            autosize={true}
+            onChange={(value: any) => {
+              note = value.target.value;
+            }}
+            placeholder="Ghi chú của khách hàng"
+          />
+        </div>
       ),
       size: "500px",
       // centered: true,
@@ -177,11 +192,12 @@ export default function CartComponent({ myAccount }: any) {
       labels: { confirm: "Tiếp tục", cancel: "Hủy" },
       onConfirm: () => {
         form.setFieldValue("dateTime", dateTime);
-        handleSubmit(form.values, dateTime);
+        handleSubmit(form.values, dateTime, note);
       },
     });
   };
-  const handleSubmit = async (values: any, dateTime: Date) => {
+  const handleSubmit = async (values: any, dateTime: Date, note: string) => {
+    console.log("note", note);
     if (cartData?.length == 0) {
       toast.error("Vui lòng thêm sản phẩm vào giỏ hàng");
       return;
@@ -191,6 +207,7 @@ export default function CartComponent({ myAccount }: any) {
     values.subTotal = calculateSubTotal();
     values.total = calculateSubTotal();
     values.userId = myAccount.id;
+    values.note = note;
     try {
       const res = await fetch(`/api/orders`, {
         method: "POST",
