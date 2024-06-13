@@ -18,6 +18,7 @@ export async function GET(request: NextRequest) {
                 limit: 10,
                 page: 1,
                 garageId: garageId,
+                s: searchParams.get('s')
             };
             if (searchParams.get('limit')) {
                 requestData.limit = Number(searchParams.get('limit'));

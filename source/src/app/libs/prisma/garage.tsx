@@ -1,7 +1,6 @@
 import { createBitlyGarage } from "@/utils/garage";
 import prisma from "../prismadb";
 import { randomString } from "@/utils";
-import { IGarage } from "@/interfaces/garage";
 
 export async function getGarages(requestData: any) {
   try {
@@ -25,6 +24,12 @@ export async function getGarages(requestData: any) {
     if (requestData.garageId) {
       garageId = requestData.garageId;
     }
+
+    let s = '';
+    if(requestData.s){
+      s = requestData.s;
+    }
+
     let include:any = {
       amenities: false
     };
@@ -36,6 +41,47 @@ export async function getGarages(requestData: any) {
         },
       }
     }
+
+    let where: any = {
+      OR: [
+        {
+          status: {
+            not: "DELETE",
+          },
+          routeId: garageId ? Number(garageId) : {},
+          name: {
+            contains: s
+          }
+        },
+        {
+          status: {
+            not: "DELETE",
+          },
+          routeId: garageId ? Number(garageId) : {},
+          phoneNumber: {
+            contains: s
+          }
+        },
+        {
+          status: {
+            not: "DELETE",
+          },
+          routeId: garageId ? Number(garageId) : {},
+          code: {
+            contains: s
+          }
+        },
+        {
+          status: {
+            not: "DELETE",
+          },
+          routeId: garageId ? Number(garageId) : {},
+          shortName: {
+            contains: s
+          }
+        },
+      ],
+    };
     const skip = take * (currentPage - 1);
     const [data, total] = await prisma.$transaction([
       prisma.garage.findMany({
@@ -44,25 +90,11 @@ export async function getGarages(requestData: any) {
         orderBy: {
           createdAt: "desc",
         },
-        where: {
-          AND: [
-            {
-              status: {
-                not: "DELETE",
-              },
-              routeId: garageId ? Number(garageId) : {},
-            },
-          ],
-        },
+        where,
         include: include,
       }),
       prisma.garage.count({
-        where: {
-          status: {
-            not: "DELETE",
-          },
-          routeId: garageId ? Number(garageId) : {},
-        },
+        where,
       }),
     ]);
     return {
