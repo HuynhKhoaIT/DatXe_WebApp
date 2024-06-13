@@ -109,6 +109,51 @@ export async function getGarages(requestData: any) {
   }
 }
 
+export async function autoComplete(requestData: any) {
+  let s = '';
+  if(requestData.s){
+    s = requestData.s;
+  }
+  return await prisma.garage.findMany({
+    select:{
+      id: true,
+      name: true,
+    },
+    take: 15,
+    orderBy: {
+      createdAt: 'desc'
+    },
+    where:{
+      OR:[
+        {
+          name: {
+            contains: s
+          },
+          status: {
+            not: 'DELETE'
+          }
+        },
+        {
+          code: {
+            contains: s
+          },
+          status: {
+            not: 'DELETE'
+          }
+        },
+        {
+          phoneNumber: {
+            contains: s
+          },
+          status: {
+            not: 'DELETE'
+          }
+        }
+      ]
+    }
+  })
+}
+
 export async function getGarageIdByDLBDID(dlbdId: number) {
   const rs = await prisma.garage.findFirst({
     where: {
