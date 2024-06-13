@@ -7,7 +7,11 @@ import { callApi } from "@/lib";
 import { getServerSession } from "next-auth";
 export default async function Products({ searchParams }: any) {
   // const session =  await getServerSession(authOptions);
-  const orders = await callApi(apiConfig.order.getList, {});
+  const orders = await callApi(apiConfig.order.getList, {
+    params: {
+      step: searchParams.step,
+    },
+  });
   return (
     <RenderContext
       components={{
