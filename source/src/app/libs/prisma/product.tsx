@@ -247,6 +247,50 @@ export async function getProductsClient(requestData: any) {
                 ]
               },
             },
+            {
+              categories,
+              keyword: {
+                contains: titleFilter!,
+              },
+              brands,
+              status: "PUBLIC",
+              garageId,
+              isProduct,
+              garage: {
+                OR: [
+                  {
+                    status: "PUBLIC",
+                    districtId
+                  },
+                  {
+                    status: "PUBLIC",
+                    provinceId: districtId
+                  }
+                ]
+              },
+            },
+            {
+              categories,
+              description: {
+                contains: titleFilter!,
+              },
+              brands,
+              status: "PUBLIC",
+              garageId,
+              isProduct,
+              garage: {
+                OR: [
+                  {
+                    status: "PUBLIC",
+                    districtId
+                  },
+                  {
+                    status: "PUBLIC",
+                    provinceId: districtId
+                  }
+                ]
+              },
+            },
           ],
         },
         include: {
