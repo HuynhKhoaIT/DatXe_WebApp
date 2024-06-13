@@ -42,39 +42,38 @@ export async function getGarages(requestData: any) {
       }
     }
 
+    let status:any = {
+      not: "DELETE",
+    }
+    if(requestData.status){
+      status = requestData.status
+    }
+
     let where: any = {
       OR: [
         {
-          status: {
-            not: "DELETE",
-          },
+          status,
           routeId: garageId ? Number(garageId) : {},
           name: {
             contains: s
           }
         },
         {
-          status: {
-            not: "DELETE",
-          },
+          status,
           routeId: garageId ? Number(garageId) : {},
           phoneNumber: {
             contains: s
           }
         },
         {
-          status: {
-            not: "DELETE",
-          },
+          status,
           routeId: garageId ? Number(garageId) : {},
           code: {
             contains: s
           }
         },
         {
-          status: {
-            not: "DELETE",
-          },
+          status,
           routeId: garageId ? Number(garageId) : {},
           shortName: {
             contains: s
