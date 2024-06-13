@@ -125,6 +125,7 @@ model Product {
   slug            String?
   sku             String?
   description     String?                 @db.Text
+  keyword         String?                 @db.Text
   price           Int                     @default(0)
   salePrice       Int                     @default(0)
   timeSaleStart   DateTime?               @default(now())
