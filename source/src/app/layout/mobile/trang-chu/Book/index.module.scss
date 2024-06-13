@@ -1,12 +1,15 @@
 .wrapper {
-    width: 80%;
-    padding: 10px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.2);
-    position: absolute;
-    top: 244px;
-    left: 50%;
-    transform: translateX(-50%);
+    background-color: var(--background-color-light);
+    .content{
+        width: 360px;
+        padding: 10px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.2);
+        display: block;
+        margin: auto;
+        margin-top: -30px;
+        position: sticky;
+    }
     .listItem {
         display: flex;
         flex-direction: column;

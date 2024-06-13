@@ -19,6 +19,12 @@
     height: 180px;
     padding: 10px 0;
 }
+@media only screen and (max-width: 780px) {
+    .wrapper {
+        width: 160px;
+        flex-shrink: 0;
+    }
+}
 
 @media only screen and (max-width: 600px) {
     .wrapper {

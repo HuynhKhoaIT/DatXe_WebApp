@@ -10,7 +10,11 @@ export default function CardReassons({ data }: any) {
         <Typo size="primary" type="bold" style={{ color: "#03121A" }}>
           {data?.title}
         </Typo>
-        <Typo size="tiny" style={{ color: "#03121A" }}>
+        <Typo
+          size="tiny"
+          style={{ color: "#03121A" }}
+          className={styles.description}
+        >
           {data?.content}
         </Typo>
       </div>

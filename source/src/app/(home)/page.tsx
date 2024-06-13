@@ -44,29 +44,18 @@ export default async function Home({ searchParams }: any) {
       isProduct: 1,
     },
   });
-  const productsHot = await callApi(apiConfig.products.getProductHot, {
-    params: {
-      isProduct: 1,
-    },
-  });
-  const servicesHot = await callApi(apiConfig.products.getServiceHot, {
-    params: {
-      isProduct: 0,
-    },
-  });
 
   const slideData = await callApi(apiConfig.banner.getList, {
     params: {
       kind: 1,
     },
   });
+
   const advertisement = await callApi(apiConfig.banner.getList, {
     params: {
       kind: 2,
     },
   });
-
-  const cate = await callApi(apiConfig.category.getList, {});
 
   return (
     <RenderContext

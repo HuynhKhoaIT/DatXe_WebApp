@@ -6,8 +6,25 @@
         padding-top: 180px;
     }
 }
+
 .categoryBox {
     background-color: var(--background-color-light);
     padding-top: 140px;
     padding-bottom: 45px;
+}
+
+@media only screen and (max-width: 780px) {
+    .wrapper {
+        .imagesShowRoom {
+            padding-top: 100px;
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        .imagesShowRoom {
+            padding-top: 180px;
+        }
+    }
 }
