@@ -118,6 +118,7 @@ export async function autoComplete(requestData: any) {
     select:{
       id: true,
       name: true,
+      phoneNumber: true
     },
     take: 15,
     orderBy: {
