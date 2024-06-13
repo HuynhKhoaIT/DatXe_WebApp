@@ -78,29 +78,42 @@ export async function getProducts(requestData: any) {
         isProduct = false;
       }
     }
-
+    let whereQuery: any = {
+      OR: [
+        {
+          categories,
+          name: {
+            contains: titleFilter!,
+          },
+          brands,
+          status: {
+            not: "DELETE",
+          },
+          garageId,
+          isProduct,
+          
+        },
+        {
+          categories,
+          sku: {
+            contains: titleFilter!,
+          },
+          brands,
+          status: {
+            not: "DELETE",
+          },
+          garageId,
+          isProduct,
+          
+        },
+      ],
+    }
     const [products, total] = await prisma.$transaction([
       prisma.product.findMany({
         take: take,
         skip: skip,
         orderBy: { createdAt: "desc" },
-        where: {
-          AND: [
-            {
-              categories,
-              name: {
-                contains: titleFilter!,
-              },
-              brands,
-              status: {
-                not: "DELETE",
-              },
-              garageId,
-              isProduct,
-              
-            },
-          ],
-        },
+        where: whereQuery,
         include: {
           reviews: true,
           categories: true,
@@ -108,22 +121,7 @@ export async function getProducts(requestData: any) {
         },
       }),
       prisma.product.count({
-        where: {
-          AND: [
-            {
-              categories,
-              name: {
-                contains: titleFilter!,
-              },
-              brands,
-              status: {
-                not: "DELETE",
-              },
-              garageId,
-              isProduct,
-            },
-          ],
-        },
+        where: whereQuery,
       }),
     ]);
 
