@@ -176,7 +176,7 @@ const apiConfig = {
   },
   order: {
     getList: {
-      baseURL: `${apiUrl}api/admin/orders`,
+      baseURL: `${apiUrl}api/orders`,
       method: "GET",
       headers: baseHeader,
     },

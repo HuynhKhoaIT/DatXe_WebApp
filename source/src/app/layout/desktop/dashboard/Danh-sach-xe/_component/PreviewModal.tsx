@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const router = useRouter();
+  console.log(data.vinNumber);
   return (
     <BasicModal
       size={800}
@@ -127,9 +128,9 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
                 input: styles.inputDashboard,
               }}
               readOnly
-              type="number"
-              label="Số vin"
-              value={Number(data.vinNumber)}
+              type="text"
+              label="Số khung"
+              value={data.vinNumber}
             />
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>

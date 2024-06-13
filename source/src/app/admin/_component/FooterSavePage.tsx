@@ -12,6 +12,9 @@ export default function FooterSavePage({
   isCancel = true,
   children,
   isAbsolute = true,
+  colorOk,
+  colorCancel = "red",
+  sizeButton = "lg",
 }: any) {
   const router = useRouter();
   return (
@@ -21,12 +24,12 @@ export default function FooterSavePage({
       {children}
       {isCancel && (
         <Button
-          size="lg"
+          size={sizeButton}
           radius={0}
-          h={{ base: 42, md: 50, lg: 50 }}
+          // h={{ base: 42, md: 50, lg: 50 }}
           variant="outline"
           key="cancel"
-          color="red"
+          color={colorCancel}
           leftSection={<IconBan size={16} />}
           onClick={() => router.back()}
         >
@@ -36,13 +39,14 @@ export default function FooterSavePage({
 
       {isOk && (
         <Button
-          size="lg"
+          size={sizeButton}
           radius={0}
-          h={{ base: 42, md: 50, lg: 50 }}
+          // h={{ base: 42, md: 50, lg: 50 }}
           loading={saveLoading}
           key="submit"
           type="submit"
           variant="filled"
+          color={colorOk}
           leftSection={<IconPlus size={16} />}
         >
           {okText}

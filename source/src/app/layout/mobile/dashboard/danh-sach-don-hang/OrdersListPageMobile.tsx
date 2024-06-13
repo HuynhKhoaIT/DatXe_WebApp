@@ -4,6 +4,7 @@ import ItemOrderMobile from "./_component/ItemOrderMobile";
 import FilterOrders from "./_component/FilterOrder";
 import Nodata from "@/assets/images/nodata.png";
 export default function OrdersListPageMobile({ dataSource }: any) {
+  console.log(dataSource);
   return (
     <div className={styles.wrapper}>
       <FilterOrders />
