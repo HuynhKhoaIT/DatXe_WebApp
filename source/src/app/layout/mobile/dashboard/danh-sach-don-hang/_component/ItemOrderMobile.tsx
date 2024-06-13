@@ -9,7 +9,9 @@ import { useRouter } from "next/navigation";
 export default function ItemOrderMobile({ data }: any) {
   console.log(data);
   const router = useRouter();
-  const images = JSON.parse(data?.orderDetails[0]?.product?.images);
+  const images =
+    data?.orderDetails[0]?.product?.images &&
+    JSON.parse(data?.orderDetails[0]?.product?.images);
   const matchedStatus: any = stepOrderOptions.find(
     (item) => item.value === data.step.toString()
   );

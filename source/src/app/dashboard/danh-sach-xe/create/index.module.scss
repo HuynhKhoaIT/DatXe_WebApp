@@ -9,8 +9,14 @@
         padding: 20px;
     }
 }
+.headerTitle{
+    border-bottom: 1px solid #eeeeee;
+}
 
 @media screen and (max-width: 600px) {
+    .headerTitle {
+        display: none;
+    }
     .wrapper {
         .title {
             padding: 0.6rem 0;

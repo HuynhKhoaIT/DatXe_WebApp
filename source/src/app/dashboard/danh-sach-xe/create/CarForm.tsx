@@ -207,9 +207,9 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     size="md"
                     radius={0}
                     {...form.getInputProps("vinNumber")}
-                    label="Số vin"
+                    label="Số khung"
                     type="text"
-                    placeholder="Số vin"
+                    placeholder="Số khung"
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -235,7 +235,6 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     placeholder="Hạn bảo dưỡng"
                     clearable={true}
                     size="md"
-                    maxDate={new Date()}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -248,7 +247,6 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     label="Hạng đăng kiểm"
                     placeholder="Hạng đăng kiểm"
                     clearable={true}
-                    maxDate={new Date()}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -261,7 +259,6 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     size="md"
                     placeholder="Hạn BHVC"
                     clearable={true}
-                    maxDate={new Date()}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -274,7 +271,6 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                     label="Hạn BHDS"
                     placeholder="Hạn BHDS"
                     clearable={true}
-                    maxDate={new Date()}
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
@@ -315,6 +311,8 @@ export default function CarForm({ isEditing, dataDetail }: any) {
           isAbsolute={false}
           saveLoading={loading}
           okText={isEditing ? "Cập nhật" : "Thêm"}
+          colorOk="blue"
+          sizeButton="md"
         />
       </form>
     </Box>
