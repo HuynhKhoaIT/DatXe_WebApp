@@ -11,7 +11,6 @@ export async function GET(request: NextRequest) {
     try {
         const getAuth = await checkAuthToken(request);
         if(getAuth!=null){
-            let garageId = getAuth.garageId;
             const { searchParams } = new URL(request.url);
             let page = 1;
             let limit = 10;
@@ -30,9 +29,10 @@ export async function GET(request: NextRequest) {
                 carId: searchParams.get('carId'),
                 limit: limit,
                 page: page,
-                garageId: garageId,
+                phoneNumber: getAuth.phoneNumber
             };
-            const orders = await getOrders(garageId, requestData);
+            
+            const orders = await getOrders("", requestData);
             return NextResponse.json(orders);
         }
         throw new Error('Chua dang nhap');

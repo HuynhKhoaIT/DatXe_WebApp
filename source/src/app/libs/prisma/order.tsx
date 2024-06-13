@@ -54,6 +54,24 @@ export async function getOrders(garage: string, requestData: any) {
     if (requestData.carId) {
       carId = requestData.carId;
     }
+    let phoneNumber = '';
+    if(requestData.phoneNumber){
+      phoneNumber = requestData.phoneNumber
+    }
+    let whereQuery:any = {
+      status: {
+        not: "DELETE",
+      },
+      createdById,
+      step,
+      customerId,
+      carId,
+      customer: {
+        phoneNumber
+      },
+      // method,
+      garageId: garageId,
+    }
     const [data, total] = await prisma.$transaction([
       prisma.order.findMany({
         take: take,
@@ -61,17 +79,7 @@ export async function getOrders(garage: string, requestData: any) {
         orderBy: {
           createdAt: "desc",
         },
-        where: {
-          status: {
-            not: "DELETE",
-          },
-          createdById,
-          step,
-          customerId,
-          carId,
-          // method,
-          garageId: garageId,
-        },
+        where: whereQuery,
         include: {
           serviceAdvisor: true,
           car: true,
@@ -97,17 +105,7 @@ export async function getOrders(garage: string, requestData: any) {
         },
       }),
       prisma.order.count({
-        where: {
-          status: {
-            not: "DELETE",
-          },
-          createdById,
-          step,
-          // method,
-          customerId,
-          carId,
-          garageId: garageId,
-        },
+        where: whereQuery,
       }),
     ]);
     return {
