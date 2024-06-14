@@ -45,6 +45,7 @@
         "eslint-config-next": "13.4.19",
         "firebase": "^10.12.0",
         "font-awesome": "^4.7.0",
+        "fuse.js": "^7.0.0",
         "google-map-react": "^2.2.1",
         "html2canvas": "^1.4.1",
         "js-sha256": "^0.11.0",
