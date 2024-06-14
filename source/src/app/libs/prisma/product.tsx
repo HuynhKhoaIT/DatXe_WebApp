@@ -173,11 +173,15 @@ export async function getProductsClient(requestData: any) {
     const brandIdFilter = requestData.brand;
     if (brandIdFilter) {
       brands = {
-        some: {
-          carModel: {
-            id: brandIdFilter,
-          },
-        },
+        OR: [
+          {
+            some: {
+              carModel: {
+                id: brandIdFilter,
+              },
+            },
+          }
+        ]
       };
     }
 
@@ -441,7 +445,15 @@ export async function getProductById(id: any) {
 
           seoMeta: true,
 
-          garage: true,
+          garage: {
+            select: {
+              id: true,
+              name: true,
+              shortName: true,
+              logo: true,
+              description: true
+            }
+          },
           marketingCampaignDetail: {
             take: 1,
             where: {
