@@ -322,7 +322,9 @@ export async function getOrderByCode(code: string) {
   try {
     const rs = await prisma.order.findFirst({
       where: {
-        code: code,
+        code: {
+          contains: code
+        },
       },
       include: {
         serviceAdvisor: true,
