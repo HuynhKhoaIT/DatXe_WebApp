@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../prismadb";
 import { createSeoMeta } from "./seoMeta";
-
 export async function getProducts(requestData: any) {
   try {
     let currentPage = 1;
@@ -216,6 +215,102 @@ export async function getProductsClient(requestData: any) {
       currentPage = Number(page);
     }
     const skip = take * (currentPage - 1);
+
+    const whereQuery:any = {
+      OR: [
+        {
+          categories,
+          name: {
+            contains: titleFilter!,
+          },
+          brands,
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          sku: {
+            contains: titleFilter!,
+          },
+          brands,
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          keyword: {
+            contains: titleFilter!,
+          },
+          brands,
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          description: {
+            contains: titleFilter!,
+          },
+          brands,
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+      ],
+    }
+
+    // return whereQuery;
+
     const [products, total] = await prisma.$transaction([
       prisma.product.findMany({
         take: take,
@@ -223,76 +318,7 @@ export async function getProductsClient(requestData: any) {
         orderBy: {
           createdAt: "desc",
         },
-        where: {
-          AND: [
-            {
-              categories,
-              name: {
-                contains: titleFilter!,
-              },
-              brands,
-              status: "PUBLIC",
-              garageId,
-              isProduct,
-              garage: {
-                OR: [
-                  {
-                    status: "PUBLIC",
-                    districtId
-                  },
-                  {
-                    status: "PUBLIC",
-                    provinceId: districtId
-                  }
-                ]
-              },
-            },
-            {
-              categories,
-              keyword: {
-                contains: titleFilter!,
-              },
-              brands,
-              status: "PUBLIC",
-              garageId,
-              isProduct,
-              garage: {
-                OR: [
-                  {
-                    status: "PUBLIC",
-                    districtId
-                  },
-                  {
-                    status: "PUBLIC",
-                    provinceId: districtId
-                  }
-                ]
-              },
-            },
-            {
-              categories,
-              description: {
-                contains: titleFilter!,
-              },
-              brands,
-              status: "PUBLIC",
-              garageId,
-              isProduct,
-              garage: {
-                OR: [
-                  {
-                    status: "PUBLIC",
-                    districtId
-                  },
-                  {
-                    status: "PUBLIC",
-                    provinceId: districtId
-                  }
-                ]
-              },
-            },
-          ],
-        },
+        where: whereQuery,
         include: {
           reviews: true,
           categories: true,
@@ -331,25 +357,10 @@ export async function getProductsClient(requestData: any) {
         },
       }),
       prisma.product.count({
-        where: {
-          AND: [
-            {
-              categories,
-              name: {
-                contains: titleFilter!,
-              },
-              brands,
-              status: "PUBLIC",
-              garageId,
-              isProduct,
-              garage: {
-                status: "PUBLIC",
-              },
-            },
-          ],
-        },
+        where: whereQuery,
       }),
     ]);
+
 
     products.map((p) => {
       if (p.marketingCampaignDetail.length) {

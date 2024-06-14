@@ -135,7 +135,7 @@ model Product {
   brands                                  CarModelsOnProducts[]
   images          Json?
   metaDescription String?                 @db.Text
-  brandDetail     String?
+  brandDetail     String?                 @db.Text
   supplier        Suppiler                @relation(fields: [supplierId], references: [id])
   supplierId      String                  @default("1")
   productBrand    ProductBrand            @relation(fields: [productBrandId], references: [id])
