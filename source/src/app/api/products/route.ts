@@ -1,6 +1,7 @@
 import prisma from '@/app/libs/prismadb';
 import { NextRequest, NextResponse } from 'next/server';
 import { getProductsClient } from '@/app/libs/prisma/product';
+
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
