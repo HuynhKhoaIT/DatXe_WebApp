@@ -1,0 +1,46 @@
+.wrapper {
+    display: block;
+    margin: auto;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 27px;
+}
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.average {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 27px;
+}
+.rating {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: rating;
+    margin: 12px 0;
+}
+.title {
+    // font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+.review {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.labelTextArea {
+    color: #000;
+    font-size: 18px;
+    font-weight: 500;
+}
+.iputTextArea {
+    font-size: 18px;
+}

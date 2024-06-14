@@ -180,6 +180,11 @@ const apiConfig = {
       method: "GET",
       headers: baseHeader,
     },
+    getById: {
+      baseURL: `${apiUrl}api/orders/:id`,
+      method: "GET",
+      headers: baseHeader,
+    },
     getOrderDLBD: {
       baseURL: `https://v2.dlbd.vn/api/v3/app/order-detail/:id`,
       method: "GET",

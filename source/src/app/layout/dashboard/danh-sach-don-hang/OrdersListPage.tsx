@@ -1,24 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { Table, Pagination, Badge, Tooltip, Button } from "@mantine/core";
-import { useRouter } from "next/navigation";
+import { Badge } from "@mantine/core";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { stepOrderOptions } from "@/constants/masterData";
-import { IconEye } from "@tabler/icons-react";
-import Link from "next/link";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
-import { textAlign } from "html2canvas/dist/types/css/property-descriptors/text-align";
+import Link from "next/link";
 export default function OrdersListPage({ dataSource }: any) {
-  // pagination
-  const router = useRouter();
-  const itemsPerPage: number = 10;
-  const [currentPage, setCurrentPage] = useState(1);
-  const paginatedData = dataSource?.data?.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
   const columns = [
     {
       label: (
@@ -30,10 +19,8 @@ export default function OrdersListPage({ dataSource }: any) {
       name: "code",
       render: (dataRow: any) => {
         return (
-          <span
-            onClick={() => {
-              router.push(`/dashboard/danh-sach-don-hang/${dataRow.slug}`);
-            }}
+          <Link
+            href={`/dashboard/danh-sach-don-hang/${dataRow.slug}`}
             style={{
               color: "blue",
               cursor: "pointer",
@@ -41,7 +28,7 @@ export default function OrdersListPage({ dataSource }: any) {
             }}
           >
             {dataRow?.code}
-          </span>
+          </Link>
         );
       },
     },
@@ -118,7 +105,8 @@ export default function OrdersListPage({ dataSource }: any) {
       <TableBasic
         className={styles.table}
         columns={columns}
-        data={paginatedData}
+        data={dataSource?.data}
+        totalPage={dataSource?.totalPage}
       />
     </div>
   );

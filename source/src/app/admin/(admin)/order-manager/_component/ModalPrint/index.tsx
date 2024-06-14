@@ -20,7 +20,11 @@ export default function ModalPrint({ openModal, close, dataDetail }: any) {
       size={isMobile ? "100%" : "400px"}
     >
       <div>
-        <OrderDetailPageMobile dataSource={dataDetail} close={close} />
+        <OrderDetailPageMobile
+          dataSource={dataDetail}
+          close={close}
+          isPrint={true}
+        />
       </div>
     </Modal>
   );

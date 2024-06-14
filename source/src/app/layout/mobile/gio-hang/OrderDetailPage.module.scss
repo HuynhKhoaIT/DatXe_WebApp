@@ -1,5 +1,13 @@
-.container{
-    background-color: #fff;
+@media screen and (min-width: 768px) {
+    .container{
+        background-color: #fff;
+        padding: 20px 20px;
+    }
+}
+@media screen and (max-width: 768px) {
+    .container{
+        background-color: #fff;
+    }
 }
 .wrapper {
     min-height: 60vh;
@@ -31,7 +39,7 @@
 }
 .infoGara{
     display: flex;
-    justify-content: space-between;
+    gap: 20;
 }
 .infoWifi{
     display: flex;
