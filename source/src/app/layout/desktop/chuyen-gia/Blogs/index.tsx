@@ -5,7 +5,10 @@ import { IProduct } from "@/interfaces/product";
 import ProductItem from "@/app/components/elements/product/ProductItem1";
 import BlogItem from "./BlogItem";
 import SlickCarousel from "@/app/components/common/SlickCarousell";
+import { useMediaQuery } from "@mantine/hooks";
 const Blogs = ({ blogs, garageId }: any) => {
+  const isTablet = useMediaQuery(`(max-width: ${"780px"})`);
+
   return (
     <div className={styles.wrapper}>
       <OverviewPanel
@@ -15,7 +18,7 @@ const Blogs = ({ blogs, garageId }: any) => {
         hiddenShowMore={true}
         id="blogs-expert"
       >
-        <SlickCarousel column={4} gap={8} dots={true}>
+        <SlickCarousel column={isTablet ? 3 : 4} gap={8} dots={true}>
           {blogs?.map((blog: any, index: number) => (
             <BlogItem blog={blog} key={index} />
           ))}

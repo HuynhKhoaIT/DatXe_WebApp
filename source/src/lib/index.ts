@@ -13,8 +13,6 @@ async function getData() {
 
 async function callApi(options: any, payload: any) {
   let { session }: any = await getData();
-
-  console.log(session);
   let token;
   if (session) {
     token = session?.user?.token;

@@ -214,7 +214,7 @@ const Expert = () => {
   const searchData = [
     {
       name: "s",
-      placeholder: "Tên chuyên gia",
+      placeholder: "Tên hoặc số điện thoại",
       type: FieldTypes.STRING,
     },
   ];
