@@ -178,6 +178,18 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   )}
                 </Flex>
               </div>
+              {ProductDetail?.sku ? (
+                <Typo
+                  style={{
+                    fontSize: "0.8rem",
+                    color: "var(--nav-color)",
+                  }}
+                >
+                  SKU: {ProductDetail?.sku}
+                </Typo>
+              ) : (
+                <></>
+              )}
               <div className={styles.starBox}>
                 <img src={Star.src} />
                 <Typo style={{ fontSize: "1rem", color: "var(--nav-color)" }}>
