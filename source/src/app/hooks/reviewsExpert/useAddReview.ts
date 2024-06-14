@@ -41,13 +41,21 @@ const updateReview = async (values: any): Promise<any> => {
 interface UseReview {
   addItem: any;
   updateItem: any;
+  isSuccessAdd: boolean;
+  isSuccessUpdate: boolean;
+  isPendingAdd: boolean;
+  isPendingUpdate: boolean;
 }
 
 export const useAddReview = (): UseReview => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
-  const { mutate: addItem } = useMutation({
+  const {
+    mutate: addItem,
+    isSuccess: isSuccessAdd,
+    isPending: isPendingAdd,
+  } = useMutation({
     mutationFn: addReview,
     onSuccess: () => {
       router.refresh();
@@ -58,11 +66,15 @@ export const useAddReview = (): UseReview => {
     },
   });
 
-  const { mutate: updateItem } = useMutation({
+  const {
+    mutate: updateItem,
+    isSuccess: isSuccessUpdate,
+    isPending: isPendingUpdate,
+  } = useMutation({
     mutationFn: updateReview,
     onSuccess: () => {
       router.refresh();
-      toast.success("Cập nhật đánh giá thành công");
+      toast.success("Gửi đánh giá thành công");
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.reviewsExpert, searchParams.toString(), 1],
       });
@@ -72,5 +84,9 @@ export const useAddReview = (): UseReview => {
   return {
     addItem,
     updateItem,
+    isSuccessAdd,
+    isSuccessUpdate,
+    isPendingAdd,
+    isPendingUpdate,
   };
 };

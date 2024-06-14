@@ -121,10 +121,10 @@ export function showStatusOrder(status: any) {
       break;
     case "4":
       s = "Hoàn thành";
-      break;    
+      break;
     case "5":
       s = "Xuất xưởng";
-      break;    
+      break;
     case "-1":
       s = "Đã hủy";
       break;
@@ -165,20 +165,25 @@ export const sendSMSOrder = async (order: any) => {
     let contentSMS = process.env.SMS_ORDER_RECEIVED;
     switch (Number(order.step)) {
       case 1:
-        contentSMS = process.env.SMS_ORDER_RECEIVED
+        contentSMS = process.env.SMS_ORDER_RECEIVED;
         break;
       case 4:
-        contentSMS = process.env.SMS_ORDER_DONE
+        contentSMS = process.env.SMS_ORDER_DONE;
         break;
       case -1:
-        contentSMS = process.env.SMS_ORDER_CANCELLED
+        contentSMS = process.env.SMS_ORDER_CANCELLED;
         break;
     }
-    contentSMS = contentSMS?.replaceAll('{order_code}',order?.code);
-    contentSMS = contentSMS?.replaceAll('{order_id}',order?.id);
-    contentSMS = contentSMS?.replaceAll('{garage_short}',order?.garage?.shortName ?? 'DatXE');
-    contentSMS = contentSMS?.replaceAll('{garage_phone}',order?.garage?.phoneNumber ?? '');
-    console.log(contentSMS)
+    contentSMS = contentSMS?.replaceAll("{order_code}", order?.code);
+    contentSMS = contentSMS?.replaceAll("{order_id}", order?.id);
+    contentSMS = contentSMS?.replaceAll(
+      "{garage_short}",
+      order?.garage?.shortName ?? "DatXE"
+    );
+    contentSMS = contentSMS?.replaceAll(
+      "{garage_phone}",
+      order?.garage?.phoneNumber ?? ""
+    );
     let dataSMS = {
       Phone: order.customer.phoneNumber,
       Content: contentSMS,
@@ -187,7 +192,7 @@ export const sendSMSOrder = async (order: any) => {
       Brandname: process.env.SMS_BRANDNAME,
       SmsType: 2,
     };
-    
+
     const { data } = await axios({
       method: "POST",
       url: `${process.env.SMS_SMS_MKT}`,
@@ -218,5 +223,3 @@ export const sendSMSAdminOrder = async (order: any) => {
     return error;
   }
 };
-
-

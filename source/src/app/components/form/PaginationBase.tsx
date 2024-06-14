@@ -19,7 +19,6 @@ export default function PaginationBase({
     } else {
       params?.delete("page");
     }
-    console.log("params", searchParams);
     if (params?.toString()?.length > 0) {
       const path = pathname + "?" + params?.toString();
       router.push(path);
@@ -35,7 +34,6 @@ export default function PaginationBase({
         total={Number(totalPage)}
         value={activePage}
         onChange={(value) => {
-          console.log(value);
           handeSetPage(value);
           if (setPage) setPage(value);
         }}

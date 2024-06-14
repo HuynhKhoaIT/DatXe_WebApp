@@ -34,7 +34,6 @@ export const CreateCustomer = async (name: any, phone: any) => {
       }
     );
     if (res) {
-      console.log(res);
     }
     return res.data;
   } catch (error) {

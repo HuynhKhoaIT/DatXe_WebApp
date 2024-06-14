@@ -17,7 +17,6 @@ export default function HeaderTopMobileApp() {
   });
 
   let lastPage: any = parts?.[parts?.length - 1];
-  console.log(lastPage);
   return (
     <div className={styles.headerTop}>
       <Container>

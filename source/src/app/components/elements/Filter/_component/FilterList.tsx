@@ -110,7 +110,6 @@ export default function FillterList({ isFilterLocation = true }: any) {
     }
     const path = pathname + "?" + params?.toString();
     router.push(path);
-    console.log("brand", brand);
   }, [province, district, s, locationId]);
 
   useEffect(() => {

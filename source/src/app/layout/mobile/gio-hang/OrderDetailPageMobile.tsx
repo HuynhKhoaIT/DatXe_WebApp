@@ -18,7 +18,7 @@ import Typo from "@/app/components/elements/Typo";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useReactToPrint } from "react-to-print";
-import { AppConstants, ORDER_DONE } from "@/constants";
+import { AppConstants, ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import {
   useOrderDLBD,
   useOrderDLBDDetail,
@@ -46,9 +46,7 @@ export default function OrderDetailPageMobile({
   review,
 }: any) {
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-
   const [containerHeight, setContainerHeight] = useState<any>(800);
-
   const componentRef: any = useRef();
   const handlePrint = useReactToPrint({
     copyStyles: true,
@@ -421,15 +419,19 @@ export default function OrderDetailPageMobile({
           Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
         </h6>
       </div>
-      <Flex justify={"flex-end"} py={20}>
-        <Button
-          color="blue"
-          fullWidth={isMobile}
-          onClick={openModalReviewGarage}
-        >
-          Đánh giá chuyên gia
-        </Button>
-      </Flex>
+      {(dataSource?.step == Number(ORDER_DONE) ||
+        dataSource?.step == Number(ORDER_CANCEL)) && (
+        <Flex justify={"flex-end"} py={20}>
+          <Button
+            color="blue"
+            fullWidth={isMobile}
+            onClick={openModalReviewGarage}
+          >
+            Đánh giá chuyên gia
+          </Button>
+        </Flex>
+      )}
+
       {openedModal && (
         <DynamicModalReview
           openedModal={openedModal}
@@ -446,6 +448,7 @@ export default function OrderDetailPageMobile({
           onCloseModal={closeModalReviewGarage}
           onCancelModal={closeModalReviewGarage}
           dataDetail={dataSource}
+          review={review}
         />
       )}
     </Container>

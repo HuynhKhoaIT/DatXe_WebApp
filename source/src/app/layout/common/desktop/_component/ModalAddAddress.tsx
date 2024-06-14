@@ -113,7 +113,6 @@ export default function ModalAddAddress({ openModal, close }: any) {
                             Number(item.value)
                           );
                           setActive("district");
-                          console.log(optionsData);
                           setDistrictOptions(optionsData);
                           form.setFieldValue("cityId", item.value);
                           form.setFieldValue("districtId", "");

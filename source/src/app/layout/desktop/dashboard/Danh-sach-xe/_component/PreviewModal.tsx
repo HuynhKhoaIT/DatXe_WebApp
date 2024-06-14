@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const router = useRouter();
-  console.log(data.vinNumber);
   return (
     <BasicModal
       size={800}

@@ -1,19 +1,21 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import BasicModal from "@/app/components/common/BasicModal";
 import { Button, Flex, Image, Rating, Textarea } from "@mantine/core";
 import styles from "./index.module.scss";
 import Typo from "@/app/components/elements/Typo";
 import { useForm } from "@mantine/form";
 import { useAddReview } from "@/app/hooks/reviewsExpert/useAddReview";
+import { useMediaQuery } from "@mantine/hooks";
 export default function ModalReviewGarage({
   openedModal,
   onCloseModal,
   onOkModal,
   onCancelModal,
   dataDetail,
+  review,
 }: any) {
-  console.log(dataDetail);
+  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const form = useForm({
     initialValues: {
       garageId: dataDetail?.garageId,
@@ -22,17 +24,28 @@ export default function ModalReviewGarage({
     },
     validate: {},
   });
-  const { addItem, updateItem } = useAddReview();
+  const {
+    addItem,
+    updateItem,
+    isSuccessUpdate,
+    isSuccessAdd,
+    isPendingAdd,
+    isPendingUpdate,
+  } = useAddReview();
 
   const handleSubmit = async (values: any) => {
-    // if (review?.data?.length > 0) {
-    //   updateItem({ id: review?.data[0]?.id, ...values });
-    // } else {
-    //   addItem(values);
-    // }
-    addItem(values);
+    if (review?.data?.length > 0) {
+      updateItem({ id: review?.data[0]?.id, ...values });
+    } else {
+      addItem(values);
+    }
     form.reset();
   };
+  useEffect(() => {
+    if (isSuccessUpdate || isSuccessAdd) {
+      onCloseModal();
+    }
+  }, [isSuccessUpdate, isSuccessAdd]);
   return (
     <BasicModal
       isOpen={openedModal}
@@ -42,9 +55,7 @@ export default function ModalReviewGarage({
       size={800}
       centered={true}
       onCancelModal={onCancelModal}
-      okText="Hoàn thành"
-      cancelText="Trở lại"
-      withCloseButton={false}
+      withCloseButton={true}
       classNames={{
         root: styles.root,
         title: styles.title,
@@ -66,7 +77,6 @@ export default function ModalReviewGarage({
           <Typo size="primary">Chất lượng chuyên gia</Typo>
           <Rating
             defaultValue={5}
-            size="lg"
             onChange={(value) => {
               form.setFieldValue("star", value);
             }}
@@ -91,7 +101,12 @@ export default function ModalReviewGarage({
           />
         </div>
         <Flex py={20} justify={"end"}>
-          <Button color="var(--primary-color)" type="submit" key="submit">
+          <Button
+            color="var(--primary-color)"
+            type="submit"
+            key="submit"
+            loading={isPendingAdd || isPendingUpdate}
+          >
             Gửi đánh giá
           </Button>
         </Flex>

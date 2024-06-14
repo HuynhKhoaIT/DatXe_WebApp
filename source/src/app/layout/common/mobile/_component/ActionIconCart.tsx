@@ -12,7 +12,6 @@ export default function ActionIconCartMobile() {
   useEffect(() => {
     const parsedCartData = getData(storageKeys.CART_DATA);
 
-    console.log();
     if (parsedCartData) {
       setCart(parsedCartData?.length);
     }

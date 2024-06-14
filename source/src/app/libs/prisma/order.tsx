@@ -54,11 +54,11 @@ export async function getOrders(garage: string, requestData: any) {
     if (requestData.carId) {
       carId = requestData.carId;
     }
-    let phoneNumber = '';
-    if(requestData.phoneNumber){
-      phoneNumber = requestData.phoneNumber
+    let phoneNumber = "";
+    if (requestData.phoneNumber) {
+      phoneNumber = requestData.phoneNumber;
     }
-    let whereQuery:any = {
+    let whereQuery: any = {
       status: {
         not: "DELETE",
       },
@@ -67,11 +67,11 @@ export async function getOrders(garage: string, requestData: any) {
       customerId,
       carId,
       customer: {
-        phoneNumber
+        phoneNumber,
       },
       // method,
       garageId: garageId,
-    }
+    };
     const [data, total] = await prisma.$transaction([
       prisma.order.findMany({
         take: take,
@@ -323,7 +323,7 @@ export async function getOrderByCode(code: string) {
     const rs = await prisma.order.findFirst({
       where: {
         code: {
-          contains: code
+          contains: code,
         },
       },
       include: {
@@ -473,7 +473,6 @@ export async function createOrder(json: any) {
           garageId: garageId,
           userId: json.userId,
         });
-        console.log("carNew", carNew);
         if (carNew) {
           carId = carNew.car?.id;
         }
@@ -1039,7 +1038,6 @@ export async function updateOrderStep(
   const orderRs = await findOrder(id, {});
   if (or.step != orderRs.step) {
     const smsRs = await sendSMSOrder(order);
-    console.log("sms", smsRs);
   }
 
   return orderRs;

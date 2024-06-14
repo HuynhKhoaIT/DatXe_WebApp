@@ -44,3 +44,9 @@
 .iputTextArea {
     font-size: 18px;
 }
+@media screen and (max-width: 600px) {
+    .review {
+        padding: 20px 0;
+        background-color: #ffffff;
+    }
+}
