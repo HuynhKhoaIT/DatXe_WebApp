@@ -7,7 +7,7 @@ import { LoadingComponent } from "@/app/components/loading";
 export default function CreateCar() {
   return (
     <Box maw={"100%"} mx="auto" className={styles.wrapper}>
-      <div style={{ borderBottom: "1px solid #eeeeee" }}>
+      <div className={styles.headerTitle}>
         <Typo size="18px" type="bold" className={styles.title}>
           Thêm xe
         </Typo>

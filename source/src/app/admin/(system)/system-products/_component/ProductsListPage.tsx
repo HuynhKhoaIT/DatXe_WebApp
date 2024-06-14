@@ -1,5 +1,6 @@
 "use client";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
+import { GarageItem } from "@/app/components/elements/garage/GarageItem";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import ImageField from "@/app/components/form/ImageField";
 import SearchForm from "@/app/components/form/SearchForm";
@@ -40,6 +41,17 @@ export default function ProductsListPage({ products }: any) {
     },
     {
       label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>SKU</span>
+      ),
+      name: "sku",
+      dataIndex: ["sku"],
+      render: (dataRow: any) => {
+        return <span>{dataRow}</span>;
+      },
+      width: "140px",
+    },
+    {
+      label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Tên sản phẩm
         </span>
@@ -57,7 +69,7 @@ export default function ProductsListPage({ products }: any) {
       name: "price",
       dataIndex: ["price"],
       textAlign: "right",
-
+      width: "180px",
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -69,7 +81,7 @@ export default function ProductsListPage({ products }: any) {
       name: "priceSale",
       dataIndex: ["salePrice"],
       textAlign: "right",
-
+      width: "180px",
       render: (dataRow: number) => {
         return <span>{dataRow?.toLocaleString()}đ</span>;
       },
@@ -130,6 +142,11 @@ export default function ProductsListPage({ products }: any) {
     },
   ];
   const searchData = [
+    // {
+    //   name: "garageId",
+    //   placeholder: "Chuyên gia",
+    //   type: FieldTypes.AUTOCOMPLETE,
+    // },
     {
       name: "s",
       placeholder: "Tên sản phẩm",
@@ -149,6 +166,7 @@ export default function ProductsListPage({ products }: any) {
     nameId: null,
     yearId: null,
     brand: null,
+    GarageId: null,
   };
   return (
     <Fragment>

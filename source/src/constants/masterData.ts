@@ -146,7 +146,7 @@ export const titleHeader = [
   {
     value: "danh-sach-xe",
     label: titleHeaderKeys.MY_CAR_TITLE,
-    detail: titleHeaderKeys.MY_CAR_DETAIL_TITLE,
+    detail: titleHeaderKeys.MY_CAR_EDIT_TITLE,
     create: titleHeaderKeys.MY_CAR_CREATE_TITLE,
     edit: titleHeaderKeys.MY_CAR_EDIT_TITLE,
   },

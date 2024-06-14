@@ -15,6 +15,7 @@ import Blogs from "./Blogs";
 import Book from "./Book";
 import { useNewsList } from "@/app/hooks/news/useNews";
 import styles from "./index.module.scss";
+import { useMediaQuery } from "@mantine/hooks";
 const LandingPageMobile = ({
   categories,
   reassons,
@@ -24,16 +25,8 @@ const LandingPageMobile = ({
   slideData,
   advertisement,
 }: any) => {
-  const slideshowData = [
-    {
-      id: "1",
-      image: image2.src,
-    },
-    {
-      id: "2",
-      image: image1.src,
-    },
-  ];
+  const isMobile = useMediaQuery("(max-width: 600px)");
+
   const { data: blogs, isLoading, isFetching } = useNewsList({
     garageId: 2,
     limit: 4,
@@ -44,7 +37,7 @@ const LandingPageMobile = ({
       <Book />
       <div
         style={{
-          padding: "320px 0 30px 0",
+          padding: "10px 0 30px 0",
           backgroundColor: "var(--background-color-light)",
         }}
       >

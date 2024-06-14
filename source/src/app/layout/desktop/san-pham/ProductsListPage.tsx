@@ -8,6 +8,7 @@ import styles from "./index.module.scss";
 import ButtonShowMore from "@/app/components/form/ButtonShowMore";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 export default function ProductsListPage({ products, searchParams }: any) {
+  console.log(products);
   return (
     <>
       <Sort lengthData={products?.data?.length || 0} />

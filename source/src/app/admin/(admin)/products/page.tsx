@@ -119,6 +119,16 @@ export default function ProductsManaga() {
     },
     {
       label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>SKU</span>
+      ),
+      name: "sku",
+      dataIndex: ["sku"],
+      render: (dataRow: any) => {
+        return <span>{dataRow}</span>;
+      },
+    },
+    {
+      label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Tên sản phẩm
         </span>

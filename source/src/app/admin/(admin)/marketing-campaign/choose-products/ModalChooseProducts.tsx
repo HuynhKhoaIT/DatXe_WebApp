@@ -114,6 +114,16 @@ export default function ModalChooseProducts({
     },
     {
       label: (
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>SKU</span>
+      ),
+      name: "sku",
+      dataIndex: ["sku"],
+      render: (dataRow: any) => {
+        return <span>{dataRow}</span>;
+      },
+    },
+    {
+      label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Tên sản phẩm
         </span>
@@ -234,11 +244,12 @@ export default function ModalChooseProducts({
       title="Chọn sản phẩm"
       opened={openModal}
       onClose={close}
-      lockScroll={isMobile}
+      // lockScroll={isMobile}
       // size={"80%"}
       radius={0}
       size="auto"
       fullScreen={isMobile}
+      lockScroll={true}
     >
       {isMobile ? (
         <>

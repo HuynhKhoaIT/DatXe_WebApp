@@ -40,24 +40,6 @@ const Info = ({ detailData }: any) => {
     openedModalShare,
     { open: openModalShare, close: closeModalShare },
   ] = useDisclosure(false);
-  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-
-  const openModalMap = () =>
-    modals.openConfirmModal({
-      title: "Chỉ đường đến trung tâm chuyên gia",
-      children: (
-        <Text size="sm">Chuyển hướng đến trang chỉ đường của google maps.</Text>
-      ),
-      labels: { confirm: "Tiếp tục", cancel: "Huỷ" },
-      confirmProps: { color: "blue" },
-      zIndex: 9999,
-      onConfirm: () => {
-        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-          "10.813794573008531, 106.72712990568188"
-        )}`;
-        window.open(googleMapsUrl, "_blank");
-      },
-    });
 
   return (
     <div className={styles.wrapper}>

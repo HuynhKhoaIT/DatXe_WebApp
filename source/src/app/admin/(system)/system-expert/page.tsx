@@ -3,7 +3,7 @@ import Breadcrumb from "@/app/components/form/Breadcrumb";
 import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { statusOptions } from "@/constants/masterData";
+import { FieldTypes, statusOptions } from "@/constants/masterData";
 import { Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
@@ -214,8 +214,8 @@ const Expert = () => {
   const searchData = [
     {
       name: "s",
-      placeholder: "Tên chuyên gia",
-      type: "input",
+      placeholder: "Tên hoặc số điện thoại",
+      type: FieldTypes.STRING,
     },
   ];
 

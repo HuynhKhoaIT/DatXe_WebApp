@@ -14,9 +14,6 @@ export default function Reassons({ data }: any) {
       id="reassons"
     >
       <div className={styles.wrapper}>
-        {/* <SlickCarousel column={1} gap={8}>
-          
-        </SlickCarousel> */}
         <Scroll>
           {data?.map((data: any, index: number) => (
             <CardReassons data={data} key={index} />

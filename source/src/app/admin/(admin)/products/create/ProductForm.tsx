@@ -65,6 +65,7 @@ export default function ProductForm({
       price: undefined,
     },
     validate: (values) => ({
+      price: values?.price === undefined ? "Vui lòng nhập giá bán" : null,
       name: values?.name?.length < 1 ? "Không được để trống" : null,
       categories: values?.name?.length < 1 ? "Không được để trống" : null,
       salePrice:
@@ -237,6 +238,7 @@ export default function ProductForm({
                   <NumberInput
                     size="lg"
                     radius={0}
+                    withAsterisk
                     {...form.getInputProps("price")}
                     label="Giá bán"
                     min={0}
@@ -276,6 +278,26 @@ export default function ProductForm({
                     min={0}
                     placeholder="Số lượng"
                     thousandSeparator=","
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("sku")}
+                    label="SKU"
+                    type="text"
+                    placeholder="SKU"
+                  />
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("keyword")}
+                    label="Từ khoá tìm kiếm"
+                    type="text"
+                    placeholder="ví dụ: abc,123,san-pham"
                   />
                 </Grid.Col>
               </Grid>

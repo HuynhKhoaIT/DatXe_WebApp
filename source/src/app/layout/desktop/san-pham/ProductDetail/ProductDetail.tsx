@@ -25,6 +25,7 @@ import { useGlobalContext } from "@/app/Context/store";
 import { storageKeys } from "@/constants";
 import { getData, setData } from "@/utils/until/localStorage";
 function ProductDetail({ ProductDetail, productReview }: any) {
+  console.log(ProductDetail);
   const { data: session } = useSession();
   const { cart, setCart } = useGlobalContext();
 
@@ -179,6 +180,13 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                   </Typo>
                 </div>
               </div>
+              {ProductDetail?.sku ? (
+                <div>
+                  <span>SKU: {ProductDetail?.sku}</span>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className={styles.salePrice}>
                 {ProductDetail?.price != ProductDetail?.salePrice && (
                   <Typo
