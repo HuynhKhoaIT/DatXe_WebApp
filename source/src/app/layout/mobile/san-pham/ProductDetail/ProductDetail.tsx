@@ -197,25 +197,20 @@ function ProductDetail({ ProductDetail, productReview }: any) {
                 </Typo>
               </div>
               <Flex gap={20}>
-                <div className={styles.salePrice}>
-                  <Typo
-                    style={{
-                      fontSize: "22px",
-                      color: "var(--text-color-sale-price)",
-                    }}
-                    type="bold"
-                  >
-                    <del>{ProductDetail?.price?.toLocaleString()} đ</del>
-                  </Typo>
-                  {/* <Typo
-                  style={{
-                    fontSize: "14px",
-                    color: "var(--text-color-sale-price)",
-                  }}
-                >
-                  30% OFF
-                </Typo> */}
-                </div>
+                {ProductDetail?.salePrice != ProductDetail?.price && (
+                  <div className={styles.salePrice}>
+                    <Typo
+                      style={{
+                        fontSize: "22px",
+                        color: "var(--text-color-sale-price)",
+                      }}
+                      type="bold"
+                    >
+                      <del>{ProductDetail?.price?.toLocaleString()} đ</del>
+                    </Typo>
+                  </div>
+                )}
+
                 <Typo
                   type="bold"
                   style={{ fontSize: "22px", color: "var(--blue-color)" }}

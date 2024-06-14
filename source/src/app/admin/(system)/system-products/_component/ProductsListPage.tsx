@@ -142,11 +142,11 @@ export default function ProductsListPage({ products }: any) {
     },
   ];
   const searchData = [
-    {
-      name: "garageId",
-      placeholder: "Chuyên gia",
-      type: FieldTypes.AUTOCOMPLETE,
-    },
+    // {
+    //   name: "garageId",
+    //   placeholder: "Chuyên gia",
+    //   type: FieldTypes.AUTOCOMPLETE,
+    // },
     {
       name: "s",
       placeholder: "Tên sản phẩm",
