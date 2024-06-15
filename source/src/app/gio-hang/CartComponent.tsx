@@ -97,7 +97,6 @@ export default function CartComponent({ myAccount }: any) {
       return updatedCart;
     }, []);
 
-    console.log(updateCartData);
     setData(storageKeys.CART_DATA, updateCartData);
     setCartData(updateCartData);
   };
@@ -197,7 +196,6 @@ export default function CartComponent({ myAccount }: any) {
     });
   };
   const handleSubmit = async (values: any, dateTime: Date, note: string) => {
-    console.log("note", note);
     if (cartData?.length == 0) {
       toast.error("Vui lòng thêm sản phẩm vào giỏ hàng");
       return;

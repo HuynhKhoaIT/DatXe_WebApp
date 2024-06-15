@@ -15,11 +15,15 @@ export default function FooterSavePage({
   colorOk,
   colorCancel = "red",
   sizeButton = "lg",
+  className,
 }: any) {
   const router = useRouter();
   return (
     <div
-      className={classNames(isAbsolute ? styles.footerSavePage : styles.footer)}
+      className={classNames(
+        isAbsolute ? styles.footerSavePage : styles.footer,
+        className
+      )}
     >
       {children}
       {isCancel && (

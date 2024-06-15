@@ -17,7 +17,6 @@ export default function ModalReview({
   dataDetail,
   orderId,
 }: any) {
-  console.log(dataDetail);
   const router = useRouter();
   const images = JSON.parse(dataDetail?.product?.images);
   const form = useForm({
@@ -33,7 +32,6 @@ export default function ModalReview({
     try {
       const res = await axios.post("/api/client/reviews", values);
       router.refresh();
-      console.log(res);
       if (res.data.data && res.data.data.error) {
         toast.error("Gửi đánh giá thất bại");
       } else {

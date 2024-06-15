@@ -84,7 +84,6 @@ export default function QuillEditor({
         }
         const response = await axios.post(baseURL, formData, options);
 
-        console.log(response.data);
         insertToEditor(response.data);
       } catch (error) {
         console.error("Error:", error);
@@ -93,7 +92,6 @@ export default function QuillEditor({
 
     const insertToEditor = (url: any) => {
       // push image url to rich editor.
-      console.log("url", url);
       const range = editor.getSelection();
       editor.insertEmbed(range.index, "image", url);
     };

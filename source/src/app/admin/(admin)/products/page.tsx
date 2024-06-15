@@ -235,7 +235,6 @@ export default function ProductsManaga() {
       width: "100px",
       textAlign: "center",
       render: (record: any) => {
-        console.log(record?.isAsync);
         if (activeTab === "first") {
           return (
             <>

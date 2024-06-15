@@ -23,7 +23,6 @@ import {
 import styles from "./index.module.scss";
 require("dayjs/locale/vi");
 export const ModalPreviewCalendar = ({ previewInfos }: any) => {
-  console.log(previewInfos);
   const data = previewInfos?.event?._def?.extendedProps;
   const originalTimeString = previewInfos?.event?._instance?.range?.start;
   const date = dayjs(originalTimeString).subtract(7, "hour");

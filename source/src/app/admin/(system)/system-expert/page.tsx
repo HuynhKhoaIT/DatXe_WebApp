@@ -38,7 +38,6 @@ const Expert = () => {
     deleteItem,
   } = useExperts();
 
-  console.log(experts);
   const [deleteRow, setDeleteRow] = useState();
   const handleDeleteItem = (id: any) => {
     deleteItem(id);

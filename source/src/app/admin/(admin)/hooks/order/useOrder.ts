@@ -126,7 +126,6 @@ const useOrderDetail = (id: string) => {
 
 // get detail DLBD
 const fetchOrderDLBDDetail = async (token: string, id: string) => {
-  console.log(id);
   const response = await fetch(
     `https://v2.dlbd.vn/api/v3/app/order-detail/${id}`,
     { method: "GET", headers: { Authorization: "Bearer " + token } }
@@ -146,7 +145,6 @@ const useOrderDLBDDetail = ({ token, id }: any) => {
 
 // get order DLBD
 const fetchOrderDLBD = async (token: string, id: string) => {
-  console.log(id);
   const response = await fetch(`https://v2.dlbd.vn/api/v3/app/orders/${id}`, {
     method: "GET",
     headers: { Authorization: "Bearer " + token },

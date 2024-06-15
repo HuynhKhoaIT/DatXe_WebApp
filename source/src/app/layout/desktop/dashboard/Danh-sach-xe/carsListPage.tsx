@@ -171,9 +171,10 @@ export default function CarsListPage({
             }}
           >
             <Button
-              size="lg"
-              h={{ base: 40, md: 50, lg: 50 }}
+              // h={{ base: 40, md: 50, lg: 50 }}
               // radius={0}
+              color="var(--primary-color)"
+              // variant="outline"
               leftSection={<IconPlus size={18} />}
             >
               Thêm xe

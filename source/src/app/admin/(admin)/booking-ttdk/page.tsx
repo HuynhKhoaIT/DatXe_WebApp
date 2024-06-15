@@ -45,7 +45,6 @@ export default function BookingTTDK() {
     deleteItem,
   } = useBookingTTDK({ token: data?.user?.token });
 
-  console.log(list);
   const [deleteRow, setDeleteRow] = useState();
   const handleDeleteItem = async (id: string) => {
     deleteItem(id);

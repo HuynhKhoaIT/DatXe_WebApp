@@ -43,8 +43,6 @@ export function AutocompleteClearable({
   const [debounced] = useDebouncedValue(value, debounceTime);
 
   useEffect(() => {
-    console.log("debounced", debounced);
-
     const fetchData = async () => {
       const data: any = await getOptionData({ s: debounced });
       setGroceries(data);

@@ -25,7 +25,6 @@ export default function AutocompleteField({
   useEffect(() => {
     const fetchData = async () => {
       const data: any = await getOptionData({ s: debounced });
-      console.log("data", data);
       setOptionsData(data);
       return data;
     };

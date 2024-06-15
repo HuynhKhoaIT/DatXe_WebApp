@@ -134,9 +134,7 @@ function Component({
             }
             setEdit(true);
             onFinish?.(filePreview);
-          } catch (error) {
-            console.log(error);
-          }
+          } catch (error) {}
         }}
       />
       {}

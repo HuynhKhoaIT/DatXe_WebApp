@@ -25,7 +25,6 @@ import { useGlobalContext } from "@/app/Context/store";
 import { storageKeys } from "@/constants";
 import { getData, setData } from "@/utils/until/localStorage";
 function ProductDetail({ ProductDetail, productReview }: any) {
-  console.log(ProductDetail);
   const { data: session } = useSession();
   const { cart, setCart } = useGlobalContext();
 

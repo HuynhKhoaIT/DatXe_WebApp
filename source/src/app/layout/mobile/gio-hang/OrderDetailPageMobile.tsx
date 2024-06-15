@@ -10,7 +10,7 @@ import {
   Group,
   Tooltip,
 } from "@mantine/core";
-import { useDisclosure, useSetState } from "@mantine/hooks";
+import { useDisclosure, useMediaQuery, useSetState } from "@mantine/hooks";
 import dynamic from "next/dynamic";
 import styles from "./OrderDetailPage.module.scss";
 import ImageField from "@/app/components/form/ImageField";
@@ -18,13 +18,14 @@ import Typo from "@/app/components/elements/Typo";
 import dayjs from "dayjs";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useReactToPrint } from "react-to-print";
-import { AppConstants, ORDER_DONE } from "@/constants";
+import { AppConstants, ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import {
   useOrderDLBD,
   useOrderDLBDDetail,
 } from "@/app/admin/(admin)/hooks/order/useOrder";
 import { useSession } from "next-auth/react";
 import { IconPrinter } from "@tabler/icons-react";
+import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 
 const DynamicModalReview = dynamic(
   () => import("@/app/layout/dashboard/danh-sach-don-hang/ModalReview"),
@@ -32,9 +33,20 @@ const DynamicModalReview = dynamic(
     ssr: false,
   }
 );
-export default function OrderDetailPageMobile({ dataSource, close }: any) {
+const DynamicModalReviewGarage = dynamic(
+  () => import("./_component/ModalReviewGarage"),
+  {
+    ssr: false,
+  }
+);
+export default function OrderDetailPageMobile({
+  dataSource,
+  close,
+  isPrint = false,
+  review,
+}: any) {
+  const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [containerHeight, setContainerHeight] = useState<any>(800);
-
   const componentRef: any = useRef();
   const handlePrint = useReactToPrint({
     copyStyles: true,
@@ -74,6 +86,10 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
+  const [
+    openedModalReviewGarage,
+    { open: openModalReviewGarage, close: closeModalReviewGarage },
+  ] = useDisclosure(false);
   function checkId(id: string) {
     const item = dataSource.reviews?.find((item: any) => item.productId == id);
     if (item) {
@@ -220,11 +236,13 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
 
   return (
     <Container className={styles.container}>
-      <Group justify="end">
-        <ActionIcon color="blue" onClick={handlePrint}>
-          <IconPrinter />
-        </ActionIcon>
-      </Group>
+      {isPrint && (
+        <Group justify="end">
+          <ActionIcon color="blue" onClick={handlePrint}>
+            <IconPrinter />
+          </ActionIcon>
+        </Group>
+      )}
       <style>
         {`
           @media print {
@@ -297,7 +315,7 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
           </Flex>
         </div>
         <div className={styles.infoCustomer}>
-          <p style={{ display: "flex", gap: "6px" }}>
+          <div style={{ display: "flex", gap: "6px" }}>
             KH:
             <Typo size="tiny">
               <p>
@@ -305,25 +323,25 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
                 {dataSource?.customer?.phoneNumber}
               </p>
             </Typo>
-          </p>
+          </div>
           {/* <p style={{ display: "flex", gap: "6px" }}>
             ĐT:
             <Typo size="tiny">
               <p>{dataSource?.customer?.phoneNumber}</p>
             </Typo>
           </p> */}
-          <p style={{ display: "flex", gap: "6px" }}>
+          <div style={{ display: "flex", gap: "6px" }}>
             XE:
             <Typo size="tiny">
               <p>{dataSource?.car?.numberPlates}</p>
             </Typo>
-          </p>
-          <p style={{ display: "flex", gap: "6px" }}>
+          </div>
+          <div style={{ display: "flex", gap: "6px" }}>
             Ghi chú:
             <Typo size="tiny">
               <p>{dataSource?.note}</p>
             </Typo>
-          </p>
+          </div>
         </div>
         <Divider my={5} mx={5} color="black" size={1.5} variant="dashed" />
         <div style={{ marginTop: "10px" }}></div>
@@ -401,6 +419,18 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
           Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!
         </h6>
       </div>
+      {(dataSource?.step == Number(ORDER_DONE) ||
+        dataSource?.step == Number(ORDER_CANCEL)) && (
+        <Flex justify={"flex-end"} py={20}>
+          <Button
+            color="blue"
+            fullWidth={isMobile}
+            onClick={openModalReviewGarage}
+          >
+            Đánh giá chuyên gia
+          </Button>
+        </Flex>
+      )}
 
       {openedModal && (
         <DynamicModalReview
@@ -410,6 +440,15 @@ export default function OrderDetailPageMobile({ dataSource, close }: any) {
           onCancelModal={closeModal}
           dataDetail={dataReview}
           orderId={dataSource.id}
+        />
+      )}
+      {openedModalReviewGarage && (
+        <DynamicModalReviewGarage
+          openedModal={openedModalReviewGarage}
+          onCloseModal={closeModalReviewGarage}
+          onCancelModal={closeModalReviewGarage}
+          dataDetail={dataSource}
+          review={review}
         />
       )}
     </Container>

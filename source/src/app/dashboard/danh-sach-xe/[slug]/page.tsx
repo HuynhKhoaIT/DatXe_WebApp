@@ -1,14 +1,13 @@
 "use client";
 import { Box, Space } from "@mantine/core";
 import Typo from "@/app/components/elements/Typo";
-import styles from "../index.module.scss";
+import styles from "../create/index.module.scss";
 import React, { Suspense, useEffect, useState } from "react";
-import { LoadingComponent } from "@/app/components/loading";
 import CarForm from "../create/CarForm";
 import axios from "axios";
+import { LoadingComponent } from "@/app/components/loading";
 export default function CarSavePage({ params }: { params: { slug: string } }) {
   const [car, setCar] = useState(null);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,16 +17,15 @@ export default function CarSavePage({ params }: { params: { slug: string } }) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, [params?.slug]);
   return (
-    <>
-      <Box maw={"100%"} mx="auto">
+    <Box maw={"100%"} mx="auto" className={styles.wrapper}>
+      <div className={styles.content}>
         <Suspense fallback={<LoadingComponent />}>
           <CarForm isEditing={true} dataDetail={car} />
         </Suspense>
-      </Box>
-    </>
+      </div>
+    </Box>
   );
 }

@@ -7,7 +7,6 @@ import Typo from "@/app/components/elements/Typo";
 import { fitString, formatTimeDifference } from "@/utils/until";
 import { AppConstants } from "@/constants";
 const BlogItem = ({ blog }: any) => {
-  console.log(blog);
   return (
     <div className={styles.wrapper}>
       <Box w={"100%"}>

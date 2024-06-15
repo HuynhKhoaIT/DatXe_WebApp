@@ -6,7 +6,6 @@ import Typo from "@/app/components/elements/Typo";
 import CardImg from "@/assets/images/card.png";
 import { BackgroundImage, Center, Text } from "@mantine/core";
 export default function InfoProfile({ myAccount, cars }: any) {
-  console.log(cars);
   return (
     <div className={styles.wrapper}>
       <div>

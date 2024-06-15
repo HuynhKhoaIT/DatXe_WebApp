@@ -7,7 +7,6 @@ import { stepOrderOptions } from "@/constants/masterData";
 import { Button } from "@mantine/core";
 import { useRouter } from "next/navigation";
 export default function ItemOrderMobile({ data }: any) {
-  console.log(data);
   const router = useRouter();
   const images =
     data?.orderDetails[0]?.product?.images &&

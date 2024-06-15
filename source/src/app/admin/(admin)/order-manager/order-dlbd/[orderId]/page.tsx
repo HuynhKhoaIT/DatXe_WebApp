@@ -22,7 +22,6 @@ export default function ProductSavePage({
   const { data: orderDetail, isLoading, isPending } = useOrderDetail(
     params?.orderId
   );
-  console.log(orderDlbdDetail?.data);
   return (
     <OrderForm
       isEditing={true}

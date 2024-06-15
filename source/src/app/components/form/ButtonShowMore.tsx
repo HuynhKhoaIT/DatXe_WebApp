@@ -12,7 +12,6 @@ export default function ButtonShowMore({ limitCurrent, defaultValue }: any) {
     const path = pathname + "?" + params?.toString();
     router.push(path);
   }
-  console.log("Query string:", params);
   return (
     <Flex justify="center" mt={36}>
       <Button

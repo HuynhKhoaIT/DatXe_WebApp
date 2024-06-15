@@ -96,7 +96,6 @@ export default function CarForm({
     if (isEditing) fetchData();
   }, [dataDetail]);
 
-  console.log(customerOptions);
   return (
     <Box pos="relative">
       <LoadingOverlay

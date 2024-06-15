@@ -26,9 +26,14 @@
             padding: 0;
         }
     }
+    .footerSavePage{
+        margin-top: 0;
+        background-color: var(--background-color-light);
+    }
 }
 
 .inputDashboard{
     border: none;
     border-radius: 10px;
 }
+

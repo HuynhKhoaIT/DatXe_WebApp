@@ -50,7 +50,6 @@ export function ModalOrderGuest({
       if (checkRs.CodeResult == "100") {
         addItem(dataDetail);
         try {
-          console.log(dataDetail);
           signIn("credentials", {
             phone: phone,
             password: password,

@@ -22,7 +22,6 @@ export default function BookingForm({ dataDetail, isLoading, isEditing }: any) {
     token: data?.user?.token,
   });
 
-  console.log(data);
   const form = useForm({
     initialValues: {},
     validate: {},
