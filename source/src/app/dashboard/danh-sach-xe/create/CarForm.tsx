@@ -110,7 +110,6 @@ export default function CarForm({ isEditing, dataDetail }: any) {
         <Grid gutter={12}>
           <Grid.Col span={12}>
             <Card
-              withBorder
               shadow="sm"
               style={{ backgroundColor: "var(--background-color-light)" }}
             >
@@ -313,6 +312,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
           okText={isEditing ? "Cập nhật" : "Thêm"}
           colorOk="blue"
           sizeButton="md"
+          className={styles.footerSavePage}
         />
       </form>
     </Box>
