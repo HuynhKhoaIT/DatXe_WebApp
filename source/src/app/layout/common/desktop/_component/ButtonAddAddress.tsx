@@ -22,7 +22,10 @@ export default function ButtonAddAddress() {
 
   const addressData = getData(storageKeys.ADDRESS_DEFAULT);
   useEffect(() => {
-    if (!addressData) return;
+    if (!addressData) {
+      setAddress("Chọn địa chỉ");
+      return;
+    }
     const address =
       `${addressData?.province?.name && addressData?.province?.name}` +
       ", " +

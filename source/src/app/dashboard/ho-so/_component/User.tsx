@@ -4,12 +4,12 @@ import {
   Button,
   Grid,
   TextInput,
-  Select,
   Group,
   Box,
   Card,
   Text,
   LoadingOverlay,
+  Autocomplete,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
@@ -34,13 +34,15 @@ import { useMediaQuery } from "@mantine/hooks";
 export default function UserProfile({ myAccount, isLoading }: any) {
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);
-  const [province, setProvince] = useState<any>();
-  const [district, setDistrict] = useState<any>();
+
+  const [provinceName, setProvinceName] = useState<any>();
+  const [districtName, setDistrictName] = useState<any>();
+  const [wardName, setWardName] = useState<any>();
+
   const [avatarUrl, setAvatarUrl] = useState(null);
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
   const { updateItem, isPending } = useAddAccount();
-  const [ward, setWard] = useState<any>();
   const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
     queryKey: [QUERY_KEY.optionsProvince],
     queryFn: () => getOptionsProvince(),
@@ -99,9 +101,22 @@ export default function UserProfile({ myAccount, isLoading }: any) {
         form.setFieldValue("cityId", myAccount?.cityId.toString());
         form.setFieldValue("districtId", myAccount?.districtId?.toString());
         form.setFieldValue("wardId", myAccount?.wardId?.toString());
-        setProvince(myAccount?.cityId?.toString());
-        setDistrict(myAccount?.districtId?.toString());
-        setWard(myAccount?.wardId?.toString());
+
+        setProvinceName(
+          getLabelByValue({
+            data: provinceOptions,
+            value: myAccount?.cityId?.toString(),
+          })
+        );
+        setDistrictName(
+          getLabelByValue({
+            data: districts,
+            value: myAccount?.districtId?.toString(),
+          })
+        );
+        setWardName(
+          getLabelByValue({ data: wards, value: myAccount?.wardId?.toString() })
+        );
 
         setDistrictOptions(districts);
         setWardOptions(wards);
@@ -134,22 +149,20 @@ export default function UserProfile({ myAccount, isLoading }: any) {
               onSubmit={form.onSubmit((values) => handleUpdateProfile(values))}
               className={styles.formUser}
             >
+              <Text size={"16px"} c={"#3d4465"} mb={"6px"}>
+                Ảnh đại diện
+              </Text>
+              <div className={styles.avatar}>
+                <CropImageLink
+                  shape="round"
+                  defaultImage={avatarUrl}
+                  uploadFileThumbnail={uploadFileThumbnail}
+                  aspect={1 / 1}
+                  form={form}
+                  name="avatar"
+                />
+              </div>
               <Grid gutter={16} w={"100%"}>
-                <Grid.Col span={{ base: 5 }}>
-                  <Text size={"16px"} c={"#3d4465"} mb={"6px"}>
-                    Ảnh đại diện
-                  </Text>
-                  <div className={styles.avatar}>
-                    <CropImageLink
-                      shape="round"
-                      defaultImage={avatarUrl}
-                      uploadFileThumbnail={uploadFileThumbnail}
-                      aspect={1 / 1}
-                      form={form}
-                      name="avatar"
-                    />
-                  </div>
-                </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
                   <TextInput
                     size="lg"
@@ -186,65 +199,71 @@ export default function UserProfile({ myAccount, isLoading }: any) {
                     radius={0}
                     {...form.getInputProps("address")}
                     label="Địa chỉ"
-                    placeholder="1234 Main St"
+                    placeholder="Nhập địa chỉ của bạn"
                   />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                  <Select
+                  <Autocomplete
                     size="lg"
                     radius={0}
                     {...form.getInputProps("cityId")}
                     label="Tỉnh/Thành phố"
                     placeholder="Chọn tỉnh"
                     data={provinceOptions}
-                    value={province}
-                    onChange={async (value) => {
+                    value={provinceName}
+                    onChange={(value) => {
+                      setProvinceName(value);
+                    }}
+                    onOptionSubmit={async (value) => {
                       const optionsData: any = await getOptionsDistrict(
                         Number(value)
                       );
+                      setDistrictName("");
+                      setWardName("");
                       setDistrictOptions(optionsData);
                       form.setFieldValue("cityId", value);
                       form.setFieldValue("districtId", "");
                       form.setFieldValue("wardId", "");
-                      setProvince(value);
-                      setDistrict(null);
-                      setWard(null);
                     }}
-                  ></Select>
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                  <Select
+                  <Autocomplete
                     size="lg"
                     radius={0}
                     {...form.getInputProps("districtId")}
                     label="Huyện/Phường"
                     placeholder="Huyện/Phường"
                     data={districtOptions}
-                    value={district}
-                    onChange={async (value) => {
+                    value={districtName}
+                    onChange={(value) => {
+                      setDistrictName(value);
+                    }}
+                    onOptionSubmit={async (value) => {
                       const optionsData = await getOptionsWard(Number(value));
                       setWardOptions(optionsData);
+                      setWardName("");
                       form.setFieldValue("districtId", value);
                       form.setFieldValue("wardId", "");
-                      setDistrict(value);
-                      setWard(null);
                     }}
-                  ></Select>
+                  />
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                  <Select
+                  <Autocomplete
                     size="lg"
                     radius={0}
                     {...form.getInputProps("wardId")}
                     label="Xã/Phường"
                     placeholder="Chọn xã/phường"
                     data={wardOptions}
-                    value={ward}
+                    value={wardName}
                     onChange={(value) => {
-                      form.setFieldValue("wardId", value);
-                      setWard(value);
+                      setWardName(value);
                     }}
-                  ></Select>
+                    onOptionSubmit={(value) => {
+                      form.setFieldValue("wardId", value);
+                    }}
+                  />
                 </Grid.Col>
               </Grid>
               <Group pt={20} justify="end" className="col-12 text-right ">
@@ -259,3 +278,6 @@ export default function UserProfile({ myAccount, isLoading }: any) {
     </div>
   );
 }
+const getLabelByValue = ({ data, value }: any) => {
+  return data?.find((item: any) => item.value === value)?.label || "";
+};

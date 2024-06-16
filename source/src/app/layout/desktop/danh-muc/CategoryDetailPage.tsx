@@ -15,6 +15,8 @@ import Body from "@/app/components/layout/Body";
 import FillterList from "@/app/components/elements/Filter";
 import { ButtonDeleteFilter } from "@/app/components/elements/ButtonDeleteFilter";
 import FillterCompoent from "@/app/components/elements/Filter";
+import Container from "@/app/components/common/Container";
+import Empty from "@/assets/images/empty-box.png";
 
 const CategoryDetailPageDesktop = ({
   kindProduct,
@@ -25,6 +27,7 @@ const CategoryDetailPageDesktop = ({
   reassons,
   searchParams,
 }: any) => {
+  console.log(products);
   return (
     <div className={styles.wrapper}>
       <CarouselDesktop height={320} slideshowData={slideshowData} />
@@ -38,23 +41,34 @@ const CategoryDetailPageDesktop = ({
           <ButtonDeleteFilter />
         </Body.Sider>
         <Body.Content>
-          <FillterCompoent />
-          <Box w={"100%"}>
-            <div className={styles.products}>
-              {products?.data?.map((product: IProduct, index: number) => (
-                <ProductItem2 product={product} key={index} />
-              ))}
-            </div>
-            {products?.currentPage < products?.totalPage && (
-              <ButtonShowMore
-                limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
-                defaultValue={DEFAULT_SIZE_LIMIT}
-              />
-            )}
-          </Box>
+          <FillterCompoent isFilterLocation={false} />
+          {products?.data?.length == 0 ? (
+            <Box w={"100%"}>
+              <div className={styles.emptyData}>
+                <img src={Empty.src} />
+                <h3>Không có kết quả phù hợp.</h3>
+              </div>
+            </Box>
+          ) : (
+            <Box w={"100%"}>
+              <div className={styles.products}>
+                {products?.data?.map((product: IProduct, index: number) => (
+                  <ProductItem2 product={product} key={index} />
+                ))}
+              </div>
+              {products?.currentPage < products?.totalPage && (
+                <ButtonShowMore
+                  limitCurrent={searchParams?.limit || DEFAULT_SIZE_LIMIT}
+                  defaultValue={DEFAULT_SIZE_LIMIT}
+                />
+              )}
+            </Box>
+          )}
         </Body.Content>
       </Body>
-      <Blogs blogs={blogs} />
+      <Container>
+        <Blogs blogs={blogs} />
+      </Container>
       <ViewedProducts viewedProducts={productRelate?.data} />
       <div
         className={styles.productsBox}

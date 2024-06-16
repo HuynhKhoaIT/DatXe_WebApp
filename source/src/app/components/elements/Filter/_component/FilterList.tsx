@@ -9,7 +9,7 @@ import {
   getOptionsYearCar,
 } from "@/utils/until";
 import { getData } from "@/utils/until/localStorage";
-import { Flex, Select } from "@mantine/core";
+import { Autocomplete, CloseButton, Flex, Select } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import styles from "./index.module.scss";
@@ -35,7 +35,9 @@ export default function FillterList({ isFilterLocation = true }: any) {
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [province, setProvince] = useState<any>();
+  const [provinceName, setProvinceName] = useState<any>();
   const [district, setDistrict] = useState<any>();
+  const [districtName, setDistrictName] = useState<any>();
 
   useEffect(() => {
     if (isFilterLocation && locationId) {
@@ -51,8 +53,13 @@ export default function FillterList({ isFilterLocation = true }: any) {
     }
   }, []);
   const [brand, setBrand] = useState<any>(brandId);
+  const [brandName, setBrandName] = useState<any>();
+
   const [model, setModel] = useState<any>(modelId);
+  const [modelName, setModelName] = useState<any>();
+
   const [year, setYear] = useState<any>(yearId);
+  const [yearName, setYearName] = useState<any>();
 
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
     queryKey: ["provinceOptions"],
@@ -101,109 +108,216 @@ export default function FillterList({ isFilterLocation = true }: any) {
     fetchOptionsData();
   }, [addRess?.province?.id, brandId, modelId]);
 
+  // thay đổi param mỗi khi được select
   useEffect(() => {
-    if (isFilterLocation) {
+    if (province) {
       params?.set("locationId", `${district || province}`);
-    }
-    if (province == null) {
+    } else {
       params?.delete("locationId");
     }
     const path = pathname + "?" + params?.toString();
     router.push(path);
   }, [province, district, s, locationId]);
 
+  // thay đổi param mỗi khi được select
   useEffect(() => {
     params?.set("brand", `${year || model || brand}`);
     if (year == null) {
       params?.delete("yearId");
+    } else {
+      params?.set("yearId", year);
     }
     if (model == null) {
       params?.delete("modelId");
+    } else {
+      params?.set("modelId", model);
     }
     if (brand == null) {
       params?.delete("brandId");
       params?.delete("brand");
+    } else {
+      params?.set("brandId", brand);
     }
 
     const path = pathname + "?" + params?.toString();
     router.push(path);
   }, [brand, model, year]);
+
+  // set giá trị mặc định
+  useEffect(() => {
+    if (province && provinceOptions) {
+      setProvinceName(
+        getLabelByValue({ data: provinceOptions, value: province })
+      );
+    }
+    if (district && districtOptions) {
+      setDistrictName(
+        getLabelByValue({ data: districtOptions, value: district })
+      );
+    }
+  }, [provinceOptions, districtOptions, province, district]);
+  // set giá trị mặc định thông tin xe
+  useEffect(() => {
+    if (brandId && brandOptions) {
+      setBrandName(getLabelByValue({ data: brandOptions, value: brandId }));
+    }
+    if (modelId && modelOptions) {
+      setModelName(getLabelByValue({ data: modelOptions, value: modelId }));
+    }
+    if (yearId && modelOptions) {
+      setYearName(getLabelByValue({ data: yearCarOptions, value: yearId }));
+    }
+  }, [brandOptions, modelOptions, yearCarOptions, brandId, modelId, yearId]);
+
   return (
     <Scroll>
-      <Select
+      <Autocomplete
         placeholder="Chọn tỉnh"
         data={provinceOptions}
-        value={province}
+        value={provinceName}
         classNames={{ dropdown: styles.dropdown }}
-        w={140}
         miw={140}
         onChange={async (value) => {
+          setProvinceName(value);
+        }}
+        onOptionSubmit={async (value) => {
           const optionsData: any = await getOptionsDistrict(Number(value));
           setDistrictOptions(optionsData);
           setProvince(value);
+          setDistrictName("");
           setDistrict(null);
         }}
-        clearable
+        rightSection={
+          <CloseButton
+            size="sm"
+            variant="transparent"
+            onClick={() => {
+              setProvinceName("");
+              setDistrictName("");
+              setProvince(null);
+              setDistrict(null);
+            }}
+            style={{ display: provinceName ? undefined : "none" }}
+          />
+        }
       />
 
-      <Select
+      <Autocomplete
         placeholder="Huyện/Phường"
-        value={district}
         classNames={{ dropdown: styles.dropdown }}
         data={districtOptions}
-        onChange={(value) => {
+        value={districtName}
+        onChange={async (value) => {
+          setDistrictName(value);
+        }}
+        onOptionSubmit={(value) => {
           setDistrict(value);
         }}
-        clearable
-        w={140}
         miw={140}
+        rightSection={
+          <CloseButton
+            size="sm"
+            variant="transparent"
+            onClick={() => {
+              setDistrict(null);
+              setDistrictName("");
+            }}
+            style={{ display: district ? undefined : "none" }}
+          />
+        }
       />
-      <Select
-        value={brand}
-        leftSectionPointerEvents="none"
+      <Autocomplete
         placeholder="Hãng xe"
         classNames={{ dropdown: styles.dropdown }}
         data={brandOptions}
-        w={140}
-        miw={140}
+        value={brandName}
         onChange={async (value) => {
+          setBrandName(value);
+        }}
+        miw={140}
+        onOptionSubmit={async (value) => {
           const optionsData = await getOptionsModels(Number(value));
           setModelOptions(optionsData);
           setBrand(value);
           setModel(null);
           setYear(null);
         }}
-        clearable
+        rightSection={
+          <CloseButton
+            size="sm"
+            variant="transparent"
+            onClick={() => {
+              setBrand(null);
+              setBrandName("");
+              setModel(null);
+              setModelName("");
+              setYearName("");
+              setYear(null);
+            }}
+            style={{ display: brandName ? undefined : "none" }}
+          />
+        }
       />
-      <Select
+      <Autocomplete
         leftSectionPointerEvents="none"
         placeholder="Dòng xe"
-        value={model}
-        w={140}
+        value={modelName}
         miw={140}
         classNames={{ dropdown: styles.dropdown }}
         data={modelOptions}
         onChange={async (value) => {
+          setModelName(value);
+        }}
+        onOptionSubmit={async (value) => {
           const optionsData = await getOptionsYearCar(Number(value));
           setYearCarOptions(optionsData);
           setModel(value);
           setYear(null);
         }}
-        clearable
+        rightSection={
+          <CloseButton
+            size="sm"
+            variant="transparent"
+            onClick={() => {
+              setModel(null);
+              setModelName("");
+              setYearName("");
+              setYear(null);
+            }}
+            style={{ display: modelName ? undefined : "none" }}
+          />
+        }
       />
-      <Select
+      <Autocomplete
         leftSectionPointerEvents="none"
         placeholder="Năm sản xuất"
-        value={year}
-        w={140}
+        value={yearName}
         miw={140}
         classNames={{ dropdown: styles.dropdown }}
         data={yearCarOptions}
         onChange={(value) => {
+          setYearName(value);
+        }}
+        onOptionSubmit={(value) => {
           setYear(value);
         }}
-        clearable
+        rightSection={
+          <CloseButton
+            size="sm"
+            variant="transparent"
+            onClick={() => {
+              setYearName("");
+              setYear(null);
+            }}
+            style={{ display: yearName ? undefined : "none" }}
+          />
+        }
       />
     </Scroll>
   );
 }
+
+// Helper function to get label by value
+const getLabelByValue = ({ data, value }: any) => {
+  return data?.find((item: any) => item.value === value)?.label || "";
+};
