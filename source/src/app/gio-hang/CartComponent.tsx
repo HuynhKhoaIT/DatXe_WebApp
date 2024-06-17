@@ -45,9 +45,9 @@ export default function CartComponent({ myAccount }: any) {
       form.setFieldValue("carBrandId", carDefault?.brandName?.id);
       form.setFieldValue("carNameId", carDefault?.modelName?.id);
       form.setFieldValue("carYearId", carDefault?.yearName?.id);
-      form.setFieldValue("carBrandName", carDefault?.brandName?.title);
-      form.setFieldValue("carModelName", carDefault?.modelName?.title);
-      form.setFieldValue("carYear", carDefault?.yearName?.title);
+      form.setFieldValue("carBrandName", carDefault?.brandName?.title || "");
+      form.setFieldValue("carModelName", carDefault?.modelName?.title || "");
+      form.setFieldValue("carYear", carDefault?.yearName?.title || "");
       form.setFieldValue("numberPlates", carDefault?.numberPlates);
       form.setFieldValue("carId", carDefault?.id);
     }
@@ -218,19 +218,11 @@ export default function CartComponent({ myAccount }: any) {
         toast.error("Đặt hàng thất bại: " + (data?.error || "Unknown error"));
       } else {
         toast.success("Đặt hàng thành công");
-
-        // const sms = await fetch(`/api/orders/sendSMS`, {
-        //   method: "POST",
-        //   body: JSON.stringify(data?.order),
-        // });
-        // localStorage.setItem("cartData", JSON.stringify([]));
         removeItem(storageKeys.CART_DATA);
         setCart(0);
         router.push(`/order/${data?.order?.slug}`);
       }
     } catch (error) {
-      console.error("Error during API call:", error);
-
       toast.error("Đã xảy ra lỗi trong quá trình xử lý yêu cầu");
     } finally {
       setLoading(false);
@@ -299,11 +291,8 @@ export default function CartComponent({ myAccount }: any) {
                 openModal={openModal}
                 value={value}
                 setValue={setValue}
-                // carDetail={carDetail}
-                // setCarDetail={setCarDetail}
               />
             </Grid>
-            {/* <InfoDate setDate={setDate} setTime={setTime} /> */}
             <InfoCart
               loading={loading}
               calculateSubTotal={calculateSubTotal}

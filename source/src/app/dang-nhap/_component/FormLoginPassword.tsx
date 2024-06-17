@@ -7,6 +7,12 @@ import { useDisclosure } from "@mantine/hooks";
 import { signIn } from "next-auth/react";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import { toast } from "react-toastify";
+import {
+  IconLock,
+  IconPassword,
+  IconPhone,
+  IconPhoneCall,
+} from "@tabler/icons-react";
 export default function FormLoginPassword() {
   const { fcmToken } = useFcmToken();
   const [opened, handlers] = useDisclosure(false);
@@ -77,6 +83,7 @@ export default function FormLoginPassword() {
         placeholder="Số điện thoại"
         {...form.getInputProps("phone")}
         mb={20}
+        leftSection={<IconPhone size={18} />}
       />
       <PasswordInput
         size="md"
@@ -86,6 +93,7 @@ export default function FormLoginPassword() {
         placeholder="Mật khẩu"
         {...form.getInputProps("password")}
         mb={20}
+        leftSection={<IconLock size={18} />}
       />
       <Button
         size="md"

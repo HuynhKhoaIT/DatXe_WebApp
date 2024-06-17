@@ -36,6 +36,7 @@ import { useProduct } from "../hooks/product/useProduct";
 import ImageField from "@/app/components/form/ImageField";
 import { AppConstants } from "@/constants";
 import { useSession } from "next-auth/react";
+import SearchFormNew from "@/app/components/form/SearchFormNew";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
@@ -302,15 +303,16 @@ export default function ProductsManaga() {
   ];
   const searchData = [
     {
-      name: "s",
+      key: "s",
       placeholder: "Tên sản phẩm",
       type: FieldTypes.STRING,
     },
     {
-      name: "isProduct",
+      key: "isProduct",
       placeholder: "Loại",
       type: FieldTypes.SELECT,
       data: kindProductOptions,
+      submitOnChanged: true,
     },
   ];
   const initialValuesSearch = {
@@ -326,8 +328,8 @@ export default function ProductsManaga() {
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
       <div style={{ background: "#fff", marginBottom: 30 }}>
-        <SearchForm
-          searchData={searchData}
+        <SearchFormNew
+          fields={searchData}
           brandFilter={true}
           initialValues={initialValuesSearch}
         />

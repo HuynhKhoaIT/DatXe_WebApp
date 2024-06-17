@@ -118,17 +118,16 @@ export default function ModalAddAddress({ openModal, close }: any) {
               {provinceName ? <>{provinceName}</> : <></>}
             </Typo>
           </Flex>
-          {districtName ||
-            (provinceName && (
-              <Button
-                color="blue"
-                variant="outline"
-                h={30}
-                onClick={handleResetAddress}
-              >
-                Xoá
-              </Button>
-            ))}
+          {(districtName || provinceName) && (
+            <Button
+              color="blue"
+              variant="outline"
+              h={30}
+              onClick={handleResetAddress}
+            >
+              Xoá
+            </Button>
+          )}
         </Flex>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>

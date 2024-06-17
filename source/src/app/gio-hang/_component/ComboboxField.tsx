@@ -29,14 +29,16 @@ export default function ComboboxField({
   });
 
   const handleSetValueCar = (data: any) => {
+    console.log("data", data);
     form.setFieldValue("carId", data?.id);
     form.setFieldValue("carBrandId", data?.carBrandId);
     form.setFieldValue("carNameId", data?.carNameId);
     form.setFieldValue("carYearId", data?.carYearId);
-    form.setFieldValue("carBrandName", data?.brandName?.title);
-    form.setFieldValue("carModelName", data?.modelName?.title);
-    form.setFieldValue("carYear", data?.yearName?.title);
+    form.setFieldValue("carBrandName", data?.brandName?.title || "");
+    form.setFieldValue("carModelName", data?.modelName?.title || "");
+    form.setFieldValue("carYear", data?.yearName?.title || "");
   };
+  console.log("carsData", carsData);
 
   const options = carsData?.map((item: any) => (
     <Combobox.Option

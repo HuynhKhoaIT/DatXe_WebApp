@@ -1,15 +1,8 @@
 "use client";
-import React, { useState } from "react";
 import { Grid, TextInput, Card } from "@mantine/core";
 import { LoadingOverlay } from "@mantine/core";
 import styles from "../index.module.scss";
-import dynamic from "next/dynamic";
-import { useDisclosure } from "@mantine/hooks";
 import ComboboxField from "./ComboboxField";
-import { useCars } from "@/app/dashboard/hooks/car/useCar";
-const DynamicModalAddCar = dynamic(() => import("../_component/ModalAddCar"), {
-  ssr: false,
-});
 
 export default function InfoCar({
   myAccount,
@@ -21,6 +14,7 @@ export default function InfoCar({
   value,
   setValue,
 }: any) {
+  console.log("form", form.values.carBrandName);
   return (
     <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
       <div className="checkout-widget">

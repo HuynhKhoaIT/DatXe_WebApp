@@ -80,7 +80,7 @@ export const useAddCar = (): UseCar => {
   const { mutate: setDefault } = useMutation({
     mutationFn: addCarDefault,
     onSuccess: () => {
-      toast.success("Thêm xe mặc định thành công");
+      toast.success("Đặt xe mặc định thành công");
 
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEY.cars, "client", searchParams.toString(), 1],
