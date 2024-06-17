@@ -83,6 +83,11 @@ const apiConfig = {
       method: "GET",
       headers: baseHeader,
     },
+    delete: {
+      baseURL: `${apiUrl}api/client/cars/:id`,
+      method: "DELETE",
+      headers: baseHeader,
+    },
     // getBrandCar:{
     //     baseURL: `${apiUrl}api/cars/:id`,
     //     method: 'GET',

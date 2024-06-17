@@ -80,6 +80,7 @@ export const useAddCar = (): UseCar => {
   const { mutate: setDefault } = useMutation({
     mutationFn: addCarDefault,
     onSuccess: () => {
+      router.refresh();
       toast.success("Đặt xe mặc định thành công");
 
       queryClient.invalidateQueries({

@@ -20,6 +20,7 @@ import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
 export default function CarForm({ isEditing, dataDetail }: any) {
+  console.log("dataDetail", dataDetail);
   const { addItem, updateItem, brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);

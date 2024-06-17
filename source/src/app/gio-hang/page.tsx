@@ -1,6 +1,9 @@
 import { getMyAccount } from "@/utils/user";
-import CartComponent from "./CartComponent";
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
+import CartDetailPage from "./CartDetailPage";
 export default async function Cart() {
   const myAccount: any = await getMyAccount();
-  return <CartComponent myAccount={myAccount} />;
+  const carsData = await callApi(apiConfig.car.getList, {});
+  return <CartDetailPage myAccount={myAccount} carsData={carsData?.data} />;
 }

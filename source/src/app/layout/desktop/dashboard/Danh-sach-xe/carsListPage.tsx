@@ -1,30 +1,16 @@
 "use client";
 import React, { useState } from "react";
-import {
-  IconChevronRight,
-  IconEye,
-  IconPencil,
-  IconTrash,
-  IconBan,
-  IconPlus,
-} from "@tabler/icons-react";
+import { IconPencil, IconTrash, IconBan, IconPlus } from "@tabler/icons-react";
 import { Radio, Button, Modal, Group, Pagination, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
 import PreviewModal from "./_component/PreviewModal";
 import ModalSetCarDefault from "./_component/ModalSetCarDefault";
 import ModalDeleteCar from "./_component/ModalDeleteCar";
-export default function CarsListPage({
-  carsData,
-  page,
-  setPage,
-  deleteItem,
-  loading,
-}: any) {
+export default function CarsListPage({ carsData, handleDeleteCar }: any) {
   const [
     openedPreviewCar,
     { open: openPreviewCar, close: closePreviewCar },
@@ -118,18 +104,6 @@ export default function CarsListPage({
       render: (record: any) => {
         return (
           <>
-            {/* <Button
-              size="lg"
-              radius={0}
-              p={5}
-              variant="transparent"
-              onClick={() => {
-                setDetail(record);
-                openPreviewCar();
-              }}
-            >
-              <IconEye size={16} />
-            </Button> */}
             <Link href={`/dashboard/danh-sach-xe/${record.id}`}>
               <Button
                 size="lg"
@@ -171,10 +145,7 @@ export default function CarsListPage({
             }}
           >
             <Button
-              // h={{ base: 40, md: 50, lg: 50 }}
-              // radius={0}
               color="var(--primary-color)"
-              // variant="outline"
               leftSection={<IconPlus size={18} />}
             >
               Thêm xe
@@ -194,17 +165,14 @@ export default function CarsListPage({
           data={carsData?.data}
           columns={columns}
           totalPage={carsData?.totalPage}
-          loading={loading}
-          setPage={setPage}
-          activePage={page}
         />
       </div>
 
       <ModalDeleteCar
         openedDeleteCar={openedDeleteCar}
         closeDeleteCar={closeDeleteCar}
-        deleteItem={deleteItem}
         deleteRow={deleteRow}
+        handleDelete={handleDeleteCar}
       />
       <ModalSetCarDefault
         openedSetDefault={openedSetDefault}
