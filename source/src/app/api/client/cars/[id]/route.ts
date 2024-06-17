@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getCarModelById } from '@/app/libs/prisma/carModel';
+import { checkAuthToken } from '@/utils/auth';
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     try {
@@ -10,9 +11,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         if (!id) {
             return new NextResponse("Missing 'id' parameter");
         }
-        const session = await getServerSession(authOptions);
-
-        if (session) {
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
             const cars = await prisma.car.findFirst({
                 where: {
                     id: id,
@@ -45,8 +45,8 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
     try {
-        const session = await getServerSession(authOptions);
-        if (session) {
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
             const id = params.id;
             if (!id) {
                 return new NextResponse("Missing 'id' parameter");
