@@ -140,6 +140,8 @@ export async function getProducts(requestData: any) {
 }
 export async function getProductsClient(requestData: any) {
   try {
+
+    // return await getProductsByBrandId("12742");
     let currentPage = 1;
     let take = 10;
     if (requestData.limit) {
@@ -169,20 +171,24 @@ export async function getProductsClient(requestData: any) {
       };
     }
 
+    //fiter by yearCar
+    const yearIdFilter = requestData.year;
+
+    if(yearIdFilter){
+      // brands
+    }
+
     // fiter by brandId
     const brandIdFilter = requestData.brand;
     if (brandIdFilter) {
       brands = {
-        OR: [
-          {
-            some: {
-              carModel: {
-                id: brandIdFilter,
-              },
-            },
+        some:{
+          carModel: {
+            id: brandIdFilter,
+            type: 'CARNAME'
           }
-        ]
-      };
+        },
+      }
     }
 
     // fiter by text
@@ -649,6 +655,24 @@ export async function getProductBySKU(sku:string,garageId: string) {
       sku,
       status:'PUBLIC',
       garageId
+    }
+  })
+}
+
+
+export async function getProductsByBrandId(brandId:string) {
+  return prisma.carModelsOnProducts.findMany({
+    where:{
+      AND:[
+        {
+          carModelId: brandId
+        },
+
+      ]
+    },
+    select:{
+      productId: true,
+      carModelId: true
     }
   })
 }
