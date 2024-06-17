@@ -23,12 +23,18 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
                 },
             });
             let carRs = JSON.parse(JSON.stringify(cars));
-            let br = await getCarModelById(carRs.carBrandId);
-            let md = await getCarModelById(carRs.carNameId);
-            let y = await getCarModelById(carRs.carYearId);
-            carRs.brandName = br;
-            carRs.modelName = md;
-            carRs.yearName = y;
+            if(carRs.carBrandId){
+                let br = await getCarModelById(carRs.carBrandId);
+                carRs.brandName = br;
+            }
+            if(carRs.carNameId){
+                let md = await getCarModelById(carRs.carNameId);
+                carRs.modelName = md;
+            }
+            if(carRs.carYearId){
+                let y = await getCarModelById(carRs.carYearId);
+                carRs.yearName = y;
+            }
             return NextResponse.json(carRs);
         }
         throw new Error('Chua dang nhap');
