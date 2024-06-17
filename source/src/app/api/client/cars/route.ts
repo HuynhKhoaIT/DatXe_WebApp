@@ -4,11 +4,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 import { getCustomerByUserId } from '@/app/libs/prisma/customer';
+import { checkAuthToken } from '@/utils/auth';
 
 export async function GET(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (session) {
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
             const { searchParams } = new URL(request.url);
             const requestData = {
                 garageId: "2",
@@ -16,7 +17,7 @@ export async function GET(request: NextRequest) {
                 carBrandId: searchParams.get('carBrandId'),
                 carNameId: searchParams.get('carNameId'),
                 carYearId: searchParams.get('carYearId'),
-                userId: session.user?.id.toString(),
+                userId: getAuth.id,
             };
             const cars = await getCars(requestData);
 
@@ -29,14 +30,14 @@ export async function GET(request: NextRequest) {
         return new NextResponse(error.message, { status: 500 });
     }
 }
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
-        const session = await getServerSession(authOptions);
-        if (session) {
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
             const json = await request.json();
-            const customer = await getCustomerByUserId((session.user?.id ?? ""))
+            const customer = await getCustomerByUserId((getAuth.id ?? ""))
             json.garageId = (process.env.GARAGE_DEFAULT);
-            json.userId = (session.user?.id)?.toString();
+            json.userId = (getAuth.id)?.toString();
             json.customerId = (customer?.id)
             const car = await createCar(json);
             return new NextResponse(JSON.stringify(car), {
