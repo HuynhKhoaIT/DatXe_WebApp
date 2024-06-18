@@ -8,7 +8,6 @@ import {
 import { ResponseError } from "@/utils/until/ResponseError";
 import { QUERY_KEY } from "@/constants";
 const queryClient = new QueryClient();
-
 // get detail
 const fetchAccountDetail = async () => {
   const response = await fetch(`/api/client/account`);
