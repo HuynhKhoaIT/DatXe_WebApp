@@ -8,12 +8,11 @@ import { useRouter } from "next/navigation";
 const DynamicModalAddCar = dynamic(() => import("./ModalAddCar"), {
   ssr: false,
 });
-export default function ButtonAddCar({ styles, user }: any) {
+export default function ButtonAddCar({ styles, user, handleAdd }: any) {
   const router = useRouter();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
-
   const isTablet = useMediaQuery(`(max-width: ${"1024px"})`);
 
   return (
@@ -38,6 +37,7 @@ export default function ButtonAddCar({ styles, user }: any) {
       <DynamicModalAddCar
         openModal={openedModal}
         close={closeModal}
+        handleAdd={handleAdd}
         myAccount={user}
       />
     </>

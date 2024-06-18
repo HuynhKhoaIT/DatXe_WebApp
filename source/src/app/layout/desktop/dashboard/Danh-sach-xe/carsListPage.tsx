@@ -4,13 +4,17 @@ import { IconPencil, IconTrash, IconBan, IconPlus } from "@tabler/icons-react";
 import { Radio, Button, Modal, Group, Pagination, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { useRouter } from "next/navigation";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
 import PreviewModal from "./_component/PreviewModal";
 import ModalSetCarDefault from "./_component/ModalSetCarDefault";
 import ModalDeleteCar from "./_component/ModalDeleteCar";
-export default function CarsListPage({ carsData, handleDeleteCar }: any) {
+import Link from "next/link";
+export default function CarsListPage({
+  carsData,
+  handleDeleteCar,
+  handleSetDefault,
+}: any) {
   const [
     openedPreviewCar,
     { open: openPreviewCar, close: closePreviewCar },
@@ -178,6 +182,7 @@ export default function CarsListPage({ carsData, handleDeleteCar }: any) {
         openedSetDefault={openedSetDefault}
         closeSetDefault={closeSetDefault}
         dataCarDefault={dataCarDefault}
+        handleSetDefault={handleSetDefault}
       />
       <PreviewModal
         opened={openedPreviewCar}

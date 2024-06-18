@@ -19,6 +19,12 @@ export default async function CarsPage({ searchParams }: any) {
       },
     });
   }
+  async function handleSetDefault(formData: any) {
+    "use server";
+    await callApi(apiConfig.car.setDefaultCar, {
+      data: formData,
+    });
+  }
   return (
     <RenderContext
       components={{
@@ -31,6 +37,7 @@ export default async function CarsPage({ searchParams }: any) {
       }}
       carsData={cars}
       handleDeleteCar={handleDeleteCar}
+      handleSetDefault={handleSetDefault}
     />
   );
 }

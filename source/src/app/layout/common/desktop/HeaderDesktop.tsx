@@ -13,9 +13,16 @@ import { getMyAccount } from "@/utils/user";
 import ButtonAddAddress from "./_component/ButtonAddAddress";
 import { brandData } from "@/constants/masterData";
 import ActionIconCart from "./_component/ActionIconCart";
+import { callApi } from "@/lib";
+import apiConfig from "@/constants/apiConfig";
 export default async function Header() {
   const myAccount: any = await getMyAccount();
-
+  async function handleAdd(formData: any) {
+    "use server";
+    await callApi(apiConfig.car.create, {
+      data: formData,
+    });
+  }
   return (
     <header className={styles.header}>
       <HeaderTop />
@@ -33,7 +40,11 @@ export default async function Header() {
               <ButtonAddAddress />
               <SearchFormName />
               <ActionIconCart />
-              <ButtonAddCar styles={styles} user={myAccount} />
+              <ButtonAddCar
+                handleAdd={handleAdd}
+                styles={styles}
+                user={myAccount}
+              />
             </div>
           </div>
           <div className={styles.headerNav}>

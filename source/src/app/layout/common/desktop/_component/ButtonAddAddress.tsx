@@ -7,7 +7,7 @@ import { IconMapPin } from "@tabler/icons-react";
 import { fitString } from "@/utils/until";
 import { getData } from "@/utils/until/localStorage";
 import { storageKeys } from "@/constants";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ModalAddress.module.scss";
 const DynamicModalAddAddress = dynamic(() => import("./ModalAddAddress"), {
   ssr: false,
@@ -18,12 +18,12 @@ export default function ButtonAddAddress() {
     false
   );
 
-  const [address, setAddress] = useState("Chọn địa chỉ");
+  const [address, setAddress] = useState("Toàn quốc");
 
   const addressData = getData(storageKeys.ADDRESS_DEFAULT);
   useEffect(() => {
     if (!addressData) {
-      setAddress("Chọn địa chỉ");
+      setAddress("Toàn quốc");
       return;
     }
     const address =

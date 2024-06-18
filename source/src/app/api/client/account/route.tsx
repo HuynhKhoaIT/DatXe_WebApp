@@ -12,7 +12,7 @@ export async function GET() {
       return NextResponse.json({ data });
     }
     throw new Error("Chua dang nhap");
-  } catch (error:any) {
+  } catch (error) {
     return new NextResponse(error?.message, { status: 500 });
   }
 }
@@ -23,14 +23,14 @@ export async function PUT(request: Request) {
     if (session) {
       json.id = session.user?.id.toString();
       const token = session.user?.token as string;
-      await updateAccount(json,token);
+      await updateAccount(json, token);
       const user = await updateUser(json);
       return new NextResponse(JSON.stringify(user), {
         status: 201,
         headers: { "Content-Type": "application/json" },
       });
     }
-  } catch (error:any) {
+  } catch (error) {
     return new NextResponse(error.message, { status: 500 });
   }
 }

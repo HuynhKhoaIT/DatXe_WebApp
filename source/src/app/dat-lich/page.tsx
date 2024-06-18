@@ -34,6 +34,8 @@ export default async function DatLich({ searchParams }: any) {
     label: category.title,
   }));
 
+  const carsData = await callApi(apiConfig.car.getList, {});
+
   return (
     <main className="main">
       <CalendarScheduler
@@ -41,6 +43,7 @@ export default async function DatLich({ searchParams }: any) {
         ordersData={[]}
         orderInfo={orderInfo}
         advisorOptions={advisorOptions}
+        carsData={carsData}
       />
     </main>
   );

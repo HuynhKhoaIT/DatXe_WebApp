@@ -26,7 +26,11 @@ import { toast } from "react-toastify";
 import { useGlobalContext } from "@/app/Context/store";
 import { getData, removeItem, setData } from "@/utils/until/localStorage";
 import { storageKeys } from "@/constants";
-export default function CartDetailPage({ myAccount, carsData }: any) {
+export default function CartDetailPage({
+  myAccount,
+  carsData,
+  handleAdd,
+}: any) {
   const { setCart } = useGlobalContext();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
@@ -305,9 +309,7 @@ export default function CartDetailPage({ myAccount, carsData }: any) {
       <DynamicModalAddCar
         openModal={openedModal}
         close={closeModal}
-        myAccount={myAccount}
-        formData={form}
-        setValue={setValue}
+        handleAdd={handleAdd}
       />
       <Modal
         title="Delete"
@@ -345,6 +347,9 @@ export default function CartDetailPage({ myAccount, carsData }: any) {
     </div>
   );
 }
-const DynamicModalAddCar = dynamic(() => import("./_component/ModalAddCar"), {
-  ssr: false,
-});
+const DynamicModalAddCar = dynamic(
+  () => import("@/app/layout/common/desktop/_component/ModalAddCar"),
+  {
+    ssr: false,
+  }
+);
