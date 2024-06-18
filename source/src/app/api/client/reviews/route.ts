@@ -1,8 +1,9 @@
 import prisma from '@/app/libs/prismadb';
 import { getServerSession } from 'next-auth/next';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { createReviewProduct } from '@/app/libs/prisma/reviewProduct';
+import { checkAuthToken } from '@/utils/auth';
 
 export async function GET(request: Request) {
     try {
@@ -11,12 +12,12 @@ export async function GET(request: Request) {
     }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const json = await request.json();
-        const session = await getServerSession(authOptions);
-        if (session) {
-            json.createdId = session.user?.id.toString();
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
+            json.createdId = getAuth.id.toString();
             const review = await createReviewProduct(json);
             return NextResponse.json({
                 data: review,

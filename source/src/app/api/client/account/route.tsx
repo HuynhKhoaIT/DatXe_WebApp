@@ -1,14 +1,15 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getMyAccount, updateUser } from "@/app/libs/prisma/user";
 import { updateAccount } from "@/utils/user";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
-    if (session?.user?.id) {
-      const data = await getMyAccount(session.user?.id.toString());
+    const getAuth = await checkAuthToken(request);
+    if (getAuth != null) {
+      const data = await getMyAccount(getAuth.id.toString());
       return NextResponse.json({ data });
     }
     throw new Error("Chua dang nhap");
@@ -16,13 +17,14 @@ export async function GET() {
     return new NextResponse(error?.message, { status: 500 });
   }
 }
-export async function PUT(request: Request) {
+export async function PUT(request: NextRequest) {
   try {
     const json = await request.json();
-    const session = await getServerSession(authOptions);
-    if (session) {
-      json.id = session.user?.id.toString();
-      const token = session.user?.token as string;
+    const getAuth = await checkAuthToken(request);
+    if (getAuth != null) {
+      json.id = getAuth.id.toString();
+      const BearerToken = request.headers.get("authorization") as string;
+      const token = BearerToken?.split(" ")[1];
       await updateAccount(json, token);
       const user = await updateUser(json);
       return new NextResponse(JSON.stringify(user), {
