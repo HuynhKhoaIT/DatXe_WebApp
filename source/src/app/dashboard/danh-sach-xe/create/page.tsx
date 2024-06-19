@@ -12,6 +12,11 @@ export default async function CreateCar() {
     });
   }
 
+  const brand = await callApi(apiConfig.car.getBrands, {});
+  const dataOption = brand?.data.map((item: any) => ({
+    value: item.id.toString(),
+    label: item.title,
+  }));
   return (
     <Box maw={"100%"} mx="auto" className={styles.wrapper}>
       <div className={styles.headerTitle}>
@@ -20,7 +25,7 @@ export default async function CreateCar() {
         </Typo>
       </div>
       <div className={styles.content}>
-        <CarForm handleSave={handleCreate} />
+        <CarForm handleSave={handleCreate} brandOptions={dataOption} />
       </div>
     </Box>
   );

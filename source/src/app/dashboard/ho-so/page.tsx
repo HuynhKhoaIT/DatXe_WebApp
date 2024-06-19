@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
 import { toast } from "react-toastify";
+import InfoProfile from "./_component/Info";
 export default async function ProfilePage() {
   // const { data: profile, isLoading } = useAccountDetail();
   const profile = await callApi(apiConfig.account.getAccount, {});
@@ -21,7 +22,7 @@ export default async function ProfilePage() {
   }
   return (
     <div className={styles.formUser}>
-      {/* <InfoProfile myAccount={profile?.data} cars={cars} /> */}
+      <InfoProfile myAccount={profile?.data} cars={carsData} />
       <Space h="md" />
       <UserProfile myAccount={profile?.data} handleUpdate={handleUpdate} />
     </div>

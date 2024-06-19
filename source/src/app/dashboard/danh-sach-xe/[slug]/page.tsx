@@ -24,10 +24,20 @@ export default async function CarSavePage({
     });
   }
 
+  const brand = await callApi(apiConfig.car.getBrands, {});
+  const dataOption = brand?.data.map((item: any) => ({
+    value: item.id.toString(),
+    label: item.title,
+  }));
   return (
     <Box maw={"100%"} mx="auto" className={styles.wrapper}>
       <div className={styles.content}>
-        <CarForm isEditing={true} dataDetail={car} handleSave={handleUpdate} />
+        <CarForm
+          isEditing={true}
+          brandOptions={dataOption}
+          dataDetail={car}
+          handleSave={handleUpdate}
+        />
       </div>
     </Box>
   );

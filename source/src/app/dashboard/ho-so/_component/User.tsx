@@ -28,10 +28,10 @@ import axios from "axios";
 import { QUERY_KEY } from "@/constants";
 import { useAddAccount } from "../../hooks/profile/useAddProfile";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
-import { useFormState } from "react-dom";
+// import { useFormState } from "react-dom";
 
 export default function UserProfile({ myAccount, handleUpdate }: any) {
-  const [state, formAction] = useFormState(createUser, initialState);
+  // const [state, formAction] = useFormState(createUser, initialState);
 
   const [districtOptions, setDistrictOptions] = useState<any>([]);
   const [wardOptions, setWardOptions] = useState<any>([]);

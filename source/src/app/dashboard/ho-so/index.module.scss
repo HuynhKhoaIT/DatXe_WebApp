@@ -2,3 +2,15 @@
     background-color: var(--white-background);
     padding: 0 10px;
 }
+.loadingPage{
+    .content {
+        background-color: var(--white-background);
+        .title {
+            padding: 1rem 30px;
+            color: var(--primary-orange);
+        }
+        .table {
+            padding: 20px;
+        }
+    }
+}

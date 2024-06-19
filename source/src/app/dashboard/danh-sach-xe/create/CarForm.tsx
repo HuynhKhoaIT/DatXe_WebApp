@@ -14,15 +14,19 @@ import { useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
-import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-export default function CarForm({ isEditing, dataDetail, handleSave }: any) {
-  const { brandOptions, isLoadingBrand } = useAddCar();
+export default function CarForm({
+  isEditing,
+  dataDetail,
+  handleSave,
+  brandOptions,
+}: any) {
+  // const { brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [loading, handlers] = useDisclosure();
@@ -108,11 +112,6 @@ export default function CarForm({ isEditing, dataDetail, handleSave }: any) {
 
   return (
     <Box pos="relative">
-      <LoadingOverlay
-        visible={isLoadingBrand}
-        zIndex={99}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Grid gutter={12}>
           <Grid.Col span={12}>

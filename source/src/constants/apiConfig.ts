@@ -103,6 +103,11 @@ const apiConfig = {
       method: "POST",
       headers: baseHeader,
     },
+    getBrands: {
+      baseURL: `${apiUrl}api/car-model`,
+      method: "GET",
+      headers: baseHeader,
+    },
   },
   account: {
     getAccount: {
