@@ -29,7 +29,12 @@
     }
 }
 .avatar{
+    display: inline-block;
     padding: 6px;
     border-radius: 8px;
     border: 2px dotted #ddd;
+    img{
+        width: 120px;
+        height: 120px;
+    }
 }

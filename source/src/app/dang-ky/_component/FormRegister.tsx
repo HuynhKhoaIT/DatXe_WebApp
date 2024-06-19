@@ -5,6 +5,7 @@ import { useForm, hasLength, isNotEmpty } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 import { toast } from "react-toastify";
+import { IconPhone, IconUser } from "@tabler/icons-react";
 interface FormInputs {
   name: string;
   phone: string;
@@ -55,6 +56,7 @@ export function FormRegister() {
         placeholder="Họ và tên"
         // onChange={(e) => setfullName(e.target.value)}
         {...form.getInputProps("name")}
+        leftSection={<IconUser size={18} />}
       />
       <br></br>
       <TextInput
@@ -63,6 +65,7 @@ export function FormRegister() {
         style={{ borderBottom: "1px solid #ddd" }}
         variant="unstyled"
         placeholder="Số điện thoại"
+        leftSection={<IconPhone size={18} />}
         {...form.getInputProps("phone")}
       />
       <Button

@@ -6,7 +6,14 @@ import {
   getOptionsProvince,
   getOptionsWard,
 } from "@/utils/until";
-import { Box, LoadingOverlay, Modal, ScrollArea } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Flex,
+  LoadingOverlay,
+  Modal,
+  ScrollArea,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronLeft, IconPlus, IconX } from "@tabler/icons-react";
@@ -14,10 +21,13 @@ import { useEffect, useState } from "react";
 import styles from "./ModalAddress.module.scss";
 import Scroll from "@/app/components/common/Scroll";
 import classNames from "classnames";
-import { getData, setData } from "@/utils/until/localStorage";
+import { getData, removeItem, setData } from "@/utils/until/localStorage";
+import Typo from "@/app/components/elements/Typo";
+import { useRouter } from "next/navigation";
 export default function ModalAddAddress({ openModal, close }: any) {
   const addressDefault = getData(storageKeys.ADDRESS_DEFAULT);
 
+  const router = useRouter();
   const { data: provinceOptions, isLoading: isLoadingProvince } = useFetch({
     queryKey: [QUERY_KEY.optionsProvince],
     queryFn: () => getOptionsProvince(),
@@ -39,8 +49,25 @@ export default function ModalAddAddress({ openModal, close }: any) {
     validate: {},
   });
 
+  useEffect(() => {
+    if (addressDefault?.district) {
+      setDistrictName(addressDefault?.district?.name);
+    }
+    if (addressDefault?.province) {
+      setProvinceName(addressDefault?.province?.name);
+    }
+  }, []);
+
   const handleSubmit = async () => {};
 
+  const handleResetAddress = () => {
+    setProvinceName(null);
+    setDistrictName(null);
+    removeItem(storageKeys.ADDRESS_DEFAULT);
+    setActive("province");
+    router.refresh();
+    close();
+  };
   return (
     <Modal
       opened={openModal}
@@ -77,15 +104,31 @@ export default function ModalAddAddress({ openModal, close }: any) {
                 }}
               />
             )}
-
-            {wardName}
-            {wardName && ", "}
             {districtName}
             {districtName && ", "}
             {provinceName}
           </span>
           <IconX style={{ cursor: "pointer" }} color="#fff" onClick={close} />
         </div>
+        <Flex p={16} align={"center"} justify={"space-between"}>
+          <Flex align={"center"} gap={10}>
+            <Typo size="primary">Vị trí hiện tại: </Typo>
+            <Typo size="primary">
+              {districtName ? <>{districtName},</> : <></>}
+              {provinceName ? <>{provinceName}</> : <></>}
+            </Typo>
+          </Flex>
+          {(districtName || provinceName) && (
+            <Button
+              color="blue"
+              variant="outline"
+              h={30}
+              onClick={handleResetAddress}
+            >
+              Xoá
+            </Button>
+          )}
+        </Flex>
 
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <div className={styles.wrapper}>
@@ -119,6 +162,7 @@ export default function ModalAddAddress({ openModal, close }: any) {
                           form.setFieldValue("wardId", "");
                           setProvince(item.value);
                           setProvinceName(item.label);
+                          setDistrictName(null);
                           setDistrict(null);
                           setWard(null);
                         }}
@@ -140,13 +184,13 @@ export default function ModalAddAddress({ openModal, close }: any) {
                           district == item.value && styles.activeItem
                         )}
                         onClick={async () => {
-                          const optionsData: any = await getOptionsWard(
-                            Number(item.value)
-                          );
-                          setActive("ward");
-                          setWardOptions(optionsData);
+                          // const optionsData: any = await getOptionsWard(
+                          //   Number(item.value)
+                          // );
+                          // setActive("ward");
+                          // setWardOptions(optionsData);
                           form.setFieldValue("districtId", item.value);
-                          form.setFieldValue("wardId", "");
+                          // form.setFieldValue("wardId", "");
                           setDistrictName(item.label);
                           setDistrict(item.value);
                           const address = {

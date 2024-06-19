@@ -43,6 +43,7 @@ export const ModalEventCalendar = ({
   eventInfos,
   onClose,
   fetchDataOrders,
+  carsData,
 }: any) => {
   const { addItem, brandOptions, isPendingAdd } = useAddOrder();
 
@@ -155,6 +156,7 @@ export const ModalEventCalendar = ({
             openModal={openModal}
             value={value}
             setValue={setValue}
+            carsData={carsData}
           />
         ) : (
           <InfoCarNew form={form} brandOptions={brandOptions} styles={styles} />

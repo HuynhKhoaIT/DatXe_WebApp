@@ -83,11 +83,31 @@ const apiConfig = {
       method: "GET",
       headers: baseHeader,
     },
-    // getBrandCar:{
-    //     baseURL: `${apiUrl}api/cars/:id`,
-    //     method: 'GET',
-    //     headers: baseHeader,
-    // }
+    delete: {
+      baseURL: `${apiUrl}api/client/cars/:id`,
+      method: "DELETE",
+      headers: baseHeader,
+    },
+    update: {
+      baseURL: `${apiUrl}api/client/cars/:id`,
+      method: "PUT",
+      headers: baseHeader,
+    },
+    create: {
+      baseURL: `${apiUrl}api/client/cars`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    setDefaultCar: {
+      baseURL: `${apiUrl}api/client/cars/set-default`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    getBrands: {
+      baseURL: `${apiUrl}api/car-model`,
+      method: "GET",
+      headers: baseHeader,
+    },
   },
   account: {
     getAccount: {

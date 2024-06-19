@@ -261,6 +261,7 @@ export default function ProductForm({
                   <MultiSelect
                     size="lg"
                     radius={0}
+                    searchable={true}
                     withAsterisk
                     {...form.getInputProps("categories")}
                     label="Danh mục"

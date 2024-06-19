@@ -9,7 +9,7 @@ import {
   getOptionsYearCar,
 } from "@/utils/until";
 import { getData } from "@/utils/until/localStorage";
-import { Flex, Select } from "@mantine/core";
+import { Autocomplete, CloseButton, Flex, Select } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import styles from "./index.module.scss";
@@ -51,7 +51,9 @@ export default function FillterList({ isFilterLocation = true }: any) {
     }
   }, []);
   const [brand, setBrand] = useState<any>(brandId);
+
   const [model, setModel] = useState<any>(modelId);
+
   const [year, setYear] = useState<any>(yearId);
 
   const { data: provinceOptions, isLoading: isLoading } = useFetch({
@@ -101,41 +103,49 @@ export default function FillterList({ isFilterLocation = true }: any) {
     fetchOptionsData();
   }, [addRess?.province?.id, brandId, modelId]);
 
+  // thay đổi param mỗi khi được select
   useEffect(() => {
-    if (isFilterLocation) {
+    if (province) {
       params?.set("locationId", `${district || province}`);
-    }
-    if (province == null) {
+    } else {
       params?.delete("locationId");
     }
     const path = pathname + "?" + params?.toString();
     router.push(path);
   }, [province, district, s, locationId]);
 
+  // thay đổi param mỗi khi được select
   useEffect(() => {
     params?.set("brand", `${year || model || brand}`);
     if (year == null) {
       params?.delete("yearId");
+    } else {
+      params?.set("yearId", year);
     }
     if (model == null) {
       params?.delete("modelId");
+    } else {
+      params?.set("modelId", model);
     }
     if (brand == null) {
       params?.delete("brandId");
       params?.delete("brand");
+    } else {
+      params?.set("brandId", brand);
     }
 
     const path = pathname + "?" + params?.toString();
     router.push(path);
   }, [brand, model, year]);
+
   return (
     <Scroll>
       <Select
         placeholder="Chọn tỉnh"
         data={provinceOptions}
         value={province}
+        searchable={true}
         classNames={{ dropdown: styles.dropdown }}
-        w={140}
         miw={140}
         onChange={async (value) => {
           const optionsData: any = await getOptionsDistrict(Number(value));
@@ -143,28 +153,27 @@ export default function FillterList({ isFilterLocation = true }: any) {
           setProvince(value);
           setDistrict(null);
         }}
-        clearable
+        clearable={true}
       />
 
       <Select
         placeholder="Huyện/Phường"
-        value={district}
         classNames={{ dropdown: styles.dropdown }}
         data={districtOptions}
+        searchable={true}
+        value={district}
         onChange={(value) => {
           setDistrict(value);
         }}
-        clearable
-        w={140}
         miw={140}
+        clearable={true}
       />
       <Select
-        value={brand}
-        leftSectionPointerEvents="none"
         placeholder="Hãng xe"
         classNames={{ dropdown: styles.dropdown }}
         data={brandOptions}
-        w={140}
+        searchable={true}
+        value={brand}
         miw={140}
         onChange={async (value) => {
           const optionsData = await getOptionsModels(Number(value));
@@ -173,14 +182,14 @@ export default function FillterList({ isFilterLocation = true }: any) {
           setModel(null);
           setYear(null);
         }}
-        clearable
+        clearable={true}
       />
       <Select
         leftSectionPointerEvents="none"
         placeholder="Dòng xe"
         value={model}
-        w={140}
         miw={140}
+        searchable={true}
         classNames={{ dropdown: styles.dropdown }}
         data={modelOptions}
         onChange={async (value) => {
@@ -189,20 +198,20 @@ export default function FillterList({ isFilterLocation = true }: any) {
           setModel(value);
           setYear(null);
         }}
-        clearable
+        clearable={true}
       />
       <Select
         leftSectionPointerEvents="none"
         placeholder="Năm sản xuất"
+        searchable={true}
         value={year}
-        w={140}
         miw={140}
         classNames={{ dropdown: styles.dropdown }}
         data={yearCarOptions}
         onChange={(value) => {
           setYear(value);
         }}
-        clearable
+        clearable={true}
       />
     </Scroll>
   );

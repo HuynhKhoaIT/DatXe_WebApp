@@ -17,7 +17,6 @@ async function callApi(options: any, payload: any) {
   if (session) {
     token = session?.user?.token;
   }
-
   try {
     const item: any = await sendRequest(options, payload, token);
     return item.data;

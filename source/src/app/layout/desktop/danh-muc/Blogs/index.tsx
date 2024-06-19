@@ -16,14 +16,7 @@ const Blogs = ({ blogs }: any) => {
         fullWidth={true}
         hiddenShowMore={blogs?.length < 8}
       >
-        <SlickCarousel
-          column={7}
-          responsive={true}
-          gap={8}
-          dots={false}
-          infinite={true}
-          autoplay={true}
-        >
+        <SlickCarousel column={4} gap={8} dots={false}>
           {blogs?.map((blog: any, index: number) => (
             <BlogItem blog={blog} key={index} />
           ))}

@@ -14,17 +14,23 @@ import { useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
-import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
-export default function CarForm({ isEditing, dataDetail }: any) {
-  const { addItem, updateItem, brandOptions, isLoadingBrand } = useAddCar();
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+export default function CarForm({
+  isEditing,
+  dataDetail,
+  handleSave,
+  brandOptions,
+}: any) {
+  // const { brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [loading, handlers] = useDisclosure();
-
+  const router = useRouter();
   const form = useForm({
     initialValues: {
       numberPlates: "",
@@ -42,10 +48,15 @@ export default function CarForm({ isEditing, dataDetail }: any) {
 
   const handleSubmit = async (values: any) => {
     handlers.open();
-    if (isEditing) {
-      updateItem(values);
-    } else {
-      addItem(values);
+    try {
+      await handleSave(values);
+      toast.success(
+        `${isEditing ? "Cập nhật xe thành công" : "Thêm xe thành công"}`
+      );
+      router.back();
+      router.refresh();
+    } catch (error) {
+      toast.error(`${isEditing ? "Cập nhật xe thất bại" : "Thêm xe thất bại"}`);
     }
     handlers.close();
   };
@@ -101,11 +112,6 @@ export default function CarForm({ isEditing, dataDetail }: any) {
 
   return (
     <Box pos="relative">
-      <LoadingOverlay
-        visible={isLoadingBrand}
-        zIndex={99}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Grid gutter={12}>
           <Grid.Col span={12}>
@@ -143,6 +149,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
+                    searchable={true}
                     classNames={{
                       input: styles.inputDashboard,
                     }}
@@ -163,6 +170,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
+                    searchable={true}
                     classNames={{
                       input: styles.inputDashboard,
                     }}
@@ -184,6 +192,7 @@ export default function CarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
+                    searchable={true}
                     classNames={{
                       input: styles.inputDashboard,
                     }}

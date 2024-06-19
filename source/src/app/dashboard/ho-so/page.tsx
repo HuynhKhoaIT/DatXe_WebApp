@@ -1,19 +1,30 @@
-"use client";
 import React from "react";
 import { Space } from "@mantine/core";
-import InfoProfile from "./_component/Info";
 import UserProfile from "./_component/User";
-import { useAccountDetail } from "../hooks/profile/useProfile";
-import { useCars } from "../hooks/car/useCar";
 import styles from "./index.module.scss";
-export default function ProfilePage() {
-  const { data: profile, isLoading } = useAccountDetail();
-  const { cars } = useCars();
+import apiConfig from "@/constants/apiConfig";
+import { callApi } from "@/lib";
+import { toast } from "react-toastify";
+import InfoProfile from "./_component/Info";
+export default async function ProfilePage() {
+  // const { data: profile, isLoading } = useAccountDetail();
+  const profile = await callApi(apiConfig.account.getAccount, {});
+  const carsData = await callApi(apiConfig.car.getList, {});
+  async function handleUpdate(formData: any) {
+    "use server";
+    try {
+      await callApi(apiConfig.account.update, {
+        data: formData,
+      });
+    } catch (error) {
+      throw new Error("Failed to create task");
+    }
+  }
   return (
     <div className={styles.formUser}>
-      <InfoProfile myAccount={profile?.data} cars={cars} />
+      <InfoProfile myAccount={profile?.data} cars={carsData} />
       <Space h="md" />
-      <UserProfile myAccount={profile?.data} isLoading={isLoading} />
+      <UserProfile myAccount={profile?.data} handleUpdate={handleUpdate} />
     </div>
   );
 }

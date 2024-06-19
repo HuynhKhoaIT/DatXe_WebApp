@@ -1,14 +1,17 @@
-import { useCars } from "@/app/dashboard/hooks/car/useCar";
 import ComboboxField from "@/app/gio-hang/_component/ComboboxField";
 import { Grid, Select, TextInput } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-export default function InfoCarUser({ form, openModal, value, setValue }: any) {
-  const { cars, isLoading, isFetching } = useCars();
-
+export default function InfoCarUser({
+  form,
+  openModal,
+  value,
+  setValue,
+  carsData,
+}: any) {
   useEffect(() => {
-    if (!cars) return;
-    const carDefault = cars?.data?.find((item: any) => item?.isDefault);
+    if (!carsData) return;
+    const carDefault = carsData?.data?.find((item: any) => item?.isDefault);
     if (carDefault) {
       setValue(carDefault?.numberPlates);
       form.setFieldValue("carBrandId", carDefault?.brandName?.id);
@@ -20,7 +23,7 @@ export default function InfoCarUser({ form, openModal, value, setValue }: any) {
       form.setFieldValue("numberPlates", carDefault?.numberPlates);
       form.setFieldValue("carId", carDefault?.id);
     }
-  }, [cars]);
+  }, [carsData]);
   return (
     <>
       <Grid mt="md" justify="center">
@@ -28,7 +31,7 @@ export default function InfoCarUser({ form, openModal, value, setValue }: any) {
           <ComboboxField
             form={form}
             placeholder="Biển số xe"
-            carsData={cars?.data}
+            carsData={carsData?.data}
             openModal={openModal}
             value={value}
             setValue={setValue}

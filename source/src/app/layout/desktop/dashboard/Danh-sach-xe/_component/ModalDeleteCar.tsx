@@ -1,5 +1,3 @@
-"use client";
-import { useAddCar } from "@/app/dashboard/hooks/car/useAddCar";
 import { Button, Card, Group, Modal } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { IconBan } from "@tabler/icons-react";
@@ -7,11 +5,11 @@ import { IconBan } from "@tabler/icons-react";
 export default function ModalDeleteCar({
   openedDeleteCar,
   closeDeleteCar,
-  deleteItem,
   deleteRow,
+  handleDelete,
 }: any) {
   const handleDeleteCar = (carId: string) => {
-    deleteItem(carId);
+    handleDelete(carId);
   };
   return (
     <Modal
