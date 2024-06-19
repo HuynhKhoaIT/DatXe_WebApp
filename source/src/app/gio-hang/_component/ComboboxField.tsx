@@ -33,9 +33,9 @@ export default function ComboboxField({
     form.setFieldValue("carBrandId", data?.carBrandId);
     form.setFieldValue("carNameId", data?.carNameId);
     form.setFieldValue("carYearId", data?.carYearId);
-    form.setFieldValue("carBrandName", data?.brandName?.title);
-    form.setFieldValue("carModelName", data?.modelName?.title);
-    form.setFieldValue("carYear", data?.yearName?.title);
+    form.setFieldValue("carBrandName", data?.brandName?.title || "");
+    form.setFieldValue("carModelName", data?.modelName?.title || "");
+    form.setFieldValue("carYear", data?.yearName?.title || "");
   };
 
   const options = carsData?.map((item: any) => (
@@ -80,7 +80,7 @@ export default function ComboboxField({
         </InputBase>
       </Combobox.Target>
 
-      <Combobox.Dropdown>
+      <Combobox.Dropdown style={{ zIndex: 9999 }}>
         <Combobox.Options>
           {options?.length > 0 ? (
             options

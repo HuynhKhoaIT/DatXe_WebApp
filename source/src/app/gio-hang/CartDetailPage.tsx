@@ -7,7 +7,6 @@ import {
   Group,
   TextInput,
   Card,
-  Box,
   Textarea,
 } from "@mantine/core";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
@@ -21,37 +20,39 @@ import { modals } from "@mantine/modals";
 import Typo from "../components/elements/Typo";
 import { DateTimePicker } from "@mantine/dates";
 import dynamic from "next/dynamic";
-import { useCars } from "../dashboard/hooks/car/useCar";
 import { useDisclosure } from "@mantine/hooks";
 import Empty from "@/assets/images/empty-box.png";
 import { toast } from "react-toastify";
 import { useGlobalContext } from "@/app/Context/store";
 import { getData, removeItem, setData } from "@/utils/until/localStorage";
 import { storageKeys } from "@/constants";
-export default function CartComponent({ myAccount }: any) {
+export default function CartDetailPage({
+  myAccount,
+  carsData,
+  handleAdd,
+}: any) {
   const { setCart } = useGlobalContext();
-
-  const { cars, isLoading, isFetching, refetch } = useCars();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
   );
+
   const [value, setValue] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!cars) return;
-    const carDefault = cars?.data?.find((item: any) => item?.isDefault);
+    if (!carsData) return;
+    const carDefault = carsData?.find((item: any) => item?.isDefault);
     if (carDefault) {
       setValue(carDefault?.numberPlates);
       form.setFieldValue("carBrandId", carDefault?.brandName?.id);
       form.setFieldValue("carNameId", carDefault?.modelName?.id);
       form.setFieldValue("carYearId", carDefault?.yearName?.id);
-      form.setFieldValue("carBrandName", carDefault?.brandName?.title);
-      form.setFieldValue("carModelName", carDefault?.modelName?.title);
-      form.setFieldValue("carYear", carDefault?.yearName?.title);
+      form.setFieldValue("carBrandName", carDefault?.brandName?.title || "");
+      form.setFieldValue("carModelName", carDefault?.modelName?.title || "");
+      form.setFieldValue("carYear", carDefault?.yearName?.title || "");
       form.setFieldValue("numberPlates", carDefault?.numberPlates);
       form.setFieldValue("carId", carDefault?.id);
     }
-  }, [cars]);
+  }, [carsData]);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -218,35 +219,28 @@ export default function CartComponent({ myAccount }: any) {
         toast.error("Đặt hàng thất bại: " + (data?.error || "Unknown error"));
       } else {
         toast.success("Đặt hàng thành công");
-
-        // const sms = await fetch(`/api/orders/sendSMS`, {
-        //   method: "POST",
-        //   body: JSON.stringify(data?.order),
-        // });
-        // localStorage.setItem("cartData", JSON.stringify([]));
         removeItem(storageKeys.CART_DATA);
         setCart(0);
         router.push(`/order/${data?.order?.slug}`);
       }
     } catch (error) {
-      console.error("Error during API call:", error);
-
       toast.error("Đã xảy ra lỗi trong quá trình xử lý yêu cầu");
     } finally {
       setLoading(false);
     }
   };
 
-  if (cartData?.length == 0) {
-    return (
-      <div className={styles.emptyData}>
-        <img src={Empty.src} />
-        <h3>Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng</h3>
-      </div>
-    );
-  }
+  // if (carsData?.length == 0) {
+  //   return (
+  //     <div className={styles.emptyData}>
+  //       <img src={Empty.src} />
+  //       <h3>Giỏ hàng trống, vui lòng thêm sản phẩm vào giỏ hàng</h3>
+  //     </div>
+  //   );
+  // }
+
   return (
-    <>
+    <div className={styles.cartDetail}>
       <form>
         <div className="shop-cart ">
           <Container>
@@ -293,17 +287,12 @@ export default function CartComponent({ myAccount }: any) {
               <InfoCar
                 myAccount={myAccount}
                 form={form}
-                cars={cars}
-                isLoading={isLoading}
-                isFetching={isFetching}
+                cars={carsData}
                 openModal={openModal}
                 value={value}
                 setValue={setValue}
-                // carDetail={carDetail}
-                // setCarDetail={setCarDetail}
               />
             </Grid>
-            {/* <InfoDate setDate={setDate} setTime={setTime} /> */}
             <InfoCart
               loading={loading}
               calculateSubTotal={calculateSubTotal}
@@ -320,10 +309,7 @@ export default function CartComponent({ myAccount }: any) {
       <DynamicModalAddCar
         openModal={openedModal}
         close={closeModal}
-        myAccount={myAccount}
-        formData={form}
-        refetch={refetch}
-        setValue={setValue}
+        handleAdd={handleAdd}
       />
       <Modal
         title="Delete"
@@ -358,9 +344,12 @@ export default function CartComponent({ myAccount }: any) {
           </Button>
         </Group>
       </Modal>
-    </>
+    </div>
   );
 }
-const DynamicModalAddCar = dynamic(() => import("./_component/ModalAddCar"), {
-  ssr: false,
-});
+const DynamicModalAddCar = dynamic(
+  () => import("@/app/layout/common/desktop/_component/ModalAddCar"),
+  {
+    ssr: false,
+  }
+);

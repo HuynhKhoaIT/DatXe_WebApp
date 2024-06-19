@@ -49,16 +49,19 @@ export default function Login() {
           </div>
           <div className="login-footer">
             <p>
-              Bạn không có tài khoản? <Link href="dang-ky">Đăng Ký</Link>
+              Bạn không có tài khoản?{" "}
+              <Link href="dang-ky" style={{ color: "blue" }}>
+                Đăng Ký
+              </Link>
             </p>
           </div>
-          <p>
+          {/* <p>
             Bằng việc tiếp tục, bạn đã chấp nhận{" "}
             <a href="/" style={{ color: "blue" }}>
               {" "}
               Điều khoản sử dụng
             </a>
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

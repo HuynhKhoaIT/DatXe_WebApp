@@ -7,7 +7,7 @@ import { IconMapPin } from "@tabler/icons-react";
 import { fitString } from "@/utils/until";
 import { getData } from "@/utils/until/localStorage";
 import { storageKeys } from "@/constants";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ModalAddress.module.scss";
 const DynamicModalAddAddress = dynamic(() => import("./ModalAddAddress"), {
   ssr: false,
@@ -18,11 +18,14 @@ export default function ButtonAddAddress() {
     false
   );
 
-  const [address, setAddress] = useState("Chọn địa chỉ");
+  const [address, setAddress] = useState("Toàn quốc");
 
   const addressData = getData(storageKeys.ADDRESS_DEFAULT);
   useEffect(() => {
-    if (!addressData) return;
+    if (!addressData) {
+      setAddress("Toàn quốc");
+      return;
+    }
     const address =
       `${addressData?.province?.name && addressData?.province?.name}` +
       ", " +
@@ -31,23 +34,21 @@ export default function ButtonAddAddress() {
   }, [addressData]);
   return (
     <div>
-      <Tooltip label={address} position="bottom">
-        <Button
-          color="#EEF1F9"
-          leftSection={<IconMapPin size={20} />}
-          classNames={{
-            root: styles.btnAdd,
-            inner: styles.innerAdd,
-          }}
-          maw={300}
-          w={{ base: 150, md: 220, lg: 300 }}
-          onClick={() => {
-            openModal();
-          }}
-        >
-          {fitString(address.toString(), 20)}
-        </Button>
-      </Tooltip>
+      <Button
+        color="#EEF1F9"
+        leftSection={<IconMapPin size={20} />}
+        classNames={{
+          root: styles.btnAdd,
+          inner: styles.innerAdd,
+        }}
+        maw={300}
+        w={{ base: 150, md: 220, lg: 300 }}
+        onClick={() => {
+          openModal();
+        }}
+      >
+        {fitString(address.toString(), 20)}
+      </Button>
 
       <DynamicModalAddAddress openModal={openedModal} close={closeModal} />
     </div>

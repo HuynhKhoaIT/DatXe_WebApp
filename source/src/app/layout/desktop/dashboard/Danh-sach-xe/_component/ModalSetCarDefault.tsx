@@ -1,18 +1,19 @@
 "use client";
-import { useAddCar } from "@/app/dashboard/hooks/car/useAddCar";
 import { Button, Card, Group, Modal } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 import { IconBan } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 export default function ModalSetCarDefault({
   openedSetDefault,
   closeSetDefault,
   dataCarDefault,
+  handleSetDefault,
 }: any) {
-  const { setDefault } = useAddCar();
-
+  const router = useRouter();
   const handleCarDefault = () => {
-    setDefault({ uuId: dataCarDefault?.uuId });
+    handleSetDefault({ uuId: dataCarDefault?.uuId });
+    router.refresh();
     closeSetDefault();
   };
   return (

@@ -32,16 +32,20 @@ export default function TableBasic({
       />
       <Table
         // mih={loading ? 300 : 0}
-        classNames={
-          isBorder
-            ? {
-                table: styles.rootTable,
-                tr: styles.trTable,
-                td: styles.td,
-                th: styles.th,
-              }
-            : {}
-        }
+        striped
+        highlightOnHover
+        withTableBorder
+        withColumnBorders
+        // classNames={
+        //   isBorder
+        //     ? {
+        //         table: styles.rootTable,
+        //         tr: styles.trTable,
+        //         td: styles.td,
+        //         th: styles.th,
+        //       }
+        //     : {}
+        // }
       >
         <Table.Thead>
           <Table.Tr>

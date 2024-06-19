@@ -5,6 +5,7 @@ import { useForm, hasLength } from "@mantine/form";
 import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 import { toast } from "react-toastify";
+import { IconPhone } from "@tabler/icons-react";
 export default function FormLogin() {
   const [opened, handlers] = useDisclosure(false);
 
@@ -70,6 +71,7 @@ export default function FormLogin() {
         placeholder="Số điện thoại"
         {...form.getInputProps("phone")}
         mb={20}
+        leftSection={<IconPhone size={18} />}
       />
       <Button
         size="md"

@@ -19,7 +19,6 @@ import { toast } from "react-toastify";
 import { useMediaQuery } from "@mantine/hooks";
 import ItemCartMobile from "./ItemCartMobile";
 export default function InfoCart({
-  loading,
   calculateSubTotal,
   cartData,
   decrementQuantity,
@@ -222,7 +221,6 @@ export default function InfoCart({
                   }
                   ModalAcceptOrder();
                 }}
-                loading={loading}
                 style={{ background: "var(--theme-color)" }}
               >
                 Đặt lịch

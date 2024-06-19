@@ -7,16 +7,10 @@ import CategoryDetailPageDesktop from "@/app/layout/desktop/danh-muc/CategoryDet
 import CategoryDetailPageMobile from "@/app/layout/mobile/danh-muc/CategoryDetailPage";
 import Banner1 from "@/assets/images/banner.png";
 import Banner2 from "@/assets/images/bannerExpert.png";
-
 import Reasons1 from "@/assets/images/reasson1.png";
 import Reasons2 from "@/assets/images/reasson2.png";
 import Reasons3 from "@/assets/images/reasson3.png";
 import RenderContextClient from "@/app/components/elements/RenderContextClient";
-import {
-  useProductByCategory,
-  useProductRelate,
-} from "@/app/hooks/products/useProducts";
-import { useState } from "react";
 import { kindProduct } from "@/constants/masterData";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
@@ -180,12 +174,6 @@ export default async function DetailCategory({ params, searchParams }: any) {
     },
   });
 
-  const productsRelate = await callApi(apiConfig.products.getRelate, {
-    pathParams: {
-      id: params?.slug,
-    },
-  });
-
   return (
     <RenderContextClient
       components={{
@@ -201,9 +189,6 @@ export default async function DetailCategory({ params, searchParams }: any) {
       kindProduct={kindProduct}
       slideshowData={slideshowData}
       productRelate={products}
-      // isFetching={isFetching}
-      // productCount={productCount}
-      // setProductCount={setProductCount}
       searchParams={searchParams}
       reassons={reassons}
     />

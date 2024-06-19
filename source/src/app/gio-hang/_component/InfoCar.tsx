@@ -1,22 +1,11 @@
 "use client";
-import React, { useState } from "react";
 import { Grid, TextInput, Card } from "@mantine/core";
-import { LoadingOverlay } from "@mantine/core";
 import styles from "../index.module.scss";
-import dynamic from "next/dynamic";
-import { useDisclosure } from "@mantine/hooks";
 import ComboboxField from "./ComboboxField";
-import { useCars } from "@/app/dashboard/hooks/car/useCar";
-const DynamicModalAddCar = dynamic(() => import("../_component/ModalAddCar"), {
-  ssr: false,
-});
 
 export default function InfoCar({
-  myAccount,
   form,
   cars,
-  isLoading,
-  isFetching,
   openModal,
   value,
   setValue,
@@ -28,18 +17,12 @@ export default function InfoCar({
           <h4 className={styles.title}>Thông tin Xe</h4>
         </div>
         <Card pos="relative">
-          <LoadingOverlay
-            visible={isLoading || isFetching}
-            zIndex={99}
-            overlayProps={{ radius: "sm", blur: 2 }}
-          />
-
           <Grid gutter={16}>
             <Grid.Col span={12}>
               <ComboboxField
                 form={form}
                 label="Biển số"
-                carsData={cars?.data}
+                carsData={cars}
                 openModal={openModal}
                 value={value}
                 setValue={setValue}

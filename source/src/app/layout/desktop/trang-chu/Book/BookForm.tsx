@@ -1,5 +1,13 @@
 "use client";
-import { Button, Flex, Grid, Select, Tabs, TextInput } from "@mantine/core";
+import {
+  Autocomplete,
+  Button,
+  Flex,
+  Grid,
+  Select,
+  Tabs,
+  TextInput,
+} from "@mantine/core";
 import Truck from "@/assets/icons/truck.svg";
 import Call from "@/assets/icons/call.svg";
 import Container from "@/app/components/common/Container";
@@ -89,8 +97,8 @@ export default function BookForm() {
               <Grid gutter={16}>
                 <Grid.Col span={10}>
                   <Flex mt={16}>
-                    <Select
-                      {...form.getInputProps("carBrandId")}
+                    <Autocomplete
+                      {...form.getInputProps("carBrandName")}
                       classNames={{ input: styles.input1 }}
                       leftSection={icon}
                       variant="unstyled"
@@ -98,7 +106,8 @@ export default function BookForm() {
                       rightSection={<></>}
                       placeholder="Hãng xe"
                       data={brandOptions}
-                      onChange={async (value) => {
+                      onOptionSubmit={async (value) => {
+                        console.log(value);
                         const optionsData = await getOptionsModels(
                           Number(value)
                         );
@@ -108,8 +117,8 @@ export default function BookForm() {
                         form.setFieldValue("carYearId", null);
                       }}
                     />
-                    <Select
-                      {...form.getInputProps("carNameId")}
+                    <Autocomplete
+                      {...form.getInputProps("carNameName")}
                       classNames={{ input: styles.input3 }}
                       leftSection={icon}
                       variant="unstyled"
@@ -117,7 +126,7 @@ export default function BookForm() {
                       rightSection={<></>}
                       placeholder="Dòng xe"
                       data={modelOptions}
-                      onChange={async (value) => {
+                      onOptionSubmit={async (value) => {
                         const optionsData = await getOptionsYearCar(
                           Number(value)
                         );
@@ -126,8 +135,8 @@ export default function BookForm() {
                         form.setFieldValue("carYearId", null);
                       }}
                     />
-                    <Select
-                      {...form.getInputProps("carYearId")}
+                    <Autocomplete
+                      {...form.getInputProps("carYearName")}
                       classNames={{ input: styles.input4 }}
                       leftSection={icon}
                       variant="unstyled"
@@ -135,7 +144,7 @@ export default function BookForm() {
                       rightSection={<></>}
                       placeholder="Năm sản xuất"
                       data={yearCarOptions}
-                      onChange={(value) => {
+                      onOptionSubmit={(value) => {
                         form.setFieldValue("carYearId", value);
                       }}
                     />

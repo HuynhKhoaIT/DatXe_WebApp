@@ -13,6 +13,7 @@ export default function ModalCalendar({
   carOptions,
   fetchDataOrders,
   advisorOptions,
+  carsData,
 }: any) {
   // Lấy thông tin khách hàng nếu có
   const { data: session } = useSession();
@@ -39,6 +40,7 @@ export default function ModalCalendar({
         advisorOptions={advisorOptions}
         carOptions={carOptions}
         onClose={onClose}
+        carsData={carsData}
         fetchDataOrders={fetchDataOrders}
       />
     </BasicModal>
