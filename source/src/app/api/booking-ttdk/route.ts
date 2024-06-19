@@ -1,5 +1,4 @@
 import { create, gets } from "@/app/libs/prisma/bookingTTDK";
-import prisma from "@/app/libs/prismadb";
 import { checkAuthToken } from "@/utils/auth";
 import { NextRequest, NextResponse } from "next/server";
 
