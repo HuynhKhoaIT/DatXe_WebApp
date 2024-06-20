@@ -20,7 +20,7 @@ export default function OrdersListPage({ dataSource }: any) {
       render: (dataRow: any) => {
         return (
           <Link
-            href={`/dashboard/danh-sach-don-hang/${dataRow.slug}`}
+            href={`/dashboard/don-hang/${dataRow.slug}`}
             style={{
               color: "blue",
               cursor: "pointer",

@@ -12,10 +12,12 @@ export default function ModalCalendar({
   eventInfos,
   categoryOptions,
   typeView,
+  brandOptions,
 }: any) {
-  const { addItem, brandOptions, isPendingAdd, isSuccessAdd } = useAddOrder({
+  const { addItem, isPendingAdd, isSuccessAdd } = useAddOrder({
     isBack: false,
   });
+
   useEffect(() => {
     if (isSuccessAdd) {
       onClose();

@@ -4,7 +4,6 @@ import UserProfile from "./_component/User";
 import styles from "./index.module.scss";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
-import { toast } from "react-toastify";
 import InfoProfile from "./_component/Info";
 export default async function ProfilePage() {
   // const { data: profile, isLoading } = useAccountDetail();

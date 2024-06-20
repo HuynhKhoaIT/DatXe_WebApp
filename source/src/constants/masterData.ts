@@ -163,4 +163,16 @@ export const titleHeader = [
     value: "thong-bao",
     label: titleHeaderKeys.NOTI_TITLE,
   },
+  {
+    value: "don-hang",
+    label: titleHeaderKeys.ORDERS_TITLE,
+    detail: titleHeaderKeys.ORDERS_DETAIL_TITLE,
+  },
+  {
+    value: "xe",
+    label: titleHeaderKeys.MY_CAR_TITLE,
+    detail: titleHeaderKeys.MY_CAR_EDIT_TITLE,
+    create: titleHeaderKeys.MY_CAR_CREATE_TITLE,
+    edit: titleHeaderKeys.MY_CAR_EDIT_TITLE,
+  },
 ];

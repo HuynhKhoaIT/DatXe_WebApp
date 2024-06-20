@@ -328,7 +328,7 @@ export default function ProductsManaga() {
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
       <div style={{ background: "#fff", marginBottom: 30 }}>
-        <SearchFormNew
+        <SearchForm
           fields={searchData}
           brandFilter={true}
           initialValues={initialValuesSearch}

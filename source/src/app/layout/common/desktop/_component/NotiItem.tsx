@@ -47,7 +47,7 @@ export default function NotiItem({ item }: any) {
                 item?.kind == NOTIFICATION_ORDER_KIND
               ) {
                 router.push(
-                  `/dashboard/danh-sach-don-hang/${JSON.parse(item.data)?.code}`
+                  `/dashboard/don-hang/${JSON.parse(item.data)?.code}`
                 );
               }
               close();

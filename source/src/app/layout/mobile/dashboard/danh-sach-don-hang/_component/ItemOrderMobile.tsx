@@ -60,7 +60,7 @@ export default function ItemOrderMobile({ data }: any) {
         <div
           className={styles.buttonDetail}
           onClick={() => {
-            router.push(`/dashboard/danh-sach-don-hang/${data.slug}`);
+            router.push(`/dashboard/don-hang/${data.slug}`);
           }}
         >
           <p>Xem thêm sản phẩm</p>
@@ -85,7 +85,7 @@ export default function ItemOrderMobile({ data }: any) {
         </p>
         <Button
           onClick={() => {
-            router.push(`/dashboard/danh-sach-don-hang/${data.slug}`);
+            router.push(`/dashboard/don-hang/${data.slug}`);
           }}
         >
           Chi tiết

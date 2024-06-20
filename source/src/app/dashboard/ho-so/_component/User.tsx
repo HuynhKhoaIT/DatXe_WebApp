@@ -137,19 +137,19 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
               />
             </div>
             <Grid gutter={16} w={"100%"}>
-              <Grid.Col span={{ base: 12, md: 12, lg: 12 }}>
+              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
                 <TextInput
-                  size="lg"
-                  radius={0}
+                  size="md"
                   w={"100%"}
                   withAsterisk
                   {...form.getInputProps("fullName")}
                   label="Họ tên"
-                  placeholder="Nguyễn Văn A"
+                  placeholder="Họ và tên"
                 />
               </Grid.Col>
               <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
                 <DateField
+                  size="md"
                   {...form.getInputProps("dob")}
                   label="Ngày sinh"
                   placeholder="Ngày sinh"
@@ -157,30 +157,28 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
                   maxDate={new Date()}
                 />
               </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+              <Grid.Col span={{ base: 12, md: 12, lg: 12, xs: 12 }}>
                 <TextInput
-                  size="lg"
-                  radius={0}
-                  type="tel"
-                  disabled={true}
-                  {...form.getInputProps("phoneNumber")}
-                  label="Điện thoại"
-                />
-              </Grid.Col>
-              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
-                <TextInput
-                  size="lg"
-                  radius={0}
+                  size="md"
                   {...form.getInputProps("address")}
                   label="Địa chỉ"
                   placeholder="Nhập địa chỉ của bạn"
                 />
               </Grid.Col>
               <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
+                <TextInput
+                  size="md"
+                  type="tel"
+                  disabled={true}
+                  {...form.getInputProps("phoneNumber")}
+                  label="Điện thoại"
+                />
+              </Grid.Col>
+
+              <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
                 <Select
-                  size="lg"
+                  size="md"
                   searchable={true}
-                  radius={0}
                   {...form.getInputProps("cityId")}
                   label="Tỉnh/Thành phố"
                   placeholder="Chọn tỉnh"
@@ -198,8 +196,7 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
               </Grid.Col>
               <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
                 <Select
-                  size="lg"
-                  radius={0}
+                  size="md"
                   {...form.getInputProps("districtId")}
                   label="Huyện/Phường"
                   placeholder="Huyện/Phường"
@@ -214,8 +211,7 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
               </Grid.Col>
               <Grid.Col span={{ base: 12, md: 6, lg: 6, xs: 12 }}>
                 <Select
-                  size="lg"
-                  radius={0}
+                  size="md"
                   {...form.getInputProps("wardId")}
                   label="Xã/Phường"
                   placeholder="Chọn xã/phường"
@@ -226,8 +222,13 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
                 />
               </Grid.Col>
             </Grid>
-            <Group pt={20} justify="end" className="col-12 text-right ">
-              <Button fullWidth={isMobile} type="submit" loading={isLoading}>
+            <Group pt={20} pb={{ base: 10, md: 0, lg: 0 }} justify="end">
+              <Button
+                fullWidth={isMobile}
+                type="submit"
+                loading={isLoading}
+                color="var(--primary-color)"
+              >
                 Cập nhật
               </Button>
             </Group>
@@ -237,6 +238,3 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
     </div>
   );
 }
-const getLabelByValue = ({ data, value }: any) => {
-  return data?.find((item: any) => item.value === value)?.label || "";
-};
