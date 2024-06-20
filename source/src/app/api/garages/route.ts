@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
                 s: searchParams.get('s'),
                 take: limit,
                 page: page,
+                status: 'PUBLIC',
                 includes: searchParams.get('includes')
             };
             const data = await getGarages(requestData);
