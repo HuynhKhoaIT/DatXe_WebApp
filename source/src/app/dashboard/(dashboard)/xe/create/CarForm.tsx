@@ -1,13 +1,5 @@
 "use client";
-import {
-  Card,
-  Grid,
-  TextInput,
-  Textarea,
-  Select,
-  Box,
-  LoadingOverlay,
-} from "@mantine/core";
+import { Card, Grid, TextInput, Textarea, Select, Box } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
@@ -26,7 +18,6 @@ export default function CarForm({
   handleSave,
   brandOptions,
 }: any) {
-  // const { brandOptions, isLoadingBrand } = useAddCar();
   const [modelOptions, setModelOptions] = useState<any>([]);
   const [yearCarOptions, setYearCarOptions] = useState<any>([]);
   const [loading, handlers] = useDisclosure();
@@ -128,7 +119,6 @@ export default function CarForm({
                     withAsterisk
                     {...form.getInputProps("numberPlates")}
                     size="md"
-                    radius={0}
                     label="Biển số xe"
                     type="text"
                     placeholder="Biển số xe"
@@ -140,7 +130,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("color")}
                     label="Màu xe"
                     type="text"
@@ -154,7 +143,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("carBrandId")}
                     label="Hãng xe"
                     placeholder="Hãng xe"
@@ -175,7 +163,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("carNameId")}
                     label="Dòng xe"
                     placeholder="Dòng xe"
@@ -197,7 +184,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("carYearId")}
                     label="Năm sản xuất"
                     placeholder="Năm sản xuất"
@@ -213,7 +199,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("vinNumber")}
                     label="Số khung"
                     type="text"
@@ -226,7 +211,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("machineNumber")}
                     label="Số máy"
                     type="text"
@@ -287,7 +271,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
                     checkIconPosition="right"
@@ -303,7 +286,6 @@ export default function CarForm({
                       input: styles.inputDashboard,
                     }}
                     size="md"
-                    radius={0}
                     label="Mô tả chi tiết"
                     minRows={4}
                     autosize={true}

@@ -28,11 +28,17 @@ export default async function Orders() {
     label: category.title,
   }));
 
+  const brand = await callApi(apiConfig.car.getBrands, {});
+  const dataOption = brand?.data.map((item: any) => ({
+    value: item.id.toString(),
+    label: item.title,
+  }));
   return (
     <div className={styles.wrapper}>
       <CalendarSchedulerGarage
         categoryOptions={categoryOptions}
         ordersData={mappedOrdersData}
+        brandOptions={dataOption}
       />
     </div>
   );

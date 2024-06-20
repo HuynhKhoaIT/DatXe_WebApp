@@ -19,6 +19,7 @@ export default function CarsListPage({
     openedPreviewCar,
     { open: openPreviewCar, close: closePreviewCar },
   ] = useDisclosure(false);
+
   const [
     openedDeleteCar,
     { open: openDeleteCar, close: closeDeleteCar },
@@ -108,7 +109,7 @@ export default function CarsListPage({
       render: (record: any) => {
         return (
           <>
-            <Link href={`/dashboard/danh-sach-xe/${record.id}`}>
+            <Link href={`/dashboard/xe/${record.id}`}>
               <Button
                 size="lg"
                 radius={0}
@@ -145,7 +146,7 @@ export default function CarsListPage({
         <Flex justify={"end"} align={"center"}>
           <Link
             href={{
-              pathname: `/dashboard/danh-sach-xe/create`,
+              pathname: `/dashboard/xe/create`,
             }}
           >
             <Button

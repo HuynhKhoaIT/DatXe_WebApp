@@ -16,7 +16,11 @@ import ModalSetCarDefault from "@/app/layout/desktop/dashboard/Danh-sach-xe/_com
 import { useDisclosure } from "@mantine/hooks";
 import ModalDeleteCar from "@/app/layout/desktop/dashboard/Danh-sach-xe/_component/ModalDeleteCar";
 import PreviewModal from "@/app/layout/desktop/dashboard/Danh-sach-xe/_component/PreviewModal";
-export default function ItemCarMobile({ data, deleteItem }: any) {
+export default function ItemCarMobile({
+  data,
+  deleteItem,
+  handleSetDefault,
+}: any) {
   const router = useRouter();
   const [
     openedSetDefault,
@@ -70,7 +74,7 @@ export default function ItemCarMobile({ data, deleteItem }: any) {
             </Menu.Item>
             <Menu.Item
               onClick={() => {
-                router.push(`/dashboard/danh-sach-xe/${data?.id}`);
+                router.push(`/dashboard/xe/${data?.id}`);
               }}
               leftSection={<IconPencil size={16} />}
             >
@@ -114,6 +118,7 @@ export default function ItemCarMobile({ data, deleteItem }: any) {
         openedSetDefault={openedSetDefault}
         closeSetDefault={closeSetDefault}
         dataCarDefault={data}
+        handleSetDefault={handleSetDefault}
       />
       <PreviewModal
         opened={openedPreviewCar}

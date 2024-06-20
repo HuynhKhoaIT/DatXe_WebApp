@@ -99,6 +99,7 @@ export const ModalEventCalendar = ({
             <Select
               size="lg"
               radius={0}
+              searchable={true}
               classNames={{ input: styles.input }}
               {...form.getInputProps("carBrandId")}
               label="Hãng xe"
@@ -130,6 +131,7 @@ export const ModalEventCalendar = ({
           ) : (
             <Select
               size="lg"
+              searchable={true}
               radius={0}
               classNames={{ input: styles.input }}
               {...form.getInputProps("carNameId")}
@@ -149,6 +151,7 @@ export const ModalEventCalendar = ({
         <Grid.Col span={4}>
           {isUser ? (
             <TextInput
+              searchable={true}
               size="lg"
               classNames={{ input: styles.input }}
               radius={0}

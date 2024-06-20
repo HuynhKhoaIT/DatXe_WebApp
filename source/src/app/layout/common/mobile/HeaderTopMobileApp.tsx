@@ -15,7 +15,6 @@ export default function HeaderTopMobileApp() {
   var res: any = titleHeader?.find((item) => {
     return item?.value == page;
   });
-
   let lastPage: any = parts?.[parts?.length - 1];
   return (
     <div className={styles.headerTop}>
@@ -37,7 +36,7 @@ export default function HeaderTopMobileApp() {
               <h2>{res?.label}</h2>
             )}
           </div>
-          <div className={styles.topRight}></div>
+          <div style={{ width: 24, display: "inline-block", height: 24 }}></div>
         </div>
       </Container>
     </div>

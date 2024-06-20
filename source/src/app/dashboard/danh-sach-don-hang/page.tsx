@@ -1,7 +1,6 @@
 import RenderContext from "@/app/components/elements/RenderContext";
 import OrdersListPage from "@/app/layout/dashboard/danh-sach-don-hang/OrdersListPage";
 import OrdersListPageMobile from "@/app/layout/mobile/dashboard/danh-sach-don-hang/OrdersListPageMobile";
-import { DEFAULT_SIZE_LIMIT } from "@/constants";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib";
 export default async function Products({ searchParams }: any) {
