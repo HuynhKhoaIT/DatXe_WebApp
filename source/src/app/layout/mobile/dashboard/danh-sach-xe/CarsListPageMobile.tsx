@@ -2,7 +2,11 @@ import { Box, Button, LoadingOverlay } from "@mantine/core";
 import ItemCarMobile from "./_component/ItemCarMobile";
 import styles from "./index.module.scss";
 import ButtonAddCar from "./_component/ButtonAddCar";
-export default function CarsListPageMobile({ carsData, handleDeleteCar }: any) {
+export default function CarsListPageMobile({
+  carsData,
+  handleDeleteCar,
+  handleSetDefault,
+}: any) {
   return (
     <Box pos={"relative"} className={styles.wrapper}>
       {carsData?.data
@@ -13,6 +17,7 @@ export default function CarsListPageMobile({ carsData, handleDeleteCar }: any) {
               deleteItem={handleDeleteCar}
               data={item}
               key={index}
+              handleSetDefault={handleSetDefault}
             />
           );
         })}
@@ -24,6 +29,7 @@ export default function CarsListPageMobile({ carsData, handleDeleteCar }: any) {
               data={item}
               deleteItem={handleDeleteCar}
               key={index}
+              handleSetDefault={handleSetDefault}
             />
           );
         })}

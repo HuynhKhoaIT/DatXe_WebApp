@@ -18,7 +18,7 @@ export default function CalendarSchedulerGarage({
   ordersData,
   selectable = true,
   categoryOptions,
-  fetchDataOrders,
+  brandOptions,
 }: any) {
   const [layoutMobile, setLayoutMobile] = useState(false);
   const [previewInfos, setPreviewInfos] = useState();
@@ -102,7 +102,7 @@ export default function CalendarSchedulerGarage({
         onClose={closeCalendar}
         eventInfos={eventInfos}
         categoryOptions={categoryOptions}
-        fetchDataOrders={fetchDataOrders}
+        brandOptions={brandOptions}
         typeView={eventInfos?.view?.type}
       />
     </div>

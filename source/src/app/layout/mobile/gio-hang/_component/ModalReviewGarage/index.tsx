@@ -58,7 +58,7 @@ export default function ModalReviewGarage({
       withCloseButton={true}
       classNames={{
         root: styles.root,
-        title: styles.title,
+        header: styles.titleModal,
       }}
     >
       <form

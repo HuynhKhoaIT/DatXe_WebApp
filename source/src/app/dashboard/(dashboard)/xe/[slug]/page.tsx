@@ -3,6 +3,7 @@ import styles from "../create/index.module.scss";
 import CarForm from "../create/CarForm";
 import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
+import Typo from "@/app/components/elements/Typo";
 export default async function CarSavePage({
   params,
 }: {
@@ -31,12 +32,17 @@ export default async function CarSavePage({
   }));
   return (
     <Box maw={"100%"} mx="auto" className={styles.wrapper}>
+      <div className={styles.headerTitle}>
+        <Typo size="18px" type="bold" className={styles.title}>
+          Cập nhật
+        </Typo>
+      </div>
       <div className={styles.content}>
         <CarForm
-          isEditing={true}
-          brandOptions={dataOption}
-          dataDetail={car}
           handleSave={handleUpdate}
+          isEditing={true}
+          dataDetail={car}
+          brandOptions={dataOption}
         />
       </div>
     </Box>

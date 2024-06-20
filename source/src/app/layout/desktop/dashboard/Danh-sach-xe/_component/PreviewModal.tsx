@@ -37,7 +37,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
           <IconChevronLeft color="var(--primary-color)" onClick={onCancel} />
           <Button
             onClick={() => {
-              router.push(`/dashboard/danh-sach-xe/${data?.id}`);
+              router.push(`/dashboard/xe/${data?.id}`);
             }}
             color="var(--theme-color)"
             leftSection={<IconPencil color="red" size={16} />}

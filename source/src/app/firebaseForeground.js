@@ -40,7 +40,7 @@ export default function FcmTokenComp() {
               JSON.parse(payload.data.data)?.code &&
               payload.data?.kind == NOTIFICATION_ORDER_KIND
             ) {
-              window.open(`https://oga.datxe.com//dashboard/danh-sach-don-hang/${JSON.parse(payload.data.data)?.code}`, "_blank");
+              window.open(`https://oga.datxe.com//dashboard/don-hang/${JSON.parse(payload.data.data)?.code}`, "_blank");
             }
           };
           toast.success((t) => (
@@ -57,7 +57,7 @@ export default function FcmTokenComp() {
                   payload.data?.kind == NOTIFICATION_ORDER_KIND
                 ) {
                   router.push(
-                    `/dashboard/danh-sach-don-hang/${JSON.parse(payload.data.data)?.code
+                    `/dashboard/don-hang/${JSON.parse(payload.data.data)?.code
                     }`
                   );
                 }
