@@ -28,6 +28,7 @@ import axios from "axios";
 import { QUERY_KEY } from "@/constants";
 import { useAddAccount } from "../../hooks/profile/useAddProfile";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { toast } from "react-toastify";
 // import { useFormState } from "react-dom";
 
 export default function UserProfile({ myAccount, handleUpdate }: any) {
@@ -74,7 +75,10 @@ export default function UserProfile({ myAccount, handleUpdate }: any) {
 
   const handleUpdateProfile = async (values: any) => {
     handlerLoading.open();
-    await handleUpdate(values);
+    const res = await handleUpdate(values);
+    if (res) {
+      toast.success("Cập nhật hồ sơ thành công");
+    }
     handlerLoading.close();
     router.refresh();
   };

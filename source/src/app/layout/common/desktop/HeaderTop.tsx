@@ -6,8 +6,14 @@ import instagram from "@/assets/icons/instagram.svg";
 import Container from "@/app/components/common/Container";
 import SigninButton from "@/app/layout/common/desktop/login-button";
 import NotificationDropDown from "./_component/NotificationDropDown";
+import { getSession, logout } from "@/lib/auth";
 
-export default function HeaderTop() {
+export default async function HeaderTop() {
+  const session = await getSession();
+  const logoutHandle = async () => {
+    "use server";
+    await logout();
+  };
   return (
     <div className={styles.headerTop}>
       <Container>
@@ -24,7 +30,7 @@ export default function HeaderTop() {
               Kiểm tra lịch hẹn
             </Link>
             <NotificationDropDown />
-            <SigninButton />
+            <SigninButton user={session?.user} logout={logoutHandle} />
           </div>
         </div>
       </Container>

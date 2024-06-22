@@ -2,9 +2,9 @@ import ProductsListPageDesktop from "../../layout/desktop/san-pham/ProductsListP
 import ProductsListPageMobile from "../../layout/mobile/san-pham/ProductsListPage";
 import { kindProduct } from "@/constants/masterData";
 import RenderContext from "../../components/elements/RenderContext";
-import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
+import { callApi } from "@/lib/auth";
 export default async function Products({ searchParams }: any) {
   const products = await callApi(apiConfig.products.getList, {
     params: {

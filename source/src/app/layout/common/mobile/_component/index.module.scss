@@ -1,0 +1,25 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+    .navItem,
+    .navLogout {
+        color: var(--nav-color);
+        font-size: var(--primary-font-size);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        padding: 1rem;
+        line-height: 16px;
+    }
+    .navItem {
+        border-bottom: 1px solid #ddd;
+    }
+}
+.inputSearch {
+    // height: 56px;
+    // font-size: 1rem;
+    &:focus-within{
+        --_input-bd: var(--blue-color) !important;
+    }
+}

@@ -27,17 +27,11 @@ export function FormAccuracy() {
   const onSubmit = async () => {
     handlers.open();
     const { name, phone, pin } = form.values;
-    let password = phone + "@@Datxe.com@@";
-    let passwordConfirmation = password;
     try {
       const checkRs = await CheckOtp(phone, pin, "register");
       if (checkRs.CodeResult == 100) {
-        // if (100 == 100) {
-
-        toast.success("Xác thực thành công");
-
         try {
-          await register(name, phone, password, passwordConfirmation, fcmToken);
+          await register(name, phone, pin, fcmToken);
           toast.success("Đăng ký thành công");
 
           handlers.close();
@@ -78,7 +72,7 @@ export function FormAccuracy() {
         type="submit"
         fullWidth
       >
-        Đăng ký
+        Xác thực
       </Button>
     </form>
   );

@@ -6,14 +6,14 @@ export default function Loading() {
     <Container>
       <div className={styles.loadingPage}>
         <div className={styles.loadingCart}>
-          <div className="checkout-widget">
+          <div className={styles.checkoutWidget}>
             <div className={styles.titleCard}>
               <Skeleton height={30} mt={6} radius="8" color="white" />
             </div>
             <Skeleton height={200} mt={6} radius="8" />
           </div>
 
-          <div className="checkout-widget">
+          <div className={styles.checkoutWidget}>
             <div className={styles.titleCard}>
               <Skeleton height={30} mt={6} radius="8" color="white" />
             </div>

@@ -1,9 +1,8 @@
 "use client";
-import { titleHeaderKeys } from "@/constants";
 import styles from "./HeaderTopMobile.module.scss";
 import Container from "@/app/components/common/Container";
 import { titleHeader } from "@/constants/masterData";
-import { IconCategory, IconChevronLeft } from "@tabler/icons-react";
+import { IconChevronLeft } from "@tabler/icons-react";
 
 import { usePathname, useRouter } from "next/navigation";
 
@@ -20,7 +19,10 @@ export default function HeaderTopMobileApp() {
     <div className={styles.headerTop}>
       <Container>
         <div className={styles.topWrapper}>
-          <div className={styles.topLeft}>
+          <div
+            className={styles.topLeft}
+            style={{ width: 24, display: "inline-block", height: 24 }}
+          >
             {parts?.[3] && (
               <div className={styles.menu} onClick={() => router.back()}>
                 <IconChevronLeft size={24} color="#fff" />

@@ -3,7 +3,7 @@ import NewDetailPage from "@/app/layout/desktop/tin-tuc/NewsDetailPage";
 import BlogDetailPageMobile from "@/app/layout/mobile/blog/BlogDetailPage";
 import { AppConstants } from "@/constants";
 import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 import type { Metadata, ResolvingMetadata } from "next";
 

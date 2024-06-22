@@ -329,7 +329,7 @@ export default function ProductsManaga() {
       <Breadcrumb breadcrumbs={Breadcrumbs} />
       <div style={{ background: "#fff", marginBottom: 30 }}>
         <SearchForm
-          fields={searchData}
+          searchData={searchData}
           brandFilter={true}
           initialValues={initialValuesSearch}
         />

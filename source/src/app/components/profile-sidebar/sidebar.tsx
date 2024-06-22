@@ -2,11 +2,9 @@
 import { usePathname } from "next/navigation";
 import { SidebarClient } from "./SidebarClient";
 import { SidebarAdmin } from "./SidebarAdmin";
-import { useAccountDetail } from "@/app/dashboard/hooks/profile/useProfile";
 const ProfileSidebar = ({ myAccount }: any) => {
   const pathname = usePathname();
   const parts = pathname.split("/");
-  console.log(myAccount);
   return (
     <div
       className="user-profile-sidebar"

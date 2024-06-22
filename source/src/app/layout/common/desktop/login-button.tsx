@@ -1,5 +1,4 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 import styles from "./Header.module.scss";
@@ -15,14 +14,13 @@ import {
 import { useRouter } from "next/navigation";
 import { deleteToken } from "@/utils/notification";
 import useFcmToken from "@/app/hooks/useFCMToken";
-import { useTheme } from "next-themes";
 import { ROLE_EXPERT, storageKeys } from "@/constants";
 import { removeItem } from "@/utils/until/localStorage";
 
-const SigninButton = () => {
+const SigninButton = ({ user, logout }: any) => {
   const { fcmToken } = useFcmToken();
   const router = useRouter();
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
   const handleCar = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     router.push("/gio-hang");
@@ -36,22 +34,12 @@ const SigninButton = () => {
     router.push("/admin");
   };
 
-  if (status == "loading") {
-    return <></>;
-  }
-
-  const { setTheme, resolvedTheme } = useTheme();
-  const handleChangeTheme = () => {
-    if (resolvedTheme === "dark") setTheme("light");
-    else setTheme("dark");
-  };
-
   return (
     <>
       <div className={styles.buttonLogin}>
         <IconUserCircle color="#fff" />
         <div className={styles.actionLogin}>
-          {!session?.user ? (
+          {!user ? (
             <div style={{ display: "flex" }}>
               <Link href="/dang-nhap" className={styles.title}>
                 Đăng nhập/
@@ -64,13 +52,13 @@ const SigninButton = () => {
             <Menu width={200} shadow="md">
               <Menu.Target>
                 <div className={styles.title} style={{ display: "flex" }}>
-                  <span className={styles.userName}>{session?.user.name}</span>
+                  <span className={styles.userName}>{user.name}</span>
                   <IconCaretDownFilled style={{ cursor: "pointer" }} />
                 </div>
               </Menu.Target>
 
               <Menu.Dropdown>
-                {session?.user?.role == "CUSTOMER" && (
+                {user?.role == "CUSTOMER" && (
                   <>
                     <Menu.Item
                       component="a"
@@ -107,7 +95,7 @@ const SigninButton = () => {
                     </Menu.Item> */}
                   </>
                 )}
-                {session?.user?.role === ROLE_EXPERT && (
+                {user?.role === ROLE_EXPERT && (
                   <Menu.Item
                     component="a"
                     onClick={() => {
@@ -123,7 +111,7 @@ const SigninButton = () => {
                   </Menu.Item>
                 )}
 
-                {session?.user?.role !== "CUSTOMER" && (
+                {user?.role !== "CUSTOMER" && (
                   <Menu.Item
                     component="a"
                     onClick={handleAdmin}
@@ -141,7 +129,9 @@ const SigninButton = () => {
                   onClick={async () => {
                     await deleteToken({ token: fcmToken });
                     removeItem(storageKeys.CART_DATA);
-                    signOut();
+                    await logout();
+                    router.refresh();
+                    // signOut();
                   }}
                   color="red"
                   leftSection={

@@ -1,3 +1,4 @@
+import { CHECK_PHONE_NUMBER } from "@/utils/constants/endpoints";
 import { apiUrl } from ".";
 
 const baseHeader = {
@@ -9,6 +10,50 @@ const multipartFormHeader = {
 };
 
 const apiConfig = {
+  account: {
+    login: {
+      baseURL: `https://v2.dlbd.vn/api/login`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    getProfile: {
+      baseURL: `${apiUrl}api/client/account`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    updateProfile: {
+      baseURL: `${apiUrl}v1/account/update_admin`,
+      method: "PUT",
+      headers: baseHeader,
+    },
+    getAccount: {
+      baseURL: `${apiUrl}api/client/account`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    update: {
+      baseURL: `${apiUrl}api/client/account`,
+      method: "PUT",
+      headers: baseHeader,
+    },
+  },
+  user: {
+    CheckPhone: {
+      baseURL: `${CHECK_PHONE_NUMBER}/:phone`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    CheckOtp: {
+      baseURL: `${apiUrl}api/sms/check-otp`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    GenOTP: {
+      baseURL: `${apiUrl}api/sms/send-otp`,
+      method: "POST",
+      headers: baseHeader,
+    },
+  },
   file: {
     upload: {
       baseURL: `${apiUrl}api/upload`,
@@ -109,18 +154,7 @@ const apiConfig = {
       headers: baseHeader,
     },
   },
-  account: {
-    getAccount: {
-      baseURL: `${apiUrl}api/client/account`,
-      method: "GET",
-      headers: baseHeader,
-    },
-    update: {
-      baseURL: `${apiUrl}api/client/account`,
-      method: "PUT",
-      headers: baseHeader,
-    },
-  },
+
   amentity: {
     getList: {
       baseURL: `${apiUrl}api/admin/amentity`,

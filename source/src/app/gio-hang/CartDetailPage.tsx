@@ -285,7 +285,6 @@ export default function CartDetailPage({
                 </div>
               </Grid.Col>
               <InfoCar
-                myAccount={myAccount}
                 form={form}
                 cars={carsData}
                 openModal={openModal}
