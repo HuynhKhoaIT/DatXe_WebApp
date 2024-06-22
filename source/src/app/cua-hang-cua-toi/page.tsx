@@ -1,5 +1,5 @@
 "use client";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import RenderContextClient from "../components/elements/RenderContextClient";
 import apiConfig from "@/constants/apiConfig";
 import StoreListPage from "../layout/desktop/cua-hang-cua-toi/StoreListPage";

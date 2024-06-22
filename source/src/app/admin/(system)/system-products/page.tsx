@@ -1,7 +1,7 @@
 import RenderContext from "@/app/components/elements/RenderContext";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import ProductsListPage from "./_component/ProductsListPage";
 
 export default async function SystemProducts({ searchParams }: any) {

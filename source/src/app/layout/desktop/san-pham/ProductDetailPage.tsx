@@ -18,6 +18,7 @@ const ProductDetailPageDesktop = async ({
   product,
   productRelate,
   productReview,
+  session,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -28,6 +29,7 @@ const ProductDetailPageDesktop = async ({
             <ProductDetail
               productReview={productReview}
               ProductDetail={product?.product}
+              session={session}
             />
           </Suspense>
           <ProductTabsDes

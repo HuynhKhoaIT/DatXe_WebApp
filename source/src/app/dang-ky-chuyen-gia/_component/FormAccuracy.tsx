@@ -32,19 +32,16 @@ export function FormAccuracy() {
   const onSubmit = async () => {
     handlers.open();
     const { name, phone, garageName, address, pin } = form.values;
-    let password = phone + "@@Datxe.com@@";
-    let passwordConfirmation = password;
+
     try {
       const checkRs = await CheckOtp(phone, pin, "register");
       if (checkRs.CodeResult == 100) {
         toast.success("Xác thực thành công");
-
         try {
           const garage = await registerGarage(
             name,
             phone,
-            password,
-            passwordConfirmation,
+            pin,
             address,
             garageName,
             fcmToken

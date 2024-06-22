@@ -9,20 +9,19 @@ import Container from "@/app/components/common/Container";
 import SearchFormName from "@/app/components/elements/search/SearchFormName";
 import { IconShoppingCart } from "@tabler/icons-react";
 import ButtonAddCar from "./_component/ButtonAddCar";
-import { getMyAccount } from "@/utils/user";
 import ButtonAddAddress from "./_component/ButtonAddAddress";
 import { brandData } from "@/constants/masterData";
 import ActionIconCart from "./_component/ActionIconCart";
-import { callApi } from "@/lib";
+import { callApi, getSession } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 export default async function Header() {
-  const myAccount: any = await getMyAccount();
   async function handleAdd(formData: any) {
     "use server";
     await callApi(apiConfig.car.create, {
       data: formData,
     });
   }
+  const session = await getSession();
   return (
     <header className={styles.header}>
       <HeaderTop />
@@ -43,7 +42,7 @@ export default async function Header() {
               <ButtonAddCar
                 handleAdd={handleAdd}
                 styles={styles}
-                user={myAccount}
+                user={session?.user}
               />
             </div>
           </div>

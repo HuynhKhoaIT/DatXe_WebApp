@@ -1,13 +1,12 @@
 "use client";
 import { Button, PinInput } from "@mantine/core";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, hasLength } from "@mantine/form";
-import { CheckOtp } from "@/utils/user";
-import { signIn } from "next-auth/react";
 import { useDisclosure } from "@mantine/hooks";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import { toast } from "react-toastify";
-export function FormAccuracy() {
+export function FormAccuracy({ login }: any) {
+  const router = useRouter();
   const [opened, handlers] = useDisclosure(false);
   const { fcmToken } = useFcmToken();
   const searchParams = useSearchParams();
@@ -26,26 +25,17 @@ export function FormAccuracy() {
 
   const onLogin = async () => {
     const { phone, pin } = form.values;
-    let password = phone + "@@Datxe.com@@";
     try {
-      handlers.open();
-      const checkRs = await CheckOtp(phone, pin, "login");
-      if (checkRs.CodeResult == "100") {
-        signIn("credentials", {
-          phone: phone,
-          password: password,
-          callbackUrl: callbackUrl || "/dashboard",
-          tokenFirebase: fcmToken,
-        });
-
-        toast.success("Đăng nhập thành công");
-      } else {
-        toast.error("Đăng nhập thất bại");
-      }
+      await login({
+        phone: phone,
+        otp: pin.toString(),
+        tokenFirebase: fcmToken,
+      });
+      toast.success("Đăng nhập thành công");
+      router.push(callbackUrl || "/dashboard");
       handlers.close();
     } catch (error) {
       toast.error("Đăng nhập thất bại");
-
       handlers.close();
     }
   };
@@ -69,7 +59,7 @@ export function FormAccuracy() {
         color="var(--theme-color)"
         fullWidth
       >
-        Đăng nhập
+        Xác thực
       </Button>
     </form>
   );

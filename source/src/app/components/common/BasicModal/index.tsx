@@ -21,6 +21,7 @@ const BasicModal = ({
   withCloseButton = true,
   fullScreen,
   radius,
+  zIndex,
 }: any) => {
   return (
     <Modal
@@ -34,7 +35,7 @@ const BasicModal = ({
       centered={centered}
       withCloseButton={withCloseButton}
       fullScreen={fullScreen}
-      // zIndex={999}
+      zIndex={zIndex}
       radius={radius}
     >
       <div className={styles.modalContent}>{children}</div>

@@ -5,7 +5,7 @@ import Reasons1 from "@/assets/images/reasson1.png";
 import Reasons2 from "@/assets/images/reasson2.png";
 import Reasons3 from "@/assets/images/reasson3.png";
 import { getCategories } from "../libs/prisma/category";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 import { getProductsHome } from "../libs/prisma/homepage";
 

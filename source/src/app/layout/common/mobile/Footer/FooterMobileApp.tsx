@@ -13,18 +13,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { titleHeader } from "@/constants/masterData";
 import { ROLE_CUSTOMER, titleHeaderKeys } from "@/constants";
-import { useSession } from "next-auth/react";
 import FooterMobile from "./FooterMobile";
 
-function FooterMobileApp() {
-  const { data } = useSession();
+function FooterMobileApp({ user }: any) {
   const pathname = usePathname();
   const parts = pathname.split("/");
   let page: any = parts?.[2] || parts?.[1];
   const res: any = titleHeader?.find((item) => {
     return item?.value == page;
   });
-  if (!data?.user?.token || data?.user?.role != ROLE_CUSTOMER) {
+  if (!user?.token || user?.role != ROLE_CUSTOMER) {
     return <FooterMobile />;
   }
   return (

@@ -91,7 +91,7 @@ export default function Chart({
       <Grid.Col span={{ base: 12, sm: 12, lg: 12, xs: 12 }}>
         <Box mb={30} className={styles.wrapper_filter}>
           <Grid gutter={12}>
-            <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+            <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
               <DatePickerInput
                 label="Thời gian"
                 size="lg"

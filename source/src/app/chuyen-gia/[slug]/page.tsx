@@ -11,7 +11,7 @@ import IconFaceBook from "@/assets/icons/faceBook.svg";
 import IconZalo from "@/assets/icons/zalo.svg";
 import IconIg from "@/assets/icons/instagram.svg";
 import { getCategories } from "@/app/libs/prisma/category";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 import type { Metadata, ResolvingMetadata } from "next";
 import { getServerSession } from "next-auth";

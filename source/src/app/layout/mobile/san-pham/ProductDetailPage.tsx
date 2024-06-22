@@ -16,6 +16,7 @@ const ProductDetailPageMobile = async ({
   product,
   productReview,
   productRelate,
+  session,
 }: any) => {
   return (
     <div className={styles.wrapper}>
@@ -25,6 +26,7 @@ const ProductDetailPageMobile = async ({
           <ProductDetail
             productReview={productReview}
             ProductDetail={product?.product}
+            session={session}
           />
           <ProductTabsDes
             ProductDetail={product?.product}

@@ -5,16 +5,12 @@ import { MyFooter } from "../layout/common/desktop/Footer/FooterDesktop";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import styles from "./index.module.scss";
-import FooterMobile from "../layout/common/mobile/Footer/FooterMobile";
-import HeaderMobile from "../layout/common/mobile/HeaderMobile";
 import Container from "../components/common/Container";
-import HeaderTopMobile from "../layout/common/mobile/HeaderTopMobile";
 import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { ROLE_CUSTOMER } from "@/constants";
 import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
 import HeaderTopMobileApp from "../layout/common/mobile/HeaderTopMobileApp";
+import { getSession } from "@/lib/auth";
 
 interface IProps {
   children: ReactNode;
@@ -23,7 +19,7 @@ export default async function DashboardLayout({ children }: IProps) {
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
   );
-  const session = await getServerSession(authOptions);
+  const session: any = await getSession();
   if (session?.user?.role !== ROLE_CUSTOMER) {
     return redirect(`/admin`);
   }
@@ -37,7 +33,7 @@ export default async function DashboardLayout({ children }: IProps) {
             <div className={styles.content}>{children}</div>
           </div>
           {/* <FooterMobile /> */}
-          <FooterMobileApp />
+          <FooterMobileApp user={session.user} />
         </main>
       ) : (
         <main>

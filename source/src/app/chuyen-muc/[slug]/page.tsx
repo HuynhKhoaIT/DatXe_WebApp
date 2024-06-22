@@ -12,7 +12,7 @@ import Reasons2 from "@/assets/images/reasson2.png";
 import Reasons3 from "@/assets/images/reasson3.png";
 import RenderContextClient from "@/app/components/elements/RenderContextClient";
 import { kindProduct } from "@/constants/masterData";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 
 const blogs = [

@@ -1,7 +1,7 @@
 import RenderContext from "@/app/components/elements/RenderContext";
 import CarsListPage from "@/app/layout/desktop/dashboard/Danh-sach-xe/carsListPage";
 import CarsListPageMobile from "@/app/layout/mobile/dashboard/danh-sach-xe/CarsListPageMobile";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 
 export default async function CarsPage({ searchParams }: any) {
