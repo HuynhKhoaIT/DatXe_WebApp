@@ -98,7 +98,7 @@ export function AutocompleteClearable({
         <Grid w={w} justify="space-between" gutter={0}>
           <Grid.Col span={isCamera ? 10 : 12}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               data-autofocus
               label={label}
@@ -142,8 +142,8 @@ export function AutocompleteClearable({
             >
               <ActionIcon
                 onClick={openModalCamera}
-                w={50}
-                h={50}
+                w={42}
+                h={42}
                 variant="filled"
                 aria-label="Settings"
               >

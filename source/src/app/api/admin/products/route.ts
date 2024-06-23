@@ -8,9 +8,10 @@ import { getProducts } from "@/app/libs/prisma/product";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { generateUUID } from "@/utils/until";
 import { createSeoMeta } from "@/app/libs/prisma/seoMeta";
+import { getSession } from "@/lib/auth";
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
     if (session && session.user?.role == "ADMINGARAGE") {
       const { searchParams } = new URL(request.url);
       const categoryId = searchParams.get("categoryId");
@@ -107,7 +108,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: Request) {
   try {
     const json = await request.json();
-    const session = await getServerSession(authOptions);
+    const session = await getSession();
     if (session && session.user?.role == "ADMINGARAGE") {
       let catArr: any = [];
       let brandArr: any = [];

@@ -25,7 +25,6 @@ export default function Cars() {
     activeTab,
     setActiveTab,
   } = useCars();
-  const searchParams = useSearchParams();
 
   return (
     <Fragment>
