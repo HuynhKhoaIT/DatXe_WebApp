@@ -1,21 +1,25 @@
-"use client";
-import React, { useEffect, useState } from "react";
 import CategoryForm from "../create/CategoryForm";
-import axios from "axios";
-import { useCategoryDetail } from "../../hooks/category/useCategory";
-export const revalidate = 60;
-export default function UpdateCategory({
+import { callApi } from "@/lib/auth";
+import apiConfig from "@/constants/apiConfig";
+export default async function UpdateCategory({
   params,
 }: {
   params: { categoryId: string };
 }) {
-  const { data: category, isLoading } = useCategoryDetail(params?.categoryId);
-
+  const category = await callApi(apiConfig.admin.productCategory.getById, {
+    pathParams: { id: params.categoryId },
+  });
+  async function handleUpdate(formData: FormData) {
+    "use server";
+    await callApi(apiConfig.admin.productCategory.update, {
+      data: formData,
+    });
+  }
   return (
     <CategoryForm
       isEditing={true}
       dataDetail={category}
-      isLoading={isLoading}
+      handleUpdate={handleUpdate}
     />
   );
 }

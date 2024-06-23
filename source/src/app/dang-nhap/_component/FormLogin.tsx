@@ -30,7 +30,6 @@ export default function FormLogin({ sendOtp, login, checkPhone }: any) {
     try {
       const { phone, password } = form.values;
       const res = await checkPhone({ phone });
-      console.log("res", res);
       if (res?.data) {
         if (!password) {
           const result = await sendOtp({ phone });

@@ -1,15 +1,15 @@
 import prisma from "@/app/libs/prismadb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getCategories } from "@/app/libs/prisma/category";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
-      if (session.user?.role == "ADMIN") {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
+      if (getAuth?.role == "ADMIN") {
         garageId = "2";
       }
       const { searchParams } = new URL(request.url);
@@ -33,15 +33,13 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
-      if (session.user?.role == "ADMIN") {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
+      if (getAuth.role == "ADMIN") {
         garageId = "2";
       }
       json.garageId = garageId;

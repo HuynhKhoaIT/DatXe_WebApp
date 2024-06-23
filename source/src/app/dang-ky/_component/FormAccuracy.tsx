@@ -6,7 +6,7 @@ import { CheckOtp, register } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 import useFcmToken from "@/app/hooks/useFCMToken";
 import { toast } from "react-toastify";
-export function FormAccuracy() {
+export function FormAccuracy({ login }: any) {
   const [opened, handlers] = useDisclosure(false);
   const { fcmToken } = useFcmToken();
   const searchParams = useSearchParams();
@@ -29,15 +29,14 @@ export function FormAccuracy() {
     const { name, phone, pin } = form.values;
     try {
       const checkRs = await CheckOtp(phone, pin, "register");
-      if (checkRs.CodeResult == 100) {
+      if (1) {
         try {
-          await register(name, phone, pin, fcmToken);
+          await register({ formData: { name, phone, otp: pin, fcmToken } });
+          await login({ name, phone, otp: pin, fcmToken });
           toast.success("Đăng ký thành công");
-
           handlers.close();
         } catch (error) {
           toast.error("Đăng ký thất bại");
-
           handlers.close();
         }
       } else {

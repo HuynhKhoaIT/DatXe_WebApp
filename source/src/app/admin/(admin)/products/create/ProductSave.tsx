@@ -6,6 +6,7 @@ export default function ProductSave({
   productDetail,
   closeModalSync,
   isLoading,
+  categoryOptions,
 }: any) {
   return (
     <Box maw={"100%"} mx="auto">
@@ -15,6 +16,7 @@ export default function ProductSave({
         isDirection={isDirection}
         closeModalSync={closeModalSync}
         isLoading={isLoading}
+        categoryOptions={categoryOptions}
       />
     </Box>
   );

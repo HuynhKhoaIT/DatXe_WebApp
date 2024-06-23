@@ -24,15 +24,10 @@ export default function CategoryForm({
   isEditing,
   dataDetail,
   isLoading,
+  handleCreate,
+  handleUpdate,
 }: any) {
-  const {
-    addItem,
-    updateItem,
-    isPendingCreate,
-    isPendingUpdate,
-  } = useAddCategory();
   const [imageField, setImageField] = useState<File | null>();
-
   const form = useForm({
     initialValues: {
       image: "",
@@ -74,9 +69,9 @@ export default function CategoryForm({
   const handleSubmit = async (values: any) => {
     values.slug = convertToSlug(values?.title);
     if (isEditing) {
-      updateItem(values);
+      await handleUpdate(values);
     } else {
-      addItem(values);
+      await handleCreate(values);
     }
   };
 
@@ -151,11 +146,7 @@ export default function CategoryForm({
             </Card>
           </Grid.Col>
         </Grid>
-
-        <FooterSavePage
-          saveLoading={isPendingCreate || isPendingUpdate}
-          okText={isEditing ? "Cập nhật" : "Thêm"}
-        />
+        <FooterSavePage okText={isEditing ? "Cập nhật" : "Thêm"} />
       </form>
     </Box>
   );

@@ -65,7 +65,6 @@ interface useProduct {
   deleteItem: any;
   pageDlbd: number;
   setPageDlbd: Dispatch<SetStateAction<number>>;
-  categoryOptions: any;
 }
 
 function mapError(error: unknown | undefined): undefined | string {
@@ -167,15 +166,6 @@ export const useProduct = (): useProduct => {
     },
   });
 
-  const { data: categoryOptions } = useFetch({
-    queryKey: [QUERY_KEY.optionsCategory],
-    queryFn: () => getOptionsCategories(),
-    options: {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      refetchInterval: false,
-    },
-  });
   return {
     products,
     isLoading,
@@ -189,7 +179,6 @@ export const useProduct = (): useProduct => {
     setPageDlbd,
     setActiveTab,
     deleteItem,
-    categoryOptions,
     isLoadingDlbd,
   };
 };

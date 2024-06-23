@@ -79,7 +79,7 @@ export default function DashboardLayout({ user, children, logout }: any) {
             <img style={{ height: "60px" }} src={logo.src} alt="logo" />
           </Link>
         </Group>
-        <NavbarNested toggle={toggle} />
+        <NavbarNested toggle={toggle} user={user} />
       </AppShell.Navbar>
       <AppShell.Main className={styles.main}>{children}</AppShell.Main>
     </AppShell>

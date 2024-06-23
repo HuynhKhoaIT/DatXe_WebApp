@@ -1,4 +1,3 @@
-export const revalidate = 0;
 import React, { Fragment } from "react";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Button, Flex } from "@mantine/core";
@@ -7,7 +6,9 @@ import Link from "next/link";
 import { IconPlus } from "@tabler/icons-react";
 import SearchForm from "@/app/components/form/SearchForm";
 import TableProducts from "./_component/TableProducts";
-import { getSession } from "@/lib/auth";
+import { callApi, getSession } from "@/lib/auth";
+import apiConfig from "@/constants/apiConfig";
+import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -39,6 +40,12 @@ export default async function ProductsManaga() {
     brand: null,
   };
 
+  const categories = await callApi(apiConfig.admin.productCategory.getList, {});
+  const categoryOptions = categories?.data?.map((item: any) => ({
+    value: item.id.toString(),
+    label: item.title,
+  }));
+
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
@@ -68,7 +75,7 @@ export default async function ProductsManaga() {
         </Flex>
       </div>
 
-      {/* <FilterCategories categories={categoryOptions} /> */}
+      <FilterCategories categories={categoryOptions} />
       <TableProducts user={session?.user} />
     </Fragment>
   );

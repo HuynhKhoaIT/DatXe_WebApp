@@ -39,7 +39,6 @@ export default function TableProducts({ user }: any) {
     activeTab,
     setActiveTab,
     deleteItem,
-    categoryOptions,
     productsDlbd,
     isLoadingDlbd,
   } = useProduct();

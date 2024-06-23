@@ -45,6 +45,7 @@ export function AutocompleteClearable({
   useEffect(() => {
     const fetchData = async () => {
       const data: any = await getOptionData({ s: debounced });
+      console.log(data);
       setGroceries(data);
       setLoading(false);
       return data;

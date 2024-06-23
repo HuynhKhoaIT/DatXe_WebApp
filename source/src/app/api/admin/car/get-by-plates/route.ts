@@ -1,21 +1,15 @@
 import { getCarsByPlates } from "@/app/libs/prisma/car";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = await getGarageIdByDLBDID(
-        Number(session.user?.garageId) ?? 0
-      );
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
       const { searchParams } = new URL(request.url);
       const s: any = searchParams.get("s");
       const cars = await getCarsByPlates(s, garageId.toString());
-
       return NextResponse.json(cars);
     } else {
       throw new Error("Chua dang nhap");
