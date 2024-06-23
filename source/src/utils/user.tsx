@@ -86,19 +86,14 @@ export const login = async (phone: string, password: string): Promise<void> => {
   }
 };
 
-export const register = async (
-  name: string,
-  phone: string,
-  pin: string,
-  fcmToken: string
-): Promise<void> => {
+export const register = async ({ formData }: any): Promise<void> => {
   try {
     const res = await axios.post(
       `${POST_REGISTER_ENDPOINT}`,
       {
-        name: name,
-        phone: phone,
-        otp: pin,
+        name: formData?.name,
+        phone: formData?.phone,
+        otp: formData?.otp,
       },
       {
         headers: {
@@ -129,12 +124,12 @@ export const register = async (
         garageId: "2",
       }),
     });
-    signIn("credentials", {
-      phone: phone,
-      otp: pin,
-      tokenFirebase: fcmToken,
-      callbackUrl: `/dashboard`,
-    });
+    // signIn("credentials", {
+    //   phone: phone,
+    //   otp: pin,
+    //   tokenFirebase: fcmToken,
+    //   callbackUrl: `/dashboard`,
+    // });
   } catch (error) {
     console.error(error);
     throw new Error("Đăng Ký thất bại");

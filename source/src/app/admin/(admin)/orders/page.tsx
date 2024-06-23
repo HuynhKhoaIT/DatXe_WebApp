@@ -7,10 +7,10 @@ import { getOrders } from "@/app/libs/prisma/order";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { callApi } from "@/lib/auth";
+import { callApi, getSession } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 export default async function Orders() {
-  const session: any = await getServerSession(authOptions);
+  const session: any = await getSession();
   let garageId = (
     await getGarageIdByDLBDID(Number(session.user?.garageId))
   ).toString();

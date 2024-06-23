@@ -104,7 +104,7 @@ export default function SearchForm({
             ) : searchData?.[0]?.type === FieldTypes.SELECT ? (
               <Select
                 searchable={true}
-                nothingFoundMessage="Không có kết quả..."
+                nothingFoundMessage="0 kết quả"
                 size="md"
                 radius={0}
                 w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
@@ -147,7 +147,7 @@ export default function SearchForm({
                 return (
                   <Select
                     searchable={true}
-                    nothingFoundMessage="Không có kết quả..."
+                    nothingFoundMessage="0 kết quả"
                     size="md"
                     radius={0}
                     w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
@@ -174,7 +174,7 @@ export default function SearchForm({
               <>
                 <Select
                   searchable={true}
-                  nothingFoundMessage="Không có kết quả..."
+                  nothingFoundMessage="0 kết quả"
                   size="md"
                   radius={0}
                   w={{ base: "100%", sm: "15%", md: "15%", lg: "15%" }}
@@ -191,7 +191,7 @@ export default function SearchForm({
                 />
                 <Select
                   searchable={true}
-                  nothingFoundMessage="Không có kết quả..."
+                  nothingFoundMessage="0 kết quả"
                   size="md"
                   radius={0}
                   w={{ base: "100%", sm: "15%", md: "15%", lg: "15%" }}
@@ -207,7 +207,7 @@ export default function SearchForm({
                 />
                 <Select
                   searchable={true}
-                  nothingFoundMessage="Không có kết quả..."
+                  nothingFoundMessage="0 kết quả"
                   size="md"
                   radius={0}
                   w={{ base: "100%", sm: "15%", md: "15%", lg: "15%" }}

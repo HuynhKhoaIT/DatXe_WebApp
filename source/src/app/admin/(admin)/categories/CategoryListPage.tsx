@@ -9,10 +9,8 @@ import dynamic from "next/dynamic";
 import { FieldTypes, statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
-import { useCategories } from "../hooks/category/useCategory";
 import ImageField from "@/app/components/form/ImageField";
 import { AppConstants } from "@/constants";
-import { useSession } from "next-auth/react";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("@/app/admin/_component/ModalDeleteItem"),
@@ -22,22 +20,15 @@ const DynamicModalDeleteItem = dynamic(
 );
 const DynamicModalCategories = dynamic(() => import("./ModalCategoriesDLBD"));
 
-export default function CategoryListPage({ profile }: any) {
-  const {
-    categories,
-    isLoading,
-    isFetching,
-    error,
-    page,
-    setPage,
-    deleteItem,
-  } = useCategories();
-
-  const { data } = useSession();
+export default function CategoryListPage({
+  user,
+  dataSource,
+  deleteItem,
+}: any) {
   const [deleteRow, setDeleteRow] = useState();
 
-  const handleDeleteItem = (id: any) => {
-    deleteItem(id);
+  const handleDeleteItem = async (id: any) => {
+    await deleteItem(id);
   };
 
   const [
@@ -188,7 +179,7 @@ export default function CategoryListPage({ profile }: any) {
         }
         actionBar={
           <Flex justify={"end"} align={"center"} gap={20}>
-            {data?.user?.useDLBD ? (
+            {user?.useDLBD ? (
               <Button
                 size="lg"
                 h={{ base: 42, md: 50, lg: 50 }}
@@ -222,12 +213,9 @@ export default function CategoryListPage({ profile }: any) {
         titleTable={true}
         baseTable={
           <TableBasic
-            data={categories?.data}
+            data={dataSource?.data}
             columns={columns}
-            loading={isLoading}
-            totalPage={categories?.totalPage}
-            setPage={setPage}
-            activePage={page}
+            totalPage={dataSource?.totalPage}
           />
         }
       />
@@ -242,7 +230,7 @@ export default function CategoryListPage({ profile }: any) {
         <DynamicModalCategories
           openedModalCategories={openedModalCategories}
           closeModalCategories={closeModalCategories}
-          profile={profile}
+          profile={user}
         />
       )}
     </div>
