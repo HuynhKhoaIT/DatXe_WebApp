@@ -11,7 +11,6 @@ export async function checkAuthToken(request: NextRequest) {
     return;
   }
   const token = BearerToken?.split(" ")[1];
-  console.log("token", token);
 
   const user = await getUser(token);
   return user;
