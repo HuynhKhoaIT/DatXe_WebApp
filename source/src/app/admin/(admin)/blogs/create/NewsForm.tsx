@@ -14,9 +14,7 @@ import {
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import QuillEditor from "@/app/components/elements/RichTextEditor";
-import { useAddNews } from "../../hooks/news/useAddNews";
 import CropImageLink from "@/app/components/common/CropImage";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import Typo from "@/app/components/elements/Typo";
@@ -24,11 +22,21 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown } from "@tabler/icons-react";
 import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
 import { AppConstants } from "@/constants";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
-export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
+export default function NewsForm({
+  isEditing,
+  dataDetail,
+  isLoading,
+  updateItem,
+  createItem,
+}: any) {
+  const router = useRouter();
   const [opened, { toggle }] = useDisclosure(false);
+  const [loading, { toggle: toggleLoading }] = useDisclosure(false);
+
   const [valueRTE, setValueRTE] = useState("");
-  const { addItem, updateItem, isPendingAdd, isPendingUpdate } = useAddNews();
   const [thumbnailUrl, setThumbnailUrl] = useState<File | null>();
   const [banner, setBannerUrl] = useState<File | null>();
 
@@ -38,6 +46,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
       title: "",
       banner: "",
       description: "",
+      status: "PUBLIC",
     },
     validate: {
       title: (value) => (value.length < 1 ? "Không được để trống" : null),
@@ -93,11 +102,27 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
     values.slug = convertToSlug(values?.title);
     values.description = valueRTE;
     values.seoThumbnail = values.thumbnail;
+    toggleLoading();
     if (isEditing) {
-      updateItem(values);
+      const res = await updateItem(values);
+      if (res.data) {
+        toast.success("Cập nhật thành công");
+        router.back();
+        router.refresh();
+      } else {
+        toast.error("Cập nhật thất bại");
+      }
     } else {
-      addItem(values);
+      const res = await createItem(values);
+      if (res.data) {
+        toast.success("Thêm thành công");
+        router.back();
+        router.refresh();
+      } else {
+        toast.error("Thêm thất bại");
+      }
     }
+    toggleLoading();
   };
 
   return (
@@ -153,6 +178,7 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
                   <TextInput
                     size="lg"
                     radius={0}
+                    withAsterisk
                     {...form.getInputProps("title")}
                     label="Tên bài viết"
                     type="text"
@@ -248,8 +274,8 @@ export default function NewsForm({ isEditing, dataDetail, isLoading }: any) {
           </Collapse>
         </Card>
         <FooterSavePage
-          saveLoading={isPendingAdd || isPendingUpdate}
           okText={isEditing ? "Cập nhật" : "Thêm"}
+          saveLoading={loading}
         />
       </form>
     </Box>

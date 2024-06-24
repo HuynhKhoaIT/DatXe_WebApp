@@ -1,13 +1,5 @@
 "use client";
-import {
-  Card,
-  Grid,
-  TextInput,
-  Textarea,
-  Select,
-  LoadingOverlay,
-  Box,
-} from "@mantine/core";
+import { Card, Grid, TextInput, Textarea, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
@@ -16,29 +8,22 @@ import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
 import FooterSavePage from "../../../_component/FooterSavePage";
 import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
-import { useAddCustomer } from "../../hooks/customer/useAddCustomer";
+import { useDisclosure } from "@mantine/hooks";
 export default function CustomersForm({
   isEditing,
   dataDetail,
-  isLoading,
   isPreview,
+  updateItem,
+  createItem,
+  provinceOptions,
 }: any) {
-  const {
-    addItem,
-    updateItem,
-    provinceOptions,
-    isLoadingProvince,
-    isPendingUpdate,
-    isPendingAdd,
-  } = useAddCustomer();
-
+  const [loading, { toggle: toggeleLoading }] = useDisclosure(false);
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
   const [ward, setWard] = useState<any>();
 
   const form = useForm({
     validateInputOnBlur: true,
-
     initialValues: {
       fullName: "",
       cityId: "",
@@ -62,9 +47,9 @@ export default function CustomersForm({
 
   const handleSubmit = async (values: any) => {
     if (isEditing) {
-      updateItem(values);
+      const res = await updateItem(values);
     } else {
-      addItem(values);
+      const res = await createItem(values);
     }
   };
 
@@ -100,182 +85,174 @@ export default function CustomersForm({
     if (isEditing) fetchData();
   }, [dataDetail]);
   return (
-    <Box pos="relative">
-      <LoadingOverlay
-        visible={isLoadingProvince || isLoading}
-        zIndex={99}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Grid gutter={12}>
-          <Grid.Col span={12}>
-            <Card withBorder shadow="sm">
-              <Grid gutter={10} mt={24}>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    withAsterisk
-                    {...form.getInputProps("fullName")}
-                    label="Họ và tên"
-                    type="text"
-                    placeholder="Họ và tên"
-                    disabled={isPreview}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    // withAsterisk
-                    {...form.getInputProps("phoneNumber")}
-                    label="Số điện thoại"
-                    type="text"
-                    placeholder="Số điện thoại"
-                    disabled={isPreview}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
-                  <DateField
-                    {...form.getInputProps("dob")}
-                    label="Ngày sinh"
-                    placeholder="Ngày sinh"
-                    clearable={true}
-                    maxDate={new Date()}
-                    disabled={isPreview}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
-                  <Select
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("sex")}
-                    label="Giới tính"
-                    checkIconPosition="right"
-                    placeholder="Giới tính"
-                    data={sexOptions}
-                    disabled={isPreview}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <Select
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("provinceId")}
-                    label="Tỉnh/Thành phố"
-                    placeholder="Chọn tỉnh"
-                    data={provinceOptions}
-                    value={province}
-                    onChange={async (value) => {
-                      const optionsData = await getOptionsDistrict(
-                        Number(value)
-                      );
-                      setDistrictOptions(optionsData);
-                      if (value)
-                        form.setFieldValue("cityId", value?.toString());
-                      form.setFieldValue("districtId", "");
-                      form.setFieldValue("wardId", "");
-                      setProvince(value);
-                      setDistrict(null);
-                      setWard(null);
-                    }}
-                    disabled={isPreview}
-                  ></Select>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <Select
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("districtId")}
-                    label="Huyện/Quận"
-                    disabled={isPreview}
-                    placeholder="Chọn huyện/quận"
-                    data={districtOptions}
-                    value={district}
-                    onChange={async (value) => {
-                      const optionsData = await getOptionsWard(Number(value));
-                      setWardOptions(optionsData);
-                      if (value)
-                        form.setFieldValue("districtId", value?.toString());
-                      form.setFieldValue("wardId", "");
-                      setDistrict(value);
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Grid gutter={12}>
+        <Grid.Col span={12}>
+          <Card withBorder shadow="sm">
+            <Grid gutter={10} mt={24}>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <TextInput
+                  size="lg"
+                  radius={0}
+                  withAsterisk
+                  {...form.getInputProps("fullName")}
+                  label="Họ và tên"
+                  type="text"
+                  placeholder="Họ và tên"
+                  disabled={isPreview}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <TextInput
+                  size="lg"
+                  radius={0}
+                  // withAsterisk
+                  {...form.getInputProps("phoneNumber")}
+                  label="Số điện thoại"
+                  type="text"
+                  placeholder="Số điện thoại"
+                  disabled={isPreview}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
+                <DateField
+                  {...form.getInputProps("dob")}
+                  label="Ngày sinh"
+                  placeholder="Ngày sinh"
+                  clearable={true}
+                  maxDate={new Date()}
+                  disabled={isPreview}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
+                <Select
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("sex")}
+                  label="Giới tính"
+                  checkIconPosition="right"
+                  placeholder="Giới tính"
+                  data={sexOptions}
+                  disabled={isPreview}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <Select
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("provinceId")}
+                  label="Tỉnh/Thành phố"
+                  placeholder="Chọn tỉnh"
+                  data={provinceOptions}
+                  value={province}
+                  searchable={true}
+                  onChange={async (value) => {
+                    const optionsData = await getOptionsDistrict(Number(value));
+                    setDistrictOptions(optionsData);
+                    if (value) form.setFieldValue("cityId", value?.toString());
+                    form.setFieldValue("districtId", "");
+                    form.setFieldValue("wardId", "");
+                    setProvince(value);
+                    setDistrict(null);
+                    setWard(null);
+                  }}
+                  disabled={isPreview}
+                ></Select>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <Select
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("districtId")}
+                  label="Huyện/Quận"
+                  disabled={isPreview}
+                  searchable={true}
+                  placeholder="Chọn huyện/quận"
+                  data={districtOptions}
+                  value={district}
+                  onChange={async (value) => {
+                    const optionsData = await getOptionsWard(Number(value));
+                    setWardOptions(optionsData);
+                    if (value)
+                      form.setFieldValue("districtId", value?.toString());
+                    form.setFieldValue("wardId", "");
+                    setDistrict(value);
 
-                      setWard(null);
-                    }}
-                  ></Select>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <Select
-                    size="lg"
-                    disabled={isPreview}
-                    radius={0}
-                    {...form.getInputProps("wardId")}
-                    label="Xã/Phường"
-                    placeholder="Chọn xã/phường"
-                    data={wardOptions}
-                    value={ward}
-                    onChange={(value) => {
-                      if (value)
-                        form.setFieldValue("wardId", value?.toString());
-                      setWard(value);
-                    }}
-                  ></Select>
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
-                  <TextInput
-                    size="lg"
-                    disabled={isPreview}
-                    radius={0}
-                    // withAsterisk
-                    {...form.getInputProps("address")}
-                    label="Địa chỉ"
-                    type="text"
-                    placeholder="Địa chỉ"
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
-                  <Select
-                    size="lg"
-                    disabled={isPreview}
-                    radius={0}
-                    {...form.getInputProps("status")}
-                    label="Trạng thái"
-                    checkIconPosition="right"
-                    placeholder="Trạng thái"
-                    data={statusOptions}
-                  />
-                </Grid.Col>
-              </Grid>
-              <Grid mt={24}>
-                <Grid.Col span={12}>
-                  <Textarea
-                    size="lg"
-                    radius={0}
-                    disabled={isPreview}
-                    label="Mô tả chi tiết"
-                    minRows={4}
-                    autosize={true}
-                    {...form.getInputProps("description")}
-                    placeholder="Mô tả"
-                  />
-                </Grid.Col>
-              </Grid>
-            </Card>
-          </Grid.Col>
-        </Grid>
-        {!isPreview ? (
-          <FooterSavePage
-            saveLoading={isPendingUpdate || isPendingAdd}
-            okText={isEditing ? "Cập nhật" : "Thêm"}
-          />
-        ) : (
-          <FooterSavePage
-            saveLoading={isPendingUpdate || isPendingAdd}
-            isOk={false}
-            cancelText="Quay lại"
-          />
-        )}
-      </form>
-    </Box>
+                    setWard(null);
+                  }}
+                ></Select>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <Select
+                  size="lg"
+                  disabled={isPreview}
+                  searchable={true}
+                  radius={0}
+                  {...form.getInputProps("wardId")}
+                  label="Xã/Phường"
+                  placeholder="Chọn xã/phường"
+                  data={wardOptions}
+                  value={ward}
+                  onChange={(value) => {
+                    if (value) form.setFieldValue("wardId", value?.toString());
+                    setWard(value);
+                  }}
+                ></Select>
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
+                <TextInput
+                  size="lg"
+                  disabled={isPreview}
+                  radius={0}
+                  // withAsterisk
+                  {...form.getInputProps("address")}
+                  label="Địa chỉ"
+                  type="text"
+                  placeholder="Địa chỉ"
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
+                <Select
+                  size="lg"
+                  disabled={isPreview}
+                  radius={0}
+                  {...form.getInputProps("status")}
+                  label="Trạng thái"
+                  checkIconPosition="right"
+                  placeholder="Trạng thái"
+                  data={statusOptions}
+                />
+              </Grid.Col>
+            </Grid>
+            <Grid mt={24}>
+              <Grid.Col span={12}>
+                <Textarea
+                  size="lg"
+                  radius={0}
+                  disabled={isPreview}
+                  label="Mô tả chi tiết"
+                  minRows={4}
+                  autosize={true}
+                  {...form.getInputProps("description")}
+                  placeholder="Mô tả"
+                />
+              </Grid.Col>
+            </Grid>
+          </Card>
+        </Grid.Col>
+      </Grid>
+      {!isPreview ? (
+        <FooterSavePage
+          saveLoading={loading}
+          okText={isEditing ? "Cập nhật" : "Thêm"}
+        />
+      ) : (
+        <FooterSavePage
+          saveLoading={loading}
+          isOk={false}
+          cancelText="Quay lại"
+        />
+      )}
+    </form>
   );
 }

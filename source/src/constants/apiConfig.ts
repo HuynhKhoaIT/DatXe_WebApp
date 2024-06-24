@@ -1,5 +1,5 @@
 import { CHECK_PHONE_NUMBER } from "@/utils/constants/endpoints";
-import { apiUrl } from ".";
+import { apiGuest, apiUrl } from ".";
 
 const baseHeader = {
   "Content-Type": "application/json",
@@ -399,6 +399,11 @@ const apiConfig = {
         method: "GET",
         headers: baseHeader,
       },
+      getListDlbd: {
+        baseURL: `${apiUrl}api/admin/customer/dlbd`,
+        method: "GET",
+        headers: baseHeader,
+      },
       getById: {
         baseURL: `${apiUrl}api/admin/customer/:id`,
         method: "GET",
@@ -419,6 +424,23 @@ const apiConfig = {
         method: "DELETE",
         headers: baseHeader,
       },
+    },
+  },
+  nation: {
+    provinceList: {
+      baseURL: `${apiGuest}/provinces`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    districtList: {
+      baseURL: `${apiGuest}/get-districts/:provinceId`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    wardList: {
+      baseURL: `${apiGuest}/get-wards/:districtId`,
+      method: "GET",
+      headers: baseHeader,
     },
   },
 };

@@ -1,7 +1,5 @@
 import prisma from "@/app/libs/prismadb";
-import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import { getProductById } from "@/app/libs/prisma/product";
 import {
   deletePost,
@@ -11,7 +9,7 @@ import {
 } from "@/app/libs/prisma/post";
 import convertToSlug from "@/utils/until";
 import { ROLE_ADMIN, ROLE_EXPERT } from "@/constants";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -23,8 +21,8 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const post = await findPostAdmin(id);
       return NextResponse.json({ data: post });
     }
@@ -39,14 +37,14 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
+    const getAuth = await checkAuthToken(request);
     if (
-      session &&
-      (session.user?.role == "ADMINGARAGE" || session.user?.role == ROLE_ADMIN)
+      getAuth &&
+      (getAuth?.role == "ADMINGARAGE" || getAuth?.role == ROLE_ADMIN)
     ) {
       const data = await request.json();
       const id = params.id;
-      data.createdBy = session.user.id.toString();
+      data.createdBy = getAuth.id.toString();
       const rs = await updatePost(id, data);
       return new NextResponse(JSON.stringify(rs), {
         status: 201,

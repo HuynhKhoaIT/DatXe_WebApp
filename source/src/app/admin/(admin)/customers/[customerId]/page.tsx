@@ -1,24 +1,36 @@
-"use client";
+import { callApi } from "@/lib/auth";
 import CustomersForm from "../create/CustomersForm";
-import { useCustomerDetail } from "../../hooks/customer/useCustomer";
-export default function UpdateCustomer({
+import apiConfig from "@/constants/apiConfig";
+export default async function UpdateCustomer({
   params,
 }: {
   params: { customerId: string };
 }) {
-  const {
-    data: customer,
-    isLoading,
-    isFetching,
-    isPending,
-  } = useCustomerDetail(params?.customerId);
+  const customer = await callApi(apiConfig.admin.customer.getById, {
+    pathParams: { id: params.customerId },
+  });
 
+  async function handleUpdate(formData: FormData) {
+    "use server";
+    const res = await callApi(apiConfig.admin.customer.update, {
+      pathParams: { id: params.customerId },
+      data: formData,
+    });
+    return res;
+  }
+
+  const provinces = await callApi(apiConfig.nation.provinceList, {});
+  const provinceOptions = provinces.data?.map((item: any) => ({
+    value: item.id.toString(),
+    label: item.name,
+  }));
   return (
     <div style={{ width: "100%", margin: "auto" }}>
       <CustomersForm
         isEditing={true}
         dataDetail={customer}
-        isLoading={isLoading || isPending}
+        updateItem={handleUpdate}
+        provinceOptions={provinceOptions}
       />
     </div>
   );
