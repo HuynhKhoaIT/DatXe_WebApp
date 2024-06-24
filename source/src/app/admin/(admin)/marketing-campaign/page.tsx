@@ -3,7 +3,11 @@ export const revalidate = 0;
 import React, { Fragment, useState } from "react";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Badge, Button, Flex, Tooltip } from "@mantine/core";
-import { kindMarketingOptions, statusOptions } from "@/constants/masterData";
+import {
+  FieldTypes,
+  kindMarketingOptions,
+  statusOptions,
+} from "@/constants/masterData";
 import Link from "next/link";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
 import dynamic from "next/dynamic";
@@ -184,12 +188,12 @@ export default function Discounts() {
     {
       name: "s",
       placeholder: "Tên chương trình",
-      type: "input",
+      type: FieldTypes.STRING,
     },
     {
       name: "state",
       placeholder: "Tình trạng",
-      type: "select",
+      type: FieldTypes.SELECT,
       data: kindMarketingOptions,
     },
   ];

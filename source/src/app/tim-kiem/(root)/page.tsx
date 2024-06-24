@@ -1,10 +1,10 @@
 import { kindProduct } from "@/constants/masterData";
 import RenderContext from "../../components/elements/RenderContext";
-import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 import { DEFAULT_SIZE_LIMIT } from "@/constants";
 import SearchPageMobile from "../../layout/mobile/search/searchPage";
 import SearchListPage from "../../layout/desktop/tim-kiem/ProductsListPage";
+import { callApi } from "@/lib/auth";
 export default async function SearchPage({ searchParams }: any) {
   const products = await callApi(apiConfig.products.getList, {
     params: {

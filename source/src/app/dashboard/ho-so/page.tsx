@@ -3,7 +3,7 @@ import { Space } from "@mantine/core";
 import UserProfile from "./_component/User";
 import styles from "./index.module.scss";
 import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import InfoProfile from "./_component/Info";
 export default async function ProfilePage() {
   // const { data: profile, isLoading } = useAccountDetail();
@@ -11,13 +11,13 @@ export default async function ProfilePage() {
   const carsData = await callApi(apiConfig.car.getList, {});
   async function handleUpdate(formData: any) {
     "use server";
-    try {
-      await callApi(apiConfig.account.update, {
-        data: formData,
-      });
-    } catch (error) {
-      throw new Error("Failed to create task");
-    }
+    const result = await callApi(apiConfig.account.update, {
+      data: formData,
+    });
+
+    return {
+      res: result,
+    };
   }
   return (
     <div className={styles.formUser}>

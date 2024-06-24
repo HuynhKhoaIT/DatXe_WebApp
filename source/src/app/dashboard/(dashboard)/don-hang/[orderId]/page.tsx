@@ -3,7 +3,7 @@ import RenderContext from "@/app/components/elements/RenderContext";
 import OrderDetailPageMobile from "@/app/layout/mobile/gio-hang/OrderDetailPageMobile";
 import { getOrderBySlug } from "@/app/libs/prisma/order";
 import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
 export default async function Products({

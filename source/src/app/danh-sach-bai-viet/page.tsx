@@ -1,4 +1,4 @@
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import RenderContextClient from "../components/elements/RenderContextClient";
 import NewsListPage from "../layout/desktop/tin-tuc/NewsListPage";
 import apiConfig from "@/constants/apiConfig";

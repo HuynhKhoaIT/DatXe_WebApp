@@ -163,3 +163,8 @@ export const titleHeaderKeys = {
   ORDERS_DETAIL_TITLE,
   NOTI_TITLE,
 };
+
+export const appAccount = {
+  APP_USERNAME: process.env.NEXT_APP_USERNAME,
+  APP_PASSWORD: process.env.NEXT_APP_PASSWORD,
+};

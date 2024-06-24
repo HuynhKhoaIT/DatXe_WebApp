@@ -56,21 +56,6 @@ export default function DashboardAdmin() {
     false
   );
 
-  function getCurrentMonthDates() {
-    const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    const lastDayOfMonth = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      0
-    );
-
-    const formattedFirstDay = formatDate(firstDayOfMonth);
-    const formattedLastDay = formatDate(lastDayOfMonth);
-
-    return `${formattedFirstDay} - ${formattedLastDay}`;
-  }
-
   function formatDate(date: Date) {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -126,24 +111,6 @@ export default function DashboardAdmin() {
       icon: Calendar.src,
       label: "Doanh thu",
       link: "/admin/revenue",
-    },
-  ];
-
-  const card_3 = [
-    {
-      label: "Nghiệm thu",
-      value: 39,
-      id: 1,
-    },
-    {
-      label: "Xuất xưởng",
-      value: 60,
-      id: 2,
-    },
-    {
-      label: "Xe huỷ",
-      value: 0,
-      id: 3,
     },
   ];
 

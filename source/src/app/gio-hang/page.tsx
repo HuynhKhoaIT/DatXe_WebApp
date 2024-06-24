@@ -1,9 +1,7 @@
-import { getMyAccount } from "@/utils/user";
-import { callApi } from "@/lib";
 import apiConfig from "@/constants/apiConfig";
 import CartDetailPage from "./CartDetailPage";
+import { callApi, getSession } from "@/lib/auth";
 export default async function Cart() {
-  const myAccount: any = await getMyAccount();
   const carsData = await callApi(apiConfig.car.getList, {});
   async function handleAdd(formData: any) {
     "use server";
@@ -11,9 +9,10 @@ export default async function Cart() {
       data: formData,
     });
   }
+  const { user }: any = await getSession();
   return (
     <CartDetailPage
-      myAccount={myAccount}
+      myAccount={user}
       carsData={carsData?.data}
       handleAdd={handleAdd}
     />

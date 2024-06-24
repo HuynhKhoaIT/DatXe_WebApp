@@ -1,0 +1,31 @@
+.main {
+    background-color: #ededed;
+}
+
+.shortName {
+    font-size: 1rem;
+    font-weight: 600;
+    max-width: 150px; /* Adjust as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.addressExpert {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+}
+@media only screen and (max-width: 600px) {
+    .main {
+        background-color: #ffffff;
+    }
+    .addressExpert {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        width: 150px;
+        font-size: 12px;
+    }
+}

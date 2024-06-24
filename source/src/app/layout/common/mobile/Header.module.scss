@@ -1,10 +1,4 @@
-.inputSearch {
-    // height: 56px;
-    // font-size: 1rem;
-    &:focus-within{
-        --_input-bd: var(--blue-color) !important;
-    }
-}
+
 .wrapper {
     height: var(--header-height-mobile);
     padding: 0 1rem;
@@ -16,28 +10,7 @@
     left: 0;
     z-index: 100;
     box-shadow: var(--box-shadow-primary);
-    .headerTop{
-        padding-top: 4px;
-        height: 47px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .headerNav {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            overflow-x: visible;
-            .avatar {
-                display: block;
-                width: 32px;
-                flex-shrink: 0;
-                img {
-                    object-fit: fill;
-                    border-radius: 50%;
-                }
-            }
-        }
-    }
+   
     .searchForm{
         display: flex;
         align-items: center;
@@ -45,9 +18,6 @@
         padding: 4px 0;
     }
     .headerNav{ 
-        display: flex;
-        gap: 10px;
-        align-items: center;
         font-size: 14px;
         overflow-x: auto;
         padding-bottom: 4px;
@@ -75,21 +45,4 @@
     }
     
 }
-.nav {
-    display: flex;
-    flex-direction: column;
-    .navItem,
-    .navLogout {
-        color: var(--nav-color);
-        font-size: var(--primary-font-size);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 500;
-        padding: 1rem;
-        line-height: 16px;
-    }
-    .navItem {
-        border-bottom: 1px solid #ddd;
-    }
-}
+

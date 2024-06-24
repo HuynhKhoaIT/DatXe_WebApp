@@ -2,11 +2,12 @@ import RenderContext from "@/app/components/elements/RenderContext";
 import ProductDetailPageDesktop from "@/app/layout/desktop/san-pham/ProductDetailPage";
 import ProductDetailPageMobile from "@/app/layout/mobile/san-pham/ProductDetailPage";
 import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 import type { Metadata, ResolvingMetadata } from "next";
 import imageDefault from "../../../../public/assets/images/no_image.png";
 import { AppConstants } from "@/constants";
+import { getSession } from "@/lib/auth";
 
 type Props = {
   params: { slug: string };
@@ -63,6 +64,8 @@ export default async function DetailProduct({
     },
   });
 
+  const session = await getSession();
+
   return (
     <RenderContext
       components={{
@@ -76,6 +79,7 @@ export default async function DetailProduct({
       product={product?.data || []}
       productReview={productReview || []}
       productRelate={productsRelate}
+      session={session}
     />
   );
 }

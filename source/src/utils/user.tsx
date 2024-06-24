@@ -43,8 +43,6 @@ export async function getUserByValidSessionToken(token: string) {
   };
 }
 
-
-
 export const getMyAccount = async () => {
   const session = await getServerSession(authOptions);
   if (session?.user?.token) {
@@ -88,21 +86,14 @@ export const login = async (phone: string, password: string): Promise<void> => {
   }
 };
 
-export const register = async (
-  name: string,
-  phone: string,
-  password: string,
-  password_confirmation: string,
-  fcmToken: string
-): Promise<void> => {
+export const register = async ({ formData }: any): Promise<void> => {
   try {
     const res = await axios.post(
       `${POST_REGISTER_ENDPOINT}`,
       {
-        name: name,
-        phone: phone,
-        password: password,
-        password_confirmation: password_confirmation,
+        name: formData?.name,
+        phone: formData?.phone,
+        otp: formData?.otp,
       },
       {
         headers: {
@@ -133,13 +124,12 @@ export const register = async (
         garageId: "2",
       }),
     });
-    console.log("customerNew", customerNew);
-    signIn("credentials", {
-      phone: phone,
-      password: password,
-      tokenFirebase: fcmToken,
-      callbackUrl: `/dashboard`,
-    });
+    // signIn("credentials", {
+    //   phone: phone,
+    //   otp: pin,
+    //   tokenFirebase: fcmToken,
+    //   callbackUrl: `/dashboard`,
+    // });
   } catch (error) {
     console.error(error);
     throw new Error("Đăng Ký thất bại");
@@ -149,8 +139,7 @@ export const register = async (
 export const registerGarage = async (
   name: string,
   phone: string,
-  password: string,
-  password_confirmation: string,
+  pin: string,
   address: string,
   garageName: string,
   fcmToken: string
@@ -163,8 +152,7 @@ export const registerGarage = async (
         phone: phone,
         address: address,
         garageName: garageName,
-        password: password,
-        password_confirmation: password_confirmation,
+        otp: pin,
       },
       {
         headers: {
@@ -202,10 +190,10 @@ export const registerGarage = async (
         role: "ADMINGARAGE",
       }),
     });
-    await sendNotificationGarageNew(garageData)
+    await sendNotificationGarageNew(garageData);
     signIn("credentials", {
       phone: phone,
-      password: password,
+      otp: pin,
       tokenFirebase: fcmToken,
       callbackUrl: "/admin",
     });
@@ -237,7 +225,6 @@ export const GenOTP = async (phone: string) => {
 
 export const CheckPhone = async (phone: string) => {
   try {
-    console.log("phone", phone);
     const res = await axios.get(`${CHECK_PHONE_NUMBER}/${phone}`, {
       headers: {
         "Content-Type": "application/json",

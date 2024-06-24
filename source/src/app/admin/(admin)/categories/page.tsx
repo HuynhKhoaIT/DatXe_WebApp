@@ -1,24 +1,25 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import CategoryListPage from "./CategoryListPage";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import { getCategories } from "@/app/libs/prisma/category";
-import { apiUrl } from "@/constants";
 import { getServerSession } from "next-auth";
 import { Fragment } from "react";
+import { callApi, getSession } from "@/lib/auth";
+import apiConfig from "@/constants/apiConfig";
 
-async function getData() {
-  const session = await getServerSession(authOptions);
-  const requestData = {
-    session: session,
-  };
-  return requestData;
-}
+export default async function Categories({ searchParams }: any) {
+  let session = await getSession();
 
-export default async function Categories() {
-  let session = await getData();
-
+  const categories = await callApi(apiConfig.admin.productCategory.getList, {
+    params: searchParams,
+  });
+  async function handleDelete(formData: FormData) {
+    "use server";
+    await callApi(apiConfig.admin.productCategory.delete, {
+      pathParams: {
+        id: formData,
+      },
+    });
+  }
   const breadcrumbs = [
     { title: "Tổng quan", href: "/admin" },
     { title: "Danh mục sản phẩm" },
@@ -26,7 +27,11 @@ export default async function Categories() {
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={breadcrumbs} />
-      <CategoryListPage profile={session} />
+      <CategoryListPage
+        user={session?.user}
+        dataSource={categories}
+        deleteItem={handleDelete}
+      />
     </Fragment>
   );
 }

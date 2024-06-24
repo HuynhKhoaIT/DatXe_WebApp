@@ -1,7 +1,7 @@
 import React from "react";
 import { getGarages } from "@/utils/garage";
 import { GarageItem } from "../components/elements/garage/GarageItem";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 export default async function Expert() {
   const expertData: any = await callApi(apiConfig.expert.getList, {});

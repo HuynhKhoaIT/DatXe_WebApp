@@ -3,18 +3,16 @@ import { ScrollArea } from "@mantine/core";
 import classes from "./NavbarNested.module.scss";
 import { LinksGroup } from "../components/NavBarLinksGroup/NavBarLinksGroup";
 import FooterAdmin from "../layout/common/desktop/Footer/footer-admin";
-import { useSession } from "next-auth/react";
 import menuConfigExpert from "@/constants/menuConfig/Expert";
 import menuConfigAdmin from "@/constants/menuConfig/Admin";
 import { ROLE_ADMIN, ROLE_EXPERT } from "@/constants";
 import { useMyGarage } from "../hooks/useMyGarage";
 import menuConfigExpertDelete from "@/constants/menuConfig/ExpertDelete";
 
-export function NavbarNested({ toggle }: any) {
+export function NavbarNested({ toggle, user }: any) {
   const garage = useMyGarage();
 
-  var { data: session, status } = useSession();
-  const role = session?.user?.role;
+  const role = user?.role;
   const menuExpert = menuConfigExpert.map((item) => (
     <LinksGroup {...item} key={item.label} toggle={toggle} />
   ));

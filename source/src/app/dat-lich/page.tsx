@@ -3,7 +3,7 @@ import { getSchedule } from "@/utils/order";
 import CalendarScheduler from "../components/elements/calendar/Calendar";
 import { mapArrayEventCalendar } from "../domain/EventCalendar";
 import { apiUrl } from "@/constants";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 
 async function getDataInfoOrder() {

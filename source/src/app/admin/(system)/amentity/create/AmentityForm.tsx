@@ -21,6 +21,7 @@ import CropImageLink from "@/app/components/common/CropImage";
 import ImageUpload from "@/assets/icons/cameraUploadMobile.svg";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useAddAmentity } from "@/app/admin/(admin)/hooks/amentity/useAddAmentity";
+import { AppConstants } from "@/constants";
 export default function AmentityForm({ isEditing, dataDetail }: any) {
   const { addItem, updateItem } = useAddAmentity();
   const [loading, handlers] = useDisclosure();
@@ -102,7 +103,10 @@ export default function AmentityForm({ isEditing, dataDetail }: any) {
                   <CropImageLink
                     shape="rect"
                     placeholder={"Cập nhật hình ảnh"}
-                    defaultImage={dataDetail?.thumbnail || ImageUpload.src}
+                    defaultImage={
+                      dataDetail?.thumbnail &&
+                      `${AppConstants.contentRootUrl}${dataDetail?.thumbnail}`
+                    }
                     uploadFileThumbnail={uploadFileThumbnail}
                   />
                 </Grid.Col>

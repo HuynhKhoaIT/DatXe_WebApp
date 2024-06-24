@@ -1,7 +1,7 @@
 "use client";
 import { IProduct } from "@/interfaces/product";
 import React, { useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { Grid, Modal, Button, Group, Skeleton, Flex } from "@mantine/core";
 import styles from "./Product.module.scss";
 import ProductSlider from "./ProductSlider";
@@ -24,10 +24,8 @@ import { toast } from "react-toastify";
 import { useGlobalContext } from "@/app/Context/store";
 import { storageKeys } from "@/constants";
 import { getData, setData } from "@/utils/until/localStorage";
-function ProductDetail({ ProductDetail, productReview }: any) {
-  const { data: session } = useSession();
+function ProductDetail({ ProductDetail, productReview, session }: any) {
   const { cart, setCart } = useGlobalContext();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [
     openedModalShare,
@@ -63,7 +61,7 @@ function ProductDetail({ ProductDetail, productReview }: any) {
   };
 
   const addProductToLocalStorage = () => {
-    if (ProductDetail && session?.user) {
+    if (ProductDetail && session?.token) {
       const productId = ProductDetail.id;
       const garageId = ProductDetail.garageId;
       // const existingCartItems = JSON.parse(

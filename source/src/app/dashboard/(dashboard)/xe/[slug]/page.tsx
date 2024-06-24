@@ -1,7 +1,7 @@
 import { Box, Space } from "@mantine/core";
 import styles from "../create/index.module.scss";
 import CarForm from "../create/CarForm";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 import Typo from "@/app/components/elements/Typo";
 export default async function CarSavePage({

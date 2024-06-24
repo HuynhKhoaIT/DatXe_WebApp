@@ -95,7 +95,7 @@ export default function SearchForm({
           <>
             {searchData?.[0]?.type === FieldTypes.STRING ? (
               <Input
-                size="lg"
+                size="md"
                 radius={0}
                 w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
                 {...form.getInputProps(searchData?.[0].name)}
@@ -104,8 +104,8 @@ export default function SearchForm({
             ) : searchData?.[0]?.type === FieldTypes.SELECT ? (
               <Select
                 searchable={true}
-                nothingFoundMessage="Không có kết quả..."
-                size="lg"
+                nothingFoundMessage="0 kết quả"
+                size="md"
                 radius={0}
                 w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
                 {...form.getInputProps(searchData?.[0].name)}
@@ -135,7 +135,7 @@ export default function SearchForm({
               if (item?.type === FieldTypes.STRING) {
                 return (
                   <Input
-                    size="lg"
+                    size="md"
                     radius={0}
                     w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
                     key={index}
@@ -147,8 +147,8 @@ export default function SearchForm({
                 return (
                   <Select
                     searchable={true}
-                    nothingFoundMessage="Không có kết quả..."
-                    size="lg"
+                    nothingFoundMessage="0 kết quả"
+                    size="md"
                     radius={0}
                     w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
                     key={index}
@@ -174,8 +174,8 @@ export default function SearchForm({
               <>
                 <Select
                   searchable={true}
-                  nothingFoundMessage="Không có kết quả..."
-                  size="lg"
+                  nothingFoundMessage="0 kết quả"
+                  size="md"
                   radius={0}
                   w={{ base: "100%", sm: "15%", md: "15%", lg: "15%" }}
                   {...form.getInputProps("brandId")}
@@ -191,8 +191,8 @@ export default function SearchForm({
                 />
                 <Select
                   searchable={true}
-                  nothingFoundMessage="Không có kết quả..."
-                  size="lg"
+                  nothingFoundMessage="0 kết quả"
+                  size="md"
                   radius={0}
                   w={{ base: "100%", sm: "15%", md: "15%", lg: "15%" }}
                   {...form.getInputProps("nameId")}
@@ -207,8 +207,8 @@ export default function SearchForm({
                 />
                 <Select
                   searchable={true}
-                  nothingFoundMessage="Không có kết quả..."
-                  size="lg"
+                  nothingFoundMessage="0 kết quả"
+                  size="md"
                   radius={0}
                   w={{ base: "100%", sm: "15%", md: "15%", lg: "15%" }}
                   {...form.getInputProps("yearId")}
@@ -223,21 +223,20 @@ export default function SearchForm({
             {!isMobile && (
               <>
                 <Button
-                  size="lg"
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  radius={0}
+                  size="md"
                   leftSection={<IconSearch size={18} />}
+                  radius={0}
                   type="submit"
+                  color="blue"
                 >
                   Tìm kiếm
                 </Button>
                 <Button
-                  size="lg"
-                  h={{ base: 42, md: 50, lg: 50 }}
+                  size="md"
                   radius={0}
                   leftSection={<IconTrash size={18} />}
                   variant="outline"
-                  color="#f72b50"
+                  color="red"
                   bg="#fee6ea"
                   style={{ border: "0" }}
                   onClick={() => {
@@ -255,8 +254,7 @@ export default function SearchForm({
           <Group justify="space-between" mt={10}>
             <Group>
               <Button
-                size="lg"
-                h={{ base: 42, md: 50, lg: 50 }}
+                size="md"
                 radius={0}
                 leftSection={<IconSearch size={18} />}
                 type="submit"
@@ -264,8 +262,7 @@ export default function SearchForm({
                 Tìm kiếm
               </Button>
               <Button
-                size="lg"
-                h={{ base: 42, md: 50, lg: 50 }}
+                size="md"
                 radius={0}
                 leftSection={<IconTrash size={18} />}
                 variant="outline"
@@ -281,20 +278,12 @@ export default function SearchForm({
               </Button>
             </Group>
             {searchData?.length > 1 ? (
-              <ActionIcon
-                size="lg"
-                h={{ base: 42, md: 50, lg: 50 }}
-                onClick={toggle}
-              >
+              <ActionIcon size="md" onClick={toggle}>
                 {opened ? <IconChevronUp /> : <IconChevronDown />}
               </ActionIcon>
             ) : (
               brandFilter && (
-                <ActionIcon
-                  size="lg"
-                  h={{ base: 42, md: 50, lg: 50 }}
-                  onClick={toggle}
-                >
+                <ActionIcon size="md" onClick={toggle}>
                   {opened ? <IconChevronUp /> : <IconChevronDown />}
                 </ActionIcon>
               )

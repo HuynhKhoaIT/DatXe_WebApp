@@ -30,6 +30,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
       lockScroll={false}
       fullScreen={isMobile}
       radius={isMobile ? 0 : 6}
+      zIndex={999}
       {...props}
     >
       <Box maw={800}>

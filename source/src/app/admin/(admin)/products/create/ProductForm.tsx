@@ -36,12 +36,12 @@ export default function ProductForm({
   isDirection = false,
   isLoading,
   closeModalSync,
+  categoryOptions,
 }: any) {
   const {
     addItem,
     updateItem,
     isLoadingCategory,
-    categoryOptions,
     isSuccessAdd,
   } = useAddProduct();
   const route = useRouter();

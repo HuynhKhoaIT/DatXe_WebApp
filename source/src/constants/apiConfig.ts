@@ -1,3 +1,4 @@
+import { CHECK_PHONE_NUMBER } from "@/utils/constants/endpoints";
 import { apiUrl } from ".";
 
 const baseHeader = {
@@ -9,6 +10,55 @@ const multipartFormHeader = {
 };
 
 const apiConfig = {
+  account: {
+    login: {
+      baseURL: `https://v2.dlbd.vn/api/login`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    getProfile: {
+      baseURL: `${apiUrl}api/client/account`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    updateProfile: {
+      baseURL: `${apiUrl}v1/account/update_admin`,
+      method: "PUT",
+      headers: baseHeader,
+    },
+    getAccount: {
+      baseURL: `${apiUrl}api/client/account`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    update: {
+      baseURL: `${apiUrl}api/client/account`,
+      method: "PUT",
+      headers: baseHeader,
+    },
+  },
+  user: {
+    CheckPhone: {
+      baseURL: `${CHECK_PHONE_NUMBER}/:phone`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    CheckOtp: {
+      baseURL: `${apiUrl}api/sms/check-otp`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    GenOTP: {
+      baseURL: `${apiUrl}api/sms/send-otp`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    register: {
+      baseURL: `${apiUrl}api/user/register`,
+      method: "POST",
+      headers: baseHeader,
+    },
+  },
   file: {
     upload: {
       baseURL: `${apiUrl}api/upload`,
@@ -109,18 +159,7 @@ const apiConfig = {
       headers: baseHeader,
     },
   },
-  account: {
-    getAccount: {
-      baseURL: `${apiUrl}api/client/account`,
-      method: "GET",
-      headers: baseHeader,
-    },
-    update: {
-      baseURL: `${apiUrl}api/client/account`,
-      method: "PUT",
-      headers: baseHeader,
-    },
-  },
+
   amentity: {
     getList: {
       baseURL: `${apiUrl}api/admin/amentity`,
@@ -221,6 +260,165 @@ const apiConfig = {
       baseURL: `${apiUrl}api/notification/:id`,
       method: "GET",
       headers: baseHeader,
+    },
+  },
+  admin: {
+    ttdk: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/booking-ttdk`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/booking-ttdk/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/booking-ttdk/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+    },
+    products: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/products`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/products/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/products`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/products/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/products/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+    },
+    car: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/car`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      autoComplete: {
+        baseURL: `${apiUrl}api/admin/car/get-by-plates`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/car/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/car`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/car/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/car/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+    },
+    posts: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/posts`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/posts/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/posts`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/posts/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/posts/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+    },
+    productCategory: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/product-category`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/product-category/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/product-category`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/product-category/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/product-category/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+    },
+    customer: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/customer`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/customer/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/customer`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/customer/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/customer/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
     },
   },
 };

@@ -2,17 +2,12 @@
 import { Button, TextInput } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 import { toast } from "react-toastify";
 import { IconPhone, IconUser } from "@tabler/icons-react";
-interface FormInputs {
-  name: string;
-  phone: string;
-}
-export function FormRegister() {
-  const [opened, handlers] = useDisclosure(false);
 
+export function FormRegister({ sendOtp, checkPhone }: any) {
+  const [opened, handlers] = useDisclosure(false);
   const router = useRouter();
   const form = useForm({
     initialValues: {
@@ -29,11 +24,10 @@ export function FormRegister() {
   const onSubmit = async () => {
     handlers.open();
     const { name, phone } = form.values;
-    const res = await CheckPhone(phone);
-    if (!res) {
-      const genRs = await GenOTP(phone);
-      if (genRs.CodeResult == 100) {
-        // if (100 == 100) {
+    const res = await checkPhone({ phone });
+    if (!res?.data) {
+      const result = await sendOtp({ phone });
+      if (result?.data?.CodeResult == "100") {
         router.push(`./dang-ky/xac-thuc?name=${name}&phone=${phone}`);
       } else {
         toast.error("Hệ thống gửi OTP thất bại, vui lòng thử lại sau!");
@@ -41,7 +35,6 @@ export function FormRegister() {
       handlers.close();
     } else {
       toast.error("Số điện thoại đã được đăng ký!");
-
       handlers.close();
       form.setErrors({ phone: "Số điện thoại đã được đăng ký!" });
     }
@@ -77,7 +70,7 @@ export function FormRegister() {
         type="submit"
         loading={opened}
       >
-        Tiếp tục
+        Đăng ký
       </Button>
     </form>
   );

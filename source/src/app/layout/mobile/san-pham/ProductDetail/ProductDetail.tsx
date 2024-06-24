@@ -1,7 +1,7 @@
 "use client";
 import { IProduct } from "@/interfaces/product";
 import React, { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import {
   Grid,
   Modal,
@@ -30,8 +30,7 @@ const DynamicModalShare = dynamic(
     ssr: false,
   }
 );
-function ProductDetail({ ProductDetail, productReview }: any) {
-  const { data: session } = useSession();
+function ProductDetail({ ProductDetail, productReview, session }: any) {
   const { cart, setCart } = useGlobalContext();
 
   const [

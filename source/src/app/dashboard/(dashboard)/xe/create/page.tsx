@@ -2,7 +2,7 @@ import CarForm from "./CarForm";
 import { Box, Space } from "@mantine/core";
 import Typo from "@/app/components/elements/Typo";
 import styles from "./index.module.scss";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 export default async function CreateCar() {
   async function handleCreate(formData: any) {

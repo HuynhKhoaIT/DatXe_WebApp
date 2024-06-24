@@ -25,4 +25,15 @@ async function callApi(options: any, payload: any) {
     return;
   }
 }
-export { callApi };
+async function callApiNotToken(options: any, payload: any) {
+  let token;
+  try {
+    const item: any = await sendRequest(options, payload, token);
+    return item.data;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
+}
+
+export { callApi, callApiNotToken };

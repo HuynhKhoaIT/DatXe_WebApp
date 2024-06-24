@@ -10,6 +10,8 @@ import dynamic from "next/dynamic";
 import { useDisclosure } from "@mantine/hooks";
 import ImageDefult from "@/assets/images/carService.jpeg";
 import { useAmenitites } from "../../(admin)/hooks/amentity/useAmentity";
+import ImageField from "@/app/components/form/ImageField";
+import { AppConstants } from "@/constants";
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
@@ -52,12 +54,11 @@ export default function amentityListPage() {
       width: "90px",
       render: (data: any) => {
         return (
-          <Image
+          <ImageField
             radius="md "
             h={40}
             w={80}
-            fit="contain"
-            src={data || ImageDefult.src}
+            src={data && `${AppConstants.contentRootUrl}${data}`}
           />
         );
       },
