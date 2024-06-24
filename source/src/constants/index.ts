@@ -1,6 +1,8 @@
 import BookingTTDK from "@/app/admin/(admin)/booking-ttdk/page";
 
 export const apiUrl = process.env.REACT_APP_API;
+export const apiGuest = process.env.apiGuest;
+
 export const envGoogleMapAPIKey = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
 export const DEFAULT_SIZE_LIMIT = 12;
 export const DEFAULT_SIZE_LIMIT_20 = 20;

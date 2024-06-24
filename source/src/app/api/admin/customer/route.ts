@@ -4,12 +4,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { generateUUID } from "@/utils/until";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+    const auth = await checkAuthToken(request);
+    if (auth) {
+      let garageId = auth?.garageId;
       const { searchParams } = new URL(request.url);
       let customerGroup: any = 0;
       if (searchParams.get("customerGroup")) {
@@ -52,13 +53,11 @@ interface formData {
   status: any;
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
       const json: formData = await request.json();
       const checkCustomer = await prisma.customer.findFirst({
         where: {

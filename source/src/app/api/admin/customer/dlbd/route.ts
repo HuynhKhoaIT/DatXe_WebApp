@@ -1,12 +1,12 @@
 import { getCustomersFromDLBD } from "@/utils/customers";
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      const customers = await getCustomersFromDLBD(session?.user?.token);
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      const customers = await getCustomersFromDLBD(getAuth?.token);
       return NextResponse.json(customers);
     }
     throw new Error("Chua dang nhap");

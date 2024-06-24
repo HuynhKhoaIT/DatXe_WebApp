@@ -7,11 +7,11 @@ import Link from "next/link";
 import TableBasic from "@/app/components/table/Tablebasic";
 import dynamic from "next/dynamic";
 import { FieldTypes, sexOptions, statusOptions } from "@/constants/masterData";
-import SearchForm from "@/app/components/form/SearchForm";
 import dayjs from "dayjs";
 import ListPage from "@/app/components/layout/ListPage";
 import styles from "./index.module.scss";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const DynamicModalDeleteItem = dynamic(
   () => import("@/app/admin/_component/ModalDeleteItem"),
@@ -20,22 +20,23 @@ const DynamicModalDeleteItem = dynamic(
   }
 );
 
-export default function CustomerListPage({
+export default function TableListPage({
   customers,
   customersDlbd,
-  activeTab,
-  setActiveTab,
-  page,
-  setPage,
-  isLoading,
-  isLoadingDlbd,
   deleteItem,
 }: any) {
-
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState("first");
   const [deleteRow, setDeleteRow] = useState();
-  const handleDeleteItem = (id: string) => {
-    deleteItem(id);
+
+  const handleDeleteItem = async (id: string) => {
+    const res = await deleteItem(id);
+    if (res.data) {
+      toast.success("Xoá thành công");
+      router.refresh();
+    } else {
+      toast.error("Xoá thất bại");
+    }
   };
 
   const [
@@ -143,21 +144,21 @@ export default function CustomerListPage({
         return (
           <>
             <Tooltip label="Xe" withArrow position="bottom">
-                <Button
-                  size="lg"
-                  radius={0}
-                  style={{ margin: "0 5px" }}
-                  variant="transparent"
-                  color="gray"
-                  p={5}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(`/admin/customers/cars?customerId=${record.id}`)
-                  }}
-                >
-                  <IconCar size={16} />
-                </Button>
-              </Tooltip>
+              <Button
+                size="lg"
+                radius={0}
+                style={{ margin: "0 5px" }}
+                variant="transparent"
+                color="gray"
+                p={5}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  router.push(`/admin/customers/cars?customerId=${record.id}`);
+                }}
+              >
+                <IconCar size={16} />
+              </Button>
+            </Tooltip>
             <Link
               href={{
                 pathname: `/admin/customers/${record.id}`,
@@ -200,44 +201,8 @@ export default function CustomerListPage({
     },
   ];
 
-  const searchData = [
-    {
-      name: "s",
-      placeholder: "Tên",
-      type: FieldTypes.STRING,
-    },
-    {
-      name: "phoneNumber",
-      placeholder: "Số điện thoại",
-      type: FieldTypes.STRING,
-    },
-  ];
-  const initialValuesSearch = {
-    s: "",
-    phoneNumber: "",
-  };
-
   return (
     <div>
-      <SearchForm searchData={searchData} initialValues={initialValuesSearch} />
-      <div style={{ marginBottom: 20 }}>
-        <Flex justify={"end"} align={"center"} gap={20}>
-          <Link
-            href={{
-              pathname: `/admin/customers/create`,
-            }}
-          >
-            <Button
-              size="lg"
-              h={{ base: 42, md: 50, lg: 50 }}
-              radius={0}
-              leftSection={<IconPlus size={18} />}
-            >
-              Thêm mới
-            </Button>
-          </Link>
-        </Flex>
-      </div>
       <div style={{ background: "#fff", position: "relative" }}>
         <div>
           <Tabs variant="pills" value={activeTab} onChange={setActiveTab}>
@@ -264,10 +229,7 @@ export default function CustomerListPage({
                   <TableBasic
                     data={customers?.data}
                     columns={columns}
-                    loading={isLoading}
                     totalPage={customers?.totalPage}
-                    setPage={setPage}
-                    activePage={page}
                     onRow={`/admin/customers`}
                   />
                 }
@@ -280,8 +242,6 @@ export default function CustomerListPage({
                   <TableBasic
                     data={customersDlbd?.data}
                     columns={columns}
-                    loading={isLoadingDlbd}
-
                     // totalPage={marketing?.totalPage}
                     // setPage={setPage}
                     // activePage={page}
@@ -292,7 +252,6 @@ export default function CustomerListPage({
           </Tabs>
         </div>
       </div>
-
       <DynamicModalDeleteItem
         openedDeleteItem={openedDeleteItem}
         closeDeleteItem={closeDeleteItem}
