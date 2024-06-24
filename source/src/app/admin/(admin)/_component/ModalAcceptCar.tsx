@@ -1,3 +1,4 @@
+"use client";
 import Typo from "@/app/components/elements/Typo";
 import { AutocompleteClearable } from "@/app/components/form/AutoCompleteClear";
 import {

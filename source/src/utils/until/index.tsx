@@ -111,8 +111,6 @@ export function convertToPlatesNumber(str: string) {
 export async function getOptionsBrands() {
   try {
     const res = await axios.get(`/api/car-model`);
-
-    console.log("resres", res);
     const dataOption = res?.data?.data.map((item: any) => ({
       value: item.id.toString(),
       label: item.title,

@@ -9,6 +9,8 @@ import dayjs from "dayjs";
 import FooterSavePage from "../../../_component/FooterSavePage";
 import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
 import { useDisclosure } from "@mantine/hooks";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 export default function CustomersForm({
   isEditing,
   dataDetail,
@@ -17,7 +19,8 @@ export default function CustomersForm({
   createItem,
   provinceOptions,
 }: any) {
-  const [loading, { toggle: toggeleLoading }] = useDisclosure(false);
+  const router = useRouter();
+  const [loadingTable, handlers] = useDisclosure(false);
   const [province, setProvince] = useState<any>();
   const [district, setDistrict] = useState<any>();
   const [ward, setWard] = useState<any>();
@@ -46,11 +49,28 @@ export default function CustomersForm({
   });
 
   const handleSubmit = async (values: any) => {
+    handlers.open();
     if (isEditing) {
       const res = await updateItem(values);
+      if (res) {
+        toast.success("Cập nhật thành công");
+        router.back();
+        router.refresh();
+      } else {
+        toast.error("Cập nhật thất bại");
+      }
     } else {
       const res = await createItem(values);
+      console.log(res);
+      if (res) {
+        toast.success("Thêm thành công");
+        router.back();
+        router.refresh();
+      } else {
+        toast.error("Thêm thất bại");
+      }
     }
+    handlers.close();
   };
 
   const [districtOptions, setDistrictOptions] = useState<any>([]);
@@ -243,12 +263,12 @@ export default function CustomersForm({
       </Grid>
       {!isPreview ? (
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={loadingTable}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         />
       ) : (
         <FooterSavePage
-          saveLoading={loading}
+          saveLoading={loadingTable}
           isOk={false}
           cancelText="Quay lại"
         />

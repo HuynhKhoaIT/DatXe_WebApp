@@ -14,20 +14,6 @@ const breadcrumbs = [
 ];
 
 export default async function Customers({ searchParams }: any) {
-  // const {
-  //   customers,
-  //   isLoading,
-  //   isLoadingDlbd,
-  //   isFetching,
-  //   error,
-  //   page,
-  //   setPage,
-  //   deleteItem,
-  //   customersDlbd,
-  //   activeTab,
-  //   setActiveTab,
-  // } = useCustomers();
-
   const customers = await callApi(apiConfig.admin.customer.getList, {
     params: searchParams,
   });
