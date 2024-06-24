@@ -1,20 +1,14 @@
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
+import { NextRequest, NextResponse } from "next/server";
 import { reportTrafictDashboard } from "@/app/libs/prisma/order";
 import dayjs from "dayjs";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const { searchParams } = new URL(request.url);
-      const garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
-      // return NextResponse.json({ garageId: garageId });
+      const garageId = getAuth?.garageId;
       const rs = await reportTrafictDashboard(
         searchParams.get("dateStart")
           ? dayjs(searchParams.get("dateStart")).endOf("day").toString()

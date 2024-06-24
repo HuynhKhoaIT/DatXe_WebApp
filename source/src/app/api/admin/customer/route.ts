@@ -59,6 +59,7 @@ export async function POST(request: NextRequest) {
     if (getAuth) {
       let garageId = getAuth?.garageId;
       const json: formData = await request.json();
+
       const checkCustomer = await prisma.customer.findFirst({
         where: {
           phoneNumber: json.phoneNumber,
@@ -68,6 +69,7 @@ export async function POST(request: NextRequest) {
           },
         },
       });
+
       // return NextResponse.json(checkCustomer)
       if (!checkCustomer) {
         const customer = await prisma.customer.create({
@@ -84,7 +86,7 @@ export async function POST(request: NextRequest) {
             sex: json.sex,
             garageId: garageId.toString(),
             status: json.status,
-            userId: session.user?.id.toString() ?? "1",
+            userId: getAuth?.id.toString() ?? "1",
           },
           include: {
             cars: true,

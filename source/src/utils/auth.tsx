@@ -11,10 +11,8 @@ export async function checkAuthToken(request: NextRequest) {
     return;
   }
   const token = BearerToken?.split(" ")[1];
-  console.log("token", token);
-
   const user = await getUser(token);
-  return user;
+  return { ...user, token };
 }
 
 async function getUser(token: string) {
@@ -27,8 +25,8 @@ async function getUser(token: string) {
   if (await us) {
     return await prisma.user.findFirst({
       where: {
-        id: res.data.data.id.toString()
-      }
+        id: res.data.data.id.toString(),
+      },
     });
   }
   return;

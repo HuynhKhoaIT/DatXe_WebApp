@@ -31,7 +31,7 @@ export default function TableListPage({
 
   const handleDeleteItem = async (id: string) => {
     const res = await deleteItem(id);
-    if (res.data) {
+    if (res) {
       toast.success("Xoá thành công");
       router.refresh();
     } else {
