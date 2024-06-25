@@ -14,7 +14,7 @@ import { useForm } from "@mantine/form";
 import { IconPrinter, IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { OptionsCancelOrder, stepOrderOptions } from "@/constants/masterData";
 import dynamic from "next/dynamic";
@@ -37,19 +37,25 @@ import {
   ORDER_DONE,
   ORDER_PENDING,
 } from "@/constants";
+import { toast } from "react-toastify";
 
 export default function OrderForm({
   isEditing = false,
   dataDetail,
-  isLoading,
+  createItem,
+  updateItem,
+  updateStep,
+  brandOptions,
+  dbDLBD,
+  session,
 }: any) {
-  const { data } = useSession();
+  const router = useRouter();
   var {
     data: orderDlbd,
     isLoading: isLoadingOrderDLBD,
     isPending: isPendingOrderDLBD,
   } = useOrderDLBD({
-    token: data?.user?.token,
+    token: session?.user?.token,
     id: dataDetail?.orderDLBDId,
   });
 
@@ -57,17 +63,17 @@ export default function OrderForm({
   const licenseNumber = searchParams.get("numberPlate");
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
-  const {
-    addItem,
-    updateItem,
-    updateStep,
-    brandOptions,
-    isPendingUpdate,
-    isPendingAdd,
-    isPendingUpdateStep,
-    dbDLBD,
-    isPendingDlbd,
-  } = useAddOrder({ isBack: true });
+  // const {
+  //   addItem,
+  //   updateItem,
+  //   updateStep,
+  //   brandOptions,
+  //   isPendingUpdate,
+  //   isPendingAdd,
+  //   isPendingUpdateStep,
+  //   dbDLBD,
+  //   isPendingDlbd,
+  // } = useAddOrder({ isBack: true });
 
   const [activeTab, setActiveTab] = useState<string | null>(
     !isEditing ? "numberPlates" : "customer"
@@ -77,6 +83,8 @@ export default function OrderForm({
   const [errorPlate, handlersPlate] = useDisclosure();
   const [loading, handlers] = useDisclosure();
   const [loadingButton, handlersButton] = useDisclosure();
+  const [loadingSave, handlersSave] = useDisclosure();
+
   const [selectedProducts, setSelectedProducts] = useState<any>(
     dataDetail
       ? dataDetail?.orderDetails?.map((item: any) => ({
@@ -262,15 +270,21 @@ export default function OrderForm({
 
   // submit form
   const handleSubmit = async (values: any) => {
+    handlersSave.open();
     values.subTotal = calculateSubTotal();
     values.total = calculateSubTotal();
     values.dateTime = new Date();
     handlersButton.open();
     if (isEditing) {
-      updateItem(values);
+      await updateItem(values);
+      toast.success("Cập nhật thành công");
     } else {
-      addItem(values);
+      await createItem(values);
+      toast.success("Thêm thành công");
     }
+    router.back();
+    router.refresh();
+    handlersSave.close();
   };
 
   const [customer, setCustomer] = useState({});
@@ -479,7 +493,8 @@ export default function OrderForm({
       confirmProps: { color: "blue" },
       withCloseButton: false,
       labels: { confirm: "Có", cancel: "Không" },
-      onConfirm: () => updateStep({ step: step, id: dataDetail?.id }),
+      onConfirm: async () =>
+        await updateStep({ step: step, id: dataDetail?.id }),
     });
   };
 
@@ -554,12 +569,6 @@ export default function OrderForm({
           In
         </Button>
       </Group>
-      <LoadingOverlay
-        visible={isLoading}
-        zIndex={99}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
-
       <form onSubmit={form.onSubmit(handleSubmit)} onKeyPress={handleKeyPress}>
         {isMobile ? (
           <OrderFormMobile
@@ -593,10 +602,10 @@ export default function OrderForm({
             calculateSubTotal={calculateSubTotal}
             HandleCancelOrder={HandleCancelOrder}
             UpdateConfirm={UpdateConfirm}
-            isPendingUpdate={isPendingUpdate}
-            isPendingAdd={isPendingAdd}
+            // isPendingUpdate={isPendingUpdate}
+            // isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
-            isPendingDlbd={isPendingDlbd}
+            // isPendingDlbd={isPendingDlbd}
           />
         ) : (
           <OrderFormDesktop
@@ -622,12 +631,12 @@ export default function OrderForm({
             setActiveTab={setActiveTab}
             HandleCancelOrder={HandleCancelOrder}
             UpdateConfirm={UpdateConfirm}
-            isPendingUpdate={isPendingUpdate}
-            isPendingAdd={isPendingAdd}
-            loadingButton={loadingButton}
+            isPendingUpdate={loadingSave}
+            isPendingAdd={loadingSave}
+            loadingButton={loadingSave}
             handleDbDLBD={handleDbDLBD}
             columns={columns}
-            isPendingDlbd={isPendingDlbd}
+            // isPendingDlbd={isPendingDlbd}
           />
         )}
       </form>
