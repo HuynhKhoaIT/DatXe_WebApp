@@ -118,6 +118,8 @@ export default function ModalNumberPlates({
             onClick={() => {
               router.back();
             }}
+            color="red"
+            variant="outline"
           >
             Huỷ bỏ
           </Button>
@@ -126,6 +128,7 @@ export default function ModalNumberPlates({
               handleGetInfo(numberPlate);
               close();
             }}
+            color="blue"
             disabled={numberPlate?.length < 3}
           >
             Tiếp tục

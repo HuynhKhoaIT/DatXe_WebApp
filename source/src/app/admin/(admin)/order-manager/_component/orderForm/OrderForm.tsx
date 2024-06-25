@@ -332,7 +332,11 @@ const Footer = ({
                   />
                 </FooterSavePage>
               ) : (
-                <FooterSavePage okText={"Cập nhật"} isCancel={false}>
+                <FooterSavePage
+                  saveLoading={loadingButton}
+                  okText={"Cập nhật"}
+                  isCancel={false}
+                >
                   <ButtonDbDLBD
                     isPendingDlbd={isPendingDlbd}
                     handleDbDLBD={handleDbDLBD}
@@ -353,6 +357,7 @@ const Footer = ({
                   <Button
                     size="lg"
                     radius={0}
+                    loading={loadingButton}
                     h={{ base: 42, md: 50, lg: 50 }}
                     // loading={saveLoading}
                     color="green"

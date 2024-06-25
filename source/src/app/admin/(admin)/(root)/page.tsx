@@ -1,19 +1,22 @@
 import styles from "./index.module.scss";
 import MenuTop from "./_component/MenuTop";
 import InfoDashboard from "./_component/InfoDashboard";
-import { callApi, getSession } from "@/lib/auth";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 import ChartDashboard from "./_component/ChartDashboard";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import { ORDER_ACCEPT, ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import { Suspense } from "react";
+import { Alert } from "@mantine/core";
+import { IconInfoCircle } from "@tabler/icons-react";
 export default async function DashboardAdmin({ searchParams }: any) {
-  const session = await getSession();
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
   );
 
-  // const { myGarage } = useMyGarage();
+  const myGarage = await callApi(apiConfig.admin.garage.myGarage, {});
+
   const ordersAdmin = await callApi(apiConfig.admin.order.dashboard, {
     params: searchParams,
   });
@@ -42,7 +45,7 @@ export default async function DashboardAdmin({ searchParams }: any) {
 
   return (
     <div className={styles.main}>
-      {/* {myGarage?.status === "PENDING" && (
+      {myGarage?.status === "PUBLIC" && (
         <Alert
           variant="light"
           title="Xác minh"
@@ -62,13 +65,15 @@ export default async function DashboardAdmin({ searchParams }: any) {
         >
           Chuyên gia đã bị xoá, hãy liên hệ với admin tổng.
         </Alert>
-      )} */}
+      )}
       <MenuTop />
-      <InfoDashboard
-        firstDayOfMonth={firstDayOfMonth}
-        lastDayOfMonth={lastDayOfMonth}
-        newArray={newArray}
-      />
+      <Suspense fallback={<>loading...</>}>
+        <InfoDashboard
+          firstDayOfMonth={firstDayOfMonth}
+          lastDayOfMonth={lastDayOfMonth}
+          newArray={newArray}
+        />
+      </Suspense>
 
       {isMobile && (
         <div className={styles.card_3}>
@@ -104,7 +109,9 @@ export default async function DashboardAdmin({ searchParams }: any) {
           </div>
         </div>
       )}
-      <ChartDashboard newArray={newArray} />
+      <Suspense fallback={<>loading...</>}>
+        <ChartDashboard newArray={newArray} />
+      </Suspense>
 
       {/* {openedModal && (
         <DynamicModalAcceptCart openModal={openedModal} close={closeModal} />

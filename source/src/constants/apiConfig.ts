@@ -458,6 +458,11 @@ const apiConfig = {
         method: "PUT",
         headers: baseHeader,
       },
+      updateStep: {
+        baseURL: `${apiUrl}api/admin/orders/step`,
+        method: "POST",
+        headers: baseHeader,
+      },
       delete: {
         baseURL: `${apiUrl}api/admin/orders/:id`,
         method: "DELETE",
@@ -465,6 +470,38 @@ const apiConfig = {
       },
       dashboard: {
         baseURL: `${apiUrl}api/admin/orders/dashboard`,
+        method: "GET",
+        headers: baseHeader,
+      },
+    },
+    garage: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/garage`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/garage/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/garage`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/garage/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/garage/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+      myGarage: {
+        baseURL: `${apiUrl}api/admin/garage/my-garage`,
         method: "GET",
         headers: baseHeader,
       },
