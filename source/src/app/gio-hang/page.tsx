@@ -9,10 +9,10 @@ export default async function Cart() {
       data: formData,
     });
   }
-  const { user }: any = await getSession();
+  const session = await getSession();
   return (
     <CartDetailPage
-      myAccount={user}
+      myAccount={session?.user || {}}
       carsData={carsData?.data}
       handleAdd={handleAdd}
     />

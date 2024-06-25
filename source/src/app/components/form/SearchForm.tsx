@@ -70,6 +70,8 @@ export default function SearchForm({
     if (values?.yearId) {
       values.brand = values?.yearId;
     }
+
+    console.log(values);
     const queryString = Object.keys(values)
       .filter((key) => values[key] !== null)
       .map(
@@ -162,6 +164,7 @@ export default function SearchForm({
                   <AutocompleteClearable
                     getOptionData={item.getOptionsData}
                     form={form}
+                    key={index}
                     name={item.name}
                     w={{ base: "100%", sm: "25%", md: "25%", lg: "25%" }}
                     placeholder={item.placeholder}
