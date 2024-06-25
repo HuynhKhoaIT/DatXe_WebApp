@@ -42,7 +42,13 @@ export default async function ProductSavePage({
     value: item.id.toString(),
     label: item.title,
   }));
-
+  async function handleUpdateCustomer(formData: any) {
+    "use server";
+    await callApi(apiConfig.admin.customer.update, {
+      pathParams: { id: formData?.customerId },
+      data: formData,
+    });
+  }
   return (
     <OrderForm
       isEditing={true}
@@ -52,6 +58,7 @@ export default async function ProductSavePage({
       dbDLBD={handleDbDLBD}
       brandOptions={brandOptions}
       session={session}
+      updateCustomer={handleUpdateCustomer}
     />
   );
 }

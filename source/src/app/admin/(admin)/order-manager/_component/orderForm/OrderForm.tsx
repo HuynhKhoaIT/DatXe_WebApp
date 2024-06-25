@@ -60,6 +60,7 @@ export default function OrderFormDesktop({
   isPendingDlbd,
   columns,
   user,
+  updateCustomer,
 }: any) {
   return (
     <div className="printable">

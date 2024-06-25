@@ -404,6 +404,11 @@ const apiConfig = {
         method: "GET",
         headers: baseHeader,
       },
+      autoComplete: {
+        baseURL: `${apiUrl}api/admin/customer/autocomplete`,
+        method: "GET",
+        headers: baseHeader,
+      },
       getListDlbd: {
         baseURL: `${apiUrl}api/admin/customer/dlbd`,
         method: "GET",
