@@ -1,11 +1,8 @@
 import prisma from "@/app/libs/prismadb";
-import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import { findOrder, updateOrder } from "@/app/libs/prisma/order";
-import { sendSMSOrder } from "@/utils/order";
 import { sendNotificationOrderUntil } from "@/utils/notification";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -17,8 +14,8 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const order = await findOrder(id, request);
       return NextResponse.json(order);
     }
@@ -33,19 +30,19 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const id = params.id;
       let createdBy = 1;
-      let garageId = 1;
+      let garageId = getAuth.garageId;
       if (!id) {
         return new NextResponse("Missing 'id' parameter");
       }
       const json = await request.json();
 
-      if (session?.user?.id) {
-        createdBy = Number(session.user.id);
-        garageId = Number(session.user.garageId);
+      if (getAuth?.id) {
+        createdBy = Number(getAuth.id);
+        garageId = getAuth.garageId;
       }
       const updatedOrder = await updateOrder(id, json);
       const fbToken = await sendNotificationOrderUntil(updatedOrder.order);

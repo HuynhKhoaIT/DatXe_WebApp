@@ -1,15 +1,13 @@
 import { getFinanceIncome } from "@/app/libs/prisma/financeIncome";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 import dayjs from "dayjs";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
-      // let garageId = 'f49c85ff-f4b2-4b35-a475-c55fcd7dc105';
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
       const { searchParams } = new URL(request.url);
       const requestData = {
         garageId: garageId,

@@ -23,9 +23,9 @@ export async function GET(request: NextRequest) {
         garageId: garageId.toString(),
         status: "PUBLIC",
       };
-      const cars = await getPosts(requestData);
+      const posts = await getPosts(requestData);
 
-      return NextResponse.json(cars);
+      return NextResponse.json(posts);
     } else {
       throw new Error("Chua dang nhap");
     }

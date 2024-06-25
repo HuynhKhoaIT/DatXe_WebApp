@@ -279,6 +279,11 @@ const apiConfig = {
         method: "GET",
         headers: baseHeader,
       },
+      udpate: {
+        baseURL: `${apiUrl}api/admin/booking-ttdk/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
     },
     products: {
       getList: {
@@ -422,6 +427,82 @@ const apiConfig = {
       delete: {
         baseURL: `${apiUrl}api/admin/customer/:id`,
         method: "DELETE",
+        headers: baseHeader,
+      },
+    },
+    finance: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/finance/income`,
+        method: "GET",
+        headers: baseHeader,
+      },
+    },
+    order: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/orders`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/orders/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/orders`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/orders/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      updateStep: {
+        baseURL: `${apiUrl}api/admin/orders/step`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/orders/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+      dashboard: {
+        baseURL: `${apiUrl}api/admin/orders/dashboard`,
+        method: "GET",
+        headers: baseHeader,
+      },
+    },
+    garage: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/garage`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/garage/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/garage`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/garage/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/garage/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+      myGarage: {
+        baseURL: `${apiUrl}api/admin/garage/my-garage`,
+        method: "GET",
         headers: baseHeader,
       },
     },

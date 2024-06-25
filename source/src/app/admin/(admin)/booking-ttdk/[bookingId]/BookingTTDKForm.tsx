@@ -9,19 +9,17 @@ import {
   Textarea,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useAddBookingTTDK } from "../../hooks/bookingTTDK/useAddBookingTTDK";
 import { useEffect } from "react";
 import DateField from "@/app/components/form/DateField";
 import dayjs from "dayjs";
-import { useSession } from "next-auth/react";
 import { TimeInput } from "@mantine/dates";
 
-export default function BookingForm({ dataDetail, isLoading, isEditing }: any) {
-  const { data } = useSession();
-  const { updateItem, isPendingUpdate } = useAddBookingTTDK({
-    token: data?.user?.token,
-  });
-
+export default function BookingForm({
+  dataDetail,
+  isLoading,
+  isEditing,
+  updateItem,
+}: any) {
   const form = useForm({
     initialValues: {},
     validate: {},
@@ -47,7 +45,7 @@ export default function BookingForm({ dataDetail, isLoading, isEditing }: any) {
   }, [dataDetail]);
   const handleSubmit = async (values: any) => {
     if (isEditing) {
-      updateItem(values);
+      await updateItem(values);
     }
   };
   return (
@@ -136,10 +134,7 @@ export default function BookingForm({ dataDetail, isLoading, isEditing }: any) {
             </Grid.Col>
           </Grid>
         </Card>
-        <FooterSavePage
-          saveLoading={isPendingUpdate}
-          okText={isEditing ? "Cập nhật" : "Thêm"}
-        />
+        <FooterSavePage okText={isEditing ? "Cập nhật" : "Thêm"} />
       </form>
     </Box>
   );

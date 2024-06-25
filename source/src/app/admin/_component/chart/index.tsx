@@ -65,10 +65,10 @@ export default function Chart({
   };
 
   useEffect(() => {
-    if (arrayDate && data) {
+    if (data && arrayDate) {
       setDataChart(getDataChart(data));
     }
-  }, [data]);
+  }, [data, arrayDate]);
 
   const handleSubmit = async (formattedDates: any) => {
     router.push(

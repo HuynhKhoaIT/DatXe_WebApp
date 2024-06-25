@@ -7,6 +7,7 @@ export async function GET(request: NextRequest) {
     const getAuth = await checkAuthToken(request);
     if (getAuth) {
       const customers = await getCustomersFromDLBD(getAuth?.token);
+
       return NextResponse.json(customers);
     }
     throw new Error("Chua dang nhap");
