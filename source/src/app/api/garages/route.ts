@@ -17,6 +17,9 @@ export async function GET(request: NextRequest) {
             }
             const requestData = {
                 s: searchParams.get('s'),
+                provinceId: searchParams.get('provinceId'),
+                wardId: searchParams.get('wardId'),
+                districtId: searchParams.get('districtId'),
                 take: limit,
                 page: page,
                 status: 'PUBLIC',
