@@ -20,13 +20,14 @@ export default async function OrdersManaga({ searchParams }: any) {
     params: searchParams,
   });
 
-  async function handleDeleteItem(id: string) {
+  async function handleDeleteItem(formData: FormData) {
     "use server";
-    await callApi(apiConfig.admin.order.delete, {
+    const res = await callApi(apiConfig.admin.order.delete, {
       pathParams: {
-        id,
+        id: formData,
       },
     });
+    return res;
   }
   async function getOptionsCar(formData: FormData) {
     "use server";
