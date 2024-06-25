@@ -30,6 +30,19 @@ export async function getGarages(requestData: any) {
       s = requestData.s;
     }
 
+    let provinceId = {}
+    if(requestData.provinceId){
+      provinceId = Number(requestData.provinceId);
+    }
+    let districtId = {}
+    if(requestData.districtId){
+      districtId = Number(requestData.districtId);
+    }
+    let wardId = {}
+    if(requestData.wardId){
+      wardId = Number(requestData.wardId);
+    }
+
     let include:any = {
       amenities: false
     };
@@ -56,28 +69,40 @@ export async function getGarages(requestData: any) {
           routeId: garageId ? Number(garageId) : {},
           name: {
             contains: s
-          }
+          },
+          provinceId,
+          districtId,
+          wardId,
         },
         {
           status,
           routeId: garageId ? Number(garageId) : {},
           phoneNumber: {
             contains: s
-          }
+          },
+          provinceId,
+          districtId,
+          wardId,
         },
         {
           status,
           routeId: garageId ? Number(garageId) : {},
           code: {
             contains: s
-          }
+          },
+          provinceId,
+          districtId,
+          wardId,
         },
         {
           status,
           routeId: garageId ? Number(garageId) : {},
           shortName: {
             contains: s
-          }
+          },
+          provinceId,
+          districtId,
+          wardId,
         },
       ],
     };

@@ -54,7 +54,7 @@ export async function getOrders(garage: string, requestData: any) {
     if (requestData.carId) {
       carId = requestData.carId;
     }
-    let phoneNumber = "";
+    let phoneNumber = {};
     if (requestData.phoneNumber) {
       phoneNumber = requestData.phoneNumber;
     }
