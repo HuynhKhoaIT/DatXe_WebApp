@@ -493,8 +493,12 @@ export default function OrderForm({
       confirmProps: { color: "blue" },
       withCloseButton: false,
       labels: { confirm: "Có", cancel: "Không" },
-      onConfirm: async () =>
-        await updateStep({ step: step, id: dataDetail?.id }),
+      onConfirm: async () => {
+        await updateStep({ step: step, id: dataDetail?.id });
+        toast.success("Cập nhật thành công");
+        router.back();
+        router.refresh();
+      },
     });
   };
 
@@ -552,10 +556,12 @@ export default function OrderForm({
     }
   }, [licenseNumber]);
 
-  const handleDbDLBD = () => {
-    dbDLBD({
+  const handleDbDLBD = async () => {
+    await dbDLBD({
       id: dataDetail?.id,
     });
+    router.back();
+    router.refresh();
   };
   return (
     <Box pos="relative">
@@ -572,6 +578,7 @@ export default function OrderForm({
       <form onSubmit={form.onSubmit(handleSubmit)} onKeyPress={handleKeyPress}>
         {isMobile ? (
           <OrderFormMobile
+            user={session.user}
             activeTab={activeTab}
             form={form}
             handlersPlate={handlersPlate}
@@ -636,6 +643,7 @@ export default function OrderForm({
             loadingButton={loadingSave}
             handleDbDLBD={handleDbDLBD}
             columns={columns}
+            user={session.user}
             // isPendingDlbd={isPendingDlbd}
           />
         )}

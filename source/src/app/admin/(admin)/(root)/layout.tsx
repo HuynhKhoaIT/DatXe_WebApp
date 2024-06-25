@@ -8,8 +8,8 @@ interface IProps {
 }
 
 export default async function AdminLayout({ children }: IProps) {
-  const { user }: any = await getSession();
-  if (user?.role == ROLE_ADMIN) {
+  const session = await getSession();
+  if (session?.user?.role == ROLE_ADMIN) {
     return redirect(`/admin/system-expert`);
   }
   return <Fragment>{children}</Fragment>;

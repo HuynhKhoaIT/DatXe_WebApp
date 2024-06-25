@@ -1,5 +1,4 @@
 "use client";
-
 import TableBasic from "@/app/components/table/Tablebasic";
 import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import { stepOrderOptions } from "@/constants/masterData";
@@ -9,6 +8,7 @@ import { IconCheck, IconPencil, IconTrash } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 const DynamicModalDeleteItem = dynamic(
   () => import("../../../_component/ModalDeleteItem"),
   {
@@ -16,15 +16,22 @@ const DynamicModalDeleteItem = dynamic(
   }
 );
 export default function TableListPage({ dataSource, deleteItem }: any) {
+  const router = useRouter();
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
   ] = useDisclosure(false);
   const [deleteRow, setDeleteRow] = useState();
   const handleDeleteItem = async (id: string) => {
-    await deleteItem({ id });
+    const res = await deleteItem(id);
+    if (res) {
+      toast.success("Xoá thành công");
+      router.refresh();
+    } else {
+      toast.success("Xoá thất bại");
+    }
   };
-  const router = useRouter();
+
   const columns = [
     {
       label: (

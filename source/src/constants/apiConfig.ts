@@ -463,6 +463,11 @@ const apiConfig = {
         method: "POST",
         headers: baseHeader,
       },
+      asyncDlbd: {
+        baseURL: `${apiUrl}api/admin/orders/asyncDLBD`,
+        method: "POST",
+        headers: baseHeader,
+      },
       delete: {
         baseURL: `${apiUrl}api/admin/orders/:id`,
         method: "DELETE",

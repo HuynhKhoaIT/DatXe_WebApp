@@ -31,7 +31,7 @@ export default async function ProductSavePage({
 
   async function handleDbDLBD(formData: FormData) {
     "use server";
-    const res = await callApi(apiConfig.admin.order.updateStep, {
+    const res = await callApi(apiConfig.admin.order.asyncDlbd, {
       data: formData,
     });
     return res;

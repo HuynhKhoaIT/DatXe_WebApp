@@ -59,6 +59,7 @@ export default function OrderFormDesktop({
   handleDbDLBD,
   isPendingDlbd,
   columns,
+  user,
 }: any) {
   return (
     <div className="printable">
@@ -256,6 +257,7 @@ export default function OrderFormDesktop({
         isPendingAdd={isPendingAdd}
         loadingButton={loadingButton}
         isPendingUpdate={isPendingUpdate}
+        user={user}
       />
     </div>
   );
@@ -271,6 +273,7 @@ const Footer = ({
   isPendingAdd,
   loadingButton,
   isPendingUpdate,
+  user,
 }: any) => {
   const router = useRouter();
   if (dataDetail?.orderDLBDId) {
@@ -326,6 +329,7 @@ const Footer = ({
               dataDetail?.step === ORDER_DONE ? (
                 <FooterSavePage isOk={false} cancelText={"Quay lại"}>
                   <ButtonDbDLBD
+                    user={user}
                     isPendingDlbd={isPendingDlbd}
                     handleDbDLBD={handleDbDLBD}
                     dataDetail={dataDetail}
@@ -338,6 +342,7 @@ const Footer = ({
                   isCancel={false}
                 >
                   <ButtonDbDLBD
+                    user={user}
                     isPendingDlbd={isPendingDlbd}
                     handleDbDLBD={handleDbDLBD}
                     dataDetail={dataDetail}
@@ -390,6 +395,7 @@ const Footer = ({
           isOk={false}
         >
           <ButtonDbDLBD
+            user={user}
             isPendingDlbd={isPendingDlbd}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}

@@ -7,11 +7,11 @@ export default function ButtonDbDLBD({
   isPendingDlbd,
   handleDbDLBD,
   dataDetail,
+  user,
 }: any) {
   if (dataDetail?.orderDLBDId) {
     return;
   }
-  const { data } = useSession();
   const HandleCancelOrder = () => {
     modals.openConfirmModal({
       title: "Xác nhận",
@@ -23,7 +23,7 @@ export default function ButtonDbDLBD({
       onConfirm: () => handleDbDLBD(),
     });
   };
-  if (!data?.user?.useDLBD) {
+  if (!user?.useDLBD) {
     return;
   }
   return (

@@ -73,6 +73,7 @@ export default function OrderFormMobile({
   handleDbDLBD,
   isPendingDlbd,
   columns,
+  user,
 }: any) {
   const router = useRouter();
   return (
@@ -374,6 +375,7 @@ export default function OrderFormMobile({
               HandleCancelOrder={HandleCancelOrder}
               UpdateConfirm={UpdateConfirm}
               loadingButton={loadingButton}
+              user={user}
             />
           </div>
         </ScrollArea>
@@ -390,6 +392,7 @@ const Footer = ({
   HandleCancelOrder,
   UpdateConfirm,
   loadingButton,
+  user,
 }: any) => {
   const router = useRouter();
   if (dataDetail?.orderDLBDId) {
@@ -441,6 +444,7 @@ const Footer = ({
       dataDetail?.step !== Number(ORDER_CANCEL) ? (
         <FooterSavePage okText="Cập nhật" isCancel={false}>
           <ButtonDbDLBD
+            user={user}
             isPendingDlbd={isPendingDlbd}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}
@@ -483,6 +487,7 @@ const Footer = ({
         dataDetail?.step !== Number(ORDER_CANCEL) ? (
         <FooterSavePage okText={isEditing ? "Cập nhật" : "Tạo đơn"}>
           <ButtonDbDLBD
+            user={user}
             isPendingDlbd={isPendingDlbd}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}
@@ -495,6 +500,7 @@ const Footer = ({
           isOk={false}
         >
           <ButtonDbDLBD
+            user={user}
             isPendingDlbd={isPendingDlbd}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}
