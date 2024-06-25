@@ -19,12 +19,12 @@ export default async function ProductsManaga() {
   const session = await getSession();
   const searchData = [
     {
-      key: "s",
+      name: "s",
       placeholder: "Tên sản phẩm",
       type: FieldTypes.STRING,
     },
     {
-      key: "isProduct",
+      name: "isProduct",
       placeholder: "Loại",
       type: FieldTypes.SELECT,
       data: kindProductOptions,
