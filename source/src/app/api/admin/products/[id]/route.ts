@@ -142,6 +142,7 @@ export async function PUT(
         timeSaleStart: json.timeSaleStart ?? null,
         timeSaleEnd: json.timeSaleEnd ?? null,
         quantity: json.quantity ?? 0,
+        keyword: json.keyword,
         images: json.images ?? null,
         metaDescription: json.metaDescription ?? null,
         status: json.status,

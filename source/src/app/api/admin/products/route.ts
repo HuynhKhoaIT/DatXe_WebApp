@@ -232,6 +232,7 @@ export async function POST(request: Request) {
           supplierId: json.supplierId ?? "1",
           productBrandId: json.productBrandId ?? "1",
           isProduct: isProduct,
+          keyword: json.keyword,
           categories: {
             create: catArr,
           },
