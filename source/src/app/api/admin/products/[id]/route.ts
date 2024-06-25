@@ -4,6 +4,7 @@ import { getProductById } from "@/app/libs/prisma/product";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { createSeoMeta } from "@/app/libs/prisma/seoMeta";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -16,8 +17,8 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const product = await getProductById(id);
       return NextResponse.json({ data: product });
     }
