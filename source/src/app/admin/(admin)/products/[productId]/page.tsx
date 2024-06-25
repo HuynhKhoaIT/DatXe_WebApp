@@ -1,12 +1,7 @@
 import React from "react";
 import ProductForm from "../create/ProductForm";
-import { useProductDetail } from "../../hooks/product/useProduct";
 import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
-export const dynamic = "force-dynamic";
-
-export const revalidate = 0;
-
 export default async function ProductSavePage({
   params,
 }: {

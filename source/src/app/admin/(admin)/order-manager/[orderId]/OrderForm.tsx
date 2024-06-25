@@ -48,6 +48,7 @@ export default function OrderForm({
   brandOptions,
   dbDLBD,
   session,
+  updateCustomer,
 }: any) {
   const router = useRouter();
   var {
@@ -84,6 +85,7 @@ export default function OrderForm({
   const [loading, handlers] = useDisclosure();
   const [loadingButton, handlersButton] = useDisclosure();
   const [loadingSave, handlersSave] = useDisclosure();
+  const [loadingUpdate, handlersUpdate] = useDisclosure();
 
   const [selectedProducts, setSelectedProducts] = useState<any>(
     dataDetail
@@ -655,6 +657,7 @@ export default function OrderForm({
           openModal={openedModalUpdateCustomer}
           close={closeModalUpdateCustomer}
           formOrder={form}
+          updateCustomer={updateCustomer}
         />
       )}
       {openedModalUpdate && (

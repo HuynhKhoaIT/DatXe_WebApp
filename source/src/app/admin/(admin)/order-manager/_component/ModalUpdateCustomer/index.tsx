@@ -23,6 +23,7 @@ export default function ModalUpdateCustomer({
   close,
   dataDetail,
   formOrder,
+  updateCustomer,
 }: any) {
   const [loading, handlers] = useDisclosure();
   const [loadingCustomer, handlersLoadingCustomer] = useDisclosure();
@@ -51,20 +52,11 @@ export default function ModalUpdateCustomer({
   const handleSubmit = async (values: any) => {
     handlers.open();
     try {
-      const res: any = await axios.put(
-        `/api/admin/customer/${values?.customerId}`,
-        values,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await updateCustomer(values);
       formOrder.setFieldValue("fullName", values?.fullName);
       formOrder.setFieldValue("address", values?.address);
       formOrder.setFieldValue("phoneNumber", values?.phoneNumber);
       formOrder.setFieldValue("customerId", values?.customerId);
-
       handlers.close();
       close();
     } catch (error) {

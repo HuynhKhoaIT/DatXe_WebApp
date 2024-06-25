@@ -9,8 +9,6 @@ import {
   TextInput,
   Tooltip,
 } from "@mantine/core";
-import { getOptionsPhone } from "../until";
-import { AutocompletePhone } from "./AutoCompletePhone";
 import styles from "./index.module.scss";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { IconEdit, IconUpload } from "@tabler/icons-react";
