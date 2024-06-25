@@ -1,17 +1,12 @@
 import { createOrder, getOrders } from "@/app/libs/prisma/order";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
-import { sendSMSOrder } from "@/utils/order";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
 import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
     const getAuth = await checkAuthToken(request);
     if (getAuth) {
-      let garageId = getAuth?.garageId;
+      let garageId = getAuth?.garageId ?? "";
       const { searchParams } = new URL(request.url);
       let page = 1;
       let limit = 10;
@@ -33,6 +28,7 @@ export async function GET(request: NextRequest) {
         garageId: garageId,
       };
       const orders = await getOrders(garageId, requestData);
+      
       return NextResponse.json(orders);
     }
     throw new Error("Chua dang nhap");
@@ -40,13 +36,13 @@ export async function GET(request: NextRequest) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
     const getAuth = await checkAuthToken(request);
     if (getAuth) {
       json.garageId = getAuth?.garageId;
-      json.createdById = getAuth?.id.toString();
+      json.createdById = getAuth?.id;
       const order = await createOrder(json);
       return new NextResponse(JSON.stringify(order), {
         status: 201,

@@ -1,6 +1,6 @@
 import { create, gets } from "@/app/libs/prisma/bookingTTDK";
-import prisma from "@/app/libs/prismadb";
-import { NextResponse } from "next/server";
+import { checkAuthToken } from "@/utils/auth";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
     try {
@@ -18,7 +18,7 @@ export async function GET(request: Request) {
     }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const json = await request.json();
         const dataInput = {
@@ -30,11 +30,14 @@ export async function POST(request: Request) {
             garageId: json.garageId,
             note: json.note,
         }
-        const order = await create(dataInput);
-        return new NextResponse(JSON.stringify(order), {
-            status: 201,
-            headers: { 'Content-Type': 'application/json' },
-        });
+        const getAuth = await checkAuthToken(request);
+        if(getAuth!=null){
+            const order = await create(dataInput);
+            return new NextResponse(JSON.stringify(order), {
+                status: 201,
+                headers: { 'Content-Type': 'application/json' },
+            });
+        }
     } catch (error: any) {
         return new NextResponse(error.message, { status: 500 });
     }

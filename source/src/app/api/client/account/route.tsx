@@ -1,5 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import { NextRequest, NextResponse } from "next/server";
 import { getMyAccount, updateUser } from "@/app/libs/prisma/user";
 import { updateAccount } from "@/utils/user";

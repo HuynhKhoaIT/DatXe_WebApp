@@ -185,7 +185,6 @@ export async function getProductsClient(requestData: any) {
         some:{
           carModel: {
             id: brandIdFilter,
-            type: 'CARNAME'
           }
         },
       }
@@ -299,7 +298,95 @@ export async function getProductsClient(requestData: any) {
           description: {
             contains: titleFilter!,
           },
+          brands: {none:{}},
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          name: {
+            contains: titleFilter!,
+          },
           brands,
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          sku: {
+            contains: titleFilter!,
+          },
+          brands: {none:{}},
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          keyword: {
+            contains: titleFilter!,
+          },
+          brands: {none:{}},
+          status: "PUBLIC",
+          garageId,
+          isProduct,
+          garage: {
+            OR: [
+              {
+                status: "PUBLIC",
+                districtId
+              },
+              {
+                status: "PUBLIC",
+                provinceId: districtId
+              }
+            ]
+          },
+        },
+        {
+          categories,
+          description: {
+            contains: titleFilter!,
+          },
+          brands: {none:{}},
           status: "PUBLIC",
           garageId,
           isProduct,
