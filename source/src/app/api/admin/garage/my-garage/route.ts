@@ -1,14 +1,13 @@
-import { getGarageByDlbdId } from "@/app/libs/prisma/garage";
+import { showGarage } from "@/app/libs/prisma/garage";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
-import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    const session:any = await getSession();
     if (session?.user) {
-      let garageId = Number(session.user?.garageId);
-      const garages = await getGarageByDlbdId(garageId);
+      let garageId = session.user?.garageId;
+      const garages = await showGarage(garageId);
       return NextResponse.json(garages);
     }
     throw new Error("Chua dang nhap");
