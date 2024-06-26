@@ -1,3 +1,4 @@
+"use server";
 /**
  * External Dependencies.
  */
@@ -17,11 +18,10 @@ import {
 
 import { IUser } from "@/interfaces/user";
 import { signIn } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sha256 } from "js-sha256";
 import { sendNotificationGarageNew } from "./notification";
 import prisma from "@/app/libs/prismadb";
+import { getSession } from "@/lib/auth";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.
@@ -44,8 +44,8 @@ export async function getUserByValidSessionToken(token: string) {
 }
 
 export const getMyAccount = async () => {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.token) {
+  const session = await getSession();
+  if (session?.user) {
     try {
       const config = {
         headers: { Authorization: `Bearer ${session.user.token}` },

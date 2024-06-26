@@ -1,4 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import CategoryListPage from "./CategoryListPage";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { getServerSession } from "next-auth";

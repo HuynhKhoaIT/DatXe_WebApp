@@ -1,7 +1,6 @@
 import prisma from "@/app/libs/prismadb";
 import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
@@ -14,7 +13,6 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getServerSession(authOptions);
     if (1) {
       const customers = await prisma.customer.findUnique({
         where: {

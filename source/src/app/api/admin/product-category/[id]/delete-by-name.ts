@@ -1,30 +1,31 @@
-import prisma from '@/app/libs/prismadb';
-import { getServerSession } from 'next-auth/next';
-import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../../../auth/[...nextauth]/route';
+import prisma from "@/app/libs/prismadb";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(request: NextRequest, { params }: { params: { garageId: string } }) {
-    // const title = params.id;
-    const title = '';
-    if (!title) {
-        return new NextResponse("Missing 'title' parameter");
-    }
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { garageId: string } }
+) {
+  // const title = params.id;
+  const title = "";
+  if (!title) {
+    return new NextResponse("Missing 'title' parameter");
+  }
 
-    const deletePost = await prisma.productCategory.updateMany({
-        where: {
-            AND: [
-                {
-                    garageId: "1",
-                    title: {
-                        contains: title,
-                    },
-                },
-            ],
+  const deletePost = await prisma.productCategory.updateMany({
+    where: {
+      AND: [
+        {
+          garageId: "1",
+          title: {
+            contains: title,
+          },
         },
-        data: {
-            status: 'DELETE',
-        },
-    });
+      ],
+    },
+    data: {
+      status: "DELETE",
+    },
+  });
 
-    return NextResponse.json({ success: 1, message: 'Delete success' });
+  return NextResponse.json({ success: 1, message: "Delete success" });
 }

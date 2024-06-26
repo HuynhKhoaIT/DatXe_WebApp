@@ -1,7 +1,5 @@
 import prisma from "@/app/libs/prismadb";
-import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import { showGarage, updateGarage } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
 

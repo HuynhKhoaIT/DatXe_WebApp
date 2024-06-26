@@ -27,8 +27,6 @@ import DropZone from "../_component/DropZone";
 import { IconQrcode } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { AppConstants, ROLE_ADMIN, apiUrl } from "@/constants";
-import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib/auth";
 import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
 export default function ExpertForm({
   isLoading,

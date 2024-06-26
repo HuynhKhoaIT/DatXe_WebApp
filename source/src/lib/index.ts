@@ -1,10 +1,8 @@
-import { getServerSession } from "next-auth";
-import { cookies } from "next/headers";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sendRequest } from "@/services/api";
+import { getSession } from "./auth";
 
 async function getData() {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   const requestData = {
     session: session,
   };

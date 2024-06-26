@@ -61,9 +61,9 @@ async function getProfile(token: string) {
       },
       {}
     );
+
     return profile;
   } catch (error) {
-    cookies().set("session", "", { expires: new Date(0) });
     window.location.reload();
     return error;
   }
@@ -186,4 +186,5 @@ export {
   updateSession,
   callApi,
   callApiNotToken,
+  getProfile,
 };
