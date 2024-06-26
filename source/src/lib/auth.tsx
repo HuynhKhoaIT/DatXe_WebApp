@@ -43,7 +43,7 @@ async function getUser(credentials: any) {
       }
     );
     const profile = await getProfile(login?.data?.user?.token);
-    return { ...profile?.data?.data };
+    return { ...profile?.data?.data, useDLBD: login?.data?.user?.useDLBD };
   } catch (error) {
     return null;
   }
@@ -71,6 +71,7 @@ async function getProfile(token: string) {
 
 async function login(formData: any) {
   const account = await getUser(formData);
+
   if (account) {
     var user = {
       token: account.token,
@@ -96,6 +97,7 @@ async function login(formData: any) {
 
 async function register(formData: any) {
   const account = await getUser(formData);
+
   if (account) {
     var user = {
       token: account.token,

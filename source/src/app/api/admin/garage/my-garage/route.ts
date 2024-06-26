@@ -4,7 +4,7 @@ import { getSession } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session:any = await getSession();
+    const session: any = await getSession();
     if (session?.user) {
       let garageId = session.user?.garageId;
       const garages = await showGarage(garageId);
