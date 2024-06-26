@@ -29,5 +29,5 @@ async function getUser(token: string) {
       },
     });
   }
-  return;
+  return ;
 }
