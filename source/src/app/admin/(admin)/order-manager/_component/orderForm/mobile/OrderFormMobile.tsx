@@ -34,7 +34,6 @@ import InfoCustomer2 from "../../InfoCustomer2";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { useRouter } from "next/navigation";
 import ButtonDbDLBD from "../../ButtonDbDLBD";
-import ItemProductDLBD from "../../ItemProductDLBD";
 import TableOrderDLBD from "../_component/TableOrderDLBD";
 
 export default function OrderFormMobile({
@@ -68,12 +67,14 @@ export default function OrderFormMobile({
   calculateSubTotal,
   HandleCancelOrder,
   UpdateConfirm,
-  isPendingUpdate,
-  isPendingAdd,
   handleDbDLBD,
-  isPendingDlbd,
   columns,
   user,
+  isLoadingDb,
+  isLoadingAccess,
+  isLoadingDone,
+  isLoadingCancel,
+  isLoadingCreate,
 }: any) {
   const router = useRouter();
   return (
@@ -370,12 +371,15 @@ export default function OrderFormMobile({
             <Footer
               dataDetail={dataDetail}
               isEditing={isEditing}
-              isPendingDlbd={isPendingDlbd}
               handleDbDLBD={handleDbDLBD}
               HandleCancelOrder={HandleCancelOrder}
               UpdateConfirm={UpdateConfirm}
-              loadingButton={loadingButton}
               user={user}
+              isLoadingDb={isLoadingDb}
+              isLoadingAccess={isLoadingAccess}
+              isLoadingDone={isLoadingDone}
+              isLoadingCancel={isLoadingCancel}
+              isLoadingCreate={isLoadingCreate}
             />
           </div>
         </ScrollArea>
@@ -387,18 +391,21 @@ export default function OrderFormMobile({
 const Footer = ({
   dataDetail,
   isEditing,
-  isPendingDlbd,
   handleDbDLBD,
   HandleCancelOrder,
   UpdateConfirm,
-  loadingButton,
   user,
+  isLoadingDb,
+  isLoadingAccess,
+  isLoadingDone,
+  isLoadingCancel,
+  isLoadingCreate,
 }: any) => {
   const router = useRouter();
   if (dataDetail?.orderDLBDId) {
     return (
       <FooterSavePage
-        saveLoading={loadingButton}
+        saveLoading={isLoadingCreate}
         cancelText="Quay lại"
         isOk={false}
       ></FooterSavePage>
@@ -406,7 +413,11 @@ const Footer = ({
   }
   if (dataDetail?.step === Number(ORDER_PENDING)) {
     return (
-      <FooterSavePage saveLoading={loadingButton} isOk={false} isCancel={false}>
+      <FooterSavePage
+        saveLoading={isLoadingCreate}
+        isOk={false}
+        isCancel={false}
+      >
         <Button
           size="lg"
           radius={0}
@@ -430,6 +441,7 @@ const Footer = ({
           onClick={() => {
             UpdateConfirm(ORDER_ACCEPT);
           }}
+          loading={isLoadingAccess}
           // leftSection={<IconPlus size={16} />}
         >
           Tiếp nhận
@@ -442,10 +454,14 @@ const Footer = ({
       {isEditing &&
       dataDetail?.step !== Number(ORDER_DONE) &&
       dataDetail?.step !== Number(ORDER_CANCEL) ? (
-        <FooterSavePage okText="Cập nhật" isCancel={false}>
+        <FooterSavePage
+          saveLoading={isLoadingCreate}
+          okText="Cập nhật"
+          isCancel={false}
+        >
           <ButtonDbDLBD
             user={user}
-            isPendingDlbd={isPendingDlbd}
+            isLoading={isLoadingDb}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}
           />
@@ -457,6 +473,7 @@ const Footer = ({
             // variant="outline"
             key="cancel"
             color="red"
+            loading={isLoadingCancel}
             // leftSection={<IconBan size={16} />}
             onClick={() => HandleCancelOrder("-1")}
           >
@@ -468,6 +485,7 @@ const Footer = ({
             // w={"33%"}
             h={{ base: 42, md: 50, lg: 50 }}
             // loading={saveLoading}
+            loading={isLoadingDone || isLoadingAccess}
             color="green"
             variant="filled"
             onClick={() => {
@@ -485,23 +503,26 @@ const Footer = ({
         </FooterSavePage>
       ) : dataDetail?.step !== Number(ORDER_DONE) &&
         dataDetail?.step !== Number(ORDER_CANCEL) ? (
-        <FooterSavePage okText={isEditing ? "Cập nhật" : "Tạo đơn"}>
+        <FooterSavePage
+          saveLoading={isLoadingCreate}
+          okText={isEditing ? "Cập nhật" : "Tạo đơn"}
+        >
           <ButtonDbDLBD
             user={user}
-            isPendingDlbd={isPendingDlbd}
+            isLoading={isLoadingDb}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}
           />
         </FooterSavePage>
       ) : (
         <FooterSavePage
-          saveLoading={loadingButton}
+          saveLoading={isLoadingCreate}
           cancelText="Quay lại"
           isOk={false}
         >
           <ButtonDbDLBD
             user={user}
-            isPendingDlbd={isPendingDlbd}
+            isLoading={isLoadingDb}
             handleDbDLBD={handleDbDLBD}
             dataDetail={dataDetail}
           />

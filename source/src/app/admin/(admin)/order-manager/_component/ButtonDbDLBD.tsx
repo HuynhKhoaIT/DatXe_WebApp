@@ -4,7 +4,7 @@ import { modals } from "@mantine/modals";
 import { useSession } from "next-auth/react";
 
 export default function ButtonDbDLBD({
-  isPendingDlbd,
+  isLoading,
   handleDbDLBD,
   dataDetail,
   user,
@@ -32,7 +32,7 @@ export default function ButtonDbDLBD({
       radius={0}
       h={{ base: 42, md: 50, lg: 50 }}
       color="blue"
-      loading={isPendingDlbd}
+      loading={isLoading}
       onClick={HandleCancelOrder}
     >
       Đồng bộ DLBD

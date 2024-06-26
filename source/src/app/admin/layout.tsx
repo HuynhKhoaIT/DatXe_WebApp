@@ -16,13 +16,6 @@ export default async function Layout({ children }: IProps) {
     await logout();
   }
   const myGarage = await callApi(apiConfig.admin.garage.myGarage, {});
-  // if (isLoading) {
-  //   return (
-  //     <Box pos={"relative"} w="100vw" h="100vh">
-  //       <LoadingOverlay zIndex={9} visible={true} />
-  //     </Box>
-  //   );
-  // }
   if (session?.user?.role === ROLE_CUSTOMER) {
     return <PageUnauthorized />;
   }

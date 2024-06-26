@@ -1,0 +1,32 @@
+.cardListProduct {
+    background-color: #ffffff;
+    box-shadow: var(--box-shadow);
+    margin: 10px;
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eeeeee;
+
+        .title {
+            padding: 16px 32px;
+        }
+    }
+    .marketingInfo {
+        padding: 30px;
+        background-color: var(--white-background);
+    }
+}
+.card {
+    background-color: #ffffff;
+    box-shadow: var(--box-shadow);
+    margin: 10px;
+    .title {
+        padding: 16px 32px;
+        border-bottom: 1px solid #eeeeee;
+    }
+    .marketingInfo {
+        padding: 30px;
+        background-color: var(--white-background);
+    }
+}
