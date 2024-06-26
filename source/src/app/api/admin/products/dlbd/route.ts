@@ -3,8 +3,6 @@ import prisma from "@/app/libs/prismadb";
 import { getProductsFromDLBD } from "@/utils/getProductsFromDLBD";
 import { NextRequest, NextResponse } from "next/server";
 import validator from "validator";
-import { authOptions } from "../../../auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
 

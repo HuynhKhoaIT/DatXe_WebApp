@@ -1,7 +1,4 @@
-"use server";
 import { DATE_FORMAT_DISPLAY, DEFAULT_FORMAT } from "@/constants";
-import apiConfig from "@/constants/apiConfig";
-import { callApi } from "@/lib";
 import axios from "axios";
 import dayjs from "dayjs";
 import moment from "moment/moment";
@@ -73,7 +70,7 @@ export const getDateInfo = (date: any) => {
     year: year,
   };
 };
-export const convertToSlug = (str: string) => {
+export default function convertToSlug(str: string) {
   // Chuyển hết sang chữ thường
   str = str.toLowerCase();
   // xóa dấu
@@ -92,7 +89,7 @@ export const convertToSlug = (str: string) => {
   str = str.replace(/^-+|-+$/g, "");
   // return
   return str;
-};
+}
 
 // Ngăn chặn hành động mặc định của phím Enter
 export const handleKeyPress = (event: any) => {
@@ -101,14 +98,14 @@ export const handleKeyPress = (event: any) => {
   }
 };
 
-export const convertToPlatesNumber = (str: string) => {
+export function convertToPlatesNumber(str: string) {
   str = str
     .toUpperCase()
     .replace(/([^0-9A-Z\s])/g, "")
     .replace(/(\s+)/g, "");
   let platesNumberFormat = /\(?([0-9]{2}[A-Z]{1,2}[0-9]{4,6})/g;
   return str.match(platesNumberFormat)?.[0];
-};
+}
 
 // get danh sách hãng xe
 export async function getOptionsBrands() {
@@ -163,8 +160,8 @@ export async function getOptionsYearCar(modelId: number) {
 // get danh sách options customers của chuyên gia
 export async function getOptionsCustomers() {
   try {
-    const res = await callApi(apiConfig.admin.customer.getList, {});
-    const dataOption = res.data?.map((item: any) => ({
+    const res = await axios.get(`/api/admin/customer`);
+    const dataOption = res.data?.data?.map((item: any) => ({
       value: item.id.toString(),
       label: item.fullName + "-" + item.phoneNumber,
     }));
@@ -272,19 +269,19 @@ export const queryClientOptions = {
     },
   },
 };
-export const convertViToEn = (str: string) => {
+export function convertViToEn(str: string) {
   return str
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/đ/g, "d")
     .replace(/Đ/g, "D");
-};
+}
 
-export const generateUUID = () => {
+export function generateUUID() {
   const short = require("short-uuid");
   return short.generate().toLowerCase();
-};
-export const stringToHash = (string: string) => {
+}
+export function stringToHash(string: string) {
   let hash = 0;
 
   if (string.length == 0) return hash;
@@ -296,7 +293,7 @@ export const stringToHash = (string: string) => {
   }
 
   return hash;
-};
+}
 
 export const convertUtcToLocalTime = (
   utcTime: any,
@@ -314,7 +311,7 @@ export const convertUtcToLocalTime = (
   }
 };
 
-export const isValidPhoneNumber = (phoneNumber: string) => {
+export function isValidPhoneNumber(phoneNumber: string) {
   // Biểu thức chính quy để kiểm tra số điện thoại
   var phoneRegex = /^0[1-9][0-9]{8}$/;
 
@@ -324,7 +321,7 @@ export const isValidPhoneNumber = (phoneNumber: string) => {
   } else {
     return false; // Không hợp lệ
   }
-};
+}
 
 export const formatTimeDifference = (utcTime: any, format = DEFAULT_FORMAT) => {
   const date = convertUtcToLocalTime(utcTime, format, format);
@@ -341,7 +338,7 @@ export const createQrCode = async (dataInput: any) => {
   });
 };
 
-export const formatLargeNumber = (number: any) => {
+export function formatLargeNumber(number: any) {
   if (number >= 1000) {
     var result = number / 1000;
     var remainder = number % 1000;
@@ -351,12 +348,12 @@ export const formatLargeNumber = (number: any) => {
     return result.toFixed(0) + "k";
   }
   return number;
-};
+}
 
-export const capitalizeFirstLetter = (str: string) => {
+export function capitalizeFirstLetter(str: string) {
   str = str.toLowerCase();
   return `${str[0].toUpperCase()}${str.slice(1)}`;
-};
+}
 
 export const fitString = (text = "", length = 0) => {
   if (!text) return text;

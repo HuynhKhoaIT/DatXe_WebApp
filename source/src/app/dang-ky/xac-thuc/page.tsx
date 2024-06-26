@@ -1,14 +1,9 @@
 import React from "react";
 import { redirect } from "next/navigation";
-import styles from "../index.module.scss";
 import Link from "next/link";
-import { IconChevronLeft } from "@tabler/icons-react";
-import { Avatar } from "@mantine/core";
 import { FormAccuracy } from "../_component/FormAccuracy";
-import Logo from "@/../../public/assets/images/logoDatxe.png";
 import { callApi, getSession, login } from "@/lib/auth";
 import LoginPage from "@/app/components/layout/LoginPage";
-import apiConfig from "@/constants/apiConfig";
 
 export default async function LoginAccuracy({ searchParams }: any) {
   const session = await getSession();

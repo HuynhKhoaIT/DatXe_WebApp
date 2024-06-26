@@ -1,8 +1,6 @@
 import { createCar, getCars } from "@/app/libs/prisma/car";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { authOptions } from "../../../../auth/[...nextauth]/route";
 import { getSession } from "@/lib/auth";
 
 export async function GET(

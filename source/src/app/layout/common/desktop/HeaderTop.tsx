@@ -14,6 +14,7 @@ export default async function HeaderTop() {
     "use server";
     await logout();
   };
+  console.log("session", session);
   return (
     <div className={styles.headerTop}>
       <Container>

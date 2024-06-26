@@ -1,7 +1,5 @@
 import { updateOrderStep } from "@/app/libs/prisma/order";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import {
   sendNotificationOrderUntil,
   sendNotificationUntil,

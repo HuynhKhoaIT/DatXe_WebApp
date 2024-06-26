@@ -1,8 +1,6 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { updateCustomerAndCar } from "@/app/libs/prisma/car";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
-import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function PUT(request: Request) {

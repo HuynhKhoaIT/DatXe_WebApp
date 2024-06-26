@@ -1,28 +1,29 @@
-import prisma from '@/app/libs/prismadb';
-import { getServerSession } from 'next-auth/next';
-import { NextRequest, NextResponse } from 'next/server';
-import { getOrderByCode,  } from '@/app/libs/prisma/order';
-import { sendSMSOrder } from '@/utils/order';
-import { authOptions } from '../../auth/[...nextauth]/route';
-import { sendNotificationAdminOrderUntil } from '@/utils/notification';
-import { checkAuthToken } from '@/utils/auth';
+import prisma from "@/app/libs/prismadb";
+import { NextRequest, NextResponse } from "next/server";
+import { getOrderByCode } from "@/app/libs/prisma/order";
+import { sendSMSOrder } from "@/utils/order";
+import { sendNotificationAdminOrderUntil } from "@/utils/notification";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET(request: NextRequest, { params }: { params: { code: string } }) {
-    try {
-        const code = params.code;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { code: string } }
+) {
+  try {
+    const code = params.code;
 
-        if (!code) {
-            return new NextResponse("Missing 'code' parameter");
-        }
-        const getAuth = await checkAuthToken(request);
-        if(getAuth!=null){
-            const order = await getOrderByCode(code);
-            return NextResponse.json(order);
-        }
-        throw new Error('Chua dang nhap');
-    } catch (error: any) {
-        return new NextResponse(error.message, { status: 500 });
+    if (!code) {
+      return new NextResponse("Missing 'code' parameter");
     }
+    const getAuth = await checkAuthToken(request);
+    if (getAuth != null) {
+      const order = await getOrderByCode(code);
+      return NextResponse.json(order);
+    }
+    throw new Error("Chua dang nhap");
+  } catch (error) {
+    return new NextResponse(error.message, { status: 500 });
+  }
 }
 
 // export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {

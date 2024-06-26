@@ -10,8 +10,6 @@ import {
   CUSTOMER_CARE_ENDPOINT_GUEST,
 } from "./constants/endpoints";
 import { ICustomerCare } from "@/interfaces/customerCare";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 /**
  * Get getCars.
  *

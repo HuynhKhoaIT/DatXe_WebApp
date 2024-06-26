@@ -1,10 +1,7 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { asyncToDLDB, findOrder } from "@/app/libs/prisma/order";
 import { checkAuthToken } from "@/utils/auth";
 import { POST_ASYNC_ORDER_DLBD_ENDPOINT } from "@/utils/constants/endpoints";
 import axios from "axios";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {

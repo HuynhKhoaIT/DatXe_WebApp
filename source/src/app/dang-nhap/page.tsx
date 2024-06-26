@@ -1,13 +1,11 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import FormLogin from "./_component/FormLogin";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import apiConfig from "@/constants/apiConfig";
-import { callApi, login } from "@/lib/auth";
+import { callApi, getSession, login } from "@/lib/auth";
 import LoginPage from "../components/layout/LoginPage";
 export default async function Login() {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (session && session.user) {
     redirect("/dashboard");
   }

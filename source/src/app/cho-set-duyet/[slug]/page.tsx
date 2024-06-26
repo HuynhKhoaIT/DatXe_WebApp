@@ -11,11 +11,9 @@ import IconFaceBook from "@/assets/icons/faceBook.svg";
 import IconZalo from "@/assets/icons/zalo.svg";
 import IconIg from "@/assets/icons/instagram.svg";
 import { getCategories } from "@/app/libs/prisma/category";
-import { callApi } from "@/lib/auth";
+import { callApi, getSession } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 import type { Metadata, ResolvingMetadata } from "next";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 type Props = {
   params: { slug: string };
@@ -115,7 +113,7 @@ export default async function DetailGarage({
 }: {
   params: { slug: string };
 }) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   const expertData: any = await callApi(apiConfig.expert.getById, {
     pathParams: {
       id: params?.slug,
