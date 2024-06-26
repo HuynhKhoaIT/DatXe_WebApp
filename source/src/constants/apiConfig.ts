@@ -16,7 +16,7 @@ const apiConfig = {
       method: "POST",
       headers: baseHeader,
     },
-    account: {
+    getAccountDlbd: {
       baseURL: `${apiUrl}api/account`,
       method: "GET",
       headers: baseHeader,
