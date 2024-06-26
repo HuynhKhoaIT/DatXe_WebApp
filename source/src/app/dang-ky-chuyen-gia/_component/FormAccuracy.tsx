@@ -8,7 +8,7 @@ import useFcmToken from "@/app/hooks/useFCMToken";
 import { sendNotificationGarageNew } from "@/utils/notification";
 import { toast } from "react-toastify";
 
-export function FormAccuracy() {
+export function FormAccuracy({ login }: any) {
   const [opened, handlers] = useDisclosure(false);
   const searchParams = useSearchParams();
   const name = searchParams.get("name");

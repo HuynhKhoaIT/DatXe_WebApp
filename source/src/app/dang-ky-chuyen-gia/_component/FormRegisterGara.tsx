@@ -2,10 +2,9 @@
 import { Button, TextInput } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import { useForm, hasLength, isNotEmpty } from "@mantine/form";
-import { CheckPhone, GenOTP } from "@/utils/user";
 import { useDisclosure } from "@mantine/hooks";
 import { toast } from "react-toastify";
-export function FormRegisterGara() {
+export function FormRegisterGara({ sendOtp, checkPhone }: any) {
   const [opened, handlers] = useDisclosure(false);
   const router = useRouter();
   const form = useForm({
@@ -25,10 +24,10 @@ export function FormRegisterGara() {
   const onSubmit = async () => {
     handlers.open();
     const { name, phone, address, garageName } = form.values;
-    const res = await CheckPhone(phone);
-    if (!res) {
-      const genRs = await GenOTP(phone);
-      if (genRs.CodeResult == 100) {
+    const res = await checkPhone({ phone });
+    if (!res?.data) {
+      const result = await sendOtp({ phone });
+      if (result?.data?.CodeResult == 100) {
         router.push(
           `./dang-ky-chuyen-gia/xac-thuc?name=${name}&phone=${phone}&address=${address}&garageName=${garageName}`
         );
