@@ -6,6 +6,7 @@ import { getGarageIdByDLBDID } from '@/app/libs/prisma/garage';
 import { authOptions } from '../auth/[...nextauth]/route';
 import { sendNotificationAdminOrderUntil } from '@/utils/notification';
 import { checkAuthToken } from '@/utils/auth';
+import { getSession } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
     try {
@@ -40,15 +41,16 @@ export async function GET(request: NextRequest) {
         return new NextResponse(error.message, { status: 500 });
     }
 }
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
     try {
         const json = await request.json();
-        const session = await getServerSession(authOptions);
+        const session:any = await getSession();
         if (session) {
+            console.log('session',session);
             if(!json.garageId){
                 json.garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
             }
-            json.createdById = session.user?.id.toString()
+            json.createdById = session.user?.id;
             const order = await createOrderClient(json);
             const nt = await sendNotificationAdminOrderUntil(order);
             return new NextResponse(JSON.stringify(order), {
