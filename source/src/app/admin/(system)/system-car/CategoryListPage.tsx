@@ -124,7 +124,7 @@ export default function CategoryListPage({ profile }: any) {
           <Flex>
             <Link
               href={{
-                pathname: `/admin/categories/${record.id}`,
+                pathname: `/admin/category/${record.id}`,
               }}
             >
               <Button
@@ -200,7 +200,7 @@ export default function CategoryListPage({ profile }: any) {
             </Button>
             <Link
               href={{
-                pathname: `/admin/categories/create`,
+                pathname: `/admin/category/create`,
               }}
             >
               <Button
