@@ -10,13 +10,13 @@ export async function GET(request: NextRequest) {
       let garageId = getAuth?.garageId;
       const dataRequest = {
         page: searchParams.get("page"),
-        garageId: garageId,
+        garageId: session?.user.garageId,
       };
       const products = await getProductsFromDLBD(getAuth, dataRequest);
       return NextResponse.json(products);
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }

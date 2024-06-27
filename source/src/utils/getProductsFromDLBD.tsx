@@ -1,13 +1,10 @@
 import { getProductBySKU } from "@/app/libs/prisma/product";
 import { GET_PRODUCTS_DLBD_ENDPOINT } from "./constants/endpoints";
+import { showGarage } from "@/app/libs/prisma/garage";
 
 export async function getProductsFromDLBD(session: any, dataInput: any) {
-  const urlFetch =
-    GET_PRODUCTS_DLBD_ENDPOINT +
-    "?garage_id=" +
-    session.garageId +
-    "&page=" +
-    dataInput.page;
+  const garage = await showGarage(session.garageId);
+  const urlFetch = GET_PRODUCTS_DLBD_ENDPOINT + '?garage_id=' + garage?.routeId + '&page=' + dataInput.page;
   const res = await fetch(urlFetch, {
     headers: {
       "Content-Type": "application/json",

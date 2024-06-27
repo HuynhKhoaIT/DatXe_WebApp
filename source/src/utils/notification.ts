@@ -78,7 +78,6 @@ export async function sendNotificationOrderUntil(order: any) {
       }),
     };
     const rs = await sendNotificationUntil(dataNoti);
-    console.log("token3333", rs);
   }
   return tokenFB;
 }
