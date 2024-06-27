@@ -624,7 +624,9 @@ const DynamicModalCamera = dynamic(
 );
 const DynamicModalChooseProducts = dynamic(
   () =>
-    import("../../../marketing-campaign/choose-products/ModalChooseProducts"),
+    import(
+      "../../../(marketing)/marketing-detail/choose-products/ModalChooseProducts"
+    ),
   {
     ssr: false,
   }

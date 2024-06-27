@@ -28,7 +28,6 @@ export default function ActioBarCategory({ session }: any) {
         ) : (
           <></>
         )}
-
         <Link
           href={{
             pathname: `/admin/category/create`,

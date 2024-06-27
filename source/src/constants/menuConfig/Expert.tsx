@@ -24,7 +24,7 @@ const menuConfigExpert = [
     label: "TTDK",
     icon: IconNotes,
     initiallyOpened: true,
-    links: [{ label: "Danh sách đơn hàng", link: "/admin/booking-ttdk" }],
+    links: [{ label: "Danh sách đơn hàng", link: "/admin/bookings-ttdk" }],
   },
 
   {
