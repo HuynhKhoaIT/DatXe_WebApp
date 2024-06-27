@@ -296,6 +296,11 @@ const apiConfig = {
         method: "GET",
         headers: baseHeader,
       },
+      getListDlbd: {
+        baseURL: `${apiUrl}api/admin/products/dlbd`,
+        method: "GET",
+        headers: baseHeader,
+      },
       getById: {
         baseURL: `${apiUrl}api/admin/products/:id`,
         method: "GET",
@@ -518,6 +523,33 @@ const apiConfig = {
       myGarage: {
         baseURL: `${apiUrl}api/admin/garage/my-garage`,
         method: "GET",
+        headers: baseHeader,
+      },
+    },
+    marketing: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/marketing-campaign`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/marketing-campaign/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/marketing-campaign`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/marketing-campaign/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/marketing-campaign/:id`,
+        method: "DELETE",
         headers: baseHeader,
       },
     },

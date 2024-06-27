@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   createMarketingCampaign,
   getMarketingCampaign,
@@ -6,16 +6,14 @@ import {
 import { createMarketingCampaignDetail } from "@/app/libs/prisma/marketingCampaignDetail";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    const getAuth = await checkAuthToken(request);
     const { searchParams } = new URL(request.url);
-    if (session?.user) {
-      let garageId =
-        (
-          await getGarageIdByDLBDID(Number(session.user?.garageId))
-        ).toString() ?? "2";
+    if (getAuth) {
+      let garageId = getAuth.garageId ?? "";
       const requestData = {
         s: searchParams.get("s"),
         limit: searchParams.get("limit"),
@@ -33,13 +31,13 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
-    const session = await getSession();
-    if (session?.user) {
-      json.createdBy = session.user?.id;
-      json.garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      json.createdBy = getAuth?.id;
+      json.garageId = getAuth?.garageId;
       const marketingCampaign = await createMarketingCampaign(json);
       return new NextResponse(JSON.stringify(marketingCampaign), {
         status: 201,

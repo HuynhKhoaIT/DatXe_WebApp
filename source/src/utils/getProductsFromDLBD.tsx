@@ -8,13 +8,13 @@ export async function getProductsFromDLBD(session: any, dataInput: any) {
   const res = await fetch(urlFetch, {
     headers: {
       "Content-Type": "application/json",
-      "Authorization": "Bearer " + session.token
+      Authorization: "Bearer " + session.token,
     },
   });
 
   const data = await res.json();
   for (const i of data.data) {
-    const p = await getProductBySKU(i.productCode,dataInput.garageId);
+    const p = await getProductBySKU(i.productCode, dataInput.garageId);
     i.isAsync = p ? 1 : 0;
   }
   return data;
