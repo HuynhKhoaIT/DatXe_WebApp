@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { sendRequest } from "@/services/api";
 import apiConfig from "@/constants/apiConfig";
-import { appAccount } from "@/constants";
+import { appAccount, storageKeys } from "@/constants";
 import { Buffer } from "buffer";
 import { access } from "fs";
 var secretKey = "secret";
@@ -25,7 +25,6 @@ async function decrypt(input: any) {
 }
 
 async function getUser(credentials: any) {
-  console.log("credentials", credentials);
   const base64Credentials = Buffer.from(
     `${appAccount.APP_USERNAME}:${appAccount.APP_PASSWORD}`
   ).toString("base64");
@@ -43,51 +42,81 @@ async function getUser(credentials: any) {
         data: credentials,
       }
     );
-
-    // const profile = await sendRequest(
-    //   {
-    //     ...apiConfig.account.getProfile,
-    //     ignoreAuth: true,
-    //     headers: {
-    //       Authorization: `Bearer ${login?.data.access_token}`,
-    //     },
-    //   },
-    //   {}
-    // );
-    return { ...login?.data };
+    const profile = await getProfile(login?.data?.user?.token);
+    return { ...profile?.data?.data, useDLBD: login?.data?.user?.useDLBD };
   } catch (error) {
-    console.log(error);
     return null;
   }
 }
 
-async function login(formData: any) {
-  // Verify credentials && get the user
+async function getProfile(token: string) {
+  try {
+    const profile = await sendRequest(
+      {
+        ...apiConfig.account.getAccountDlbd,
+        ignoreAuth: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      {}
+    );
 
-  // const user = { email: formData.get("email"), name: "John" };
+    return profile;
+  } catch (error) {
+    window.location.reload();
+    return error;
+  }
+}
+
+async function login(formData: any) {
   const account = await getUser(formData);
 
   if (account) {
-    console.log("account", account);
-    // Create the session
-
     var user = {
-      token: account.user.token,
+      token: account.token,
       user: {
-        id: account.user.id,
-        token: account.user.token,
-        phone: account.user.phone,
-        name: account.user.name,
-        address: account.user.address,
-        garageId: account.user.garageId,
-        isAdmin: account.user.garageId,
-        role: account.user.phone == "0964824588" ? "ADMIN" : account.user.role,
-        useDLBD: account.user.useDLBD ?? 0,
+        id: account.id,
+        token: account.token,
+        phone: account.phoneNumber,
+        name: account.fullName,
+        address: account.address,
+        garageId: account.garageId,
+        isAdmin: account.garageId,
+        role: account.phoneNumber == "0964824588" ? "ADMIN" : account.role,
+        useDLBD: account?.useDLBD || 0,
       },
     };
     const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 ngày
     const session = await encrypt({ user, expires });
     // Save the session in a cookie
+
+    cookies().set("session", session, { expires, httpOnly: true });
+  } else throw new Error("Login fail");
+}
+
+async function register(formData: any) {
+  const account = await getUser(formData);
+
+  if (account) {
+    var user = {
+      token: account.token,
+      user: {
+        id: account.id,
+        token: account.token,
+        phone: account.phoneNumber,
+        name: account.fullName,
+        address: account.address,
+        garageId: account.garageId,
+        isAdmin: account.garageId,
+        role: account.phone == "0964824588" ? "ADMIN" : account.role,
+        useDLBD: account?.useDLBD || 0,
+      },
+    };
+    const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 ngày
+    const session = await encrypt({ user, expires });
+    // Save the session in a cookie
+
     cookies().set("session", session, { expires, httpOnly: true });
   } else throw new Error("Login fail");
 }
@@ -159,4 +188,5 @@ export {
   updateSession,
   callApi,
   callApiNotToken,
+  getProfile,
 };

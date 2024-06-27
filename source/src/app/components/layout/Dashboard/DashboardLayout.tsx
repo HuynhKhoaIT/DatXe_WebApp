@@ -9,12 +9,16 @@ import Link from "next/link";
 import { NavbarNested } from "@/app/admin/NavbarNested";
 import logo from "@/assets/images/logo.png";
 
-export default function DashboardLayout({ user, children, logout }: any) {
-  const { myGarage, isLoading } = useMyGarage();
-
+export default function DashboardLayout({
+  user,
+  children,
+  logout,
+  myGarage,
+}: any) {
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [opened, { toggle }] = useDisclosure();
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
+  console.log("myGarage", myGarage);
   return (
     <AppShell
       layout="alt"

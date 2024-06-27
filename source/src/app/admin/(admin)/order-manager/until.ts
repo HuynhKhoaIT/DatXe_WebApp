@@ -45,11 +45,16 @@ export async function deleteOrder(id: string) {
 
 export async function getOptionsPhone({ s }: any) {
   try {
-    const res = await axios.get(`/api/admin/customer/autocomplete?s=${s}`);
-    if (!res.data) {
+    const res = await callApi(apiConfig.admin.customer.autoComplete, {
+      params: { s },
+    });
+
+    console.log("autocompleteS", res);
+    // const res = await axios.get(`/api/admin/customer/autocomplete?s=${s}`);
+    if (!res) {
       throw new Error("Failed to fetch data");
     }
-    const dataOption = res?.data?.map((item: any) => ({
+    const dataOption = res?.map((item: any) => ({
       value: item.id.toString(),
       label: item.phoneNumber,
       otherData: item,
@@ -62,11 +67,13 @@ export async function getOptionsPhone({ s }: any) {
 
 export async function getOptionsCustomer({ s }: any) {
   try {
-    const res = await axios.get(`/api/admin/customer/autocomplete?s=${s}`);
-    if (!res.data) {
+    const res = await callApi(apiConfig.admin.customer.autoComplete, {
+      params: { s },
+    });
+    if (!res) {
       throw new Error("Failed to fetch data");
     }
-    const dataOption = res?.data?.map((item: any) => ({
+    const dataOption = res?.map((item: any) => ({
       value: item.id.toString(),
       label: item.phoneNumber + "-" + item.fullName,
       otherData: item,

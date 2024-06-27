@@ -5,11 +5,14 @@ import axios from "axios";
 /**
  * Internal Dependencies.
  */
-import { GET_CARS_DLBD_ENDPOINT, GET_CAR_ENDPOINT, SET_CAR_DEFAULT } from "./constants/endpoints";
+import {
+  GET_CARS_DLBD_ENDPOINT,
+  GET_CAR_ENDPOINT,
+  SET_CAR_DEFAULT,
+} from "./constants/endpoints";
 import { ICar } from "@/interfaces/car";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { convertToPlatesNumber } from "./until";
+import { getSession } from "@/lib/auth";
 /**
  * Get getCars.
  *
@@ -33,8 +36,8 @@ export const getCars = async (token: string) => {
 };
 
 export const getCarsSsr = async () => {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.token) {
+  const session = await getSession();
+  if (session?.user) {
     try {
       const config = {
         headers: { Authorization: `Bearer ${session?.user?.token}` },
@@ -150,29 +153,26 @@ export const setCarDefault = async (carId: string, token: String) => {
   }
 };
 
-export const getCarFromDLBD = async (carId: number,token: string) =>{
+export const getCarFromDLBD = async (carId: number, token: string) => {
   try {
     if (token) {
       const config = {
         headers: { Authorization: `Bearer ${token}` },
       };
-      const res = await axios.get(
-        `${GET_CAR_ENDPOINT}/${carId}`,
-        config
-      );
+      const res = await axios.get(`${GET_CAR_ENDPOINT}/${carId}`, config);
       return res.data.data;
     }
   } catch (error) {
     console.error(error);
     throw new Error("Lỗi trong quá trình tạo xe mặc định");
   }
-}
+};
 
-export async function getCarsFromDLBD(token : string){
-  const res = await fetch(GET_CARS_DLBD_ENDPOINT,{
+export async function getCarsFromDLBD(token: string) {
+  const res = await fetch(GET_CARS_DLBD_ENDPOINT, {
     headers: {
       "Content-Type": "application/json",
-      "Authorization":"Bearer "+token
+      Authorization: "Bearer " + token,
     },
   });
 
@@ -180,12 +180,12 @@ export async function getCarsFromDLBD(token : string){
   return data;
 }
 
-export async function getPlatesNumberFromImg(img:string) {
+export async function getPlatesNumberFromImg(img: string) {
   const res = await fetch(
-    'https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBOzbQ6x2QGBERqj6a-aAPrAmtmcs6KUn0',
+    "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyBOzbQ6x2QGBERqj6a-aAPrAmtmcs6KUn0",
     {
-        method: 'POST',
-        body: `{
+      method: "POST",
+      body: `{
         "requests":[
           {
             "image":{
@@ -202,19 +202,18 @@ export async function getPlatesNumberFromImg(img:string) {
           }
         ]
       }`,
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    },
-    );
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   const data = await res.json();
-  try{
+  try {
     // return data;
     let rs = data.responses[0].textAnnotations[0].description;
     // return rs;
     return convertToPlatesNumber(rs);
   } catch (error) {
-    return '';
+    return "";
   }
-  
 }

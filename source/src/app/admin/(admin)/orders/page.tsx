@@ -4,8 +4,6 @@ export const revalidate = 0;
 import styles from "./index.module.scss";
 import CalendarSchedulerGarage from "@/app/admin/(admin)/orders/CalendarGarage";
 import { getOrders } from "@/app/libs/prisma/order";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { callApi, getSession } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";

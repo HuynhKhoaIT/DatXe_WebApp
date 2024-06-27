@@ -1,3 +1,4 @@
+"use server";
 /**
  * External Dependencies.
  */
@@ -17,11 +18,10 @@ import {
 
 import { IUser } from "@/interfaces/user";
 import { signIn } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { sha256 } from "js-sha256";
 import { sendNotificationGarageNew } from "./notification";
 import prisma from "@/app/libs/prismadb";
+import { getSession } from "@/lib/auth";
 // import ForgotPassword from '@/app/forgot-password/page';
 /**
  * Get getMyAccount.
@@ -44,8 +44,8 @@ export async function getUserByValidSessionToken(token: string) {
 }
 
 export const getMyAccount = async () => {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.token) {
+  const session = await getSession();
+  if (session?.user) {
     try {
       const config = {
         headers: { Authorization: `Bearer ${session.user.token}` },
@@ -56,6 +56,83 @@ export const getMyAccount = async () => {
       console.log(error);
       throw new Error("Lỗi lấy thông tin my-account");
     }
+  }
+};
+
+export const login = async (phone: string, password: string): Promise<void> => {
+  try {
+    const res = await axios.post(
+      `${POST_LOGIN_ENDPOINT}`,
+      {
+        phone: phone,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (res.status === 200) {
+      // Login was successful
+      const data = res.data;
+      localStorage.setItem("token", data.token);
+    } else {
+      // Login failed
+    }
+  } catch (error) {
+    console.error(error);
+    throw new Error("Đăng nhập thất bại");
+  }
+};
+
+export const register = async ({ formData }: any): Promise<void> => {
+  try {
+    const res = await axios.post(
+      `${POST_REGISTER_ENDPOINT}`,
+      {
+        name: formData?.name,
+        phone: formData?.phone,
+        otp: formData?.otp,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const userNew = await fetch("/api/user/register", {
+      method: "POST",
+      body: JSON.stringify({
+        id: res.data.user.id.toString(),
+        email: res.data.user.email,
+        phoneNumber: res.data.user.phone,
+        name: res.data.user.name,
+        hash: sha256(`${res.data.user.phone}|@|${Number(res.data.user.id)}`),
+        garageId: "2",
+        role: "CUSTOMER",
+      }),
+    });
+    const customerNew = await fetch("/api/client/customer", {
+      method: "POST",
+      body: JSON.stringify({
+        userId: res.data.user.id.toString(),
+        fullName: res.data.user.name,
+        phoneNumber: res.data.user.phone,
+        hash: sha256(`${res.data.user.phone}|@|${res.data.user.name}`),
+        garageId: "2",
+      }),
+    });
+    // signIn("credentials", {
+    //   phone: phone,
+    //   otp: pin,
+    //   tokenFirebase: fcmToken,
+    //   callbackUrl: `/dashboard`,
+    // });
+  } catch (error) {
+    console.error(error);
+    throw new Error("Đăng Ký thất bại");
   }
 };
 

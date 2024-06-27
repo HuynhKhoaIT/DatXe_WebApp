@@ -16,6 +16,11 @@ const apiConfig = {
       method: "POST",
       headers: baseHeader,
     },
+    getAccountDlbd: {
+      baseURL: `${apiUrl}api/account`,
+      method: "GET",
+      headers: baseHeader,
+    },
     getProfile: {
       baseURL: `${apiUrl}api/client/account`,
       method: "GET",
@@ -401,6 +406,11 @@ const apiConfig = {
     customer: {
       getList: {
         baseURL: `${apiUrl}api/admin/customer`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      autoComplete: {
+        baseURL: `${apiUrl}api/admin/customer/autocomplete`,
         method: "GET",
         headers: baseHeader,
       },

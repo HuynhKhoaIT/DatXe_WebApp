@@ -1,16 +1,13 @@
 import { getCustomersAutoComplete } from "@/app/libs/prisma/customer";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { authOptions } from "../../../auth/[...nextauth]/route";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    console.log("session", session !== null);
-    if (session) {
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
       const { searchParams } = new URL(request.url);
       let page = 1;
       if (searchParams.get("page")) {
@@ -26,6 +23,8 @@ export async function GET(request: NextRequest) {
         status: "PUBLIC",
       };
       const customers = await getCustomersAutoComplete(requestData);
+
+      console.log("customers", customers);
       return NextResponse.json(customers);
     }
     throw new Error("Chua dang nhap");

@@ -15,8 +15,7 @@ import { statusOptions } from "@/constants/masterData";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { useAddCar } from "../../hooks/car/useAddCar";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
-import { AutocompletePhone } from "../../order-manager/_component/AutoCompletePhone";
-import { getOptionsCustomer, getOptionsPhone } from "../../order-manager/until";
+import { getOptionsCustomer } from "../../order-manager/until";
 import { useDisclosure } from "@mantine/hooks";
 import AutocompleteField from "@/app/components/form/AutoCompleteField";
 export default function CarForm({

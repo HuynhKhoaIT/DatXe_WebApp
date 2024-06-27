@@ -32,7 +32,7 @@ export function FormAccuracy({ login }: any) {
         tokenFirebase: fcmToken,
       });
       toast.success("Đăng nhập thành công");
-      router.push(callbackUrl || "/dashboard");
+      router.push("/");
       handlers.close();
     } catch (error) {
       toast.error("Đăng nhập thất bại");

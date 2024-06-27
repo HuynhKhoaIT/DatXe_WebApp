@@ -1,15 +1,5 @@
 "use client";
-import {
-  ActionIcon,
-  Box,
-  Button,
-  Group,
-  LoadingOverlay,
-  NumberInput,
-  Select,
-  Table,
-  Tooltip,
-} from "@mantine/core";
+import { Box, Button, Grid, Group, Select } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconPrinter, IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
@@ -26,18 +16,17 @@ import {
   handleKeyPress,
 } from "@/utils/until";
 import { getOptionsCar } from "../until";
-import { useAddOrder } from "../../hooks/order/useAddOrder";
-import OrderFormDesktop from "../_component/orderForm/OrderForm";
 import OrderFormMobile from "../_component/orderForm/mobile/OrderFormMobile";
-import { useOrderDLBD, useOrderDLBDDetail } from "../../hooks/order/useOrder";
-import { useSession } from "next-auth/react";
-import {
-  ORDER_ACCEPT,
-  ORDER_CANCEL,
-  ORDER_DONE,
-  ORDER_PENDING,
-} from "@/constants";
+import { useOrderDLBD } from "../../hooks/order/useOrder";
+import { ORDER_ACCEPT, ORDER_CANCEL, ORDER_DONE } from "@/constants";
 import { toast } from "react-toastify";
+import AlertOrderCancel from "./_componentDesktop/AlertOrderCancel";
+import InfoCustomer from "../_component/InfoCustomer";
+import InfoCustomer2 from "../_component/InfoCustomer2";
+import InfoCar from "../_component/InfoCar";
+import CartListProduct from "./_componentDesktop/CartListProduct";
+import InfoCart from "./_componentDesktop/InfoCart";
+import FooterOrder from "./_componentDesktop/FooterOrder";
 
 export default function OrderForm({
   isEditing = false,
@@ -48,6 +37,7 @@ export default function OrderForm({
   brandOptions,
   dbDLBD,
   session,
+  updateCustomer,
 }: any) {
   const router = useRouter();
   var {
@@ -84,6 +74,12 @@ export default function OrderForm({
   const [loading, handlers] = useDisclosure();
   const [loadingButton, handlersButton] = useDisclosure();
   const [loadingSave, handlersSave] = useDisclosure();
+  const [loadingUpdate, handlersUpdate] = useDisclosure();
+  const [isLoadingAccess, handlersAccess] = useDisclosure();
+  const [isLoadingDone, handlersDone] = useDisclosure();
+  const [isLoadingCancel, handlersCancel] = useDisclosure();
+  const [isLoadingDb, handlersDb] = useDisclosure();
+  const [isLoadingCreate, handlersCreate] = useDisclosure();
 
   const [selectedProducts, setSelectedProducts] = useState<any>(
     dataDetail
@@ -270,11 +266,10 @@ export default function OrderForm({
 
   // submit form
   const handleSubmit = async (values: any) => {
-    handlersSave.open();
     values.subTotal = calculateSubTotal();
     values.total = calculateSubTotal();
     values.dateTime = new Date();
-    handlersButton.open();
+    handlersCreate.open();
     if (isEditing) {
       await updateItem(values);
       toast.success("Cập nhật thành công");
@@ -282,9 +277,9 @@ export default function OrderForm({
       await createItem(values);
       toast.success("Thêm thành công");
     }
+    handlersCreate.close();
     router.back();
     router.refresh();
-    handlersSave.close();
   };
 
   const [customer, setCustomer] = useState({});
@@ -335,147 +330,13 @@ export default function OrderForm({
     }
   };
 
-  const columns = [
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tên sản phẩm
-        </span>
-      ),
-      name: "name",
-      dataIndex: ["name"],
-      render: (dataRow: any) => {
-        return <span>{dataRow}</span>;
-      },
-    },
-
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giá bán</span>
-      ),
-      name: "price",
-      dataIndex: ["sellPrice"],
-      textAlign: "right",
-      render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
-      },
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Số lượng</span>
-      ),
-      name: "quantity",
-      width: 100,
-      dataIndex: ["quantity"],
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tổng tiền
-        </span>
-      ),
-      name: "priceSale",
-      dataIndex: ["total"],
-      textAlign: "right",
-
-      render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
-      },
-    },
-  ];
-
-  const rows = form.values.detail.map((selectedRow: any, index: number) => {
-    // const images = JSON.parse(selectedRow.images);
-    return (
-      <Table.Tr key={index}>
-        <Table.Td miw={200} style={{ fontSize: "18px" }}>
-          {selectedRow.name || selectedRow?.product?.name || ""}
-        </Table.Td>
-        <Table.Td w={200}>
-          <NumberInput
-            size="lg"
-            radius={0}
-            w={200}
-            {...form.getInputProps(`detail.${index}.priceSale`)}
-            min={0}
-            placeholder="Giá sale"
-            suffix="đ"
-            thousandSeparator=","
-            onChange={(value: any) => {
-              form.setFieldValue(
-                `detail.${index}.subTotal`,
-                form.values.detail[index].quantity * Number(value)
-              );
-              form.setFieldValue(`detail.${index}.priceSale`, value);
-            }}
-          />
-        </Table.Td>
-        <Table.Td w={150}>
-          <NumberInput
-            size="lg"
-            radius={0}
-            w={150}
-            {...form.getInputProps(`detail.${index}.quantity`)}
-            min={0}
-            placeholder="Số lượng"
-            thousandSeparator=","
-            onChange={(value: any) => {
-              form.setFieldValue(`detail.${index}.quantity`, value);
-              form.setFieldValue(
-                `detail.${index}.subTotal`,
-                form.values.detail[index].priceSale * Number(value)
-              );
-            }}
-          />
-        </Table.Td>
-        <Table.Td w={150}>
-          <NumberInput
-            size="lg"
-            radius={0}
-            w={150}
-            {...form.getInputProps(`detail.${index}.subTotal`)}
-            min={0}
-            readOnly
-            thousandSeparator=","
-            suffix="đ"
-          />
-        </Table.Td>
-        <Table.Td
-          className="no-print"
-          style={{ width: "120px", textAlign: "center" }}
-        >
-          <>
-            <Tooltip label="Xoá" withArrow position="bottom">
-              <Button
-                size="lg"
-                radius={0}
-                p={5}
-                variant="transparent"
-                color="red"
-                onClick={(e) => {
-                  setSelectedProducts(
-                    selectedProducts.filter(
-                      (selectedItem: any) =>
-                        selectedItem.id !== selectedRow.id &&
-                        selectedItem.id !== selectedRow.productId
-                    )
-                  );
-                }}
-              >
-                <IconTrash size={16} color="red" />
-              </Button>
-            </Tooltip>
-          </>
-        </Table.Td>
-      </Table.Tr>
-    );
-  });
-
   const UpdateConfirm = (step: any) => {
     var subTitle = "";
     if (step == ORDER_CANCEL) {
+      handlersCancel.open();
       subTitle = "huỷ đơn hàng";
     } else if (step == ORDER_ACCEPT) {
+      handlersAccess.open();
       subTitle = "tiếp nhận đơn hàng";
     } else if (step == ORDER_DONE) {
       subTitle = "hoàn thành đơn hàng";
@@ -494,8 +355,18 @@ export default function OrderForm({
       withCloseButton: false,
       labels: { confirm: "Có", cancel: "Không" },
       onConfirm: async () => {
+        if (step == ORDER_CANCEL) {
+          handlersCancel.open();
+        } else if (step == ORDER_ACCEPT) {
+          handlersAccess.open();
+        } else if (step == ORDER_DONE) {
+          handlersDone.open();
+        }
         await updateStep({ step: step, id: dataDetail?.id });
         toast.success("Cập nhật thành công");
+        handlersAccess.close();
+        handlersCancel.close();
+        handlersDone.close();
         router.back();
         router.refresh();
       },
@@ -503,6 +374,7 @@ export default function OrderForm({
   };
 
   const HandleCancelOrder = (step: any) => {
+    handlersCancel.open();
     var cancelReason = "";
     modals.openConfirmModal({
       title: (
@@ -536,12 +408,14 @@ export default function OrderForm({
       // zIndex: 99,
       withCloseButton: false,
       labels: { confirm: "Xác nhận", cancel: "Huỷ" },
-      onConfirm: () =>
-        updateStep({
+      onConfirm: async () => {
+        await updateStep({
           step: step,
           id: dataDetail?.id,
           cancelReason: cancelReason,
         }),
+          handlersCancel.close();
+      },
     });
   };
 
@@ -557,9 +431,11 @@ export default function OrderForm({
   }, [licenseNumber]);
 
   const handleDbDLBD = async () => {
+    handlersDb.open();
     await dbDLBD({
       id: dataDetail?.id,
     });
+    handlersDb.close();
     router.back();
     router.refresh();
   };
@@ -609,43 +485,72 @@ export default function OrderForm({
             calculateSubTotal={calculateSubTotal}
             HandleCancelOrder={HandleCancelOrder}
             UpdateConfirm={UpdateConfirm}
-            // isPendingUpdate={isPendingUpdate}
-            // isPendingAdd={isPendingAdd}
             handleDbDLBD={handleDbDLBD}
-            // isPendingDlbd={isPendingDlbd}
+            isLoadingDb={isLoadingDb}
+            isLoadingAccess={isLoadingAccess}
+            isLoadingDone={isLoadingDone}
+            isLoadingCancel={isLoadingCancel}
+            isLoadingCreate={isLoadingCreate}
           />
         ) : (
-          <OrderFormDesktop
-            dataDetail={dataDetail}
-            form={form}
-            car={car}
-            loading={loading}
-            brandOptions={brandOptions}
-            isUser={isUser}
-            setModelOptions={setModelOptions}
-            modelOptions={modelOptions}
-            yearCarOptions={yearCarOptions}
-            setYearCarOptions={setYearCarOptions}
-            openModalUpdate={openModalUpdate}
-            handleGetInfo={handleGetInfo}
-            openModalUpdateCustomer={openModalUpdateCustomer}
-            styles={styles}
-            openModal={openModal}
-            rows={rows}
-            isEditing={isEditing}
-            stepOrderOptions={stepOrderOptions}
-            calculateSubTotal={calculateSubTotal}
-            setActiveTab={setActiveTab}
-            HandleCancelOrder={HandleCancelOrder}
-            UpdateConfirm={UpdateConfirm}
-            isPendingUpdate={loadingSave}
-            isPendingAdd={loadingSave}
-            loadingButton={loadingSave}
-            handleDbDLBD={handleDbDLBD}
-            columns={columns}
-            user={session.user}
-            // isPendingDlbd={isPendingDlbd}
-          />
+          <div className="printable">
+            {dataDetail?.step === Number(ORDER_CANCEL) && (
+              <AlertOrderCancel cancelReason={dataDetail.cancelReason} />
+            )}
+            <Grid gutter={12}>
+              <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12, xl: 6 }}>
+                <InfoCar
+                  loading={loading}
+                  brandOptions={brandOptions}
+                  car={car}
+                  isUser={isUser}
+                  setModelOptions={setModelOptions}
+                  modelOptions={modelOptions}
+                  yearCarOptions={yearCarOptions}
+                  setYearCarOptions={setYearCarOptions}
+                  form={form}
+                  openModalUpdate={openModalUpdate}
+                  handleGetInfo={handleGetInfo}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12, xl: 6 }}>
+                <InfoCustomer
+                  openModalUpdateCustomer={openModalUpdateCustomer}
+                  form={form}
+                  isUser={isUser}
+                  loading={loading}
+                />
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <InfoCustomer2 form={form} isUser={isUser} />
+              </Grid.Col>
+            </Grid>
+            <CartListProduct
+              dataDetail={dataDetail}
+              openModal={openModal}
+              form={form}
+              setSelectedProducts={setSelectedProducts}
+              selectedProducts={selectedProducts}
+            />
+            <InfoCart
+              calculateSubTotal={calculateSubTotal}
+              form={form}
+              isEditing={isEditing}
+            />
+            <FooterOrder
+              dataDetail={dataDetail}
+              isEditing={isEditing}
+              handleDbDLBD={handleDbDLBD}
+              HandleCancelOrder={HandleCancelOrder}
+              UpdateConfirm={UpdateConfirm}
+              user={session?.user}
+              isLoadingDb={isLoadingDb}
+              isLoadingAccess={isLoadingAccess}
+              isLoadingDone={isLoadingDone}
+              isLoadingCancel={isLoadingCancel}
+              isLoadingCreate={isLoadingCreate}
+            />
+          </div>
         )}
       </form>
 
@@ -655,6 +560,7 @@ export default function OrderForm({
           openModal={openedModalUpdateCustomer}
           close={closeModalUpdateCustomer}
           formOrder={form}
+          updateCustomer={updateCustomer}
         />
       )}
       {openedModalUpdate && (

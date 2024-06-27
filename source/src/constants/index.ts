@@ -1,5 +1,3 @@
-import BookingTTDK from "@/app/admin/(admin)/booking-ttdk/page";
-
 export const apiUrl = process.env.REACT_APP_API;
 export const apiGuest = process.env.apiGuest;
 
@@ -133,6 +131,7 @@ export const storageKeys = {
   USER_ACCESS_TOKEN: `${appName}-user-access-token`,
   ADDRESS_DEFAULT: `${appName}-address-default`,
   CART_DATA: `${appName}-cart-data`,
+  ROLE: `${appName}-role`,
 };
 export const AppConstants = {
   apiRootUrl: process.env.REACT_APP_API,

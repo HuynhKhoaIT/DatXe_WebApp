@@ -1,9 +1,8 @@
+"use server";
 /**
  * External Dependencies.
  */
 import axios from "axios";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth/next";
 /**
  * Internal Dependencies.
  */
@@ -15,14 +14,15 @@ import {
 import { IOrder } from "@/interfaces/order";
 import { IOrderDetail } from "@/interfaces/orderDetail";
 import { convertViToEn } from "./until";
+import { getSession } from "@/lib/auth";
 /**
  * Get getOrders.
  *
  * @return {Promise<void>}
  */
 export const getOrders = async (pageNo = 1) => {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.token) {
+  const session = await getSession();
+  if (session?.user) {
     try {
       const config = {
         headers: { Authorization: `Bearer ${session?.user?.token}` },
@@ -39,8 +39,8 @@ export const getOrders = async (pageNo = 1) => {
 };
 
 export const getOrdersOfGarage = async (garageId: number) => {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.token) {
+  const session = await getSession();
+  if (session?.user) {
     try {
       const config = {
         headers: { Authorization: `Bearer ${session?.user?.token}` },
@@ -59,8 +59,8 @@ export const getOrdersOfGarage = async (garageId: number) => {
 };
 
 export const getOrder = async (orderId = 0) => {
-  const session = await getServerSession(authOptions);
-  if (session?.user?.token && orderId != 0) {
+  const session = await getSession();
+  if (session?.user && orderId != 0) {
     const config = {
       headers: { Authorization: `Bearer ${session?.user?.token}` },
     };
@@ -78,7 +78,7 @@ export const getScheduleCsr = async (token: string) => {
   }
 };
 export const getSchedule = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (session?.user?.token) {
     const config = {
       headers: { Authorization: `Bearer ${session?.user?.token}` },
@@ -89,7 +89,7 @@ export const getSchedule = async () => {
 };
 
 export const getOrderDetail = async (orderId = 0) => {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (session?.user?.token && orderId != 0) {
     try {
       const config = {
@@ -104,7 +104,7 @@ export const getOrderDetail = async (orderId = 0) => {
   }
 };
 
-export function showStatusOrder(status: any) {
+export const showStatusOrder = (status: any) => {
   let s = "Đang tiếp nhận";
   switch (status) {
     case "0":
@@ -133,7 +133,7 @@ export function showStatusOrder(status: any) {
       break;
   }
   return s;
-}
+};
 
 export const checkOutCart = async (
   carId: any,

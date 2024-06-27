@@ -1,8 +1,5 @@
 import { createCar, getCars } from "@/app/libs/prisma/car";
-import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { getCustomerByUserId } from "@/app/libs/prisma/customer";
 import { checkAuthToken } from "@/utils/auth";
 

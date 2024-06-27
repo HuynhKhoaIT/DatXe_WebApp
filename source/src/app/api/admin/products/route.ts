@@ -1,7 +1,5 @@
 import prisma from "@/app/libs/prismadb";
-import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../auth/[...nextauth]/route";
 import { slugify } from "@/utils/index";
 type ResponseBody = { errors: { message: string }[] } | { username: string };
 import { getProducts } from "@/app/libs/prisma/product";

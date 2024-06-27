@@ -52,11 +52,10 @@ export default function FormLogin({ sendOtp, login, checkPhone }: any) {
               phone: phone,
               password: password,
               otp: "",
-              callbackUrl: callbackUrl || "/dashboard",
               tokenFirebase: fcmToken,
             });
             toast.success("Đăng nhập thành công");
-            router.push(callbackUrl || "/dashboard");
+            router.push("/");
             handlers.close();
           } catch (error) {
             toast.error("Đăng nhập thất bại");
