@@ -1,14 +1,14 @@
 "use client";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { ORDER_CANCEL, ORDER_DONE } from "@/constants";
-import { stepOrderOptions } from "@/constants/masterData";
-import { ActionIcon, Badge, Box, Button, Tooltip } from "@mantine/core";
+import { DATE_FORMAT_DISPLAY, ORDER_CANCEL, ORDER_DONE } from "@/constants";
+import { ActionIcon, Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconCheck, IconPencil, IconTrash } from "@tabler/icons-react";
+import { IconPencil } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
+import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { toast } from "react-toastify";
 const DynamicModalDeleteItem = dynamic(
   () => import("../../../../_component/ModalDeleteItem"),
   {
@@ -17,20 +17,15 @@ const DynamicModalDeleteItem = dynamic(
 );
 export default function TableListPage({ dataSource, deleteItem }: any) {
   const router = useRouter();
+  const [deleteRow, setDeleteRow] = useState();
+  const handleDeleteItem = async (id: string) => {
+    await deleteItem(id);
+  };
+
   const [
     openedDeleteItem,
     { open: openDeleteProduct, close: closeDeleteItem },
   ] = useDisclosure(false);
-  const [deleteRow, setDeleteRow] = useState();
-  const handleDeleteItem = async (id: string) => {
-    const res = await deleteItem(id);
-    if (res) {
-      toast.success("Xoá thành công");
-      router.refresh();
-    } else {
-      toast.success("Xoá thất bại");
-    }
-  };
 
   const columns = [
     {
@@ -47,10 +42,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
         </span>
       ),
       name: "fullName",
-      dataIndex: ["customer"],
-      render: (dataRow: any) => {
-        return <span>{dataRow.fullName}</span>;
-      },
+      dataIndex: ["fullname"],
     },
     {
       label: (
@@ -59,10 +51,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
         </span>
       ),
       name: "phoneNumber",
-      dataIndex: ["customer"],
-      render: (dataRow: any) => {
-        return <span>{dataRow.phoneNumber}</span>;
-      },
+      dataIndex: ["phone"],
     },
     {
       label: (
@@ -71,7 +60,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
         </span>
       ),
       name: "phoneNumber",
-      dataIndex: ["car", "numberPlates"],
+      dataIndex: ["licensePlates"],
       render: (dataRow: any) => {
         return <span>{dataRow}</span>;
       },
@@ -79,57 +68,24 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
     {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tổng đơn hàng
+          Ngày đặt lịch
         </span>
       ),
+      name: "dateSchedule",
+      dataIndex: ["dateSchedule"],
       textAlign: "right",
-
-      name: "total",
-      dataIndex: ["total"],
-      render: (dataRow: number) => {
-        return <span>{dataRow?.toLocaleString()}đ</span>;
-      },
-    },
-
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
-          Tình trạng
-        </span>
-      ),
-      name: "kind",
-      dataIndex: ["step"],
-      width: "100px",
-      render: (record: any, index: number) => {
-        const matchedStatus = stepOrderOptions.find(
-          (item) => item.value === record.toString()
-        );
-        if (matchedStatus) {
-          return (
-            <Badge
-              radius={0}
-              size="lg"
-              variant="light"
-              color={matchedStatus.color}
-              key={index}
-            >
-              {matchedStatus.label}
-            </Badge>
-          );
-        }
+      render: (dataRow: any) => {
+        return <span>{dayjs(dataRow).format(DATE_FORMAT_DISPLAY)}</span>;
       },
     },
     {
       label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Đồng bộ</span>
+        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Giờ</span>
       ),
-      name: "orderDLBDId",
-      textAlign: "center",
-      dataIndex: ["orderDLBDId"],
-      width: "100px",
-
-      render: (dataRow: number) => {
-        if (dataRow) return <IconCheck color="green" size={20} />;
+      name: "time",
+      dataIndex: ["time"],
+      render: (dataRow: any) => {
+        return <span>{dataRow}</span>;
       },
     },
     {
@@ -157,7 +113,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
                 p={5}
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push(`/admin/order-detail/${record?.id}`);
+                  router.push(`/admin/booking-ttdk/${record?.id}`);
                 }}
               >
                 <IconPencil size={16} color="blue" />
@@ -171,9 +127,9 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
                   p={5}
                   variant="transparent"
                   onClick={(e) => {
-                    openDeleteProduct();
+                    // openDeleteProduct();
+                    // setDeleteRow(record.id);
                     e.stopPropagation();
-                    setDeleteRow(record.id);
                   }}
                 >
                   <IconTrash size={16} color={"red"} />
@@ -191,7 +147,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
         data={dataSource?.data}
         columns={columns}
         totalPage={dataSource?.totalPage}
-        onRow={`/admin/order-detail`}
+        onRow={`/admin/booking-ttdk`}
       />
       <DynamicModalDeleteItem
         openedDeleteItem={openedDeleteItem}

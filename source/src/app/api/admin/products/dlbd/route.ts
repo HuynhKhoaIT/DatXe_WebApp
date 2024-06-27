@@ -1,24 +1,18 @@
-import { getCustomers } from "@/app/libs/prisma/customer";
-import prisma from "@/app/libs/prismadb";
 import { getProductsFromDLBD } from "@/utils/getProductsFromDLBD";
 import { NextRequest, NextResponse } from "next/server";
-import validator from "validator";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const { searchParams } = new URL(request.url);
-      let garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
+      let garageId = getAuth?.garageId;
       const dataRequest = {
         page: searchParams.get("page"),
         garageId: garageId,
       };
-      const products = await getProductsFromDLBD(session.user, dataRequest);
+      const products = await getProductsFromDLBD(getAuth, dataRequest);
       return NextResponse.json(products);
     }
     throw new Error("Chua dang nhap");

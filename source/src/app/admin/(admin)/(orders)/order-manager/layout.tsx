@@ -13,6 +13,7 @@ import Link from "next/link";
 import { IconPlus } from "@tabler/icons-react";
 import FilterTable from "@/app/components/common/FilterTable";
 import { getOptionsCar } from "./until";
+import ActionBar from "@/app/components/common/ActionBar";
 interface IProps {
   children: ReactNode;
 }
@@ -47,22 +48,7 @@ export default async function Layout({ children }: IProps) {
           />
         }
         actionBar={
-          <Flex justify={"end"} align={"center"}>
-            <Link
-              href={{
-                pathname: `/admin/order-detail/create`,
-              }}
-            >
-              <Button
-                size="lg"
-                h={{ base: 42, md: 50, lg: 50 }}
-                radius={0}
-                leftSection={<IconPlus size={18} />}
-              >
-                Tạo đơn
-              </Button>
-            </Link>
-          </Flex>
+          <ActionBar linkTo="/admin/order-detail/create" label="Tạo đơn" />
         }
         filterCategory={
           <FilterTable stepOptions={stepOrderOptions} keyQuery="step" />

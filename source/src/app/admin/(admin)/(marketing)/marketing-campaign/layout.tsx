@@ -2,7 +2,7 @@ import { Fragment, ReactNode } from "react";
 import ListPage from "@/app/components/layout/ListPage";
 import SearchForm from "@/app/components/form/SearchForm";
 import { getSession } from "@/lib/auth";
-import { FieldTypes } from "@/constants/masterData";
+import { FieldTypes, kindMarketingOptions } from "@/constants/masterData";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
 import ActionBar from "@/app/components/common/ActionBar";
 interface IProps {
@@ -11,19 +11,26 @@ interface IProps {
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Bài viết" },
+  { title: "Danh sách chương trình" },
 ];
 export default async function Layout({ children }: IProps) {
   const session = await getSession();
   const searchData = [
     {
       name: "s",
-      placeholder: "Tên bài viết",
+      placeholder: "Tên chương trình",
       type: FieldTypes.STRING,
+    },
+    {
+      name: "state",
+      placeholder: "Tình trạng",
+      type: FieldTypes.SELECT,
+      data: kindMarketingOptions,
     },
   ];
   const initialValuesSearch = {
     s: "",
+    state: null,
   };
   return (
     <Fragment>
@@ -36,7 +43,9 @@ export default async function Layout({ children }: IProps) {
             initialValues={initialValuesSearch}
           />
         }
-        actionBar={<ActionBar linkTo="/admin/blog/create" />}
+        actionBar={
+          <ActionBar linkTo="/admin/marketing-detail/choose-products" />
+        }
         style={{ height: "100%" }}
         titleTable={true}
         baseTable={<>{children}</>}

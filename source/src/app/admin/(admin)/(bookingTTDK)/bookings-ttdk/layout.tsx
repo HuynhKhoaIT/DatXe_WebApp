@@ -4,27 +4,34 @@ import SearchForm from "@/app/components/form/SearchForm";
 import { getSession } from "@/lib/auth";
 import { FieldTypes } from "@/constants/masterData";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import ActionBar from "@/app/components/common/ActionBar";
+import { getOptionsCar } from "../../(orders)/order-manager/until";
 interface IProps {
   children: ReactNode;
 }
 
 const breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Bài viết" },
+  { title: "Đơn hàng TTDK" },
 ];
+
 export default async function Layout({ children }: IProps) {
   const session = await getSession();
   const searchData = [
     {
-      name: "s",
-      placeholder: "Tên bài viết",
-      type: FieldTypes.STRING,
+      name: "carId",
+      placeholder: "Biển số xe",
+      type: FieldTypes?.AUTOCOMPLETE,
+      getOptionsData: getOptionsCar,
+      isCamera: true,
     },
   ];
+
   const initialValuesSearch = {
-    s: "",
+    // s: "",
+    // customerId: null,
+    carId: null,
   };
+
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={breadcrumbs} />
@@ -36,7 +43,6 @@ export default async function Layout({ children }: IProps) {
             initialValues={initialValuesSearch}
           />
         }
-        actionBar={<ActionBar linkTo="/admin/blog/create" />}
         style={{ height: "100%" }}
         titleTable={true}
         baseTable={<>{children}</>}
