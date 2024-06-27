@@ -8,21 +8,19 @@ import { getSession } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+
+    const session:any = await getSession();
+    if (session.user) {
       const { searchParams } = new URL(request.url);
-      let garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
       const dataRequest = {
         page: searchParams.get("page"),
-        garageId: garageId,
+        garageId: session?.user.garageId,
       };
       const products = await getProductsFromDLBD(session.user, dataRequest);
       return NextResponse.json(products);
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
