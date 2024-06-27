@@ -1,7 +1,5 @@
 import prisma from "@/app/libs/prismadb";
-import { getServerSession } from "next-auth/next";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../../../auth/[...nextauth]/route";
 import { showGarage, updateGarage } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
 
@@ -31,8 +29,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (1) {
+    const session:any = await getSession();
+    if (session) {
       const id = params.id;
       let createdBy = 1;
       if (!id) {
@@ -50,7 +48,7 @@ export async function PUT(
         headers: { "Content-Type": "application/json" },
       });
     }
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
