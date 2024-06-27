@@ -114,7 +114,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
           <>
             <Link
               href={{
-                pathname: `/admin/categories/${record.id}`,
+                pathname: `/admin/category/${record.id}`,
               }}
             >
               <Button
@@ -173,7 +173,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
       <Flex justify={"end"} align={"center"}>
         <Link
           href={{
-            pathname: `/admin/categories/create`,
+            pathname: `/admin/category/create`,
           }}
         >
           <Button

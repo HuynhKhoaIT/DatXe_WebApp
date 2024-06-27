@@ -19,6 +19,7 @@ import Logo from "../assets/images/logo.png";
 import ToastProvider from "./providers/toaster-provider";
 // import StoreProvider from "./StoreProvider";
 import { GlobalContextProvider } from "./Context/store";
+import NextTopLoader from "nextjs-toploader";
 
 export const dynamic = "force-dynamic";
 const inter = Inter({ subsets: ["latin"] });
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: IProps) {
   return (
     <html lang="vi" suppressHydrationWarning>
       <body className={inter.className}>
+        <NextTopLoader color="var(--theme-color)" />
         <GlobalContextProvider>
           <QueryProvider>
             <MantineProvider theme={theme}>

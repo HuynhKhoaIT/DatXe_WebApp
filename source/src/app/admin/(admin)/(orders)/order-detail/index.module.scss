@@ -1,0 +1,10 @@
+.loadingPage{
+    display: block;
+    margin-bottom: 30px;
+    .infoCustomer{
+        width: 100%;
+        display: grid;
+        gap: 20px;
+        grid-template-columns: repeat(2,1fr);
+    }
+}

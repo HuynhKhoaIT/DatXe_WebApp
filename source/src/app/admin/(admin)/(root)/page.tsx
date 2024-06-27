@@ -1,9 +1,13 @@
 import styles from "./index.module.scss";
-import MenuTop from "./_component/MenuTop";
-import InfoDashboard from "./_component/InfoDashboard";
+import MenuTop, { MenuSkeleton } from "./_component/MenuTop";
+import InfoDashboard, {
+  InfoDashboardSkeleton,
+} from "./_component/InfoDashboard";
 import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
-import ChartDashboard from "./_component/ChartDashboard";
+import ChartDashboard, {
+  ChartDashboardSkeleton,
+} from "./_component/ChartDashboard";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import { headers } from "next/headers";
 import { ORDER_ACCEPT, ORDER_CANCEL, ORDER_DONE } from "@/constants";
@@ -38,11 +42,6 @@ export default async function DashboardAdmin({ searchParams }: any) {
     currentDate.getDate()
   );
 
-  // const isMobile = useMediaQuery("(max-width: 600px)");
-  // const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
-  //   false
-  // );
-
   return (
     <div className={styles.main}>
       {myGarage?.status === "PUBLIC" && (
@@ -66,15 +65,16 @@ export default async function DashboardAdmin({ searchParams }: any) {
           Chuyên gia đã bị xoá, hãy liên hệ với admin tổng.
         </Alert>
       )}
-      <MenuTop />
-      <Suspense fallback={<>loading...</>}>
+      <Suspense fallback={<MenuSkeleton />}>
+        <MenuTop />
+      </Suspense>
+      <Suspense fallback={<InfoDashboardSkeleton />}>
         <InfoDashboard
           firstDayOfMonth={firstDayOfMonth}
           lastDayOfMonth={lastDayOfMonth}
           newArray={newArray}
         />
       </Suspense>
-
       {isMobile && (
         <div className={styles.card_3}>
           <div className={styles.item_card}>
@@ -109,20 +109,12 @@ export default async function DashboardAdmin({ searchParams }: any) {
           </div>
         </div>
       )}
-      <Suspense fallback={<>loading...</>}>
+      <Suspense fallback={<ChartDashboardSkeleton />}>
         <ChartDashboard newArray={newArray} />
       </Suspense>
-
       {/* {openedModal && (
         <DynamicModalAcceptCart openModal={openedModal} close={closeModal} />
       )} */}
-      {isMobile && (
-        <footer className={styles.appFooter}>
-          <div>
-            <strong>DatXE - Ứng dụng đặt lịch sửa xe </strong>
-          </div>
-        </footer>
-      )}
     </div>
   );
 }

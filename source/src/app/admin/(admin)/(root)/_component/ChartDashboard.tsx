@@ -1,5 +1,6 @@
 "use client";
 import Chart from "@/app/admin/_component/chart";
+import { Skeleton } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -54,4 +55,8 @@ export default function ChartDashboard({ newArray }: any) {
       lastDayOfMonth={lastDayOfMonth}
     />
   );
+}
+
+export function ChartDashboardSkeleton() {
+  return <Skeleton h={600} radius={10} />;
 }

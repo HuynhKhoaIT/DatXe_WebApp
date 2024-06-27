@@ -1,5 +1,5 @@
 "use client";
-import NewsForm from "@/app/admin/(admin)/blogs/create/NewsForm";
+import NewsForm from "@/app/admin/(admin)/(blogs)/blog/create/NewsForm";
 import { useNewsDetail } from "@/app/admin/(admin)/hooks/news/useNews";
 import { Box } from "@mantine/core";
 export const revalidate = 60;

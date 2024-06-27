@@ -71,7 +71,6 @@ export default function SearchForm({
       values.brand = values?.yearId;
     }
 
-    console.log(values);
     const queryString = Object.keys(values)
       .filter((key) => values[key] !== null)
       .map(

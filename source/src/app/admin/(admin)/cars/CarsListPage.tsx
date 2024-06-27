@@ -10,7 +10,7 @@ import { FieldTypes, statusOptions } from "@/constants/masterData";
 import SearchForm from "@/app/components/form/SearchForm";
 import ListPage from "@/app/components/layout/ListPage";
 import styles from "./index.module.scss";
-import { getOptionsCar } from "../order-manager/until";
+import { getOptionsCar } from "../(orders)/order-manager/until";
 const DynamicModalDeleteItem = dynamic(
   () => import("../../_component/ModalDeleteItem"),
   {
