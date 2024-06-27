@@ -21,7 +21,7 @@ import styles from "./ModalAcceptCar.module.scss";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
-import { getOptionsCar } from "../order-manager/until";
+import { getOptionsCar } from "../(orders)/order-manager/until";
 export default function ModalAcceptCar({ openModal, close }: any) {
   const [numberPlate, setNumberPlate] = useState("");
   const router = useRouter();
@@ -134,7 +134,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
           <>
             <Link
               href={{
-                pathname: `/admin/order-manager/${record.slug}`,
+                pathname: `/admin/order-detail/${record.slug}`,
               }}
             >
               <Tooltip label="Cập nhật" withArrow position="bottom">
@@ -201,7 +201,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
           <Button
             onClick={() => {
               router.push(
-                `/admin/order-manager/create?numberPlate=${numberPlate}`
+                `/admin/order-detail/create?numberPlate=${numberPlate}`
               );
             }}
           >
@@ -217,7 +217,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
               totalPage={list?.totalPage}
               setPage={setPage}
               activePage={page}
-              onRow={`/admin/order-manager`}
+              onRow={`/admin/order-detail`}
             />
           ) : (
             <div className={styles.pleaseInput}>

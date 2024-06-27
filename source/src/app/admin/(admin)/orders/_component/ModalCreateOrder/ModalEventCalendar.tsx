@@ -17,9 +17,12 @@ import { useRef } from "react";
 import { ActionIcon, rem } from "@mantine/core";
 import { IconClock } from "@tabler/icons-react";
 import styles from "./index.module.scss";
-import { AutocompletePhone } from "../../../order-manager/_component/AutoCompletePhone";
-import { getOptionsCar, getOptionsPhone } from "../../../order-manager/until";
-import { AutocompleteLicensePlates } from "../../../order-manager/_component/AutoCompleteLicensePlates";
+import { AutocompletePhone } from "../../../(orders)/order-manager/_component/AutoCompletePhone";
+import {
+  getOptionsCar,
+  getOptionsPhone,
+} from "../../../(orders)/order-manager/until";
+import { AutocompleteLicensePlates } from "../../../(orders)/order-manager/_component/AutoCompleteLicensePlates";
 import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { useMyGarage } from "@/app/hooks/useMyGarage";
 

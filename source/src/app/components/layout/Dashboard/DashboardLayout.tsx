@@ -8,6 +8,7 @@ import styles from "./index.module.scss";
 import Link from "next/link";
 import { NavbarNested } from "@/app/admin/NavbarNested";
 import logo from "@/assets/images/logo.png";
+import { Suspense } from "react";
 
 export default function DashboardLayout({
   user,
@@ -18,7 +19,6 @@ export default function DashboardLayout({
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   const [opened, { toggle }] = useDisclosure();
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
-  console.log("myGarage", myGarage);
   return (
     <AppShell
       layout="alt"
@@ -85,7 +85,7 @@ export default function DashboardLayout({
         </Group>
         <NavbarNested toggle={toggle} user={user} />
       </AppShell.Navbar>
-      <AppShell.Main className={styles.main}>{children}</AppShell.Main>
+      <AppShell.Main className={styles.main}>{children} </AppShell.Main>
     </AppShell>
   );
 }

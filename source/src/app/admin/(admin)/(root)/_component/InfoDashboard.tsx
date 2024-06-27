@@ -4,6 +4,7 @@ import CarService from "@/assets/images/carService2.jpeg";
 import styles from "./index.module.scss";
 import dayjs from "dayjs";
 import { useSearchParams } from "next/navigation";
+import { Skeleton } from "@mantine/core";
 export default function InfoDashboard({
   lastDayOfMonth,
   firstDayOfMonth,
@@ -37,4 +38,8 @@ export default function InfoDashboard({
       </div>
     </div>
   );
+}
+
+export function InfoDashboardSkeleton() {
+  return <Skeleton h={600} radius={10} />;
 }

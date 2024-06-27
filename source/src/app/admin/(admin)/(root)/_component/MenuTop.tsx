@@ -10,6 +10,7 @@ import Calendar from "@/assets/icons/calendar-svgrepo-com.svg";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import { Skeleton } from "@mantine/core";
 export default function MenuTop() {
   const router = useRouter();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
@@ -114,3 +115,7 @@ const DynamicModalAcceptCart = dynamic(
     ssr: false,
   }
 );
+
+export function MenuSkeleton() {
+  return <Skeleton h={236} radius={10} />;
+}

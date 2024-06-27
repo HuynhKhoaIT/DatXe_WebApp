@@ -1,7 +1,5 @@
 import { ReactNode } from "react";
-
 import PageUnauthorized from "../components/page/unauthorized";
-import NotificationDropDown from "../layout/common/desktop/_component/NotificationDropDown";
 import { callApi, getSession, logout } from "@/lib/auth";
 import { ROLE_CUSTOMER } from "@/constants";
 import DashboardLayout from "../components/layout/Dashboard/DashboardLayout";

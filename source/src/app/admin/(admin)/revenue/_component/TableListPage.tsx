@@ -77,7 +77,7 @@ export default function TableListPage({ dataSource }: any) {
           <>
             <Link
               href={{
-                pathname: `/admin/order-manager/${record.id}`,
+                pathname: `/admin/order-detail/${record.id}`,
               }}
             >
               <Tooltip label="Chi tiết" withArrow position="bottom">
