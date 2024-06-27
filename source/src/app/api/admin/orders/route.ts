@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
   try {
     const getAuth = await checkAuthToken(request);
     if (getAuth) {
-      let garageId = getAuth?.garageId ?? "";
+      let garageId = getAuth.garageId ?? "";
       const { searchParams } = new URL(request.url);
       let page = 1;
       let limit = 10;
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
         garageId: garageId,
       };
       const orders = await getOrders(garageId, requestData);
-      
+
       return NextResponse.json(orders);
     }
     throw new Error("Chua dang nhap");

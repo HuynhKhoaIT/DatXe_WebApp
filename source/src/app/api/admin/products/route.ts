@@ -3,14 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { slugify } from "@/utils/index";
 type ResponseBody = { errors: { message: string }[] } | { username: string };
 import { getProducts } from "@/app/libs/prisma/product";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { generateUUID } from "@/utils/until";
 import { createSeoMeta } from "@/app/libs/prisma/seoMeta";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
+import { ROLE_ADMIN, ROLE_EXPERT } from "@/constants";
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session && session.user?.role == "ADMINGARAGE") {
+    const getAuth: any = await checkAuthToken(request);
+    if (getAuth?.role == ROLE_EXPERT) {
       const { searchParams } = new URL(request.url);
       const categoryId = searchParams.get("categoryId");
       const brandIdFilter = searchParams.get("brand");
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
       if (searchParams.get("status")) {
         statusFilter = searchParams.get("status")!.toUpperCase();
       }
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+      let garageId = getAuth?.garageId;
       // return NextResponse.json(session.user?.garageId)
       const requestData = {
         category: categoryId,
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
       const products = await getProducts(requestData);
 
       return NextResponse.json(products);
-    } else if (session && session.user?.role == "ADMIN") {
+    } else if (getAuth?.role == ROLE_ADMIN) {
       const { searchParams } = new URL(request.url);
       const categoryId = searchParams.get("categoryId");
       const brandIdFilter = searchParams.get("brand");
@@ -103,18 +103,16 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
-    const session = await getSession();
-    if (session && session.user?.role == "ADMINGARAGE") {
+    const getAuth: any = await checkAuthToken(request);
+    if (getAuth?.role == ROLE_EXPERT) {
       let catArr: any = [];
       let brandArr: any = [];
       let createdBy = "0";
 
-      let garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
+      let garageId = getAuth?.garageId;
       let isProduct = true;
 
       if (!json.categories) {
@@ -122,7 +120,7 @@ export async function POST(request: Request) {
       } else {
         json.categories.forEach(function (id: number) {
           catArr.push({
-            assignedBy: session?.user?.name ?? "Admin",
+            assignedBy: getAuth?.fullName ?? "Admin",
             assignedAt: new Date(),
             category: {
               connect: {
@@ -135,7 +133,7 @@ export async function POST(request: Request) {
 
       if (!json.brands) {
         brandArr = {
-          assignedBy: session?.user?.name ?? "Admin",
+          assignedBy: getAuth?.fullName ?? "Admin",
           assignedAt: new Date(),
           carBrandType: "CARBRAND",
           carModel: {
@@ -148,7 +146,7 @@ export async function POST(request: Request) {
         let brandArrTemp: any = [];
         json.brands.forEach(function (b: any) {
           const assignedAt = new Date();
-          const assignedBy = session?.user?.name ?? "Admin";
+          const assignedBy = getAuth?.fullName ?? "Admin";
           if (b.yearId) {
             const yearArr = b.yearId.split(",");
             yearArr.forEach(function (y: any) {
@@ -202,8 +200,8 @@ export async function POST(request: Request) {
           }
         });
       }
-      if (session?.user?.id) {
-        createdBy = session.user.id;
+      if (getAuth?.id) {
+        createdBy = getAuth.id;
       }
       if (typeof json.isProduct !== "undefined") {
         isProduct = Number(json.isProduct) == 1 ? true : false;
