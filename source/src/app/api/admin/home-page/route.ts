@@ -4,12 +4,12 @@ import {
   deleteProductsHome,
   getProductsHome,
 } from "@/app/libs/prisma/homepage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const { searchParams } = new URL(request.url);
       const products = await getProductsHome(
         Number(searchParams.get("isProduct"))

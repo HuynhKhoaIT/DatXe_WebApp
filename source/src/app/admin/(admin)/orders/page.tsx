@@ -31,12 +31,25 @@ export default async function Orders() {
     value: item.id.toString(),
     label: item.title,
   }));
+  async function hanldeCreate(formData: FormData) {
+    "use server";
+    try {
+      const res = await callApi(apiConfig.admin.order.create, {
+        data: formData,
+      });
+      return res;
+    } catch (error) {
+      return null;
+    }
+  }
+
   return (
     <div className={styles.wrapper}>
       <CalendarSchedulerGarage
         categoryOptions={categoryOptions}
         ordersData={mappedOrdersData}
         brandOptions={dataOption}
+        addItem={hanldeCreate}
       />
     </div>
   );
