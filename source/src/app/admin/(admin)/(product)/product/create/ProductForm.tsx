@@ -29,24 +29,19 @@ import {
   IconChevronRight,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function ProductForm({
   isEditing = false,
   dataDetail,
   isDirection = false,
-  isLoading,
   closeModalSync,
   categoryOptions,
+  updateItem,
+  createItem,
 }: any) {
-  const {
-    addItem,
-    updateItem,
-    isLoadingCategory,
-    isSuccessAdd,
-  } = useAddProduct();
-  const route = useRouter();
+  const router = useRouter();
   const [opened, { toggle }] = useDisclosure(false);
-
   const [loading, handlers] = useDisclosure();
   const [valueRTE, setValueRTE] = useState("");
   const [images, setImages] = useState<any>();
@@ -179,144 +174,201 @@ export default function ProductForm({
 
     handlers.open();
     if (isEditing) {
-      await updateItem(values);
+      const res = await updateItem(values);
+      console.log(res);
+      if (res) {
+        toast.success("Cập nhật thành công");
+        router.back();
+        router.refresh();
+      } else {
+        toast.error("Cập nhật thất bại");
+        router.back();
+      }
     } else {
-      await addItem(values);
+      const res = await createItem(values);
+      if (res) {
+        toast.success("Thêm thành công");
+        router.back();
+        router.refresh();
+      } else {
+        toast.error("Thêm thất bại");
+        router.back();
+      }
+    }
+    if (closeModalSync) {
+      closeModalSync();
     }
     handlers.close();
   };
 
-  useEffect(() => {
-    if (isSuccessAdd) {
-      if (isDirection) {
-        route.refresh();
-        closeModalSync();
-      } else {
-        route.back();
-      }
-    }
-  }, [isSuccessAdd]);
-
   return (
-    <Box pos="relative">
-      <LoadingOverlay
-        visible={loading || isLoadingCategory || isLoading}
-        zIndex={99}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Grid gutter={12}>
-          <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
-            <Card withBorder shadow="sm">
-              <Grid gutter={10}>
-                <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    withAsterisk
-                    {...form.getInputProps("name")}
-                    label="Tên sản phẩm"
-                    type="text"
-                    placeholder="Tên sản phẩm"
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
-                  <Select
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("isProduct")}
-                    label="Loại"
-                    checkIconPosition="right"
-                    placeholder="Loại"
-                    data={[
-                      { value: "1", label: "Sản phẩm" },
-                      { value: "0", label: "Dịch vụ" },
-                    ]}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <NumberInput
-                    size="lg"
-                    radius={0}
-                    withAsterisk
-                    {...form.getInputProps("price")}
-                    label="Giá bán"
-                    min={0}
-                    placeholder="Giá bán"
-                    thousandSeparator=","
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <NumberInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("salePrice")}
-                    min={0}
-                    label="Giá sale"
-                    placeholder="Giá sale"
-                    thousandSeparator=","
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <MultiSelect
-                    size="lg"
-                    radius={0}
-                    searchable={true}
-                    withAsterisk
-                    {...form.getInputProps("categories")}
-                    label="Danh mục"
-                    checkIconPosition="right"
-                    placeholder="Danh mục"
-                    data={categoryOptions}
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <NumberInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("quantity")}
-                    label="Số lượng"
-                    min={0}
-                    placeholder="Số lượng"
-                    thousandSeparator=","
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("sku")}
-                    label="SKU"
-                    type="text"
-                    placeholder="SKU"
-                  />
-                </Grid.Col>
-                <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
-                  <TextInput
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("keyword")}
-                    label="Từ khoá tìm kiếm"
-                    type="text"
-                    placeholder="ví dụ: abc,123,san-pham"
-                  />
-                </Grid.Col>
-              </Grid>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
+      <Grid gutter={12}>
+        <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
+          <Card withBorder shadow="sm">
+            <Grid gutter={10}>
+              <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
+                <TextInput
+                  size="lg"
+                  radius={0}
+                  withAsterisk
+                  {...form.getInputProps("name")}
+                  label="Tên sản phẩm"
+                  type="text"
+                  placeholder="Tên sản phẩm"
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
+                <Select
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("isProduct")}
+                  label="Loại"
+                  checkIconPosition="right"
+                  placeholder="Loại"
+                  data={[
+                    { value: "1", label: "Sản phẩm" },
+                    { value: "0", label: "Dịch vụ" },
+                  ]}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                <NumberInput
+                  size="lg"
+                  radius={0}
+                  withAsterisk
+                  {...form.getInputProps("price")}
+                  label="Giá bán"
+                  min={0}
+                  placeholder="Giá bán"
+                  thousandSeparator=","
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                <NumberInput
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("salePrice")}
+                  min={0}
+                  label="Giá sale"
+                  placeholder="Giá sale"
+                  thousandSeparator=","
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                <MultiSelect
+                  size="lg"
+                  radius={0}
+                  searchable={true}
+                  withAsterisk
+                  {...form.getInputProps("categories")}
+                  label="Danh mục"
+                  checkIconPosition="right"
+                  placeholder="Danh mục"
+                  data={categoryOptions}
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                <NumberInput
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("quantity")}
+                  label="Số lượng"
+                  min={0}
+                  placeholder="Số lượng"
+                  thousandSeparator=","
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                <TextInput
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("sku")}
+                  label="SKU"
+                  type="text"
+                  placeholder="SKU"
+                />
+              </Grid.Col>
+              <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
+                <TextInput
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("keyword")}
+                  label="Từ khoá tìm kiếm"
+                  type="text"
+                  placeholder="ví dụ: abc,123,san-pham"
+                />
+              </Grid.Col>
+            </Grid>
 
-              <Grid mt={24}>
+            <Grid mt={24}>
+              <Grid.Col span={12}>
+                <QuillEditor
+                  label="Mô tả chi tiết"
+                  theme="snow"
+                  placeholder="Mô tả chi tiết"
+                  className={"quill"}
+                  setValue={setValueRTE}
+                  value={valueRTE}
+                  style={{ height: 450 }}
+                />
+              </Grid.Col>
+            </Grid>
+            <Grid mt={24}>
+              <Grid.Col span={12}>
+                <Textarea
+                  size="lg"
+                  radius={0}
+                  label="Mô tả ngắn"
+                  minRows={4}
+                  autosize={true}
+                  {...form.getInputProps("description")}
+                  placeholder="Mô tả ngắn"
+                />
+              </Grid.Col>
+            </Grid>
+
+            <InfoCar
+              carData={car}
+              setCar={setCar}
+              handleChangeBrand={handleChangeBrand}
+              handleChangeNameCar={handleChangeNameCar}
+              handleChangeYearCar={handleChangeYearCar}
+            />
+          </Card>{" "}
+          <Card withBorder={true} mt={20} radius={0}>
+            <Group justify="space-between">
+              <Typo
+                size="primary"
+                type="bold"
+                style={{ color: "var(--primary-orange)" }}
+              >
+                SEO META
+              </Typo>
+              {opened ? (
+                <IconChevronDown
+                  onClick={toggle}
+                  style={{ cursor: "pointer", rotate: "180deg" }}
+                />
+              ) : (
+                <IconChevronDown
+                  onClick={toggle}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+            </Group>
+            <Collapse in={opened}>
+              <Grid>
                 <Grid.Col span={12}>
-                  <QuillEditor
-                    label="Mô tả chi tiết"
-                    theme="snow"
-                    placeholder="Mô tả chi tiết"
-                    className={"quill"}
-                    setValue={setValueRTE}
-                    value={valueRTE}
-                    style={{ height: 450 }}
+                  <TextInput
+                    size="lg"
+                    radius={0}
+                    {...form.getInputProps("seoTitle")}
+                    label="Tiêu đề"
+                    type="text"
+                    placeholder="Tiêu đề"
                   />
                 </Grid.Col>
-              </Grid>
-              <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
                     size="lg"
@@ -324,120 +376,65 @@ export default function ProductForm({
                     label="Mô tả ngắn"
                     minRows={4}
                     autosize={true}
-                    {...form.getInputProps("description")}
-                    placeholder="Mô tả ngắn"
+                    {...form.getInputProps("seoDescription")}
+                    placeholder="Mô tả"
                   />
                 </Grid.Col>
               </Grid>
-
-              <InfoCar
-                carData={car}
-                setCar={setCar}
-                handleChangeBrand={handleChangeBrand}
-                handleChangeNameCar={handleChangeNameCar}
-                handleChangeYearCar={handleChangeYearCar}
-              />
-            </Card>{" "}
-            <Card withBorder={true} mt={20} radius={0}>
-              <Group justify="space-between">
-                <Typo
-                  size="primary"
-                  type="bold"
-                  style={{ color: "var(--primary-orange)" }}
-                >
-                  SEO META
-                </Typo>
-                {opened ? (
-                  <IconChevronDown
-                    onClick={toggle}
-                    style={{ cursor: "pointer", rotate: "180deg" }}
-                  />
-                ) : (
-                  <IconChevronDown
-                    onClick={toggle}
-                    style={{ cursor: "pointer" }}
-                  />
-                )}
-              </Group>
-              <Collapse in={opened}>
-                <Grid>
-                  <Grid.Col span={12}>
-                    <TextInput
-                      size="lg"
-                      radius={0}
-                      {...form.getInputProps("seoTitle")}
-                      label="Tiêu đề"
-                      type="text"
-                      placeholder="Tiêu đề"
-                    />
-                  </Grid.Col>
-                  <Grid.Col span={12}>
-                    <Textarea
-                      size="lg"
-                      radius={0}
-                      label="Mô tả ngắn"
-                      minRows={4}
-                      autosize={true}
-                      {...form.getInputProps("seoDescription")}
-                      placeholder="Mô tả"
-                    />
-                  </Grid.Col>
-                </Grid>
-              </Collapse>
-            </Card>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
-            <Card withBorder shadow="sm">
-              <Grid>
-                <Grid.Col span={12}>
-                  <Select
-                    size="lg"
-                    radius={0}
-                    {...form.getInputProps("status")}
-                    label="Trạng thái"
-                    checkIconPosition="right"
-                    placeholder="Trạng thái"
-                    data={[
-                      { value: "PUBLIC", label: "Công khai" },
-                      { value: "DRAFT", label: "Nháp" },
-                      { value: "PENDING", label: "Đang duyệt" },
-                    ]}
-                  />
-                </Grid.Col>
-                <Grid.Col span={12}>
-                  <BasicDropzone
-                    setImages={setImages}
-                    maxFiles={5}
-                    images={images}
-                  />
-                </Grid.Col>
-              </Grid>
-              <Grid gutter={10} mt={24}></Grid>
-            </Card>
-          </Grid.Col>
-        </Grid>
-        {!isDirection ? (
-          <FooterSavePage
-            saveLoading={loading}
-            okText={isEditing ? "Cập nhật" : "Thêm"}
-          />
-        ) : (
-          <Group justify="end" style={{ marginTop: 10 }}>
-            <Button
-              size="lg"
-              radius={0}
-              h={{ base: 42, md: 50, lg: 50 }}
-              style={{ marginLeft: "12px" }}
-              variant="filled"
-              type="submit"
-              key="submit"
-              leftSection={<IconChevronRight size={16} />}
-            >
-              Điều hướng
-            </Button>
-          </Group>
-        )}
-      </form>
-    </Box>
+            </Collapse>
+          </Card>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, sm: 4, md: 4, lg: 4 }}>
+          <Card withBorder shadow="sm">
+            <Grid>
+              <Grid.Col span={12}>
+                <Select
+                  size="lg"
+                  radius={0}
+                  {...form.getInputProps("status")}
+                  label="Trạng thái"
+                  checkIconPosition="right"
+                  placeholder="Trạng thái"
+                  data={[
+                    { value: "PUBLIC", label: "Công khai" },
+                    { value: "DRAFT", label: "Nháp" },
+                    { value: "PENDING", label: "Đang duyệt" },
+                  ]}
+                />
+              </Grid.Col>
+              <Grid.Col span={12}>
+                <BasicDropzone
+                  setImages={setImages}
+                  maxFiles={5}
+                  images={images}
+                />
+              </Grid.Col>
+            </Grid>
+            <Grid gutter={10} mt={24}></Grid>
+          </Card>
+        </Grid.Col>
+      </Grid>
+      {!isDirection ? (
+        <FooterSavePage
+          saveLoading={loading}
+          okText={isEditing ? "Cập nhật" : "Thêm"}
+        />
+      ) : (
+        <Group justify="end" style={{ marginTop: 10 }}>
+          <Button
+            size="lg"
+            radius={0}
+            h={{ base: 42, md: 50, lg: 50 }}
+            style={{ marginLeft: "12px" }}
+            variant="filled"
+            type="submit"
+            key="submit"
+            leftSection={<IconChevronRight size={16} />}
+          >
+            Điều hướng
+          </Button>
+        </Group>
+      )}
+    </form>
   );
 }

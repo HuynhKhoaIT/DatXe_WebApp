@@ -1,15 +1,6 @@
 "use client";
-import {
-  Badge,
-  Button,
-  Group,
-  Image,
-  LoadingOverlay,
-  Modal,
-  ScrollArea,
-} from "@mantine/core";
+import { Badge, Button, Group, Modal, ScrollArea } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import ImageDefult from "../../../../../../public/assets/images/logoDatxe.png";
 import {
   FieldTypes,
   kindProductOptions,
@@ -18,34 +9,20 @@ import {
 import ListPage from "@/app/components/layout/ListPage";
 import SearchForm from "@/app/components/form/SearchForm";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { useSearchParams } from "next/navigation";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
-import { useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { useMediaQuery } from "@mantine/hooks";
 import ItemProductChoose from "../../marketing-campaign/_component/ItemProductChoose";
-import useFetch from "@/app/hooks/useFetch";
-import { getOptionsCategories } from "@/utils/until";
-import { QueryClient } from "@tanstack/react-query";
 import FilterCategories from "@/app/components/common/FilterCategory/FilterCategories";
-import { AppConstants, QUERY_KEY } from "@/constants";
-import { ResponseError } from "@/utils/until/ResponseError";
-const queryClient = new QueryClient();
+import { AppConstants } from "@/constants";
 import styles from "./index.module.scss";
 import ImageField from "@/app/components/form/ImageField";
-const fetchProducts = async (searchParams: any, page: number): Promise<any> => {
-  const response = await fetch(
-    `/api/admin/products?${searchParams}&page=${page}`
-  );
-  if (!response.ok) {
-    throw new ResponseError("Failed to fetch products", response);
-  }
-  return await response.json();
-};
-
 export default function ModalChooseProducts({
   openModal,
   close,
   selectedProducts,
   setSelectedProducts,
+  categoryOptions,
+  products,
 }: any) {
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
 
@@ -54,43 +31,6 @@ export default function ModalChooseProducts({
   useEffect(() => {
     if (selectedProducts) setSelectedRows(selectedProducts);
   }, [selectedProducts]);
-  const searchParams = useSearchParams();
-  const [page, setPage] = useState<number>(1);
-
-  const {
-    data: categoryOptions,
-    isLoading: isLoadingCategory,
-    isError,
-  } = useFetch({
-    queryKey: [QUERY_KEY.optionsCategory],
-    queryFn: () => getOptionsCategories(),
-    options: {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      refetchInterval: false,
-    },
-  });
-
-  const {
-    data: products,
-    isLoading,
-    error,
-    isFetching,
-    isPlaceholderData,
-    refetch,
-  } = useFetch({
-    queryKey: [QUERY_KEY.products, searchParams.toString(), page],
-    queryFn: () => fetchProducts(searchParams.toString(), page),
-  });
-  useEffect(() => {
-    if (!isPlaceholderData && page < products?.totalPage) {
-      queryClient.prefetchQuery({
-        queryKey: [QUERY_KEY.products, searchParams.toString(), page],
-        queryFn: () => fetchProducts(searchParams.toString(), page),
-        staleTime: Infinity,
-      });
-    }
-  }, [searchParams, isPlaceholderData, page, queryClient, products]);
 
   const columns = [
     {
@@ -244,7 +184,6 @@ export default function ModalChooseProducts({
       title="Chọn sản phẩm"
       opened={openModal}
       onClose={close}
-      // lockScroll={isMobile}
       // size={"80%"}
       radius={0}
       size="auto"
@@ -314,12 +253,9 @@ export default function ModalChooseProducts({
             style={{ height: "100%" }}
             baseTable={
               <TableBasic
-                loading={isLoading || isFetching}
                 data={products?.data}
                 columns={columns}
                 totalPage={products?.totalPage}
-                setPage={setPage}
-                activePage={page}
                 selectRow={true}
                 selectedRows={selectedRows}
                 setSelectedRows={setSelectedRows}

@@ -12,11 +12,25 @@ export default async function ProductsManaga({ searchParams }: any) {
     params: searchParams,
   });
 
+  async function handleDelete(formData: FormData) {
+    "use server";
+    try {
+      const res = await callApi(apiConfig.admin.products.delete, {
+        pathParams: {
+          id: formData,
+        },
+      });
+      return res;
+    } catch (error) {
+      return null;
+    }
+  }
   return (
     <TableProducts
       user={session?.user}
       products={products || []}
       productsDlbd={productsDlbd || []}
+      deleteItem={handleDelete}
     />
   );
 }
