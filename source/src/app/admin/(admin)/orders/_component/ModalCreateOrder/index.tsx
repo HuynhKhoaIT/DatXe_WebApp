@@ -1,7 +1,6 @@
 "use client";
 import BasicModal from "@/app/components/common/BasicModal";
 import { ModalEventCalendar } from "./ModalEventCalendar";
-import { useAddOrder } from "../../../hooks/order/useAddOrder";
 import { useForm } from "@mantine/form";
 import { useDisclosure } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -13,18 +12,9 @@ export default function ModalCalendar({
   categoryOptions,
   typeView,
   brandOptions,
+  addItem,
 }: any) {
-  const { addItem, isPendingAdd, isSuccessAdd } = useAddOrder({
-    isBack: false,
-  });
-
-  useEffect(() => {
-    if (isSuccessAdd) {
-      onClose();
-      form.reset();
-      handlersIsUser.close();
-    }
-  }, [isSuccessAdd]);
+  const [isLoadingCreate, handlersLoading] = useDisclosure();
   const newDate = new Date(eventInfos?.start);
   newDate.setHours(newDate.getHours() + 9);
   const form = useForm<any>({
@@ -89,7 +79,9 @@ export default function ModalCalendar({
     }
   };
   const handleSubmit = async (values: any) => {
-    addItem(values);
+    handlersLoading.open();
+    await addItem(values);
+    handlersLoading.close();
   };
   return (
     <BasicModal
@@ -112,7 +104,7 @@ export default function ModalCalendar({
           addItem={addItem}
           eventInfos={eventInfos}
           form={form}
-          isPendingAdd={isPendingAdd}
+          isPendingAdd={isLoadingCreate}
           handleGetInfo={handleGetInfo}
           modelOptions={modelOptions}
           setModelOptions={setModelOptions}

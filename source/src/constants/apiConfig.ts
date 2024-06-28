@@ -321,6 +321,16 @@ const apiConfig = {
         method: "DELETE",
         headers: baseHeader,
       },
+      productHot: {
+        baseURL: `${apiUrl}api/admin/home-page`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      homePagedeleteItem: {
+        baseURL: `${apiUrl}api/admin/home-page/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
     },
     car: {
       getList: {
