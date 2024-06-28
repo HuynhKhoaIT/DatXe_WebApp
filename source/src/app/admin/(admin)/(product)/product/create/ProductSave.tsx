@@ -5,8 +5,8 @@ export default function ProductSave({
   isDirection,
   productDetail,
   closeModalSync,
-  isLoading,
   categoryOptions,
+  createItem,
 }: any) {
   return (
     <Box maw={"100%"} mx="auto">
@@ -15,8 +15,8 @@ export default function ProductSave({
         dataDetail={isDirection ? productDetail : []}
         isDirection={isDirection}
         closeModalSync={closeModalSync}
-        isLoading={isLoading}
         categoryOptions={categoryOptions}
+        createItem={createItem}
       />
     </Box>
   );

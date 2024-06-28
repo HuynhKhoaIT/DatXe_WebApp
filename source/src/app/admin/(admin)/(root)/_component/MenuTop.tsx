@@ -40,7 +40,7 @@ export default function MenuTop() {
       id: 4,
       icon: Product.src,
       label: "Thêm sp/dv",
-      link: "/admin/products/create",
+      link: "/admin/product/create",
     },
     {
       id: 5,

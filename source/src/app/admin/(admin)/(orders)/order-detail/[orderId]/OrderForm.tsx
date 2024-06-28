@@ -38,6 +38,8 @@ export default function OrderForm({
   dbDLBD,
   session,
   updateCustomer,
+  products,
+  categoryOptions,
 }: any) {
   const router = useRouter();
   var {
@@ -583,6 +585,8 @@ export default function OrderForm({
           close={closeModal}
           setSelectedProducts={setSelectedProducts}
           selectedProducts={selectedProducts}
+          products={products}
+          categoryOptions={categoryOptions}
         />
       )}
 

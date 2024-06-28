@@ -42,6 +42,8 @@ export default function MarketingCampaignForm({
   isEditing,
   createItem,
   updateItem,
+  products,
+  categoryOptions,
 }: any) {
   const router = useRouter();
   const [selectedProducts, setSelectedProducts] = useState<any>(
@@ -465,6 +467,8 @@ export default function MarketingCampaignForm({
         close={closeModal}
         setSelectedProducts={setSelectedProducts}
         selectedProducts={selectedProducts}
+        products={products}
+        categoryOptions={categoryOptions}
       />
     </Box>
   );

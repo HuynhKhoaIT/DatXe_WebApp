@@ -3,11 +3,7 @@ import { Flex, Pagination } from "@mantine/core";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-export default function PaginationBase({
-  activePage,
-  setPage,
-  totalPage,
-}: any) {
+export default function PaginationBase({ totalPage }: any) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -24,18 +20,20 @@ export default function PaginationBase({
       router.push(path);
     } else {
       router.push(pathname);
+      router.refresh();
     }
   };
+  console.log();
+  useEffect(() => {});
 
   return (
     <Flex justify={"end"} bg={"#fff"} mt={20}>
       <Pagination
         size="xl"
         total={Number(totalPage)}
-        value={activePage}
+        value={Number(params.get("page") || 1)}
         onChange={(value) => {
           handeSetPage(value);
-          if (setPage) setPage(value);
         }}
         mt={"auto"}
       />

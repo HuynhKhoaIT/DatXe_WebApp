@@ -61,7 +61,7 @@ export default async function Layout({ children }: IProps) {
             initialValues={initialValuesSearch}
           />
         }
-        actionBar={<ActionBar linkTo="/admin/products/create" />}
+        actionBar={<ActionBar linkTo="/admin/product/create" />}
         FilterCategories={<FilterCategories categories={categoryOptions} />}
         style={{ height: "100%" }}
         titleTable={true}
