@@ -2,7 +2,7 @@ import React from "react";
 import MarketingCampaignForm from "./MarketingCampaignForm";
 import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
-export default async function ChooseProducts() {
+export default async function ChooseProducts({ searchParams }: any) {
   async function handleCreate(formData: FormData) {
     "use server";
     try {
@@ -14,5 +14,19 @@ export default async function ChooseProducts() {
       return error;
     }
   }
-  return <MarketingCampaignForm createItem={handleCreate} />;
+  const categories = await callApi(apiConfig.admin.productCategory.getList, {});
+  const categoryOptions = categories?.data?.map((item: any) => ({
+    value: item.id.toString(),
+    label: item.title,
+  }));
+  const products = await callApi(apiConfig.admin.products.getList, {
+    params: searchParams,
+  });
+  return (
+    <MarketingCampaignForm
+      createItem={handleCreate}
+      products={products}
+      categoryOptions={categoryOptions}
+    />
+  );
 }

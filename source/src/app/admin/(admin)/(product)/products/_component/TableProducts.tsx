@@ -3,7 +3,7 @@ import ListPage from "@/app/components/layout/ListPage";
 import TableBasic from "@/app/components/table/Tablebasic";
 import { ActionIcon, Badge, Button, Flex, Tabs, Tooltip } from "@mantine/core";
 import { useProduct } from "../../../hooks/product/useProduct";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import ImageField from "@/app/components/form/ImageField";
@@ -13,6 +13,7 @@ import Link from "next/link";
 import { IconArrowUp, IconPencil, IconTrash } from "@tabler/icons-react";
 import styles from "./index.module.scss";
 import dynamic from "next/dynamic";
+import { toast } from "react-toastify";
 
 const DynamicModalSyncProduct = dynamic(
   () => import(".././_component/ModalSyncProduct"),
@@ -32,10 +33,11 @@ export default function TableProducts({
   deleteItem,
   productsDlbd,
 }: any) {
-  console.log(productsDlbd);
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  let params = new URLSearchParams(searchParams);
   const [activeTab, setActiveTab] = useState<string | null>("first");
-
   const [deleteRow, setDeleteRow] = useState();
   const [onRowId, setOnRowId] = useState();
   const [
@@ -48,7 +50,22 @@ export default function TableProducts({
   ] = useDisclosure(false);
 
   const handleDeleteItem = async (id: any) => {
-    await deleteItem(id);
+    const res = await deleteItem(id);
+    if (res) {
+      toast.success("Xoá thành công");
+      router.refresh();
+    }
+  };
+  const handeChangeTab = (value: any) => {
+    // params?.delete("page");
+    // if (params?.toString()?.length > 0) {
+    //   const path = pathname + "?" + params?.toString();
+    //   router.push(path);
+    // } else {
+    //   router.push(pathname);
+    //   router.refresh();
+    // }
+    setActiveTab(value);
   };
   const columns = [
     {
@@ -199,7 +216,7 @@ export default function TableProducts({
             <>
               <Link
                 href={{
-                  pathname: `/admin/products/${record.id}`,
+                  pathname: `/admin/product/${record.id}`,
                 }}
               >
                 <Tooltip label="Cập nhật" withArrow position="bottom">
@@ -266,7 +283,7 @@ export default function TableProducts({
           variant="pills"
           value={activeTab}
           onChange={(value) => {
-            setActiveTab(value);
+            handeChangeTab(value);
             // setPage(1);
             // setPageDlbd(1);
           }}
@@ -308,7 +325,7 @@ export default function TableProducts({
                   data={products?.data}
                   columns={columns}
                   totalPage={products?.totalPage}
-                  onRow={`/admin/products`}
+                  onRow={`/admin/product`}
                 />
               }
             />

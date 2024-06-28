@@ -15,11 +15,26 @@ export default async function ProductSavePage({
     value: item.id.toString(),
     label: item.title,
   }));
+  async function handleUpdate(formData: FormData) {
+    "use server";
+    try {
+      const res = await callApi(apiConfig.admin.products.update, {
+        pathParams: {
+          id: params.productId,
+        },
+        data: formData,
+      });
+      return res;
+    } catch (error) {
+      return null;
+    }
+  }
   return (
     <ProductForm
       categoryOptions={categoryOptions}
       isEditing={true}
       dataDetail={productDetail?.data}
+      updateItem={handleUpdate}
     />
   );
 }

@@ -5,6 +5,7 @@ import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { createSeoMeta } from "@/app/libs/prisma/seoMeta";
 import { getSession } from "@/lib/auth";
 import { checkAuthToken } from "@/utils/auth";
+import { ROLE_EXPERT } from "@/constants";
 
 export async function GET(
   request: NextRequest,
@@ -33,12 +34,10 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (session && session.user?.role == "ADMINGARAGE") {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth?.role == ROLE_EXPERT) {
       const id = params.id;
-      const garageId = (
-        await getGarageIdByDLBDID(Number(session.user?.garageId))
-      ).toString();
+      const garageId = getAuth?.garageId;
       let createdBy = "0";
       let isProduct = true;
       let catArr: any = [];
@@ -52,7 +51,7 @@ export async function PUT(
       } else {
         json.categories.forEach(function (id: number) {
           catArr.push({
-            assignedBy: session?.user?.name ?? "",
+            assignedBy: getAuth?.fullName ?? "",
             assignedAt: new Date(),
             category: {
               connect: {
@@ -69,7 +68,7 @@ export async function PUT(
         let brandArrTemp: any = [];
         json.brands.forEach(function (b: any) {
           const assignedAt = new Date();
-          const assignedBy = session?.user?.name ?? "Admin";
+          const assignedBy = getAuth?.fullName ?? "Admin";
           if (b.yearId) {
             const yearArr = b.yearId.split(",");
             yearArr.forEach(function (y: any) {
@@ -127,8 +126,8 @@ export async function PUT(
           create: brandArr,
         };
       }
-      if (session?.user?.id) {
-        createdBy = session.user.id.toString();
+      if (getAuth?.id) {
+        createdBy = getAuth.id;
       }
       if (json.isProduct.length) {
         isProduct = json.isProduct == 1 ? true : false;
@@ -153,7 +152,7 @@ export async function PUT(
         categories: {
           deleteMany: {},
           create: json.categories.map((cat: string) => ({
-            assignedBy: session?.user?.name ?? "",
+            assignedBy: getAuth?.fullName ?? "",
             assignedAt: new Date(),
             category: {
               connect: {

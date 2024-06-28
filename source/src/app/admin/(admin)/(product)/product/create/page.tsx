@@ -9,11 +9,24 @@ export default async function CreateProduct() {
     value: item.id.toString(),
     label: item.title,
   }));
+
+  async function handleCreate(formData: FormData) {
+    "use server";
+    try {
+      const res = await callApi(apiConfig.admin.products.create, {
+        data: formData,
+      });
+      return res;
+    } catch (error) {
+      return null;
+    }
+  }
   return (
     <ProductSave
       isDirection={false}
       user={session?.user}
       categoryOptions={categoryOptions}
+      createItem={handleCreate}
     />
   );
 }
