@@ -1,9 +1,7 @@
 import { getCustomers } from "@/app/libs/prisma/customer";
 import prisma from "@/app/libs/prismadb";
 import { NextRequest, NextResponse } from "next/server";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { generateUUID } from "@/utils/until";
-import { getSession } from "@/lib/auth";
 import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
@@ -84,9 +82,9 @@ export async function POST(request: NextRequest) {
             dob: json.dob,
             description: json.description,
             sex: json.sex,
-            garageId: garageId.toString(),
+            garageId: garageId,
             status: json.status,
-            userId: getAuth?.id.toString() ?? "1",
+            userId: getAuth?.id ?? "1",
           },
           include: {
             cars: true,

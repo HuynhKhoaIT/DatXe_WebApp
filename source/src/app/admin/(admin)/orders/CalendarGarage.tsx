@@ -19,6 +19,7 @@ export default function CalendarSchedulerGarage({
   selectable = true,
   categoryOptions,
   brandOptions,
+  addItem,
 }: any) {
   const [layoutMobile, setLayoutMobile] = useState(false);
   const [previewInfos, setPreviewInfos] = useState();
@@ -104,6 +105,7 @@ export default function CalendarSchedulerGarage({
         categoryOptions={categoryOptions}
         brandOptions={brandOptions}
         typeView={eventInfos?.view?.type}
+        addItem={addItem}
       />
     </div>
   );

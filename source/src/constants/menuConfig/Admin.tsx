@@ -48,7 +48,7 @@ const menuConfigAdmin = [
     links: [
       {
         label: "Danh sách khách hàng",
-        link: "/admin/system-customer",
+        link: "/admin/system-customers",
       },
       {
         label: "Danh sách người dùng",
