@@ -66,7 +66,7 @@ export async function getGarages(requestData: any) {
       OR: [
         {
           status,
-          routeId: garageId ? Number(garageId) : {},
+          id: garageId ? (garageId) : {},
           name: {
             contains: s
           },
@@ -76,7 +76,7 @@ export async function getGarages(requestData: any) {
         },
         {
           status,
-          routeId: garageId ? Number(garageId) : {},
+          id: garageId ? (garageId) : {},
           phoneNumber: {
             contains: s
           },
@@ -86,7 +86,7 @@ export async function getGarages(requestData: any) {
         },
         {
           status,
-          routeId: garageId ? Number(garageId) : {},
+          id: garageId ? (garageId) : {},
           code: {
             contains: s
           },
@@ -96,7 +96,7 @@ export async function getGarages(requestData: any) {
         },
         {
           status,
-          routeId: garageId ? Number(garageId) : {},
+          id: garageId ? (garageId) : {},
           shortName: {
             contains: s
           },

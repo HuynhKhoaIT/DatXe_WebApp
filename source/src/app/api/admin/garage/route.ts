@@ -27,12 +27,13 @@ export async function GET(request: NextRequest) {
       if (searchParams.get("page")) {
         requestData.page = Number(searchParams.get("page"));
       }
+
       const garages = await getGarages(requestData);
 
       return NextResponse.json(garages);
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
@@ -43,7 +44,7 @@ export async function POST(request: Request) {
     const errors: string[] = [];
     const garage = await createGarage(json);
     return NextResponse.json(garage);
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }

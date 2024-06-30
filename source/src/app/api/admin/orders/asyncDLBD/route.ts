@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
         message: "Tồn tại",
       });
     }
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
