@@ -2,7 +2,7 @@
 import React from "react";
 import { useCarDetail } from "@/app/admin/(admin)/hooks/car/useCar";
 import Breadcrumb from "@/app/components/form/Breadcrumb";
-import CarForm from "@/app/admin/(admin)/cars/create/CarForm";
+import CarForm from "@/app/admin/(admin)/(car)/car/create/CarForm";
 export default function UpdateCar({ params, searchParams }: any) {
   const { data: car, isLoading, isPending } = useCarDetail(params?.id);
   const Breadcrumbs = [

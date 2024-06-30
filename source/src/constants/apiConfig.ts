@@ -103,6 +103,33 @@ const apiConfig = {
       headers: baseHeader,
     },
   },
+  orders: {
+    getList: {
+      baseURL: `${apiUrl}api/orders`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    getById: {
+      baseURL: `${apiUrl}api/orders/:id`,
+      method: "GET",
+      headers: baseHeader,
+    },
+    create: {
+      baseURL: `${apiUrl}api/orders`,
+      method: "POST",
+      headers: baseHeader,
+    },
+    update: {
+      baseURL: `${apiUrl}api/orders/:id`,
+      method: "PUT",
+      headers: baseHeader,
+    },
+    delete: {
+      baseURL: `${apiUrl}api/orders/:id`,
+      method: "DELETE",
+      headers: baseHeader,
+    },
+  },
   category: {
     getList: {
       baseURL: `${apiUrl}api/admin/product-category`,
@@ -335,6 +362,11 @@ const apiConfig = {
     car: {
       getList: {
         baseURL: `${apiUrl}api/admin/car`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getCarsDlbd: {
+        baseURL: `${apiUrl}api/admin/car/dlbd`,
         method: "GET",
         headers: baseHeader,
       },

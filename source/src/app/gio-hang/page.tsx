@@ -10,11 +10,22 @@ export default async function Cart() {
     });
   }
   const session = await getSession();
+  async function handleCreate(formData: FormData) {
+    "use server";
+    try {
+      const res = await callApi(apiConfig.orders.update, {
+        data: formData,
+      });
+    } catch (error) {
+      return null;
+    }
+  }
   return (
     <CartDetailPage
       myAccount={session?.user || {}}
       carsData={carsData?.data}
       handleAdd={handleAdd}
+      createItem={handleCreate}
     />
   );
 }

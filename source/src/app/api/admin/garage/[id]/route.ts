@@ -2,6 +2,7 @@ import prisma from "@/app/libs/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 import { showGarage, updateGarage } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -13,8 +14,8 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const garage = await showGarage(id);
       return NextResponse.json(garage);
     }
@@ -29,17 +30,17 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session:any = await getSession();
-    if (session) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const id = params.id;
-      let createdBy = 1;
+      let createdBy = "1";
       if (!id) {
         return new NextResponse("Missing 'id' parameter");
       }
       const json = await request.json();
 
-      if (session?.user?.id) {
-        createdBy = Number(session.user.id);
+      if (auth?.id) {
+        createdBy = auth.id;
       }
       const updatedData = await updateGarage(id, json);
 
@@ -48,7 +49,7 @@ export async function PUT(
         headers: { "Content-Type": "application/json" },
       });
     }
-  } catch (error:any) {
+  } catch (error) {
     return new NextResponse(error.message, { status: 500 });
   }
 }

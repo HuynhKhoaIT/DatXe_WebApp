@@ -19,10 +19,10 @@ export async function getOptionsCar({ s }: any) {
         s,
       },
     });
-    if (!res.data) {
+    if (!res) {
       throw new Error("Failed to fetch data");
     }
-    const dataOption = res?.data?.map((item: any) => ({
+    const dataOption = res?.map((item: any) => ({
       value: item.id.toString(),
       label: item.numberPlates,
       otherData: item,
