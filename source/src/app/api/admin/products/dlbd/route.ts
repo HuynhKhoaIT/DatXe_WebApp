@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
     const getAuth = await checkAuthToken(request);
     if (getAuth) {
       const { searchParams } = new URL(request.url);
-      let garageId = getAuth?.garageId;
       const dataRequest = {
         page: searchParams.get("page"),
         garageId: getAuth.garageId,
@@ -16,7 +15,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(products);
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
