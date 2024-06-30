@@ -1,13 +1,12 @@
 import { createCar, getCars } from "@/app/libs/prisma/car";
 import { NextRequest, NextResponse } from "next/server";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
+      let garageId = getAuth?.garageId;
 
       const { searchParams } = new URL(request.url);
       const requestData = {
@@ -30,14 +29,14 @@ export async function GET(request: NextRequest) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const getAuth = await checkAuthToken(request);
+    if (getAuth) {
       const json = await request.json();
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+      let garageId = getAuth?.garageId;
       json.garageId = garageId;
-      json.userId = session?.user?.id.toString();
+      json.userId = getAuth?.id;
       const car = await createCar(json);
       return new NextResponse(JSON.stringify(car), {
         status: 201,

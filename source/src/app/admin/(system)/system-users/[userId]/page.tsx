@@ -1,6 +1,6 @@
 "use client";
 
-import CustomersForm from "@/app/admin/(admin)/(customer)/customer/create/CustomersForm";
+import CustomersForm from "@/app/admin/(admin)/(customer)/(root)/customer/create/CustomersForm";
 import { useCustomerDetail } from "@/app/admin/(admin)/hooks/customer/useCustomer";
 import { useUserDetail } from "../../hooks/users/useUsers";
 

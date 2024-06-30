@@ -6,10 +6,10 @@ export async function GET(request: NextRequest) {
   try {
     const getAuth = await checkAuthToken(request);
     if (getAuth) {
-      let garageId = getAuth?.garageId;
+      let garageId = getAuth.garageId ?? "";
       const { searchParams } = new URL(request.url);
       const s: any = searchParams.get("s");
-      const cars = await getCarsByPlates(s, garageId.toString());
+      const cars = await getCarsByPlates(s, garageId);
       return NextResponse.json(cars);
     } else {
       throw new Error("Chua dang nhap");

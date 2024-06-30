@@ -1,19 +1,16 @@
-import {
-  createGarage,
-  getGarageIdByDLBDID,
-  getGarages,
-} from "@/app/libs/prisma/garage";
+import { createGarage, getGarages } from "@/app/libs/prisma/garage";
 import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
+import { ROLE_ADMIN } from "@/constants";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    const auth = await checkAuthToken(request);
 
-    if (session?.user) {
-      let garageId = session.user?.garageId;
+    if (auth) {
+      let garageId = auth?.garageId;
 
-      if (session.user?.role == "ADMIN") {
+      if (auth?.role == ROLE_ADMIN) {
         garageId = "";
       }
       const { searchParams } = new URL(request.url);
