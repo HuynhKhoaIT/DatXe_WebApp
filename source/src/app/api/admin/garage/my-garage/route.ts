@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(garages);
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }

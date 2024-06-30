@@ -24,7 +24,7 @@ export async function GET(
       return NextResponse.json({ data: product });
     }
     throw new Error("Chua dang nhap");
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
@@ -149,6 +149,7 @@ export async function PUT(
         createdBy: createdBy,
         garageId: garageId ?? "2",
         brandDetail: JSON.stringify(json.brands),
+        sku: json.sku ?? '',
         categories: {
           deleteMany: {},
           create: json.categories.map((cat: string) => ({
@@ -187,7 +188,7 @@ export async function PUT(
         headers: { "Content-Type": "application/json" },
       });
     }
-  } catch (error) {
+  } catch (error:any) {
     return new NextResponse(error.message, { status: 500 });
   }
 }
