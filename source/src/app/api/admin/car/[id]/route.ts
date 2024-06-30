@@ -2,6 +2,7 @@ import prisma from "@/app/libs/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 import { getCarModelById } from "@/app/libs/prisma/carModel";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -12,9 +13,9 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
+    const auth = await checkAuthToken(request);
 
-    if (session?.user) {
+    if (auth) {
       const car = await prisma.car.findFirst({
         where: {
           id: id,
@@ -44,8 +45,8 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const id = params.id;
       if (!id) {
         return new NextResponse("Missing 'id' parameter");

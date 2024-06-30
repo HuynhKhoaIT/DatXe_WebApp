@@ -1,4 +1,4 @@
-import CustomersForm from "@/app/admin/(admin)/(customer)/customer/create/CustomersForm";
+import CustomersForm from "@/app/admin/(admin)/(customer)/(root)/customer/create/CustomersForm";
 import apiConfig from "@/constants/apiConfig";
 import { callApi } from "@/lib/auth";
 

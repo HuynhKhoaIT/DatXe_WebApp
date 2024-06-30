@@ -1,7 +1,6 @@
 import { createCar, getCars } from "@/app/libs/prisma/car";
 import { NextRequest, NextResponse } from "next/server";
-import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -9,9 +8,9 @@ export async function GET(
 ) {
   try {
     const numberPlates = params.numberPlates;
-    const session = await getSession();
-    if (session?.user) {
-      let garageId = await getGarageIdByDLBDID(Number(session.user?.garageId));
+    const auth = await checkAuthToken(request);
+    if (auth) {
+      let garageId = auth?.garageId;
       const requestData = {
         s: numberPlates,
         garageId: garageId,
