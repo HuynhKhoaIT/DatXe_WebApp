@@ -1,11 +1,12 @@
 import { createAmentity, getAmentity } from "@/app/libs/prisma/amentity";
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const { searchParams } = new URL(request.url);
       const requestData = {
         s: searchParams.get("s"),
@@ -21,8 +22,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const json = await request.json();
       const errors: string[] = [];
       const amentity = await createAmentity(json);

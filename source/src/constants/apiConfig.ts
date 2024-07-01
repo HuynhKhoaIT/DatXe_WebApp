@@ -213,6 +213,11 @@ const apiConfig = {
       method: "PUT",
       headers: baseHeader,
     },
+    delete: {
+      baseURL: `${apiUrl}api/admin/amentity/:id`,
+      method: "DELETE",
+      headers: baseHeader,
+    },
     // getBrandCar:{
     //     baseURL: `${apiUrl}api/cars/:id`,
     //     method: 'GET',
@@ -596,6 +601,33 @@ const apiConfig = {
       },
       delete: {
         baseURL: `${apiUrl}api/admin/marketing-campaign/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+    },
+    banner: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/slide-banner`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/slide-banner/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/slide-banner`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/slide-banner/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/slide-banner/:id`,
         method: "DELETE",
         headers: baseHeader,
       },

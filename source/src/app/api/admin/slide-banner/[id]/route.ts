@@ -5,6 +5,8 @@ import {
   updateSlideBanner,
 } from "@/app/libs/prisma/slideBanner";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
+import { ROLE_EXPERT } from "@/constants";
 
 export async function GET(
   request: NextRequest,
@@ -16,8 +18,8 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const post = await findSlideBanner(id);
       return NextResponse.json({ data: post });
     }
@@ -32,11 +34,11 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (session && session.user?.role == "ADMINGARAGE") {
+    const auth = await checkAuthToken(request);
+    if (auth?.role == ROLE_EXPERT) {
       const data = await request.json();
       const id = params.id;
-      data.createdBy = session.user.id.toString();
+      data.createdBy = auth.id;
       const rs = await updateSlideBanner(id, data);
       return new NextResponse(JSON.stringify(rs), {
         status: 201,

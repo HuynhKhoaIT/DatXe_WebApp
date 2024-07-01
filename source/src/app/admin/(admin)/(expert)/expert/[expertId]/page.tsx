@@ -45,7 +45,7 @@ export default async function UpdateCategory({
   const ultilities = await callApi(apiConfig.amentity.getList, {});
   const UltilitiesOptions = ultilities?.data?.map((item: any) => ({
     value: item.id.toString(),
-    label: item.name,
+    label: item.title,
   }));
   return (
     <Box maw={"100%"} mx="auto">
