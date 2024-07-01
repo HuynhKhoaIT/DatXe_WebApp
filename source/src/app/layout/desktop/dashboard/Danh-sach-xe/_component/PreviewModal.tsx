@@ -236,7 +236,7 @@ const PreviewModal = ({
         </Grid> */}
         <ul className={styles.listInfo}>
           <h4 className={styles.plates}>{data?.numberPlates}</h4>
-          <li>Hãng xe: {data.brandName.title || "Không rõ"}</li>
+          <li>Hãng xe: {data?.brandName?.title || "Không rõ"}</li>
           <li>Dòng xe: {data?.modelName?.title || "Không rõ"} </li>
           <li>NSX: {data?.yearName?.title || "Không rõ"}</li>
           <li>Mẫu xe: {data?.carStyle?.name || "Không rõ"}</li>
