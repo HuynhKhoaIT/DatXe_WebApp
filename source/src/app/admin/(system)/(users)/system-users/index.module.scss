@@ -1,0 +1,37 @@
+.content {
+    box-shadow: var(--box-shadow);
+    background-color: var(--white-background);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.list {
+    border-bottom: 1px solid #eeeeee;
+    margin-bottom: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+.tab {
+    height: 50px;
+    font-size: 18px;
+    font-weight: 550;
+    border-radius: 0;
+}
+.title {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        padding: 0 10px;
+    }
+    .content {
+        padding: 10px;
+    }
+}

@@ -18,17 +18,10 @@ import { useForm } from "@mantine/form";
 import styles from "./index.module.scss";
 import { useDisclosure } from "@mantine/hooks";
 import { stepOrderOptions } from "@/constants/masterData";
-import {
-  getOptionsBrands,
-  getOptionsModels,
-  getOptionsYearCar,
-} from "@/utils/until";
+import { getOptionsModels, getOptionsYearCar } from "@/utils/until";
 import { ORDER_DONE, QUERY_KEY, ROLE_EXPERT } from "@/constants";
-import useFetch from "@/app/hooks/useFetch";
 import { useSession } from "next-auth/react";
-import { useAddOrder } from "../../hooks/order/useAddOrder";
 import { useUpdateOrder } from "../../hooks/order/useUpdateOrder";
-import { useMyGarage } from "@/app/hooks/useMyGarage";
 require("dayjs/locale/vi");
 
 export const ModalPreviewCalendar = ({

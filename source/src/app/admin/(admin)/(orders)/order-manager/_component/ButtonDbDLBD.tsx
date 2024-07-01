@@ -1,7 +1,5 @@
-import Typo from "@/app/components/elements/Typo";
 import { Button } from "@mantine/core";
 import { modals } from "@mantine/modals";
-import { useSession } from "next-auth/react";
 
 export default function ButtonDbDLBD({
   isLoading,

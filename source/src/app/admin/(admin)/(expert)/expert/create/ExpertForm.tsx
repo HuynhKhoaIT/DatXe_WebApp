@@ -13,13 +13,11 @@ import {
 import { isNotEmpty, useForm } from "@mantine/form";
 import "react-quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
 import CropImageLink from "@/app/components/common/CropImage";
 import Typo from "@/app/components/elements/Typo";
 import { IconQrcode } from "@tabler/icons-react";
-import { useSession } from "next-auth/react";
 import { AppConstants, ROLE_ADMIN, apiUrl } from "@/constants";
 import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
 import DropZone from "../../experts/_component/DropZone";
