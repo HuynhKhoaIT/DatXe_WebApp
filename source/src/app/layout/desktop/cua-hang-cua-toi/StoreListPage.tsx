@@ -2,7 +2,7 @@ import { Box, Space } from "@mantine/core";
 import styles from "./index.module.scss";
 import { GarageItem } from "@/app/components/elements/garage/GarageItem";
 import Container from "@/app/components/common/Container";
-export default function StoreListPage({ experts, searchParams }: any) {
+export default function StoreListPage({ experts }: any) {
   return (
     <Container>
       <Box w={"100%"} mt={20}>

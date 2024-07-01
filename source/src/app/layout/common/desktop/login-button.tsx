@@ -10,6 +10,8 @@ import {
   IconCaretDownFilled,
   IconUserCircle,
   IconBuildingStore,
+  IconUser,
+  IconSettings,
 } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { deleteToken } from "@/utils/notification";
@@ -96,19 +98,30 @@ const SigninButton = ({ user, logout }: any) => {
                   </>
                 )}
                 {user?.role === ROLE_EXPERT && (
-                  <Menu.Item
-                    component="a"
-                    onClick={() => {
-                      router.push("/cua-hang-cua-toi");
-                    }}
-                    leftSection={
-                      <IconBuildingStore
-                        style={{ width: rem(14), height: rem(14) }}
-                      />
-                    }
-                  >
-                    Cửa hàng của tôi
-                  </Menu.Item>
+                  <>
+                    <Menu.Item
+                      component="a"
+                      onClick={handleDashboard}
+                      leftSection={
+                        <IconUser style={{ width: rem(14), height: rem(14) }} />
+                      }
+                    >
+                      Xem hồ sơ
+                    </Menu.Item>
+                    <Menu.Item
+                      component="a"
+                      onClick={() => {
+                        router.push("/cua-hang-cua-toi");
+                      }}
+                      leftSection={
+                        <IconBuildingStore
+                          style={{ width: rem(14), height: rem(14) }}
+                        />
+                      }
+                    >
+                      Cửa hàng của tôi
+                    </Menu.Item>
+                  </>
                 )}
 
                 {user?.role !== "CUSTOMER" && (
@@ -116,7 +129,9 @@ const SigninButton = ({ user, logout }: any) => {
                     component="a"
                     onClick={handleAdmin}
                     leftSection={
-                      <IconEye style={{ width: rem(14), height: rem(14) }} />
+                      <IconSettings
+                        style={{ width: rem(14), height: rem(14) }}
+                      />
                     }
                   >
                     Quản trị

@@ -11,6 +11,7 @@ import {
   IconKey,
   IconLogin,
   IconLogout,
+  IconSettings,
   IconUser,
 } from "@tabler/icons-react";
 import { IconShoppingCart } from "@tabler/icons-react";
@@ -77,17 +78,25 @@ export default function MenuHeader({ user, logout }: any) {
             </li>
           )}
           {user?.role === ROLE_EXPERT && (
-            <li>
-              <Link href="/cua-hang-cua-toi" className={styles.navItem}>
-                <IconBuildingStore size={18} />
-                Cửa hàng của tôi
-              </Link>
-            </li>
+            <>
+              <li>
+                <Link href="/dashboard" className={styles.navItem}>
+                  <IconUser size={18} />
+                  Hồ sơ
+                </Link>
+              </li>
+              <li>
+                <Link href="/cua-hang-cua-toi" className={styles.navItem}>
+                  <IconBuildingStore size={18} />
+                  Cửa hàng của tôi
+                </Link>
+              </li>
+            </>
           )}
           {user?.role !== ROLE_CUSTOMER && (
             <li>
               <Link href="/admin" className={styles.navItem}>
-                <IconUser size={18} />
+                <IconSettings size={18} />
                 Quản trị
               </Link>
             </li>

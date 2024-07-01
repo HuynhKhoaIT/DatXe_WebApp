@@ -3,16 +3,16 @@ import { headers } from "next/headers";
 import { getSelectorsByUserAgent } from "react-device-detect";
 import Header from "../layout/common/desktop/HeaderDesktop";
 import { MyFooter } from "../layout/common/desktop/Footer/FooterDesktop";
-import HeaderMobile from "../layout/common/mobile/HeaderMobile";
-import FooterMobile from "../layout/common/mobile/Footer/FooterMobile";
 import HeaderTopMobileApp from "../layout/common/mobile/HeaderTopMobileApp";
 import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
+import { getSession } from "@/lib/auth";
 export const dynamic = "force-dynamic";
 
 interface IProps {
   children: ReactNode;
 }
-export default function Layout({ children }: IProps) {
+export default async function Layout({ children }: IProps) {
+  const session = await getSession();
   const { isMobile } = getSelectorsByUserAgent(
     headers().get("user-agent") ?? ""
   );
@@ -31,7 +31,7 @@ export default function Layout({ children }: IProps) {
           >
             {children}
           </div>
-          <FooterMobileApp />
+          <FooterMobileApp user={session?.user} />
         </main>
       ) : (
         <main>

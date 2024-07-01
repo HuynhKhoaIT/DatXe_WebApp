@@ -1,14 +1,12 @@
-"use client";
-import { callApi } from "@/lib/auth";
-import RenderContextClient from "../components/elements/RenderContextClient";
-import apiConfig from "@/constants/apiConfig";
+import RenderContext from "../components/elements/RenderContext";
 import StoreListPage from "../layout/desktop/cua-hang-cua-toi/StoreListPage";
-import { useExperts } from "../admin/(admin)/hooks/expert/useExpert";
+import { callApi } from "@/lib/auth";
+import apiConfig from "@/constants/apiConfig";
 
-export default function News() {
-  const { experts, isLoading, isFetching } = useExperts();
+export default async function MyGarage() {
+  const experts = await callApi(apiConfig.admin.garage.getList, {});
   return (
-    <RenderContextClient
+    <RenderContext
       components={{
         desktop: {
           defaultTheme: StoreListPage,
@@ -18,7 +16,6 @@ export default function News() {
         },
       }}
       experts={experts}
-      isLoading={isLoading || isFetching}
     />
   );
 }

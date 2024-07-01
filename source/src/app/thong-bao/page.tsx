@@ -1,7 +1,5 @@
 "use client";
-import { callApi } from "@/lib/auth";
 import RenderContextClient from "../components/elements/RenderContextClient";
-import apiConfig from "@/constants/apiConfig";
 import NotiListPage from "../layout/desktop/thong-bao/NotiListPage";
 import { useNotiList } from "../hooks/noti/useNoti";
 

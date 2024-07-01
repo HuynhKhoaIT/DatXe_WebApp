@@ -12,7 +12,12 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { titleHeader } from "@/constants/masterData";
-import { ROLE_CUSTOMER, titleHeaderKeys } from "@/constants";
+import {
+  ROLE_ADMIN,
+  ROLE_CUSTOMER,
+  ROLE_EXPERT,
+  titleHeaderKeys,
+} from "@/constants";
 import FooterMobile from "./FooterMobile";
 
 function FooterMobileApp({ user }: any) {
@@ -22,7 +27,7 @@ function FooterMobileApp({ user }: any) {
   const res: any = titleHeader?.find((item) => {
     return item?.value == page;
   });
-  if (!user?.token || user?.role != ROLE_CUSTOMER) {
+  if (!user?.token || user?.role == ROLE_ADMIN) {
     return <FooterMobile />;
   }
   return (

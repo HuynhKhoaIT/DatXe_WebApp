@@ -44,7 +44,7 @@ export default async function DashboardAdmin({ searchParams }: any) {
 
   return (
     <div className={styles.main}>
-      {myGarage?.status === "PUBLIC" && (
+      {myGarage?.status !== "PUBLIC" && (
         <Alert
           variant="light"
           title="Xác minh"

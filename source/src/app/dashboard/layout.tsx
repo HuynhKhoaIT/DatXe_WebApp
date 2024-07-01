@@ -7,7 +7,7 @@ import { headers } from "next/headers";
 import styles from "./index.module.scss";
 import Container from "../components/common/Container";
 import { redirect } from "next/navigation";
-import { ROLE_CUSTOMER } from "@/constants";
+import { ROLE_ADMIN, ROLE_CUSTOMER } from "@/constants";
 import FooterMobileApp from "../layout/common/mobile/Footer/FooterMobileApp";
 import HeaderTopMobileApp from "../layout/common/mobile/HeaderTopMobileApp";
 import { getSession } from "@/lib/auth";
@@ -20,7 +20,7 @@ export default async function DashboardLayout({ children }: IProps) {
     headers().get("user-agent") ?? ""
   );
   const session: any = await getSession();
-  if (session?.user?.role !== ROLE_CUSTOMER) {
+  if (session?.user?.role == ROLE_ADMIN) {
     return redirect(`/admin`);
   }
 
