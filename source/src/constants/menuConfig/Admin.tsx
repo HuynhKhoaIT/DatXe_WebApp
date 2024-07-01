@@ -28,12 +28,12 @@ const menuConfigAdmin = [
     icon: IconNotes,
     initiallyOpened: true,
     links: [
-      { label: "Danh sách banner", link: "/admin/slide-banner" },
-      { label: "Danh sách merketing", link: "/admin/system-marketing" },
+      { label: "Danh sách banner", link: "/admin/slide-banners" },
+      { label: "Danh sách merketing", link: "/admin/system-marketing-list" },
     ],
   },
   {
-    link: "/admin/amentity",
+    link: "/admin/amentities",
     label: "Danh sách tiện ích",
     icon: IconGasStation,
   },

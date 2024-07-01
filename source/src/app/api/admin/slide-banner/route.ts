@@ -1,17 +1,18 @@
 import prisma from "@/app/libs/prismadb";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   createSlideBanner,
   getSlideBanners,
 } from "@/app/libs/prisma/slideBanner";
 import { getGarageIdByDLBDID } from "@/app/libs/prisma/garage";
 import { getSession } from "@/lib/auth";
-export async function GET(request: Request) {
+import { checkAuthToken } from "@/utils/auth";
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    const auth = await checkAuthToken(request);
     const { searchParams } = new URL(request.url);
     let garageId = "2";
-    if (session?.user) {
+    if (auth) {
       const requestData = {
         s: searchParams.get("s"),
         kind: searchParams.get("kind"),
@@ -27,12 +28,12 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
-    const session = await getSession();
-    if (session?.user) {
-      json.createdBy = session.user?.id.toString();
+    const auth = await checkAuthToken(request);
+    if (auth) {
+      json.createdBy = auth.id;
       const serviceAdvisor = await createSlideBanner(json);
       return new NextResponse(JSON.stringify(serviceAdvisor), {
         status: 201,

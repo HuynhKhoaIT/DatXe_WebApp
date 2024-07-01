@@ -6,6 +6,7 @@ import {
   updateAmentity,
 } from "@/app/libs/prisma/amentity";
 import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
 export async function GET(
   request: NextRequest,
@@ -16,8 +17,8 @@ export async function GET(
     if (!id) {
       return new NextResponse("Missing 'id' parameter");
     }
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const amenities = await findAmentity(id);
       return NextResponse.json(amenities);
     }
@@ -32,19 +33,19 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const session = await getSession();
-    if (session?.user) {
+    const auth = await checkAuthToken(request);
+    if (auth) {
       const id = params.id;
-      let createdBy = 1;
-      let garageId = 1;
+      let createdBy = "1";
+      let garageId = "1";
       if (!id) {
         return new NextResponse("Missing 'id' parameter");
       }
       const json = await request.json();
 
-      if (session?.user?.id) {
-        createdBy = Number(session.user.id);
-        garageId = Number(session.user.garageId);
+      if (auth?.id) {
+        createdBy = auth.id;
+        garageId = auth.garageId;
       }
 
       const updateData = await updateAmentity(id, json);
