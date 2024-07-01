@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }: IProps) {
   );
   const session: any = await getSession();
   if (session?.user?.role == ROLE_ADMIN) {
-    return redirect(`/admin/system-expert`);
+    return redirect(`/admin/system-experts`);
   }
   return (
     <Fragment>

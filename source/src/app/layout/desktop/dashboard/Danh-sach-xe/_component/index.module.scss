@@ -12,5 +12,18 @@
         align-items: center;
         justify-content: space-between;
     }
-    
+    .listInfo{
+        display: flex;
+        position: relative;
+        z-index: 1;
+        flex-direction: column;
+        // color: var(--title-white);
+        font-size: 1rem;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: var(--box-shadow-primary);
+        .plates{
+            // color: var(--title-white);
+        }
+    }
 }

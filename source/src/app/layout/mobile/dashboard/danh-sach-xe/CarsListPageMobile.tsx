@@ -2,11 +2,13 @@ import { Box, Button, LoadingOverlay } from "@mantine/core";
 import ItemCarMobile from "./_component/ItemCarMobile";
 import styles from "./index.module.scss";
 import ButtonAddCar from "./_component/ButtonAddCar";
-export default function CarsListPageMobile({
+import { getSession } from "@/lib/auth";
+export default async function CarsListPageMobile({
   carsData,
   handleDeleteCar,
   handleSetDefault,
 }: any) {
+  const session = await getSession();
   return (
     <Box pos={"relative"} className={styles.wrapper}>
       {carsData?.data
@@ -18,6 +20,7 @@ export default function CarsListPageMobile({
               data={item}
               key={index}
               handleSetDefault={handleSetDefault}
+              session={session}
             />
           );
         })}

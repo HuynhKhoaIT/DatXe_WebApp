@@ -1,46 +1,26 @@
 "use client";
-import Breadcrumb from "@/app/components/form/Breadcrumb";
-import SearchForm from "@/app/components/form/SearchForm";
-import ListPage from "@/app/components/layout/ListPage";
 import TableBasic from "@/app/components/table/Tablebasic";
-import { FieldTypes, statusOptions } from "@/constants/masterData";
-import { Badge, Button, Flex, Image, Tooltip } from "@mantine/core";
-import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
-import ImageDefult from "../../../../../public/assets/images/logoDatxe.png";
+import { statusOptions } from "@/constants/masterData";
+import { Badge, Button, Tooltip } from "@mantine/core";
+import { IconPencil, IconTrash } from "@tabler/icons-react";
 import Link from "next/link";
 import { Fragment, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import dynamic from "next/dynamic";
-import { useExperts } from "../../(admin)/hooks/expert/useExpert";
-import FilterTable from "@/app/components/common/FilterTable";
 import { AppConstants } from "@/constants";
 import ImageField from "@/app/components/form/ImageField";
 
-const Breadcrumbs = [
-  { title: "Tổng quan", href: "/admin" },
-  { title: "Chuyên gia" },
-];
-
 const DynamicModalDeleteItem = dynamic(
-  () => import("../../_component/ModalDeleteItem"),
+  () => import("../../../_component/ModalDeleteItem"),
   {
     ssr: false,
   }
 );
-const Expert = () => {
-  const {
-    experts,
-    isLoading,
-    isFetching,
-    error,
-    page,
-    setPage,
-    deleteItem,
-  } = useExperts();
-
+const TableListPage = ({ dataSource, deleteItem }: any) => {
+  console.log(dataSource);
   const [deleteRow, setDeleteRow] = useState();
-  const handleDeleteItem = (id: any) => {
-    deleteItem(id);
+  const handleDeleteItem = async (id: any) => {
+    await deleteItem(id);
   };
 
   const [
@@ -59,10 +39,9 @@ const Expert = () => {
       render: (data: any) => {
         return (
           <ImageField
-            radius="md "
-            h={40}
-            w={80}
-            fit="contain"
+            radius="md"
+            height={60}
+            width={60}
             src={data && `${AppConstants.contentRootUrl}${data}`}
           />
         );
@@ -114,20 +93,20 @@ const Expert = () => {
       dataIndex: ["phoneNumber"],
       textAlign: "center",
     },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Email</span>
-      ),
-      name: "email",
-      dataIndex: ["email"],
-    },
-    {
-      label: (
-        <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Địa chỉ</span>
-      ),
-      name: "address",
-      dataIndex: ["address"],
-    },
+    // {
+    //   label: (
+    //     <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Email</span>
+    //   ),
+    //   name: "email",
+    //   dataIndex: ["email"],
+    // },
+    // {
+    //   label: (
+    //     <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>Địa chỉ</span>
+    //   ),
+    //   name: "address",
+    //   dataIndex: ["address"],
+    // },
 
     {
       label: (
@@ -210,43 +189,13 @@ const Expert = () => {
     },
   ];
 
-  const searchData = [
-    {
-      name: "s",
-      placeholder: "Tên hoặc số điện thoại",
-      type: FieldTypes.STRING,
-    },
-  ];
-
-  const initialValuesSearch = {
-    s: "",
-  };
   return (
     <Fragment>
-      <Breadcrumb breadcrumbs={Breadcrumbs} />
-      <ListPage
-        searchForm={
-          <SearchForm
-            searchData={searchData}
-            brandFilter={false}
-            initialValues={initialValuesSearch}
-          />
-        }
-        filterCategory={
-          <FilterTable keyQuery="status" stepOptions={statusOptions} />
-        }
-        style={{ height: "100%" }}
-        titleTable={true}
-        baseTable={
-          <TableBasic
-            data={experts?.data}
-            columns={columns}
-            loading={isLoading}
-            totalPage={experts?.totalPage}
-            setPage={setPage}
-            activePage={page}
-          />
-        }
+      <TableBasic
+        data={dataSource?.data}
+        columns={columns}
+        totalPage={dataSource?.totalPage}
+        onRow={`/admin/system-expert`}
       />
       {openedDeleteItem && (
         <DynamicModalDeleteItem
@@ -259,4 +208,4 @@ const Expert = () => {
     </Fragment>
   );
 };
-export default Expert;
+export default TableListPage;

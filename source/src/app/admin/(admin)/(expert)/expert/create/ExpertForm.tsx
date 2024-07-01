@@ -2,16 +2,12 @@
 import {
   Box,
   Card,
-  FileButton,
   Grid,
   Text,
   TextInput,
   Textarea,
-  Image,
   Select,
-  LoadingOverlay,
   MultiSelect,
-  Space,
   Button,
 } from "@mantine/core";
 import { isNotEmpty, useForm } from "@mantine/form";
@@ -21,29 +17,30 @@ import axios from "axios";
 import FooterSavePage from "@/app/admin/_component/FooterSavePage";
 import { getOptionsDistrict, getOptionsWard } from "@/utils/until";
 import CropImageLink from "@/app/components/common/CropImage";
-import ImageUpload from "@/assets/icons/image.svg";
 import Typo from "@/app/components/elements/Typo";
-import DropZone from "../_component/DropZone";
 import { IconQrcode } from "@tabler/icons-react";
 import { useSession } from "next-auth/react";
 import { AppConstants, ROLE_ADMIN, apiUrl } from "@/constants";
 import { uploadFileImage } from "@/utils/uploadFile/uploadFile";
+import DropZone from "../../experts/_component/DropZone";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { useDisclosure } from "@mantine/hooks";
 export default function ExpertForm({
-  isLoading,
   isEditing,
   dataDetail,
   UltilitiesOptions,
   updateItem,
   addItem,
   provinceOptions,
-  isLoadingUltilities,
-  isPendingUpdate,
-  isPendingAdd,
   createQr,
-  isPendingQr,
   isCreateQr,
   isSystem,
 }: any) {
+  const [isLoadingSave, handlerLoading] = useDisclosure();
+  const [isLoadingQr, handlerLoadingQr] = useDisclosure();
+
+  const router = useRouter();
   const [logoUrl, setLogoUrl] = useState(null);
   const [bannerUrl, setBannerUrl] = useState(null);
   const [imagesUrl, setImagesUrl] = useState<any>([]);
@@ -164,21 +161,36 @@ export default function ExpertForm({
   };
 
   const handleSubmit = async (values: any) => {
+    handlerLoading.open();
     values.photos = JSON.stringify(imagesUrl);
     if (isEditing) {
-      updateItem(values);
+      const res = await updateItem(values);
+      if (res) {
+        router.back();
+        router.refresh();
+        toast.success("Cập nhật thành công");
+      } else {
+        router.back();
+        router.refresh();
+        toast.error("Cập nhật thất bại");
+      }
     } else {
-      addItem(values);
+      const res = await addItem(values);
+      if (res) {
+        router.back();
+        router.refresh();
+        toast.success("Thêm thành công");
+      } else {
+        router.back();
+        router.refresh();
+        toast.error("Thêm thất bại");
+      }
     }
+    handlerLoading.close();
   };
 
   return (
     <Box pos="relative">
-      <LoadingOverlay
-        visible={isLoading || isLoadingUltilities}
-        zIndex={99}
-        overlayProps={{ radius: "sm", blur: 2 }}
-      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Grid gutter={12}>
           <Grid.Col span={12}>
@@ -473,7 +485,7 @@ export default function ExpertForm({
         </Grid>
 
         <FooterSavePage
-          saveLoading={isPendingUpdate || isPendingAdd}
+          saveLoading={isLoadingSave}
           okText={isEditing ? "Cập nhật" : "Thêm"}
         >
           {isCreateQr ? (
@@ -486,10 +498,13 @@ export default function ExpertForm({
               variant="outline"
               key="cancel"
               color="blue"
-              loading={isPendingQr}
+              loading={isLoadingQr}
               leftSection={<IconQrcode size={16} />}
-              onClick={() => {
-                createQr({ garageId: dataDetail?.id });
+              onClick={async () => {
+                handlerLoadingQr.open();
+                await createQr({ garageId: dataDetail?.id });
+                router.refresh();
+                handlerLoadingQr.close();
               }}
             >
               Tạo Qr code

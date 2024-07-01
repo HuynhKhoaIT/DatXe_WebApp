@@ -46,7 +46,7 @@ const SidebarAdmin = () => {
       </li>
       <li>
         <Link
-          href="/admin/expert"
+          href="/admin/experts"
           className={`list-group-item ${page == "expert" && styles.active}`}
         >
           <IconUsers /> Quản lý chuyên gia

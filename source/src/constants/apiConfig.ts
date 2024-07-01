@@ -567,6 +567,11 @@ const apiConfig = {
         method: "GET",
         headers: baseHeader,
       },
+      createQrCode: {
+        baseURL: `${apiUrl}api/admin/garage/create-qr`,
+        method: "POST",
+        headers: baseHeader,
+      },
     },
     marketing: {
       getList: {

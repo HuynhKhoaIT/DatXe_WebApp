@@ -11,7 +11,7 @@ const menuConfigAdmin = [
   {
     label: "Danh sách chuyên gia",
     icon: IconUsers,
-    link: "/admin/system-expert",
+    link: "/admin/system-experts",
   },
   {
     label: "Quản lí trang chủ",

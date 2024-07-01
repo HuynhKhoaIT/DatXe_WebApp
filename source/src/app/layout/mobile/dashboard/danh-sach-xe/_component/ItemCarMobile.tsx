@@ -20,6 +20,7 @@ export default function ItemCarMobile({
   data,
   deleteItem,
   handleSetDefault,
+  session,
 }: any) {
   const router = useRouter();
   const [
@@ -126,6 +127,7 @@ export default function ItemCarMobile({
         onCancel={closePreviewCar}
         width={800}
         data={data}
+        session={session}
       />
     </div>
   );
