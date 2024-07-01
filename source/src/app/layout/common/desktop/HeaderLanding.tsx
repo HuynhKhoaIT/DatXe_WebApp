@@ -48,7 +48,7 @@ export default function HeaderLanding() {
         </ul>
         <div className={styles.nav}>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             variant="outline"
             color="var(--primary-color)"

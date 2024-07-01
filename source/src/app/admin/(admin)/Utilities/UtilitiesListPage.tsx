@@ -91,7 +91,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -118,7 +118,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
               }}
             >
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -131,7 +131,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
             </Link>
 
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"
@@ -177,7 +177,7 @@ export default function UtilitiesListPage({ dataSource }: any) {
           }}
         >
           <Button
-            size="lg"
+            size="md"
             h={{ base: 42, md: 50, lg: 50 }}
             radius={0}
             leftSection={<IconPlus size={18} />}

@@ -42,7 +42,7 @@ const BasicModal = ({
       {footer && (
         <Group mt={20} justify="flex-end" className={styles.modalFooter}>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             className={styles.cancelButton}
             onClick={() => {
@@ -55,7 +55,7 @@ const BasicModal = ({
             {cancelText}
           </Button>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             className={styles.okButton}
             onClick={onOkModal}

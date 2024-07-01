@@ -94,7 +94,7 @@ export default function Chart({
             <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
               <DatePickerInput
                 label="Thời gian"
-                size="lg"
+                size="md"
                 radius={0}
                 placeholder="Vui lòng chọn"
                 type="range"

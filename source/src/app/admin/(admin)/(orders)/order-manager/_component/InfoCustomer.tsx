@@ -77,7 +77,7 @@ export default function InfoCustomer({
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <TextInput
               disabled={isUser}
-              size="lg"
+              size="md"
               classNames={{ input: styles.input }}
               radius={0}
               {...form.getInputProps("fullName")}
@@ -89,7 +89,7 @@ export default function InfoCustomer({
 
           <Grid.Col span={12}>
             <TextInput
-              size="lg"
+              size="md"
               disabled={isUser}
               classNames={{ input: styles.input }}
               radius={0}

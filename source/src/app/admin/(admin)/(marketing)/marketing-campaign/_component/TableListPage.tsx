@@ -108,7 +108,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -136,7 +136,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
             >
               <Tooltip label="Cập nhật" withArrow position="bottom">
                 <Button
-                  size="lg"
+                  size="md"
                   radius={0}
                   style={{ margin: "0 5px" }}
                   variant="transparent"
@@ -151,7 +151,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
 
             <Tooltip label="Xoá" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 p={5}
                 variant="transparent"

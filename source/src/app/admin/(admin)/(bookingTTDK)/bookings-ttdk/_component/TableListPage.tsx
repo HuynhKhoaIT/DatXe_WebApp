@@ -106,7 +106,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
           <>
             <Tooltip label="Cập nhật" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -122,7 +122,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
             {!deleteDisabled && (
               <Tooltip label="Xoá" withArrow position="bottom">
                 <ActionIcon
-                  size="lg"
+                  size="md"
                   radius={0}
                   p={5}
                   variant="transparent"

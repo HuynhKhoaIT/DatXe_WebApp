@@ -391,7 +391,7 @@ export default function OrderForm({
       children: (
         <Box mb={30}>
           <Select
-            size="lg"
+            size="md"
             radius={0}
             label={"Lí do huỷ đơn"}
             placeholder="Chọn lí do"

@@ -110,7 +110,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
           return (
             <Badge
               radius={0}
-              size="lg"
+              size="md"
               variant="light"
               color={matchedStatus.color}
               key={index}
@@ -139,7 +139,7 @@ export default function ModalAcceptCar({ openModal, close }: any) {
             >
               <Tooltip label="Cập nhật" withArrow position="bottom">
                 <Button
-                  size="lg"
+                  size="md"
                   radius={0}
                   style={{ margin: "0 5px" }}
                   variant="transparent"

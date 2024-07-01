@@ -46,7 +46,7 @@ const Reviews = ({ reviews, expertId, review }: any) => {
             <Typo size="primary">Chất lượng chuyên gia</Typo>
             <Rating
               defaultValue={5}
-              size="lg"
+              size="md"
               onChange={(value) => {
                 form.setFieldValue("star", value);
               }}
@@ -54,7 +54,7 @@ const Reviews = ({ reviews, expertId, review }: any) => {
           </div>
           <div className={styles.review}>
             <Textarea
-              size="lg"
+              size="md"
               radius={0}
               label="Đánh giá chuyên gia:"
               placeholder="Để lại đánh giá"
@@ -82,7 +82,7 @@ const Reviews = ({ reviews, expertId, review }: any) => {
           Đánh giá ({reviews?.total})
         </Typo>
         <Select
-          size="lg"
+          size="md"
           radius={0}
           w={130}
           placeholder="Lọc theo"

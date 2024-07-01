@@ -98,7 +98,7 @@ export default function CategoryListPage({ profile }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -128,7 +128,7 @@ export default function CategoryListPage({ profile }: any) {
               }}
             >
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -140,7 +140,7 @@ export default function CategoryListPage({ profile }: any) {
               </Button>
             </Link>
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"
@@ -190,7 +190,7 @@ export default function CategoryListPage({ profile }: any) {
         actionBar={
           <Flex justify={"end"} align={"center"} gap={20}>
             <Button
-              size="lg"
+              size="md"
               h={{ base: 42, md: 50, lg: 50 }}
               radius={0}
               onClick={openModalCategories}
@@ -205,7 +205,7 @@ export default function CategoryListPage({ profile }: any) {
             >
               <Button
                 h={{ base: 42, md: 50, lg: 50 }}
-                size="lg"
+                size="md"
                 radius={0}
                 leftSection={<IconPlus size={18} />}
               >

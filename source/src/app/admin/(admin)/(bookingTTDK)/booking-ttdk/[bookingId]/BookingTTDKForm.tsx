@@ -46,7 +46,7 @@ export default function BookingForm({
         <Grid gutter={12}>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               {...form.getInputProps("code")}
               label="Mã đơn hàng"
@@ -56,7 +56,7 @@ export default function BookingForm({
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               {...form.getInputProps("licensePlates")}
               label="Biển số xe"
@@ -66,7 +66,7 @@ export default function BookingForm({
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               {...form.getInputProps("fullname")}
               label="Tên khách hàng"
@@ -76,7 +76,7 @@ export default function BookingForm({
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               {...form.getInputProps("phone")}
               label="Số điện thoại"
@@ -94,7 +94,7 @@ export default function BookingForm({
           </Grid.Col>
           <Grid.Col span={6}>
             <TimeInput
-              size="lg"
+              size="md"
               radioGroup="0"
               {...form.getInputProps("time")}
               label="Giờ hẹn"
@@ -109,7 +109,7 @@ export default function BookingForm({
           </Grid.Col>
           <Grid.Col span={12}>
             <Textarea
-              size="lg"
+              size="md"
               radius={0}
               label="Ghi chú của khách hàng"
               minRows={2}

@@ -41,7 +41,7 @@ const FooterOrder = ({
         isCancel={false}
       >
         <Button
-          size="lg"
+          size="md"
           radius={0}
           h={{ base: 42, md: 50, lg: 50 }}
           variant="outline"
@@ -53,7 +53,7 @@ const FooterOrder = ({
           Quay lại
         </Button>
         <Button
-          size="lg"
+          size="md"
           radius={0}
           h={{ base: 42, md: 50, lg: 50 }}
           loading={isLoadingAccess}
@@ -104,7 +104,7 @@ const FooterOrder = ({
                     dataDetail={dataDetail}
                   />
                   <Button
-                    size="lg"
+                    size="md"
                     radius={0}
                     h={{ base: 42, md: 50, lg: 50 }}
                     // variant="outline"
@@ -117,7 +117,7 @@ const FooterOrder = ({
                     Huỷ đơn
                   </Button>
                   <Button
-                    size="lg"
+                    size="md"
                     radius={0}
                     h={{ base: 42, md: 50, lg: 50 }}
                     loading={isLoadingDone}

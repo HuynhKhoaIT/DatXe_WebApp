@@ -54,7 +54,7 @@ export default function InfoItem({
     <Flex key={index} gap={12} w={"100%"} align={"end"} justify="space-between">
       <Flex gap={12} w={"90%"} style={{ flexWrap: "wrap" }}>
         <Select
-          size="lg"
+          size="md"
           searchable={true}
           radius={0}
           w={{ base: "100%", md: "30%", lg: "30%" }}
@@ -69,7 +69,7 @@ export default function InfoItem({
           }}
         />
         <Select
-          size="lg"
+          size="md"
           searchable={true}
           radius={0}
           w={{ base: "100%", md: "30%", lg: "30%" }}
@@ -84,7 +84,7 @@ export default function InfoItem({
           }}
         />
         <MultiSelect
-          size="lg"
+          size="md"
           radius={0}
           searchable={true}
           w={{ base: "100%", md: "30%", lg: "30%" }}
@@ -98,7 +98,7 @@ export default function InfoItem({
         />
       </Flex>
       <Button
-        size="lg"
+        size="md"
         radius={0}
         onClick={() => removeCar(index)}
         variant="outline"

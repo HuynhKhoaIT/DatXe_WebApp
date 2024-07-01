@@ -110,7 +110,7 @@ export function AutocompleteLicensePlates({
         <Grid w={w} justify="space-between" gutter={0}>
           <Grid.Col span={isCamera ? 10 : 12}>
             <TextInput
-              size="lg"
+              size="md"
               classNames={{ input: styles.input }}
               radius={0}
               data-autofocus

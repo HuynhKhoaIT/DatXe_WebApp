@@ -92,7 +92,7 @@ export function AutocompletePhone({
         <Grid w={w} justify="space-between" gutter={0}>
           <Grid.Col span={12}>
             <TextInput
-              size="lg"
+              size="md"
               classNames={{ input: styles.input }}
               radius={0}
               error={errorText}

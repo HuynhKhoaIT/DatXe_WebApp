@@ -71,7 +71,7 @@ export default function TableListPage({ dataSource, session }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -99,7 +99,7 @@ export default function TableListPage({ dataSource, session }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -123,7 +123,7 @@ export default function TableListPage({ dataSource, session }: any) {
           <>
             <Tooltip label="Điều hướng chuyên gia" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -145,7 +145,7 @@ export default function TableListPage({ dataSource, session }: any) {
             >
               <Tooltip label="Xem chi tiết" withArrow position="bottom">
                 <Button
-                  size="lg"
+                  size="md"
                   radius={0}
                   style={{ margin: "0 5px" }}
                   variant="transparent"

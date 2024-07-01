@@ -149,7 +149,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={8}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("title")}
                     label="Tên danh mục"
@@ -159,7 +159,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={4}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -176,7 +176,7 @@ export default function CategoryForm({ isEditing, dataDetail }: any) {
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả chi tiết"
                     minRows={4}

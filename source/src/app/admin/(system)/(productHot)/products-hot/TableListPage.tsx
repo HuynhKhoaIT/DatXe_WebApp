@@ -108,7 +108,7 @@ const TableListPage = ({ dataSource, deleteItem }: any) => {
         return (
           <Tooltip label="Xoá" withArrow position="bottom">
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"

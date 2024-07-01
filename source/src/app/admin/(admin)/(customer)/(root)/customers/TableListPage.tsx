@@ -94,7 +94,7 @@ export default function TableListPage({
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -122,7 +122,7 @@ export default function TableListPage({
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -145,7 +145,7 @@ export default function TableListPage({
           <>
             <Tooltip label="Xe" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -166,7 +166,7 @@ export default function TableListPage({
             >
               <Tooltip label="Chỉnh sửa" withArrow position="bottom">
                 <Button
-                  size="lg"
+                  size="md"
                   radius={0}
                   style={{ margin: "0 5px" }}
                   variant="transparent"
@@ -180,7 +180,7 @@ export default function TableListPage({
             </Link>
             <Tooltip label="Xoá" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 p={5}
                 variant="transparent"

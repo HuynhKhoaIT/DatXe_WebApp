@@ -7,7 +7,7 @@ export default function ActionBar({ linkTo, label = "Thêm mới", style }: any)
     <Flex justify={"end"} align={"center"} style={style}>
       <Link href={linkTo}>
         <Button
-          size="lg"
+          size="md"
           h={{ base: 42, md: 50, lg: 50 }}
           radius={0}
           leftSection={<IconPlus size={18} />}

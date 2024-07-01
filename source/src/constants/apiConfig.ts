@@ -226,17 +226,7 @@ const apiConfig = {
   },
   garage: {
     getList: {
-      baseURL: `${apiUrl}api/client/cars`,
-      method: "GET",
-      headers: baseHeader,
-    },
-    getById: {
-      baseURL: `${apiUrl}api/client/cars/:id`,
-      method: "GET",
-      headers: baseHeader,
-    },
-    getReviews: {
-      baseURL: `${apiUrl}api/reviews/garage/:id`,
+      baseURL: `${apiUrl}api/garages`,
       method: "GET",
       headers: baseHeader,
     },
@@ -674,6 +664,13 @@ const apiConfig = {
     wardList: {
       baseURL: `${apiGuest}/get-wards/:districtId`,
       method: "GET",
+      headers: baseHeader,
+    },
+  },
+  ttdk: {
+    create: {
+      baseURL: `${apiUrl}api/booking-ttdk`,
+      method: "POST",
       headers: baseHeader,
     },
   },

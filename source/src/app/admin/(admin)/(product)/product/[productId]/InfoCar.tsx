@@ -28,11 +28,10 @@ export default function InfoCar({
           handleChangeBrand={handleChangeBrand}
           handleChangeNameCar={handleChangeNameCar}
           handleChangeYearCar={handleChangeYearCar}
-          
         />
       ))}
       <Flex justify="end" mt={12}>
-        <Button size="lg" radius={0} onClick={addCar}>
+        <Button size="md" radius={0} onClick={addCar}>
           <IconPlus size={16} />
         </Button>
       </Flex>

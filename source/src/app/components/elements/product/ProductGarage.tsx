@@ -30,7 +30,7 @@ function ProductGarage({ garage }: { garage: any }) {
               <Group grow gap={10}>
                 <Link href={`/chuyen-gia/${garage?.code}`}>
                   <Button
-                    size="lg"
+                    size="md"
                     radius={0}
                     style={{ borderRadius: "0" }}
                     color="red"
@@ -41,7 +41,7 @@ function ProductGarage({ garage }: { garage: any }) {
                 </Link>
                 <Link href={`/chuyen-gia/${garage?.code}`}>
                   <Button
-                    size="lg"
+                    size="md"
                     radius={0}
                     style={{ borderRadius: "0" }}
                     variant="outline"

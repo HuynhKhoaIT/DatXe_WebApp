@@ -132,7 +132,7 @@ export default function BannerForm({
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={8}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("title")}
                     label="Tên banner"
@@ -142,7 +142,7 @@ export default function BannerForm({
                 </Grid.Col>
                 <Grid.Col span={4}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -159,7 +159,7 @@ export default function BannerForm({
               <Grid gutter={12}>
                 <Grid.Col span={12}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("url")}
                     label="Đường dẫn url"
@@ -171,7 +171,7 @@ export default function BannerForm({
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả ngắn"
                     minRows={4}

@@ -69,7 +69,7 @@ export default function InfoCar({
             {isUser ? (
               <TextInput
                 classNames={{ input: styles.input }}
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("carBrand")}
                 label="Hãng xe"
@@ -79,7 +79,7 @@ export default function InfoCar({
               />
             ) : (
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 classNames={{ input: styles.input }}
                 {...form.getInputProps("carBrandId")}
@@ -101,7 +101,7 @@ export default function InfoCar({
             {isUser ? (
               <TextInput
                 classNames={{ input: styles.input }}
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("carName")}
                 label="Dòng xe"
@@ -111,7 +111,7 @@ export default function InfoCar({
               />
             ) : (
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 classNames={{ input: styles.input }}
                 {...form.getInputProps("carNameId")}
@@ -131,7 +131,7 @@ export default function InfoCar({
           <Grid.Col span={{ base: 4, sm: 6, md: 6, lg: 6 }}>
             {isUser ? (
               <TextInput
-                size="lg"
+                size="md"
                 classNames={{ input: styles.input }}
                 radius={0}
                 {...form.getInputProps("carYear")}
@@ -142,7 +142,7 @@ export default function InfoCar({
               />
             ) : (
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 classNames={{ input: styles.input }}
                 {...form.getInputProps("carYearId")}

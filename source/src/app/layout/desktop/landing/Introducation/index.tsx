@@ -23,7 +23,7 @@ const Introducation = () => {
         đã được đội ngũ Chuyên Gia của DatXE giải quyết cho bạn.
       </Typo>
       <Button
-        size="lg"
+        size="md"
         radius={0}
         leftSection={<img src={IconPlay.src} />}
         color="#6C00FF"

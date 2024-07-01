@@ -99,7 +99,7 @@ export default function CarsListPage({ cars, loading, deleteItem }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -127,7 +127,7 @@ export default function CarsListPage({ cars, loading, deleteItem }: any) {
               }}
             >
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"

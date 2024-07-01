@@ -161,7 +161,7 @@ export default function MarketingCampaignForm({
         </Table.Td>
         <Table.Td>
           <NumberInput
-            size="lg"
+            size="md"
             radius={0}
             withAsterisk
             readOnly
@@ -184,7 +184,7 @@ export default function MarketingCampaignForm({
           <Grid miw={150}>
             <Grid.Col span={{ base: 12, sm: 5, md: 5, lg: 5 }}>
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 miw={100}
                 {...form.getInputProps(`detail.${index}.saleType`)}
@@ -205,7 +205,7 @@ export default function MarketingCampaignForm({
             <Grid.Col span={{ base: 12, sm: 7, md: 7, lg: 7 }}>
               {selectedRow.saleType === "FIXED" ? (
                 <NumberInput
-                  size="lg"
+                  size="md"
                   radius={0}
                   {...form.getInputProps(`detail.${index}.saleValue`)}
                   min={0}
@@ -223,7 +223,7 @@ export default function MarketingCampaignForm({
                 />
               ) : (
                 <NumberInput
-                  size="lg"
+                  size="md"
                   radius={0}
                   {...form.getInputProps(`detail.${index}.saleValue`)}
                   placeholder="Phầm trăm sale"
@@ -245,7 +245,7 @@ export default function MarketingCampaignForm({
         </Table.Td>
         <Table.Td style={{ width: "200px" }}>
           <NumberInput
-            size="lg"
+            size="md"
             radius={0}
             miw={100}
             {...form.getInputProps(`detail.${index}.quantity`)}
@@ -258,7 +258,7 @@ export default function MarketingCampaignForm({
           <>
             <Tooltip label="Xoá" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 p={5}
                 variant="transparent"
@@ -346,7 +346,7 @@ export default function MarketingCampaignForm({
             <Grid gutter={16}>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <TextInput
-                  size="lg"
+                  size="md"
                   radius={0}
                   withAsterisk
                   label="Tên chương trình"
@@ -357,7 +357,7 @@ export default function MarketingCampaignForm({
               </Grid.Col>
               <Grid.Col span={{ base: 6, sm: 3, md: 3, lg: 3 }}>
                 <DateTimeField
-                  size="lg"
+                  size="md"
                   radius={0}
                   placeholder="Ngày bắt đầu"
                   label="Ngày bắt đầu"
@@ -367,7 +367,7 @@ export default function MarketingCampaignForm({
               </Grid.Col>
               <Grid.Col span={{ base: 6, sm: 3, md: 3, lg: 3 }}>
                 <DateTimeField
-                  size="lg"
+                  size="md"
                   placeholder="Ngày kết thúc"
                   radius={0}
                   label="Ngày kết thúc"
@@ -377,7 +377,7 @@ export default function MarketingCampaignForm({
               </Grid.Col>
               <Grid.Col span={12}>
                 <Textarea
-                  size="lg"
+                  size="md"
                   radius={0}
                   label="Mô tả"
                   minRows={4}
@@ -414,7 +414,7 @@ export default function MarketingCampaignForm({
                       }}
                     >
                       <Button
-                        size="lg"
+                        size="md"
                         radius={0}
                         onClick={(e) => {
                           openModal();

@@ -112,7 +112,7 @@ export default function CustomersForm({
             <Grid gutter={10} mt={24}>
               <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                 <TextInput
-                  size="lg"
+                  size="md"
                   radius={0}
                   withAsterisk
                   {...form.getInputProps("fullName")}
@@ -124,7 +124,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                 <TextInput
-                  size="lg"
+                  size="md"
                   radius={0}
                   // withAsterisk
                   {...form.getInputProps("phoneNumber")}
@@ -146,7 +146,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 6, sm: 4, md: 2, lg: 2 }}>
                 <Select
-                  size="lg"
+                  size="md"
                   radius={0}
                   {...form.getInputProps("sex")}
                   label="Giới tính"
@@ -158,7 +158,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                 <Select
-                  size="lg"
+                  size="md"
                   radius={0}
                   {...form.getInputProps("provinceId")}
                   label="Tỉnh/Thành phố"
@@ -181,7 +181,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                 <Select
-                  size="lg"
+                  size="md"
                   radius={0}
                   {...form.getInputProps("districtId")}
                   label="Huyện/Quận"
@@ -204,7 +204,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                 <Select
-                  size="lg"
+                  size="md"
                   disabled={isPreview}
                   searchable={true}
                   radius={0}
@@ -221,7 +221,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 8, md: 8, lg: 8 }}>
                 <TextInput
-                  size="lg"
+                  size="md"
                   disabled={isPreview}
                   radius={0}
                   // withAsterisk
@@ -233,7 +233,7 @@ export default function CustomersForm({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                 <Select
-                  size="lg"
+                  size="md"
                   disabled={isPreview}
                   radius={0}
                   {...form.getInputProps("status")}
@@ -247,7 +247,7 @@ export default function CustomersForm({
             <Grid mt={24}>
               <Grid.Col span={12}>
                 <Textarea
-                  size="lg"
+                  size="md"
                   radius={0}
                   disabled={isPreview}
                   label="Mô tả chi tiết"

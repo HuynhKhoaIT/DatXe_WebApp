@@ -45,7 +45,7 @@ export function FormAccuracy({ login }: any) {
         placeholder="○"
         variant="unstyled"
         type="number"
-        size="lg"
+        size="md"
         length={6}
         {...form.getInputProps("pin")}
         mb={20}

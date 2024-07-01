@@ -88,7 +88,7 @@ export default function OrderDetailPage({ dataSource }: any) {
         }
         return (
           <Button
-            size="lg"
+            size="md"
             radius={0}
             variant="outline"
             onClick={() => {
