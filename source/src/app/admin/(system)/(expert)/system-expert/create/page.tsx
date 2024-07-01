@@ -20,9 +20,9 @@ export default async function CreateCategory() {
     label: item.name,
   }));
   const ultilities = await callApi(apiConfig.amentity.getList, {});
-  const UltilitiesOptions = ultilities?.data?.map((item: any) => ({
+  const UltilitiesOptions = ultilities?.map((item: any) => ({
     value: item.id.toString(),
-    label: item.name,
+    label: item.title,
   }));
 
   return (

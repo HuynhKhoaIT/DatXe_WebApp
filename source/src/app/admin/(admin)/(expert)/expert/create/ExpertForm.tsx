@@ -46,7 +46,6 @@ export default function ExpertForm({
   const [imagesUrl, setImagesUrl] = useState<any>([]);
   const [qrUrl, setQrUrl] = useState(null);
 
-  const session = useSession();
   const handleChangeImage = (index: number, value: any) => {
     const newImage = [...imagesUrl];
     newImage[index] = value;
@@ -462,7 +461,7 @@ export default function ExpertForm({
                   />
                 </Grid.Col>
 
-                {session?.data?.user?.role === ROLE_ADMIN && (
+                {isSystem && (
                   <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                     <Select
                       size="lg"
