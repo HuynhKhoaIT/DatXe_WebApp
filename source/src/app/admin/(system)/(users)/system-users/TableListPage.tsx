@@ -1,47 +1,21 @@
 "use client";
-import Breadcrumb from "@/app/components/form/Breadcrumb";
 import { Fragment, useState } from "react";
-import ListPage from "@/app/components/layout/ListPage";
-import SearchForm from "@/app/components/form/SearchForm";
 import TableBasic from "@/app/components/table/Tablebasic";
-import {
-  IconCar,
-  IconEye,
-  IconPencil,
-  IconRepeat,
-  IconTrash,
-} from "@tabler/icons-react";
+import { IconEye, IconRepeat } from "@tabler/icons-react";
 import { Badge, Button, Tooltip } from "@mantine/core";
 import Link from "next/link";
-import { FieldTypes, sexOptions, statusOptions } from "@/constants/masterData";
+import { sexOptions, statusOptions } from "@/constants/masterData";
 import dayjs from "dayjs";
 import { useDisclosure } from "@mantine/hooks";
-import { useUsers } from "../hooks/users/useUsers";
 import dynamic from "next/dynamic";
 
-const breadcrumbs = [
-  { title: "Tổng quan", href: "/admin" },
-  { title: "Danh sách người dùng" },
-];
 const DynamicModalChangeGarage = dynamic(
   () => import("./_component/ModalChangeGarage"),
   {
     ssr: false,
   }
 );
-export default function UserListPage() {
-  const {
-    users,
-    isLoading,
-    isFetching,
-    error,
-    page,
-    setPage,
-    deleteItem,
-    activeTab,
-    setActiveTab,
-  } = useUsers();
-
+export default function TableListPage({ dataSource, session }: any) {
   const [userId, setUserId] = useState();
   const [openedModal, { open: openModal, close: closeModal }] = useDisclosure(
     false
@@ -67,7 +41,7 @@ export default function UserListPage() {
         </span>
       ),
       name: "phoneNumber",
-      dataIndex: activeTab === "first" ? ["phoneNumber"] : ["phone_number"],
+      dataIndex: ["phoneNumber"],
     },
     {
       label: (
@@ -107,7 +81,7 @@ export default function UserListPage() {
         }
       },
     },
-    activeTab === "first" && {
+    {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Trạng thái
@@ -135,7 +109,7 @@ export default function UserListPage() {
         }
       },
     },
-    activeTab === "first" && {
+    {
       label: (
         <span style={{ whiteSpace: "nowrap", fontSize: "16px" }}>
           Hành động
@@ -166,7 +140,7 @@ export default function UserListPage() {
             </Tooltip>
             <Link
               href={{
-                pathname: `/admin/system-users/${record.id}`,
+                pathname: `/admin/system-user/${record.id}`,
               }}
             >
               <Tooltip label="Xem chi tiết" withArrow position="bottom">
@@ -188,45 +162,20 @@ export default function UserListPage() {
       },
     },
   ];
-  const searchData = [
-    {
-      name: "phoneNumber",
-      placeholder: "Số điện thoại",
-      type: FieldTypes.STRING,
-    },
-  ];
-  const initialValuesSearch = {
-    phoneNumber: "",
-  };
+
   return (
     <Fragment>
-      <Breadcrumb breadcrumbs={breadcrumbs} />
-      <ListPage
-        searchForm={
-          <SearchForm
-            searchData={searchData}
-            brandFilter={false}
-            initialValues={initialValuesSearch}
-          />
-        }
-        style={{ height: "100%" }}
-        titleTable={true}
-        baseTable={
-          <TableBasic
-            data={users?.data}
-            columns={columns}
-            loading={isLoading}
-            totalPage={users?.totalPage}
-            setPage={setPage}
-            activePage={page}
-            onRow={`/admin/system-users`}
-          />
-        }
+      <TableBasic
+        data={dataSource?.data}
+        columns={columns}
+        totalPage={dataSource?.totalPage}
+        onRow={`/admin/system-user`}
       />
       <DynamicModalChangeGarage
         opened={openedModal}
         close={closeModal}
         userId={userId}
+        user={session?.user}
       />
     </Fragment>
   );

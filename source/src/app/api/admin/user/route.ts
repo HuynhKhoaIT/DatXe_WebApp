@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getUsers } from "@/app/libs/prisma/user";
-import { getSession } from "@/lib/auth";
+import { checkAuthToken } from "@/utils/auth";
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const session = await getSession();
+    const auth = await checkAuthToken(request);
     const { searchParams } = new URL(request.url);
-    if (session?.user) {
+    if (auth) {
       let page = 1;
       if (searchParams.get("page")) {
         page = Number(searchParams.get("page"));

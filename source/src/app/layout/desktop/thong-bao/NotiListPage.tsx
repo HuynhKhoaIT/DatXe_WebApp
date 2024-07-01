@@ -12,7 +12,6 @@ import IconBellEmpty from "@/assets/icons/iconbell.svg";
 
 import { formatTimeDifference } from "@/utils/until";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { NOTIFICATION_ORDER_KIND, ROLE_EXPERT } from "@/constants";
 import NotiItem from "../../common/desktop/_component/NotiItem";
 export default function NotiListPage({ notifications }: any) {
@@ -20,7 +19,6 @@ export default function NotiListPage({ notifications }: any) {
     limit: 100,
   });
 
-  const { data: session } = useSession();
   const router = useRouter();
 
   const [data, setData] = useState([]);

@@ -5,7 +5,11 @@ import dayjs from "dayjs";
 import BasicModal from "@/app/components/common/BasicModal";
 import { useDisclosure, useMediaQuery } from "@mantine/hooks";
 import styles from "./index.module.scss";
-import { IconChevronLeft, IconPencil } from "@tabler/icons-react";
+import {
+  IconCardboards,
+  IconChevronLeft,
+  IconPencil,
+} from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 const PreviewModal = ({
   data,
@@ -18,7 +22,7 @@ const PreviewModal = ({
   const isMobile = useMediaQuery(`(max-width: ${"600px"})`);
   const [openedTtdk, handlerOpen] = useDisclosure();
   const router = useRouter();
-  const src = `https://partner.sandbox.ttdk.com.vn/?apikey=001def4c-d614-4472-a226-6d272e8ed4d1&name=${session?.user?.name}&phone=${session?.user?.phone}&licensePlates=${data?.licensePlates}`;
+  const src = `https://partner.sandbox.ttdk.com.vn/?apikey=001def4c-d614-4472-a226-6d272e8ed4d1&name=${session?.user?.name}&phone=${session?.user?.phone}&licensePlates=${data?.numberPlates}`;
 
   return (
     <BasicModal
@@ -56,184 +60,6 @@ const PreviewModal = ({
             <span style={{ fontSize: 16, color: "white" }}>Sửa</span>
           </Button>
         </div>
-        {/* <Grid gutter={10}>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              label="Biển số xe"
-              readOnly
-              type="text"
-              value={data.numberPlates}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              name="color"
-              label="Màu xe"
-              value={data.color}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              name="brandCar"
-              label="Hãng xe"
-              value={data?.brandName?.title}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Dòng xe"
-              value={data?.modelName?.title}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Năm sản xuất"
-              value={data?.yearName?.title}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Số khung"
-              value={data.vinNumber}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Số máy"
-              value={data?.machineNumber}
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Hạn bảo dưỡng"
-              value={
-                data?.maintenanceDeadline &&
-                dayjs(data.maintenanceDeadline)
-                  .add(1, "day")
-                  .format("DD/MM/YYYY")
-              }
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Hạn đăng kiểm"
-              value={
-                data?.registrationDeadline &&
-                dayjs(data.registrationDeadline)
-                  .add(1, "day")
-                  .format("DD/MM/YYYY")
-              }
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Hạn BHVC"
-              value={
-                data?.materialInsuranceDeadline &&
-                dayjs(data.materialInsuranceDeadline)
-                  .add(1, "day")
-                  .format("DD/MM/YYYY")
-              }
-            />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
-            <TextInput
-              variant="filled"
-              size="md"
-              classNames={{
-                root: styles.root,
-                input: styles.inputDashboard,
-              }}
-              readOnly
-              type="text"
-              label="Hạn BHDS"
-              value={
-                data?.civilInsuranceDeadline &&
-                dayjs(data.civilInsuranceDeadline)
-                  .add(1, "day")
-                  .format("DD/MM/YYYY")
-              }
-            />
-          </Grid.Col>
-        </Grid> */}
         <ul className={styles.listInfo}>
           <h4 className={styles.plates}>{data?.numberPlates}</h4>
           <li>Hãng xe: {data?.brandName?.title || "Không rõ"}</li>
@@ -249,6 +75,7 @@ const PreviewModal = ({
             }}
             variant="outline"
             color="var(--primary-color)"
+            leftSection={<IconCardboards />}
           >
             Đặt lịch đăng kiểm
           </Button>
