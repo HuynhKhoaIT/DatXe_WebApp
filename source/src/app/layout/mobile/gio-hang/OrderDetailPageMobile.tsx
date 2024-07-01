@@ -218,7 +218,7 @@ export default function OrderDetailPageMobile({
         }
         return (
           <Button
-            // size="lg"
+            // size="md"
             // radius={0}
             color="blue"
             variant="outline"

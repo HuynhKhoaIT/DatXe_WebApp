@@ -60,7 +60,7 @@ export const ModalEventCalendar = ({
         visible={loading}
       />
       <Textarea
-        size="lg"
+        size="md"
         radius={0}
         placeholder="Yêu cầu khách hàng"
         withAsterisk={true}
@@ -90,7 +90,7 @@ export const ModalEventCalendar = ({
           {isUser ? (
             <TextInput
               classNames={{ input: styles.input }}
-              size="lg"
+              size="md"
               radius={0}
               {...form.getInputProps("carBrand")}
               label="Hãng xe"
@@ -100,7 +100,7 @@ export const ModalEventCalendar = ({
             />
           ) : (
             <Select
-              size="lg"
+              size="md"
               radius={0}
               searchable={true}
               classNames={{ input: styles.input }}
@@ -123,7 +123,7 @@ export const ModalEventCalendar = ({
           {isUser ? (
             <TextInput
               classNames={{ input: styles.input }}
-              size="lg"
+              size="md"
               radius={0}
               {...form.getInputProps("carName")}
               label="Dòng xe"
@@ -133,7 +133,7 @@ export const ModalEventCalendar = ({
             />
           ) : (
             <Select
-              size="lg"
+              size="md"
               searchable={true}
               radius={0}
               classNames={{ input: styles.input }}
@@ -155,7 +155,7 @@ export const ModalEventCalendar = ({
           {isUser ? (
             <TextInput
               searchable={true}
-              size="lg"
+              size="md"
               classNames={{ input: styles.input }}
               radius={0}
               {...form.getInputProps("carYear")}
@@ -166,7 +166,7 @@ export const ModalEventCalendar = ({
             />
           ) : (
             <Select
-              size="lg"
+              size="md"
               radius={0}
               classNames={{ input: styles.input }}
               {...form.getInputProps("carYearId")}
@@ -195,7 +195,7 @@ export const ModalEventCalendar = ({
         </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
-            size="lg"
+            size="md"
             classNames={{ input: styles.input }}
             radius={0}
             {...form.getInputProps("fullName")}
@@ -209,7 +209,7 @@ export const ModalEventCalendar = ({
       <Grid gutter={10} mt="md">
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           <Select
-            size="lg"
+            size="md"
             radius={0}
             data={categoryOptions}
             placeholder="Danh mục đặt lịch"
@@ -224,7 +224,7 @@ export const ModalEventCalendar = ({
           className="input-date"
         >
           <DateTimePicker
-            size="lg"
+            size="md"
             radius={0}
             valueFormat="DD/MM/YYYY hh:mm A"
             placeholder="Thời gian đặt lịch"
@@ -237,7 +237,7 @@ export const ModalEventCalendar = ({
       <Grid mt="md">
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           <Textarea
-            size="lg"
+            size="md"
             classNames={{ input: styles.input }}
             radius={0}
             {...form.getInputProps("note")}
@@ -249,7 +249,7 @@ export const ModalEventCalendar = ({
         </Grid.Col>
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           <Textarea
-            size="lg"
+            size="md"
             classNames={{ input: styles.input }}
             radius={0}
             {...form.getInputProps("notePrivate")}
@@ -268,7 +268,7 @@ export const ModalEventCalendar = ({
         className="footer-modal-schedule"
       >
         <Button
-          size="lg"
+          size="md"
           radius={0}
           loading={isPendingAdd}
           w={100}

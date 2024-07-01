@@ -84,7 +84,7 @@ export default function ModalReviewGarage({
         </div>
         <div className={styles.review}>
           <Textarea
-            size="lg"
+            size="md"
             radius={0}
             label="Đánh giá chuyên gia:"
             placeholder="Để lại đánh giá"

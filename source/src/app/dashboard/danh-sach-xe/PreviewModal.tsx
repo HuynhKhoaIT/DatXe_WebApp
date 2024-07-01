@@ -19,7 +19,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
         <Grid gutter={10}>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               label="Biển số xe"
               readOnly
@@ -30,7 +30,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"
@@ -43,7 +43,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
         <Grid gutter={10}>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"
@@ -54,7 +54,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"
@@ -67,7 +67,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
         <Grid gutter={10}>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="number"
@@ -78,7 +78,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"
@@ -94,7 +94,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
         <Grid gutter={10}>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"
@@ -108,7 +108,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"
@@ -126,7 +126,7 @@ const PreviewModal = ({ data, onOk, opened, onCancel, ...props }: any) => {
         <Grid gutter={10}>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               type="text"

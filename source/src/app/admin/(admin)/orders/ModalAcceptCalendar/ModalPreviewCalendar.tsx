@@ -99,7 +99,7 @@ export const ModalPreviewCalendar = ({
       />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Textarea
-          size="lg"
+          size="md"
           radius={0}
           label="Yêu cầu khách hàng"
           placeholder="Yêu cầu khách hàng"
@@ -121,7 +121,7 @@ export const ModalPreviewCalendar = ({
         <Grid gutter={10} mt="md">
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               label="Họ và tên"
               placeholder="Họ và tên"
@@ -132,7 +132,7 @@ export const ModalPreviewCalendar = ({
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               label="Số điện thoại"
               placeholder="Số điện thoại"
@@ -152,7 +152,7 @@ export const ModalPreviewCalendar = ({
                 input: styles.inputPlates,
               }}
               placeholder="Nhập biển số xe"
-              size="lg"
+              size="md"
               disabled
               radius={0}
               {...form.getInputProps("numberPlates")}
@@ -163,7 +163,7 @@ export const ModalPreviewCalendar = ({
         <Grid gutter={10} mt="md">
           <Grid.Col span={4}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               label="Hãng xe"
               {...form.getInputProps("carBrandId")}
@@ -185,7 +185,7 @@ export const ModalPreviewCalendar = ({
           </Grid.Col>
           <Grid.Col span={4}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               label="Dòng xe"
               data={modelOptions}
@@ -203,7 +203,7 @@ export const ModalPreviewCalendar = ({
           </Grid.Col>
           <Grid.Col span={4}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               label="Năm sản xuất"
               data={yearCarOptions}
@@ -219,7 +219,7 @@ export const ModalPreviewCalendar = ({
         <Grid gutter={10} mt="md">
           <Grid.Col span={6}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               label="Danh mục đặt lịch"
               data={categoryOptions}
@@ -232,7 +232,7 @@ export const ModalPreviewCalendar = ({
           </Grid.Col>
           <Grid.Col span={6} className="input-date">
             <DateTimePicker
-              size="lg"
+              size="md"
               radius={0}
               label="Thời gian đặt lịch"
               valueFormat="DD/MM/YYYY hh:mm A"
@@ -243,7 +243,7 @@ export const ModalPreviewCalendar = ({
           </Grid.Col>
           {/* <Grid.Col span={6}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               label="Cố vận dịch vụ"
               allowDeselect={false}
@@ -257,7 +257,7 @@ export const ModalPreviewCalendar = ({
           {role !== ROLE_EXPERT && (
             <Grid.Col span={6}>
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 label="Chuyên gia"
                 allowDeselect={false}
@@ -273,7 +273,7 @@ export const ModalPreviewCalendar = ({
         {/* <Grid mt="md">
           <Grid.Col span={12}>
             <Textarea
-              size="lg"
+              size="md"
               radius={0}
               label="Ghi chú cho CVDV"
               placeholder="Ghi chú cho CVDV"
@@ -285,7 +285,7 @@ export const ModalPreviewCalendar = ({
         <Grid mt="md">
           <Grid.Col span={12}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               label="Tình trạng"
               {...form.getInputProps("step")}
@@ -303,7 +303,7 @@ export const ModalPreviewCalendar = ({
             className="footer-modal-schedule"
           >
             <Button
-              size="lg"
+              size="md"
               radius={0}
               h={{ base: 42, md: 50, lg: 50 }}
               w={100}
@@ -314,7 +314,7 @@ export const ModalPreviewCalendar = ({
               Huỷ
             </Button>
             <Button
-              size="lg"
+              size="md"
               radius={0}
               h={{ base: 42, md: 50, lg: 50 }}
               loading={isPendingUpdate}

@@ -67,7 +67,7 @@ export default function ComboboxField({
     >
       <Combobox.Target targetType="button">
         <InputBase
-          size="lg"
+          size="md"
           label={label}
           component="button"
           type="button"

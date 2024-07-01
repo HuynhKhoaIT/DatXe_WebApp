@@ -91,7 +91,7 @@ export default function ModalCustomersDLBD({
         />
         <Group justify="end" style={{ marginTop: 10 }}>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             h={{ base: 42, md: 50, lg: 50 }}
             variant="filled"
@@ -103,7 +103,7 @@ export default function ModalCustomersDLBD({
             Huỷ bỏ
           </Button>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             h={{ base: 42, md: 50, lg: 50 }}
             style={{ marginLeft: "12px" }}

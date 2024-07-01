@@ -12,7 +12,7 @@ export default function InfoCarNew({ form, brandOptions, styles }: any) {
         <Grid.Col span={6} className="input-plate">
           <TextInput
             classNames={{ input: styles.input }}
-            size="lg"
+            size="md"
             radius={0}
             {...form.getInputProps("numberPlates")}
             type="text"
@@ -24,7 +24,7 @@ export default function InfoCarNew({ form, brandOptions, styles }: any) {
       <Grid gutter={10} mt="md">
         <Grid.Col span={4}>
           <Select
-            size="lg"
+            size="md"
             radius={0}
             classNames={{ input: styles.input }}
             {...form.getInputProps("carBrandId")}
@@ -43,7 +43,7 @@ export default function InfoCarNew({ form, brandOptions, styles }: any) {
         </Grid.Col>
         <Grid.Col span={4}>
           <Select
-            size="lg"
+            size="md"
             radius={0}
             classNames={{ input: styles.input }}
             {...form.getInputProps("carNameId")}
@@ -61,7 +61,7 @@ export default function InfoCarNew({ form, brandOptions, styles }: any) {
         </Grid.Col>
         <Grid.Col span={4}>
           <Select
-            size="lg"
+            size="md"
             radius={0}
             classNames={{ input: styles.input }}
             {...form.getInputProps("carYearId")}

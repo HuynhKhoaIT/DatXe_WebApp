@@ -33,7 +33,7 @@ export default function InfoDate({ setDate, setTime }: any) {
 
             <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
               <TimeInput
-                size="lg"
+                size="md"
                 radius={0}
                 withSeconds
                 defaultValue={new Date().toLocaleTimeString("en-US", {

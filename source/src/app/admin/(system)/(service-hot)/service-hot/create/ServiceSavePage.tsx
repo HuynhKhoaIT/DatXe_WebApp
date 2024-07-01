@@ -96,7 +96,7 @@ export default function ServiceSavePage({
           return (
             <Badge
               radius={0}
-              size="lg"
+              size="md"
               variant="light"
               color={matchedStatus.color}
               key={index}

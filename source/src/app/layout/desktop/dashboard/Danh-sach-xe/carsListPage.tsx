@@ -118,7 +118,7 @@ export default function CarsListPage({
           <>
             <Link href={`/dashboard/ttdk?licensePlates=${record.numberPlates}`}>
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -130,7 +130,7 @@ export default function CarsListPage({
             </Link>
             <Link href={`/dashboard/xe/${record.id}`}>
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -142,7 +142,7 @@ export default function CarsListPage({
             </Link>
 
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"

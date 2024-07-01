@@ -20,6 +20,9 @@ import { IconClock12 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Logo from "@/assets/images/logo.png";
+import ImageField from "@/app/components/form/ImageField";
+
 export default function FormDlbd({
   create,
   searchParams,
@@ -94,13 +97,16 @@ export default function FormDlbd({
       className={styles.formData}
     >
       <h3 className={styles.title}>Đặt lịch bảo dưỡng</h3>
-      <Box w={500} className={styles.content}>
+      <Box maw={500} p={{ base: 10, md: 20 }} className={styles.content}>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Grid gutter={12}>
             <Grid.Col span={12}>
               <TextInput
                 size="md"
                 withAsterisk
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 label="Họ và tên chủ xe"
                 placeholder="Nguyễn Văn a"
                 {...form.getInputProps("fullname")}
@@ -109,6 +115,9 @@ export default function FormDlbd({
             <Grid.Col span={12}>
               <TextInput
                 size="md"
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 withAsterisk
                 label="Số điện thoại"
                 placeholder="Nhập số điện thoại"
@@ -127,6 +136,9 @@ export default function FormDlbd({
             <Grid.Col span={12}>
               <TextInput
                 size="md"
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 withAsterisk
                 label="Biển số xe"
                 placeholder="59B12345"
@@ -140,6 +152,9 @@ export default function FormDlbd({
                 label="Tỉnh/Thành phố"
                 placeholder="Chọn tỉnh"
                 data={provinceOptions}
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 withAsterisk
                 value={province}
                 searchable={true}
@@ -159,6 +174,9 @@ export default function FormDlbd({
                 disabled={isDisabledGarage || !province}
                 {...form.getInputProps("garageId")}
                 label="Chọn chuyên gia"
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 placeholder="Chọn chuyên gia"
                 data={garageOptions}
                 withAsterisk
@@ -173,6 +191,9 @@ export default function FormDlbd({
             <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
               <DateField
                 size="md"
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 label="Ngày đặt lịch"
                 name="dateSchedule"
                 withAsterisk={true}
@@ -183,6 +204,9 @@ export default function FormDlbd({
             <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
               <TimeInput
                 size="md"
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 withSeconds
                 {...form.getInputProps("time")}
                 withAsterisk
@@ -198,7 +222,9 @@ export default function FormDlbd({
             <Grid.Col span={12}>
               <Textarea
                 size="md"
-                classNames={{ input: styles.input }}
+                classNames={{
+                  input: styles.inputDlbd,
+                }}
                 {...form.getInputProps("note")}
                 label="Ghi chú"
                 minRows={2}
@@ -223,6 +249,14 @@ export default function FormDlbd({
           </Group>
         </form>
       </Box>
+      <ImageField
+        style={{ marginTop: "1rem" }}
+        src={Logo.src}
+        width={80}
+        height={80}
+        radius={80}
+      />
+      <p className={styles.poweredBy}>Powered by DATXE</p>
     </Flex>
   );
 }

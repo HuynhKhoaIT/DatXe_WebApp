@@ -81,7 +81,7 @@ export default function ModalUpdateCustomer({
           <Grid gutter={16}>
             <Grid.Col span={6}>
               {/* <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 // withAsterisk
                 {...form.getInputProps("phoneNumber")}
@@ -102,7 +102,7 @@ export default function ModalUpdateCustomer({
             </Grid.Col>
             <Grid.Col span={6}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 withAsterisk
                 {...form.getInputProps("fullName")}
@@ -113,7 +113,7 @@ export default function ModalUpdateCustomer({
             </Grid.Col>
             <Grid.Col span={12}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("address")}
                 label="Địa chỉ"
@@ -125,7 +125,7 @@ export default function ModalUpdateCustomer({
           <Group mt={30} justify="end">
             <Flex gap={20}>
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 h={{ base: 42, md: 50, lg: 50 }}
                 variant="outline"
@@ -137,7 +137,7 @@ export default function ModalUpdateCustomer({
                 Huỷ
               </Button>
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 h={{ base: 42, md: 50, lg: 50 }}
                 loading={loading}

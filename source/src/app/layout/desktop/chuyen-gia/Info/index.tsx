@@ -108,7 +108,7 @@ const Info = ({ detailData }: any) => {
             </Link>
             <a href={`tel:${detailData.phoneNumber}`}>
               <Button
-                // size="lg"
+                // size="md"
                 // radius={0}
                 variant="outline"
                 color="#000"

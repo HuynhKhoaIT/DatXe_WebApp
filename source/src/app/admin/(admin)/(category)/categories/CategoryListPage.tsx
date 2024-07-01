@@ -74,7 +74,7 @@ export default function CategoryListPage({ dataSource, deleteItem }: any) {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -104,7 +104,7 @@ export default function CategoryListPage({ dataSource, deleteItem }: any) {
               }}
             >
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -116,7 +116,7 @@ export default function CategoryListPage({ dataSource, deleteItem }: any) {
               </Button>
             </Link>
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"

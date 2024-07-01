@@ -82,7 +82,7 @@ export default function TableListPage({ dataSource }: any) {
             >
               <Tooltip label="Chi tiết" withArrow position="bottom">
                 <Button
-                  size="lg"
+                  size="md"
                   radius={0}
                   style={{ margin: "0 5px" }}
                   variant="transparent"

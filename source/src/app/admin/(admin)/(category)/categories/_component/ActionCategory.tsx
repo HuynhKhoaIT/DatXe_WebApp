@@ -17,7 +17,7 @@ export default function ActioBarCategory({ session }: any) {
       <Flex justify={"end"} align={"center"} gap={20}>
         {session?.user?.useDLBD ? (
           <Button
-            size="lg"
+            size="md"
             h={{ base: 42, md: 50, lg: 50 }}
             radius={0}
             onClick={openModalCategories}
@@ -35,7 +35,7 @@ export default function ActioBarCategory({ session }: any) {
         >
           <Button
             h={{ base: 42, md: 50, lg: 50 }}
-            size="lg"
+            size="md"
             radius={0}
             leftSection={<IconPlus size={18} />}
           >

@@ -19,7 +19,7 @@ export default function InfoCart({ calculateSubTotal, form, isEditing }: any) {
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           <NumberInput
             classNames={{ input: styles.input }}
-            size="lg"
+            size="md"
             radius={0}
             label="Tổng đơn hàng"
             placeholder="Tổng đơn hàng"
@@ -33,7 +33,7 @@ export default function InfoCart({ calculateSubTotal, form, isEditing }: any) {
           <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
             <Select
               classNames={{ input: styles.input }}
-              size="lg"
+              size="md"
               radius={0}
               label="Tình trạng đơn hàng"
               placeholder="Tình trạng đơn hàng"
@@ -47,7 +47,7 @@ export default function InfoCart({ calculateSubTotal, form, isEditing }: any) {
         )}
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           <Textarea
-            size="lg"
+            size="md"
             classNames={{ input: styles.input }}
             radius={0}
             {...form.getInputProps("note")}
@@ -59,7 +59,7 @@ export default function InfoCart({ calculateSubTotal, form, isEditing }: any) {
         </Grid.Col>
         <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
           <Textarea
-            size="lg"
+            size="md"
             classNames={{ input: styles.input }}
             radius={0}
             {...form.getInputProps("notePrivate")}

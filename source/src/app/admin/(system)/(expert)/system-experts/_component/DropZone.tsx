@@ -27,7 +27,7 @@ export default function DropZone({
         />
       ))}
       {imagesUrl?.length < 4 && (
-        <Button size="lg" radius={0} onClick={addImage}>
+        <Button size="md" radius={0} onClick={addImage}>
           <IconPlus size={16} />
         </Button>
       )}

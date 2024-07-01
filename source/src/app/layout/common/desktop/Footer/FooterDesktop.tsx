@@ -88,7 +88,7 @@ const MyFooter = () => (
               <Button color={"var(--yellow-btn)"}>Trở thành chuyên gia</Button>
             </Link>
             <Input
-              size="lg"
+              size="md"
               radius={0}
               placeholder="Nhập địa chỉ email"
               classNames={{

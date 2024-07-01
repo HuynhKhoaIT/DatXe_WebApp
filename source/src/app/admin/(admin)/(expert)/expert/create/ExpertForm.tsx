@@ -250,7 +250,7 @@ export default function ExpertForm({
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={{ base: 6, sm: 3, md: 2, lg: 2 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("code")}
                     label="Mã số"
@@ -261,7 +261,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 6, sm: 3, md: 2, lg: 2 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("routeId")}
                     label="ID"
@@ -273,7 +273,7 @@ export default function ExpertForm({
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
                     withAsterisk
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("name")}
                     label="Tên chuyên gia"
@@ -283,7 +283,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("shortName")}
                     label="Tên rút gọn"
@@ -293,7 +293,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     withAsterisk
                     {...form.getInputProps("phoneNumber")}
@@ -304,7 +304,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("email")}
                     label="email"
@@ -314,7 +314,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("bitlyUrl")}
                     label="Qr code"
@@ -325,7 +325,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 {/* <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("website")}
                     label="Website"
@@ -335,7 +335,7 @@ export default function ExpertForm({
                 </Grid.Col> */}
                 <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                   <MultiSelect
-                    size="lg"
+                    size="md"
                     radius={0}
                     withAsterisk
                     label="Tiện ích lân cận"
@@ -348,7 +348,7 @@ export default function ExpertForm({
 
                 <Grid.Col span={12}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("wifiInfo")}
                     label="Thông tin wifi"
@@ -358,7 +358,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("provinceId")}
                     label="Tỉnh/Thành phố"
@@ -383,7 +383,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("districtId")}
                     label="Huyện/Quận"
@@ -405,7 +405,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("wardId")}
                     label="Xã/Phường"
@@ -422,7 +422,7 @@ export default function ExpertForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 12, md: 12, lg: 12 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("address")}
                     label="Địa chỉ"
@@ -449,7 +449,7 @@ export default function ExpertForm({
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả"
                     minRows={4}
@@ -462,7 +462,7 @@ export default function ExpertForm({
                 {isSystem && (
                   <Grid.Col span={{ base: 12, sm: 8, md: 4, lg: 4 }}>
                     <Select
-                      size="lg"
+                      size="md"
                       radius={0}
                       {...form.getInputProps("status")}
                       label="Trạng thái"
@@ -489,7 +489,7 @@ export default function ExpertForm({
             <></>
           ) : (
             <Button
-              size="lg"
+              size="md"
               radius={0}
               h={{ base: 42, md: 50, lg: 50 }}
               variant="outline"

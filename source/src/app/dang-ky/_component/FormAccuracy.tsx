@@ -58,7 +58,7 @@ export function FormAccuracy({ login }: any) {
         type="number"
         placeholder="○"
         length={6}
-        size="lg"
+        size="md"
         radius={0}
         {...form.getInputProps("pin")}
       />

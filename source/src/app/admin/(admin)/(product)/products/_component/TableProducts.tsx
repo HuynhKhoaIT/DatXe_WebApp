@@ -162,7 +162,7 @@ export default function TableProducts({
           return (
             <Badge
               radius={0}
-              size="lg"
+              size="md"
               variant="light"
               color={matchedStatus.color}
               key={index}
@@ -191,7 +191,7 @@ export default function TableProducts({
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >
@@ -221,7 +221,7 @@ export default function TableProducts({
               >
                 <Tooltip label="Cập nhật" withArrow position="bottom">
                   <Button
-                    size="lg"
+                    size="md"
                     radius={0}
                     style={{ margin: "0 5px" }}
                     variant="transparent"
@@ -236,7 +236,7 @@ export default function TableProducts({
 
               <Tooltip label="Xoá" withArrow position="bottom">
                 <Button
-                  size="lg"
+                  size="md"
                   radius={0}
                   p={5}
                   variant="transparent"

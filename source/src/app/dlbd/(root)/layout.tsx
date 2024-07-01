@@ -11,23 +11,9 @@ export default function Layout({ children }: IProps) {
 
   return (
     <Fragment>
-      {isMobile ? (
-        <main>
-          <div
-            style={{
-              minHeight: "calc(100vh - 67px)",
-              marginTop: "var(--header-height-mobile)",
-              marginBottom: "var(--bottom-height-mobile)",
-            }}
-          >
-            {children}
-          </div>
-        </main>
-      ) : (
-        <main>
-          <div style={{ minHeight: "calc(100vh - 195px)" }}>{children}</div>
-        </main>
-      )}
+      <main>
+        <div>{children}</div>
+      </main>
     </Fragment>
   );
 }

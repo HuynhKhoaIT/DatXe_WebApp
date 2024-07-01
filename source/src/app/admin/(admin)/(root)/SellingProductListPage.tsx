@@ -148,7 +148,7 @@ export default function SellingProductListPage() {
           return (
             <Badge
               radius={0}
-              size="lg"
+              size="md"
               variant="light"
               color={matchedStatus.color}
               key={index}
@@ -177,7 +177,7 @@ export default function SellingProductListPage() {
             <Badge
               variant="light"
               radius={0}
-              size="lg"
+              size="md"
               color={matchedStatus.color}
               key={record}
             >

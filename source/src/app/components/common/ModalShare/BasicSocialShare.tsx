@@ -182,7 +182,7 @@ const BasicSocialShare = ({ opened, close }: any) => {
         <Input
           placeholder="Clearable input"
           value={shareUrl}
-          size="lg"
+          size="md"
           mt={24}
           radius="md"
           rightSectionWidth={120}

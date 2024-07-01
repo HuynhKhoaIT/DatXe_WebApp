@@ -82,7 +82,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
               }}
             >
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -94,7 +94,7 @@ export default function TableListPage({ dataSource, deleteItem }: any) {
               </Button>
             </Link>
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"

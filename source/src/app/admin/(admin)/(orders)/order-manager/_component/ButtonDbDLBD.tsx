@@ -26,7 +26,7 @@ export default function ButtonDbDLBD({
   }
   return (
     <Button
-      size="lg"
+      size="md"
       radius={0}
       h={{ base: 42, md: 50, lg: 50 }}
       color="blue"

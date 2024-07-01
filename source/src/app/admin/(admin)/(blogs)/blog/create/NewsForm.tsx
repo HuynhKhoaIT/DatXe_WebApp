@@ -176,7 +176,7 @@ export default function NewsForm({
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={8}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     withAsterisk
                     {...form.getInputProps("title")}
@@ -187,7 +187,7 @@ export default function NewsForm({
                 </Grid.Col>
                 <Grid.Col span={4}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -204,7 +204,7 @@ export default function NewsForm({
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả ngắn"
                     minRows={4}
@@ -251,7 +251,7 @@ export default function NewsForm({
             <Grid>
               <Grid.Col span={12}>
                 <TextInput
-                  size="lg"
+                  size="md"
                   radius={0}
                   {...form.getInputProps("seoTitle")}
                   label="Tiêu đề"
@@ -261,7 +261,7 @@ export default function NewsForm({
               </Grid.Col>
               <Grid.Col span={12}>
                 <Textarea
-                  size="lg"
+                  size="md"
                   radius={0}
                   label="Mô tả ngắn"
                   minRows={4}

@@ -84,7 +84,7 @@ export default function ModelCarListPage() {
               }}
             >
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 style={{ margin: "0 5px" }}
                 variant="transparent"
@@ -96,7 +96,7 @@ export default function ModelCarListPage() {
               </Button>
             </Link>
             <Button
-              size="lg"
+              size="md"
               radius={0}
               p={5}
               variant="transparent"
@@ -135,7 +135,7 @@ export default function ModelCarListPage() {
             >
               <Button
                 h={{ base: 42, md: 50, lg: 50 }}
-                size="lg"
+                size="md"
                 radius={0}
                 leftSection={<IconPlus size={18} />}
               >

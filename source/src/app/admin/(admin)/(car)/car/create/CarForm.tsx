@@ -122,7 +122,7 @@ export default function CarForm({
               <Grid gutter={10}>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   {/* <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     withAsterisk
                     {...form.getInputProps("customerId")}
@@ -132,7 +132,7 @@ export default function CarForm({
                     data={customerOptions}
                   /> */}
                   <AutocompleteField
-                    size="lg"
+                    size="md"
                     radius={0}
                     placeholder="Khách hàng"
                     w="100%"
@@ -163,7 +163,7 @@ export default function CarForm({
                   <TextInput
                     withAsterisk
                     {...form.getInputProps("numberPlates")}
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Biển số xe"
                     type="text"
@@ -172,7 +172,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("color")}
                     label="Màu xe"
@@ -182,7 +182,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     searchable={true}
                     {...form.getInputProps("carBrandId")}
@@ -200,7 +200,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     searchable={true}
                     {...form.getInputProps("carNameId")}
@@ -219,7 +219,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     searchable={true}
                     {...form.getInputProps("carYearId")}
@@ -233,7 +233,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("vinNumber")}
                     label="Số khung"
@@ -243,7 +243,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("machineNumber")}
                     label="Số máy"
@@ -253,7 +253,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("maintenanceDeadline")}
                     label="Hạn bảo dưỡng"
@@ -263,7 +263,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("registrationDeadline")}
                     label="Hạng đăng kiểm"
@@ -275,7 +275,7 @@ export default function CarForm({
                   <DateField
                     {...form.getInputProps("materialInsuranceDeadline")}
                     label="Hạn BHVC"
-                    size="lg"
+                    size="md"
                     radius={0}
                     placeholder="Hạn BHVC"
                     clearable={true}
@@ -283,7 +283,7 @@ export default function CarForm({
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <DateField
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("civilInsuranceDeadline")}
                     label="Hạn BHDS"
@@ -293,7 +293,7 @@ export default function CarForm({
                 </Grid.Col>
                 {/* <Grid.Col span={{ base: 12, sm: 6, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -306,7 +306,7 @@ export default function CarForm({
               <Grid mt={24}>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả chi tiết"
                     minRows={4}

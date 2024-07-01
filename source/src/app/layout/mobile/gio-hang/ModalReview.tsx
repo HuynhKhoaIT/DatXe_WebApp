@@ -45,11 +45,11 @@ export default function ModalReview({
         <div>
           <div className={styles.rating}>
             <Typo size="sub">Chất lượng sản phẩm</Typo>
-            <Rating defaultValue={5} size="lg" />
+            <Rating defaultValue={5} size="md" />
           </div>
           <div className={styles.review}>
             <Textarea
-              size="lg"
+              size="md"
               radius={0}
               label="Chất lượng sản phẩm:"
               placeholder="Để lại đánh giá"

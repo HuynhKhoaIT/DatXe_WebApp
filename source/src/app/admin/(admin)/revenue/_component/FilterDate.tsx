@@ -48,7 +48,7 @@ export default function FilterDate({ totalSum }: any) {
         <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
           <DatePickerInput
             label="Thời gian"
-            size="lg"
+            size="md"
             radius={0}
             placeholder="Vui lòng chọn"
             type="range"
@@ -67,7 +67,7 @@ export default function FilterDate({ totalSum }: any) {
             readOnly
             label="Tổng doanh thu"
             value={totalSum}
-            size="lg"
+            size="md"
             radius={0}
             thousandSeparator=","
           />

@@ -112,12 +112,12 @@ export function ModalOrderGuest({
             variant="unstyled"
             placeholder="○"
             length={6}
-            size="lg"
+            size="md"
             radius={0}
             {...form.getInputProps("pin")}
           />
           <Button
-            size="lg"
+            size="md"
             radius={0}
             loading={loading}
             className="login-btn"

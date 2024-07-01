@@ -91,7 +91,7 @@ export default function ModalUpdateCar({
           <Grid gutter={16}>
             <Grid.Col span={6}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("numberPlates")}
                 label="Biển số xe"
@@ -101,7 +101,7 @@ export default function ModalUpdateCar({
             </Grid.Col>
             <Grid.Col span={6}>
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("carBrandId")}
                 label="Hãng xe"
@@ -119,7 +119,7 @@ export default function ModalUpdateCar({
             </Grid.Col>
             <Grid.Col span={6}>
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("carNameId")}
                 label="Dòng xe"
@@ -136,7 +136,7 @@ export default function ModalUpdateCar({
             </Grid.Col>{" "}
             <Grid.Col span={6}>
               <Select
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("carYearId")}
                 label="Năm SX"
@@ -152,7 +152,7 @@ export default function ModalUpdateCar({
           <Group mt={30} justify="end">
             <Flex gap={20}>
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 h={{ base: 42, md: 50, lg: 50 }}
                 variant="outline"
@@ -164,7 +164,7 @@ export default function ModalUpdateCar({
                 Huỷ
               </Button>
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 h={{ base: 42, md: 50, lg: 50 }}
                 loading={loading}

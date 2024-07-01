@@ -78,7 +78,7 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Hãng xe"
                     type="text"
@@ -90,7 +90,7 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                   <TextInput
                     disabled
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Dòng xe"
                     type="text"
@@ -102,7 +102,7 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={8}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("title")}
                     label="Năm sản xuất"
@@ -112,7 +112,7 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={4}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -127,7 +127,7 @@ export default function YearCarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả chi tiết"
                     minRows={2}

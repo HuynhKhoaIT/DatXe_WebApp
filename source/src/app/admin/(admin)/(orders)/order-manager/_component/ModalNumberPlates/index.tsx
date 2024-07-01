@@ -72,7 +72,7 @@ export default function ModalNumberPlates({
         <Grid gutter={12}>
           <Grid.Col span={10}>
             <AutocompleteField
-              size="lg"
+              size="md"
               radius={0}
               w={"100%"}
               placeholder="Biển số xe"
@@ -88,7 +88,7 @@ export default function ModalNumberPlates({
           <Grid.Col span={2}>
             <ActionIcon
               onClick={openModalCamera}
-              size="lg"
+              size="md"
               h={50}
               w={50}
               variant="filled"

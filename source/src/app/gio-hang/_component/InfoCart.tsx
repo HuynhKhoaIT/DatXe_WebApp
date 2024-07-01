@@ -142,7 +142,7 @@ export default function InfoCart({
       render: (record: any) => {
         return (
           <Button
-            size="lg"
+            size="md"
             radius={0}
             variant="transparent"
             color="red"
@@ -208,7 +208,7 @@ export default function InfoCart({
             </ul>
             <Group justify="end">
               <Button
-                size="lg"
+                size="md"
                 // radius={0}
                 className="theme-btn"
                 variant="filled"

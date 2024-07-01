@@ -67,7 +67,7 @@ export default function ModalUpdate({
         </Grid>
         <Group justify="end" style={{ marginTop: 30 }}>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             h={{ base: 42, md: 50, lg: 50 }}
             onClick={() => {

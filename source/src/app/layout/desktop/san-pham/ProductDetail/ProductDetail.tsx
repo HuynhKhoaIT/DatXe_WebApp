@@ -216,7 +216,7 @@ function ProductDetail({ ProductDetail, productReview, session }: any) {
 
               <Flex gap={10}>
                 <Button
-                  // size="lg"
+                  // size="md"
                   // radius={0}
                   mt={22}
                   color={"var(--primary-color)"}
@@ -226,7 +226,7 @@ function ProductDetail({ ProductDetail, productReview, session }: any) {
                   Đặt lịch
                 </Button>
                 <Button
-                  // size="lg"
+                  // size="md"
                   // radius={0}
                   leftSection={<IconShare3 />}
                   mt={22}
@@ -251,7 +251,7 @@ function ProductDetail({ ProductDetail, productReview, session }: any) {
         </div>
         <Group justify="end" style={{ marginTop: 10 }}>
           <Button
-            // size="lg"
+            // size="md"
             // radius={0}
             // h={{ base: 42, md: 50, lg: 50 }}
             variant="outline"
@@ -263,7 +263,7 @@ function ProductDetail({ ProductDetail, productReview, session }: any) {
             Huỷ bỏ
           </Button>
           <Button
-            // size="lg"
+            // size="md"
             // radius={0}
             // h={{ base: 42, md: 50, lg: 50 }}
             style={{ marginLeft: "12px" }}

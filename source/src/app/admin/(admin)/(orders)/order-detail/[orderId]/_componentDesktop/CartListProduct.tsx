@@ -79,7 +79,7 @@ export default function CartListProduct({
         </Table.Td>
         <Table.Td w={200}>
           <NumberInput
-            size="lg"
+            size="md"
             radius={0}
             w={200}
             {...form.getInputProps(`detail.${index}.priceSale`)}
@@ -98,7 +98,7 @@ export default function CartListProduct({
         </Table.Td>
         <Table.Td w={150}>
           <NumberInput
-            size="lg"
+            size="md"
             radius={0}
             w={150}
             {...form.getInputProps(`detail.${index}.quantity`)}
@@ -116,7 +116,7 @@ export default function CartListProduct({
         </Table.Td>
         <Table.Td w={150}>
           <NumberInput
-            size="lg"
+            size="md"
             radius={0}
             w={150}
             {...form.getInputProps(`detail.${index}.subTotal`)}
@@ -133,7 +133,7 @@ export default function CartListProduct({
           <>
             <Tooltip label="Xoá" withArrow position="bottom">
               <Button
-                size="lg"
+                size="md"
                 radius={0}
                 p={5}
                 variant="transparent"
@@ -172,7 +172,7 @@ export default function CartListProduct({
           dataDetail?.step !== Number(ORDER_DONE) &&
           !dataDetail?.orderDLBDId && (
             <Button
-              size="lg"
+              size="md"
               radius={0}
               h={{ base: 42, md: 50, lg: 50 }}
               onClick={(e) => {

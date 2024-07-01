@@ -109,7 +109,7 @@ export default function OrderFormMobile({
           <Grid gutter={12}>
             <Grid.Col span={10}>
               <AutocompleteField
-                size="lg"
+                size="md"
                 radius={0}
                 placeholder="Biển số xe"
                 value={numberPlate}
@@ -128,7 +128,7 @@ export default function OrderFormMobile({
             <Grid.Col span={2}>
               <ActionIcon
                 onClick={openModalCamera}
-                size="lg"
+                size="md"
                 h={50}
                 w={50}
                 variant="filled"
@@ -144,7 +144,7 @@ export default function OrderFormMobile({
 
           <div className={styles.footer}>
             <Button
-              size="lg"
+              size="md"
               w={"48%"}
               radius={0}
               h={{ base: 42, md: 50, lg: 50 }}
@@ -157,7 +157,7 @@ export default function OrderFormMobile({
               Huỷ bỏ
             </Button>
             <Button
-              size="lg"
+              size="md"
               radius={0}
               w={"48%"}
               h={{ base: 42, md: 50, lg: 50 }}
@@ -204,7 +204,7 @@ export default function OrderFormMobile({
         />
         <div className={styles.footer}>
           <Button
-            size="lg"
+            size="md"
             w={"48%"}
             radius={0}
             h={{ base: 42, md: 50, lg: 50 }}
@@ -223,7 +223,7 @@ export default function OrderFormMobile({
             Quay lại
           </Button>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             w={"48%"}
             h={{ base: 42, md: 50, lg: 50 }}
@@ -272,7 +272,7 @@ export default function OrderFormMobile({
                 dataDetail?.step !== Number(ORDER_DONE) &&
                 !dataDetail?.orderDLBDId && (
                   <Button
-                    size="lg"
+                    size="md"
                     radius={0}
                     h={{ base: 42, md: 50, lg: 50 }}
                     onClick={(e) => {
@@ -347,7 +347,7 @@ export default function OrderFormMobile({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <Textarea
-                  size="lg"
+                  size="md"
                   rows={2}
                   radius={0}
                   {...form.getInputProps("notePrivate")}
@@ -358,7 +358,7 @@ export default function OrderFormMobile({
               </Grid.Col>
               <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
                 <Textarea
-                  size="lg"
+                  size="md"
                   rows={2}
                   radius={0}
                   {...form.getInputProps("note")}
@@ -419,7 +419,7 @@ const Footer = ({
         isCancel={false}
       >
         <Button
-          size="lg"
+          size="md"
           radius={0}
           h={{ base: 42, md: 50, lg: 50 }}
           variant="outline"
@@ -431,7 +431,7 @@ const Footer = ({
           Quay lại
         </Button>
         <Button
-          size="lg"
+          size="md"
           radius={0}
           h={{ base: 42, md: 50, lg: 50 }}
           // loading={saveLoading}

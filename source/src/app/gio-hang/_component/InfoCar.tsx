@@ -30,7 +30,7 @@ export default function InfoCar({
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 label="Hãng Xe"
                 placeholder="Hãng Xe"
@@ -41,7 +41,7 @@ export default function InfoCar({
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 label="Dòng xe"
                 value={form.values.carModelName}
@@ -51,7 +51,7 @@ export default function InfoCar({
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 4, lg: 4, xl: 4 }}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 value={form.values.carYear}
                 label="Năm sản xuất"

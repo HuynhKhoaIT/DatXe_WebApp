@@ -44,7 +44,7 @@ export default function InfoCustomer2({ form, isUser }: any) {
           <Grid gutter={12} className={styles.marketingInfo}>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 // withAsterisk
                 {...form.getInputProps("billingPhone")}
@@ -55,7 +55,7 @@ export default function InfoCustomer2({ form, isUser }: any) {
             </Grid.Col>
             <Grid.Col span={{ base: 12, sm: 6, md: 6, lg: 6 }}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("billingCustomerName")}
                 label="Tên khách hàng"
@@ -66,7 +66,7 @@ export default function InfoCustomer2({ form, isUser }: any) {
 
             <Grid.Col span={12}>
               <TextInput
-                size="lg"
+                size="md"
                 radius={0}
                 {...form.getInputProps("billingAdress")}
                 label="Địa chỉ"

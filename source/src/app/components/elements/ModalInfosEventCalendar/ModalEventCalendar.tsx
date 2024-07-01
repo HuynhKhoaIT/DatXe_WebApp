@@ -116,7 +116,7 @@ export const ModalEventCalendar = ({
       />
       <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
         <Textarea
-          size="lg"
+          size="md"
           radius={0}
           placeholder="Yêu cầu khách hàng"
           withAsterisk={true}
@@ -133,7 +133,7 @@ export const ModalEventCalendar = ({
         <Grid gutter={10} mt="md">
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               placeholder="Họ và tên"
               withAsterisk
@@ -142,7 +142,7 @@ export const ModalEventCalendar = ({
           </Grid.Col>
           <Grid.Col span={6}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               placeholder="Số điện thoại"
               withAsterisk
@@ -164,7 +164,7 @@ export const ModalEventCalendar = ({
         <Grid gutter={10} mt="md">
           <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
             <Select
-              size="lg"
+              size="md"
               radius={0}
               data={categoryOptions}
               placeholder="Danh mục đặt lịch"
@@ -176,7 +176,7 @@ export const ModalEventCalendar = ({
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 6 }} className="input-date">
             <DateTimePicker
-              size="lg"
+              size="md"
               radius={0}
               valueFormat="DD/MM/YYYY hh:mm A"
               placeholder="Thời gian đặt lịch"
@@ -189,7 +189,7 @@ export const ModalEventCalendar = ({
         <Grid gutter={10} mt="md">
           <Grid.Col span={12}>
             <TextInput
-              size="lg"
+              size="md"
               radius={0}
               readOnly
               placeholder="Chuyên gia"
@@ -201,7 +201,7 @@ export const ModalEventCalendar = ({
         <Grid mt="md">
           <Grid.Col span={12}>
             <Textarea
-              size="lg"
+              size="md"
               radius={0}
               placeholder="Ghi chú cho CVDV"
               withAsterisk
@@ -221,7 +221,7 @@ export const ModalEventCalendar = ({
             <a href="/">đăng nhập</a>
           </div> */}
           <Button
-            size="lg"
+            size="md"
             radius={0}
             loading={isPendingAdd}
             w={100}

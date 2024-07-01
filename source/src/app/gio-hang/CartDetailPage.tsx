@@ -174,7 +174,7 @@ export default function CartDetailPage({
             }}
           />
           <Textarea
-            size="lg"
+            size="md"
             radius={0}
             label="Ghi chú của khách hàng"
             minRows={2}
@@ -254,7 +254,7 @@ export default function CartDetailPage({
                     <Grid gutter={16}>
                       <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
                         <TextInput
-                          size="lg"
+                          size="md"
                           radius={0}
                           {...form.getInputProps("fullName")}
                           label="Họ Tên"
@@ -263,7 +263,7 @@ export default function CartDetailPage({
                       </Grid.Col>
                       <Grid.Col span={{ base: 12, md: 12, lg: 6, xl: 6 }}>
                         <TextInput
-                          size="lg"
+                          size="md"
                           radius={0}
                           {...form.getInputProps("phoneNumber")}
                           label="Điện thoại"
@@ -272,7 +272,7 @@ export default function CartDetailPage({
                       </Grid.Col>
                       <Grid.Col span={12}>
                         <TextInput
-                          size="lg"
+                          size="md"
                           radius={0}
                           {...form.getInputProps("address")}
                           label="Địa chỉ"
@@ -319,7 +319,7 @@ export default function CartDetailPage({
         <div>Bạn có muốn xoá không?</div>
         <Group justify="end" style={{ marginTop: 10 }}>
           <Button
-            size="lg"
+            size="md"
             radius={0}
             h={{ base: 42, md: 50, lg: 50 }}
             variant="outline"
@@ -331,7 +331,7 @@ export default function CartDetailPage({
             Huỷ bỏ
           </Button>
           <Button
-            size="lg"
+            size="md"
             h={{ base: 42, md: 50, lg: 50 }}
             radius={0}
             style={{ marginLeft: "12px" }}

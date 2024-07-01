@@ -76,7 +76,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
               <Grid gutter={10} mt={24}>
                 <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Tên hãng xe"
                     type="text"
@@ -87,7 +87,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 8, lg: 8 }}>
                   <TextInput
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("title")}
                     label="Tên dòng xe"
@@ -97,7 +97,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={{ base: 12, md: 4, lg: 4 }}>
                   <Select
-                    size="lg"
+                    size="md"
                     radius={0}
                     {...form.getInputProps("status")}
                     label="Trạng thái"
@@ -112,7 +112,7 @@ export default function BrandCarForm({ isEditing, dataDetail }: any) {
                 </Grid.Col>
                 <Grid.Col span={12}>
                   <Textarea
-                    size="lg"
+                    size="md"
                     radius={0}
                     label="Mô tả chi tiết"
                     minRows={2}
