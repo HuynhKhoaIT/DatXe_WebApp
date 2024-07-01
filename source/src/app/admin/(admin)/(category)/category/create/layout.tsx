@@ -14,7 +14,7 @@ export default function CreateLayout({ children }: IProps) {
   return (
     <Fragment>
       <Breadcrumb breadcrumbs={Breadcrumbs} />
-      <div className={styles.content}>{children}</div>
+      <div style={{ maxWidth: 1000 }}>{children}</div>
     </Fragment>
   );
 }

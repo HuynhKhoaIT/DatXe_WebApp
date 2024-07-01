@@ -19,6 +19,8 @@ export default function DateField({
   classNames,
   size = "lg",
   radius,
+  withAsterisk,
+  props,
 }: any) {
   return (
     <DateInput
@@ -37,7 +39,9 @@ export default function DateField({
       size={size}
       radius={radius}
       classNames={classNames}
+      withAsterisk={withAsterisk}
       type={type}
+      {...props}
     />
   );
 }

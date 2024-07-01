@@ -1,11 +1,12 @@
 import { create, gets } from "@/app/libs/prisma/bookingTTDK";
+import { ROLE_EXPERT } from "@/constants";
 import { checkAuthToken } from "@/utils/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
     const getAuth = await checkAuthToken(request);
-    if (getAuth != null && getAuth.role == "ADMINGARAGE") {
+    if (getAuth != null && getAuth.role == ROLE_EXPERT) {
       const { searchParams } = new URL(request.url);
       const requestData = {
         garageId: getAuth?.garageId,
