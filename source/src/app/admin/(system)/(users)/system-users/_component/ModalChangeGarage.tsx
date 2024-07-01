@@ -3,11 +3,14 @@ import { Button, Group, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconBan, IconChevronRight } from "@tabler/icons-react";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
-export default function ModelChangeGarage({ userId, opened, close }: any) {
-  const { data } = useSession();
+export default function ModelChangeGarage({
+  userId,
+  opened,
+  close,
+  user,
+}: any) {
   const form = useForm({
     initialValues: {
       garage_id: "",
@@ -22,7 +25,7 @@ export default function ModelChangeGarage({ userId, opened, close }: any) {
         },
         {
           headers: {
-            Authorization: `Bearer ${data?.user?.token}`,
+            Authorization: `Bearer ${user?.token}`,
           },
         }
       );

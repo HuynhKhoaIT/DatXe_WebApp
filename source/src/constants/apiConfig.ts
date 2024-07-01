@@ -632,6 +632,33 @@ const apiConfig = {
         headers: baseHeader,
       },
     },
+    user: {
+      getList: {
+        baseURL: `${apiUrl}api/admin/user`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      getById: {
+        baseURL: `${apiUrl}api/admin/user/:id`,
+        method: "GET",
+        headers: baseHeader,
+      },
+      create: {
+        baseURL: `${apiUrl}api/admin/user`,
+        method: "POST",
+        headers: baseHeader,
+      },
+      update: {
+        baseURL: `${apiUrl}api/admin/user/:id`,
+        method: "PUT",
+        headers: baseHeader,
+      },
+      delete: {
+        baseURL: `${apiUrl}api/admin/user/:id`,
+        method: "DELETE",
+        headers: baseHeader,
+      },
+    },
   },
   nation: {
     provinceList: {
