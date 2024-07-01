@@ -1,6 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { IconPencil, IconTrash, IconBan, IconPlus } from "@tabler/icons-react";
+import {
+  IconPencil,
+  IconTrash,
+  IconBan,
+  IconPlus,
+  IconCardboards,
+} from "@tabler/icons-react";
 import { Radio, Button, Modal, Group, Pagination, Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import TableBasic from "@/app/components/table/Tablebasic";
@@ -14,6 +20,7 @@ export default function CarsListPage({
   carsData,
   handleDeleteCar,
   handleSetDefault,
+  user,
 }: any) {
   const [
     openedPreviewCar,
@@ -105,10 +112,22 @@ export default function CarsListPage({
         </span>
       ),
       dataIndex: [],
-      width: "120px",
+      width: "150px",
       render: (record: any) => {
         return (
           <>
+            <Link href={`/dashboard/ttdk?licensePlates=${record.numberPlates}`}>
+              <Button
+                size="lg"
+                radius={0}
+                style={{ margin: "0 5px" }}
+                variant="transparent"
+                color="gray"
+                p={5}
+              >
+                <IconCardboards size={16} color="blue" />
+              </Button>
+            </Link>
             <Link href={`/dashboard/xe/${record.id}`}>
               <Button
                 size="lg"

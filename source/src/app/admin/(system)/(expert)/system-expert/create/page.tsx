@@ -1,23 +1,12 @@
-import React from "react";
-import ExpertForm from "./ExpertForm";
-import { callApi } from "@/lib/auth";
+import ExpertForm from "@/app/admin/(admin)/(expert)/expert/create/ExpertForm";
 import apiConfig from "@/constants/apiConfig";
+import { callApi } from "@/lib/auth";
+import React from "react";
 export default async function CreateCategory() {
   async function addItem(formData: FormData) {
     "use server";
     try {
       const res = await callApi(apiConfig.admin.garage.create, {
-        data: formData,
-      });
-      return res;
-    } catch (error) {
-      return null;
-    }
-  }
-  async function createQr(formData: FormData) {
-    "use server";
-    try {
-      const res = await callApi(apiConfig.admin.garage.createQrCode, {
         data: formData,
       });
       return res;
@@ -38,11 +27,11 @@ export default async function CreateCategory() {
 
   return (
     <ExpertForm
+      isSystem={true}
       isEditing={false}
       addItem={addItem}
       provinceOptions={provinceOptions}
       UltilitiesOptions={UltilitiesOptions}
-      createQr={createQr}
     />
   );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import CarForm from "./CarForm";
-import { callApi } from "@/lib";
+import { callApi } from "@/lib/auth";
 import apiConfig from "@/constants/apiConfig";
 export default async function CreateCar() {
   async function handleCreate(formData: FormData) {

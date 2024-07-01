@@ -1,0 +1,9 @@
+
+.ttdkContent{
+    height: 1600px;
+}
+@media only screen and (max-width: 600px) {
+    .ttdkContent{
+        height: 100vh;
+    }
+}

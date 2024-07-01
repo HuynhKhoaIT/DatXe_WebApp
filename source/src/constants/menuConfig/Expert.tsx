@@ -54,7 +54,7 @@ const menuConfigExpert = [
   {
     label: "Chuyên gia",
     icon: IconUsers,
-    links: [{ label: "Danh sách chuyên gia", link: "/admin/expert" }],
+    links: [{ label: "Danh sách chuyên gia", link: "/admin/experts" }],
   },
 ];
 

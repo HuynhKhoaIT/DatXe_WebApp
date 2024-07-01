@@ -8,7 +8,7 @@ interface IProps {
 
 const Breadcrumbs = [
   { title: "Tổng quan", href: "/admin" },
-  { title: "Danh sách chuyên gia", href: "/admin/system-expert" },
+  { title: "Danh sách chuyên gia", href: "/admin/system-experts" },
   { title: "Thêm chuyên gia" },
 ];
 export default function CreateLayout({ children }: IProps) {

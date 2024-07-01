@@ -1,7 +1,7 @@
-import { Box } from "@mantine/core";
-import ExpertForm from "../create/ExpertForm";
-import { callApi } from "@/lib/auth";
+import ExpertForm from "@/app/admin/(admin)/(expert)/expert/create/ExpertForm";
 import apiConfig from "@/constants/apiConfig";
+import { callApi } from "@/lib/auth";
+import { Box } from "@mantine/core";
 export default async function UpdateCategory({
   params,
 }: {
@@ -57,6 +57,7 @@ export default async function UpdateCategory({
         UltilitiesOptions={UltilitiesOptions}
         createQr={createQr}
         isCreateQr={expert?.bitlyUrl}
+        isSystem={true}
       />
     </Box>
   );
